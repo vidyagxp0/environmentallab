@@ -1,0 +1,62 @@
+<?php
+
+use App\Models\ActionItem;
+use App\Models\Division;
+use App\Models\QMSDivision;
+use App\Models\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+
+class Helpers
+{
+    public static function getdateFormat($date)
+    {
+        $date = Carbon::parse($date);
+        $formatted_date = $date->format("d-M-Y");
+        return $formatted_date;
+    }
+    public static function getdateFormat1($date)
+    {
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
+    }
+
+
+    public static function divisionNameForQMS($id)
+    {
+        return QMSDivision::where('id', $id)->value('name');
+    }
+
+    public static function year($createdAt)
+    {
+        return Carbon::parse($createdAt)->format('Y');
+    }
+
+    public static function getDivisionName($id)
+    {
+        $name = DB::table('q_m_s_divisions')->where('id', $id)->value('name');
+        return $name;
+    }
+    public static function recordFormat($number)
+    {
+        return   str_pad($number, 4, '0', STR_PAD_LEFT);
+    }
+    public static function getInitiatorName($id)
+    {
+        return   User::where('id',$id)->value('name');
+    }
+
+    public static function record($id)
+    {
+        return   str_pad($id, 5, '0', STR_PAD_LEFT);
+    }
+
+    public static function hodMail($data)
+    {
+        Mail::send('hod-mail',['data' => $data],
+    function ($message){
+            $message->to("shaleen.mishra@connexodemo.com")
+                    ->subject('Record is for Review');
+        });
+    }
+}

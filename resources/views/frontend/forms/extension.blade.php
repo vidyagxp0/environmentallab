@@ -1,0 +1,360 @@
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
+    <style>
+        textarea.note-codable {
+            display: none !important;
+        }
+
+        header {
+            display: none;
+        }
+    </style>
+
+    <div class="form-field-head">
+
+        <div class="division-bar">
+            <strong>Site Division/Project</strong> :
+            {{ Helpers::getDivisionName(session()->get('division')) }} /Child/Extension
+        </div>
+    </div>
+
+    @php
+        $users = DB::table('users')->get();
+    @endphp
+
+
+    {{-- ======================================
+                DATA FIELDS
+    ======================================= --}}
+    <div id="change-control-fields">
+
+        <div class="container-fluid">
+
+            <!-- Tab links -->
+            <div class="cctab">
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Extension</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')"> QA Approval</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')"> Activity Log</button>
+            </div>
+            <form action="{{ route('extension.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div id="step-form">
+                    <!--  Extension Details Tab content -->
+                    <div id="CCForm1" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="sub-head">Extension Details</div>
+                                </div>
+                                <input type="hidden" name="parent_id" value="{{ $parent_id }}">
+                                <input type="hidden" name="parent_type" value="{{ $parent_name }}">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number">Record Number</label>
+                                        <input disabled type="text" name="record_number"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extention/{{ date('Y') }}/{{ $record_number }}">
+                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Division Code">Division Code</label>
+                                        <input disabled type="text" name="division_code"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        {{-- <div class="static">QMS-North America</div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator">Initiator</label>
+                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
+                                        <input disabled type="text" name="division_code"
+                                            value="{{ Auth::user()->name }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Date Due">Date of Initiation</label>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Current Parent Due Date <span class="text-danger"></span></label>
+                                        {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
+                                        <input disabled type="text"
+                                            value="{{ Helpers::getdateFormat($due_date) }}">  --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+                                        <input disabled type="text"
+                                            value="{{ Helpers::getdateFormat($parent_due_date) }}" name="due_date">
+                                        <input type="hidden" value="{{ $parent_due_date }}" name="due_date">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Revised Due Date <span class="text-danger"></span></label>
+                                        {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
+                                        <input disabled type="text"
+                                            value="{{ Helpers::getdateFormat($due_date) }}">  --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+                                        <input type="date" min="{{ $parent_due_date }}"
+                                            value="" name="revised_date">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Desccription">Short Description <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" name="short_description">
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Justification of Extention">Justification of Extention</label>
+                                        <textarea name="justification"></textarea>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Extention Attachments">Extention Attachments </label>
+                                        <input type="file" id="myfile" name="extention_attachment[]" multiple>
+                                    </div>
+                                </div> --}}
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Extention Attachments</label>
+                                        {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="extention_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="extention_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'extention_attachment')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Approver">Approver</label>
+                                        <select id="select-state" placeholder="Select..." name="approver">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $value)
+                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QA Approval content -->
+                    <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Approver Comments">Approver Comments</label>
+                                        <textarea name="approver_comments"></textarea>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="closure-attachments">Closure Attachments</label>
+                                        <input type="file" name="closure_attachments[]" multiple>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Closure Attachments</label>
+
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="closure_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="closure_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Activity Log content -->
+                    <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="row">
+                                <div class="sub-head">Electronic Signatures</div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted By">Submitted By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submitted On">Submitted On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Cancelled On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Ext Approved By">Ext Approved By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Ext Approved On">Ext Approved On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="More Information Required By">More Information Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="More Information Required On">More Information Required On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Rejected By">Rejected By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Rejected On">Rejected On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+        </div>
+        </form>
+    </div>
+
+    <style>
+        #step-form>div {
+            display: none
+        }
+
+        #step-form>div:nth-child(1) {
+            display: block;
+        }
+    </style>
+
+    <script>
+        function openCity(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("cctabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("cctablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".cctablinks");
+        const steps = document.querySelectorAll(".cctabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+    </script>
+@endsection

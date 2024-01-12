@@ -1,0 +1,1309 @@
+@extends('frontend.layout.main')
+@section('container')
+
+    <style>
+        textarea.note-codable {
+            display: none !important;
+        }
+
+        header {
+            display: none;
+        }
+
+        .group-input table input,
+        .group-input table select {
+            border: 0;
+            margin: 0 !important;
+            padding: 0 !important;
+        }
+    </style>
+
+    <div id="data-field-head">
+        <div class="pr-id">
+            New Document
+        </div>
+        <div class="division-bar">
+            <strong>Site Division/Project</strong> :
+            {{ $division->dname }} / {{ $division->pname }}
+        </div>
+    </div>
+
+    <div id="data-fields">
+
+        <div class="container-fluid">
+            <div class="tab">
+                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">
+                    Document information
+                </button>
+                <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
+                <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
+                <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
+                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &
+                    Retrieval</button>
+                <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button>
+                <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
+            </div>
+
+            <form id="document-form" action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div id="step-form">
+                    <!-- Tab content -->
+                    <div id="doc-info" class="tabcontent">
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="group-input">
+                                        <label for="originator">Originator</label>
+                                        <div class="default-name">{{ Auth::user()->name }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="group-input">
+                                        <label for="open-date">Date Opened</label>
+                                        <div class="default-name"> {{ date('d-M-Y') }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="group-input">
+                                        <label for="record-num">Record Number</label>
+                                        <div class="default-name">{{ $recordNumber }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="document_name-desc">Document Name<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="document_name" maxlength="255" required>
+                                    </div>
+                                    <p id="docnameError" style="color:red">**Document Name is required</p>
+
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="short-desc">Short Description<span class="text-danger">*</span></label>
+                                        <input type="text" id="short_desc" name="short_desc">
+                                    </div>
+                                    <p id="short_descError" style="color:red">**Short description is required</p>
+
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date</label>
+                                        <input type="date" id="due_dateDoc" name="due_date" pattern="\d{4}-\d{2}-\d{2}"
+                                            onchange="changeFormat(this)">
+                                    </div>
+                                    <p id="due_dateDocError" style="color:red">**Due Date is required</p>
+
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="group-input">
+                                        <label for="notify_to">Notify To</label>
+                                        <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
+                                            data-silent-initial-value-set="true" id="notify_to">
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                    ({{ $data->role }})
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="description">Description</label>
+                                        <textarea name="description"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="orig-head">
+                            Document Information
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-num">Document Number</label>
+                                        <div class="default-name">Not available</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="link-doc">Reference Record</label>
+                                        <select multiple name="reference_record[]" placeholder="Select Reference Records"
+                                            data-search="false" data-silent-initial-value-set="true" id="reference_record">
+                                            @if (!empty($document))
+                                                @foreach ($document as $temp)
+                                                    <option value="{{ $temp->id }}">
+                                                        {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-0000{{ $temp->id }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="depart-name">Department Name<span class="text-danger">*</span></label>
+                                        <select name="department_id" id="depart-name" required>
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach ($departments as $department)
+                                                <option data-id="{{ $department->dc }}" value="{{ $department->id }}">
+                                                    {{ $department->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <p id="depart-nameError" style="color:red">** Department is required</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="depart-code">Department Code</label>
+                                        <div class="default-name"> <span id="department-code">Not selected</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Document Type<span class="text-danger">*</span></label>
+                                        <select name="document_type_id" id="doc-type" required>
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach ($documentTypes as $type)
+                                                <option data-id="{{ $type->typecode }}" value="{{ $type->id }}">
+                                                    {{ $type->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <p id="doc-typeError" style="color:red">** Department is required</p>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-code">Document Type Code</label>
+                                        <div class="default-name"> <span id="document_type_code">Not selected</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-type">Document Sub Type<span class="text-danger">*</span></label>
+                                        <select name="document_subtype_id" id="doc-subtype">
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach ($documentsubTypes as $type)
+                                                <option data-id="{{ $type->code }}" value="{{ $type->id }}">
+                                                    {{ $type->docSubtype }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-code">Document SubType Code</label>
+                                        <div class="default-name"> <span id="document_subtype_code">Not selected</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-lang">Document Language</label>
+                                        <select name="document_language_id" id="doc-lang">
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach ($documentLanguages as $lan)
+                                                <option data-id="{{ $lan->lcode }}" value="{{ $lan->id }}">
+                                                    {{ $lan->lname }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="doc-lang">Document Language Code</label>
+                                        <div class="default-name"><span id="document_language">Not selected</span></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="keyword">Keywords</label>
+                                        <div class="add-keyword">
+                                            <input type="text" id="sourceField" class="mb-0">
+                                            <button id="addButton" type="button">ADD</button>
+                                        </div>
+                                        <select name="keywords[]" class="targetField" multiple id="keywords">
+
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="group-input">
+                                        <label for="effective-date">Effective Date</label>
+                                        <input type="date" name="effectve_date" id="effectve_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="group-input">
+                                        <label for="review-period">Review Period</label>
+                                        <input type="number" name="review_period" id="review_period">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="group-input">
+                                        <label for="review-date">Next Review Date</label>
+                                        <input type="date" name="next_review_date" id="next_review_date">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="draft-doc">Attach Draft document</label>
+                                        <input type="file" name="attach_draft_doocument">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="effective-doc">Attach Effective document</label>
+                                        <input type="file" name="attach_effective_docuement">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="orig-head">
+                            Other Information
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="reviewers">Reviewers<span class="text-danger">*</span></label>
+                                        <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
+                                            name="reviewers[]" placeholder="Select Reviewers" multiple required>
+                                            @if (!empty($reviewer))
+                                                @foreach ($reviewer as $lan)
+                                                    <option value="{{ $lan->id }}">
+                                                        {{ $lan->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+
+                                    </div>
+                                    <p id="reviewerError" style="color:red">** Reviewers are required</p>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="approvers">Approvers<span class="text-danger">*</span></label>
+                                        <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
+                                            name="approvers[]" placeholder="Select Approvers" multiple required>
+                                            @if (!empty($approvers))
+                                                @foreach ($approvers as $lan)
+                                                    <option value="{{ $lan->id }}">
+                                                        {{ $lan->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                    <p id="approverError" style="color:red">** Approvers are required</p>
+
+                                </div>
+                                <div class="col-md-6">
+
+                                    <div class="group-input">
+                                        <label for="reviewers-group">Reviewers Group</label>
+                                        {{--  <select class="form-control"  name="reviewers_group" required/>  --}}
+                                        <select id="choices-multiple-remove-button" name="reviewers_group[]"
+                                            placeholder="Select Reviewers" multiple>
+
+                                            @if (count($reviewergroup) > 0)
+                                                @foreach ($reviewergroup as $lan)
+                                                    <option value="{{ $lan->id }}">
+                                                        {{ $lan->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="approvers-group">Approvers Group</label>
+                                        {{--  <select class="form-control"   name="approver_group"/>  --}}
+
+                                        <select id="choices-multiple-remove-button" name="approver_group[]"
+                                            placeholder="Select Approvers" multiple>
+                                            @if (count($approversgroup) > 0)
+                                                @foreach ($approversgroup as $lan)
+                                                    <option value="{{ $lan->id }}">
+                                                        {{ $lan->name }}
+                                                    </option>
+                                                @endforeach
+                                            @endif
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="summary">Revision Summary</label>
+                                        <textarea name="revision_summary"></textarea>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="nextButton" id="DocnextButton">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="add-doc" class="tabcontent">
+                        <div class="orig-head">
+                            Training Information
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="train-require">Training Required?</label>
+                                        <select name="training_required" required>
+                                            <option value="">Enter your Selection</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no" selected>No</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="link-doc">Trainer</label>
+                                        <select name="trainer">
+                                            <option value="" selected>Enter your Selection</option>
+                                            @foreach ($trainer as $temp)
+                                                <option value="{{ $temp->id }}">{{ $temp->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="launch-cbt">Launch CBT</label>
+                                    <select name="cbt">
+                                        <option value="" selected>Enter your Selection</option>
+                                        <option value="1`">Lorem, ipsum.</option>
+                                        <option value="1`">Lorem, ipsum.</option>
+                                        <option value="1`">Lorem, ipsum.</option>
+                                        <option value="1`">Lorem, ipsum.</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="group-input">
+                                    <label for="training-type">Type</label>
+                                    <select name="training-type">
+                                        <option value="" selected>Enter your Selection</option>
+                                        <option value="">Lorem, ipsum.</option>
+                                        <option value="1`">Lorem, ipsum.</option>
+                                        <option value="1`">Lorem, ipsum.</option>
+                                    </select>
+                                </div>
+                            </div> --}}
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="test">
+                                            Test(0)<button type="button" name="test"
+                                                onclick="addTrainRow('test')">+</button>
+                                        </label>
+                                        <table class="table-bordered table" id="test">
+                                            <thead>
+                                                <tr>
+                                                    <th class="row-num">Row No.</th>
+                                                    <th class="question">Question</th>
+                                                    <th class="answer">Answer</th>
+                                                    <th class="result">Result</th>
+                                                    <th class="comment">Comment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="test">
+                                            Survey(0)<button type="button" name="reporting"
+                                                onclick="addTrainRow('survey')">+</button>
+                                        </label>
+                                        <table class="table-bordered table" id="survey">
+                                            <thead>
+                                                <tr>
+                                                    <th class="row-num">Row No.</th>
+                                                    <th class="question">Subject</th>
+                                                    <th class="answer">Topic</th>
+                                                    <th class="result">Rating</th>
+                                                    <th class="comment">Comment</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="comments">Comments</label>
+                                        <textarea name="comments"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" id="DocnextButton"
+                                onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="doc-content" class="tabcontent">
+                        <div class="orig-head">
+                            Document Information
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="purpose">Purpose</label>
+                                        <input type="text" name="purpose">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="scope">Scope</label>
+                                        <textarea name="scope"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="responsibility" id="responsibility">
+                                            Responsibility<button type="button" id="responsibilitybtnadd"
+                                                name="button">+</button>
+                                        </label>
+
+                                        <input type="text" name="responsibility[]" class="myclassname">
+
+
+                                        <div id="responsibilitydiv"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="abbreviation" id="abbreviation">
+                                            Abbreviation<button type="button" id="abbreviationbtnadd"
+                                                name="button">+</button>
+                                        </label>
+
+                                        <input type="text" name="abbreviation[]" class="myclassname">
+
+
+                                        <div id="abbreviationdiv"></div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="abbreviation" id="definition">
+                                            Definition<button type="button" id="Definitionbtnadd"
+                                                name="button">+</button>
+                                        </label>
+
+                                        <input type="text" name="defination[]" class="myclassname">
+
+                                        <div id="definitiondiv"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="reporting" id="newreport">
+                                            Materials and Equipments<button type="button" id="materialsbtadd"
+                                                name="button">+</button>
+                                        </label>
+
+                                        <input type="text" name="materials_and_equipments[]" class="myclassname">
+
+
+                                        <div id="materialsdiv"></div>
+
+                                    </div>
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <div class="group-input">
+                                        <label for="procedure">Procedure</label>
+                                        <textarea name="procedure" id="summernote">
+                                    </textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="reporting" id="newreport">
+                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button>
+                                        </label>
+
+                                        <input type="text" name="reporting[]" class="myclassname">
+
+
+                                        <div id="reportingdiv"></div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="references" id="references">
+                                            References<button type="button" onclick="addReference()">+</button>
+                                        </label>
+                                        <div class="row reference-data">
+                                            <div class="col-lg-6">
+                                                <input type="text" name="reference-text">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="file" name="references" class="myclassname">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="annexure">
+                                            Annexure<button type="button" name="ann" id="annexurebtnadd">+</button>
+                                        </label>
+                                        <table class="table-bordered table" id="annexure">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sr-num">Sr. No.</th>
+                                                    <th class="annx-num">Annexure No.</th>
+                                                    <th class="annx-title">Title of Annexure</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="text" name="serial_number[]"></td>
+                                                    <td><input type="text" name="annexure_number[]"></td>
+                                                    <td><input type="text" name="annexure_data[]"></td>
+                                                </tr>
+                                                <div id="annexurediv"></div>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="test">
+                                            Revision History<button type="button" name="reporting"
+                                                onclick="addRevRow('revision')">+</button>
+                                        </label>
+                                        <table class="table-bordered table" id="revision">
+                                            <thead>
+                                                <tr>
+                                                    <th class="sop-num">SOP Revision No.</th>
+                                                    <th class="dcrf-num">Change Control No./ DCRF No.</th>
+                                                    <th class="changes">Changes</th>
+                                                    {{-- <th class="deleteRow">&nbsp;</th> --}}
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="text" id="rev-num0"></td>
+                                                    <td><input type="text" id="control0"></td>
+                                                    <td><input type="text" id="change0"></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" id="DocsaveButton"
+                                class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="annexures" class="tabcontent">
+                        <div class="input-fields">
+                            <div class="group-input">
+                                <label for="annexure-1">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-1"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-2">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-2"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-3">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-3"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-4">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-4"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-5">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-5"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-6">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-6"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-7">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-7"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-8">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-8"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-9">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-9"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-10">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-10"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-11">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-11"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-12">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-12"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-13">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-13"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-14">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-14"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-15">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-15"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-16">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-16"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-17">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-17"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-18">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-18"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-19">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-19"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="annexure-20">Annexure</label>
+                                <textarea class="summernote" name="annexuredata[]" id="annexure-20"></textarea>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="distribution-retrieval" class="tabcontent">
+                        <div class="orig-head">
+                            Distribution & Retrieval
+                        </div>
+                        <div class="input-fields">
+                            <div class="group-input">
+                                <label for="distriution_retrieval">
+                                    Distribution & Retrieval
+                                    <button type="button" name="agenda"
+                                        onclick="addDistributionRetrieval('distribution-retrieval-grid')">+</button>
+                                </label>
+                                <div class="table-responsive retrieve-table">
+                                    <table class="table table-bordered" id="distribution-retrieval-grid">
+                                        <thead>
+                                            <tr>
+                                                <th class="copy-name">Row #</th>
+                                                <th class="copy-name">Document Title</th>
+                                                <th class="copy-name">Document Number</th>
+                                                <th class="copy-name">Document Printed By</th>
+                                                <th class="copy-name">Document Printed on</th>
+                                                <th class="copy-num">Number of Print Copies</th>
+                                                <th class="copy-name">Issuance Date</th>
+                                                <th class="copy-name">Issued To </th>
+                                                <th class="copy-long">Department/Location</th>
+                                                <th class="copy-num">Number of Issued Copies</th>
+                                                <th class="copy-long">Reason for Issuance</th>
+                                                <th class="copy-name">Retrieval Date</th>
+                                                <th class="copy-name">Retrieved By</th>
+                                                <th class="copy-name">Retrieved Person Department</th>
+                                                <th class="copy-num">Number of Retrieved Copies</th>
+                                                <th class="copy-long">Reason for Retrieval</th>
+                                                <th class="copy-long">Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="print-download" class="tabcontent">
+                        <div class="orig-head">
+                            Print Permissions
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="person-print">Person Print Permission</label>
+                                        <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Jquery">Jquery</option>
+                                            <option value="CSS">CSS</option>
+                                            <option value="Bootstrap 3">Bootstrap 3</option>
+                                            <option value="Bootstrap 4">Bootstrap 4</option>
+                                            <option value="Java">Java</option>
+                                            <option value="Javascript">Javascript</option>
+                                            <option value="Angular">Angular</option>
+                                            <option value="Python">Python</option>
+                                            <option value="Hybris">Hybris</option>
+                                            <option value="SQL">SQL</option>
+                                            <option value="NOSQL">NOSQL</option>
+                                            <option value="NodeJS">NodeJS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <table class="table-bordered table">
+                                            <thead>
+                                                <th class="person">Person</th>
+                                                <th class="permission">Daily</th>
+                                                <th class="permission">Weekly</th>
+                                                <th class="permission">Monthly</th>
+                                                <th class="permission">Quarterly</th>
+                                                <th class="permission">Annually</th>
+                                            </thead>
+                                            <tbody>
+                                                <td class="person">
+                                                    Amit Patel
+                                                </td>
+                                                <td class="permission">
+                                                    6543
+                                                </td>
+                                                <td class="permission">
+                                                    6543
+                                                </td>
+                                                <td class="permission">
+                                                    6543
+                                                </td>
+                                                <td class="permission">
+                                                    432
+                                                </td>
+                                                <td class="permission">
+                                                    123
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="group-print">Group Print Permission</label>
+                                        <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Jquery">Jquery</option>
+                                            <option value="CSS">CSS</option>
+                                            <option value="Bootstrap 3">Bootstrap 3</option>
+                                            <option value="Bootstrap 4">Bootstrap 4</option>
+                                            <option value="Java">Java</option>
+                                            <option value="Javascript">Javascript</option>
+                                            <option value="Angular">Angular</option>
+                                            <option value="Python">Python</option>
+                                            <option value="Hybris">Hybris</option>
+                                            <option value="SQL">SQL</option>
+                                            <option value="NOSQL">NOSQL</option>
+                                            <option value="NodeJS">NodeJS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <table class="table-bordered table">
+                                            <thead>
+                                                <th class="person">Group</th>
+                                                <th class="permission">Daily</th>
+                                                <th class="permission">Weekly</th>
+                                                <th class="permission">Monthly</th>
+                                                <th class="permission">Quarterly</th>
+                                                <th class="permission">Annually</th>
+                                            </thead>
+                                            <tbody>
+                                                <td class="person">
+                                                    QA
+                                                </td>
+                                                <td class="permission">1</td>
+                                                <td class="permission">
+                                                    54
+                                                </td>
+                                                <td class="permission">
+                                                    654
+                                                </td>
+                                                <td class="permission">
+                                                    765
+                                                </td>
+                                                <td class="permission">
+                                                    654
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="orig-head">
+                            Download Permissions
+                        </div>
+                        <div class="input-fields">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="person-print">Person Download Permission</label>
+                                        <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Jquery">Jquery</option>
+                                            <option value="CSS">CSS</option>
+                                            <option value="Bootstrap 3">Bootstrap 3</option>
+                                            <option value="Bootstrap 4">Bootstrap 4</option>
+                                            <option value="Java">Java</option>
+                                            <option value="Javascript">Javascript</option>
+                                            <option value="Angular">Angular</option>
+                                            <option value="Python">Python</option>
+                                            <option value="Hybris">Hybris</option>
+                                            <option value="SQL">SQL</option>
+                                            <option value="NOSQL">NOSQL</option>
+                                            <option value="NodeJS">NodeJS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <table class="table-bordered table">
+                                            <thead>
+                                                <th class="person">Person</th>
+                                                <th class="permission">Daily</th>
+                                                <th class="permission">Weekly</th>
+                                                <th class="permission">Monthly</th>
+                                                <th class="permission">Quarterly</th>
+                                                <th class="permission">Annually</th>
+                                            </thead>
+                                            <tbody>
+                                                <td class="person">
+                                                    Amit Patel
+                                                </td>
+                                                <td class="permission">1</td>
+                                                <td class="permission">
+                                                    54
+                                                </td>
+                                                <td class="permission">
+                                                    654
+                                                </td>
+                                                <td class="permission">
+                                                    765
+                                                </td>
+                                                <td class="permission">
+                                                    654
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="group-print">Group Download Permission</label>
+                                        <select id="choices-multiple-remove-button" placeholder="Select Persons" multiple>
+                                            <option value="HTML">HTML</option>
+                                            <option value="Jquery">Jquery</option>
+                                            <option value="CSS">CSS</option>
+                                            <option value="Bootstrap 3">Bootstrap 3</option>
+                                            <option value="Bootstrap 4">Bootstrap 4</option>
+                                            <option value="Java">Java</option>
+                                            <option value="Javascript">Javascript</option>
+                                            <option value="Angular">Angular</option>
+                                            <option value="Python">Python</option>
+                                            <option value="Hybris">Hybris</option>
+                                            <option value="SQL">SQL</option>
+                                            <option value="NOSQL">NOSQL</option>
+                                            <option value="NodeJS">NodeJS</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <table class="table-bordered table">
+                                            <thead>
+                                                <th class="person">Group</th>
+                                                <th class="permission">Daily</th>
+                                                <th class="permission">Weekly</th>
+                                                <th class="permission">Monthly</th>
+                                                <th class="permission">Quarterly</th>
+                                                <th class="permission">Annually</th>
+                                            </thead>
+                                            <tbody>
+                                                <td class="person">
+                                                    QA
+                                                </td>
+                                                <td class="permission">1</td>
+                                                <td class="permission">
+                                                    54
+                                                </td>
+                                                <td class="permission">
+                                                    654
+                                                </td>
+                                                <td class="permission">
+                                                    765
+                                                </td>
+                                                <td class="permission">
+                                                    654
+                                                </td>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                            <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="sign" class="tabcontent">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Review Proposed By
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Review Proposed On
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Document Reuqest Approved By
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Document Reuqest Approved On
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Document Writing Completed By
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Document Writing Completed On
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Reviewd By
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Reviewd On
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Approved By
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="review-names">
+                                    <div class="orig-head">
+                                        Approved On
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="button-block">
+                            <button type="submit" value="save" name="submit" class="saveButton">Save</button>
+                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                            <button type="submit">Submit</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    {{-- ======================================
+                  DIVISION MODAL
+    ======================================= --}}
+    <style>
+        #step-form>div {
+            display: none
+        }
+
+        #step-form>div:nth-child(1) {
+            display: block;
+        }
+    </style>
+
+    <script>
+        VirtualSelect.init({
+            ele: '#reference_record, #notify_to'
+        });
+
+        $('#summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear', 'italic']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        let referenceCount = 1;
+
+        function addReference() {
+            referenceCount++;
+            let newReference = document.createElement('div');
+            newReference.classList.add('row', 'reference-data-' + referenceCount);
+            newReference.innerHTML = `
+            <div class="col-lg-6">
+                <input type="text" name="reference-text">
+            </div>
+            <div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div>
+        `;
+            let referenceContainer = document.querySelector('.reference-data');
+            referenceContainer.parentNode.insertBefore(newReference, referenceContainer.nextSibling);
+        }
+    </script>
+
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#document-form').validate({
+                rules: {
+                    name: 'required',
+                    email: {
+                        required: true,
+                        email: true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6
+                    }
+                },
+                // Add custom messages if needed
+                messages: {
+                    name: 'Please enter your name',
+                    email: {
+                        required: 'Please enter your email',
+                        email: 'Please enter a valid email address'
+                    },
+                    password: {
+                        required: 'Please enter a password',
+                        minlength: 'Password must be at least 6 characters long'
+                    }
+                },
+                submitHandler: function(form) {
+                    form.submit(); // Submit the form if validation passes
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#addButton').click(function() {
+                var sourceValue = $('#sourceField').val(); // Get the value from the source field
+                var targetField = $(
+                    '.targetField'); // The target field where the data will be added and selected
+
+                // Create a new option with the source value
+                var newOption = $('<option>', {
+                    value: sourceValue,
+                    text: sourceValue
+                });
+
+                // Append the new option to the target field
+                targetField.append(newOption);
+
+                // Set the new option as selected
+                newOption.prop('selected', true);
+                $('#sourceField').val('');
+            });
+        });
+    </script>
+
+    <script>
+        function openData(evt, cityName) {
+            var i, cctabcontent, cctablinks;
+            cctabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < cctabcontent.length; i++) {
+                cctabcontent[i].style.display = "none";
+            }
+            cctablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < cctablinks.length; i++) {
+                cctablinks[i].className = cctablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+            // Find the index of the clicked tab button
+            const index = Array.from(cctablinks).findIndex(button => button === evt.currentTarget);
+
+            // Update the currentStep to the index of the clicked tab
+            currentStep = index;
+        }
+
+        const saveButtons = document.querySelectorAll(".saveButton");
+        const nextButtons = document.querySelectorAll(".nextButton");
+        const form = document.getElementById("step-form");
+        const stepButtons = document.querySelectorAll(".tablinks");
+        const steps = document.querySelectorAll(".tabcontent");
+        let currentStep = 0;
+
+        function nextStep() {
+            // Check if there is a next step
+            if (currentStep < steps.length - 1) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show next step
+                steps[currentStep + 1].style.display = "block";
+
+                // Add active class to next button
+                stepButtons[currentStep + 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep++;
+            }
+        }
+
+        function previousStep() {
+            // Check if there is a previous step
+            if (currentStep > 0) {
+                // Hide current step
+                steps[currentStep].style.display = "none";
+
+                // Show previous step
+                steps[currentStep - 1].style.display = "block";
+
+                // Add active class to previous button
+                stepButtons[currentStep - 1].classList.add("active");
+
+                // Remove active class from current button
+                stepButtons[currentStep].classList.remove("active");
+
+                // Update current step
+                currentStep--;
+            }
+        }
+    </script>
+@endsection
