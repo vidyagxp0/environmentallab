@@ -29,6 +29,8 @@ class FormDivisionController extends Controller
             return redirect()->route('CC.create');
         } elseif ($request->process_name == "Management Review") {
             return redirect('meeting');
+        }elseif ($request->process_name == "New Document") {
+            return redirect('documents/create');
         }
     }
 }

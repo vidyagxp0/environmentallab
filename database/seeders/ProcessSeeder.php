@@ -205,6 +205,8 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Lab Incident";
         $process->save();
 
+       
+
         $process  = new QMSProcess();
         $process->division_id = 1;
         $process->process_name = "Risk Assessment";
@@ -225,6 +227,11 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Management Review";
         $process->save();
 
+        $process  = new QMSProcess();
+        $process->division_id = 1;
+        $process->process_name = "New Document";
+        $process->save();
+        
         //-----------Diviaion-2
 
         $process  = new QMSProcess();
@@ -272,6 +279,11 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Management Review";
         $process->save();
 
+        $process  = new QMSProcess();
+        $process->division_id = 2;
+        $process->process_name = "New Document";
+        $process->save();
+        
 
         /////---------Division 3
 
@@ -320,6 +332,11 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Management Review";
         $process->save();
 
+        $process  = new QMSProcess();
+        $process->division_id = 3;
+        $process->process_name = "New Document";
+        $process->save();
+        
 
         ///-----------------Division 4
 
@@ -369,6 +386,12 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Management Review";
         $process->save();
 
+        $process  = new QMSProcess();
+        $process->division_id = 4;
+        $process->process_name = "New Document";
+        $process->save();
+        
+
         //---------Division5
 
         $process  = new QMSProcess();
@@ -415,6 +438,12 @@ class ProcessSeeder extends Seeder
         $process->division_id = 5;
         $process->process_name = "Management Review";
         $process->save();
+
+        $process  = new QMSProcess();
+        $process->division_id = 5;
+        $process->process_name = "New Document";
+        $process->save();
+        
 
 
         ////////////////---------------------Diviaion 6
@@ -464,7 +493,11 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Management Review";
         $process->save();
 
-
+        $process  = new QMSProcess();
+        $process->division_id = 6;
+        $process->process_name = "New Document";
+        $process->save();
+        
 
         ////////////////---------------------Diviaion 7
 
@@ -513,6 +546,12 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Management Review";
         $process->save();
 
+        $process  = new QMSProcess();
+        $process->division_id = 7;
+        $process->process_name = "New Document";
+        $process->save();
+        
+
 
         ////////////////---------------------Diviaion 8
 
@@ -560,5 +599,12 @@ class ProcessSeeder extends Seeder
         $process->division_id = 8;
         $process->process_name = "Management Review";
         $process->save();
+
+        $process  = new QMSProcess();
+        $process->division_id = 8;
+        $process->process_name = "New Document";
+        $process->save();
+        
+
     }
 }

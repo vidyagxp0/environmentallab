@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
-class RootCauseController extends Controller
+ class RootCauseController extends Controller
 {
     public function rootcause()
     {
@@ -26,12 +26,15 @@ class RootCauseController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
+        //return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
+        return view("frontend.forms.root-cause-analysis");
     }
 
 
     public function root_store(Request $request)
     {
+
+        $request->dd();
         // return $request;
 
         if (!$request->short_description) {
@@ -53,22 +56,20 @@ class RootCauseController extends Controller
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
-        $root->investigators =  implode(',', $request->investigators);
+        $root->investigators =  $request->investigators;
 
-
-        if (!empty($request->attachments)) {
+        if (!empty($request->root_cause_initial_attachment)) {
             $files = [];
-            if ($request->hasfile('attachments')) {
-                foreach ($request->file('attachments') as $file) {
-                    $name = $request->name . 'attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+            if ($request->hasfile('root_cause_initial_attachment')) {
+                foreach ($request->file('root_cause_initial_attachment') as $file) {
+                    $name = $request->name . 'root_cause_initial_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-
-
             $root->attachments = json_encode($files);
         }
+        
         $root->comments = $request->comments;
         $root->lab_inv_concl = $request->lab_inv_concl;
 
@@ -81,8 +82,6 @@ class RootCauseController extends Controller
                     $files[] = $name;
                 }
             }
-
-
             $root->lab_inv_attach = json_encode($files);
         }
         $root->qc_head_comments = $request->qc_head_comments;
@@ -98,7 +97,6 @@ class RootCauseController extends Controller
                     $files[] = $name;
                 }
             }
-
 
             $root->inv_attach = json_encode($files);
         }

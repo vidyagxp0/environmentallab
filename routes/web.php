@@ -166,7 +166,7 @@ Route::get('auditDetailsrisk/{id}', [RiskManagementController::class, 'auditDeta
 Route::post('child/{id}',[RiskManagementController::class,'child'])->name('riskAssesmentChild');
 
 
-
+    
 // ======================================================
 
 

@@ -11,13 +11,13 @@
     </style>
 
     <div class="form-field-head">
-
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Root Cause Analysis
+            EHS-North America / Root Cause Analysis
         </div>
     </div>
-    @php
+
+    @php 
         $users = DB::table('users')->get();
     @endphp
 
@@ -29,17 +29,15 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Chemical Analysis</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Water Analysis</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QC Head/Designee Eval Comments</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
+                
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
             </div>
 
-            <form action="{{ route('root_store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('root_store')}}" method="POST" enctype="multipart/form-data">
                 @csrf
+
                 <div id="step-form">
 
                     <div id="CCForm1" class="inner-block cctabcontent">
@@ -47,169 +45,145 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <label for="originator">Originator</label>
+                                        <input type="text" name="originator" value="Amit Guru" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        <label for="date-opened">Date Opened</label>
+                                        <div><small class="text-primary">When was this Investigation record opened?</small>
+                                        </div>
+                                        <input type="text" name="date-opened" value="10 Jan, 2024" disabled>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="short_description">Short Description</label>
+                                        <div><small class="text-primary">Investigation short description to be presented on
+                                                desktop</small></div>
+                                        <textarea name="short_description"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator"><b>Initiator</b></label>
-                                        {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ Auth::user()->name }}">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="search">
-                                            Assigned To <span class="text-danger"></span>
-                                        </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
+                                        <label for="assigned-to">Assigned to</label>
+                                        <div><small class="text-primary">Lead Investigator</small></div>
+                                        <select name="assigned-to">
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">Amit Guru</option>
+                                            <option value="2">Shaleen Mishra</option>
+                                            <option value="3">Madhulika Mishra</option>
+                                            <option value="4">Amit Patel</option>
+                                            <option value="5">Harsh Mishra</option>
                                         </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        <label for="Date Due">Date Due</label>
+                                        <div><small class="text-danger">Last date this Investigation should be closed
+                                                by</small></div>
                                         {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
                                         <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
                                         <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="" name="due_date">
-
-
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiatorGroup" id="initiator_group">
-                                            <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('initiatorGroup') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QAB" @if(old('initiatorGroup') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQA") selected @endif>Central Quality Control</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQC") selected @endif>Manufacturing</option>
-                                            <option value="PSG" @if(old('initiatorGroup') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                            <option value="CS"  @if(old('initiatorGroup') == "CS") selected @endif>Central Stores</option>
-                                            <option value="ITG" @if(old('initiatorGroup') =="ITG") selected @endif>Information Technology Group</option>
-                                            <option value="MM"  @if(old('initiatorGroup') == "MM") selected @endif>Molecular Medicine</option>
-                                            <option value="CL"  @if(old('initiatorGroup') == "CL") selected @endif>Central Laboratory</option>
-
-                                            <option value="TT"  @if(old('initiatorGroup') == "TT") selected @endif>Tech team</option>
-                                            <option value="QA"  @if(old('initiatorGroup') == "QA") selected @endif> Quality Assurance</option>
-                                            <option value="QM"  @if(old('initiatorGroup') == "QM") selected @endif>Quality Management</option>
-                                            <option value="IA"  @if(old('initiatorGroup') == "IA") selected @endif>IT Administration</option>
-                                            <option value="ACC"  @if(old('initiatorGroup') == "ACC") selected @endif>Accounting</option>
-                                            <option value="LOG"  @if(old('initiatorGroup') == "LOG") selected @endif>Logistics</option>
-                                            <option value="SM"  @if(old('initiatorGroup') == "SM") selected @endif>Senior Management</option>
-                                            <option value="BA"  @if(old('initiatorGroup') == "BA") selected @endif>Business Administration</option>
+                                        <label for="Type">Type</label>
+                                        <select name="Type">
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">Facillties</option>
+                                            <option value="2">Other</option>
+                                            <option value="3">Stabillity</option>
+                                            <option value="4">Raw Material</option>
+                                            <option value="5">Clinical Production</option>
+                                            <option value="6">Commercial Production</option>
+                                            <option value="7">Labellling</option>
+                                            <option value="8">laboratory</option>
+                                            <option value="9">Utillities</option>
+                                            <option value="10">Validation</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" disabled>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Desc.">Short Description <span
-                                                class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description"></textarea>
-                                    </div>
-                                </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Sample_Type">Sample Type</label>
-                                        <select name="Sample_Types">
-                                            <option value="">-- Select --</option>
-                                            <option value="Demo">Demo 1</option>
-                                            <option value="Demo">Demo 2</option>
-                                            <option value="Demo">Demo 3</option>
-                                            <option value="Demo">Demo 4</option>
-                                            <option value="Demo">Demo 5</option>
+                                        <label for="priority_level">Priority Level</label>
+                                        <div><small class="text-primary">Choose high if Immidiate actions are
+                                                required</small></div>
+                                        <select name="priority_level">
+                                            <option value="0">-- Select --</option>
+                                            <option value="low">Low</option>
+                                            <option value="medium">Medium</option>
+                                            <option value="high">High</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="test_lab">Test Lab</label>
-                                        <input type="text" name="test_lab" />
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="ten_trend">Trend of Previous Ten Results</label>
-                                        <textarea name="ten_trend"></textarea>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="investigators">Investigators</label>
-                                        <select multiple name="investigators[]" placeholder="Select Investigators"
+                                        <label for="investigators">Additional Investigators</label>
+                                        <select multiple name="investigators" placeholder="Select Investigators"
                                             data-search="false" data-silent-initial-value-set="true" id="investigators">
                                             <option value="1">Amit Guru</option>
-                                            <option value="2">Amit Patel</option>
-                                            <option value="3">Shaleen Mishra</option>
-                                            <option value="4">Anshul Patel</option>
-                                            <option value="5">Vikas Prajapati</option>
+                                            <option value="2">Shaleen Mishra</option>
+                                            <option value="3">Madhulika Mishra</option>
+                                            <option value="4">Amit Patel</option>
+                                            <option value="5">Harsh Mishra</option>
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="attachments">Attachments</label>
-                                        <input type="file" name="attachments" />
+                                        <label for="department">Department(s)</label>
+                                        <select multiple name="department" placeholder="Select Department(s)"
+                                            data-search="false" data-silent-initial-value-set="true" id="department">
+                                            <option value="1">Work Instruction</option>
+                                            <option value="2">Quality Assurance</option>
+                                            <option value="3">Specifications</option>
+                                            <option value="4">Production</option>
+                                        </select>
                                     </div>
-                                </div> --}}
-
+                                </div>
+                                <div class="col-12">
+                                    <div class="sub-head">Investigatiom details</div>
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Audit Attachments">Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="attachments"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="attachments[]"
-                                                    oninput="addMultipleFiles(this, 'attachments')" multiple>
-                                            </div>
-                                        </div>
+                                        <label for="description">Description</label>
+                                        <textarea name="description"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="comments">Comments</label>
                                         <textarea name="comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="root_cause_initial_attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="root_cause_initial_attachment[]"
+                                                    oninput="addMultipleFiles(this, 'root_cause_initial_attachment')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="related_url">Related URL</label>
+                                        <input type="url" name="related_url" />
                                     </div>
                                 </div>
                             </div>
@@ -223,110 +197,349 @@
 
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="sub-head">
-                                Chemical Analysis I
-                            </div>
-                            <div class="group-input">
-                                <label for="review_analyst_knowledge">
-                                    Review of analyst knowledge and training<button type="button" name="ann"
-                                        id="Chemical-Analysis1">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number[]" value="1"></td>
-                                            <td><input type="text" name="questions[]"></td>
-                                            <td><input type="text" name="response[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Chemical Analysis II
-                            </div>
-                            <div class="group-input">
-                                <label for="review_raw_data">
-                                    Review of Raw Data<button type="button" name="ann"
-                                        id="Chemical-Analysis2">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge2">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number2[]" value="1"></td>
-                                            <td><input type="text" name="questions2[]"></td>
-                                            <td><input type="text" name="response2[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Chemical Analysis III
-                            </div>
-                            <div class="group-input">
-                                <label for="review_sampling_storage">
-                                    Review of Sampling and Storage<button type="button" name="ann"
-                                        id="Chemical-Analysis3">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge3">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number3[]" value="1"></td>
-                                            <td><input type="text" name="questions3[]"></td>
-                                            <td><input type="text" name="response3[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Chemical Analysis IV
-                            </div>
-                            <div class="group-input">
-                                <label for="instrument_performance">
-                                    Instrument Performance<button type="button" name="ann"
-                                        id="Chemical-Analysis4">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge4">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number4[]" value="1"></td>
-                                            <td><input type="text" name="questions4[]"></td>
-                                            <td><input type="text" name="response4[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root-cause-methodology">Root Cause Methodology</label>
+                                        <select name="root_cause_methodology[]" multiple placeholder="-- Select --"
+                                            data-search="false" data-silent-initial-value-set="true"
+                                            id="root-cause-methodology">
+                                            <option value="1">Why-Why Chart</option>
+                                            <option value="2">Failure Mode and Efect Analysis</option>
+                                            <option value="3">Fishbone or Ishikawa Diagram</option>
+                                            <option value="4">Is/Is Not Analysis</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12 sub-head"></div>
+                                <div class="col-12 mb-4">
+                                    <div class="group-input">
+                                        <label for="agenda">
+                                            Failure Mode and Effect Analysis
+                                            <button type="button" name="agenda"
+                                                onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                            <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" style="width: 200%"
+                                                id="risk-assessment-risk-management">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Row #</th>
+                                                        <th>Risk Factor</th>
+                                                        <th>Risk element </th>
+                                                        <th>Probable cause of risk element</th>
+                                                        <th>Existing Risk Controls</th>
+                                                        <th>Initial Severity- H(3)/M(2)/L(1)</th>
+                                                        <th>Initial Probability- H(3)/M(2)/L(1)</th>
+                                                        <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                        <th>Initial RPN</th>
+                                                        <th>Risk Acceptance (Y/N)</th>
+                                                        <th>Proposed Additional Risk control measure (Mandatory for Risk
+                                                            elements having RPN>4)</th>
+                                                        <th>Residual Severity- H(3)/M(2)/L(1)</th>
+                                                        <th>Residual Probability- H(3)/M(2)/L(1)</th>
+                                                        <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                        <th>Residual RPN</th>
+                                                        <th>Risk Acceptance (Y/N)</th>
+                                                        <th>Mitigation proposal (Mention either CAPA reference number, IQ,
+                                                            OQ or
+                                                            PQ)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 sub-head"></div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="fishbone">
+                                            Fishbone or Ishikawa Diagram
+                                            <button type="button" name="agenda"
+                                                onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+                                            <button type="button" name="agenda" class="fishbone-del-btn"
+                                                onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#fishbone-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="fishbone-ishikawa-diagram">
+                                            <div class="left-group">
+                                                <div class="grid-field field-name">
+                                                    <div>Measurement</div>
+                                                    <div>Materials</div>
+                                                    <div>Methods</div>
+                                                </div>
+                                                <div class="top-field-group">
+                                                    <div class="grid-field fields top-field">
+                                                        <div><input type="text" name="measurement[]"></div>
+                                                        <div><input type="text" name="materials[]"></div>
+                                                        <div><input type="text" name="methods[]"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="mid"></div>
+                                                <div class="bottom-field-group">
+                                                    <div class="grid-field fields bottom-field">
+                                                        <div><input type="text" name="environment[]"></div>
+                                                        <div><input type="text" name="manpower[]"></div>
+                                                        <div><input type="text" name="machine[]"></div>
+                                                    </div>
+                                                </div>
+                                                <div class="grid-field field-name">
+                                                    <div>Environment</div>
+                                                    <div>Manpower</div>
+                                                    <div>Machine</div>
+                                                </div>
+                                            </div>
+                                            <div class="right-group">
+                                                <div class="field-name">
+                                                    Problem Statement
+                                                </div>
+                                                <div class="field">
+                                                    <textarea name="problem_statement"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 sub-head"></div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="why-why-chart">
+                                            Why-Why Chart
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#why_chart-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr style="background: #f4bb22">
+                                                        <th style="width:150px;">Problem Statement :</th>
+                                                        <td>
+                                                            <textarea name="why_problem_statement"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 1 <span
+                                                                onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_1_block">
+                                                                <textarea name="why_1[]"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 2 <span
+                                                                onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_2_block">
+                                                                <textarea name="why_2[]"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 3 <span
+                                                                onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_3_block">
+                                                                <textarea name="why_3[]"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 4 <span
+                                                                onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_4_block">
+                                                                <textarea name="why_4[]"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 5 <span
+                                                                onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_5_block">
+                                                                <textarea name="why_5[]"></textarea>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="background: #0080006b;">
+                                                        <th style="width:150px;">Root Cause :</th>
+                                                        <td>
+                                                            <textarea name="root-cause"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 sub-head"></div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="why-why-chart">
+                                            Is/Is Not Analysis
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#is_is_not-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>&nbsp;</th>
+                                                        <th>Will Be</th>
+                                                        <th>Will Not Be</th>
+                                                        <th>Rationale</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="background: #0039bd85">What</th>
+                                                        <td>
+                                                            <textarea name="what_will_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="what_will_not_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="what_rationable"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="background: #0039bd85">Where</th>
+                                                        <td>
+                                                            <textarea name="where_will_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="where_will_not_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="where_rationable"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="background: #0039bd85">When</th>
+                                                        <td>
+                                                            <textarea name="when_will_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="when_will_not_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="when_rationable"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="background: #0039bd85">Coverage</th>
+                                                        <td>
+                                                            <textarea name="coverage_will_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="coverage_will_not_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="coverage_rationable"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="background: #0039bd85">Who</th>
+                                                        <td>
+                                                            <textarea name="who_will_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="who_will_not_be"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <textarea name="who_rationable"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 sub-head"></div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="investigation_summary">Investigation Summary</label>
+                                        <textarea name="investigation_summary"></textarea>
+                                    </div>
+                                </div>
+                             <div class="col-12">
+                                    <div class="sub-head">Geographic Information</div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Zone">Zone</label>
+                                        <select name="zone" id="zone">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="Asia">Asia</option>
+                                            <option value="Europe">Europe</option>
+                                            <option value="Africa">Africa</option>
+                                            <option value="Central_America">Central America</option>
+                                            <option value="South_America">South America</option>
+                                            <option value="Oceania">Oceania</option>
+                                            <option value="North_America">North America</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Country">Country</label>
+                                        <select name="country" class="countries" id="country">
+                                            <option value="">Select Country</option>
+
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="State/District">State/District</label>
+                                        <select name="state" class="states" id="stateId">
+                                            <option value="">Select State</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="City">City</label>
+                                        <select name="city" class="cities" id="city">
+                                            <option value="">Select City</option>
+
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button" class="nextButton">Next</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -334,401 +547,28 @@
 
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="sub-head">
-                                Water Analysis I
-                            </div>
-                            <div class="group-input">
-                                <label for="water_review_analyst_knowledge">
-                                    Review of analyst knowledge and training<button type="button" name="ann"
-                                        id="Chemical-Analysis5">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge5">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number5[]" value="1"></td>
-                                            <td><input type="text" name="questions5[]"></td>
-                                            <td><input type="text" name="response5[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Water Analysis II
-                            </div>
-                            <div class="group-input">
-                                <label for="review_instruments">
-                                    Review of Instuments<button type="button" name="ann"
-                                        id="Chemical-Analysis6">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge6">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number6[]" value="1"></td>
-                                            <td><input type="text" name="questions6[]"></td>
-                                            <td><input type="text" name="response6[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Water Analysis III
-                            </div>
-                            <div class="group-input">
-                                <label for="water_plant_checklist">
-                                    Water Plant Checklist<button type="button" name="ann"
-                                        id="Chemical-Analysis7">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge7">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number7[]" value="1"></td>
-                                            <td><input type="text" name="questions7[]"></td>
-                                            <td><input type="text" name="response7[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Water Analysis IV
-                            </div>
-                            <div class="group-input">
-                                <label for="sample_testing_checklist">
-                                    Sample Testing Checklist<button type="button" name="ann"
-                                        id="Chemical-Analysis8">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge8">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number8[]" value="1"></td>
-                                            <td><input type="text" name="questions8[]"></td>
-                                            <td><input type="text" name="response8[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="CCForm4" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="sub-head">
-                                Environmental Monitoring I
-                            </div>
-                            <div class="group-input">
-                                <label for="environment_monitoring_results">
-                                    Environment Monitoring Results<button type="button" name="ann"
-                                        id="Chemical-Analysis9">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge9">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number9[]" value="1"></td>
-                                            <td><input type="text" name="questions9[]"></td>
-                                            <td><input type="text" name="response9[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Environmental Monitoring II
-                            </div>
-                            <div class="group-input">
-                                <label for="instrument_calibration_result">
-                                    Intrument Calibration Results<button type="button" name="ann"
-                                        id="Chemical-Analysis10">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge10">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number10[]" value="1"></td>
-                                            <td><input type="text" name="questions10[]"></td>
-                                            <td><input type="text" name="response10[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Environmental Monitoring III
-                            </div>
-                            <div class="group-input">
-                                <label for="review_storage_plate">
-                                    Review of Storage condition of Plate<button type="button" name="ann"
-                                        id="Chemical-Analysis11">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge11">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number11[]" value="1"></td>
-                                            <td><input type="text" name="questions11[]"></td>
-                                            <td><input type="text" name="response11[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Environmental Monitoring IV
-                            </div>
-                            <div class="group-input">
-                                <label for="review_media_lot">
-                                    Review of Media Lot<button type="button" name="ann"
-                                        id="Chemical-Analysis12">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge12">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number12[]" value="1"></td>
-                                            <td><input type="text" name="questions12[]"></td>
-                                            <td><input type="text" name="response12[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Environmental Monitoring V
-                            </div>
-                            <div class="group-input">
-                                <label for="environment_sampling">
-                                    Sampling<button type="button" name="ann" id="Chemical-Analysis13">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge13">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number13[]" value="1"></td>
-                                            <td><input type="text" name="questions13[]"></td>
-                                            <td><input type="text" name="response13[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="sub-head">
-                                Environmental Monitoring VI
-                            </div>
-                            <div class="group-input">
-                                <label for="airborne_contamination">
-                                    Airborne Contamination<button type="button" name="ann"
-                                        id="Chemical-Analysis14">+</button>
-                                </label>
-                                <table class="table table-bordered" id="review_analyst_knowledge14">
-                                    <thead>
-                                        <tr>
-                                            <th>Row #</th>
-                                            <th>Question</th>
-                                            <th>Response</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><input type="text" name="serial_number14[]" value="1"></td>
-                                            <td><input type="text" name="questions14[]"></td>
-                                            <td><input type="text" name="response14[]"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="CCForm5" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="lab_inv_concl">Lab Investigator Conclusion</label>
-                                        <textarea name="lab_inv_concl"></textarea>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="lab_inv_attach">Lab Investigator Attachments</label>
-                                        <input type="file" name="lab_inv_attach" />
-                                    </div>
-                                </div> --}}
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments">Lab Investigator Attachments</label>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="lab_inv_attach"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="lab_inv_attach[]"
-                                                    oninput="addMultipleFiles(this, 'lab_inv_attach')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="CCForm6" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="qc_head_comments">QC Head Evaluation Comments</label>
-                                        <textarea name="qc_head_comments"></textarea>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="inv_attach">Investigation Attachments</label>
-                                        <input type="file" name="inv_attach" />
-                                    </div>
-                                </div> --}}
-
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Audit Attachments">Investigation Attachments</label>
-                                        <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="inv_attach"></div>
-                                            <div class="add-btn">
-                                                <div>Add</div>
-                                                <input type="file" id="myfile" name="inv_attach[]"
-                                                    oninput="addMultipleFiles(this, 'inv_attach')" multiple>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white"> Exit </a> </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="CCForm7" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Submitted_By..">Submitted By..</label>
-                                        {{-- <div class="static">person data field</div> --}}
+                                        <label for="completed_by">Completed By</label>
+                                        <input type="text" name="completed_by" disabled />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Submitted_On">Submitted On</label>
-                                        {{-- <div class="static">17-04-2023 11:12PM</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Report_Result_By">Report Result By</label>
-                                        {{-- <div class="static">person data field</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Report_Result_On">Report Result On</label>
-                                        {{-- <div class="static">17-04-2023 11:12PM</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Evaluation_Complete_By">Evaluation Complete By</label>
-                                        {{-- <div class="static">person data field</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Evaluation_Complete_On">Evaluation Complete On</label>
-                                        {{-- <div class="static">17-04-2023 11:12PM</div> --}}
+                                        <label for="completed_on">Completed On</label>
+                                        <input type="text" name="completed_on" disabled />
                                     </div>
                                 </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </form>
 
@@ -747,7 +587,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#investigators'
+            ele: '#investigators, #department, #root-cause-methodology'
         });
 
         function openCity(evt, cityName) {
@@ -835,15 +675,106 @@
     </script>
 
     <script>
-        VirtualSelect.init({
-            ele: '#departments, #team_members, #training-require, #impacted_objects'
-        });
+        function addFishBone(top, bottom) {
+            let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
+            let topBlock = mainBlock.querySelector(top)
+            let bottomBlock = mainBlock.querySelector(bottom)
+
+            let topField = document.createElement('div')
+            topField.className = 'grid-field fields top-field'
+
+            let measurement = document.createElement('div')
+            let measurementInput = document.createElement('input')
+            measurementInput.setAttribute('type', 'text')
+            measurementInput.setAttribute('name', 'measurement[]')
+            measurement.append(measurementInput)
+            topField.append(measurement)
+
+            let materials = document.createElement('div')
+            let materialsInput = document.createElement('input')
+            materialsInput.setAttribute('type', 'text')
+            materialsInput.setAttribute('name', 'materials[]')
+            materials.append(materialsInput)
+            topField.append(materials)
+
+            let methods = document.createElement('div')
+            let methodsInput = document.createElement('input')
+            methodsInput.setAttribute('type', 'text')
+            methodsInput.setAttribute('name', 'methods[]')
+            methods.append(methodsInput)
+            topField.append(methods)
+
+            topBlock.prepend(topField)
+
+            let bottomField = document.createElement('div')
+            bottomField.className = 'grid-field fields bottom-field'
+
+            let environment = document.createElement('div')
+            let environmentInput = document.createElement('input')
+            environmentInput.setAttribute('type', 'text')
+            environmentInput.setAttribute('name', 'environment[]')
+            environment.append(environmentInput)
+            bottomField.append(environment)
+
+            let manpower = document.createElement('div')
+            let manpowerInput = document.createElement('input')
+            manpowerInput.setAttribute('type', 'text')
+            manpowerInput.setAttribute('name', 'manpower[]')
+            manpower.append(manpowerInput)
+            bottomField.append(manpower)
+
+            let machine = document.createElement('div')
+            let machineInput = document.createElement('input')
+            machineInput.setAttribute('type', 'text')
+            machineInput.setAttribute('name', 'machine[]')
+            machine.append(machineInput)
+            bottomField.append(machine)
+
+            bottomBlock.append(bottomField)
+        }
+
+        function deleteFishBone(top, bottom) {
+            let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
+            let topBlock = mainBlock.querySelector(top)
+            let bottomBlock = mainBlock.querySelector(bottom)
+            if (topBlock.firstChild) {
+                topBlock.removeChild(topBlock.firstChild);
+            }
+            if (bottomBlock.lastChild) {
+                bottomBlock.removeChild(bottomBlock.lastChild);
+            }
+        }
     </script>
+
     <script>
-        // JavaScript
-        document.getElementById('initiator_group').addEventListener('change', function() {
-            var selectedValue = this.value;
-            document.getElementById('initiator_group_code').value = selectedValue;
-        });
+        function addWhyField(con_class, name) {
+            let mainBlock = document.querySelector('.why-why-chart')
+            let container = mainBlock.querySelector(`.${con_class}`)
+            let textarea = document.createElement('textarea')
+            textarea.setAttribute('name', name);
+            container.append(textarea)
+        }
+    </script>
+
+    <script>
+        function calculateInitialResult(selectElement) {
+            let row = selectElement.closest('tr');
+            let R = parseFloat(row.querySelector('.fieldR').value) || 0;
+            let P = parseFloat(row.querySelector('.fieldP').value) || 0;
+            let N = parseFloat(row.querySelector('.fieldN').value) || 0;
+            let result = R * P * N;
+            row.querySelector('.initial-rpn').value = result;
+        }
+    </script>
+
+    <script>
+        function calculateResidualResult(selectElement) {
+            let row = selectElement.closest('tr');
+            let R = parseFloat(row.querySelector('.residual-fieldR').value) || 0;
+            let P = parseFloat(row.querySelector('.residual-fieldP').value) || 0;
+            let N = parseFloat(row.querySelector('.residual-fieldN').value) || 0;
+            let result = R * P * N;
+            row.querySelector('.residual-rpn').value = result;
+        }
     </script>
 @endsection

@@ -17,6 +17,10 @@
         </div>
     </div>
 
+    @php 
+        $users = DB::table('users')->get();
+    @endphp
+
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
@@ -25,6 +29,7 @@
 
             <!-- Tab links -->
             <div class="cctab">
+                
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
