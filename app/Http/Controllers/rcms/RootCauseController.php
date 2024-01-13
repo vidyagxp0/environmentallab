@@ -32,19 +32,66 @@ use Illuminate\Support\Facades\Hash;
 
 
     public function root_store(Request $request)
-    {
+    { 
 
-        $request->dd();
-        // return $request;
+       //$request->dd();
+         //return $request;
 
         if (!$request->short_description) {
-            toastr()->error("Short description is required");
-            return redirect()->back();
+           toastr()->error("Short description is required");
+             return redirect()->back();
         }
 
         $root = new RootCauseAnalysis();
         $root->form_type = "root-cause-analysis";
-        $root->division_id = $request->division_id;
+        $root->originator = json_encode($request->originator);
+        $root->date_opened = ($request->date_opened);
+        $root->short_description =($request->short_description);
+        $root->assigned_to = ($request->assigned_to);
+        $root->due_date = ($request->due_date);
+        $root->Type = ($request->Type);
+        $root->investigators = ($request->investigators);
+        $root->department = ($request->department);
+        $root->description = ($request->description);
+        $root->root_cause_initial_attachment = json_encode($request->root_cause_initial_attachment);
+        $root->related_url = ($request->related_url);
+        $root->root_cause_methodology = json_encode($request->root_cause_methodology);
+        $root->measurement = json_encode($request->measurement);
+        $root->materials = json_encode($request->materials);
+        $root->methods = json_encode($request->methods);
+        $root->environment = json_encode($request->environment);
+        $root->manpower = json_encode($request->manpower);
+        $root->machine = json_encode($request->machine);
+        $root->problem_statement = ($request->problem_statement);
+        $root->why_problem_statement = ($request->why_problem_statement);
+        $root->why_1 = json_encode($request->why_1);
+        $root->why_2 = json_encode($request->why_2);
+        $root->why_3 = json_encode($request->why_3);
+        $root->why_4 = json_encode($request->why_4);
+        $root->why_5 = json_encode($request->why_5);
+        //$root->root_cause = ($request->root_cause);
+        $root->what_will_be = ($request->what_will_be);
+        $root->what_will_not_be = ($request->what_will_not_be);
+        $root->what_rationable = ($request->what_rationable);
+        $root->where_will_be = ($request->where_will_be);
+        $root->where_will_not_be = ($request->where_will_not_be);
+        $root->where_rationable = ($request->where_rationable);
+        $root->when_will_be = ($request->when_will_be);
+        $root->when_will_not_be = ($request->when_will_not_be);
+        $root->when_rationable = ($request->when_rationable);
+        $root->coverage_will_be = ($request->coverage_will_be);
+        $root->coverage_will_not_be = ($request->coverage_will_not_be);
+        $root->coverage_rationable = ($request->coverage_rationable);
+        $root->who_will_be = ($request->who_will_be);
+        $root->who_will_not_be = ($request->who_will_not_be);
+        $root->who_rationable = ($request->who_rationable);
+        $root->investigation_summary = ($request->investigation_summary);
+        $root->zone = ($request->zone);
+        $root->country = ($request->country);
+        $root->state = ($request->state);
+        $root->city = ($request->city);
+
+
         $root->record = ((RecordNumber::first()->value('counter')) + 1);
         $root->initiator_id = Auth::user()->id;
         $root->division_code = $request->division_code;
@@ -67,7 +114,7 @@ use Illuminate\Support\Facades\Hash;
                     $files[] = $name;
                 }
             }
-            $root->attachments = json_encode($files);
+            $root->root_cause_initial_attachment = json_encode($files);
         }
         
         $root->comments = $request->comments;
@@ -366,7 +413,7 @@ use Illuminate\Support\Facades\Hash;
         $history->root_id = $root->id;
         $history->activity_type = 'Attachments';
         $history->previous = "Null";
-        $history->current = $root->attachments;
+        $history->current = empty($root->attachments) ? null : $root->attachments;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;

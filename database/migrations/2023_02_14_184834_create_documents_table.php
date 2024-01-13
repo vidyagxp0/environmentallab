@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->integer('originator_id');
+            $table->integer('originator_id')->nullable();
             $table->integer('division_id')->nullable();
             $table->integer('process_id')->nullable();
             $table->integer('record')->nullable();
@@ -56,6 +56,19 @@ return new class extends Migration
             // $table->longtext('procedure')->nullable();
             // $table->longtext('reporting')->nullable();
             // $table->longtext('references')->nullable();
+            $table->string('trainer')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+            $table->string('revision_policy')->nullable();
+
             $table->softDeletes();
             $table->timestamps();
         });
