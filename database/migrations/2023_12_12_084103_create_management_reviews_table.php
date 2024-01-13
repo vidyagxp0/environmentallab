@@ -52,7 +52,7 @@ return new class extends Migration
             $table->string('completed_by')->nullable();
 
             $table->string('completed_on')->nullable();
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

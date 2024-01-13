@@ -15,6 +15,15 @@
             display: none;
         }
     </style>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+        $( function() {
+          $( "#datepicker" ).datepicker();
+        } );
+        </script>
 
     <script>
         function otherController(value, checkValue, blockID) {
@@ -193,6 +202,7 @@
     <div id="change-control-fields">
         <div class="container-fluid">
 
+
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
@@ -242,9 +252,10 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <label for="Date Due"><b>Date of Initiationjfijihvi</b></label>
+                                        {{-- <input disabled type="date" value="{{ date('d-M-Y') }}" name="intiation_date"> --}}
+                                        {{-- <input type="date" value="{{ date('Y-m-d') }}" name="intiation_date"> --}}
+                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="intiation_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -269,8 +280,9 @@
                                         <div>
                                             <small class="text-primary">Please mention expected date of completion</small>
                                         </div>
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date">
+                                         <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="due_date"> 
+                                            
+                                        
                                     </div>
                                 </div>
 
@@ -371,9 +383,11 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+                                    
                                     <div class="group-input">
+                                        
                                         <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity-level">
+                                        <select name="severity_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -425,6 +439,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
+                                 
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Audit Agenda<button type="button" name="audit-agenda-grid"
@@ -1113,5 +1128,6 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
+
     </script>
 @endsection

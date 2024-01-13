@@ -30,6 +30,7 @@ class InternalauditController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         // return $old_record;
+        
 
         return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record'));
     }
@@ -37,7 +38,7 @@ class InternalauditController extends Controller
 
     public function create(request $request)
     {
-        // return $request;
+        //$request->dd();
 
         if (!$request->short_description) {
             toastr()->error("Short Description is required");

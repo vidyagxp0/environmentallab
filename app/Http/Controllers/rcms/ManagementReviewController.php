@@ -42,6 +42,7 @@ class ManagementReviewController extends Controller
     public function managestore(Request $request)
     {
         // return $request;
+         $request;
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");

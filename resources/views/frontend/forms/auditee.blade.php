@@ -243,8 +243,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        {{-- <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date"> --}}
+                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
+                                        value="" name="intiation_date">
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                     </div>
                                 </div>
@@ -270,7 +272,7 @@
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
                                         {{-- <input disabled type="text"
                                             value="{{ Helpers::getdateFormat($due_date) }}" name="due_date"> --}}
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
                                             value="" name="due_date">
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
 
