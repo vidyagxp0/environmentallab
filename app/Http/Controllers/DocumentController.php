@@ -46,8 +46,64 @@ class DocumentController extends Controller
     public function division(Request $request)
     {
         $new = new SetDivision;
+        $new->originator_id = $request->originator_id;
         $new->division_id = $request->division_id;
-        $new->process_id = $request->process_id;
+        $new->record = $request->record;
+        $new->revised = $request->revised;
+        $new->revised_doc = $request->revised_doc;
+        $new->document_name = $request->document_name;
+        $new->short_description = $request->short_description;
+        $new->due_date = $request->due_date;
+        $new->description = $request->description;
+        $new->notify_to = $request->notify_to;
+        $new->reference_record = $request->reference_record;
+        $new->department_id = $request->department_id;
+        $new->document_type_id = $request->document_type_id;
+        $new->document_subtype_id = $request->document_subtype_id;
+        $new->document_language_id = $request->document_language_id;
+        $new->keywords = $request->keywords;
+        $new->effectve_date = $request->effectve_date;
+        $new->next_review_date = $request->next_review_date;
+        $new->review_period = $request->review_period;
+        $new->attach_draft_doocument = $request->attach_draft_doocument;
+        $new->attach_effective_docuement = $request->attach_effective_docuement;
+        $new->reviewers = $request->reviewers;
+        $new->approvers = $request->approvers;
+        $new->reviewers_group = $request->reviewers_group;
+        $new->approver_group = $request->approver_group;
+        $new->revision_summary = $request->revision_summary;
+        $new->stage = $request->stage;
+        $new->status = $request->status;
+        $new->training_required = $request->training_required;
+        $new->document = $request->document;
+        $new->revision = $request->revision;
+        $new->revision_policy = $request->revision_policy;
+        // $new->revision_status = $request->revision_status;
+        // $new->defination = $request->defination;
+        // $new->materials_and_equipments = $request->materials_and_equipments;
+        // $new->procedure = $request->procedure;
+        // $new->reporting = $request->reporting;
+        // $new->references = $request->references;
+        $new->trainer = $request->trainer;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+        $new->revision = $request->revision;
+
+        
+
+
+
+
         $new->user_id = Auth::user()->id;
         $new->save();
 

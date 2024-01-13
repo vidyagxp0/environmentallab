@@ -13,7 +13,9 @@
     <div class="form-field-head">
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            EHS-North America / Root Cause Analysis
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Root Cause Analysis
+            {{-- KSA / Root Cause Analysis   --}}
+            {{-- EHS-North America --}}
         </div>
     </div>
 
@@ -113,7 +115,8 @@
                                         <label for="priority_level">Priority Level</label>
                                         <div><small class="text-primary">Choose high if Immidiate actions are
                                                 required</small></div>
-                                        <select name="priority_level">
+                                        <select 
+                                        priority_level">
                                             <option value="0">-- Select --</option>
                                             <option value="low">Low</option>
                                             <option value="medium">Medium</option>
@@ -546,7 +549,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
