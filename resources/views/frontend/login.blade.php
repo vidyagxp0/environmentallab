@@ -6,12 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Connexo - Software</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bitter&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/fontawesome.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
     <style>
         * {
-            font-family: 'Bitter', serif;
+            font-family: 'Noto Sans', serif;
         }
 
         body {
@@ -118,7 +118,7 @@
         }
 
         #rcms_login_block .login-form-block .logo {
-            width: 250px;
+            width: 280px;
             margin: 0 auto 30px;
         }
 
@@ -127,11 +127,12 @@
         }
 
         #rcms_login_block .login-form-block .head {
-            font-size: 2rem;
+            font-size: 1.6rem;
             font-weight: bold;
             text-transform: uppercase;
             text-align: center;
             color: white;
+            letter-spacing: 2px
         }
 
         #rcms_login_block .login-form-block form {
@@ -202,7 +203,7 @@
                     <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
                 </div>
                 <div class="head">
-                    Welcome to IRCMS
+                    Welcome to Doculife
                 </div>
             </div>
             <form action="{{ url('rcms_check') }}" method="POST">
@@ -581,7 +582,7 @@
 
 {{-- -------------------------------------------------------------------X------------------------------------------------------ --}}
 
-{{-- 
+{{--
 <!DOCTYPE html>
 <html lang="en">
 
@@ -778,14 +779,14 @@
 
     ======================================
                     PRELOADER
-    ======================================= 
+    =======================================
     <div id="preloader">
         <span class="loader"></span>
     </div>
 
     ======================================
                     LOGIN FORM
-    ======================================= 
+    =======================================
      <div id="login-container">
         <div class="login-form">
             <div class="image-block">
@@ -924,7 +925,7 @@
 
      ======================================
                     SCRIPT TAGS
-    ======================================= 
+    =======================================
      <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
@@ -939,7 +940,7 @@
             document.querySelector("#preloader").style.display = "none";
         }
     </script>
-    
+
     @toastr_js
     @toastr_render
     @jquery

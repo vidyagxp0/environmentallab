@@ -469,6 +469,42 @@ function addDistributionRetrieval(tableId) {
     }
 }
 
+function addManagementReviewParticipants(tableId) {
+    let table = document.getElementById(tableId);
+    let currentRowCount = table.rows.length;
+    let newRow = table.insertRow(currentRowCount);
+    newRow.setAttribute("id", "row" + currentRowCount);
+
+    let cell1 = newRow.insertCell(0);
+    cell1.innerHTML = currentRowCount-1;
+
+    let cell2 = newRow.insertCell(1)
+    cell2.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+
+    let cel3 = newRow.insertCell(2)
+    cel3.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+
+    let cell4 = newRow.insertCell(3)
+    cell4.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+
+    let cell5 = newRow.insertCell(4)
+    cell5.innerHTML = "<select><option value='0'>-- Select --</option><option value='Yes'>Yes</option><option value='No'>No</option></select>"
+
+    let cell6 = newRow.insertCell(5)
+    cell6.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+
+    let cell7 = newRow.insertCell(6)
+    cell7.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+
+    let cell8 = newRow.insertCell(7);
+    cell8.innerHTML = "<input type='text'>";
+
+    for (let i = 1; i < currentRowCount; i++) {
+        let row = table.rows[i];
+        row.cells[0].innerHTML = i;
+    }
+}
+
 // ================================ EIGHT INPUTS
 function add11Input(tableId) {
     var table = document.getElementById(tableId);

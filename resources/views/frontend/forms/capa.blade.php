@@ -296,6 +296,17 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
+                                        <label for="severity-level">Sevrity Level</label>
+                                        <select name="severity-level">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
@@ -309,12 +320,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="CAPA QA Comments">CAPA QA Comments</label>
-                                        <textarea name="capa_qa_comments"></textarea>
-                                    </div>
-                                </div> --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>

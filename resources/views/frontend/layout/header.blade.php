@@ -538,7 +538,7 @@
     </div>
 
     {{-- ============================================
-                FISHBONE INSTRUCTION MODAL
+                IS/IS NOT INSTRUCTION MODAL
     ============================================= --}}
     <div class="modal fade" id="is_is_not-instruction-modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -765,6 +765,496 @@
                         The current status of the observation (e.g., Open, In Progress, Closed).
                     </div>
 
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 1 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-operations-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-4">
+                        The organization shall plan, implement and control the processes (see 4.4) needed to meet the
+                        requirements for the provision of products and services, and to implement the actions determined
+                        in
+                        Clause 6, by:
+                    </div>
+                    <ul>
+                        <li>determining the requirements for the products and services;</li>
+                        <li>
+                            establishing criteria for:
+                            <ol>
+                                <li>the processes;</li>
+                                <li>the acceptance of products and services;</li>
+                            </ol>
+                        </li>
+                        <li>determining the resources needed to achieve conformity to the product and service
+                            requirements;</li>
+                        <li>implementing control of the processes in accordance with the criteria;</li>
+                        <li>
+                            determining, maintaining and retaining documented information to the extent necessary:
+                            <ol>
+                                <li>to have confidence that the processes have been carried out as planned;</li>
+                                <li>to demonstrate the conformity of products and services to their requirements.</li>
+                            </ol>
+                        </li>
+                    </ul>
+                    <div class="mb-4">The output of this planning shall be suitable for the organization’s
+                        operations.</div>
+                    <div class="mb-4">The organization shall control planned changes and review the consequences of
+                        unintended changes, taking action to mitigate any adverse effects, as necessary.</div>
+                    <div>The organization shall ensure that outsourced processes are controlled (see 8.4).</div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 2 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-requirement_products_services-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h5>Customer Communication</h5>
+                    <p>Communication with customers shall include:</p>
+                    <ul>
+                        <li>Providing information relating to products and services;</li>
+                        <li>Handling inquiries, contracts, or orders, including changes;</li>
+                        <li>Obtaining customer feedback relating to products and services, including customer
+                            complaints;</li>
+                        <li>Handling or controlling customer property;</li>
+                        <li>Establishing specific requirements for contingency actions, when relevant.</li>
+                    </ul>
+
+                    <h5>Determining the Requirements for Products and Services</h5>
+                    <p>When determining the requirements for the products and services to be offered to customers, the
+                        organization shall ensure that:</p>
+                    <ul>
+                        <li>The requirements for the products and services are defined, including:</li>
+                        <ul>
+                            <li>Any applicable statutory and regulatory requirements;</li>
+                            <li>Those considered necessary by the organization;</li>
+                        </ul>
+                        <li>The organization can meet the claims for the products and services it offers.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 3 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-design_development_product_services-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h4>General</h4>
+                    The organization shall ensure that externally provided processes, products and services conform to
+                    requirements.
+                    <ul>
+                        <li>he approval of:</li>
+                        <ol>
+                            <li>products and services;</li>
+                            <li>methods, processes and equipment;</li>
+                            <li>the release of products and services;</li>
+                        </ol>
+                        <li>competence, including any required qualification of persons;</li>
+                        <li>the external providers’ interactions with the organization;</li>
+                        <li>control and monitoring of the external providers’ performance to be applied by the
+                            organization;
+                        </li>
+                        <li>verification or validation activities that the organization, or its customer, intends to
+                            perform at the external providers’ premises.</li>
+
+                    </ul>
+                    <div class="mb-4">
+                        The organization shall determine the controls to be applied to externally provided processes,
+                        products
+                        and services when:
+                    </div>
+                    <ul>
+                        <li>products and services from external providers are intended for incorporation into the
+                            organization’s own products and services;</li>
+                        <li>products and services are provided directly to the customer(s)by external providers on
+                            behalf of
+                            the organization;</li>
+                        <li>a process, or part of a process, is provided by an external provider as a result of a
+                            decision
+                            by the organization.</li>
+                    </ul>
+                    <div class="mb-4">
+                        The organization shall determine and apply criteria for the evaluation, selection, monitoring of
+                        performance, and re-evaluation of external providers, based on their ability to provide
+                        processes or
+                        products and services in accordance with requirements. The organization shall retain documented
+                        information of these activities and any necessary actions arising from the evaluations.
+                    </div>
+                    <h4>Type and extent of control</h4>
+                    <div class="mb-4">
+                        The organization shall ensure that externally provided processes, products and services do not
+                        adversely affect the organization’s ability to consistently deliver conforming products and
+                        services to
+                        its customers.
+                    </div>
+                    <div class="mb-4">
+                        The organization shall:
+                    </div>
+                    <ul>
+                        <li>ensure that externally provided processes remain within the control of its quality
+                            management
+                            system;</li>
+                        <li>define both the controls that it intends to apply to an external provider and those it
+                            intends
+                            to apply to the resulting output;</li>
+                        <li>take into consideration:</li>
+                        <ol>
+                            <li>the potential impact of the externally provided processes, products and services on the
+                                organization’s ability to consistently meet customer and applicable statutory and
+                                regulatory
+                                requirements;</li>
+                            <li>the effectiveness of the controls applied by the external provider;</li>
+                        </ol>
+                        <li>determine the verification, or other activities, necessary to ensure that the externally
+                            provided processes, products and services meet requirements.</li>
+                    </ul>
+                    <h4>Information for external providers</h4>
+                    <div class="mb-4">
+                        The organization shall ensure the adequacy of requirements prior to their communication to the
+                        external provider.
+                    </div>
+                    <div class="mb-4"></div>
+                    <ul>
+                        <li>the processes, products and services to be provided;"</li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 4 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-control_externally_provide_services-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h4>General</h4>
+                    <div class="mb-4">The organization shall ensure that externally provided processes, products and
+                        services conform to requirements.</div>
+                    <ul>
+                        <li>
+                            the approval of:
+                            <ol>
+                                <li>products and services;</li>
+                                <li>methods, processes and equipment;</li>
+                                <li>the release of products and services;</li>
+                            </ol>
+                        </li>
+                        <li>competence, including any required qualification of persons;</li>
+                        <li>the external providers’ interactions with the organization;</li>
+                        <li>control and monitoring of the external providers’ performance to be applied by the
+                            organization;</li>
+                        <li>verification or validation activities that the organization, or its customer, intends to
+                            perform at the external providers’ premises.</li>
+                    </ul>
+                    <div class="mb-4">The organization shall determine the controls to be applied to externally
+                        provided processes, products and services when:</div>
+                    <ul>
+                        <li>products and services from external providers are intended for incorporation into the
+                            organization’s own products and services;</li>
+                        <li>products and services are provided directly to the customer(
+                        <li>by external providers on behalf of the organization;</li>
+                        <li>a process, or part of a process, is provided by an external provider as a result of a
+                            decision by the organization.</li>
+                    </ul>
+                    <div class="mb-4">The organization shall determine and apply criteria for the evaluation,
+                        selection, monitoring of performance, and re-evaluation of external providers, based on their
+                        ability to provide processes or products and services in accordance with requirements. The
+                        organization shall retain documented information of these activities and any necessary actions
+                        arising from the evaluations.</div>
+                    <h4>Type and extent of control</h4>
+                    <div class="mb-4">The organization shall ensure that externally provided processes, products and
+                        services do not adversely affect the organization’s ability to consistently deliver conforming
+                        products and services to its customers.</div>
+                    <div class="mb-4">The organization shall:</div>
+                    <ul>
+                        <li>ensure that externally provided processes remain within the control of its quality
+                            management system;</li>
+                        <li>define both the controls that it intends to apply to an external provider and those it
+                            intends to apply to the resulting output;</li>
+                        <li>
+                            take into consideration:
+                            <ol>
+                                <li>the potential impact of the externally provided processes, products and services on
+                                    the
+                                    organization’s ability to consistently meet customer and applicable statutory and
+                                    regulatory requirements;</li>
+                                <li>the effectiveness of the controls applied by the external provider;</li>
+                            </ol>
+                        <li>determine the verification, or other activities, necessary to ensure that the externally
+                            provided processes, products and services meet requirements.</li>
+                    </ul>
+                    <h4>Information for external providers</h4>
+                    <div class="mb-4">The organization shall ensure the adequacy of requirements prior to their
+                        communication to the external provider.</div>
+                    <div class="mb-4">The organization shall communicate to external providers its requirements for:
+                    </div>
+                    <ul>
+                        <li>the processes, products and services to be provided;"</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 5 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-production_service_provision-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h4>Control of production and service provision</h4>
+                    <div class="mb-4">The organization shall implement production and service provision under
+                        controlled conditions. Controlled conditions shall include, as applicable:</div>
+                    <ul>
+                        <li>
+                            the availability of documented information that defines:
+                            <ol>
+                                <li>the characteristics of the products to be produced, the services to be provided, or
+                                    the activities to be performed;</li>
+                                <li>the results to be achieved;</li>
+                            </ol>
+                        </li>
+                        <li>the availability and use of suitable monitoring and measuring resources;</li>
+                        <li>the implementation of monitoring and measurement activities at appropriate stages to verify
+                            that criteria for control of processes or outputs, and acceptance criteria for products and
+                            services, have been met;</li>
+                        <li>the use of suitable infrastructure and environment for the operation of processes;</li>
+                        <li>the appointment of competent persons, including any required qualification;</li>
+                        <li>the validation, and periodic revalidation, of the ability to achieve planned results of the
+                            processes for production and service provision, where the resulting output cannot be
+                            verified by subsequent monitoring or measurement;</li>
+                        <li>the implementation of actions to prevent human error;</li>
+                        <li>the implementation of release, delivery and post-delivery activities.</li>
+                    </ul>
+                    <h4>Identification and traceability</h4>
+                    <div class="mb-4">The organization shall use suitable means to identify outputs when it is
+                        necessary to ensure the conformity of products and services.</div>
+                    <div class="mb-4">The organization shall identify the status of outputs with respect to
+                        monitoring and measurement requirements throughout production and service provision.</div>
+                    <div class="mb-4">The organization shall control the unique identification of the outputs when
+                        traceability is a requirement, and shall retain the documented information necessary to enable
+                        traceability.</div>
+                    <h4>Property belonging to customers or external providers</h4>
+                    <div class="mb-4">The organization shall exercise care with property belonging to customers or
+                        external providers while it is under the organization’s control or being used by the
+                        organization.</div>
+                    <div class="mb-4">The organization shall identify, verify, protect and safeguard customers’ or
+                        external providers’ property provided for use or incorporation into the products and services.
+                    </div>
+                    <div class="mb-4">When the property of a customer or external provider is lost, damaged or
+                        otherwise found to be unsuitable for use, the organization shall report this to the customer or
+                        external provider and retain documented information on what has occurred.</div>
+                    <div class="mb-4">NOTE A customer’s or external provider’s property can include materials,
+                        components, tools and equipment, premises, intellectual property and personal data.</div>
+                    <h4>Preservation</h4>
+                    <div class="mb-4">The organization shall preserve the outputs during production and service
+                        provision, to the extent necessary to ensure conformity to requirements.</div>
+                    <div class="mb-4">NOTE Preservation can include identification, handling, contamination control,
+                        packaging, storage, transmission or transportation, and protection.</div>
+                    <h4>Post-delivery activities</h4>
+                    <div class="mb-4">The organization shall meet requirements for post-delivery activities
+                        associated with the products
+                        and services.</div>
+                    <div class="mb-4">In determining the extent of post-delivery activities that are required, the
+                        organization shall
+                        consider:</div>
+                    <li>statutory and regulatory requirements;</li>
+                    <li>the potential undesired consequences associated with its products and services;</li>
+                    <li>the nature, use and intended lifetime of its products and services;</li>
+                    <li>customer requirements;</li>
+                    <li>customer feedback.</li>
+                    <div class="mb-4">NOTE Post-delivery activities can include actions under warranty provisions,
+                        contractual obligations such as maintenance services, and supplementary services such as
+                        recycling or final disposal.</div>
+                    <h4>Control of changes</h4>
+                    <div class="mb-4">The organization shall review and control changes for production or service
+                        provision, to the extent necessary to ensure continuing conformity with requirements.</div>
+                    <div>The organization shall retain documented information describing the results of the review of
+                        changes, the person(s) authorizing the change, and any necessary actions arising from the
+                        review."</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 6 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-release_product_services-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-4">The organization shall implement planned arrangements, at appropriate stages,
+                        to verify that the product and service requirements have been met.</div>
+                    <div class="mb-4">The release of products and services to the customer shall not proceed until
+                        the planned arrangements have been satisfactorily completed, unless otherwise approved by a
+                        relevant authority and, as applicable, by the customer.The organization shall retain documented
+                        information on the release of products and services. The documented information shall include:
+                    </div>
+                    <ul>
+                        <li>evidence of conformity with the acceptance criteria;</li>
+                        <li>traceability to the person(s) authorizing the release."</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 7 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-control_nonconforming_outputs-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="mb-4">The organization shall ensure that outputs that do not conform to their
+                        requirements are identified and controlled to prevent their unintended use or delivery.</div>
+                    <div class="mb-4">The organization shall take appropriate action based on the nature of the
+                        nonconformity and its effect on the conformity of products and services. This shall also apply
+                        to nonconforming products and services detected after delivery of products, during or after the
+                        provision of services.</div>
+                    <div class="mb-4">The organization shall deal with nonconforming outputs in one or more of the
+                        following ways:</div>
+                    <ul>
+                        <li>correction;</li>
+                        <li>segregation, containment, return or suspension of provision of products and services;</li>
+                        <li>informing the customer;</li>
+                        <li>obtaining authorization for acceptance under concession.</li>
+                    </ul>
+                    <div class="mb-4">Conformity to the requirements shall be verified when nonconforming outputs are
+                        corrected.</div>
+                    <h4>
+                        The organization shall retain documented information that:
+                    </h4>
+                    <ul>
+                        <li>describes the nonconformity;</li>
+                        <li>describes the actions taken;</li>
+                        <li>describes any concessions obtained;</li>
+                        <li>identifies the authority deciding the action in respect of the nonconformity.</li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    {{-- ============================================
+                MANAGEMENT REVIEW 8 INSTRUCTION MODAL
+    ============================================= --}}
+    <div class="modal fade" id="management-review-performance_evaluation-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h4>General</h4>
+                    <div class="mb-4">The organization shall determine:</div>
+                    <ul>
+                        <li>what needs to be monitored and measured;</li>
+                        <li>the methods for monitoring, measurement, analysis and evaluation needed to ensure valid
+                            results;
+                        </li>
+                        <li>when the monitoring and measuring shall be performed;</li>
+                        <li>when the results from monitoring and measurement shall be analysed and evaluated.</li>
+                    </ul>
+                    <div class="mb-4">The organization shall evaluate the performance and the effectiveness of the
+                        quality management system.</div>
+                    <div class="mb-4">The organization shall retain appropriate documented information as evidence of
+                        the results.</div>
+                    <h4>Customer satisfaction</h4>
+                    <div class="mb-4">The organization shall monitor customers’ perceptions of the degree to which
+                        their needs and expectations have been fulfilled. The organization shall determine the methods
+                        for obtaining, monitoring and reviewing this information.</div>
+                    <div class="mb-4">NOTE Examples of monitoring customer perceptions can include customer surveys,
+                        customer feedback on delivered products and services, meetings with customers, market-share
+                        analysis, compliments, warranty claims and dealer reports.</div>
+                    <h4>Analysis and evaluation</h4>
+                    <div class="mb-4">The organization shall analyse and evaluate appropriate data and information
+                        arising from monitoring and measurement.</div>
+                    <div class="mb-4">The results of analysis shall be used to evaluate:</div>
+                    <ul>
+                        <li>conformity of products and services;</li>
+                        <li>the degree of customer satisfaction;</li>
+                        <li>the performance and effectiveness of the quality management system;</li>
+                        <li>if planning has been implemented effectively;</li>
+                        <li>the effectiveness of actions taken to address risks and opportunities;</li>
+                        <li>the performance of external providers;</li>
+                        <li>the need for improvements to the quality management system.</li>
+                    </ul>
+                    <div>NOTE Methods to analyse data can include statistical techniques.</div>
                 </div>
 
             </div>

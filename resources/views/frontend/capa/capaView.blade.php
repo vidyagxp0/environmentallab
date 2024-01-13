@@ -413,21 +413,6 @@
 
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="CAPA Related Records">CAPA Related Records</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  multiple id="capa_related_record" name="capa_related_record[]" id="">
-                                                    <option value="">--Select---</option>
-                                                    @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}"  >
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-
-
-                                            </div>
-                                        </div> --}}
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records</label>
@@ -473,6 +458,17 @@
                                                     Containment Comments <span class="text-danger d-none">*</span>
                                                 </label>
                                                 <textarea name="containment_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->containment_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="severity-level">Sevrity Level</label>
+                                                <select name="severity-level">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="minor">Minor</option>
+                                                    <option value="major">Major</option>
+                                                    <option value="critical">Critical</option>
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="col-12">

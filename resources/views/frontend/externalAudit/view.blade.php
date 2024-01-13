@@ -561,6 +561,17 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
+                                                <label for="severity-level">Sevrity Level</label>
+                                                <select name="severity-level">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="minor">Minor</option>
+                                                    <option value="major">Major</option>
+                                                    <option value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
                                                 <label for="Inv Attachments">Initial Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
@@ -582,9 +593,6 @@ function addMultipleFiles(input, block_id) {
                                                             multiple>
                                                     </div>
                                                 </div>
-                                                {{-- <input type="file" id="myfile" name="inv_attachment"
-                                                    value="{{ $data->inv_attachment }}" multiple
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                             </div>
                                         </div>
                                     </div>

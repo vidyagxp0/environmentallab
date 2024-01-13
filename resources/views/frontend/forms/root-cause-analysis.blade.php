@@ -17,7 +17,7 @@
         </div>
     </div>
 
-    @php 
+    @php
         $users = DB::table('users')->get();
     @endphp
 
@@ -29,7 +29,7 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                
+
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
@@ -178,6 +178,17 @@
                                                     multiple>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="severity-level">Sevrity Level</label>
+                                        <select name="severity-level">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12">

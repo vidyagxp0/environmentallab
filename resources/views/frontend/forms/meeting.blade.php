@@ -30,14 +30,15 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Meeting Summary</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Operational planning and control</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
             </div>
 
             <form action="{{ route('managestore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
-                    <!-- Meeting content -->
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -244,6 +245,37 @@
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
+                                <div class="group-input">
+                                    <label for="management-review-participants">
+                                        Management Review Participants
+                                        <button type="button"
+                                            onclick="addManagementReviewParticipants('management-review-participants')">+</button>
+                                    </label>
+                                    <div class="instruction">
+                                        <small class="text-primary">
+                                            Refer Attached Performance Evaluation Grid
+                                        </small>
+                                    </div>
+                                    <table class="table table-bordered" id="management-review-participants">
+                                        <thead>
+                                            <tr>
+                                                <th>Row #</th>
+                                                <th>Invited Person</th>
+                                                <th>Designee</th>
+                                                <th>Department</th>
+                                                <th>Meeting Attended</th>
+                                                <th>Designee Name</th>
+                                                <th>Designee Department/Designation</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">File Attachment</label>
@@ -268,10 +300,9 @@
                         </div>
                     </div>
 
-                    <!-- Meeting Summary content -->
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Actual Start Date">Actual Start Date</label>
@@ -704,55 +735,6 @@
                                         </table>
                                     </div>
                                 </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="assessment-external-bodies">
-                                            Assessment by External Bodies<button type="button"
-                                                name="assessment-external-bodies" id="external_bodie">+</button>
-                                        </label>
-                                        <table class="table table-bordered" id="external_bodie_details">
-                                            <thead>
-                                                <tr>
-                                                    <th>Row #</th>
-                                                    <th>External Body</th>
-                                                    <th>Short Description</th>
-                                                    <th>Type</th>
-                                                    <th>Site / Division</th>
-                                                    <th>Assessment Date</th>
-                                                    <th>Assessment Details</th>
-                                                    <th>Date Due</th>
-                                                    <th>Current Status</th>
-                                                    <th>Person Responsible</th>
-                                                    <th>Date Closed</th>
-                                                    <th>Related Documents</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="external_body[]"></td>
-                                                <td><input type="text" name="short_desc[]"></td>
-                                                <td><input type="text" name="type[]"></td>
-                                                <td><input type="text" name="site[]"></td>
-                                                <td><input type="date" name="assessment_date[]"></td>
-                                                <td><input type="text" name="assessment_details[]"></td>
-                                                <td><input type="date" name="date_due[]"></td>
-                                                <td><input type="text" name="current_status[]"></td>
-                                                <td> <select id="select-state" placeholder="Select..."
-                                                        name="responsible_person[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><input type="date" name="date_closed[]"></td>
-                                                <td><input type="text" name="related_documents[]"></td>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="issue-other-than-audits">
@@ -903,6 +885,114 @@
                                         <textarea name="psummary-recommendations"></textarea>
                                     </div>
                                 </div>
+                            </div> --}}
+                            <div class="group-input">
+                                <label for="Operations">
+                                    Operations
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-operations-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="Operations"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="requirement_products_services">
+                                    Requirements for Products and Services
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-requirement_products_services-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="requirement_products_services"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="design_development_product_services">
+                                    Design and Development of Products and Services
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-design_development_product_services-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="design_development_product_services"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="control_externally_provide_services">
+                                    Control of Externally Provided Processes, Products and Services
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-control_externally_provide_services-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="control_externally_provide_services"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="production_service_provision">
+                                    Production and Service Provision
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-production_service_provision-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="production_service_provision"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="release_product_services">
+                                    Release of Products and Services
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-release_product_services-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="release_product_services"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="control_nonconforming_outputs">
+                                    Control of Non-conforming Outputs
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-control_nonconforming_outputs-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <textarea name="control_nonconforming_outputs"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="performance_evaluation">
+                                    Performance Evaluation
+                                    <button type="button" onclick="add4Input('performance_evaluation')">+</button>
+                                    <span class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#management-review-performance_evaluation-instruction-modal"
+                                        style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                        (Launch Instruction)
+                                    </span>
+                                </label>
+                                <table class="table table-bordered" id="performance_evaluation">
+                                    <thead>
+                                        <tr>
+                                            <th>Row #</th>
+                                            <th>Monitoring</th>
+                                            <th>Measurement</th>
+                                            <th>Analysis</th>
+                                            <th>Evalutaion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><input type="text" name="row_no" value="1" disabled></td>
+                                            <td><input type="text" name="monitoring"></td>
+                                            <td><input type="text" name="measurement"></td>
+                                            <td><input type="text" name="analysis"></td>
+                                            <td><input type="text" name="evaluation"></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -913,8 +1003,198 @@
                         </div>
                     </div>
 
-                    <!-- Signatures content -->
                     <div id="CCForm3" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="group-input">
+                                <label for="risk_opportunities">Risk & Opportunities</label>
+                                <textarea name="risk_opportunities"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="external_supplier_performance">External Supplier Performance</label>
+                                <textarea name="external_supplier_performance"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="customer_satisfaction_level">Customer Satisfaction Level</label>
+                                <textarea name="customer_satisfaction_level"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="budget_estimates">Budget Estimates</label>
+                                <textarea name="budget_estimates"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="completion_of_previous_tasks">Completion of Previous Tasks</label>
+                                <textarea name="completion_of_previous_tasks"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="production">Production</label>
+                                <textarea name="production"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="plans">Plans</label>
+                                <textarea name="plans"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="forecast">Forecast</label>
+                                <textarea name="forecast"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="additional_suport_required">Any Additional Support Required</label>
+                                <textarea name="additional_suport_required"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="file_attchment_if_any">File Attachment, if any</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                        documents</small></div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="file_attchment_if_any"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="file_attchment_if_any[]"
+                                            oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="group-input">
+                                <label for="action-item-details">
+                                    Action Item Details<button type="button" name="action-item-details"
+                                        id="action_item">+</button>
+                                </label>
+                                <table class="table table-bordered" id="action_item_details">
+                                    <thead>
+                                        <tr>
+                                            <th>Row #</th>
+                                            <th>Record Number</th>
+                                            <th>Short Description</th>
+                                            <th>CAPA Type (Corrective Action / Preventive Action)</th>
+                                            <th>Date Opened</th>
+                                            <th>Site / Division</th>
+                                            <th>Date Due</th>
+                                            <th>Current Status</th>
+                                            <th>Person Responsible</th>
+                                            <th>Date Closed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <td><input disabled type="text" name="serial_number[]" value="1">
+                                        </td>
+                                        <td><input type="text" name="record[]"></td>
+                                        <td><input type="text" name="short_desc[]"></td>
+                                        <td><input type="text" name="capa_type[]"></td>
+                                        <td><input type="date" name="date_opened[]"></td>
+                                        <td><input type="text" name="site[]"></td>
+                                        <td><input type="date" name="date_due[]"></td>
+                                        <td><input type="text" name="current_status[]"></td>
+                                        <td> <select id="select-state" placeholder="Select..."
+                                                name="responsible_person[]">
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select></td>
+                                        <td><input type="date" name="date_closed[]"></td>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="group-input">
+                                <label for="capa-details">
+                                    CAPA Details<button type="button" name="capa-details" id="capa_detail"">+</button>
+                                </label>
+                                <table class="table table-bordered" id="capa_detail_details">
+                                    <thead>
+                                        <tr>
+                                            <th>Row #</th>
+                                            <th>Record Number</th>
+                                            <th>Short Description</th>
+                                            <th>CAPA Type (Corrective Action / Preventive Action)</th>
+                                            <th>Date Opened</th>
+                                            <th>Site / Division</th>
+                                            <th>Date Due</th>
+                                            <th>Current Status</th>
+                                            <th>Person Responsible</th>
+                                            <th>Date Closed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <td><input disabled type="text" name="serial_number[]" value="1">
+                                        </td>
+                                        <td><input type="text" name="record[]"></td>
+                                        <td><input type="text" name="short_desc[]"></td>
+                                        <td><input type="text" name="capa_type[]"></td>
+                                        <td><input type="date" name="date_opened[]"></td>
+                                        <td><input type="text" name="site[]"></td>
+                                        <td><input type="date" name="date_due[]"></td>
+                                        <td><input type="text" name="current_status[]"></td>
+                                        <td> <select id="select-state" placeholder="Select..."
+                                                name="responsible_person[]">
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $data)
+                                                    <option value="{{ $data->id }}">{{ $data->name }}
+                                                    </option>
+                                                @endforeach
+                                            </select></td>
+                                        <td><input type="date" name="date_closed[]"></td>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="group-input">
+                                <label for="next_managment_review_date">Next Management Review Date</label>
+                                <input type="date" name='next_managment_review_date'>
+                            </div>
+                            <div class="group-input">
+                                <label for="summary_recommendation">Summary & Recommendation</label>
+                                <textarea name="summary_recommendation"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="conclusion">Conclusion</label>
+                                <textarea name="conclusion"></textarea>
+                            </div>
+                            <div class="group-input">
+                                <label for="closure_attachments">Closure Attachments</label>
+                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                        documents</small></div>
+                                <div class="file-attachment-field">
+                                    <div class="file-attachment-list" id="closure_attachments"></div>
+                                    <div class="add-btn">
+                                        <div>Add</div>
+                                        <input type="file" id="myfile" name="closure_attachments[]"
+                                            oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sub-head">
+                                Extension Justification
+                            </div>
+                            <div class="group-input">
+                                <label for="due_date_extension">Due Date Extension Justification</label>
+                                <div><small class="text-primary">Please Mention justification if due date is
+                                        crossed</small></div>
+                                <textarea name="due_date_extension"></textarea>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit">Submit</button>
+                                <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">

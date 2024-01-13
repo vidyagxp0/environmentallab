@@ -784,6 +784,17 @@
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="severity-level">Sevrity Level</label>
+                                                <select name="severity-level">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="minor">Minor</option>
+                                                    <option value="major">Major</option>
+                                                    <option value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div>
