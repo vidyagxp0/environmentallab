@@ -66,6 +66,18 @@ return new class extends Migration
             // $table->string('reference_text')->nullable();
             // $table->string('references')->nullable();
         
+            $table->string('trainer')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
+            // $table->string('revision_policy')->nullable();
 
             $table->softDeletes();
             $table->timestamps();

@@ -12,6 +12,7 @@ use App\Models\EffectivenessCheck;
 use App\Models\InternalAudit;
 use App\Models\LabIncident;
 use App\Models\ManagementReview;
+use App\Models\MeetingSummary;
 use App\Models\RecordNumber;
 use App\Models\ManagementAuditTrial;
 use App\Models\ManagementReviewDocDetails;
@@ -41,18 +42,42 @@ class ManagementReviewController extends Controller
 
     public function managestore(Request $request)
     {
-        // return $request;
-         $request;
+         //$request->dd();
+        //  return $request;
 
-        if (!$request->short_description) {
-            toastr()->error("Short description is required");
-            return redirect()->back();
-        }
+        // if (!$request->short_description) {
+        //     toastr()->error("Short description is required");
+        //     return redirect()->back();
+        // }
         $management = new ManagementReview();
+        //$management->record_number = ($request->record_number);
+        $management->assign_id = 1;//$request->assign_id;
+        $management->priority_level = $request->priority_level;
+        $management->Operations = $request->Operations;
+        $management->requirement_products_services = $request->requirement_products_services;
+        $management->design_development_product_services = $request->design_development_product_services; 
+        $management->control_externally_provide_services = $request->control_externally_provide_services;
+        $management->production_service_provision = $request->production_service_provision;
+        $management->release_product_services = $request->release_product_services;
+        $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
+        // $management->risk_opportunities = $request->risk_opportunities;
+       // $management->initiator_group_code = $request->initiator_group_code;
+        $management->type = $request->type;
+        $management->serial_number = 1;
+        //json_encode($request->serial_number);
+        //  $management->date =1; //json_encode($request->date);
+        $management->topic = json_encode($request->topic);
+        $management->responsible = json_encode ($request->responsible);
+
+        $management->comment = json_encode($request->comment);
+        //$management->end_time = json_encode($request->end_time);
+        $management->topic = json_encode($request->topic);
+       // $management->external_supplier_performance = $request->Operations;
+      // $management = new ManagementReview();
         $management->form_type = "management-review";
         $management->division_id = $request->division_id;
-        $management->record = ((RecordNumber::first()->value('counter')) + 1);
-        $management->initiator_id = Auth::user()->id;
+        //$management->record = ((RecordNumber::first()->value('counter')) + 1);
+        //$management->initiator_id = Auth::user()->id;
         $management->intiation_date = $request->intiation_date;
         $management->division_code = $request->division_code;
         $management->short_description = $request->short_description;
@@ -83,6 +108,27 @@ class ManagementReviewController extends Controller
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
+
+
+        // $request->dd();
+        //  return $request;
+
+        $management = new MeetingSummary();
+        $management->risk_opportunities = $request->risk_opportunities;
+       // $management->external_supplier_performance = $request->external_supplier_performance;
+        $management->customer_satisfaction_level = $request->customer_satisfaction_level;
+        $management->budget_estimates = $request->budget_estimates; 
+        $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
+        $management->production = $request->production;
+        $management->additional_suport_required = $request->additional_suport_required;
+        $management->file_attchment_if_any = $request->file_attchment_if_any;
+        // $management->external_supplier_performance = $request->external_supplier_performance;
+        $management->save();
+
+
+       
+
+
             // --------------agenda--------------
         $data1 = new ManagementReviewDocDetails();
         $data1->review_id = $management->id;
@@ -106,8 +152,6 @@ class ManagementReviewController extends Controller
             $data1->comment = serialize($request->comment);
         }
         $data1->save();
-
-
 
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;

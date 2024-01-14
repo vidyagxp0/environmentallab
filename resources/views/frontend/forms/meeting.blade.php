@@ -81,7 +81,7 @@
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_id">
-                                            <option value="">Select a value</option>
+                                            <option value="assign_id">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -955,7 +955,8 @@
                             <div class="group-input">
                                 <label for="control_nonconforming_outputs">
                                     Control of Non-conforming Outputs
-                                    <span class="text-primary" data-bs-toggle="modal"
+                                    <span class="
+                                    " data-bs-toggle="modal"
                                         data-bs-target="#management-review-control_nonconforming_outputs-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
                                         (Launch Instruction)
@@ -986,12 +987,13 @@
                                     <tbody>
                                         <tr>
                                             <td><input type="text" name="row_no" value="1" disabled></td>
-                                            <td><input type="text" name="monitoring"></td>
+                        {{-- ignore   --}}                 <td><input type="text" name="monitoring"></td> 
                                             <td><input type="text" name="measurement"></td>
                                             <td><input type="text" name="analysis"></td>
                                             <td><input type="text" name="evaluation"></td>
                                         </tr>
                                     </tbody>
+
                                 </table>
                             </div>
                             <div class="button-block">
@@ -1049,7 +1051,7 @@
                                     <div class="file-attachment-list" id="file_attchment_if_any"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                        <input type="file" id="myfile" name="file_attchment_if_any[]"
+                                         <input type="file" id="myfile" name="file_attchment_if_any[]"{{-- ignore --}}
                                             oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                     </div>
                                 </div>

@@ -15,7 +15,25 @@ return new class extends Migration
     {
         Schema::create('management_reviews', function (Blueprint $table) {
             $table->id();
-            $table->integer('initiator_id')->nullable();
+            // $table->integer('record_number')->nullable();
+            $table->string('Operations')->nullable();
+            $table->string('requirement_products_services')->nullable();
+            $table->string('design_development_product_services')->nullable();
+            $table->string('control_externally_provide_services')->nullable();
+            $table->string('production_service_provision')->nullable();
+            $table->string('release_product_services')->nullable();
+            $table->string('control_nonconforming_outputs')->nullable();
+            $table->string('risk_opportunities')->nullable();
+            $table->string('action-item-details')->nullable();
+            $table->integer('serial_number')->nullable();
+            $table->date('date')->nullable();
+            $table->string('topic')->nullable();
+            $table->string('responsible')->nullable();
+            $table->string('start_time')->nullable();
+            $table->string('comment')->nullable();
+    
+
+            $table->integer('assign_id')->nullable();
             $table->string('division_id')->nullable();
             $table->string('form_type')->nullable();
             $table->integer('record')->nullable();
