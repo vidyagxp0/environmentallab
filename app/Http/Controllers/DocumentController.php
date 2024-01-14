@@ -7,11 +7,13 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
-use App\Models\DocumentContent;
+//use App\Models\DocumentContent;
+use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
 use App\Models\DocumentLanguage;
 use App\Models\DocumentSubtype;
-use App\Models\DocumentTraining;
+//use App\Models\DocumentTraining;
+use App\Models\DocumentTraningInformation;
 use App\Models\DocumentType;
 use App\Models\DownloadControl;
 use App\Models\DownloadHistory;
@@ -45,9 +47,60 @@ class DocumentController extends Controller
      */
     public function division(Request $request)
     {
+        
+
         $new = new SetDivision;
+        $new->division_id = $request->division_id;
+        $new->process_id = $request->process_id;
+        $new->user_id = Auth::user()->id;
+        $new->save();
+
+        return redirect()->route('documents.create');
+    }
+    public function division_old(Request $request)
+    {
+         //$request->dd();
+         //return $request;
+
+        //  if (!$request->short_description) {
+        //     toastr()->error("Short description is required");
+        //       return redirect()->back();
+        //  }
+        $new = new DocumentTraningInformation;
         $new->originator_id = $request->originator_id;
         $new->division_id = $request->division_id;
+        $new->process_id = $request->process_id;
+        $new->training_required = $request->training_required;
+        $new->trainer = $request->trainer;
+        $new->test = $request->test;
+        $new->reporting = $request->reporting;
+        $new->comments = $request->comments;
+        $new->save();
+
+        $new = new ContentsDocument;
+        $new->purpose = $request->purpose;
+        $new->scope = $request->scope;
+        $new->responsibility = $request->responsibility;
+        $new->abbreviation = $request->abbreviation;
+        $new->defination = $request->defination;
+        $new->materials_and_equipments = $request->materials_and_equipments;
+        $new->procedure = $request->procedure;
+        $new->reporting = $request->reporting;    
+        $new->reference_text = $request->reference_text;
+        $new->references = $request->references;
+        $new->ann = $request->ann;
+        $new->serial_number = $request->serial_number;
+        $new->annexure_number = $request->annexure_number;
+        $new->annexure_data = $request->annexure_data;
+        // $new->reporting = $request->reporting;    
+        $new->save();
+
+
+
+        $new = new Document;
+        $new->originator_id = $request->originator_id;
+        $new->division_id = $request->division_id;
+        $new->process_id = $request->process_id;
         $new->record = $request->record;
         $new->revised = $request->revised;
         $new->revised_doc = $request->revised_doc;
@@ -74,7 +127,7 @@ class DocumentController extends Controller
         $new->revision_summary = $request->revision_summary;
         $new->stage = $request->stage;
         $new->status = $request->status;
-        $new->training_required = $request->training_required;
+        //$new->training_required = $request->training_required;
         $new->document = $request->document;
         $new->revision = $request->revision;
         $new->revision_policy = $request->revision_policy;
@@ -84,26 +137,15 @@ class DocumentController extends Controller
         // $new->procedure = $request->procedure;
         // $new->reporting = $request->reporting;
         // $new->references = $request->references;
-        $new->trainer = $request->trainer;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-        $new->revision = $request->revision;
-
-        
-
-
-
-
+        // $new->trainer = $request->trainer;
+        // $new->reporting = $request->reporting;
+        // $new->references = $request->references;
+        // $new->serial_number = $request->serial_number;
+        // $new->annexure_number = $request->annexure_number;
+        // $new->annexure_data = $request->annexure_data;
+        // $new->annexuredata = $request->annexuredata;
+        // $new->reference_text = $request->reference_text;
+        // $new->references = $request->references;
         $new->user_id = Auth::user()->id;
         $new->save();
 
@@ -207,7 +249,9 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->dd();
+        //  return $request;
+
 
         if ($request->submit == 'save') {
 
@@ -622,6 +666,8 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
+
+           
             // if ($lastDocument->department_id != $document->department_id || ! empty($request->department_id_comment)) {
             //     $history = new DocumentHistory;
             //     $history->document_id = $id;

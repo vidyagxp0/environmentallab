@@ -152,7 +152,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.connexodemo.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -752,7 +752,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.connexodemo.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -897,7 +897,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.connexodemo.com/user/images/logo.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>

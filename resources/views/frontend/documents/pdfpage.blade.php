@@ -310,13 +310,13 @@
             <tbody>
                 <tr>
                     <td class="logo w-20">
-                        <img src="https://dms.connexodemo.com/user/images/logo.png" alt="...">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
                     </td>
                     <td class="title w-60">
                         {{ $data->document_name }}
                     </td>
                     <td class="logo w-20">
-                        <img src="https://dms.connexodemo.com/user/images/logo1.png" alt="...">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="...">
                     </td>
                 </tr>
             </tbody>

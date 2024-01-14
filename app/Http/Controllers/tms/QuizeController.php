@@ -172,6 +172,7 @@ class QuizeController extends Controller
         <td>'.$temp->question.'</td>
         <td>'.$temp->type.'</td>
     </tr>';
+    
     array_push($htmls,$html);
       }
         $response['htmls'] = $htmls;

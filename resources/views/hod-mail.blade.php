@@ -184,7 +184,7 @@ h2{
         <div class="notification-container">
             <div class="inner-block">
                 <div class="logo">
-                    <img src="https://dms.connexodemo.com/user/images/logo.png" alt="...">
+                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
                 </div>
                 <div class="mail-content">
 

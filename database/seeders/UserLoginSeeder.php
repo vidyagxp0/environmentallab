@@ -20,64 +20,64 @@ class UserLoginSeeder extends Seeder
 
         $user  = new User();
         $user->name = "Amit Guru";
-        $user->email = "amit.guru@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "amit.guru@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 3;
         $user->save();
 
         $user  = new User();
         $user->name = "Shaleen Mishra";
-        $user->email = "shaleen.mishra@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "shaleen.mishra@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 4;
         $user->save();
 
         $user  = new User();
         $user->name = "Vikas Prajapati";
-        $user->email = "vikas.prajapati@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "vikas.prajapati@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 1;
         $user->save();
 
         $user  = new User();
         $user->name = "Anshul Patel";
-        $user->email = "anshul.patel@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "anshul.patel@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 5;
         $user->save();
 
         $user  = new User();
         $user->name = "Amit Patel";
-        $user->email = "amit.patel@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "amit.patel@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 2;
         $user->save();
 
         $user  = new User();
         $user->name = "Madhulika Mishra";
-        $user->email = "madhulika.mishra@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "madhulika.mishra@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 6;
         $user->save();
 
         $user  = new User();
         $user->name = "Jin Kim";
-        $user->email = "jin.kim@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "jin.kim@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 3;
         $user->save();
 
         $user  = new User();
         $user->name = "Akash Asthana";
-        $user->email = "akash.asthana@connexodemo.com";
-        $user->password = Hash::make('1234567890');
+        $user->email = "akash.asthana@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
         $user->role = 8;
         $user->save();

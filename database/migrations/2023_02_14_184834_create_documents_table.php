@@ -46,7 +46,7 @@ return new class extends Migration
             $table->longtext('revision_summary')->nullable();
             $table->integer('stage')->default(1);
             $table->string('status');
-            $table->string('training_required');
+            //$table->string('training_required');
             $table->longtext('document')->nullable();
             $table->string('revision')->default("No");
             $table->string('revision_policy')->nullable();
@@ -56,18 +56,16 @@ return new class extends Migration
             // $table->longtext('procedure')->nullable();
             // $table->longtext('reporting')->nullable();
             // $table->longtext('references')->nullable();
-            $table->string('trainer')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
-            $table->string('revision_policy')->nullable();
+            // $table->string('trainer')->nullable();
+            // $table->string('reporting')->nullable();
+            // $table->string('references')->nullable();
+            // $table->string('serial_number')->nullable();
+            // $table->string('annexure_number')->nullable();
+            // $table->string('annexure_data')->nullable();
+            // $table->string('annexuredata')->nullable();
+            // $table->string('reference_text')->nullable();
+            // $table->string('references')->nullable();
+        
 
             $table->softDeletes();
             $table->timestamps();

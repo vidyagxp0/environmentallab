@@ -148,7 +148,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
-                                        <select name="department_id" id="depart-name" required>
+                                        <select name="department_id" id="depart-name1" required>
                                             <option value="" selected>Enter your Selection</option>
                                             @foreach ($departments as $department)
                                                 <option data-id="{{ $department->dc }}" value="{{ $department->id }}">
@@ -318,7 +318,7 @@
                                         <label for="reviewers-group">Reviewers Group</label>
                                         {{--  <select class="form-control"  name="reviewers_group" required/>  --}}
                                         <select id="choices-multiple-remove-button" name="reviewers_group[]"
-                                            placeholder="Select Reviewers" multiple>
+                                            placeholder="Select Reviewers" class="is-hidden" aria-hidden="true" multiple>
 
                                             @if (count($reviewergroup) > 0)
                                                 @foreach ($reviewergroup as $lan)
