@@ -14,6 +14,24 @@ return new class extends Migration
     public function up()
     {
         Schema::create('document_contents', function (Blueprint $table) {
+
+            // $table->id();
+            // $table->string('purpose')->nullable();
+            // $table->string('scope')->nullable();
+            // $table->string('responsibility')->nullable();
+            // $table->string('abbreviation')->nullable();
+            // $table->string('defination')->nullable();
+            // $table->string('materials_and_equipments')->nullable();
+            // $table->string('procedure')->nullable();
+            // $table->string('reporting')->nullable();
+            // $table->string('reference_text')->nullable();
+            // $table->string('references')->nullable();
+            // $table->string('ann')->nullable();
+            // $table->string('serial_number')->nullable();
+            // $table->string('annexure_number')->nullable();
+            // $table->string('annexure_data')->nullable();
+            // // $table->integer('reporting')->nullable();
+
             $table->bigIncrements('id');
             $table->bigInteger('document_id');
             $table->longtext('purpose')->nullable();

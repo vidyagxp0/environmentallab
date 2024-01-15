@@ -50,20 +50,15 @@
                                         <label for="originator">Originator</label>
                                         <input type="text" name="originator" value="Amit Guru" disabled />
                                     </div>
-                                </div>
-                               
-                                      
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
+                                </div>     
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="date-opened">Date Opened </label>
                                         <div><small class="text-primary">When was this Investigation record opened?</small>
                                         </div>
-                                        <div class="calenderauditee">                                     
-                                            <input type="text" name="date-opened" id="date-opened"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="date-opened" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'date-opened')"/>
-                                        </div>
+                                        <input type="text" name="date-opened" value="{{date('d-M-Y')}}" disabled>
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="date-opened">
+                                        
                                     </div>
                                 </div>
                                 <div class="col-12">

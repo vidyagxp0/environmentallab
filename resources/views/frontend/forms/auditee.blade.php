@@ -240,23 +240,11 @@
 
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
+                                <div class="col-lg-6">
+                                    <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
-                                        {{-- <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date"> --}}
-                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-M-d') }}"
-                                        value="" name="intiation_date"> --}}
-                                        {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
-
-                                        <div class="calenderauditee">
-                                        <input type="text" name="intiation_date" id="intiation_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input
-                                        type="date" 
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'intiation_date')"
-                                        />
-                                        </div>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">                                        
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -460,16 +448,12 @@
                                          </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
-                                        <div class="calenderauditee">
-                                        <input type="text" name="start_date" id="start_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" 
-                                        type ="date"  
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'start_date')"/>
-                                    </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="intiation-date"><b>Date of Initiation </b></label>
+                                         <input type="text" value="{{ date('d-M-Y') }}" name="intiation-date" disabled>
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation-date">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
