@@ -51,12 +51,19 @@
                                         <input type="text" name="originator" value="Amit Guru" disabled />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="date-opened">Date Opened</label>
+                               
+                                      
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="date-opened">Date Opened </label>
                                         <div><small class="text-primary">When was this Investigation record opened?</small>
                                         </div>
-                                        <input type="text" name="date-opened" value="10 Jan, 2024" disabled>
+                                        <div class="calenderauditee">                                     
+                                            <input type="text" name="date-opened" id="date-opened"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="date-opened" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'date-opened')"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -81,15 +88,22 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Date Due">Date Due</label>
                                         <div><small class="text-danger">Last date this Investigation should be closed
                                                 by</small></div>
+                                        <div class="calenderauditee">                                     
+                                            <input type="text" name="Date Due" id="Date Due"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="Date Due" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'Date Due')"/>
+                                        </div>
+
                                         {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
                                         <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date">
+                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="" name="due_date"> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

@@ -1164,7 +1164,7 @@ header .header-bottom.bottom-pr-links {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
 
-#data-fields .input-fields select#keywords::-webkit-scrollbar-thumb {}
+/* #data-fields .input-fields select#keywords::-webkit-scrollbar-thumb {} */
 
 #data-fields .input-fields select#keywords option {
     display: inline-block;
@@ -5987,3 +5987,46 @@ section#pdf-page .watermark {
     margin-left: 3px;
     cursor: pointer;
 }
+/*  Date Picker css*/
+
+.new-date-data-field {
+    margin-bottom: 20px;
+  }
+
+  .new-date-data-field label {
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    display: block;
+    width: 100%;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .new-date-data-field input {
+    border: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 15px;
+    display: block;
+    width: 100%;
+    background: white;
+  }
+
+  .new-date-data-field .input-date {
+    position: relative;
+  }
+
+  .new-date-data-field .input-date input.hide-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+  }
+
+  .new-date-data-field .input-date input::-webkit-calendar-picker-indicator {
+    width: 100%;
+  }
+  .calenderauditee{
+    position: relative;
+  }

@@ -877,3 +877,12 @@ function openDivision(evt, cityName) {
     evt.currentTarget.className += " active";
 }
 
+function handleDateInput(element, textInputID) {
+    let textInput = document.getElementById(textInputID)
+    const date = new Date(element.value);
+    const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+    const month = months[date.getMonth()];
+    const day = date.getDate();
+    const year = date.getFullYear();
+    textInput.setAttribute('value', `${day}-${month}-${year}`)
+  }

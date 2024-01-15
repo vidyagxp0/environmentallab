@@ -4,6 +4,7 @@
         header .header_rcms_bottom {
             display: none;
         }
+        
     </style>
 
     <script>
@@ -91,11 +92,16 @@
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="intiation_date"><b>Date of Initiation</b></label>
+                                        <div class="calenderauditee">                                     
+                                        <input type="text" name="intiation_date" id="intiation_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" 
+                                        value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'intiation_date')"/>
+                                        </div>                                        
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -114,11 +120,17 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <input type="date" id="dueDate" value="{{ old('due_date')}}" name="due_date">
+                                        <div class="calenderauditee">                                     
+                                            <input type="text" name="dueDate" id="dueDate"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="dueDate" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'dueDate')"/>
+                                        </div>
+                                        {{-- <input type="date" id="dueDate" value="{{ old('due_date')}}" name="due_date"> --}}
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
 
                                     </div>

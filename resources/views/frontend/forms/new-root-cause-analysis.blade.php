@@ -50,10 +50,12 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="date-opened">Date Opened</label>
+                                        <label for="date-opened">Date Opened </label>
                                         <div><small class="text-primary">When was this Investigation record opened?</small>
                                         </div>
+                                        <div class="calenderauditee">                                     
                                         <input type="text" name="date-opened" value="10 Jan, 2024" disabled>
+                                    </div>
                                     </div>
                                 </div>
                                 <div class="col-12">

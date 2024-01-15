@@ -88,11 +88,20 @@
                                     <p id="short_descError" style="color:red">**Short description is required</p>
 
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="group-input">
+                               
+
+                                <div class="col-md-4 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date</label>
-                                        <input type="date" id="due_dateDoc" name="due_date" pattern="\d{4}-\d{2}-\d{2}"
-                                            onchange="changeFormat(this)">
+                                        <div class="calenderauditee"> 
+                                            <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />                                    
+                                        <input
+                                         type="date" id="due_dateDoc" name="due_dateDoc" pattern="\d{4}-\d{2}-\d{2}"
+                                         class="hide-input"
+                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
+                                        </div>
+
+                                            {{-- onchange="changeFormat(this,'due-dateDoc')"> --}}
                                     </div>
                                     <p id="due_dateDocError" style="color:red">**Due Date is required</p>
 
@@ -237,24 +246,37 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="group-input">
+                                <div class="col-md-4 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="effective-date">Effective Date</label>
-                                        <input type="date" name="effectve_date" id="effectve_date">
+                                        <div class="calenderauditee"> 
+                                        <input type="text" name="effective_date" id="effective_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input 
+                                        type="date" name="effective_date" id="effective_date"
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'effective_date')"
+                                        />
+                                        </div>
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="group-input">
+                                <div class="col-md-4 new-date-data-field">
+                                    <div class="group-input ">
                                         <label for="review-period">Review Period</label>
+
                                         <input type="number" name="review_period" id="review_period">
                                     </div>
                                 </div>
 
-                                <div class="col-md-4">
-                                    <div class="group-input">
-                                        <label for="review-date">Next Review Date</label>
-                                        <input type="date" name="next_review_date" id="next_review_date">
+                                <div class="col-md-4 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="next_review_date">Next Review Date</label>
+                                        <div class="calenderauditee"> 
+                                            <input type="text" name="next_review_date" id="next_review_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_review_date" id="next_review_date"
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'next_review_date')"/>
+                                        </div>
                                     </div>
                                 </div>
 
