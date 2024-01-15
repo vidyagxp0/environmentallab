@@ -4,7 +4,30 @@
         header .header_rcms_bottom {
             display: none;
         }
-        
+
+        .calenderauditee {
+            position: relative;
+        }
+
+        .new-date-data-field .input-date input.hide-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .new-date-data-field input {
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 5px 15px;
+            display: block;
+            width: 100%;
+            background: white;
+        }
+
+        .calenderauditee input::-webkit-calendar-picker-indicator {
+            width: 100%;
+        }
     </style>
 
     <script>
@@ -96,7 +119,7 @@
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">                                        
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -107,7 +130,8 @@
                                         <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($hod as $data)
-                                                <option @if(old('assign_to') == $data->id) selected @endif value="{{ $data->id }}" >{{ $data->name }}</option>
+                                                <option @if (old('assign_to') == $data->id) selected @endif
+                                                    value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -118,15 +142,14 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <div class="calenderauditee">                                     
-                                        <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input
-                                        type="date" 
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"
-                                        />
-                                         </div>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="due_date" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -135,23 +158,40 @@
                                                 class="text-danger">*</span></label>
                                         <select name="initiatorGroup" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('initiatorGroup') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QAB" @if(old('initiatorGroup') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQA") selected @endif>Central Quality Control</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQC") selected @endif>Manufacturing</option>
-                                            <option value="PSG" @if(old('initiatorGroup') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                            <option value="CS"  @if(old('initiatorGroup') == "CS") selected @endif>Central Stores</option>
-                                            <option value="ITG" @if(old('initiatorGroup') =="ITG") selected @endif>Information Technology Group</option>
-                                            <option value="MM"  @if(old('initiatorGroup') == "MM") selected @endif>Molecular Medicine</option>
-                                            <option value="CL"  @if(old('initiatorGroup') == "CL") selected @endif>Central Laboratory</option>
-                                            <option value="TT"  @if(old('initiatorGroup') == "TT") selected @endif>Tech team</option>
-                                            <option value="QA"  @if(old('initiatorGroup') == "QA") selected @endif> Quality Assurance</option>
-                                            <option value="QM"  @if(old('initiatorGroup') == "QM") selected @endif>Quality Management</option>
-                                            <option value="IA"  @if(old('initiatorGroup') == "IA") selected @endif>IT Administration</option>
-                                            <option value="ACC"  @if(old('initiatorGroup') == "ACC") selected @endif>Accounting</option>
-                                            <option value="LOG"  @if(old('initiatorGroup') == "LOG") selected @endif>Logistics</option>
-                                            <option value="SM"  @if(old('initiatorGroup') == "SM") selected @endif>Senior Management</option>
-                                            <option value="BA"  @if(old('initiatorGroup') == "BA") selected @endif>Business Administration</option>
+                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>
+                                                Central Laboratory</option>
+                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                                Business Administration</option>
                                         </select>
                                         @error('initiatorGroup')
                                             <p class="text-danger">{{ $message }}</p>
@@ -169,8 +209,8 @@
                                     <div class="group-input">
                                         <label for="short-desc">Short Description <span
                                                 class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description"  id="short_description">{{ old('short_description') }}</textarea>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <textarea name="short_description" id="short_description">{{ old('short_description') }}</textarea>
                                         @error('short_description')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
@@ -183,14 +223,22 @@
                                         <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option>Enter Your Selection Here</option>
-                                            <option @if(old('initiated_through') == "recall") selected @endif value="recall">Recall</option>
-                                            <option @if(old('initiated_through') == "return") selected @endif value="return">Return</option>
-                                            <option @if(old('initiated_through') == "deviation") selected @endif value="deviation">Deviation</option>
-                                            <option @if(old('initiated_through') == "complaint") selected @endif value="complaint">Complaint</option>
-                                            <option @if(old('initiated_through') == "regulatory") selected @endif value="regulatory">Regulatory</option>
-                                            <option @if(old('initiated_through') == "lab-incident") selected @endif value="lab-incident">Lab Incident</option>
-                                            <option @if(old('initiated_through') == "improvement") selected @endif value="improvement">Improvement</option>
-                                            <option @if(old('initiated_through') == "others") selected @endif value="others">Others</option>
+                                            <option @if (old('initiated_through') == 'recall') selected @endif value="recall">
+                                                Recall</option>
+                                            <option @if (old('initiated_through') == 'return') selected @endif value="return">
+                                                Return</option>
+                                            <option @if (old('initiated_through') == 'deviation') selected @endif value="deviation">
+                                                Deviation</option>
+                                            <option @if (old('initiated_through') == 'complaint') selected @endif value="complaint">
+                                                Complaint</option>
+                                            <option @if (old('initiated_through') == 'regulatory') selected @endif value="regulatory">
+                                                Regulatory</option>
+                                            <option @if (old('initiated_through') == 'lab-incident') selected @endif
+                                                value="lab-incident">Lab Incident</option>
+                                            <option @if (old('initiated_through') == 'improvement') selected @endif
+                                                value="improvement">Improvement</option>
+                                            <option @if (old('initiated_through') == 'others') selected @endif value="others">
+                                                Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -204,13 +252,17 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="repeat">Repeat</label>
-                                        <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
+                                        <div><small class="text-primary">Please select yes if it is has recurred in past
+                                                six months</small></div>
                                         <select name="repeat"
                                             onchange="otherController(this.value, 'yes', 'repeat_nature')">
                                             <option>Enter Your Selection Here</option>
-                                            <option @if(old('repeat') == "yes") Selected @endif value="yes">Yes</option>
-                                            <option @if(old('repeat') == "no") Selected @endif value="no">No</option>
-                                            <option @if(old('repeat') == "na") Selected @endif value="na">NA</option>
+                                            <option @if (old('repeat') == 'yes') Selected @endif value="yes">Yes
+                                            </option>
+                                            <option @if (old('repeat') == 'no') Selected @endif value="no">No
+                                            </option>
+                                            <option @if (old('repeat') == 'na') Selected @endif value="na">NA
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
@@ -278,7 +330,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">Initial attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="in_attachment"></div>
                                             <div class="add-btn">
@@ -325,7 +378,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="text" value="1" name="serial_number[]" readonly></td>
+                                                    <td><input type="text" value="1" name="serial_number[]"
+                                                            readonly></td>
                                                     <td><input type="text" name="current_doc_number[]"></td>
                                                     <td><input type="text" name="current_version[]"></td>
                                                     <td><input type="text" name="new_doc_number[]"></td>
@@ -416,17 +470,19 @@
                                         <select multiple name="related_records[]" placeholder="Select Reference Records"
                                             data-search="false" data-silent-initial-value-set="true"
                                             id="related_records">
-                                           @foreach ($pre as $prix)
-                                           <option value="{{ $prix->id }}">{{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}</option>
-
-                                           @endforeach
+                                            @foreach ($pre as $prix)
+                                                <option value="{{ $prix->id }}">
+                                                    {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="qa_head">QA Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="qa_head"></div>
                                             <div class="add-btn">
@@ -461,7 +517,8 @@
                             </div>
                             <div class="group-input">
                                 <label for="qa-eval-attach">QA Evaluation Attachments</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
+                                </div>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="qa_eval_attach"></div>
                                     <div class="add-btn">
@@ -611,7 +668,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="additional_attachments">Additional Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="additional_attachments"></div>
                                             <div class="add-btn">
@@ -651,7 +709,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="comments">CFT Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="cft_attchament"></div>
                                             <div class="add-btn">
@@ -718,7 +777,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="group-attachments">Group Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="group_attachments"></div>
                                             <div class="add-btn">
@@ -756,8 +816,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Severity Rate">Severity Rate</label>
-                                        <select name="severity" id="analysisR"
-                                            onchange='calculateRiskAnalysis(this)'>
+                                        <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)'>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1">Negligible</option>
                                             <option value="2">Moderate</option>
@@ -838,7 +897,8 @@
                             </div>
                             <div class="group-input">
                                 <label for="tran-attach">Training Attachments</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
+                                </div>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="tran_attach"></div>
                                     <div class="add-btn">
@@ -882,7 +942,8 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input type="text" Value="1" name="serial_number[]" readonly></td>
+                                            <td><input type="text" Value="1" name="serial_number[]" readonly>
+                                            </td>
 
                                             <td><input type="text" name="affected_documents[]">
                                             </td>
@@ -909,7 +970,8 @@
                             </div>
                             <div class="group-input">
                                 <label for="attach-list">List Of Attachments</label>
-                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
+                                </div>
                                 <div class="file-attachment-field">
                                     <div class="file-attachment-list" id="attach_list"></div>
                                     <div class="add-btn">
@@ -945,8 +1007,8 @@
                                         <select name="Effectiveness_checker">
                                             <option value="">Enter Your Selection Here</option>
                                             @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -962,7 +1024,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                                crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
