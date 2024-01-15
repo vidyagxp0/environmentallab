@@ -34,8 +34,8 @@ use Illuminate\Support\Facades\Hash;
     public function root_store(Request $request)
     { 
 
-        $request->dd();
-        return $request;
+        //$request->dd();
+        //return $request;
 
         if (!$request->short_description) {
            toastr()->error("Short description is required");

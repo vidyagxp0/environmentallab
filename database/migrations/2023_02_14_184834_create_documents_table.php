@@ -46,7 +46,6 @@ return new class extends Migration
             $table->longtext('revision_summary')->nullable();
             $table->integer('stage')->default(1);
             $table->string('status');
-            //$table->string('training_required');
             $table->longtext('document')->nullable();
             $table->string('revision')->default("No");
             $table->string('revision_policy')->nullable();
@@ -66,7 +65,7 @@ return new class extends Migration
             // $table->string('reference_text')->nullable();
             // $table->string('references')->nullable();
         
-            $table->string('trainer')->nullable();
+           // $table->string('trainer')->nullable();
             // $table->string('revision_policy')->nullable();
             // $table->string('revision_policy')->nullable();
             // $table->string('revision_policy')->nullable();

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('originator_id')->nullable();
             $table->string('division_id')->nullable();
             $table->string('process_id')->nullable();
-            $table->string('training_required')->nullable();
+            //$table->string('training_required')->nullable();
             $table->string('trainer')->nullable();
             $table->string('test')->nullable();
             $table->string('reporting')->nullable();
