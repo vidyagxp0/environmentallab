@@ -7,8 +7,8 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
-//use App\Models\DocumentContent;
-use App\Models\ContentsDocument;
+use App\Models\DocumentContent;
+//use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
 use App\Models\DocumentLanguage;
 use App\Models\DocumentSubtype;
@@ -341,6 +341,9 @@ class DocumentController extends Controller
                     $keyword->save();
                 }
 
+
+
+                
             }
             if ($request->training_required == 'yes') {
                 $trainning = new DocumentTraining();
