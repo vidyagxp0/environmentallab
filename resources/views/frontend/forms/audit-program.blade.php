@@ -246,14 +246,19 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Date Due">Date Due</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">  --}}
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" name="due_date">
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        {{-- <input type="date"
+                                            value="" name="due_date"> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -261,24 +266,41 @@
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="initiatorGroup" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('initiatorGroup') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QAB" @if(old('initiatorGroup') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQA") selected @endif>Central Quality Control</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQC") selected @endif>Manufacturing</option>
-                                            <option value="PSG" @if(old('initiatorGroup') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                            <option value="CS"  @if(old('initiatorGroup') == "CS") selected @endif>Central Stores</option>
-                                            <option value="ITG" @if(old('initiatorGroup') =="ITG") selected @endif>Information Technology Group</option>
-                                            <option value="MM"  @if(old('initiatorGroup') == "MM") selected @endif>Molecular Medicine</option>
-                                            <option value="CL"  @if(old('initiatorGroup') == "CL") selected @endif>Central Laboratory</option>
+                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>Central
+                                                Laboratory</option>
 
-                                            <option value="TT"  @if(old('initiatorGroup') == "TT") selected @endif>Tech team</option>
-                                            <option value="QA"  @if(old('initiatorGroup') == "QA") selected @endif> Quality Assurance</option>
-                                            <option value="QM"  @if(old('initiatorGroup') == "QM") selected @endif>Quality Management</option>
-                                            <option value="IA"  @if(old('initiatorGroup') == "IA") selected @endif>IT Administration</option>
-                                            <option value="ACC"  @if(old('initiatorGroup') == "ACC") selected @endif>Accounting</option>
-                                            <option value="LOG"  @if(old('initiatorGroup') == "LOG") selected @endif>Logistics</option>
-                                            <option value="SM"  @if(old('initiatorGroup') == "SM") selected @endif>Senior Management</option>
-                                            <option value="BA"  @if(old('initiatorGroup') == "BA") selected @endif>Business Administration</option>
+                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                                Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
@@ -293,7 +315,7 @@
                                     <div class="group-input">
                                         <label for="Short Description"><b>Short Description <span
                                                     class="text-danger">*</span></b></label>
-                                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
                                 </div>
@@ -412,7 +434,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                                                    <td><input disabled type="text" name="serial_number[]"
+                                                            value="1"></td>
                                                     <td> <select id="select-state" placeholder="Select..."
                                                             name="Auditees[]">
                                                             <option value="">Select a value</option>
@@ -452,7 +475,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="attachments">Attached Files</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         {{-- <input type="file" name="attachments[]" multiple /> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="attachments"></div>
@@ -541,7 +565,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                                crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>

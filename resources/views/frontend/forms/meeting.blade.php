@@ -30,8 +30,8 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Operational planning and control</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings and summary</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Operational Planning & Control</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Meetings & Summary</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
             </div>
@@ -71,7 +71,6 @@
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                     </div>
                                 </div>
@@ -91,15 +90,14 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
                                         </div>
-                                        <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}">
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
-
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -190,7 +188,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <input type="date" name="start_date">
@@ -200,6 +198,26 @@
                                     <div class="group-input">
                                         <label for="Scheduled end date">Scheduled end date</label>
                                         <input type="date" name="end_date">
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Scheduled Start Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Scheduled End Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'end_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -955,8 +973,7 @@
                             <div class="group-input">
                                 <label for="control_nonconforming_outputs">
                                     Control of Non-conforming Outputs
-                                    <span class="
-                                    " data-bs-toggle="modal"
+                                    <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-control_nonconforming_outputs-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
                                         (Launch Instruction)
@@ -987,7 +1004,7 @@
                                     <tbody>
                                         <tr>
                                             <td><input type="text" name="row_no" value="1" disabled></td>
-                        {{-- ignore   --}}                 <td><input type="text" name="monitoring"></td> 
+                                            {{-- ignore   --}} <td><input type="text" name="monitoring"></td>
                                             <td><input type="text" name="measurement"></td>
                                             <td><input type="text" name="analysis"></td>
                                             <td><input type="text" name="evaluation"></td>
@@ -1051,7 +1068,8 @@
                                     <div class="file-attachment-list" id="file_attchment_if_any"></div>
                                     <div class="add-btn">
                                         <div>Add</div>
-                                         <input type="file" id="myfile" name="file_attchment_if_any[]"{{-- ignore --}}
+                                        <input type="file" id="myfile"
+                                            name="file_attchment_if_any[]"{{-- ignore --}}
                                             oninput="addMultipleFiles(this, 'file_attchment_if_any')" multiple>
                                     </div>
                                 </div>
@@ -1076,36 +1094,36 @@
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
-                                            <th>Record Number</th>
                                             <th>Short Description</th>
-                                            <th>CAPA Type (Corrective Action / Preventive Action)</th>
-                                            <th>Date Opened</th>
+                                            <th>Due Date</th>
                                             <th>Site / Division</th>
-                                            <th>Date Due</th>
-                                            <th>Current Status</th>
                                             <th>Person Responsible</th>
+                                            <th>Current Status</th>
                                             <th>Date Closed</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
-                                        <td><input type="text" name="record[]"></td>
                                         <td><input type="text" name="short_desc[]"></td>
-                                        <td><input type="text" name="capa_type[]"></td>
-                                        <td><input type="date" name="date_opened[]"></td>
-                                        <td><input type="text" name="site[]"></td>
                                         <td><input type="date" name="date_due[]"></td>
-                                        <td><input type="text" name="current_status[]"></td>
-                                        <td> <select id="select-state" placeholder="Select..."
+                                        <td><input type="text" name="site[]"></td>
+                                        <td>
+                                            <select id="select-state" placeholder="Select..."
                                                 name="responsible_person[]">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $data)
                                                     <option value="{{ $data->id }}">{{ $data->name }}
                                                     </option>
                                                 @endforeach
-                                            </select></td>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" name="current_status[]"></td>
                                         <td><input type="date" name="date_closed[]"></td>
+                                        <td><input type="text" name="record[]"></td>
+                                        {{-- <td><input type="text" name="capa_type[]"></td> --}}
+                                        {{-- <td><input type="date" name="date_opened[]"></td> --}}
 
                                     </tbody>
                                 </table>
@@ -1118,43 +1136,65 @@
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
-                                            <th>Record Number</th>
-                                            <th>Short Description</th>
-                                            <th>CAPA Type (Corrective Action / Preventive Action)</th>
-                                            <th>Date Opened</th>
+                                            {{-- <th>Record Number</th> --}}
+                                            <th>CAPA Details</th>
+                                            <th>CAPA Type</th>
                                             <th>Site / Division</th>
-                                            <th>Date Due</th>
-                                            <th>Current Status</th>
                                             <th>Person Responsible</th>
+                                            <th>Current Status</th>
                                             <th>Date Closed</th>
+                                            <th>Remarks</th>
+                                            {{-- <th>Date Opened</th> --}}
+                                            {{-- <th>Date Due</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
-                                        <td><input type="text" name="record[]"></td>
                                         <td><input type="text" name="short_desc[]"></td>
-                                        <td><input type="text" name="capa_type[]"></td>
-                                        <td><input type="date" name="date_opened[]"></td>
+                                        <td>
+                                            <select id="select-state" placeholder="Select..."
+                                                name="capa_type[]">
+                                                <option value="">Select a value</option>
+                                                <option value="corrective">Corrective Action</option>
+                                                <option value="preventive">Preventive Action</option>
+                                                <option value="corrective_preventive">Corrective & Preventive Action</option>
+                                            </select>
+                                        </td>
                                         <td><input type="text" name="site[]"></td>
-                                        <td><input type="date" name="date_due[]"></td>
-                                        <td><input type="text" name="current_status[]"></td>
-                                        <td> <select id="select-state" placeholder="Select..."
+                                        <td>
+                                            <select id="select-state" placeholder="Select..."
                                                 name="responsible_person[]">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $data)
                                                     <option value="{{ $data->id }}">{{ $data->name }}
                                                     </option>
                                                 @endforeach
-                                            </select></td>
+                                            </select>
+                                        </td>
+                                        <td><input type="text" name="current_status[]"></td>
                                         <td><input type="date" name="date_closed[]"></td>
+                                        <td><input type="text" name="record[]"></td>
+                                        {{-- <td><input type="date" name="date_opened[]"></td> --}}
+                                        {{-- <td><input type="date" name="date_due[]"></td> --}}
 
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="group-input">
+                            {{-- <div class="group-input">
                                 <label for="next_managment_review_date">Next Management Review Date</label>
                                 <input type="date" name='next_managment_review_date'>
+                            </div> --}}
+                            <div class="new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="next_managment_review_date">Next Management Review Date</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="next_managment_review_date" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_managment_review_date" class="hide-input"
+                                            oninput="handleDateInput(this, 'next_managment_review_date')" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="group-input">
                                 <label for="summary_recommendation">Summary & Recommendation</label>

@@ -561,6 +561,29 @@ function addMultipleFiles(input, block_id) {
                                                 <textarea name="if_other" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->if_other }}</textarea>
                                             </div>
                                         </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="external_agencies">External Agencies</label>
+                                                <select name="external_agencies">
+                                                    <option value="">-- Select --</option>
+                                                    <option value="jordan_fda">Jordan FDA</option>
+                                                    <option value="us_fda">USFDA</option>
+                                                    <option value="mhra">MHRA</option>
+                                                    <option value="anvisa">ANVISA</option>
+                                                    <option value="iso">ISO</option>
+                                                    <option value="who">WHO</option>
+                                                    <option value="local_fda">Local FDA</option>
+                                                    <option value="tga">TGA</option>
+                                                    <option value="others">Others</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="others">Others</label>
+                                                <textarea name="others"></textarea>
+                                            </div>
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Initial Comments">Initial Comments</label>

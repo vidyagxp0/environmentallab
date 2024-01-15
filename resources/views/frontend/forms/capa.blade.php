@@ -97,7 +97,6 @@
                                         <label for="Date Due">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                        {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -116,16 +115,17 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">  --}}
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="due-date">Due Date<span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -133,24 +133,42 @@
                                         <label for="Initiator Group">Initiator Group</label>
                                         <select name="initiatorGroup" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('initiatorGroup') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QAB" @if(old('initiatorGroup') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQA") selected @endif>Central Quality Control</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQC") selected @endif>Manufacturing</option>
-                                            <option value="PSG" @if(old('initiatorGroup') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                            <option value="CS"  @if(old('initiatorGroup') == "CS") selected @endif>Central Stores</option>
-                                            <option value="ITG" @if(old('initiatorGroup') =="ITG") selected @endif>Information Technology Group</option>
-                                            <option value="MM"  @if(old('initiatorGroup') == "MM") selected @endif>Molecular Medicine</option>
-                                            <option value="CL"  @if(old('initiatorGroup') == "CL") selected @endif>Central Laboratory</option>
-
-                                            <option value="TT"  @if(old('initiatorGroup') == "TT") selected @endif>Tech team</option>
-                                            <option value="QA"  @if(old('initiatorGroup') == "QA") selected @endif> Quality Assurance</option>
-                                            <option value="QM"  @if(old('initiatorGroup') == "QM") selected @endif>Quality Management</option>
-                                            <option value="IA"  @if(old('initiatorGroup') == "IA") selected @endif>IT Administration</option>
-                                            <option value="ACC"  @if(old('initiatorGroup') == "ACC") selected @endif>Accounting</option>
-                                            <option value="LOG"  @if(old('initiatorGroup') == "LOG") selected @endif>Logistics</option>
-                                            <option value="SM"  @if(old('initiatorGroup') == "SM") selected @endif>Senior Management</option>
-                                            <option value="BA"  @if(old('initiatorGroup') == "BA") selected @endif>Business Administration</option>
+                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>
+                                                Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>
+                                                Central
+                                                Laboratory</option>
+                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                                Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
@@ -165,7 +183,7 @@
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
                                 </div>
@@ -176,6 +194,8 @@
                                         <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">Enter Your Selection Here</option>
+                                            <option value="internal_audit">Internal Audit</option>
+                                            <option value="external_audit">External Audit</option>
                                             <option value="recall">Recall</option>
                                             <option value="return">Return</option>
                                             <option value="deviation">Deviation</option>
@@ -197,7 +217,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="repeat">Repeat</label>
-                                        <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
+                                        <div><small class="text-primary">Please select yes if it is has recurred in past
+                                                six months</small></div>
                                         <select name="repeat"
                                             onchange="otherController(this.value, 'Yes', 'repeat_nature')">
                                             <option value="">Enter Your Selection Here</option>
@@ -308,7 +329,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="capa_attachment[]"> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="capa_attachment"></div>
@@ -660,7 +682,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Closure Attachments">Closure Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         {{-- <input multiple type="file" id="myfile" name="closure_attachment[]"> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="closure_attachment"></div>
@@ -686,11 +709,16 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="group-input">
-                                        <label for="Effect.Check Creation Date">Effect.Check Creation Date</label>
-                                        <input type="date" name="effect_check_date">
-                                        <div class="static"></div>
+                                <div class="col-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Effect.Check Creation Date">Effectiveness Check Creation Date</label>
+                                        {{-- <input type="date" name="effect_check_date"> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" name="effect_check_date" id="effect_check_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" class="hide-input"
+                                                oninput="handleDateInput(this, 'effect_check_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -716,7 +744,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                                crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>

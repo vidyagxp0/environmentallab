@@ -230,16 +230,17 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">  --}}
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Date Due</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -687,17 +688,26 @@
                                 Assignment Details
                             </div>
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Scheduled Start Date">Scheduled Start Date</label>
-                                        <input type="date" name="schedule_start_date">
-                                        {{-- <div class="static"></div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Scheduled Start Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="schedule_start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="schedule_start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'schedule_start_date')" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Scheduled End Date">Scheduled End Date</label>
-                                        <input type="date" name="schedule_end_date">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Scheduled End Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="schedule_end_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="schedule_end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'schedule_end_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -1359,10 +1369,15 @@
                                         <textarea  name="mitigation_plan"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="mitigation-due-date">Mitigation Due Date</label>
-                                        <input type="date" name="mitigation_due_date">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Scheduled End Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="mitigation_due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="mitigation_due_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'mitigation_due_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

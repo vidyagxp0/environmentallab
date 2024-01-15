@@ -78,7 +78,8 @@
                     console.log(users);
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '"></td>' +
                         '<td><input type="text" name="audit[]"></td>' +
                         '<td><input type="date" name="scheduled_start_date[]"></td>' +
                         '<td><input type="time" name="scheduled_start_time[]"></td>' +
@@ -112,66 +113,66 @@
             });
         });
     </script>
-<script>
-    $(document).ready(function() {
-        $('#ObservationAdd').click(function(e) {
-            function generateTableRow(serialNumber) {
-                var users = @json($users);
+    <script>
+        $(document).ready(function() {
+            $('#ObservationAdd').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
 
-                var html =
-                    '<tr>' +
-                    '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                    '"></td>' +
-                    '<td><input type="text" name="observation_id[]"></td>' +
-                    '<td><input type="date" name="date[]"></td>' +
-                    '<td><select name="auditorG[]">' +
-                    '<option value="">Select a value</option>';
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="observation_id[]"></td>' +
+                        '<td><input type="date" name="date[]"></td>' +
+                        '<td><select name="auditorG[]">' +
+                        '<option value="">Select a value</option>';
 
-                for (var i = 0; i < users.length; i++) {
-                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+                        '<td><select name="auditeeG[]">' +
+                        '<option value="">Select a value</option>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+                    html += '</select></td>' +
+                        '<td><input type="text" name="observation_description[]"></td>' +
+                        '<td><input type="text" name="severity_level[]"></td>' +
+                        '<td><input type="text" name="area[]"></td>' +
+                        '<td><input type="text" name="observation_category[]"></td>' +
+                        '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
+                        '<td><input type="text" name="auditee_response[]"></td>' +
+                        '<td><input type="text" name="auditor_review_on_response[]"></td>' +
+                        '<td><input type="text" name="qa_comment[]"></td>' +
+                        '<td><input type="text" name="capa_details[]"></td>' +
+                        '<td><input type="date" name="capa_due_date[]"></td>' +
+                        '<td><select name="capa_owner[]">' +
+                        '<option value="">Select a value</option>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' + '<td><input type="text" name="action_taken[]"></td>' +
+                        '<td><input type="date" name="capa_completion_date[]"></td>' +
+                        '<td><input type="text" name="status_Observation[]"></td>' +
+                        '<td><input type="text" name="remark_observation[]"></td>' +
+                        '</tr>';
+
+                    return html;
                 }
 
-                html += '</select></td>' +
-                    '<td><select name="auditeeG[]">' +
-                    '<option value="">Select a value</option>';
-
-                for (var i = 0; i < users.length; i++) {
-                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                }
-                html += '</select></td>' +
-                    '<td><input type="text" name="observation_description[]"></td>' +
-                    '<td><input type="text" name="severity_level[]"></td>' +
-                    '<td><input type="text" name="area[]"></td>' +
-                    '<td><input type="text" name="observation_category[]"></td>' +
-                    '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                    '<td><input type="text" name="auditee_response[]"></td>' +
-                    '<td><input type="text" name="auditor_review_on_response[]"></td>' +
-                    '<td><input type="text" name="qa_comment[]"></td>' +
-                    '<td><input type="text" name="capa_details[]"></td>' +
-                    '<td><input type="date" name="capa_due_date[]"></td>' +
-                    '<td><select name="capa_owner[]">' +
-                    '<option value="">Select a value</option>';
-
-                for (var i = 0; i < users.length; i++) {
-                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                }
-
-                html += '</select></td>' +                    '<td><input type="text" name="action_taken[]"></td>' +
-                    '<td><input type="date" name="capa_completion_date[]"></td>' +
-                    '<td><input type="text" name="status_Observation[]"></td>' +
-                    '<td><input type="text" name="remark_observation[]"></td>' +
-                    '</tr>';
-
-                return html;
-            }
-
-            var tableBody = $('#onservation-field-table tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
+                var tableBody = $('#onservation-field-table tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
         });
-    });
-</script>
+    </script>
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -244,7 +245,7 @@
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">                                        
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -266,15 +267,14 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <div class="calenderauditee">                                     
-                                        <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input
-                                        type="date" 
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"
-                                        />
-                                         </div>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="due_date" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
 
@@ -283,24 +283,41 @@
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="initiatorGroup" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if(old('initiatorGroup') =="CQA") selected @endif>Corporate Quality Assurance</option>
-                                            <option value="QAB" @if(old('initiatorGroup') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQA") selected @endif>Central Quality Control</option>
-                                            <option value="CQC" @if(old('initiatorGroup') =="CQC") selected @endif>Manufacturing</option>
-                                            <option value="PSG" @if(old('initiatorGroup') =="PSG") selected @endif>Plasma Sourcing Group</option>
-                                            <option value="CS"  @if(old('initiatorGroup') == "CS") selected @endif>Central Stores</option>
-                                            <option value="ITG" @if(old('initiatorGroup') =="ITG") selected @endif>Information Technology Group</option>
-                                            <option value="MM"  @if(old('initiatorGroup') == "MM") selected @endif>Molecular Medicine</option>
-                                            <option value="CL"  @if(old('initiatorGroup') == "CL") selected @endif>Central Laboratory</option>
+                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>Central
+                                                Laboratory</option>
 
-                                            <option value="TT"  @if(old('initiatorGroup') == "TT") selected @endif>Tech team</option>
-                                            <option value="QA"  @if(old('initiatorGroup') == "QA") selected @endif> Quality Assurance</option>
-                                            <option value="QM"  @if(old('initiatorGroup') == "QM") selected @endif>Quality Management</option>
-                                            <option value="IA"  @if(old('initiatorGroup') == "IA") selected @endif>IT Administration</option>
-                                            <option value="ACC"  @if(old('initiatorGroup') == "ACC") selected @endif>Accounting</option>
-                                            <option value="LOG"  @if(old('initiatorGroup') == "LOG") selected @endif>Logistics</option>
-                                            <option value="SM"  @if(old('initiatorGroup') == "SM") selected @endif>Senior Management</option>
-                                            <option value="BA"  @if(old('initiatorGroup') == "BA") selected @endif>Business Administration</option>
+                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                                Business Administration</option>
                                         </select>
                                     </div>
                                 </div>
@@ -315,7 +332,7 @@
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
                                 </div>
@@ -387,6 +404,29 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="external_agencies">External Agencies</label>
+                                        <select name="external_agencies">
+                                            <option value="">-- Select --</option>
+                                            <option value="jordan_fda">Jordan FDA</option>
+                                            <option value="us_fda">USFDA</option>
+                                            <option value="mhra">MHRA</option>
+                                            <option value="anvisa">ANVISA</option>
+                                            <option value="iso">ISO</option>
+                                            <option value="who">WHO</option>
+                                            <option value="local_fda">Local FDA</option>
+                                            <option value="tga">TGA</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="others">Others</label>
+                                        <textarea name="others"></textarea>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial Comments">Initial Comments</label>
@@ -407,7 +447,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Initial Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="audit_file_attachment"></div>
@@ -438,21 +479,22 @@
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <div class="calenderauditee">                                     
+                                        <div class="calenderauditee">
                                         <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
                                         <input
-                                        type="date" 
+                                        type="date"
                                         class="hide-input"
                                         oninput="handleDateInput(this, 'due_date')"
                                         />
                                          </div>
                                     </div>
                                 </div> --}}
-                                
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="intiation-date"><b>Date of Initiation </b></label>
-                                         <input type="text" value="{{ date('d-M-Y') }}" name="intiation-date" disabled>
+                                        <input type="text" value="{{ date('d-M-Y') }}" name="intiation-date"
+                                            disabled>
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation-date">
                                     </div>
                                 </div>
@@ -460,13 +502,12 @@
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="end_date" id="end_date"  readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" 
-                                            type ="date"  
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'end_date')"/>
+                                            <input type="text" name="end_date" id="end_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" type ="date" class="hide-input"
+                                                oninput="handleDateInput(this, 'end_date')" />
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -490,7 +531,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1"></td>
+                                                <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
                                                 <td><input type="text" name="audit[]"></td>
                                                 <td><input type="date" name="scheduled_start_date[]"></td>
                                                 <td><input type="time" name="scheduled_start_time[]"></td>
@@ -584,7 +626,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="File Attachments">File Attachment</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         {{-- <div class="file-attachment-field">
                                             <div id="file_attachment"></div>
                                             <input type="file" id="myfile" name="file_attachment[]"
@@ -605,7 +648,7 @@
                                         <label for="audit-agenda-grid">
                                             Observation Details
                                             <button type="button" name="audit-agenda-grid"
-                                            id="ObservationAdd">+</button>
+                                                id="ObservationAdd">+</button>
                                             <span class="text-primary" data-bs-toggle="modal"
                                                 data-bs-target="#observation-field-instruction-modal"
                                                 style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
@@ -681,8 +724,8 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Auditee">Auditee</label>
-                                        <select multiple name="Auditee[]" placeholder="Select Auditee" data-search="false"
-                                            data-silent-initial-value-set="true" id="Auditee">
+                                        <select multiple name="Auditee[]" placeholder="Select Auditee"
+                                            data-search="false" data-silent-initial-value-set="true" id="Auditee">
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -703,7 +746,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines / Industry Standards</label>
+                                        <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines /
+                                            Industry Standards</label>
                                         <textarea name="Relevant Guidelines / Industry Standards"></textarea>
                                     </div>
                                 </div>
@@ -775,47 +819,33 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                {{-- <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">
-                                    </div>
-                                </div> --}}
-
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="audit_start_date Date">Audit Start Date</label>
-                                        <div class="calenderauditee">                                     
-                                            <input type="text" name="audit_start_date" id="audit_start_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input
-                                         type="date" name="audit_start_date"
-                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'audit_start_date')"/>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="audit_start_date" id="audit_start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="audit_start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'audit_start_date')" />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <div class="calenderauditee">                                     
-                                            <input type="text" name="audit_end_date" id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <label for="Audit End Date">Audit End Date</label>
-                                        <input type="date" name="audit_end_date"
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'audit_end_date')"/>
+                                        <div class="calenderauditee">
+                                            <label for="Audit End Date">Audit End Date</label>
+                                            <input type="text" name="audit_end_date" id="audit_end_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="audit_end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'audit_end_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Audit Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Audit_file[]" multiple> --}}
-                                        {{-- <div class="file-attachment-field">
-                                            <div id="audit_attachment"></div>
-                                            <input type="file" id="myfile" name="Audit_file[]"
-                                            oninput="addMultipleFiles(this, 'audit_attachment')" multiple>
-                                        </div> --}}
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="audit_attachment"></div>
                                             <div class="add-btn">
@@ -863,7 +893,7 @@
                                             <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -872,7 +902,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Report Attachments">Report Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         {{-- <input type="file" id="myfile" name="report_file[]" multiple> --}}
                                         {{-- <div class="file-attachment-field">
                                             <div id="Audit_file_attachment"></div>
@@ -893,7 +924,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Attachments">Audit Attachments</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
                                         {{-- <input type="file" id="myfile" name="myfile[]" multiple> --}}
                                         {{-- <div class="file-attachment-field">
                                             <div id="myfile_attachment"></div>
@@ -919,7 +951,8 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                                crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
@@ -964,13 +997,15 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed By</label>
+                                        <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                            By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Preparation Completed On">Audit Preparation Completed On</label>
+                                        <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                            On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -988,13 +1023,15 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Audit Observation Submitted By</label>
+                                        <label for="Audit Observation Submitted By">Audit Observation Submitted
+                                            By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Audit Observation Submitted On</label>
+                                        <label for="Audit Observation Submitted On">Audit Observation Submitted
+                                            On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1024,13 +1061,15 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Response Feedback Verified By">Response Feedback Verified By</label>
+                                        <label for="Response Feedback Verified By">Response Feedback Verified
+                                            By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Response Feedback Verified On">Response Feedback Verified On</label>
+                                        <label for="Response Feedback Verified On">Response Feedback Verified
+                                            On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

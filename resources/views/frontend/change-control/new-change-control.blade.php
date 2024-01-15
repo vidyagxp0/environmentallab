@@ -447,7 +447,14 @@
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="type_change">Type of Change</label>
+                                        <label for="type_change">
+                                            Type of Change
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#change-control-type-of-change-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
                                         <select name="type_chnage">
                                             <option value="0">-- Select --</option>
                                             <option value="major">Major</option>
@@ -1220,6 +1227,61 @@
                 </div>
             </form>
 
+        </div>
+    </div>
+
+    <div class="modal fade" id="change-control-type-of-change-instruction-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Instructions</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <h4>1. Major Change:</h4>
+                    <ul>
+                        <li>A major change is usually a significant alteration that may have a substantial impact on the
+                            product.</li>
+
+                        <li>It might involve modifications to the manufacturing process, formulation, equipment, or other
+                            critical aspects of production.</li>
+
+                        <li>Major changes often require thorough assessment, validation, and regulatory approval before
+                            implementation.</li>
+                    </ul>
+
+
+                    <h4>2. Minor Change:</h4>
+                    <ul>
+
+                        <li>A minor change is typically a less significant alteration, one that is unlikely to have a
+                            substantial impact on product quality, safety, or efficacy.</li>
+
+                        <li>Minor changes may include adjustments to documentation, labeling, or other non-critical aspects
+                            that don't significantly affect the product's characteristics.</li>
+
+                        <li>These changes may still require some level of evaluation and documentation but may not
+                            necessitate the same level of scrutiny as major changes.</li>
+                    </ul>
+
+
+                    <h4>3. Critical Change:</h4>
+                    <ul>
+
+                        <li>A critical change is one that has the potential to significantly impact product quality, safety,
+                            or efficacy and may require immediate attention.</li>
+
+                        <li>These changes are often associated with unexpected events or deviations that need prompt
+                            resolution to maintain product integrity.</li>
+
+                        <li>Critical changes may require urgent assessment, corrective actions, and regulatory reporting.
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
     </div>
 
