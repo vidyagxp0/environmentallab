@@ -765,6 +765,10 @@ use Illuminate\Support\Facades\Hash;
     {
 
         $data = RootCauseAnalysis::find($id);
+        if(empty($data)) {
+            toastr()->error('Invalid ID.');
+            return back();
+        }
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');

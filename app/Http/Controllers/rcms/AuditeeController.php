@@ -89,6 +89,7 @@ class AuditeeController extends Controller
         $internalAudit->audit_end_date = $request->audit_end_date;
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
+        $internalAudit->external_agencies = $request->external_agencies;
 
         if (!empty($request->inv_attachment)) {
             $files = [];

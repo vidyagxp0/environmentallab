@@ -61,40 +61,7 @@ class DocumentController extends Controller
     {
          $request->dd();
          return $request;
-
-        //  if (!$request->short_description) {
-        //     toastr()->error("Short description is required");
-        //       return redirect()->back();
-        //  }
-
-        // $new = new DocumentTraningInformation;
-        // $new->originator_id = $request->originator_id;
-        // $new->division_id = $request->division_id;
-        // $new->process_id = $request->process_id;
-        // $new->training_required = $request->training_required;
-        // $new->trainer = $request->trainer;
-        // $new->test = $request->test;
-        // $new->reporting = $request->reporting;
-        // $new->comments = $request->comments;
-        // $new->save();
-
-        // $new = new ContentsDocument;
-        // $new->purpose = $request->purpose;
-        // $new->scope = $request->scope;
-        // $new->responsibility = $request->responsibility;
-        // $new->abbreviation = $request->abbreviation;
-        // $new->defination = $request->defination;
-        // $new->materials_and_equipments = $request->materials_and_equipments;
-        // $new->procedure = $request->procedure;
-        // $new->reporting = $request->reporting;    
-        // $new->reference_text = $request->reference_text;
-        // $new->references = $request->references;
-        // $new->ann = $request->ann;
-        // $new->serial_number = $request->serial_number;
-        // $new->annexure_number = $request->annexure_number;
-        // $new->annexure_data = $request->annexure_data;
-        // // $new->reporting = $request->reporting;    
-        // $new->save();
+ 
 
         $new = new Document;
         $new->originator_id = $request->originator_id;

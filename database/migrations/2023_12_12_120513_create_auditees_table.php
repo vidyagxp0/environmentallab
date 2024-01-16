@@ -23,7 +23,6 @@ return new class extends Migration
             $table->string('initiator_group_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('form_type')->nullable();
-            $table->string('due_date')->nullable();
 
             $table->integer('record')->nullable();
             $table->integer('parent_id')->nullable();
@@ -38,9 +37,10 @@ return new class extends Migration
             $table->text('repeat')->nullable();
             $table->text('repeat_nature')->nullable();
             $table->text('initial_comments')->nullable();
-            // $table->string('due_date')->nullable();
+            $table->string('due_date')->nullable();
             $table->date('audit_start_date')->nullable();
             $table->date('audit_end_date')->nullable();
+            $table->string('external_agencies')->nullable();
             //<!-- ------------------------------- -->
             $table->longText('inv_attachment')->nullable();
             $table->date('start_date')->nullable();

@@ -48,6 +48,7 @@
                                     @endphp
                                     @foreach ($pro as $test)
                                         <label for="process">
+                                            <input type="hidden" name="process_id" value="{{ $test->id }}">
                                             <input type="submit" class="bg-light text-dark"
                                                 style="width: 100%; height: 60%; background-color: #011627; color: #fdfffc; padding: 7px; border: 0px;"
                                                 bgcolor="#011627" border="0" type="submit" for="process"

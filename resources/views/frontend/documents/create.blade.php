@@ -24,7 +24,8 @@
         </div>
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ $division->dname }} / {{ $division->pname }}
+            {{ Helpers::getDivisionName(session()->get('division')) }} / New Document
+            {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
     </div>
 

@@ -435,6 +435,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @if(!empty($dataAnalysis1->Question))
                                             @foreach (unserialize($dataAnalysis1->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number[]"
@@ -446,6 +447,7 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                            @endif
                                         </tbody>
                                     </table>
                                 </div>
