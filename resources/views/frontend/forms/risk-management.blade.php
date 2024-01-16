@@ -1326,7 +1326,14 @@
                                                 <tbody>
                                                     <td><input type="text" name="serial_number[]" value="1"></td>
                                                     <td><input type="text" name="mitigation_steps[]"></td>
-                                                    <td><input type="date" name="deadline2[]"></td> 
+                                                    {{-- <td><input type="date" name="deadline2[]"></td>  --}}
+                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date "><div
+                                                        class="calenderauditee">
+                                                        <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="deadline2[]" class="hide-input" 
+                                                        oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
+                                                    <td><input type="text" name="item_static[]"></td>
                                                     
 
                                                     <td> <select id="select-state" placeholder="Select..." name="responsible_person[]">
@@ -1739,7 +1746,7 @@
                         '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                         '<td><input type="text" name="mitigation_steps[]"></td>' +
                         // '<td><input type="date" name="deadline2[]"></td>' 
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
+                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
                         
                         
                         +
