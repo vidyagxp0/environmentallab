@@ -113,14 +113,21 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
                                         <input disabled type="text"
                                             value="{{ Helpers::getdateFormat($due_date) }}">  --}}
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" name="due_date">
 
+                                            <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" name="due_date"> -->
+
+                                            <div class="calenderauditee">                                     
+                                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -352,16 +359,32 @@
                                 <div class="col-12 sub-head">
                                     Audit Information
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Last Audit Date">Last Audit Date</label>
-                                        <input type="date" id="last_audit_date" name="last_audit_date">
+                                        <!-- <input type="date" id="last_audit_date" name="last_audit_date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                        <input type="text"  id="last_audit_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="last_audit_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'last_audit_date')"/>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Next Audit Date">Next Audit Date</label>
-                                        <input type="date" id="next_audit_date" name="next_audit_date">
+                                        <!-- <input type="date" id="next_audit_date" name="next_audit_date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                        <input type="text"  id="next_audit_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_audit_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'next_audit_date')"/>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

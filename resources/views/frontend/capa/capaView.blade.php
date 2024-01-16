@@ -942,12 +942,18 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="group-input">
+                                        <div class="col-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Effect.Check Creation Date">Effect.Check Creation
                                                     Date</label>
-                                                <input type="date" name="effect_check_date"
-                                                    value="{{ $data->effect_check_date }}">
+                                                <!-- <input type="date" name="effect_check_date"
+                                                    value="{{ $data->effect_check_date }}"> -->
+                                                    <div class="calenderauditee">                                     
+                                                        <input type="text"  value="{{ $data->effect_check_date }}" id="effect_check_date"  readonly placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="effect_check_date" value=""
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'effect_check_date')"/>
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="col-6">

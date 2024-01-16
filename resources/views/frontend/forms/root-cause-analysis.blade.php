@@ -89,10 +89,10 @@
                                         <div><small class="text-danger">Last date this Investigation should be closed
                                                 by</small></div>
                                         <div class="calenderauditee">                                     
-                                            <input type="text" name="Date Due" id="Date Due"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="Date Due" value=""
+                                        <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="due_date" value=""
                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'Date Due')"/>
+                                        oninput="handleDateInput(this, 'due_date')"/>
                                         </div>
 
                                         {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">

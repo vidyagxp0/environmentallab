@@ -634,18 +634,33 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm2" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
-                                                <input type="date" name="start_date" value="{{ $data->start_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <!-- <input type="date" name="start_date" value="{{ $data->start_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+                                                <div class="calenderauditee">                                     
+                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->start_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                    <input type="date" name="start_date" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'start_date')"/>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input  input-date">
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
-                                                <input type="date" name="end_date" value="{{ $data->end_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <!-- <input type="date" name="end_date" value="{{ $data->end_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+                                                
+                                                <div class="calenderauditee">                                     
+                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->end_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                    <input type="date" name="end_date" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'end_date')"/>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1092,20 +1107,35 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="static">{{ $data->due_date }}</div>
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
-                                                <input type="date" name="audit_start_date"
+                                                <!-- <input type="date" name="audit_start_date"
                                                     value="{{ $data->audit_start_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+                                                    <div class="calenderauditee">                                     
+                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ $data->audit_start_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                        <input type="date" name="audit_start_date" value=""
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'audit_start_date')"/>
+                                                    </div>    
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
-                                                <input type="date" name="audit_end_date"
+                                                <!-- <input type="date" name="audit_end_date"
                                                     value="{{ $data->audit_end_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+                                                
+                                                    <div class="calenderauditee">                                     
+                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->audit_end_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                    <input type="date" name="audit_end_date" value=""
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'audit_end_date')"/>
+                                                    </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">

@@ -116,11 +116,17 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date">
+                                        <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="" name="due_date"> -->
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="due_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'due_date')"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -278,16 +284,31 @@
                                         <textarea name="action_taken"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="start_date">Actual Start Date</label>
-                                        <input type="date" name="start_date">
+                                        <!-- <input type="date" name="start_date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="start_date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'start_date')"/>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="end_date">Actual End Date</label>
-                                        <input type="date" name="end_date">
+                                        <!-- <input type="date" name="end_date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                        <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="end_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'end_date')"/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">

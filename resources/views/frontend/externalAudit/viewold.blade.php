@@ -544,20 +544,34 @@
                                         <div class="col-12 sub-head">
                                             Audit Information
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Last Audit Date">Last Audit Date</label>
-                                                <input type="date" id="last_audit_date" name="last_audit_date"
+                                                <!-- <input type="date" id="last_audit_date" name="last_audit_date"
                                                     value="{{ $data->last_audit_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+                                                    <div class="calenderauditee">                                     
+                                                        <input type="text"  id="last_audit_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->last_audit_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                        <input type="date" name="last_audit_date" value=""
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'last_audit_date')"/>
+                                                    </div>  
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Next Audit Date">Next Audit Date</label>
-                                                <input type="date" id="next_audit_date" name="next_audit_date"
+                                                <!-- <input type="date" id="next_audit_date" name="next_audit_date"
                                                     value="{{ $data->next_audit_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+                                                    <div class="calenderauditee">                                     
+                                                        <input type="text"  id="next_audit_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ $data->next_audit_date }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                        <input type="date" name="next_audit_date" value=""
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'next_audit_date')"/>
+                                                    </div>    
                                             </div>
                                         </div>
                                         <div class="col-lg-6">

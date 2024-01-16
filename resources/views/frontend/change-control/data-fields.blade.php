@@ -116,11 +116,18 @@
                                         </datalist>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date<span class="text-danger">*</span></label>
-                                        <input type="date" name="due_date" id="Changedue_date"
-                                            value="{{ old('due_date') }}">
+                                        <!-- <input type="date" name="due_date" id="Changedue_date"
+                                            value="{{ old('due_date') }}"> -->
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="Changedue_date" value="{{ old('due_date') }}" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'Changedue_date')"/>
+                                        </div>
+
                                         <p id="Changedue_dateError" style="color:red"> **Due Date is required</p>
                                     </div>
                                 </div>
@@ -1417,10 +1424,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                        <input type="date" name="effective-check-date">
+                                        <!-- <input type="date" name="effective-check-date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="effective-check-date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="effective-check-date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'effective-check-date')"/>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

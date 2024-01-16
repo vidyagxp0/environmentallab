@@ -1002,10 +1002,18 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                        <input type="date" name="effective_check_date">
+                                        <!-- <input type="date" name="effective_check_date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                        <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="effective_check_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'effective_check_date')"/>
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-12">

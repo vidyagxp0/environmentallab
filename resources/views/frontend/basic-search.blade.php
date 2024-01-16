@@ -69,22 +69,40 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="group-input">
+                    <div class="col-lg-4 new-date-data-field">
+                        <div class="group-input input-date">
                             <label for="created_date">Created Date</label>
-                            <input type="date" name="created_date">
+                            <!-- <input type="date" name="created_date"> -->
+                            <div>
+                                <input type="text"  id="created_date"  readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="created_date" value=""
+                                class="hide-input"
+                                oninput="handleDateInput(this, 'created_date')"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="group-input">
+                    <div class="col-lg-4 new-date-data-field">
+                        <div class="group-input input-date">
                             <label for="due_date">Due Date</label>
-                            <input type="date" name="due_date">
+                            <!-- <input type="date" name="due_date"> -->
+                            <div class="calenderauditee">                                     
+                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="due_date" value=""
+                                class="hide-input"
+                                oninput="handleDateInput(this, 'due_date')"/>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <div class="group-input">
+                    <div class="col-lg-4 new-date-data-field">
+                        <div class="group-input input-date">
                             <label for="effective_date">Effective Date</label>
-                            <input type="date" name="effective_date">
+                            <!-- <input type="date" name="effective_date"> -->
+                            <div class="calenderauditee">                                     
+                                <input type="text"  id="effective_date"  readonly placeholder="DD-MMM-YYYY" />
+                                <input type="date" name="effective_date" value=""
+                                class="hide-input"
+                                oninput="handleDateInput(this, 'effective_date')"/>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-4">

@@ -1441,10 +1441,16 @@
                                             </datalist>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="group-input">
+                                    <div class="col-md-6 new-date-data-field">
+                                        <div class="group-input input-date">
                                             <label for="due-date">Due Date</label>
-                                            <input type="date" name="due_date">
+                                            <!-- <input type="date" name="due_date"> -->
+                                            <div class="calenderauditee">                                     
+                                                <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                                <input type="date" name="due_date" value=""
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')"/>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6">

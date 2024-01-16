@@ -127,11 +127,18 @@
                             @endif
 
 
-                            <div class="col-md-4">
-                                <div class="group-input">
+                            <div class="col-md-4 new-date-data-field">
+                                <div class="group-input input-date">
                                     <label for="due-date">Due Date</label>
-                                    <input type="date" name="due_date" id="due_dateDoc"
-                                        value="{{ $document->due_date }}">
+                                    <!-- <input type="date" name="due_date" id="due_dateDoc"
+                                        value="{{ $document->due_date }}"> -->
+                                    
+                                    <div class="calenderauditee">                                     
+                                        <input type="text"  id="due_date" value="{{ $document->due_date }}"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="due_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')"/>
+                                    </div>
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Due Date' &&
@@ -633,10 +640,16 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="group-input">
+                            <div class="col-md-4 new-date-data-field">
+                                <div class="group-input input-date">
                                     <label for="effective-date">Effective Date</label>
-                                    <input type="date" name="effectve_date" value="{{ $document->effectve_date }}" id="effectve_date">
+                                    <!-- <input type="date" name="effectve_date" value="{{ $document->effectve_date }}" id="effectve_date"> -->
+                                    <div class="calenderauditee">                                     
+                                        <input type="text"  id="effectve_date" value="{{ $document->effectve_date }} readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="effectve_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'effectve_date')"/>
+                                    </div>
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Effective Date' &&
@@ -713,11 +726,19 @@
 
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="group-input">
+                            <div class="col-md-4 new-date-data-field">
+                                <div class="group-input input-date">
                                     <label for="review-date">Next Review Date</label>
-                                    <input type="date" name="next_review_date" id="next_review_date"
-                                        value="{{ $document->next_review_date }}">
+                                    <!-- <input type="date" name="next_review_date" id="next_review_date"
+                                        value="{{ $document->next_review_date }}"> -->
+
+                                        <div class="calenderauditee">                                     
+                                        <input type="text"  id="next_review_date" value="{{ $document->next_review_date }}" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_review_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'next_review_date')"/>
+                                        </div>
+
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Next-Review Date' &&

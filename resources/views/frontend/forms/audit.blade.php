@@ -300,8 +300,8 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input new-date-data-field">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div>
                                             <small class="text-primary">Please mention expected date of completion</small>
@@ -496,8 +496,8 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6">
-                                    <div class="group-input new-date-data-field">
+                                <div class="col-lg-6  new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                         {{-- <input type="date" name="start_date"> --}}
                                         <div class="calenderauditee">
@@ -508,8 +508,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                         {{-- <input type="date" name="end_date"> --}}
                                         <div class="calenderauditee">
@@ -818,8 +818,8 @@
                                             value="{{ Helpers::getdateFormat($due_date) }}">
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6">
-                                    <div class="group-input new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Audit Start Date">Audit Start Date</label>
                                         {{-- <input type="date" name="audit_start_date"> --}}
                                         <div class="calenderauditee">
@@ -830,8 +830,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Audit End Date">Audit End Date</label>
                                         {{-- <input type="date" name="audit_end_date"> --}}
                                         <div class="calenderauditee">
