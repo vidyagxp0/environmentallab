@@ -81,9 +81,9 @@
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="audit[]"></td>' +
-                        '<td><input type="date" name="scheduled_start_date[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_start_time[]"></td>' +
-                        '<td><input type="date" name="scheduled_end_date[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_end_time[]"></td>' +
                         '<td><select name="auditor[]">' +
                         '<option value="">Select a value</option>';
@@ -118,7 +118,7 @@
             $('#ObservationAdd').click(function(e) {
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
-
+                    
                     var html =
                         '<tr>' +
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
@@ -149,7 +149,7 @@
                         '<td><input type="text" name="auditor_review_on_response[]"></td>' +
                         '<td><input type="text" name="qa_comment[]"></td>' +
                         '<td><input type="text" name="capa_details[]"></td>' +
-                        '<td><input type="date" name="capa_due_date[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><select name="capa_owner[]">' +
                         '<option value="">Select a value</option>';
 
@@ -534,9 +534,24 @@
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="audit[]"></td>
-                                                <td><input type="date" name="scheduled_start_date[]"></td>
-                                                <td><input type="time" name="scheduled_start_time[]"></td>
-                                                <td><input type="date" name="scheduled_end_date[]"></td>
+                                                 {{-- <td><input type="date" name="scheduled_start_date[]"></td>  --}}
+
+                                                 <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="scheduled_start_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>'
+                                      <td><input type="time" name="scheduled_start_time[]"></td>
+
+                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
+                                                <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="scheduled_end_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>'
+                                      <td><input type="time" name="scheduled_start_time[]"></td>
                                                 <td><input type="time" name="scheduled_end_time[]"></td>
                                                 <td> <select id="select-state" placeholder="Select..." name="auditor[]">
                                                         <option value="">Select a value</option>
@@ -834,10 +849,12 @@
                                     <div class="group-input input-date">
                                         <div class="calenderauditee">
                                             <label for="Audit End Date">Audit End Date</label>
+                                            <div class="calenderauditee">
                                             <input type="text" name="audit_end_date" id="audit_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="audit_end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_end_date')" />
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
