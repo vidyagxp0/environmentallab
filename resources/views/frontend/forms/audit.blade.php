@@ -90,9 +90,11 @@
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="audit[]"></td>' +
-                        '<td><input type="date" name="scheduled_start_date[]"></td>' +
+                        // '<td><input type="date" name="scheduled_start_date[]"></td>'
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_start_time[]"></td>' +
-                        '<td><input type="date" name="scheduled_end_date[]"></td>' +
+                        // '<td><input type="date" name="scheduled_end_date[]"></td>'
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_end_time[]"></td>' +
                         '<td><select name="auditor[]">' +
                         '<option value="">Select a value</option>';
@@ -545,9 +547,22 @@
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="audit[]"></td>
-                                                <td><input type="date" name="scheduled_start_date[]"></td>
+                                                {{-- <td><input type="date" name="scheduled_start_date[]"></td> --}}
+                                                <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="scheduled_start_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>'
                                                 <td><input type="time" name="scheduled_start_time[]"></td>
-                                                <td><input type="date" name="scheduled_end_date[]"></td>
+                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
+                                                <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="scheduled_end_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
+
                                                 <td><input type="time" name="scheduled_end_time[]"></td>
                                                 <td> <select id="select-state" placeholder="Select..." name="auditor[]">
                                                         <option value="">Select a value</option>
