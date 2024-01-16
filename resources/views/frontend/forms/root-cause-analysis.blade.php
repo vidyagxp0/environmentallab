@@ -50,7 +50,7 @@
                                         <label for="originator">Originator</label>
                                         <input type="text" name="originator" value="Amit Guru" disabled />
                                     </div>
-                                </div>     
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date-opened">Date Opened </label>
@@ -58,7 +58,7 @@
                                         </div>
                                         <input type="text" name="date-opened" value="{{date('d-M-Y')}}" disabled>
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="date-opened">
-                                        
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -88,7 +88,7 @@
                                         <label for="Date Due">Date Due</label>
                                         <div><small class="text-danger">Last date this Investigation should be closed
                                                 by</small></div>
-                                        <div class="calenderauditee">                                     
+                                        <div class="calenderauditee">
                                         <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_date" value=""
                                         class="hide-input"
@@ -124,8 +124,7 @@
                                         <label for="priority_level">Priority Level</label>
                                         <div><small class="text-primary">Choose high if Immidiate actions are
                                                 required</small></div>
-                                        <select 
-                                        priority_level">
+                                        <select name="priority_level">
                                             <option value="0">-- Select --</option>
                                             <option value="low">Low</option>
                                             <option value="medium">Medium</option>
@@ -232,6 +231,28 @@
                                             <option value="3">Fishbone or Ishikawa Diagram</option>
                                             <option value="4">Is/Is Not Analysis</option>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="root_cause">
+                                            Root Cause
+                                            <button type="button"
+                                            onclick="add4Input('root-cause-first-table')">+</button>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="root-cause-first-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Row #</th>
+                                                        <th>Root Cause Category</th>
+                                                        <th>Root Cause Sub-Category</th>
+                                                        <th>Probability</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head"></div>
@@ -510,6 +531,12 @@
                                 <div class="col-12 sub-head"></div>
                                 <div class="col-12">
                                     <div class="group-input">
+                                        <label for="root_cause_description">Root Cause Description</label>
+                                        <textarea name="root_cause_description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
                                         <label for="investigation_summary">Investigation Summary</label>
                                         <textarea name="investigation_summary"></textarea>
                                     </div>
@@ -558,7 +585,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
