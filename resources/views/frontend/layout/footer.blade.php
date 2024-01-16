@@ -510,8 +510,10 @@
                     '<td><input type="text" name="document_name[]"></td>' +
                     '<td><input type="text" name="document_no[]"></td>' +
                     '<td><input type="text" name="version_no[]"></td>' +
-                    '<td><input type="date" name="implementation_date[]"></td>' +
-                    '<td><input type="text" name="new_document_no[]"></td>' +
+                    // '<td><input type="date" name="implementation_date[]"></td>' 
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="implementation_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="implementation_date[]" class="hide-input" oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" /></div></div></div></td>'+
+                   
+                   '<td><input type="text" name="new_document_no[]"></td>' +
                     '<td><input type="text" name="new_version_no[]"></td>' +
                     '</tr>';
 
@@ -884,8 +886,8 @@
                     '<option value="BJJH0004A">BJJH0004A</option>' +
                     '<option value="DCAU0036">DCAU0036</option>' +
                     '</select></td>' +
-                    '<td><input type="date" name="product_mfg_date[]"></td>' +
-                    ' <td><input type="date" name="product_expiry_date[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_mfg_date[]" class="hide-input" oninput="handleDateInput(this, `product_mfg_date' + serialNumber +'`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="product_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="product_expiry_date[]" class="hide-input" oninput="handleDateInput(this, `product_expiry_date' + serialNumber +'`)" /></div></div></div></td>' +
                     '<td><input type="text" name="product_batch_desposition[]"></td>' +
                     '<td><input type="text" name="product_remark[]"></td>' +
                     '<td><select name="product_batch_status[]" id="batch_status">' +
@@ -923,8 +925,8 @@
                     '<option value="BJJH0004A">BJJH0004A</option>' +
                     '<option value="DCAU0036">DCAU0036</option>' +
                     '</select></td>' +
-                    '<td><input type="date" name="material_mfg_date[]"></td>' +
-                    ' <td><input type="date" name="material_expiry_date[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td>' +
                     '<td><input type="text" name="material_batch_desposition[]"></td>' +
                     '<td><input type="text" name="material_remark[]"></td>' +
                     '<td><select name="material_batch_status[]" id="batch_status">' +

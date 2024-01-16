@@ -246,7 +246,14 @@
                                             <tbody>
                                                 <tr>
                                                     <td><input type="text" name="serial_number[]" value="1"></td>
-                                                    <td><input type="date" name="date[]"></td>
+                                                    {{-- <td><input type="date" name="date[]"></td> --}}
+                                                    
+                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date "><div
+                                                         class="calenderauditee">
+                                                        <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="date[]" class="hide-input" 
+                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'                                         
                                                     <td><input type="text" name="topic[]"></td>
                                                     <td><input type="text" name="responsible[]"></td>
                                                     <td><input type="time" name="start_time[]"></td>
@@ -1107,7 +1114,13 @@
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
                                         <td><input type="text" name="short_desc[]"></td>
-                                        <td><input type="date" name="date_due[]"></td>
+                                        {{-- <td><input type="date" name="date_due[]"></td> --}}
+                                        <td><div class="group-input new-date-data-field mb-0">
+                                            <div class="input-date "><div
+                                             class="calenderauditee">
+                                            <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_due[]" class="hide-input" 
+                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>'
                                         <td><input type="text" name="site[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
@@ -1120,7 +1133,15 @@
                                             </select>
                                         </td>
                                         <td><input type="text" name="current_status[]"></td>
-                                        <td><input type="date" name="date_closed[]"></td>
+                                        {{-- <td><input type="date" name="date_closed[]"></td> --}}
+                                        <td><div class="group-input new-date-data-field mb-0">
+                                            <div class="input-date "><div
+                                             class="calenderauditee">
+                                            <input type="text" id="date_closed00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_closed[]" class="hide-input" 
+                                            oninput="handleDateInput(this, `date_closed00' + serialNumber +'`)" /></div></div></div></td>'
+
+
                                         <td><input type="text" name="record[]"></td>
                                         {{-- <td><input type="text" name="capa_type[]"></td> --}}
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
@@ -1130,7 +1151,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="capa-details">
-                                    CAPA Details<button type="button" name="capa-details" id="capa_detail"">+</button>
+                                    CAPA Details<button type="button" name="capa-details" id="capa_detail">+</button>
                                 </label>
                                 <table class="table table-bordered" id="capa_detail_details">
                                     <thead>
@@ -1173,7 +1194,14 @@
                                             </select>
                                         </td>
                                         <td><input type="text" name="current_status[]"></td>
-                                        <td><input type="date" name="date_closed[]"></td>
+                                         {{-- <td><input type="date" name="date_closed[]"></td>  --}}
+                                         <td><div class="group-input new-date-data-field mb-0">
+                                            <div class="input-date "><div
+                                             class="calenderauditee">
+                                            <input type="text" id="date_closed11' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_closed[]" class="hide-input" 
+                                            oninput="handleDateInput(this, `date_closed11' + serialNumber +'`)" /></div></div></div></td>' 
+
                                         <td><input type="text" name="record[]"></td>
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
                                         {{-- <td><input type="date" name="date_due[]"></td> --}}
@@ -1449,23 +1477,22 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="record[]"></td>' +
                         '<td><input type="text" name="short_desc[]">' +
-                        '<td><input type="text" name="capa_type[]">' +
-                        '<td><input type="date" name="date_opened[]">' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_due[]" class="hide-input" oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><input type="text" name="site[]">' +
-                        '<td><input type="date" name="date_due[]">' +
-                        '<td><input type="text" name="current_status[]">' +
                         '<td><select name="responsible_person[]">' +
                         '<option value="">Select a value</option>';
 
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
+                                for (var i = 0; i < users.length; i++) {
+                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                }
 
                     html += '</select></td>' +
-                        '<td><input type="date" name="date_closed[]"></td>' +
-
+                        '<td><input type="text" name="current_status[]">' + 
+                            '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]" class="hide-input" oninput="handleDateInput(this, `date_closed00' + serialNumber +'`)" /></div></div></div></td>' +
+                        
+                        '<td><input type="text" name="record[]">' +
+                        
                         '</tr>';
                     return html;
                 }
@@ -1581,13 +1608,16 @@
                         '<tr>' +
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
-                        '<td><input type="text" name="record[]"></td>' +
+                       
                         '<td><input type="text" name="short_desc[]">' +
-                        '<td><input type="text" name="capa_type[]">' +
-                        '<td><input type="date" name="date_opened[]">' +
+                        '<td><select id="select-state" placeholder="Select..." name="capa_type[]">'+
+                        '<option value="">Select a value</option>'+
+                        '<option value="corrective">Corrective Action</option>'+
+                        '<option value="preventive">Preventive Action</option>'+
+                        '<option value="corrective_preventive">Corrective & Preventive Action</option>'+
+                        '</select></td>'+
+
                         '<td><input type="text" name="site[]">' +
-                        '<td><input type="date" name="date_due[]">' +
-                        '<td><input type="text" name="current_status[]">' +
                         '<td><select name="responsible_person[]">' +
                         '<option value="">Select a value</option>';
 
@@ -1596,7 +1626,12 @@
                     }
 
                     html += '</select></td>' +
-                        '<td><input type="date" name="date_closed[]"></td>' +
+                        
+                        '<td><input type="text" name="current_status[]">' +
+                       
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed11' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]" class="hide-input" oninput="handleDateInput(this, `date_closed11' + serialNumber +'`)" /></div></div></div></td>' +
+
+                        '<td><input type="text" name="record[]"></td>' +
 
                         '</tr>';
                     return html;
