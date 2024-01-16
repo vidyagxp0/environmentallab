@@ -89,7 +89,7 @@ return new class extends Migration
             // $table->string('rejected_on')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
-            // $table->string('submitted_by')->nullable();
+            $table->string('submitted_by')->nullable();
             // $table->string('report_result_by')->nullable();
             // $table->string('evaluation_complete_by')->nullable();
             // $table->string('submitted_on')->nullable();
