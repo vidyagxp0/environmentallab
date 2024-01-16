@@ -350,10 +350,16 @@
                                         <input type="file" name="attach_files1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->attach_files1 }}"/>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="capa_date_due">Recomendation Date Due for CAPA</label>
-                                        <input type="date" name="recomendation_capa_date_due" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->recomendation_capa_date_due }}" />
+                                        <!-- <input type="date" name="recomendation_capa_date_due" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->recomendation_capa_date_due }}" /> -->
+                                        <div class="calenderauditee">                                     
+                                        <input type="text"  id="recomendation_capa_date_due"  readonly placeholder="DD-MMM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->recomendation_capa_date_due }}"/>
+                                        <input type="date" name="recomendation_capa_date_due" value=""
+                                        class="hide-input" 
+                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')"  />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -389,10 +395,16 @@
                                 <div class="col-12">
                                     <div class="sub-head">CAPA Plan Details</div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="date_Response_due1">Date Response Due</label>
-                                        <input type="date" name="date_Response_due2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}"/>
+                                        <!-- <input type="date" name="date_Response_due2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}"/> -->
+                                        <div class="calenderauditee">                                     
+                                        <input type="text"  id="date_Response_due2"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}" />
+                                        <input type="date" name="date_Response_due2" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'date_Response_due2')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

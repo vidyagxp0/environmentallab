@@ -469,6 +469,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis2->Question) {   
                                             @foreach (unserialize($dataAnalysis2->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number2[]"
@@ -480,6 +481,17 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                         @else
+                                         <tr>
+                                            <td><input type="text" name="serial_number2[]"
+                                                        value="1"></td>
+                                                <td><input type="text" name="questions2[]"
+                                                        value=""></td>
+                                                <td><input type="text" name="response2[]"
+                                                        value="">
+                                                </td>
+                                            </tr>
+                                         @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -501,6 +513,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis3->Question) {  
                                             @foreach (unserialize($dataAnalysis3->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number3[]"
@@ -512,6 +525,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                        
+                                                <tr>
+                                                    <td><input type="text" name="serial_number3[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions3[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response3[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -533,6 +558,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis4->Question) {  
                                             @foreach (unserialize($dataAnalysis4->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number4[]"
@@ -544,6 +570,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                                <tr>
+                                                    <td><input type="text" name="serial_number4[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions4[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response4[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -579,6 +617,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis5->Question) {  
                                             @foreach (unserialize($dataAnalysis5->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number5[]"
@@ -590,6 +629,17 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                        <tr>
+                                            <td><input type="text" name="serial_number5[]"
+                                                    value="1"></td>
+                                            <td><input type="text" name="questions5[]"
+                                                    value=""></td>
+                                            <td><input type="text" name="response5[]"
+                                                    value="">
+                                            </td>
+                                        </tr>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -611,6 +661,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis6->Question) {  
                                             @foreach (unserialize($dataAnalysis6->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number6[]"
@@ -622,6 +673,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                        <tr>
+                                                    <td><input type="text" name="serial_number6[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions6[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response6[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif;
                                         </tbody>
                                     </table>
                                 </div>
@@ -643,6 +706,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis7->Question) {  
                                             @foreach (unserialize($dataAnalysis7->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number7[]"
@@ -654,6 +718,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                                <tr>
+                                                    <td><input type="text" name="serial_number7[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions7[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response7[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -675,6 +751,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis8->Question) {  
                                             @foreach (unserialize($dataAnalysis8->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number8[]"
@@ -686,6 +763,17 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                        <tr>
+                                            <td><input type="text" name="serial_number8[]"
+                                                    value="1"></td>
+                                            <td><input type="text" name="questions8[]"
+                                                    value=""></td>
+                                            <td><input type="text" name="response8[]"
+                                                    value="">
+                                            </td>
+                                        </tr>
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -721,6 +809,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis9->Question) { 
                                             @foreach (unserialize($dataAnalysis9->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number9[]"
@@ -732,6 +821,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                        <tr>
+                                                    <td><input type="text" name="serial_number9[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions9[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response9[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -753,6 +854,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis10->Question) { 
                                             @foreach (unserialize($dataAnalysis10->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number10[]"
@@ -764,6 +866,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                                <tr>
+                                                    <td><input type="text" name="serial_number10[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions10[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response10[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -785,6 +899,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis11->Question) { 
                                             @foreach (unserialize($dataAnalysis11->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number11[]"
@@ -796,6 +911,20 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                            
+                                                <tr>
+                                                    <td><input type="text" name="serial_number11[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions11[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response11[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -817,6 +946,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis12->Question) {
                                             @foreach (unserialize($dataAnalysis12->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number12[]"
@@ -828,6 +958,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                             <tr>
+                                                    <td><input type="text" name="serial_number12[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions12[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response12[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -849,6 +991,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis13->Question) {
                                             @foreach (unserialize($dataAnalysis13->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number13[]"
@@ -860,6 +1003,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                                <tr>
+                                                    <td><input type="text" name="serial_number13[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions13[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response13[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -881,6 +1036,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                        @if ($dataAnalysis14->Question) {
                                             @foreach (unserialize($dataAnalysis14->Question) as $key => $temps)
                                                 <tr>
                                                     <td><input type="text" name="serial_number14[]"
@@ -892,6 +1048,18 @@
                                                     </td>
                                                 </tr>
                                             @endforeach
+                                        @else
+                                        <tr>
+                                                    <td><input type="text" name="serial_number14[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="questions14[]"
+                                                            value=""></td>
+                                                    <td><input type="text" name="response14[]"
+                                                            value="">
+                                                    </td>
+                                                </tr>
+                                        
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
