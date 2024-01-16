@@ -102,6 +102,7 @@ class ManagementReviewController extends Controller
         $management->building = $request->building;
         $management->floor = $request->floor;
         $management->room = $request->room;
+        $management->updated_at = $request->updated_at;
         $management->status = 'Opened';
         $management->stage = 1;
         $management->save();

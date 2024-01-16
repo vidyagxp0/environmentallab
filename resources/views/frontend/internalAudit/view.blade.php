@@ -910,6 +910,7 @@ function addMultipleFiles(input, block_id) {
                                                             </tr>
                                                         </thead>
                                                         <tbody id="observationDetail">
+                                                            @if ($grid_data1->observation_id)
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
                                                             <tr></tr>
                                                                     <td>{{ $key + 1 }}</td>
@@ -969,6 +970,7 @@ function addMultipleFiles(input, block_id) {
                                                                     <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td>
                                                                 </tr>
                                                             @endforeach
+                                                            @endif
                                                         </tbody>
                                                     </table>
                                                 </div>

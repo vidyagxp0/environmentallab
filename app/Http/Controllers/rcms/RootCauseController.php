@@ -90,6 +90,7 @@ use Illuminate\Support\Facades\Hash;
         $root->country = ($request->country);
         $root->state = ($request->state);
         $root->city = ($request->city);
+        $root->submitted_by = ($request->submitted_by);
 
 
         $root->record = ((RecordNumber::first()->value('counter')) + 1);
