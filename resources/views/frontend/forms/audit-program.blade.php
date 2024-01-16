@@ -451,16 +451,16 @@
                                                     <td><div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date "><div
                                                          class="calenderauditee">
-                                                        <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                        <input type="text" id="start_date1" readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="start_date[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>'
+                                                        oninput="handleDateInput(this, 'start_date1')" /></div></div></div></td>'
                                                     {{-- <td><input type="date" name="end_date[]"></td> --}}
                                                     <td><div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date "><div
                                                          class="calenderauditee">
-                                                        <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                        <input type="text" id="end_date1" readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="end_date[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>'
+                                                        oninput="handleDateInput(this, 'end_date1')" /></div></div></div></td>'
                                                     <td> <select id="select-state" placeholder="Select..."
                                                             name="lead_investigator[]">
                                                             <option value="">Select a value</option>
