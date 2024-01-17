@@ -25,8 +25,8 @@ return new class extends Migration
             $table->string('form_type')->nullable();
 
             $table->integer('record')->nullable();
-            $table->integer('parent_id')->nullable();
-            $table->string('parent_type')->nullable();
+           // $table->integer('parent_id')->nullable();
+            //$table->string('parent_type')->nullable();
             $table->integer('assigend')->nullable();
             $table->string('Initiator_Group')->nullable();
             $table->text('short_description')->nullable();
@@ -38,20 +38,20 @@ return new class extends Migration
             $table->text('repeat_nature')->nullable();
             $table->text('initial_comments')->nullable();
             $table->string('due_date')->nullable();
-            $table->date('audit_start_date')->nullable();
-            $table->date('audit_end_date')->nullable();
+            $table->string('audit_start_date')->nullable();
+            $table->string('audit_end_date')->nullable();
             $table->string('external_agencies')->nullable();
             //<!-- ------------------------------- -->
             $table->longText('inv_attachment')->nullable();
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->string('start_date')->nullable();
+            $table->string('end_date')->nullable();
             $table->text('audit_agenda')->nullable();
             $table->text('Facility')->nullable();
             $table->text('Group')->nullable();
             $table->text('material_name')->nullable();
             $table->text('if_comments')->nullable();
-            $table->string('lead_auditor')->nullable();
             // -------------------------
+            $table->string('lead_auditor')->nullable();
             $table->longText('file_attachment')->nullable();
             $table->text('Audit_team')->nullable();
             $table->text('Auditee')->nullable();

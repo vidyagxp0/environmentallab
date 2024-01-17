@@ -37,7 +37,9 @@ class AuditeeController extends Controller
 
     public function store(Request $request)
     {
-        // return $request;
+        //$request->dd();
+        //  return $request->audit_start_date;
+        //  die;
 
 
         if (!$request->short_description) {
@@ -50,8 +52,8 @@ class AuditeeController extends Controller
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
-        $internalAudit->parent_id = $request->parent_id;
-        $internalAudit->parent_type = $request->parent_type;
+        //$internalAudit->parent_id = $request->parent_id;
+        //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assigend = $request->assigend;
         $internalAudit->due_date = $request->due_date;
@@ -152,7 +154,7 @@ class AuditeeController extends Controller
             }
             $internalAudit->myfile = json_encode($files);
         }
-        // return $internalAudit;
+        //return $internalAudit;
         $internalAudit->save();
 
         $record = RecordNumber::first();
@@ -739,6 +741,7 @@ class AuditeeController extends Controller
 
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->start_date = $request->start_date;
+        
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
         $internalAudit->Facility =  implode(',', $request->Facility);

@@ -273,7 +273,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="due_date" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" class="hide-input"
+                                            <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -505,7 +505,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="end_date" id="end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" type ="date" class="hide-input"
+                                            <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'end_date')" />
                                         </div>
 
@@ -841,7 +841,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="audit_start_date" id="audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="audit_start_date" class="hide-input"
+                                            <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_start_date')" />
                                         </div>
                                     </div>
@@ -853,7 +853,7 @@
                                             <div class="calenderauditee">
                                             <input type="text" name="audit_end_date" id="audit_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="audit_end_date" class="hide-input"
+                                            <input type="date" class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_end_date')" />
                                         </div>
                                         </div>
