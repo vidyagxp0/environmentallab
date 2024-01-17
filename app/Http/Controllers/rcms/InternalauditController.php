@@ -38,7 +38,10 @@ class InternalauditController extends Controller
 
     public function create(request $request)
     {
-        //$request->dd();
+        // $request->dd();
+        // echo "<pre>";
+        // print_r($request->all());
+        // die;
 
         if (!$request->short_description) {
             toastr()->error("Short Description is required");
@@ -49,12 +52,13 @@ class InternalauditController extends Controller
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
+        $internalAudit->division_code = $request->division_code;
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assigend = $request->assigend;
         $internalAudit->due_date = $request->due_date;
-        $internalAudit->initiator_group = $request->initiator_group;
+        $internalAudit->initiator_Group = $request->initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
@@ -84,6 +88,7 @@ class InternalauditController extends Controller
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
+        
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
 
@@ -157,7 +162,7 @@ class InternalauditController extends Controller
 
             $internalAudit->myfile = json_encode($files);
         }
-        // return $internalAudit;
+         //return $internalAudit;
         $internalAudit->save();
 
         $record = RecordNumber::first();

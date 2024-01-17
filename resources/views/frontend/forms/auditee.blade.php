@@ -159,7 +159,10 @@
                     }
 
                     html += '</select></td>' + '<td><input type="text" name="action_taken[]"></td>' +
-                        '<td><input type="date" name="capa_completion_date[]"></td>' +
+                        //'<td><input type="date" name="capa_completion_date[]"></td>'
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
+                        
+                        +
                         '<td><input type="text" name="status_Observation[]"></td>' +
                         '<td><input type="text" name="remark_observation[]"></td>' +
                         '</tr>';
@@ -493,7 +496,8 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="intiation-date"><b>Date of Initiation </b></label>
+                                        <label for="intiation-date"><b>Audit Schedule Start Date
+                                        </b></label>
                                         <input type="text" value="{{ date('d-M-Y') }}" name="intiation-date"
                                             disabled>
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation-date">
@@ -537,12 +541,7 @@
                                                 <td><input type="text" name="audit[]"></td>
                                                  {{-- <td><input type="date" name="scheduled_start_date[]"></td>  --}}
 
-                                                 <td><div class="group-input new-date-data-field mb-0">
-                                                    <div class="input-date "><div
-                                                     class="calenderauditee">
-                                                    <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="scheduled_start_date[]" class="hide-input" 
-                                                    oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>'
+
                                       <td><input type="time" name="scheduled_start_time[]"></td>
 
                                                 {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}

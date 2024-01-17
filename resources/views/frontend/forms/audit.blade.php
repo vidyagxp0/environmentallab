@@ -160,7 +160,8 @@
                         '<td><input type="text" name="auditor_review_on_response[]"></td>' +
                         '<td><input type="text" name="qa_comment[]"></td>' +
                         '<td><input type="text" name="capa_details[]"></td>' +
-                        '<td><input type="date" name="capa_due_date[]"></td>' +
+                        // '<td><input type="date" name="capa_due_date[]"></td>'
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><select name="capa_owner[]">' +
                         '<option value="">Select a value</option>';
 
@@ -169,7 +170,9 @@
                     }
 
                     html += '</select></td>' + '<td><input type="text" name="action_taken[]"></td>' +
-                        '<td><input type="date" name="capa_completion_date[]"></td>' +
+                        // '<td><input type="date" name="capa_completion_date[]"></td>'
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
+                        +
                         '<td><input type="text" name="status_Observation[]"></td>' +
                         '<td><input type="text" name="remark_observation[]"></td>' +
                         '</tr>';
@@ -310,9 +313,9 @@
                                         </div>
                                         {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="due_date"> --}}
                                         <div class="calenderauditee">
-                                            <input type="text" name="due_date" id="due_date" readonly
+                                            <input type="text"  id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" class="hide-input"
+                                            <input type="date" name="due_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -321,7 +324,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiatorGroup" id="initiator_group">
+                                        <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
@@ -840,7 +843,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="audit_start_date" id="audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" class="hide-input"
+                                            <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_start_date')" />
                                         </div>
                                     </div>
@@ -852,7 +855,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="audit_end_date" id="audit_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" class="hide-input"
+                                            <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_end_date')" />
                                         </div>
                                     </div>
