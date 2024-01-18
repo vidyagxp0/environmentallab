@@ -230,8 +230,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <label for="Division Code"><b>Division</b></label>
+                                        <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
@@ -249,7 +249,7 @@
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -285,7 +285,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiatorGroup" id="initiator_group">
+                                        <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
                                             <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
@@ -329,7 +329,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" disabled>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -440,7 +440,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity_level">
+                                        <select name="severity_level1">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -496,11 +496,11 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="intiation-date"><b>Audit Schedule Start Date
+                                        <label for="start_date"><b>Audit Schedule Start Date
                                         </b></label>
-                                        <input type="text" value="{{ date('d-M-Y') }}" name="intiation-date"
+                                        <input type="text" value="{{ date('d-M-Y') }}" name="start_date"
                                             disabled>
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation-date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="start_date">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -539,20 +539,35 @@
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="audit[]"></td>
-                                                 {{-- <td><input type="date" name="scheduled_start_date[]"></td>  --}}
+                                                 
 
+                                                 <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" name="scheduled_start_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
+                                                <td><input type="time" name="scheduled_start_time[]"></td> 
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div  class="calenderauditee">
+                                                                <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" name="scheduled_end_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                
 
-                                      <td><input type="time" name="scheduled_start_time[]"></td>
-
-                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
-                                                <td><div class="group-input new-date-data-field mb-0">
-                                                    <div class="input-date "><div
-                                                     class="calenderauditee">
-                                                    <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="scheduled_end_date[]" class="hide-input" 
-                                                    oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>'
-                                      <td><input type="time" name="scheduled_start_time[]"></td>
                                                 <td><input type="time" name="scheduled_end_time[]"></td>
+                                                
                                                 <td> <select id="select-state" placeholder="Select..." name="auditor[]">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
@@ -756,20 +771,20 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditing Agency">External Auditing Agency</label>
-                                        <textarea name="External Auditing Agency"></textarea>
+                                        <textarea name="External_Auditing_Agency"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines /
                                             Industry Standards</label>
-                                        <textarea name="Relevant Guidelines / Industry Standards"></textarea>
+                                        <textarea name="Relevant_Guidelines"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Comments">QA Comments</label>
-                                        <textarea name="QA Comments"></textarea>
+                                        <textarea name="QA_Comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -790,7 +805,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Category">Audit Category</label>
-                                        <select name="Audit Category">
+                                        <select name="Audit_Category">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Internal Audit/Self Inspection</option>
                                             <option value="2">Supplier Audit</option>
@@ -803,14 +818,14 @@
                                     <div class="group-input">
                                         <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
                                             Details</label>
-                                        <input type="text" name="Supplier/Vendor/Manufacturer Details">
+                                        <input type="text" name="Supplier_Details">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
                                             Site</label>
-                                        <input type="text" name="Supplier/Vendor/Manufacturer Site">
+                                        <input type="text" name="Supplier_Site">
                                     </div>
                                 </div>
                                 <div class="col-12">

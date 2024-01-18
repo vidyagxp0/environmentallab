@@ -34,9 +34,11 @@ return new class extends Migration
             $table->text('if_other')->nullable();
             $table->text('initiated_through')->nullable();
             $table->text('initiated_if_other')->nullable();
+            $table->text('others')->nullable();
             $table->text('repeat')->nullable();
             $table->text('repeat_nature')->nullable();
             $table->text('initial_comments')->nullable();
+            $table->text('severity_level')->nullable();
             $table->string('due_date')->nullable();
             $table->string('audit_start_date')->nullable();
             $table->string('audit_end_date')->nullable();
@@ -56,6 +58,13 @@ return new class extends Migration
             $table->text('Audit_team')->nullable();
             $table->text('Auditee')->nullable();
             $table->text('Auditor_Details')->nullable();
+            $table->text('External_Auditing_Agency')->nullable();
+            $table->text('Relevant_Guidelines')->nullable();
+            $table->text('QA_Comments')->nullable();
+            $table->text('file_attachment_guideline')->nullable();
+            $table->text('Audit_Category')->nullable();
+            $table->text('Supplier_Details')->nullable();
+            $table->text('Supplier_Site')->nullable();
             $table->text('Comments')->nullable();
             $table->longText('Audit_file')->nullable();
             $table->text('Audit_Comments1')->nullable();

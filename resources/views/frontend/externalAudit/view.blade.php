@@ -335,7 +335,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Division Code"><b>Division Code</b></label>
+                                                <label for="Division Code"><b>Division</b></label>
                                                 <input disabled type="text" name="division_code"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static">QMS-North America</div> --}}
@@ -387,7 +387,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator-group">
                                                     <option value="CQA"
                                                         @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
@@ -639,6 +639,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                                 <!-- <input type="date" name="start_date" value="{{ $data->start_date }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
+
                                                 <div class="calenderauditee">                                     
                                                     <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->start_date }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
@@ -685,7 +686,7 @@ function addMultipleFiles(input, block_id) {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        @if ($grid_data)
+                                                        @if ($grid_data->start_date)
                                                         @foreach (unserialize($grid_data->start_date) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"
@@ -1022,19 +1023,19 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditing Agency">External Auditing Agency</label>
-                                                <textarea name="External Auditing Agency"></textarea>
+                                                <textarea name="External_Auditing_Agency"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines / Industry Standards</label>
-                                                <textarea name="Relevant Guidelines / Industry Standards"></textarea>
+                                                <textarea name="Relevant_Guidelines"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="QA Comments">QA Comments</label>
-                                                <textarea name="QA Comments"></textarea>
+                                                <textarea name="QA_Comments"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1055,7 +1056,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
-                                                <select name="Audit Category">
+                                                <select name="Audit_Category">
                                                     <option value="0">-- Select --</option>
                                                     <option value="1">Internal Audit/Self Inspection</option>
                                                     <option value="2">Supplier Audit</option>
@@ -1068,14 +1069,14 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
                                                     Details</label>
-                                                <input type="text" name="Supplier/Vendor/Manufacturer Details">
+                                                <input type="text" name="Supplier_Details">
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
                                                     Site</label>
-                                                <input type="text" name="Supplier/Vendor/Manufacturer Site">
+                                                <input type="text" name="Supplier_Site">
                                             </div>
                                         </div>
                                         <div class="col-12">

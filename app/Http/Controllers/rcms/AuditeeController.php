@@ -54,6 +54,7 @@ class AuditeeController extends Controller
         $internalAudit->division_id = $request->division_id;
         //$internalAudit->parent_id = $request->parent_id;
         //$internalAudit->parent_type = $request->parent_type;
+        $internalAudit->division_code = $request->division_code;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assigend = $request->assigend;
         $internalAudit->due_date = $request->due_date;
@@ -65,11 +66,14 @@ class AuditeeController extends Controller
 
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
+        $internalAudit->others = $request->others;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
-
         $internalAudit->initial_comments = $request->initial_comments;
+        $internalAudit->severity_level = $request->severity_level1;
+
+
         $internalAudit->start_date = $request->start_date;
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
@@ -81,6 +85,13 @@ class AuditeeController extends Controller
         $internalAudit->Audit_team =  implode(',', $request->Audit_team);
         $internalAudit->Auditee =  implode(',', $request->Auditee);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
+        $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
+        $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
+        $internalAudit->QA_Comments = $request->QA_Comments;
+        $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
+        $internalAudit->Audit_Category = $request->Audit_Category;
+        $internalAudit->Supplier_Details = $request->Supplier_Details;
+        $internalAudit->Supplier_Site = $request->Supplier_Site;
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
@@ -161,8 +172,9 @@ class AuditeeController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        // -----------------grid----
+        // -----------------grid---- Audit Agenda 
         $data3 = new InternalAuditGrid();
+      //  $request->dd();
         $data3->audit_id = $internalAudit->id;
         $data3->type = "external_audit";
         if (!empty($request->audit)) {
@@ -189,8 +201,9 @@ class AuditeeController extends Controller
         if (!empty($request->remarks)) {
             $data3->remark = serialize($request->remarks);
         }
-        $data3->save();
 
+        $data3->save();
+         // -----------------grid ---- Observation Details
         $data4 = new InternalAuditGrid();
         $data4->audit_id = $internalAudit->id;
         $data4->type = "Observation_field_Auditee";
@@ -251,6 +264,7 @@ class AuditeeController extends Controller
         if (!empty($request->remark_observation)) {
             $data4->remark = serialize($request->remark_observation);
         }
+        //dd($data4);
         $data4->save();
         if (!empty($internalAudit->date)) {
             $history = new AuditTrialExternal();
