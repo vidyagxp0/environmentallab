@@ -38,26 +38,23 @@ class InternalauditController extends Controller
 
     public function create(request $request)
     {
-        // $request->dd();
-        // echo "<pre>";
-        // print_r($request->all());
-        // die;
-
-        if (!$request->short_description) {
-            toastr()->error("Short Description is required");
-            return redirect()->back()->withInput();
-        }
+        
+        
         $internalAudit = new InternalAudit();
         $internalAudit->form_type = "internal-audit";
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
+        $internalAudit->external_agencies = $request->external_agencies;
+        $internalAudit->severity_level = $request->severity_level_select;
         $internalAudit->division_code = $request->division_code;
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assigend = $request->assigend;
         $internalAudit->due_date = $request->due_date;
+        $internalAudit->audit_schedule_start_date = $request->audit_schedule_start_date;
+        $internalAudit->audit_schedule_end_date = $request->audit_schedule_end_date;
         $internalAudit->initiator_Group = $request->initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
@@ -71,7 +68,14 @@ class InternalauditController extends Controller
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->start_date = $request->start_date;
         $internalAudit->end_date = $request->end_date;
-        $internalAudit->audit_agenda = $request->audit_agenda;
+        $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
+        $internalAudit->Relevant_Guideline= $request->Relevant_Guideline;
+        $internalAudit->QA_Comments = $request->QA_Comments;
+        $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
+        $internalAudit->Audit_Category = $request->Audit_Category;
+        $internalAudit->Audit_Category = $request->Audit_Category;
+        $internalAudit->Supplier_Details = $request->Supplier_Details;
+        $internalAudit->Supplier_Site = $request->Supplier_Site;
         $internalAudit->Facility =  implode(',', $request->Facility);
         $internalAudit->Group = implode(',', $request->Group);
         $internalAudit->material_name = $request->material_name;
@@ -162,6 +166,7 @@ class InternalauditController extends Controller
 
             $internalAudit->myfile = json_encode($files);
         }
+        //dd($internalAudit);
          //return $internalAudit;
         $internalAudit->save();
 
@@ -170,7 +175,7 @@ class InternalauditController extends Controller
         $record->update();
 
 
-        // -----------------grid----
+        // -----------------grid----  Audit Agenda+
         $data3 = new InternalAuditGrid();
         $data3->audit_id = $internalAudit->id;
         $data3->type = "internal_audit";
@@ -732,7 +737,7 @@ class InternalauditController extends Controller
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
-
+        $internalAudit->Relevant_Guideline= $request->Relevant_Guideline;
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->repeat = $request->repeat;

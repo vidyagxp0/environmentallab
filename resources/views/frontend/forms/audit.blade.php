@@ -266,8 +266,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <label for="Division Code"><b>Division </b></label>
+                                        <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
@@ -368,7 +368,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" disabled>
+                                              value="" readonly> 
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -501,16 +501,25 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-lg-6  new-date-data-field">
+                                {{-- <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                         {{-- <input type="date" name="start_date"> --}}
-                                        <div class="calenderauditee">
+                                        {{-- <div class="calenderauditee">
                                             <input type="text" name="audit_schedule_start_date"
                                                 id="audit_schedule_start_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_schedule_start_date')" />
-                                        </div>
+                                        </div> --}}
+                                    {{-- </div> --}}
+                                {{-- </div> --}} 
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="audit_schedule_start_date"><b>Audit Schedule Start Date
+                                        </b></label>
+                                        <input type="text" value="{{ date('d-M-Y') }}" name="audit_schedule_start_date"
+                                            disabled>
+                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="audit_schedule_start_date">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -750,20 +759,20 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="External Auditing Agency">External Auditing Agency</label>
-                                        <textarea name="External Auditing Agency"></textarea>
+                                        <textarea name="External_Auditing_Agency"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines /
                                             Industry Standards</label>
-                                        <textarea name="Relevant Guidelines / Industry Standards"></textarea>
+                                        <textarea name="Relevant_Guideline"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Comments">QA Comments</label>
-                                        <textarea name="QA Comments"></textarea>
+                                        <textarea name="QA_Comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -784,7 +793,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Audit Category">Audit Category</label>
-                                        <select name="Audit Category">
+                                        <select name="Audit_Category">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Internal Audit/Self Inspection</option>
                                             <option value="2">Supplier Audit</option>
@@ -797,14 +806,14 @@
                                     <div class="group-input">
                                         <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
                                             Details</label>
-                                        <input type="text" name="Supplier/Vendor/Manufacturer Details">
+                                        <input type="text" name="Supplier_Details">
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
                                             Site</label>
-                                        <input type="text" name="Supplier/Vendor/Manufacturer Site">
+                                        <input type="text" name="Supplier_Site">
                                     </div>
                                 </div>
                                 <div class="col-12">

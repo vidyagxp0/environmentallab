@@ -593,7 +593,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity-level">
+                                                <select name="severity_level_select">
                                                     <option value="0">-- Select --</option>
                                                     <option value="minor">Minor</option>
                                                     <option value="major">Major</option>
@@ -1017,19 +1017,19 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditing Agency">External Auditing Agency</label>
-                                                <textarea name="External Auditing Agency"></textarea>
+                                                <textarea name="External_Auditing_Agency"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines / Industry Standards</label>
-                                                <textarea name="Relevant Guidelines / Industry Standards"></textarea>
+                                                <textarea name="Relevant_Guideline"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="QA Comments">QA Comments</label>
-                                                <textarea name="QA Comments"></textarea>
+                                                <textarea name="QA_Comments"></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
