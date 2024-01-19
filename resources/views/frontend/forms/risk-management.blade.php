@@ -184,15 +184,15 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
-                                            <input disabled type="text" name="record_number"
+                                            <input readonly type="text" name="record_number"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
                                             {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Division Code"><b>Division Code</b></label>
-                                            <input disabled type="text" name="division_code"
+                                            <label for="Division Code"><b>Division</b></label>
+                                            <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                             <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         </div>
@@ -246,7 +246,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
-                                            <select name="initiatorGroup" id="initiator_group">
+                                            <select name="Initiator_Group" id="initiator_group">
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA" @if(old('initiatorGroup') =="CQA") selected @endif>Corporate Quality Assurance</option>
                                                 <option value="QAB" @if(old('initiatorGroup') =="QAB") selected @endif>Quality Assurance Biopharma</option>
@@ -404,7 +404,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Sevrity Level</label>
-                                            <select name="severity-level">
+                                            <select name="severity2_level">
                                                 <option value="0">-- Select --</option>
                                                 <option value="minor">Minor</option>
                                                 <option value="major">Major</option>
@@ -694,7 +694,7 @@
                                             <div class="calenderauditee">
                                                 <input type="text" id="schedule_start_date" readonly
                                                     placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="schedule_start_date" class="hide-input"
+                                                <input type="date" name="schedule_start_date1" class="hide-input"
                                                     oninput="handleDateInput(this, 'schedule_start_date')" />
                                             </div>
                                         </div>
@@ -705,7 +705,7 @@
                                             <div class="calenderauditee">
                                                 <input type="text" id="schedule_end_date" readonly
                                                     placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="schedule_end_date" class="hide-input"
+                                                <input type="date" name="schedule_end_date1" class="hide-input"
                                                     oninput="handleDateInput(this, 'schedule_end_date')" />
                                             </div>
                                         </div>

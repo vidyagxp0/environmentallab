@@ -41,8 +41,10 @@ class AuditProgramController extends Controller
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
+        $data->division_code = $request->division_code;
         $data->parent_id = $request->parent_id;
         $data->parent_type = $request->parent_type;
+        $data->intiation_date = $request->intiation_date;
         $data->short_description = $request->short_description;
 
         $data->initiated_through = $request->initiated_through;
@@ -52,7 +54,7 @@ class AuditProgramController extends Controller
         $data->due_date_extension = $request->due_date_extension;
 
 
-        $data->initiator_group = $request->initiator_group;
+        $data->Initiator_Group = $request->Initiator_Group;
         $data->assign_to = $request->assign_to;
         $data->due_date = $request->due_date;
         $data->type = $request->type;
@@ -67,6 +69,8 @@ class AuditProgramController extends Controller
         $data->country = $request->country;
         $data->City = $request->city;
         $data->state_district = $request->state;
+        $data->severity1_level = $request->severity1_level;
+
         $data->status = 'Opened';
         $data->stage = 1;
 

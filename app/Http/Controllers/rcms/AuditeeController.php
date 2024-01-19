@@ -736,8 +736,8 @@ class AuditeeController extends Controller
         $lastDocument = Auditee::find($id);
         $internalAudit = Auditee::find($id);
         // $internalAudit->division_id = $request->division_id;
-        $internalAudit->parent_id = $request->parent_id;
-        $internalAudit->parent_type = $request->parent_type;
+        //$internalAudit->parent_id = $request->parent_id;
+        //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assigend = $request->assigend;
         $internalAudit->due_date = $request->due_date;
@@ -749,6 +749,7 @@ class AuditeeController extends Controller
 
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
+        $internalAudit->others = $request->others;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;

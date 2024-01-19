@@ -494,13 +494,25 @@
                                     </div>
                                 </div> --}}
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="start_date"><b>Audit Schedule Start Date
                                         </b></label>
                                         <input type="text" value="{{ date('d-M-Y') }}" name="start_date"
                                             disabled>
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="start_date">
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="start_date" id="start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date')" />
+                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">

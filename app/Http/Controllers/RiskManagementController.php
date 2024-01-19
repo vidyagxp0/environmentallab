@@ -47,6 +47,7 @@ class RiskManagementController extends Controller
         $data = new RiskManagement();
         $data->form_type = "risk-assesment";
         $data->division_id = $request->division_id;
+        $data->division_code = $request->division_code;
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->short_description = $request->short_description;
@@ -54,7 +55,7 @@ class RiskManagementController extends Controller
         $data->open_date = $request->open_date;
         $data->assign_id = $request->assign_id;
         $data->due_date = $request->due_date;
-        $data->initiator_group = $request->initiator_group;
+        $data->Initiator_Group = $request->Initiator_Group;
         $data->departments = implode(',', $request->departments);
         $data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
@@ -63,14 +64,17 @@ class RiskManagementController extends Controller
         $data->priority_level = $request->priority_level;
         $data->zone = $request->zone;
         $data->country = $request->country;
+        $data->state = $request->state;
         $data->city = $request->city;
         $data->description = $request->description;
+        $data->severity2_level = $request->severity2_level;
         $data->comments = $request->comments;
         $data->departments2 = implode(',', $request->departments2);
         $data->site_name = $request->site_name;
         $data->building = $request->building;
         $data->floor = $request->floor;
         $data->room = $request->room;
+        $data->related_record = json_encode($request->related_record);
         $data->duration = $request->duration;
         $data->hazard = $request->hazard;
         $data->room2 = $request->room2;
@@ -78,10 +82,19 @@ class RiskManagementController extends Controller
         $data->Number_of_employees = $request->Number_of_employees;
         $data->risk_management_strategy = $request->risk_management_strategy;
         $data->estimated_man_hours = $request->estimated_man_hours;
+        $data->schedule_start_date1 = $request->schedule_start_date1;
+        $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_cost = $request->estimated_cost;
         $data->currency = $request->currency;
 
         $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
+        $data->measurement = json_encode($request->measurement);
+        $data->materials = json_encode($request->materials);
+        $data->methods = json_encode($request->methods);
+        $data->environment = json_encode($request->environment);
+        //$data->manpower = json_encode($request->manpower);
+        //$data->machine = json_encode($request->machine);
+        //$data->problem_statement = ($request->problem_statement);
         $data->training_require = $request->training_require;
         $data->justification = $request->justification;
         $data->cost_of_risk = $request->cost_of_risk;

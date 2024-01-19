@@ -310,8 +310,8 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Division Code"><b>Division Code</b></label>
-                                                <input disabled type="text" name="division_code"
+                                                <label for="Division Code"><b>Division</b></label>
+                                                <input readonly type="text" name="division_code"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static">QMS-North America</div> --}}
                                             </div>
@@ -363,7 +363,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                      id="initiator-group">
                                                     <option value="CQA"
                                                         @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
@@ -776,6 +776,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
+                                        
                                                 <label for="City">City</label>
                                                 <select name="city" class="cities" id="cityId">
                                                     <option value="{{ $data->City }}">Select City</option>
@@ -787,7 +788,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity-level">
+                                                <select name="severity1_level">
                                                     <option value="0">-- Select --</option>
                                                     <option value="minor">Minor</option>
                                                     <option value="major">Major</option>

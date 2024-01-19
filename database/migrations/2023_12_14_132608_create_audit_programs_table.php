@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('initiator_id')->nullable();
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
-            $table->string('initiator_group')->nullable();
+            $table->string('Initiator_Group')->nullable();
             $table->string('due_date')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
@@ -49,6 +49,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('City')->nullable();
             $table->string('state_district')->nullable();
+            $table->string('severity1_level')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
 
