@@ -225,6 +225,7 @@
                                                 {{-- <div class="static"> </div> --}}
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Date Due">Date of Initiation</label>
@@ -252,7 +253,7 @@
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">Please mention expected date of completion</small></div>
                                                 @if (!empty($revised_date))
-                                                <input disabled type="text"
+                                                <input readonly type="text"
                                                 value="{{ Helpers::getdateFormat($revised_date) }}">
                                                 @else
                                                 <input disabled type="text"
@@ -324,7 +325,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input disabled type="text"
+                                                <input readonly type="text"
                                                     value="{{ $data->general_initiator_group }}">
                                                 {{-- <div class="static"></div> --}}
                                             </div>
@@ -463,7 +464,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity-level">
+                                                <select name="severity_level_form">
                                                     <option value="0">-- Select --</option>
                                                     <option value="minor">Minor</option>
                                                     <option value="major">Major</option>
@@ -942,7 +943,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-6 new-date-data-field">
+                                        {{-- <div class="col-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Effect.Check Creation Date">Effect.Check Creation
                                                     Date</label>
@@ -954,6 +955,19 @@
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'effect_check_date')"/>
                                                     </div>
+                                            </div>
+                                        </div> --}}
+
+                                        <div class="col-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Effect Check Creation Date">Effectiveness Check Creation Date</label>
+                                                {{-- <input type="date" name="effect_check_date"> --}}
+                                                <div class="calenderauditee">
+                                                    <input type="text"  id="effect_check_date" readonly
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="effect_check_date" class="hide-input"
+                                                        oninput="handleDateInput(this,'effect_check_date')" />
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-6">

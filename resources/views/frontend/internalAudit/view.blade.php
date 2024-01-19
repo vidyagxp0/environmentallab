@@ -593,7 +593,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity_level_select">
+                                                <select name="severity_level_form">
                                                     <option value="0">-- Select --</option>
                                                     <option value="minor">Minor</option>
                                                     <option value="major">Major</option>

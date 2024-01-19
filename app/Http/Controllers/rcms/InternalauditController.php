@@ -46,7 +46,8 @@ class InternalauditController extends Controller
         $internalAudit->initiator_id = Auth::user()->id;
         $internalAudit->division_id = $request->division_id;
         $internalAudit->external_agencies = $request->external_agencies;
-        $internalAudit->severity_level = $request->severity_level_select;
+       // $internalAudit->severity_level = $request->severity_level_select;
+       $internalAudit->severity_level_form = $request->severity_level_form;
         $internalAudit->division_code = $request->division_code;
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
@@ -227,7 +228,7 @@ class InternalauditController extends Controller
         if (!empty($request->severity_level)) {
             $data4->severity_level = serialize($request->severity_level);
         }
-        if (!empty($request->area)) {
+        if (!empty($request->area)) { 
             $data4->area = serialize($request->area);
         }
         if (!empty($request->observation_category)) {

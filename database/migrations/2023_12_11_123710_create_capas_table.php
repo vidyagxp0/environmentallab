@@ -37,6 +37,9 @@ return new class extends Migration
             $table->text('capa_type')->nullable();
 
             $table->integer('assign_id')->nullable();
+            $table->string('initiator_group_code')->nullable();
+            $table->string('severity_level_form')->nullable();
+            
             $table->string('capa_team')->nullable();
             $table->string('capa_related_record')->nullable();
             $table->string('reference_record')->nullable();

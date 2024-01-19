@@ -28,7 +28,7 @@ return new class extends Migration
             $table->string('audit_schedule_end_date')->nullable();
             $table->string('record_number')->nullable();
             $table->string('external_agencies')->nullable();
-            $table->string('severity_level')->nullable();
+            $table->string('severity_level_form')->nullable();
 
  
 

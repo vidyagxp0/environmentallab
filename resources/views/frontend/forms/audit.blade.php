@@ -462,7 +462,7 @@
                                     <div class="group-input">
 
                                         <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity_level">
+                                        <select name="severity_level_form">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -501,19 +501,19 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                {{-- <div class="col-lg-6  new-date-data-field">
+                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
-                                        {{-- <input type="date" name="start_date"> --}}
-                                        {{-- <div class="calenderauditee">
+                                         {{-- <input type="date" name="start_date"> --}} 
+                                         <div class="calenderauditee">
                                             <input type="text" name="audit_schedule_start_date"
                                                 id="audit_schedule_start_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_schedule_start_date')" />
-                                        </div> --}}
-                                    {{-- </div> --}}
-                                {{-- </div> --}} 
-                                <div class="col-lg-6">
+                                        </div> 
+                                     </div> 
+                                </div> 
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="audit_schedule_start_date"><b>Audit Schedule Start Date
                                         </b></label>
@@ -521,7 +521,7 @@
                                             disabled>
                                         <input type="hidden" value="{{ date('d-M-Y') }}" name="audit_schedule_start_date">
                                     </div>
-                                </div>
+                                </div> --}} 
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule End Date">Audit Schedule End Date</label>

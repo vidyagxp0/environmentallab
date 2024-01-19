@@ -77,8 +77,8 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code">Division Code</label>
-                                        <input disabled type="text" name="division_code"
+                                        <label for="Division Code">Division </label>
+                                        <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
@@ -176,7 +176,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" disabled>
+                                            value="" >
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -318,7 +318,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity-level">
+                                        <select name="severity_level_form">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -555,8 +555,8 @@
                         </div>
                     </div>
 
-                    <!-- Project Study content -->
-                    {{-- <div id="CCForm3" class="inner-block cctabcontent">
+                    <!-- Project Study content****************************** -->
+                    <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">
@@ -604,12 +604,12 @@
                                         <input type="text" name="sponsor">
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="General Deviation">General Deviation</label>
                                         <textarea name="general_deviation"></textarea>
                                     </div>
-                                </div>
+                                </div> 
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -618,9 +618,9 @@
                                 <button type="button"> <a class="text-white"> Exit </a> </button>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
 
-                    <!-- CAPA Details content -->
+                    <!-- CAPA Details content ****************************-->
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
@@ -711,12 +711,12 @@
                                 </div>
                                 <div class="col-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Effect.Check Creation Date">Effectiveness Check Creation Date</label>
+                                        <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
                                         {{-- <input type="date" name="effect_check_date"> --}}
                                         <div class="calenderauditee">
                                             <input type="text" name="effect_check_date" id="effect_check_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" class="hide-input"
+                                            <input type="date" name="effect_check_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'effect_check_date')" />
                                         </div>
                                     </div>

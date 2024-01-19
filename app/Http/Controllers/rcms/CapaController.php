@@ -28,7 +28,7 @@ class CapaController extends Controller
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date = $formattedDate->format('Y-m-d');
+        $due_date= $formattedDate->format('Y-m-d');
         return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record'));
     }
 
@@ -56,7 +56,7 @@ class CapaController extends Controller
         $capa->assign_id = $request->assign_id;
         $capa->capa_team = $request->capa_team;
         $capa->capa_type = $request->capa_type;
-
+        $capa->severity_level_form= $request->severity_level_form;
         $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
@@ -91,7 +91,7 @@ class CapaController extends Controller
         $capa->subject_number = $request->subject_number;
         $capa->subject_initials = $request->subject_initials;
         $capa->sponsor = $request->sponsor;
-        $capa->general_deviation = $request->general_deviation;
+        $capa->general_deviation= $request->general_deviation;
         $capa->corrective_action = $request->corrective_action;
         $capa->preventive_action = $request->preventive_action;
         $capa->supervisor_review_comments = $request->supervisor_review_comments;
@@ -635,7 +635,7 @@ class CapaController extends Controller
         $capa->parent_id = $request->parent_id;
         $capa->parent_type = $request->parent_type;
         $capa->division_code = $request->division_code;
-        $capa->intiation_date = $request->intiation_date;
+        $capa->intiation_date= $request->intiation_date;
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
@@ -646,6 +646,8 @@ class CapaController extends Controller
         $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
+        $capa->severity_level_form= $request->severity_level_form;
+
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
@@ -1074,7 +1076,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->general_deviation != $capa->general_deviation || !empty($request->general_deviation_comment)) {
+        if ($lastDocument->general_deviation!= $capa->general_deviation||!empty($request->general_deviation_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
