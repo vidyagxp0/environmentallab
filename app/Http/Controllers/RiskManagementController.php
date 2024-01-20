@@ -48,6 +48,7 @@ class RiskManagementController extends Controller
         $data->form_type = "risk-assesment";
         $data->division_id = $request->division_id;
         $data->division_code = $request->division_code;
+        //$data->record_number = $request->record_number;
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->short_description = $request->short_description;
@@ -94,7 +95,29 @@ class RiskManagementController extends Controller
         $data->environment = json_encode($request->environment);
         //$data->manpower = json_encode($request->manpower);
         //$data->machine = json_encode($request->machine);
-        //$data->problem_statement = ($request->problem_statement);
+        //$data->problem_statement1 = ($request->problem_statement1);
+        $data->why_problem_statement = $request->why_problem_statement;
+        $data->why_1 = json_encode($request->why_1);
+        $data->why_2 = json_encode($request->why_2);
+        $data->why_3 = json_encode($request->why_3);
+        $data->why_4 = json_encode($request->why_4);
+        $data->why_5 = json_encode($request->why_5);
+        $data->root_cause = $request->root_cause;
+        $data->what_will_be = $request->what_will_be;
+        $data->what_will_not_be = $request->what_will_not_be;
+        $data->what_rationable = $request->what_rationable;
+        $data->where_will_be = $request->where_will_be;
+        $data->where_will_not_be = $request->where_will_not_be;
+        $data->where_rationable = $request->where_rationable;
+        $data->when_will_be = $request->when_will_be;
+        $data->when_will_not_be = $request->when_will_not_be;
+        $data->when_rationable = $request->when_rationable;
+        $data->coverage_will_be = $request->coverage_will_be;
+        $data->coverage_will_not_be = $request->coverage_will_not_be;
+        $data->coverage_rationable = $request->coverage_rationable;
+        $data->who_will_be = $request->who_will_be;
+        $data->who_will_not_be = $request->who_will_not_be;
+        $data->who_rationable = $request->who_rationable;
         $data->training_require = $request->training_require;
         $data->justification = $request->justification;
         $data->cost_of_risk = $request->cost_of_risk;
@@ -126,8 +149,10 @@ class RiskManagementController extends Controller
         $data->criticality = $request->criticality;
         $data->impact_analysis = $request->impact_analysis;
         $data->risk_analysis = $request->risk_analysis;
-        $data->severity = $request->severity;
-        $data->occurance = $request->occurance;
+        $data->due_date_extension = $request->due_date_extension;
+        $data->initial_rpn = $request->initial_rpn;
+        //$data->severity = $request->severity;
+        //$data->occurance = $request->occurance;
         $data->refrence_record =  implode(',', $request->refrence_record);
 
         if (!empty($request->reference)) {
@@ -972,6 +997,8 @@ class RiskManagementController extends Controller
 
         $lastDocument =  RiskManagement::find($id);
         $data =  RiskManagement::find($id);
+        $data->division_code = $request->division_code;
+        //$data->record_number = $request->record_number;
         $data->short_description = $request->short_description;
         $data->open_date = $request->open_date;
         $data->assign_id = $request->assign_id;
@@ -1034,8 +1061,9 @@ class RiskManagementController extends Controller
         $data->criticality = $request->criticality;
         $data->impact_analysis = $request->impact_analysis;
         $data->risk_analysis = $request->risk_analysis;
-        $data->severity = $request->severity;
-        $data->occurance = $request->occurance;
+        $data->due_date_extension = $request->due_date_extension;
+        //$data->severity = $request->severity;
+        //$data->occurance = $request->occurance;
         $data->refrence_record =  implode(',', $request->refrence_record);
         if (!empty($request->reference)) {
             $files = [];

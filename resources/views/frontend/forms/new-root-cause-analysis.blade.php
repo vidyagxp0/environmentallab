@@ -13,7 +13,7 @@
     <div class="form-field-head">
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            EHS-North America / Root Cause Analysis
+            {{ Helpers::getDivisionName($data->division_id) }} / Root Cause Analysis
         </div>
     </div>
 

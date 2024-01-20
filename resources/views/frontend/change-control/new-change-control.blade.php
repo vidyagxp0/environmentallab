@@ -51,8 +51,8 @@
 
 
                 <div class="slogan">
-                    <strong>Division / Project :</strong>
-                    {{ Helpers::getDivisionName(session()->get('division')) }}/ Change Control
+                    <strong>Site Division / Project </strong>:
+                    {{ Helpers::getDivisionName(session()->get('division')) }} / Change Control
                 </div>
             </div>
         </div>

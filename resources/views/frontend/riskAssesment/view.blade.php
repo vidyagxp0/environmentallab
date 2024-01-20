@@ -1361,7 +1361,7 @@
                                                                     </td>
                                                                     <td>{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ? unserialize($riskEffectAnalysis->initial_probability)[$key] : '' }}
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ? unserialize($riskEffectAnalysis->initial_rpn)[$key] : '' }}
+                                                                    {{-- <td>{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ? unserialize($riskEffectAnalysis->initial_rpn)[$key] : '' }}  --}}
                                                                     </td>
                                                                     <td>{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance)[$key] : '' }}
                                                                     </td>
@@ -1373,7 +1373,7 @@
                                                                     </td>
                                                                     <td>{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ? unserialize($riskEffectAnalysis->residual_detectability)[$key] : '' }}
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ? unserialize($riskEffectAnalysis->residual_rpn)[$key] : '' }}
+                                                                    {{-- <td>{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ? unserialize($riskEffectAnalysis->residual_rpn)[$key] : '' }} --}}
                                                                     </td>
                                                                     <td>{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance2)[$key] : '' }}
                                                                     </td>
@@ -1458,7 +1458,7 @@
                                                         </div>
                                                         <div class="field">
 
-                                                            <textarea name="problem_statement">{{ $fishbone->problem_statement }}</textarea>
+                                                            <textarea name="problem_statement1">{{ $fishbone->problem_statement }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1564,7 +1564,7 @@
                                                             <tr style="background: #0080006b;">
                                                                 <th style="width:150px;">Root Cause :</th>
                                                                 <td>
-                                                                    <textarea name="root-cause"></textarea>
+                                                                    <textarea name="root_cause"></textarea>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1738,7 +1738,7 @@
                                                 <label for="RPN">RPN</label>
                                                 <div><small class="text-primary">Auto - Calculated</small></div>
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
-                                                    <input disabled type="text" name="rpn" id="analysisRPN" value="{{$data->rpn}}">
+                                                    <input readonly type="text" name="rpn" id="analysisRPN" value="{{$data->rpn}}">
 
                                             </div>
                                         </div>
@@ -1807,7 +1807,7 @@
                                             <div class="group-input">
                                                 <label for="RPN">Residual RPN</label>
                                                 <div><small class="text-primary">Auto - Calculated</small></div>
-                                                <input disabled type="text" name="rpn2" id="analysisRPN2" value="{{$data->rpn2}}">
+                                                <input readonly type="text" name="rpn2" id="analysisRPN2" value="{{$data->rpn2}}">
                                             </div>
                                         </div>
                                         <div class="col-12">

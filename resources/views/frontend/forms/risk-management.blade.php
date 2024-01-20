@@ -974,7 +974,7 @@
                                                         Problem Statement
                                                     </div>
                                                     <div class="field">
-                                                        <textarea name="problem_statement"></textarea>
+                                                        <textarea name="problem_statement1"></textarea>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1058,7 +1058,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="root-cause"></textarea>
+                                                                <textarea name="root_cause"></textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1214,7 +1214,7 @@
                                         <div class="group-input">
                                             <label for="RPN">RPN</label>
                                             <div><small class="text-primary">Auto - Calculated</small></div>
-                                            <input type="text" name="rpn" id="analysisRPN" value="" disabled>
+                                            <input type="text" name="rpn" id="analysisRPN" value="" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -1278,7 +1278,7 @@
                                         <div class="group-input">
                                             <label for="RPN">Residual RPN</label>
                                             <div><small class="text-primary">Auto - Calculated</small></div>
-                                            <input type="text" name="rpn2" id="analysisRPN2" value="" disabled>
+                                            <input type="text" name="rpn2" id="analysisRPN2" value="" readonly>
                                         </div>
                                     </div>
                                     <div class="col-12">
