@@ -211,7 +211,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Division Code">Division Code</label>
+                                                <label for="Division Code">Site/Location Code</label>
                                                 <input disabled type="text" name="division_code"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static"></div> --}}
@@ -338,6 +338,17 @@
                                                 <textarea name="short_description">{{ $data->short_description }}</textarea>
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="severity-level">Sevrity Level</label>
+                                                <select name="severity_level_form">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="minor">Minor</option>
+                                                    <option value="major">Major</option>
+                                                    <option value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
@@ -461,17 +472,7 @@
                                                 <textarea name="containment_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->containment_comments }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity_level_form">
-                                                    <option value="0">-- Select --</option>
-                                                    <option value="minor">Minor</option>
-                                                    <option value="major">Major</option>
-                                                    <option value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Attachments">CAPA Attachment</label>

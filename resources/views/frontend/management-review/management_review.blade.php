@@ -123,7 +123,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                         {{-- <div class="static">QMS-North America</div> --}}

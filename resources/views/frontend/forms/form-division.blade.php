@@ -16,7 +16,7 @@
                     <div class="division-tabs">
                         <div class="left-block">
                             <div class="head">
-                                Division
+                                Site/Location
                             </div>
                             <div class="tab">
                                 @php
@@ -34,7 +34,7 @@
                         </div>
                         <div class="right-block">
                             <div class="head">
-                                Project
+                                Process
                             </div>
                             @php
                                 $process = DB::table('q_m_s_processes')->get();

@@ -1014,6 +1014,7 @@ class RiskManagementController extends Controller
         $data->country = $request->country;
         $data->city = $request->city;
         $data->description = $request->description;
+        $data->severity2_level = $request->severity2_level;
         $data->comments = $request->comments;
         $data->departments2 = implode(',', $request->departments2);
         $data->site_name = $request->site_name;

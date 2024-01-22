@@ -333,7 +333,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Division Code"><b>Division</b></label>
+                                                <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input readonly type="text" name="division_code"
                                                     value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static">QMS-North America</div> --}}
@@ -464,7 +464,17 @@
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="short_desc">{{ $data->short_description }}</textarea>
                                             </div>
                                         </div>
-
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="severity-level">Sevrity Level</label>
+                                                <select name="severity2_level">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="minor">Minor</option>
+                                                    <option value="major">Major</option>
+                                                    <option value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         {{-- --------------------------------------- --}}
                                         <div class="col-12">
                                             <div class="group-input">
@@ -632,17 +642,7 @@
                                                 <textarea name="description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="description">{{ $data->description }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity2_level">
-                                                    <option value="0">-- Select --</option>
-                                                    <option value="minor">Minor</option>
-                                                    <option value="major">Major</option>
-                                                    <option value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                       
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Comments">Comments</label>
@@ -2437,6 +2437,32 @@
                 });
             </script>
             <script>
+                $(document).ready(function() {
+                    var loc = new locationInfo();
+                    var countryDropdown = $("#country"); 
+                    var desiredValue = '{{$data->country}}'; 
+                     setTimeout(function() {
+                        countryDropdown.find('option[value="{{$data->country}}"]').prop('selected', true);
+                         var countryId = jQuery("option:selected", this).attr('countryid');
+                            if(countryId != ''){
+                                loc.getStates(countryId);
+                            }
+                            else{
+                                jQuery(".states option:gt(0)").remove();
+                            }
+                        var stateDropdown = $("#state");     
+                        stateDropdown.find('option[value="{{$data->state}}"]').prop('selected', true);
+                        var stateId = jQuery("option:selected", this).attr('stateid');
+                        if(stateId != ''){
+                            loc.getCities(stateId);
+                        }
+                        else{
+                            jQuery(".cities option:gt(0)").remove();
+                        }
+                        var cityDropdown = $("#city");     
+                        cityDropdown.find('option[value="{{$data->city}}"]').prop('selected', true);
+                    }, 1000);
+                });
                 function calculateRiskAnalysis(selectElement) {
                     // Get the row containing the changed select element
                     let row = selectElement.closest('tr');

@@ -24,9 +24,7 @@
                     var users = @json($users);
                     console.log(users);
                     var html =
-                        '<tr>' +
-                        '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                        '<td><select name="Auditees[]">' +
+                    '<tr>' +'<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +'<td><select name="Auditees[]">' +
                         '<option value="">Select a value</option>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -213,7 +211,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -322,6 +320,17 @@
                                         <textarea name="short_description"></textarea>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="severity-level">Sevrity Level</label>
+                                        <select name="severity1_level">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="critical">Critical</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
@@ -383,26 +392,23 @@
                                         <label for="Year">Year</label>
                                         <select name="year">
                                             <option value="">-- Select --</option>
-                                            <option value="2001">2001</option>
-                                            <option value="2002">2002</option>
-                                            <option value="2003">2003</option>
-                                            <option value="2004">2004</option>
-                                            <option value="2005">2005</option>
-                                            <option value="2006">2006</option>
-                                            <option value="2007">2007</option>
-                                            <option value="2008">2008</option>
-                                            <option value="2009">2009</option>
-                                            <option value="2010">2010</option>
-                                            <option value="2011">2011</option>
-                                            <option value="2012">2012</option>
-                                            <option value="2013">2013</option>
-                                            <option value="2014">2014</option>
-                                            <option value="2015">2015</option>
-                                            <option value="2016">2016</option>
-                                            <option value="2017">2017</option>
-                                            <option value="2018">2018</option>
-                                            <option value="2019">2019</option>
-                                            <option value="2020">2020</option>
+                                            <option value="2001">2024</option>
+                                            <option value="2002">2025</option>
+                                            <option value="2003">2026</option>
+                                            <option value="2004">2027</option>
+                                            <option value="2005">2028</option>
+                                            <option value="2006">2029</option>
+                                            <option value="2007">2030</option>
+                                            <option value="2008">2031</option>
+                                            <option value="2009">2032</option>
+                                            <option value="2010">2033</option>
+                                            <option value="2011">2034</option>
+                                            <option value="2012">2035</option>
+                                            <option value="2013">2036</option>
+                                            <option value="2014">2037</option>
+                                            <option value="2015">2038</option>
+                                            <option value="2016">2039</option>
+                                            <option value="2017">2040</option>
                                         </select>
                                     </div>
                                 </div>
@@ -515,12 +521,12 @@
                                         <input type="text" name="url_description" id="url_description" />
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="suggested_audit">Suggested Audits</label>
                                         <input type="text" name="suggested_audits" />
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="sub-head">Geographical Information</div>
                                 </div>
@@ -562,18 +568,7 @@
                                             <option value="">Select City</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity1_level">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                </div>                              
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
@@ -599,7 +594,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Submitted_By..">Submitted By..</label>
+                                        <label for="Submitted_By..">Submitted By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -618,6 +613,30 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Approved_On">Approved On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit_Completed_By">Audit Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit_Completed_On">Audit Completed On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled_By">Cancelled By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled_On">Cancelled On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input disabled type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -158,8 +158,7 @@
                                         <textarea name="short_description"></textarea>
                                     </div>
                                 </div>
-
-
+                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>

@@ -213,11 +213,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
+                            </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                End of Period
+                                Audit Completed 
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -310,7 +310,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Division Code"><b>Division</b></label>
+                                                <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input readonly type="text" name="division_code"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static">QMS-North America</div> --}}
@@ -592,6 +592,17 @@
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="severity-level">Sevrity Level</label>
+                                                <select name="severity1_level">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="minor">Minor</option>
+                                                    <option value="major">Major</option>
+                                                    <option value="critical">Critical</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
@@ -710,14 +721,14 @@
                                                     name="url_description" id="url_description" />
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="suggested_audit">Suggested Audits</label>
                                                 <input type="text" name="suggested_audits"
                                                     value="{{ $data->suggested_audits }}"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12">
                                             <div class="sub-head">Geographical Information</div>
                                         </div>
@@ -785,17 +796,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity1_level">
-                                                    <option value="0">-- Select --</option>
-                                                    <option value="minor">Minor</option>
-                                                    <option value="major">Major</option>
-                                                    <option value="critical">Critical</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div>
@@ -809,8 +810,7 @@
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -854,7 +854,7 @@
                                         <button type="submit"
                                             {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Submit</button>
                                         <button type="button"> <a class="text-white"
-                                                href="{{ url('rcms/qms-dashboard') }}""> Exit </a> </button>
+                                                href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
@@ -1018,6 +1018,10 @@
                                         <input type="radio" name="child_type" value="External_Audit">
                                         External Audit
                                     </label>
+                                    <label for="minor">
+                                        <input type="radio" name="child_type" value="extension">
+                                        Extension
+                                    </label>
                                 </div>
 
                             </div>
@@ -1049,7 +1053,7 @@
                                         <input type="hidden" name="parent_name" value="Audit_program">
                                         <input type="hidden" name="due_date" value="{{ $data->due_date }}">
                                         <input type="radio" name="child_type" value="extension">
-                                        extension
+                                        Extension
                                     </label>
 
                                 </div>

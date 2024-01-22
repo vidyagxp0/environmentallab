@@ -191,7 +191,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Division Code"><b>Division</b></label>
+                                            <label for="Division Code"><b>Site/Location Code</b></label>
                                             <input readonly type="text" name="division_code"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                             <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -284,7 +284,17 @@
                                             <textarea name="short_description" id="short_desc"></textarea>
                                         </div>
                                     </div>
-
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="severity-level">Sevrity Level</label>
+                                            <select name="severity2_level">
+                                                <option value="0">-- Select --</option>
+                                                <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Department(s)">Department(s)</label>
@@ -401,17 +411,7 @@
                                             <textarea name="description" id="description"></textarea>
                                         </div>
                                     </div>
-                                    <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="severity-level">Sevrity Level</label>
-                                            <select name="severity2_level">
-                                                <option value="0">-- Select --</option>
-                                                <option value="minor">Minor</option>
-                                                <option value="major">Major</option>
-                                                <option value="critical">Critical</option>
-                                            </select>
-                                        </div>
-                                    </div>
+                                    
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
