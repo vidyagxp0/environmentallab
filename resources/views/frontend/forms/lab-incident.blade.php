@@ -200,7 +200,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
                                         <select name="Invocation_Type">
@@ -209,7 +209,7 @@
                                             <option value="2">2</option>
                                             <option value="3">3</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 
                                 <div class="col-lg-12">
@@ -314,9 +314,9 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Questionnaire
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="INV Questionnaire">INV Questionnaire</label>

@@ -77,8 +77,8 @@ class AuditeeController extends Controller
         $internalAudit->start_date = $request->start_date;
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
-        $internalAudit->Facility =  implode(',', $request->Facility);
-        $internalAudit->Group = implode(',', $request->Group);
+        // $internalAudit->Facility =  implode(',', $request->Facility);
+        // $internalAudit->Group = implode(',', $request->Group);
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
@@ -406,33 +406,33 @@ class AuditeeController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->Facility)) {
-            $history = new AuditTrialExternal();
-            $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Facility Name';
-            $history->previous = "Null";
-            $history->current = $internalAudit->Facility;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $internalAudit->status;
-            $history->save();
-        }
+        // if (!empty($internalAudit->Facility)) {
+        //     $history = new AuditTrialExternal();
+        //     $history->ExternalAudit_id = $internalAudit->id;
+        //     $history->activity_type = 'Facility Name';
+        //     $history->previous = "Null";
+        //     $history->current = $internalAudit->Facility;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $internalAudit->status;
+        //     $history->save();
+        // }
 
-        if (!empty($internalAudit->Group)) {
-            $history = new AuditTrialExternal();
-            $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Group Name';
-            $history->previous = "Null";
-            $history->current = $internalAudit->Group;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $internalAudit->status;
-            $history->save();
-        }
+        // if (!empty($internalAudit->Group)) {
+        //     $history = new AuditTrialExternal();
+        //     $history->ExternalAudit_id = $internalAudit->id;
+        //     $history->activity_type = 'Group Name';
+        //     $history->previous = "Null";
+        //     $history->current = $internalAudit->Group;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $internalAudit->status;
+        //     $history->save();
+        // }
 
         if (!empty($internalAudit->material_name)) {
             $history = new AuditTrialExternal();
@@ -759,8 +759,8 @@ class AuditeeController extends Controller
         
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
-        $internalAudit->Facility =  implode(',', $request->Facility);
-        $internalAudit->Group = implode(',', $request->Group);
+        // $internalAudit->Facility =  implode(',', $request->Facility);
+        // $internalAudit->Group = implode(',', $request->Group);
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
@@ -1051,34 +1051,34 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Facility != $internalAudit->Facility || !empty($request->Facility_comment)) {
+        // if ($lastDocument->Facility != $internalAudit->Facility || !empty($request->Facility_comment)) {
 
-            $history = new AuditTrialExternal();
-            $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Facility Name';
-            $history->previous = $lastDocument->Facility;
-            $history->current = $internalAudit->Facility;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Group != $internalAudit->Group || !empty($request->Group_comment)) {
+        //     $history = new AuditTrialExternal();
+        //     $history->ExternalAudit_id = $id;
+        //     $history->activity_type = 'Facility Name';
+        //     $history->previous = $lastDocument->Facility;
+        //     $history->current = $internalAudit->Facility;
+        //     $history->comment = $request->date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        // if ($lastDocument->Group != $internalAudit->Group || !empty($request->Group_comment)) {
 
-            $history = new AuditTrialExternal();
-            $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Group Name';
-            $history->previous = $lastDocument->Group;
-            $history->current = $internalAudit->Group;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new AuditTrialExternal();
+        //     $history->ExternalAudit_id = $id;
+        //     $history->activity_type = 'Group Name';
+        //     $history->previous = $lastDocument->Group;
+        //     $history->current = $internalAudit->Group;
+        //     $history->comment = $request->date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->material_name != $internalAudit->material_name || !empty($request->material_name_comment)) {
 
             $history = new AuditTrialExternal();

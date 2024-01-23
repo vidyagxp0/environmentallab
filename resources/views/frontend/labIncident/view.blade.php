@@ -141,9 +141,9 @@
                                 <div class="">Pending QA Review</div>
                             @endif
                             @if ($data->stage >= 7)
-                                <div class="active">Pending QA Head Approve</div>
+                                <div class="active">Pending QA Head Approval</div>
                             @else
-                                <div class="">Pending QA Head Approve</div>
+                                <div class="">Pending QA Head Approval</div>
                             @endif
                             @if ($data->stage >= 8)
                                 <div class="bg-danger">Closed - Done</div>
@@ -522,9 +522,9 @@
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Questionnaire
-                                </div>
+                                </div>  --}}
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="INV Questionnaire">INV Questionnaire</label>

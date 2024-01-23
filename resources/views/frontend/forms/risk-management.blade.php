@@ -164,7 +164,7 @@
                 <!-- Tab links -->
                 <div class="cctab">
                     <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk Assesment</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Details</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Analysis</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button>
@@ -412,6 +412,23 @@
                                         </div>
                                     </div>
                                     
+                                    <div class="col-6">
+                                        <div class="group-input">
+                                            <label for="Description"> Opportunity Description</label>
+                                            <textarea name=" Opportunity_description" id="Opportunitydescription"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="severity-level">Sevrity Level</label>
+                                            <select name="severity2_level">
+                                                <option value="0">-- Select --</option>
+                                                <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>

@@ -130,7 +130,7 @@ function addMultipleFiles(input, block_id) {
                 }
                 html += '</select></td>' +
                     '<td><input type="text" name="observation_description[]"></td>' +
-                    '<td><input type="text" name="severity_level[]"></td>' +
+                    //'<td><input type="text" name="severity_level[]"></td>' +
                     '<td><input type="text" name="area[]"></td>' +
                     '<td><input type="text" name="observation_category[]"></td>' +
                     '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
@@ -344,7 +344,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Division Code"><b>Division Code</b></label>
+                                                <label for="Division Code"><b>Site/Location Code</b></label>
                                                 <input disabled type="text" name="division_code"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static">QMS-North America</div> --}}
@@ -939,7 +939,7 @@ function addMultipleFiles(input, block_id) {
                                                                         @endforeach
                                                                     </select>
                                                                 </td>                                                            <td><input type="text" name="observation_description[]" value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td>
+                                                                    {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
                                                                     <td><input type="text" name="area[]" value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td>
                                                                     <td>

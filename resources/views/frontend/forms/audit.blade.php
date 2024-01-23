@@ -152,7 +152,7 @@
                     }
                     html += '</select></td>' +
                         '<td><input type="text" name="observation_description[]"></td>' +
-                        '<td><input type="text" name="severity_level[]"></td>' +
+                        // '<td><input type="text" name="severity_level[]"></td>' +
                         '<td><input type="text" name="area[]"></td>' +
                         '<td><input type="text" name="observation_category[]"></td>' +
                         '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
@@ -266,7 +266,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Division Code"><b>Division </b></label>
+                                        <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
@@ -432,7 +432,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" id="type_of_audit_req">
-                                        <label for="If Other">If Other<span class="text-danger d-none">*</span></label>
+                                        <label for="If Other">If Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="if_other"></textarea>
                                         @error('if_other')
                                             <p class="text-danger">this field is required</p>
@@ -464,7 +464,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Initial Comments">Initial Comments</label>
+                                        <label for="Initial Comments">Description</label>
                                         <textarea name="initial_comments"></textarea>
                                     </div>
                                 </div>
@@ -595,7 +595,7 @@
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <div class="group-input">
+                                    {{-- <div class="group-input">
                                         <label for="Facility Name">Facility Name</label>
                                         <select multiple name="Facility[]" placeholder="Select Facility Name"
                                             data-search="false" data-silent-initial-value-set="true" id="Facility">
@@ -607,10 +607,10 @@
                                             <option value="Microbiology">Microbiology</option>
                                             <option value="Others">Others</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input">
+                                    {{-- <div class="group-input">
                                         <label for="Group Name">Function Name</label>
                                         <select multiple name="Group[]" placeholder="Select Function Name"
                                             data-search="false" data-silent-initial-value-set="true" id="Group">
@@ -621,7 +621,7 @@
                                             <option value="RA">RA</option>
                                             <option value="R&D">R&D</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -680,7 +680,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Observation Details
@@ -703,8 +703,8 @@
                                                         <th>Auditor</th>
                                                         <th>Auditee</th>
                                                         <th>Observation Description</th>
-                                                        <th>Severity Level</th>
-                                                        <th>Area/process</th>
+                                                        {{-- <th>Severity Level</th> --}}
+                                                        {{-- <th>Area/process</th>
                                                         <th>Observation Category</th>
                                                         <th>CAPA Required</th>
                                                         <th>Auditee Response</th>
@@ -724,7 +724,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}} 
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
@@ -867,6 +867,52 @@
                                                 oninput="handleDateInput(this, 'audit_end_date')" />
                                         </div>
                                     </div>
+                                </div>
+                                      <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="audit-agenda-grid">
+                                            Observation Details
+                                            <button type="button" name="audit-agenda-grid"
+                                                id="ObservationAdd">+</button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#observation-field-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered" id="onservation-field-table"
+                                                style="width: 150%;">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Row#</th>
+                                                        <th>Observation ID</th>
+                                                        <th>Date</th>
+                                                        <th>Auditor</th>
+                                                        <th>Auditee</th>
+                                                        <th>Observation Description</th>
+                                                        {{-- <th>Severity Level</th> --}}
+                                                        <th>Area/process</th>
+                                                        <th>Observation Category</th>
+                                                        <th>CAPA Required</th>
+                                                        <th>Auditee Response</th>
+                                                        <th>Auditor Review on Response</th>
+                                                        <th>QA Comments</th>
+                                                        <th>CAPA Details</th>
+                                                        <th>CAPA Due Date</th>
+                                                        <th>CAPA Owner</th>
+                                                        <th>Action Taken</th>
+                                                        <th>CAPA Completion Date</th>
+                                                        <th>Status</th>
+                                                        <th>Remarks</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="observationDetail">
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div> 
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -1139,7 +1185,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record'
+             ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record'
         });
 
         function openCity(evt, cityName) {
