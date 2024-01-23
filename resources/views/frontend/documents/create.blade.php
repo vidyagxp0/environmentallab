@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        <label for="short-desc">Short Description<span class="text-danger">*</span></label>
+                                        <label for="short-desc">Short Description1<span class="text-danger">*</span></label>
                                         <input type="text" id="short_desc" name="   short_desc">
                                     </div>
                                     <p id="short_descError" style="color:red">**Short description is required</p>

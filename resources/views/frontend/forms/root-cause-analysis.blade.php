@@ -34,6 +34,8 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Group Comments</button>
+                
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
             </div>
 
@@ -612,7 +614,115 @@
                             </div>
                         </div>
                     </div>
+                    <div id="CCForm4" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                            <div class="sub-head">
+                                CFT Feedback
+                            </div>
+                            <div class="row">
 
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments">CFT Comments</label>
+                                        <textarea name="cft_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments">CFT Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="cft_attchament"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="cft_attchament[]"
+                                                    oninput="addMultipleFiles(this, 'cft_attchament')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="sub-head">
+                                    Concerned Group Feedback
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">QA Comments</label>
+                                        <textarea name="qa_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">QA Head Designee Comments</label>
+                                        <textarea name="designee_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Warehouse Comments</label>
+                                        <textarea name="Warehouse_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Engineering Comments</label>
+                                        <textarea name="Engineering_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Instrumentation Comments</label>
+                                        <textarea name="Instrumentation_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Validation Comments</label>
+                                        <textarea name="Validation_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Others Comments</label>
+                                        <textarea name="Others_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="comments">Group Comments</label>
+                                        <textarea name="Group_comments"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="group-attachments">Group Attachments</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="group_attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="group_attachments[]"
+                                                    oninput="addMultipleFiles(this, 'group_attachments')" multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="button-block">
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                        Exit </a> </button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    
                     <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
