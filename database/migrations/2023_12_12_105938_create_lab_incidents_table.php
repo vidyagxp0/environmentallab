@@ -26,11 +26,13 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->string('short_desc')->nullable();
+            $table->string('severity_level2')->nullable();
             $table->string('Initiator_Group')->nullable();
             $table->string('Other_Ref')->nullable();
             // $table->string('due_date')->nullable();
             $table->date('effect_check_date')->nullable();
             $table->date('occurance_date')->nullable();
+            $table->string('due_date_extension1')->nullable();
             $table->string('assigend')->nullable();
             $table->string('Incident_Category')->nullable();
             $table->string('Invocation_Type')->nullable();
@@ -54,6 +56,7 @@ return new class extends Migration
             $table->text('QA_Head_Attachment')->nullable();
             $table->text('QA_Head')->nullable();
             $table->string('Effectiveness_Check')->nullable();
+            $table->date('effectivess_check_creation_date')->nullable();
             $table->string('Incident_Type')->nullable();
             $table->string('Conclusion')->nullable();
             $table->string('status')->nullable();

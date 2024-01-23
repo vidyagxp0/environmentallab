@@ -197,7 +197,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                        <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName($data->division_id) }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
@@ -245,7 +245,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                              id="initiator-group">
                                             <option value="CQA"
                                                 @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate

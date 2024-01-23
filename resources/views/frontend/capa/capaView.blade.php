@@ -150,9 +150,9 @@
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">Pending Approval</div>
+                                <div class="active">CFT/SME Review</div>
                             @else
-                                <div class="">Pending Approval</div>
+                                <div class="">CFT/SME Review</div>
                             @endif
 
 
@@ -187,7 +187,7 @@
                     <div class="cctab">
                         <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Product Information</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button>
+                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
@@ -930,6 +930,9 @@
                                                 </div>
                                             </div>
                                         </div>
+                                         <div class="col-12 sub-head">
+                                    Effectiveness Check Details
+                                </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Effectiveness Check required">Effectiveness Check

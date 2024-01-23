@@ -43,8 +43,9 @@ class LabIncidentController extends Controller
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
         $data->short_desc = $request->short_desc;
+        $data->severity_level2 = $request->severity_level2;
         $data->intiation_date = $request->intiation_date;
-        $data->Initiator_Group = $request->initiator_group;
+        $data->Initiator_Group = $request->Initiator_Group;
         $data->Other_Ref = $request->Other_Ref;
         $data->due_date = $request->due_date;
         $data->assigend = $request->assigend;
@@ -65,10 +66,12 @@ class LabIncidentController extends Controller
         $data->QA_Review_Comments = $request->QA_Review_Comments;
         $data->QA_Head = $request->QA_Head;
         $data->Effectiveness_Check = $request->Effectiveness_Check;
+        $data->effectivess_check_creation_date = $request->effectivess_check_creation_date;
         $data->Incident_Type = $request->Incident_Type;
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date = $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
+        $data->due_date_extension1 = $request->due_date_extension1;
         $data->status = 'Opened';
         $data->stage = 1;
 
@@ -606,10 +609,12 @@ class LabIncidentController extends Controller
         $data->QA_Review_Comments = $request->QA_Review_Comments;
         $data->QA_Head = $request->QA_Head;
         $data->Effectiveness_Check = $request->Effectiveness_Check;
+        $data->effectivess_check_creation_date = $request->effectivess_check_creation_date;
         $data->Incident_Type = $request->Incident_Type;
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date = $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
+        $data->due_date_extension1 = $request->due_date_extension1;
 
         if (!empty($request->Initial_Attachment)) {
             $files = [];
