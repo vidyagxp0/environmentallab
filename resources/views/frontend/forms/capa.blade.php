@@ -255,10 +255,11 @@
                                     </div>
                                 </div>
 
+                            
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Team">CAPA Team</label>
-                                        <select id="select-state" placeholder="Select..." name="capa_team">
+                                        <select multiple id="select-state" placeholder="Select..." name="capa_team[]">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -671,7 +672,7 @@
                             </div>
                         </div>
                     </div>
-                     {{-- <div id="CCForm5" class="inner-block cctabcontent">
+                      <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information

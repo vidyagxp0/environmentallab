@@ -262,8 +262,7 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional
-                                Information</button>
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Risk Assessment</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Approval Comments</button>
@@ -294,9 +293,10 @@
                                                     <label for="Division Code"><b>Division Code</b></label>
                                                     <input disabled type="text" name="division_code"
                                                         value=" {{ Helpers::getDivisionName($data->division_id) }}">
-                                                    {{-- <div class="static">QMS-North America</div> --}}
+                                                
                                                 </div>
                                             </div>
+                                             {{-- <div class="static">QMS-North America</div> --}}
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator">Initiator</label>
@@ -405,6 +405,17 @@
                                                 <div class="group-input">
                                                     <label for="short-desc">Short Description</label>
                                                     <textarea name="short_description">{{ $data->short_description }}</textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="severity-level">Sevrity Level</label>
+                                                    <select name="severity_level1">
+                                                        <option value="0">-- Select --</option>
+                                                        <option value="minor">Minor</option>
+                                                        <option value="major">Major</option>
+                                                        <option value="critical">Critical</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">

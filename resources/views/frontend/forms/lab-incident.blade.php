@@ -506,7 +506,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <textarea name="due_date_extension1"></textarea>
+                                        <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
                             </div>

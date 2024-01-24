@@ -71,7 +71,7 @@ class LabIncidentController extends Controller
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date = $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
-        $data->due_date_extension1 = $request->due_date_extension1;
+        $data->due_date_extension = $request->due_date_extension;
         $data->status = 'Opened';
         $data->stage = 1;
 
@@ -614,7 +614,7 @@ class LabIncidentController extends Controller
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date = $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
-        $data->due_date_extension1 = $request->due_date_extension1;
+        $data->due_date_extension = $request->due_date_extension;
 
         if (!empty($request->Initial_Attachment)) {
             $files = [];

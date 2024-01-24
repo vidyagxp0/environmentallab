@@ -99,6 +99,35 @@ class CCController extends Controller
         $openState->doc_change = $request->natureChange;
         $openState->If_Others = $request->others;
         $openState->Division_Code = $request->div_code;
+        $openState->severity_level1 = $request->severity_level1;
+
+        $openState->current_practice = $request->current_practice;
+        $openState->proposed_change = $request->proposed_change;
+        $openState->reason_change = $request->reason_change;
+        $openState->other_comment = $request->other_comment; 
+        $openState->supervisor_comment = $request->supervisor_comment;
+
+        $openState->type_chnage = $request->type_chnage;
+        $openState->qa_comments = $request->qa_comments;
+        $openState->related_records = json_encode($request->related_records);
+        $openState->qa_head = json_encode($request->qa_head);
+
+        // $openState->qa_eval_comments = json_encode($request->qa_eval_comments);
+        // $openState->qa_eval_attach = $request->qa_eval_attach;
+        // $openState->training_required = $request->training_required;
+        // $openState->train_comments = $request->train_comments;
+
+        $openState->Microbiology = $request->Microbiology;
+        //$openState->Microbiology_Person = $request->Microbiology_Person;
+        $openState->Production = $request->Production;
+        $openState->Production_Person = $request->Production_Person;
+        $openState->Quality_Approver = $request->Quality_Approver;
+        $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
+        $openState->bd_domestic = $request->bd_domestic;
+        $openState->Bd_Person = $request->Bd_Person;
+        //$openState->additional_attachments = $request->additional_attachments;
+
+
         if (!empty($request->in_attachment)) {
             $files = [];
             if ($request->hasfile('in_attachment')) {
@@ -1044,6 +1073,31 @@ class CCController extends Controller
         $openState->doc_change = $request->naturechange;
         $openState->If_Others = $request->others;
         $openState->Division_Code = $request->div_code;
+        $openState->severity_level1 = $request->severity_level1;
+        $openState->current_practice = $request->current_practice;
+        $openState->proposed_change = $request->proposed_change;
+        $openState->reason_change = $request->reason_change;
+        $openState->other_comment = $request->other_comment; 
+        $openState->supervisor_comment = $request->supervisor_comment;
+        $openState->type_chnage = $request->type_chnage;
+        $openState->qa_comments = $request->qa_comments;
+        $openState->related_records = $request->related_records;
+        $openState->qa_head = $request->qa_head;
+
+        // $openState->qa_eval_comments = $request->qa_eval_comments;
+        // $openState->qa_eval_attach = $request->qa_eval_attach;
+        // $openState->training_required = $request->training_required;
+        // $openState->train_comments = $request->train_comments;
+        $openState->Microbiology = $request->Microbiology;
+        //$openState->Microbiology_Person = $request->Microbiology_Person;
+        $openState->Production = $request->Production;
+        $openState->Production_Person = $request->Production_Person;
+        $openState->Quality_Approver = $request->Quality_Approver;
+        $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
+        $openState->bd_domestic = $request->bd_domestic;
+        $openState->Bd_Person = $request->Bd_Person;
+        //$openState->additional_attachments = $request->additional_attachments;
+
         if (!empty($request->in_attachment)) {
             $files = [];
             if ($request->hasfile('in_attachment')) {
