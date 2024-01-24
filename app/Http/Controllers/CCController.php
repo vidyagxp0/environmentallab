@@ -34,10 +34,16 @@ class CCController extends Controller
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->Inititator_Group = $request->initiatorGroup;
         $openState->short_description = $request->short_description;
-        $openState->assign_to = $request->assign_to;        $openState->due_date = $request->due_date;
+        $openState->assign_to = $request->assign_to;      
+        $openState->due_date = $request->due_date;
         $openState->doc_change = $request->naturechange;
         $openState->If_Others = $request->others;
         $openState->Division_Code = $request->div_code;
+        // $openState->current_practice = $request->current_practice;
+        // $openState->proposed_change = $request->proposed_change;
+        // $openState->reason_change = $request->reason_change;
+        // $openState->other_comment = $request->other_comment;
+        // $openState->supervisor_comment = $request->supervisor_comment;
         if($request->training_required){
             $openState->training_required = $request->training_required;
         }
@@ -74,10 +80,16 @@ class CCController extends Controller
         $openState->initiator_id = Auth::user()->id;
         $openState->Inititator_Group = $request->initiatorGroup;
         $openState->short_description = $request->short_description;
-        $openState->assign_to = $request->assign_to;        $openState->due_date = $request->due_date;
+        $openState->assign_to = $request->assign_to;        
+        $openState->due_date = $request->due_date;
         $openState->doc_change = $request->naturechange;
         $openState->If_Others = $request->others;
         $openState->Division_Code = $request->div_code;
+        // $openState->current_practice = $request->current_practice;
+        // $openState->proposed_change = $request->proposed_change;
+        // $openState->reason_change = $request->reason_change;
+        // $openState->other_comment = $request->other_comment;
+        // $openState->supervisor_comment = $request->supervisor_comment;
         if($request->training_required){
             $openState->training_required = $request->training_required;
         }

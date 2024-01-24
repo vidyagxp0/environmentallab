@@ -211,6 +211,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">

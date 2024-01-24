@@ -17,19 +17,23 @@ use PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Models\OpenStage;
 
 class CapaController extends Controller
 {
 
     public function capa()
     {
+        $cft = [];
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
-        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record'));
+        $changeControl = OpenStage::find(1);
+        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record', 'cft'));
     }
 
     public function capastore(Request $request)
@@ -54,7 +58,7 @@ class CapaController extends Controller
         $capa->problem_description = $request->problem_description;
         $capa->due_date = $request->due_date;
         $capa->assign_id = $request->assign_id;
-        $capa->capa_team = $request->capa_team;
+        $capa->capa_team = implode(',', $request->capa_team);
         $capa->capa_type = $request->capa_type;
         $capa->severity_level_form= $request->severity_level_form;
         $capa->initiated_through = $request->initiated_through;
