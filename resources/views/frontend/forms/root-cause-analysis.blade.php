@@ -50,7 +50,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Originator</label>
-                                        <input type="text" name="originator" value="Amit Guru" disabled />
+                                        <input readonly  type="text" name="originator_id" value="Amit Guru"  />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -58,8 +58,8 @@
                                         <label for="date-opened">Date Opened </label>
                                         <div><small class="text-primary">When was this Investigation record opened?</small>
                                         </div>
-                                        <input type="text" name="date-opened" value="{{date('d-M-Y')}}" disabled>
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="date-opened">
+                                        <input type="text" name="date_opened" value="{{date('d-M-Y')}}" readonly>
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="date_opened">
 
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity-level">
+                                        <select name="severity_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -93,7 +93,7 @@
                                     <div class="group-input">
                                         <label for="assigned-to">Assigned to</label>
                                         <div><small class="text-primary">Lead Investigator</small></div>
-                                        <select name="assigned-to">
+                                        <select name="assigned_to">
                                             <option value="0">-- Select --</option>
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
@@ -624,7 +624,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="comments">CFT Comments</label>
-                                        <textarea name="cft_comments"></textarea>
+                                        <textarea name="cft_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -650,49 +650,49 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">QA Comments</label>
-                                        <textarea name="qa_comments"></textarea>
+                                        <textarea name="qa_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">QA Head Designee Comments</label>
-                                        <textarea name="designee_comments"></textarea>
+                                        <textarea name="designee_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Warehouse Comments</label>
-                                        <textarea name="Warehouse_comments"></textarea>
+                                        <textarea name="Warehouse_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Engineering Comments</label>
-                                        <textarea name="Engineering_comments"></textarea>
+                                        <textarea name="Engineering_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Instrumentation Comments</label>
-                                        <textarea name="Instrumentation_comments"></textarea>
+                                        <textarea name="Instrumentation_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Validation Comments</label>
-                                        <textarea name="Validation_comments"></textarea>
+                                        <textarea name="Validation_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Others Comments</label>
-                                        <textarea name="Others_comments"></textarea>
+                                        <textarea name="Others_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Group Comments</label>
-                                        <textarea name="Group_comments"></textarea>
+                                        <textarea name="Group_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -729,13 +729,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_by">Completed By</label>
-                                        <input type="text" name="completed_by" disabled />
+                                        {{-- <input type="text" name="completed_by" disabled /> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_on">Completed On</label>
-                                        <input type="text" name="completed_on" disabled />
+                                        {{-- <input type="text" name="completed_on" disabled /> --}}
                                     </div>
                                 </div>
                             </div>

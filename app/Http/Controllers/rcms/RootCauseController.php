@@ -44,11 +44,23 @@ use Illuminate\Support\Facades\Hash;
 
         $root = new RootCauseAnalysis();
         $root->form_type = "root-cause-analysis";
-        $root->originator = json_encode($request->originator);
+        $root->originator_id = json_encode($request->originator_id);
         $root->date_opened = ($request->date_opened);
+        $root->priority_level = ($request->priority_level);
+        $root->severity_level = ($request->severity_level);
         $root->short_description =($request->short_description);
         $root->assigned_to = ($request->assigned_to);
+        $root->root_cause_description = ($request->root_cause_description);
         $root->due_date = ($request->due_date);
+        //  $comments->cft_comments_new = $request->cft_comments_new;
+        // // $comments->qa_comments_new = $request->qa_comments_new;
+        //  $comments->designee_comments_new = $request->designee_comments_new;
+        // $comments->Warehouse_comments_new = $request->Warehouse_comments_new;
+        //  $comments->Engineering_comments_new = $request->Engineering_comments_new;
+        // $comments->Instrumentation_comments_new = $request->Instrumentation_comments_new;
+        // $comments->Validation_comments_new = $request->Validation_comments_new;
+        // $comments->Others_comments_new = $request->Others_comments_new;
+        // $comments->Group_comments_new = $request->Group_comments_new;
         $root->Type = ($request->Type);
         $root->investigators = ($request->investigators);
         $root->department = ($request->department);
@@ -952,7 +964,7 @@ use Illuminate\Support\Facades\Hash;
     {
         $data = RootCauseAnalysis::find($id);
         if (!empty($data)) {
-            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $data->originator_id = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
             $pdf = PDF::loadview('frontend.root-cause-analysis.singleReport', compact('data'))
@@ -977,7 +989,7 @@ use Illuminate\Support\Facades\Hash;
     {
         $doc = RootCauseAnalysis::find($id);
         if (!empty($doc)) {
-            $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+            $doc->originator_id = User::where('id', $doc->initiator_id)->value('name');
             $data = RootAuditTrial::where('root_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();

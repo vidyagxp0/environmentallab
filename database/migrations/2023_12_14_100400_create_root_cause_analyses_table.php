@@ -15,12 +15,24 @@ return new class extends Migration
     {
         Schema::create('root_cause_analyses', function (Blueprint $table) {
             $table->id();
-            $table->string('originator')->nullable();
+            $table->string('originator_id')->nullable();
             $table->string('form_type')->nullable();
             $table->string('date_opened')->nullable();
+            $table->string('severity_level')->nullable();
             $table->string('short_description')->nullable();
             $table->string('assigned_to')->nullable();
             $table->string('due_date')->nullable();
+            $table->string('priority_level')->nullable();
+            $table->text('root_cause_description')->nullable();
+            // $table->text('cft_comments_new')->nullable();
+            // // $table->text('qa_comments_new')->nullable();
+            //  $table->text('designee_comments_new')->nullable();
+            //  $table->text('Warehouse_comments_new')->nullable();
+            //  $table->text('Engineering_comments_new')->nullable();
+            // $table->string('Instrumentation_comments_new')->nullable();
+            // $table->string('Validation_comments_new')->nullable();
+            // $table->string('Others_comments_new')->nullable();
+            // $table->string('Group_comments_new')->nullable();
             $table->string('Type')->nullable();
             $table->string('investigators')->nullable();
             $table->string('department')->nullable();
