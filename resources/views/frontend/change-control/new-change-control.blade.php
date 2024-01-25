@@ -436,7 +436,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="supervisor_comment">
-                                            Supervisor Comments111
+                                            Supervisor Comments
                                         </label>
                                         <textarea name="supervisor_comment"></textarea>
                                     </div>
@@ -747,7 +747,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">QA Comments</label>
-                                        <textarea name="qa_comments"></textarea>
+                                        <textarea name="qa_commentss"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -873,7 +873,7 @@
                                     <div class="group-input">
                                         <label for="RPN">RPN</label>
                                         <div><small class="text-primary">Auto - Calculated</small></div>
-                                        <input type="text" name="RPN" id="analysisRPN" disabled>
+                                        <input type="text" name="RPN" id="analysisRPN" readonly>
                                     </div>
                                 </div>
 

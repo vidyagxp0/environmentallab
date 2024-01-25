@@ -1021,7 +1021,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">QA Comments</label>
-                                                    <textarea name="qa_comments">{{ $comments->qa_comments }}</textarea>
+                                                    <textarea name="qa_commentss">{{ $comments->qa_comments }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
