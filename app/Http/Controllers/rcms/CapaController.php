@@ -58,7 +58,7 @@ class CapaController extends Controller
         $capa->problem_description = $request->problem_description;
         $capa->due_date = $request->due_date;
         $capa->assign_id = $request->assign_id;
-        $capa->capa_team = implode(',', $request->capa_team);
+        // $capa->capa_team = implode(',', $request->capa_team);
         $capa->capa_type = $request->capa_type;
         $capa->severity_level_form= $request->severity_level_form;
         $capa->initiated_through = $request->initiated_through;
@@ -68,6 +68,28 @@ class CapaController extends Controller
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
+        $capa->cft_comments_form = $request->cft_comments_form;
+        $capa->qa_comments_new = $request->qa_comments_new;
+        $capa->designee_comments_new = $request->designee_comments_new;
+       $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
+        $capa->Engineering_comments_new = $request->Engineering_comments_new;
+       $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
+       $capa->Validation_comments_new = $request->Validation_comments_new;
+       $capa->Others_comments_new = $request->Others_comments_new;
+       $capa->Group_comments_new = $request->Group_comments_new;
+       $capa->cft_attchament_new = json_encode($request->cft_attchament_new);
+       $capa->additional_attachments = json_encode($request->additional_attachments);
+       $capa->group_attachments_new = json_encode($request->group_attachments_new);
+       $capa->Microbiology_new = $request->Microbiology_new;
+    //    $capa->Microbiology_Person = $request->Microbiology_Person;
+       $capa->goup_review = $request->goup_review;
+       $capa->Production_new = $request->Production_new;
+       $capa->Quality_Approver = $request->Quality_Approver;
+       $capa->Quality_Approver_Person = $request->Quality_Approver_Person;
+       $capa->bd_domestic = $request->bd_domestic;
+       $capa->Bd_Person = $request->Bd_Person;
+       $capa->Production_Person = $request->Production_Person;
+       $capa->additional_attachments = json_encode($request->additional_attachments);
 
 
         $capa->capa_related_record = implode(',', $request->capa_related_record);
@@ -86,9 +108,43 @@ class CapaController extends Controller
             }
             $capa->capa_attachment = json_encode($files);
         }
+        if (!empty($request->cft_attchament_new)) {
+            $files = [];
+            if ($request->hasfile('cft_attchament_new')) {
+                foreach ($request->file('cft_attchament_new') as $file) {
+                    $name = $request->name . '-cft_attchament_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->cft_attchament_new = json_encode($files);
+        }
+        if (!empty($request->additional_attachments)) {
+            $files = [];
+            if ($request->hasfile('additional_attachments')) {
+                foreach ($request->file('additional_attachments') as $file) {
+                    $name = $request->name . '-additional_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->additional_attachments = json_encode($files);
+        }
+        if (!empty($request->group_attachments_new)) {
+            $files = [];
+            if ($request->hasfile('group_attachments_new')) {
+                foreach ($request->file('group_attachments_new') as $file) {
+                    $name = $request->name . '-group_attachments_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $capa->group_attachments_new = json_encode($files);
+        }
+        
         $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
-        $capa->details = $request->details;
+        $capa->details_new = $request->details_new;
         $capa->project_details_application = $request->project_details_application;
         $capa->project_initiator_group = $request->project_initiator_group;
         $capa->site_number = $request->site_number;
@@ -371,19 +427,19 @@ class CapaController extends Controller
             $history->origin_state = $capa->status;
             $history->save();
         }
-        if (!empty($capa->capa_attachment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'CAPA Attachment';
-            $history->previous = "Null";
-            $history->current = $capa->capa_attachment;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->save();
-        }
+        // if (!empty($capa->capa_attachment)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $capa->id;
+        //     $history->activity_type = 'CAPA Attachment';
+        //     $history->previous = "Null";
+        //     $history->current = $capa->capa_attachment;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $capa->status;
+        //     $history->save();
+        // }
 
         if (!empty($capa->capa_qa_comments)) {
             $history = new CapaAuditTrial();
@@ -651,7 +707,17 @@ class CapaController extends Controller
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
         $capa->severity_level_form= $request->severity_level_form;
-
+        $capa->cft_comments_form = $request->cft_comments_form;
+        $capa->qa_comments_new = $request->qa_comments_new;
+        $capa->designee_comments_new = $request->designee_comments_new;
+       $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
+        $capa->Engineering_comments_new = $request->Engineering_comments_new;
+       $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
+       $capa->Validation_comments_new = $request->Validation_comments_new;
+       $capa->Others_comments_new = $request->Others_comments_new;
+       $capa->Group_comments_new = $request->Group_comments_new;
+       $capa->cft_attchament_new = json_encode($request->cft_attchament_new);
+       $capa->group_attachments_new = json_encode($request->group_attachments_new);
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
@@ -678,17 +744,17 @@ class CapaController extends Controller
         $capa->effectiveness = $request->effectiveness;
         $capa->effect_check = $request->effect_check;
         $capa->effect_check_date = $request->effect_check_date;
-        if (!empty($request->capa_attachment)) {
-            $files = [];
-            if ($request->hasfile('capa_attachment')) {
-                foreach ($request->file('capa_attachment') as $file) {
-                    $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
-                    $file->move('upload/', $name);
-                    $files[] = $name;
-                }
-            }
-            $capa->capa_attachment = json_encode($files);
-        }
+        // if (!empty($request->capa_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('capa_attachment')) {
+        //         foreach ($request->file('capa_attachment') as $file) {
+        //             $name = $request->name . 'capa_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->capa_attachment = json_encode($files);
+        // }
         if (!empty($request->closure_attachment)) {
             $files = [];
             if ($request->hasfile('closure_attachment')) {
@@ -940,20 +1006,20 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->capa_attachment != $capa->capa_attachment || !empty($request->capa_attachment_comment)) {
+        // if ($lastDocument->capa_attachment != $capa->capa_attachment || !empty($request->capa_attachment_comment)) {
 
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'CAPA Attachment';
-            $history->previous = $lastDocument->capa_attachment;
-            $history->current = $capa->capa_attachment;
-            $history->comment = $request->capa_attachment_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $id;
+        //     $history->activity_type = 'CAPA Attachment';
+        //     $history->previous = $lastDocument->capa_attachment;
+        //     $history->current = $capa->capa_attachment;
+        //     $history->comment = $request->capa_attachment_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->capa_qa_comments != $capa->capa_qa_comments || !empty($request->capa_qa_comments_comment)) {
 
             $history = new CapaAuditTrial();

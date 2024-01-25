@@ -633,11 +633,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cft_attchament"></div>
+                                            <div class="file-attachment-list" id="cft_attchament_new"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="cft_attchament[]"
-                                                    oninput="addMultipleFiles(this, 'cft_attchament')" multiple>
+                                                <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -701,11 +701,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="group_attachments"></div>
+                                            <div class="file-attachment-list" id="group_attachments_new"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="group_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'group_attachments')" multiple>
+                                                <input type="file" id="myfile" name="group_attachments_new[]"
+                                                    oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
                                             </div>
                                         </div>
                                     </div>

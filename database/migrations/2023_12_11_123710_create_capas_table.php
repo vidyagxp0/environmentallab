@@ -39,6 +39,20 @@ return new class extends Migration
             $table->integer('assign_id')->nullable();
             $table->string('initiator_group_code')->nullable();
             $table->string('severity_level_form')->nullable();
+            $table->text('cft_comments_form')->nullable();
+            $table->text('qa_comments_new')->nullable();
+             $table->text('designee_comments_new')->nullable();
+             $table->text('Warehouse_comments_new')->nullable();
+             $table->text('Engineering_comments_new')->nullable();
+            $table->text('Instrumentation_comments_new')->nullable();
+            $table->text('Validation_comments_new')->nullable();
+            $table->text('Others_comments_new')->nullable();
+            $table->text('Group_comments_new')->nullable();
+            $table->string('cft_attchament_new')->nullable();
+            $table->string('group_attachments_new')->nullable();
+            $table->string('details_new')->nullable();
+
+
             
             $table->string('capa_team')->nullable();
             $table->string('capa_related_record')->nullable();
@@ -49,7 +63,17 @@ return new class extends Migration
             $table->string('capa_attachment')->nullable();
             $table->text('capa_qa_comments')->nullable();
             $table->text('capa_qa_comments2')->nullable();
-            $table->text('details')->nullable();
+            $table->text('Microbiology_new')->nullable();
+            // $table->text('Microbiology_Person')->nullable();
+            $table->text('goup_review')->nullable();
+            $table->text('Production_new')->nullable();
+            $table->text('Production_Person')->nullable();
+            $table->text('Quality_Approver')->nullable();
+            $table->text('Quality_Approver_Person')->nullable();
+            $table->text('bd_domestic')->nullable();
+            $table->text('Bd_Person')->nullable();
+            $table->string('additional_attachments')->nullable();
+            
             $table->string('project_details_application')->nullable();
             $table->text('project_initiator_group')->nullable();
             $table->string('site_number')->nullable();

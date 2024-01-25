@@ -52,15 +52,17 @@ use Illuminate\Support\Facades\Hash;
         $root->assigned_to = ($request->assigned_to);
         $root->root_cause_description = ($request->root_cause_description);
         $root->due_date = ($request->due_date);
-        //  $comments->cft_comments_new = $request->cft_comments_new;
-        // // $comments->qa_comments_new = $request->qa_comments_new;
-        //  $comments->designee_comments_new = $request->designee_comments_new;
-        // $comments->Warehouse_comments_new = $request->Warehouse_comments_new;
-        //  $comments->Engineering_comments_new = $request->Engineering_comments_new;
-        // $comments->Instrumentation_comments_new = $request->Instrumentation_comments_new;
-        // $comments->Validation_comments_new = $request->Validation_comments_new;
-        // $comments->Others_comments_new = $request->Others_comments_new;
-        // $comments->Group_comments_new = $request->Group_comments_new;
+        $root->cft_comments_new = $request->cft_comments_new;
+         $root->qa_comments_new = $request->qa_comments_new;
+         $root->designee_comments_new = $request->designee_comments_new;
+        $root->Warehouse_comments_new = $request->Warehouse_comments_new;
+         $root->Engineering_comments_new = $request->Engineering_comments_new;
+        $root->Instrumentation_comments_new = $request->Instrumentation_comments_new;
+        $root->Validation_comments_new = $request->Validation_comments_new;
+        $root->Others_comments_new = $request->Others_comments_new;
+        $root->Group_comments_new = $request->Group_comments_new;
+        $root->cft_attchament_new = json_encode($request->cft_attchament_new);
+        $root->group_attachments_new = json_encode($request->group_attachments_new);
         $root->Type = ($request->Type);
         $root->investigators = ($request->investigators);
         $root->department = ($request->department);
@@ -128,6 +130,28 @@ use Illuminate\Support\Facades\Hash;
                 }
             }
             $root->root_cause_initial_attachment = json_encode($files);
+        }
+        if (!empty($request->cft_attchament_new)) {
+            $files = [];
+            if ($request->hasfile('cft_attchament_new')) {
+                foreach ($request->file('cft_attchament_new') as $file) {
+                    $name = $request->name . 'cft_attchament_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->cft_attchament_new = json_encode($files);
+        }
+        if (!empty($request->group_attachments_new)) {
+            $files = [];
+            if ($request->hasfile('group_attachments_new')) {
+                foreach ($request->file('group_attachments_new') as $file) {
+                    $name = $request->name . 'group_attachments_new' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $root->group_attachments_new = json_encode($files);
         }
         
         $root->comments = $request->comments;

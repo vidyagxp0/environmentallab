@@ -540,7 +540,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Details">Details</label>
-                                        <input type="text" name="details">
+                                        <input type="text" name="details_new">
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -682,7 +682,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology">CFT Reviewer</label>
-                                        <select name="Microbiology">
+                                        <select name="Microbiology_new">
                                             <option value="0">-- Select --</option>
                                             <option value="yes" selected>Yes</option>
                                             <option value="no">No</option>
@@ -692,7 +692,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                        <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
+                                        <select  name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
                                             <option value="0">-- Select --</option>
                                             @foreach ($cft as $data)
@@ -719,7 +719,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Production">Production</label>
-                                        <select name="Production">
+                                        <select name="Production_new">
                                             <option value="0">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -806,7 +806,7 @@
 
                             </div>
                         </div>
-                    </div> --}}
+                    </div> 
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
@@ -817,7 +817,7 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="comments">CFT Comments</label>
-                                        <textarea name="cft_comments"></textarea>
+                                        <textarea name="cft_comments_form"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -826,11 +826,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cft_attchament"></div>
+                                            <div class="file-attachment-list" id="cft_attchament_new"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="cft_attchament[]"
-                                                    oninput="addMultipleFiles(this, 'cft_attchament')" multiple>
+                                                <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -843,49 +843,49 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">QA Comments</label>
-                                        <textarea name="qa_comments"></textarea>
+                                        <textarea name="qa_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">QA Head Designee Comments</label>
-                                        <textarea name="designee_comments"></textarea>
+                                        <textarea name="designee_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Warehouse Comments</label>
-                                        <textarea name="Warehouse_comments"></textarea>
+                                        <textarea name="Warehouse_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Engineering Comments</label>
-                                        <textarea name="Engineering_comments"></textarea>
+                                        <textarea name="Engineering_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Instrumentation Comments</label>
-                                        <textarea name="Instrumentation_comments"></textarea>
+                                        <textarea name="Instrumentation_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Validation Comments</label>
-                                        <textarea name="Validation_comments"></textarea>
+                                        <textarea name="Validation_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Others Comments</label>
-                                        <textarea name="Others_comments"></textarea>
+                                        <textarea name="Others_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="comments">Group Comments</label>
-                                        <textarea name="Group_comments"></textarea>
+                                        <textarea name="Group_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -894,11 +894,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="group_attachments"></div>
+                                            <div class="file-attachment-list" id="group_attachments_new"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="group_attachments[]"
-                                                    oninput="addMultipleFiles(this, 'group_attachments')" multiple>
+                                                <input type="file" id="myfile" name="group_attachments_new[]"
+                                                    oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
                                             </div>
                                         </div>
                                     </div>
