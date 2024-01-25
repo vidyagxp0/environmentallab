@@ -49,15 +49,47 @@ return new class extends Migration
             $table->string('train_comments')->nullable();
 
             $table->string('Microbiology')->nullable(); 
-            //$table->string('Microbiology_Person')->nullable();
+            $table->text('Microbiology_Person')->nullable();
+            $table->string('goup_review')->nullable();
             $table->string('Production')->nullable();
             $table->string('Production_Person')->nullable();
             $table->string('Quality_Approver')->nullable();
             $table->string('Quality_Approver_Person')->nullable();
             $table->string('bd_domestic')->nullable();
             $table->string('Bd_Person')->nullable();
-            //$table->string('additional_attachments')->nullable();
+            $table->string('additional_attachments')->nullable();
 
+            $table->string('cft_comments')->nullable();
+            $table->string('cft_attchament')->nullable();
+            $table->string('qa_commentss')->nullable();
+            $table->string('designee_comments')->nullable();
+            $table->string('Warehouse_comments')->nullable();
+            $table->string('Engineering_comments')->nullable();
+            $table->string('Instrumentation_comments')->nullable();
+            $table->string('Validation_comments')->nullable();
+            $table->string('Others_comments')->nullable();
+            $table->string('Group_comments')->nullable();
+            $table->string('group_attachments')->nullable();
+            
+            $table->string('risk_identification')->nullable();
+            $table->string('severity')->nullable();
+            $table->string('Occurance')->nullable();
+            $table->string('Detection')->nullable();
+            $table->string('RPN')->nullable();
+            $table->string('risk_evaluation')->nullable();
+            $table->string('migration_action')->nullable();
+
+            $table->string('qa_appro_comments')->nullable();
+            $table->string('feedback')->nullable();
+            $table->string('tran_attach')->nullable();
+
+            $table->string('qa_closure_comments')->nullable();
+            $table->string('attach_list')->nullable();
+            $table->string('effective_check')->nullable();
+            $table->string('effective_check_date')->nullable();
+            $table->string('Effectiveness_checker')->nullable();
+            $table->string('effective_check_plan')->nullable();
+            $table->string('due_date_extension')->nullable();
 
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();

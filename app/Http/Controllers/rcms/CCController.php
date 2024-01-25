@@ -112,20 +112,53 @@ class CCController extends Controller
         $openState->related_records = json_encode($request->related_records);
         $openState->qa_head = json_encode($request->qa_head);
 
-        // $openState->qa_eval_comments = json_encode($request->qa_eval_comments);
-        // $openState->qa_eval_attach = $request->qa_eval_attach;
-        // $openState->training_required = $request->training_required;
-        // $openState->train_comments = $request->train_comments;
+        $openState->qa_eval_comments = json_encode($request->qa_eval_comments);
+        $openState->qa_eval_attach = json_encode($request->qa_eval_attach);
+        $openState->training_required = $request->training_required;
+        $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
-        //$openState->Microbiology_Person = $request->Microbiology_Person;
+        $openState->Microbiology_Person = json_encode($request->Microbiology_Person);
+        $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
         $openState->Quality_Approver = $request->Quality_Approver;
         $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
         $openState->bd_domestic = $request->bd_domestic;
         $openState->Bd_Person = $request->Bd_Person;
-        //$openState->additional_attachments = $request->additional_attachments;
+        $openState->additional_attachments = json_encode($request->additional_attachments);
+
+        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_attchament = json_encode($request->cft_attchament);
+        $openState->qa_commentss = $request->qa_commentss;
+        $openState->designee_comments = $request->designee_comments;
+        $openState->Warehouse_comments = $request->Warehouse_comments;
+        $openState->Engineering_comments = $request->Engineering_comments;
+        $openState->Instrumentation_comments = $request->Instrumentation_comments;
+        $openState->Validation_comments = $request->Validation_comments;
+        $openState->Others_comments = $request->Others_comments;
+        $openState->Group_comments = $request->Group_comments;
+        $openState->group_attachments = json_encode($request->group_attachments);
+
+        $openState->risk_identification = $request->risk_identification;
+        $openState->severity = $request->severity;
+        $openState->Occurance = $request->Occurance;
+        $openState->Detection = $request->Detection;
+        $openState->RPN = $request->RPN;
+        $openState->risk_evaluation = $request->risk_evaluation;
+        $openState->migration_action = $request->migration_action;
+
+        $openState->qa_appro_comments = $request->qa_appro_comments;
+        $openState->feedback = $request->feedback;
+        $openState->tran_attach = json_encode($request->tran_attach);
+
+        $openState->qa_closure_comments = $request->qa_closure_comments;
+        $openState->attach_list = json_encode($request->attach_list);
+        $openState->effective_check = $request->effective_check;
+        $openState->effective_check_date = $request->effective_check_date;
+        $openState->Effectiveness_checker = $request->Effectiveness_checker;
+        $openState->effective_check_plan = $request->effective_check_plan;
+        $openState->due_date_extension = $request->due_date_extension;
 
 
         if (!empty($request->in_attachment)) {
@@ -1011,18 +1044,18 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $closure->id;
-        $history->activity_type = 'List Of Attachments';
-        $history->previous = "Null";
-        $history->current = $closure->attach_list;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
-        toastr()->success('Record is created Successfully ');
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $closure->id;
+        // $history->activity_type = 'List Of Attachments';
+        // $history->previous = "Null";
+        // $history->current = $closure->attach_list;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
+        // toastr()->success('Record is created Successfully ');
 
         return redirect('rcms/qms-dashboard');
     }
@@ -1084,19 +1117,54 @@ class CCController extends Controller
         $openState->related_records = $request->related_records;
         $openState->qa_head = $request->qa_head;
 
-        // $openState->qa_eval_comments = $request->qa_eval_comments;
-        // $openState->qa_eval_attach = $request->qa_eval_attach;
-        // $openState->training_required = $request->training_required;
-        // $openState->train_comments = $request->train_comments;
+        $openState->qa_eval_comments = $request->qa_eval_comments;
+        $openState->qa_eval_attach = $request->qa_eval_attach;
+        $openState->training_required = $request->training_required;
+        $openState->train_comments = $request->train_comments;
+
         $openState->Microbiology = $request->Microbiology;
-        //$openState->Microbiology_Person = $request->Microbiology_Person;
+        $openState->Microbiology_Person = $request->Microbiology_Person;
+        $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
         $openState->Quality_Approver = $request->Quality_Approver;
         $openState->Quality_Approver_Person = $request->Quality_Approver_Person;
         $openState->bd_domestic = $request->bd_domestic;
         $openState->Bd_Person = $request->Bd_Person;
-        //$openState->additional_attachments = $request->additional_attachments;
+        $openState->additional_attachments = json_encode($request->additional_attachments);
+
+        $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_attchament = json_encode($request->cft_attchament);
+        $openState->qa_commentss = $request->qa_commentss;
+        $openState->designee_comments = $request->designee_comments;
+        $openState->Warehouse_comments = $request->Warehouse_comments;
+        $openState->Engineering_comments = $request->Engineering_comments;
+        $openState->Instrumentation_comments = $request->Instrumentation_comments;
+        $openState->Validation_comments = $request->Validation_comments;
+        $openState->Others_comments = $request->Others_comments;
+        $openState->Group_comments = $request->Group_comments;
+        $openState->group_attachments = json_encode($request->group_attachments);
+
+        $openState->risk_identification = $request->risk_identification;
+        $openState->severity = $request->severity;
+        $openState->Occurance = $request->Occurance;
+        $openState->Detection = $request->Detection;
+        $openState->RPN = $request->RPN;
+        $openState->risk_evaluation = $request->risk_evaluation;
+        $openState->migration_action = $request->migration_action;
+
+        $openState->qa_appro_comments = $request->qa_appro_comments;
+        $openState->feedback = $request->feedback;
+        $openState->tran_attach = json_encode($request->tran_attach);
+
+        $openState->qa_closure_comments = $request->qa_closure_comments;
+        $openState->attach_list = json_encode($request->attach_list);
+        $openState->effective_check = $request->effective_check;
+        $openState->effective_check_date = $request->effective_check_date;
+        $openState->Effectiveness_checker = $request->Effectiveness_checker;
+        $openState->effective_check_plan = $request->effective_check_plan;
+        $openState->due_date_extension = $request->due_date_extension;
+
 
         if (!empty($request->in_attachment)) {
             $files = [];
@@ -2031,20 +2099,20 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastclosure->attach_list != $closure->attach_list || !empty($request->attach_list_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'List Of Attachments';
-            $history->previous = $lastclosure->attach_list;
-            $history->current = $closure->attach_list;
-            $history->comment = $request->attach_list_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-            return $history;
-        }
+        // if ($lastclosure->attach_list != $closure->attach_list || !empty($request->attach_list_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'List Of Attachments';
+        //     $history->previous = $lastclosure->attach_list;
+        //     $history->current = $closure->attach_list;
+        //     $history->comment = $request->attach_list_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        //     return $history;
+        // }
 
         toastr()->success('Record is updated Successfully');
         return back();

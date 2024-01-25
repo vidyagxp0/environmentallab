@@ -59,8 +59,8 @@ class DocumentController extends Controller
     }
     public function division_old(Request $request)
     {
-         $request->dd();
-         return $request;
+        //  $request->dd();
+        //  return $request;
  
 
         $new = new Document;
@@ -72,7 +72,7 @@ class DocumentController extends Controller
         $new->revised_doc = $request->revised_doc;
         $new->document_name = $request->document_name;
         $new->short_description = $request->short_description;
-        $new->due_date = $request->due_date;
+        $new->due_dateDoc = $request->due_dateDoc;
         $new->description = $request->description;
         $new->notify_to = $request->notify_to;
         $new->reference_record = $request->reference_record;
@@ -81,7 +81,7 @@ class DocumentController extends Controller
         $new->document_subtype_id = $request->document_subtype_id;
         $new->document_language_id = $request->document_language_id;
         $new->keywords = $request->keywords;
-        $new->effectve_date = $request->effectve_date;
+        $new->effective_date = $request->effective_date;
         $new->next_review_date = $request->next_review_date;
         $new->review_period = $request->review_period;
         $new->attach_draft_doocument = $request->attach_draft_doocument;
@@ -96,21 +96,10 @@ class DocumentController extends Controller
         $new->document = $request->document;
         $new->revision = $request->revision;
         $new->revision_policy = $request->revision_policy;
-        // $new->revision_status = $request->revision_status;
-        // $new->defination = $request->defination;
-        // $new->materials_and_equipments = $request->materials_and_equipments;
-        // $new->procedure = $request->procedure;
-        // $new->reporting = $request->reporting;
-        // $new->references = $request->references;
-        // $new->trainer = $request->trainer;
-        // $new->reporting = $request->reporting;
-        // $new->references = $request->references;
-        // $new->serial_number = $request->serial_number;
-        // $new->annexure_number = $request->annexure_number;
-        // $new->annexure_data = $request->annexure_data;
-        // $new->annexuredata = $request->annexuredata;
-        // $new->reference_text = $request->reference_text;
-        // $new->references = $request->references;
+        $new->training_required = $request->training_required;
+        $new->trainer = $request->trainer;
+        $new->comments = $request->comments;
+       
         $new->user_id = Auth::user()->id;
         $new->save();
 
@@ -231,15 +220,19 @@ class DocumentController extends Controller
             $document->description = $request->description;
             $document->stage = 1;
             $document->status = Stage::where('id', 1)->value('name');
-            $document->due_date = $request->due_date;
+            $document->due_dateDoc = $request->due_dateDoc;
             $document->department_id = $request->department_id;
             $document->document_type_id = $request->document_type_id;
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
-            $document->effectve_date = $request->effectve_date;
+            $document->effective_date = $request->effective_date;
             $document->next_review_date = $request->next_review_date;
             $document->review_period = $request->review_period;
-            //$document->training_required = $request->training_required;
+            $document->training_required = $request->training_required;
+            $document->trainer = $request->trainer;
+            $document->comments = $request->comments;
+            //$document->purpose = $request->purpose;
+
             if ($request->keywords) {
                 $document->keywords = implode(',', $request->keywords);
             }
@@ -489,14 +482,17 @@ class DocumentController extends Controller
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
-            $document->due_date = $request->due_date;
+            $document->due_dateDoc = $request->due_dateDoc;
             $document->department_id = $request->department_id;
             $document->document_type_id = $request->document_type_id;
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
-            $document->effectve_date = $request->effectve_date;
+            $document->effective_date = $request->effective_date;
             $document->next_review_date = $request->next_review_date;
             $document->review_period = $request->review_period;
+            $document->training_required = $request->training_required;
+
+
             if ($request->keywords) {
                 $document->keywords = implode(',', $request->keywords);
             }
@@ -506,7 +502,7 @@ class DocumentController extends Controller
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
             }
-            $document->training_required = $request->training_required;
+            
 
             if ($request->hasfile('attach_draft_doocument')) {
 
@@ -608,13 +604,13 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
-            if ($lastDocument->due_date != $document->due_date || ! empty($request->due_date_comment)) {
+            if ($lastDocument->due_dateDoc != $document->due_dateDoc || ! empty($request->due_dateDoc_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
                 $history->activity_type = 'Due Date';
-                $history->previous = $lastDocument->due_date;
-                $history->current = $document->due_date;
-                $history->comment = $request->due_date_comment;
+                $history->previous = $lastDocument->due_dateDoc;
+                $history->current = $document->due_dateDoc;
+                $history->comment = $request->due_dateDoc_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -688,13 +684,13 @@ class DocumentController extends Controller
             //     $history->origin_state = $lastDocument->status;
             //     $history->save();
             // }
-            if ($lastDocument->effectve_date != $document->effectve_date || ! empty($request->effectve_date_comment)) {
+            if ($lastDocument->effective_date != $document->effective_date || ! empty($request->effective_date_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
                 $history->activity_type = 'Effective Date';
-                $history->previous = $lastDocument->effectve_date;
-                $history->current = $document->effectve_date;
-                $history->comment = $request->effectve_date_comment;
+                $history->previous = $lastDocument->effective_date;
+                $history->current = $document->effective_date;
+                $history->comment = $request->effective_date_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1520,7 +1516,7 @@ class DocumentController extends Controller
         $newdoc->revised_doc = $document->id;
         $newdoc->document_name = $document->document_name;
         $newdoc->short_description = $document->short_description;
-        $newdoc->due_date = $document->due_date;
+        $newdoc->due_dateDoc = $document->due_dateDoc;
         $newdoc->description = $document->description;
         $newdoc->notify_to = $document->notify_to;
         $newdoc->reference_record = $document->reference_record;
@@ -1529,7 +1525,7 @@ class DocumentController extends Controller
         $newdoc->document_subtype_id = $document->document_subtype_id;
         $newdoc->document_language_id = $document->document_language_id;
         $newdoc->keywords = $document->keywords;
-        $newdoc->effectve_date = $document->effectve_date;
+        $newdoc->effective_date = $document->effective_date;
         $newdoc->next_review_date = $document->next_review_date;
         $newdoc->review_period = $document->review_period;
         $newdoc->attach_draft_doocument = $document->attach_draft_doocument;
@@ -1540,6 +1536,9 @@ class DocumentController extends Controller
         $newdoc->reviewers_group = $document->reviewers_group;
         $newdoc->revision_summary = $document->revision_summary;
         $newdoc->training_required = $document->training_required;
+        $newdoc->trainer = $request->trainer;
+        $newdoc->comments = $request->comments;
+        //$newdoc->purpose = $request->purpose;
         $newdoc->stage = 1;
         $newdoc->status = Stage::where('id', 1)->value('name');
         $newdoc->save();

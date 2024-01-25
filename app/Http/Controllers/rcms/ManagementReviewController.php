@@ -90,7 +90,7 @@ class ManagementReviewController extends Controller
         $management->agenda = $request->agenda;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
-        $management->inv_attachment = $request->inv_attachment;
+        //$management->inv_attachment = $request->inv_attachment;
         $management->actual_start_date = $request->actual_start_date;
         $management->actual_end_date = $request->actual_end_date;
         $management->meeting_minute = $request->meeting_minute;
