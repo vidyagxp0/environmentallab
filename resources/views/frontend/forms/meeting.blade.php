@@ -44,7 +44,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="RLS Record Number"><b>Record Number1</b></label>
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
@@ -53,7 +53,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input disabled type="text" name="division_code"
+                                        <input readonly type="text" name="division_code"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                     </div>
@@ -62,7 +62,7 @@
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
+                                        <input readonly type="text" name="Initiator_id"
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
@@ -306,11 +306,11 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                            <div class="file-attachment-list" id="inv_attachment"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="inv_attachment[]"
-                                                    oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
+                                                    oninput="addMultipleFiles(this, 'inv_attachment')" multiple>
                                             </div>
                                         </div>
                                     </div>
@@ -1052,15 +1052,15 @@
                             </div>
                             <div class="group-input">
                                 <label for="production">Production</label>
-                                <textarea name="production"></textarea>
+                                <textarea name="production_new"></textarea>
                             </div>
                             <div class="group-input">
                                 <label for="plans">Plans</label>
-                                <textarea name="plans"></textarea>
+                                <textarea name="plans_new"></textarea>
                             </div>
                             <div class="group-input">
                                 <label for="forecast">Forecast</label>
-                                <textarea name="forecast"></textarea>
+                                <textarea name="forecast_new"></textarea>
                             </div>
                             <div class="group-input">
                                 <label for="additional_suport_required">Any Additional Support Required</label>
@@ -1119,7 +1119,7 @@
                                              class="calenderauditee">
                                             <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_due[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>'
+                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>
                                         <td><input type="text" name="site[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
@@ -1138,7 +1138,7 @@
                                              class="calenderauditee">
                                             <input type="text" id="date_closed00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_closed[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_closed00' + serialNumber +'`)" /></div></div></div></td>'
+                                            oninput="handleDateInput(this, `date_closed00' + serialNumber +'`)" /></div></div></div></td>
 
 
                                         <td><input type="text" name="record[]"></td>
@@ -1229,7 +1229,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="conclusion">Conclusion</label>
-                                <textarea name="conclusion"></textarea>
+                                <textarea name="conclusion_new"></textarea>
                             </div>
                             <div class="group-input">
                                 <label for="closure_attachments">Closure Attachments</label>

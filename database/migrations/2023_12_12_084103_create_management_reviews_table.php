@@ -16,15 +16,27 @@ return new class extends Migration
         Schema::create('management_reviews', function (Blueprint $table) {
             $table->id();
             // $table->integer('record_number')->nullable();
-            $table->string('Operations')->nullable();
-            $table->string('requirement_products_services')->nullable();
-            $table->string('design_development_product_services')->nullable();
-            $table->string('control_externally_provide_services')->nullable();
-            $table->string('production_service_provision')->nullable();
-            $table->string('release_product_services')->nullable();
-            $table->string('control_nonconforming_outputs')->nullable();
-            $table->string('risk_opportunities')->nullable();
-            $table->string('action-item-details')->nullable();
+            $table->text('Operations')->nullable();
+            $table->text('requirement_products_services')->nullable();
+            $table->text('design_development_product_services')->nullable();
+            $table->text('control_externally_provide_services')->nullable();
+            $table->text('production_service_provision')->nullable();
+            $table->text('release_product_services')->nullable();
+            $table->text('control_nonconforming_outputs')->nullable();
+            $table->text('risk_opportunities')->nullable();
+            $table->text('external_supplier_performance')->nullable();
+            $table->text('customer_satisfaction_level')->nullable();
+            $table->text('budget_estimates')->nullable();
+            $table->text('completion_of_previous_tasks')->nullable();
+            $table->text('production_new')->nullable();
+            $table->text('plans_new')->nullable();
+            // $table->text('action-item-details')->nullable();
+            $table->text('forecast_new')->nullable();
+            $table->text('due_date_extension')->nullable();
+            $table->text('next_managment_review_date')->nullable();
+            $table->text('summary_recommendation')->nullable();
+            $table->text('conclusion_new')->nullable();
+            $table->text('additional_suport_required')->nullable();
             $table->integer('serial_number')->nullable();
             $table->date('date')->nullable();
             $table->string('topic')->nullable();
@@ -33,7 +45,10 @@ return new class extends Migration
             $table->string('comment')->nullable();
     
 
-            $table->integer('assign_id')->nullable();
+            $table->text('assign_id')->nullable();
+            $table->text('Initiator_id')->nullable();
+            $table->text('initiator_group_code')->nullable();
+
             $table->string('division_id')->nullable();
             $table->string('form_type')->nullable();
             $table->integer('record')->nullable();
@@ -45,14 +60,15 @@ return new class extends Migration
             $table->string('due_date')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('type')->nullable();
-            $table->string('priority_level')->nullable();
+            $table->text('priority_level')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('attendees')->nullable();
             $table->text('agenda')->nullable();
             $table->text('description')->nullable();
             $table->text('attachment')->nullable();
-            $table->text('inv_attachment')->nullable();
+            $table->string('inv_attachment')->nullable();
+            $table->string('file_attchment_if_any')->nullable();
             $table->date('actual_start_date')->nullable();
             $table->date('actual_end_date')->nullable();
             $table->string('meeting_minute')->nullable();
@@ -68,7 +84,7 @@ return new class extends Migration
             $table->integer('stage')->nullable();
             $table->date('updated_at')->nullable();
             $table->date('created_at')->nullable();
-            //$table->date('origin_state')->nullable();
+            // $table->date('origin_state')->nullable();
 
 
 
