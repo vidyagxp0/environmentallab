@@ -774,7 +774,7 @@
                             <div class="group-input">
                                 <label for="distriution_retrieval">
                                     Distribution & Retrieval
-                                    <button type="button" name="agenda"
+                                    <button type="button" name="    "
                                         onclick="addDistributionRetrieval('distribution-retrieval-grid')">+</button>
                                 </label>
                                 <div class="table-responsive retrieve-table">

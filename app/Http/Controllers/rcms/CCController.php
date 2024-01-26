@@ -610,6 +610,7 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
+        if (!empty($evaluation->qa_eval_attach)){
         $history = new RcmDocHistory;
         $history->cc_id = $evaluation->id;
         $history->activity_type = 'QA Evaluation Attachments';
@@ -621,6 +622,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
+        }
 
         $history = new RcmDocHistory;
         $history->cc_id = $evaluation->id;
@@ -2086,7 +2088,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastclosure->effective_check_date != $closure->feffective_check_dateedback || !empty($request->effective_check_date_comment)) {
+        if ($lastclosure->effective_check_date != $closure->feedbackeffective_check_date || !empty($request->effective_check_date_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Migration Action';
@@ -2099,20 +2101,20 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        // if ($lastclosure->attach_list != $closure->attach_list || !empty($request->attach_list_comment)) {
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'List Of Attachments';
-        //     $history->previous = $lastclosure->attach_list;
-        //     $history->current = $closure->attach_list;
-        //     $history->comment = $request->attach_list_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->save();
-        //     return $history;
-        // }
+        if ($lastclosure->attach_list != $closure->attach_list || !empty($request->attach_list_comment)) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'List Of Attachments';
+            $history->previous = $lastclosure->attach_list;
+            $history->current = $closure->attach_list;
+            $history->comment = $request->attach_list_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+            return $history;
+        }
 
         toastr()->success('Record is updated Successfully');
         return back();

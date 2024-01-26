@@ -23,7 +23,6 @@ return new class extends Migration
             $table->integer('revised_doc')->default('0');
             $table->longtext('document_name');
             $table->longtext('short_description')->nullable();
-            // $table->longtext('assigned_to')->nullable();
             $table->string('due_dateDoc')->nullable();
             $table->longtext('description')->nullable();
             $table->longtext('notify_to')->nullable();
@@ -42,10 +41,8 @@ return new class extends Migration
             $table->longtext('approvers')->nullable();
             $table->longtext('reviewers_group')->nullable();
             $table->longtext('approver_group')->nullable();
-            // $table->longtext('distribution_list')->nullable();
             $table->longtext('revision_summary')->nullable();
             $table->longtext('training_required')->nullable();
-            
             $table->integer('stage')->default(1);
             $table->string('status');
             $table->longtext('document')->nullable();
