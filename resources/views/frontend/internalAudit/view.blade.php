@@ -592,7 +592,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="others">Others</label>
-                                                <textarea name="others"></textarea>
+                                                <textarea name="others"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -641,21 +641,36 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Audit Planning content -->
-                            <div id="CCForm2" class="inner-block cctabcontent">
-                                <div class="inner-block-content">
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
-                                                <input type="date" name="start_date" value="{{ $data->start_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+
+                                                {{-- <input type="date" name="start_date" value="{{ $data->start_date }}" --}}
+
+                                        <div id="CCForm2" class="inner-block cctabcontent">
+                                            <div class="inner-block-content">
+                                                <div class="row">
+                                                    <div class="col-lg-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
+                                                            {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
+                                                                     <div class="calenderauditee">                                     
+                                                                <input type="text"  id="audit_schedule_start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->audit_schedule_start_date }}">
+                                                                <input type="date" name="audit_schedule_start_date" 
+                                                                class="hide-input"
+                                                                oninput="handleDateInput(this, 'audit_schedule_start_date')"/>
+                                                            </div> 
+                                                        </div>
+                                                    </div>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
-                                                <input type="date" name="end_date" value="{{ $data->end_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
+                                         
+                                                        <div class="calenderauditee">                                     
+                                                            <input type="text"  id="audit_schedule_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->audit_schedule_end_date }}">
+                                                            <input type="date" name="audit_schedule_end_date" 
+                                                            class="hide-input"
+                                                            oninput="handleDateInput(this, 'audit_schedule_end_date')"/>
+                                                </div> 
+                                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  --}}
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -735,7 +750,7 @@ function addMultipleFiles(input, block_id) {
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Facility Name">Facility Name</label>
                                                 <select multiple name="Facility[]" placeholder="Select Facility Name"
@@ -767,8 +782,8 @@ function addMultipleFiles(input, block_id) {
 
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
+                                        </div> --}}
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Group Name">Function Name</label>
                                                 <select multiple name="Group[]" placeholder="Select Function Name"
@@ -797,7 +812,7 @@ function addMultipleFiles(input, block_id) {
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Product/Material Name">Product/Material Name</label>
@@ -1018,19 +1033,19 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditing Agency">External Auditing Agency</label>
-                                                <textarea name="External_Auditing_Agency"></textarea>
+                                                <textarea name="External_Auditing_Agency"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines / Industry Standards</label>
-                                                <textarea name="Relevant_Guideline"></textarea>
+                                                <textarea name="Relevant_Guideline"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guideline }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="QA Comments">QA Comments</label>
-                                                <textarea name="QA_Comments"></textarea>
+                                                <textarea name="QA_Comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1039,10 +1054,20 @@ function addMultipleFiles(input, block_id) {
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="file_attachment_guideline"></div>
+                                                    <div class="file-attachment-list" id="file_attachment_guideline">
+                                                        @if ($data->file_attachment_guideline)
+                                                        @foreach(json_decode($data->file_attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="file_attachment_guideline"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment_guideline"
                                                             oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
                                                     </div>
                                                 </div>
@@ -1064,14 +1089,16 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
                                                     Details</label>
-                                                <input type="text" name="Supplier/Vendor/Manufacturer Details">
+                                                {{-- <input type="text"> --}}
+                                                <textarea name="Supplier_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
                                                     Site</label>
-                                                <input type="text" name="Supplier/Vendor/Manufacturer Site">
+                                            
+                                                <textarea name="Supplier_Site" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">

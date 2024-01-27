@@ -641,7 +641,7 @@
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white"> Exit </a> </button>
+                                <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
@@ -681,6 +681,7 @@
                                         </div>
                                     </div>
                                 </div>
+                            
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
@@ -726,7 +727,7 @@
                                             </table>
                                         </div>
                                     </div> --}} 
-                                </div>
+                                
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Audit Team">Audit Team</label>
@@ -743,7 +744,6 @@
                                         <label for="Auditee">Auditee</label>
                                         <select multiple name="Auditee[]" placeholder="Select Auditee"
                                             data-search="false" data-silent-initial-value-set="true" id="Auditee">
-
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach

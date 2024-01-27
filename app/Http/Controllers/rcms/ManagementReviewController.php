@@ -686,6 +686,7 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        
         if ($lastDocument->file_attchment_if_any != $management->file_attchment_if_any || !empty($request->file_attchment_if_any_comment)) {
 
             $history = new ManagementAuditTrial();
