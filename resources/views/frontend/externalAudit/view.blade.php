@@ -749,7 +749,7 @@ function addMultipleFiles(input, block_id) {
                                                 <select multiple name="Facility[]" placeholder="Select Facility Name"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="Facility"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'readonly' : '' }}>
                                                         <option value="Plant 1"
                                                             {{ in_array('Plant 1', explode(',', $data->Facility)) ? 'selected' : '' }}>
                                                             Plant 1</option>
@@ -781,7 +781,7 @@ function addMultipleFiles(input, block_id) {
                                                 <select multiple name="Group[]" placeholder="Select Group Name"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="Group"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'readonly' : '' }}>
                                                         <option value="QA"
                                                             {{ in_array('QA', explode(',', $data->Facility)) ? 'selected' : '' }}>
                                                             QA</option>
@@ -1024,19 +1024,19 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="External Auditing Agency">External Auditing Agency</label>
-                                                <textarea name="External_Auditing_Agency"></textarea>
+                                                <textarea name="External_Auditing_Agency" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->External_Auditing_Agency }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Relevant Guidelines / Industry Standards">Relevant Guidelines / Industry Standards</label>
-                                                <textarea name="Relevant_Guidelines"></textarea>
+                                                <textarea name="Relevant_Guidelines" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Relevant_Guidelines}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="QA Comments">QA Comments</label>
-                                                <textarea name="QA_Comments"></textarea>
+                                                <textarea name="QA_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1046,9 +1046,10 @@ function addMultipleFiles(input, block_id) {
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="file_attachment_guideline"></div>
+
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="file_attachment_guideline"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment_guideline"
                                                             oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
                                                     </div>
                                                 </div>
@@ -1057,7 +1058,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
-                                                <select name="Audit_Category">
+                                                <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option value="1">Internal Audit/Self Inspection</option>
                                                     <option value="2">Supplier Audit</option>
@@ -1068,16 +1069,14 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer
-                                                    Details</label>
-                                                <input type="text" name="Supplier_Details">
+                                                <label for="Supplier/Vendor/Manufacturer Details">Supplier/Vendor/Manufacturer Details</label>
+                                                <textarea type="text" name="Supplier_Details" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Details}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
-                                                    Site</label>
-                                                <input type="text" name="Supplier_Site">
+                                                <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer Site</label>
+                                                <textarea type="text" name="Supplier_Site" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Supplier_Site}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1163,7 +1162,7 @@ function addMultipleFiles(input, block_id) {
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Audit_file[]"
+                                                            <input type="file" id="myfile" name="Audit_file[]"
                                                                 oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                         </div>
                                                     </div>

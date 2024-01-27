@@ -439,7 +439,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="others">Others</label>
+                                        <label for="others">Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="others"></textarea>
                                     </div>
                                 </div>
@@ -455,7 +455,6 @@
                                         <label for="Inv Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="inv_attachment[]" multiple> --}}
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="audit_file_attachment"></div>
                                             <div class="add-btn">
@@ -601,7 +600,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                {{-- <div class="col-6">
+                                <div class="col-6">
                                     <div class="group-input">
                                         <label for="Facility Name">Facility Name</label>
                                         <select multiple name="Facility[]" placeholder="Select Facility Name"
@@ -615,8 +614,8 @@
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
+                                </div> 
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Group Name">Group Name</label>
                                         <select multiple name="Group[]" placeholder="Select Group Name"
@@ -629,7 +628,7 @@
                                             <option value="R&D">R&D</option>
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Product/Material Name">Product/Material Name</label>

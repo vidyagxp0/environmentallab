@@ -3520,7 +3520,7 @@ section#pdf-page .watermark {
 #change-control-view .inner-block .block-list .block .bar {
     margin-bottom: 5px;
 }
-
+    
 #change-control-view .state-block .progress-bars {
     display: flex;
 }
@@ -3548,22 +3548,44 @@ section#pdf-page .watermark {
     font-weight: bold;
 }
 
-#signature-modal .group-input label {
+
+#rejection-modal .group-input label {
     display: block;
     font-size: 0.9rem;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-#signature-modal .group-input input,
-#signature-modal .group-input select {
+#rejection-modal .group-input input,
+#rejection-modal .group-input select {
     display: block;
     width: 100%;
     border-radius: 5px;
     margin-bottom: 20px;
 }
 
-#signature-modal .modal-footer button {
+#rejection-modal .modal-footer button {
+    color: white;
+    background: #4274da;
+    border: 1px solid rgb(202, 202, 202);
+}
+
+#cancel-modal .group-input label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#cancel-modal .group-input input,
+#cancel-modal .group-input select {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#cancel-modal .modal-footer button {
     color: white;
     background: #4274da;
     border: 1px solid rgb(202, 202, 202);

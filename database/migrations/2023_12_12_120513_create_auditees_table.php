@@ -48,7 +48,7 @@ return new class extends Migration
             $table->string('start_date')->nullable();
             $table->string('end_date')->nullable();
             $table->text('audit_agenda')->nullable();
-            // $table->text('Facility')->nullable();
+            $table->text('Facility')->nullable();
             $table->text('Group')->nullable();
             $table->text('material_name')->nullable();
             $table->text('if_comments')->nullable();

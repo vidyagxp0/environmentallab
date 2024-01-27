@@ -77,8 +77,8 @@ class AuditeeController extends Controller
         $internalAudit->start_date = $request->start_date;
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
-        // $internalAudit->Facility =  implode(',', $request->Facility);
-        // $internalAudit->Group = implode(',', $request->Group);
+        $internalAudit->Facility =  implode(',', $request->Facility);
+        $internalAudit->Group = implode(',', $request->Group);
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
@@ -759,8 +759,8 @@ class AuditeeController extends Controller
         
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
-        // $internalAudit->Facility =  implode(',', $request->Facility);
-        // $internalAudit->Group = implode(',', $request->Group);
+        $internalAudit->Facility =  implode(',', $request->Facility);
+        $internalAudit->Group = implode(',', $request->Group);
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
@@ -771,7 +771,7 @@ class AuditeeController extends Controller
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
-
+        //$internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;

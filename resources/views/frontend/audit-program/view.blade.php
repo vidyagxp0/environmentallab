@@ -690,7 +690,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'readonly' : '' }}
                                                             type="file" id="myfile" name="attachments[]"
                                                             oninput="addMultipleFiles(this, 'attachments')" multiple>
                                                     </div>
@@ -737,7 +737,7 @@
                                                 <label for="zone">Zone</label>
                                                 <select name="zone"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option value="">-- Select --</option>
+                                                    <option value="{{ $data->zone }}">-- Select --</option>
                                                     <option value="Asia"
                                                         @if ($data->zone == 'Asia') selected @endif>Asia
                                                     </option>
@@ -769,7 +769,7 @@
                                             <div class="group-input">
                                                 <label for="country">Country</label>
                                                 <select name="country" class="countries" id="countryId">
-                                                    <option value="{{ $data->country }}">Select Country</option>
+                                                    <option value="">Select Country</option>
                                                 </select>
                                                 {{--  <select name="country" id="country"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
@@ -790,7 +790,7 @@
                                         
                                                 <label for="City">City</label>
                                                 <select name="city" class="cities" id="cityId">
-                                                    <option value="{{ $data->City }}">Select City</option>
+                                                    <option value="">Select City</option>
                                                 </select>
                                                 {{--  <select name="city" id="city"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
