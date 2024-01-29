@@ -249,7 +249,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input readonly type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
@@ -292,7 +292,7 @@
                                                 Corporate Quality Assurance</option>
                                             <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>Central
                                                 Quality Control</option>
                                             <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
                                                 Manufacturing</option>
@@ -344,7 +344,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity_level_form">
+                                        <select name="severity_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -600,7 +600,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="Facility Name">Facility Name</label>
                                         <select multiple name="Facility[]" placeholder="Select Facility Name"
@@ -628,7 +628,7 @@
                                             <option value="R&D">R&D</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Product/Material Name">Product/Material Name</label>

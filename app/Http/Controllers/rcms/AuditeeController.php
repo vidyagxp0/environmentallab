@@ -71,14 +71,14 @@ class AuditeeController extends Controller
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
         $internalAudit->initial_comments = $request->initial_comments;
-        $internalAudit->severity_level = $request->severity_level1;
+        $internalAudit->severity_level = $request->severity_level;
 
 
         $internalAudit->start_date = $request->start_date;
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
-        $internalAudit->Facility =  implode(',', $request->Facility);
-        $internalAudit->Group = implode(',', $request->Group);
+        //$internalAudit->Facility =  implode(',', $request->Facility);
+        //$internalAudit->Group = implode(',', $request->Group);
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
@@ -750,6 +750,7 @@ class AuditeeController extends Controller
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->others = $request->others;
+        $internalAudit->external_agencies = $request->external_agencies;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
@@ -759,24 +760,29 @@ class AuditeeController extends Controller
         
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
-        $internalAudit->Facility =  implode(',', $request->Facility);
-        $internalAudit->Group = implode(',', $request->Group);
+        //$internalAudit->Facility =  implode(',', $request->Facility);
+        //$internalAudit->Group = implode(',', $request->Group);
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team =  implode(',', $request->Audit_team);
         $internalAudit->Auditee =  implode(',', $request->Auditee);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
+        $internalAudit->Audit_Category = $request->Audit_Category;
+        $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
+        $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
+        $internalAudit->QA_Comments = $request->QA_Comments;
+        $internalAudit->Supplier_Details = $request->Supplier_Details;
+        $internalAudit->Supplier_Site = $request->Supplier_Site;
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
-        //$internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
+        $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
-
 
         if (!empty($request->inv_attachment)) {
             $files = [];

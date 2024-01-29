@@ -65,7 +65,7 @@ function addMultipleFiles(input, block_id) {
                 }
                 html += '</select></td>' +
                     '<td><input type="text" name="observation_description[]"></td>' +
-                    '<td><input type="text" name="severity_level[]"></td>' +
+                    // '<td><input type="text" name="severity_level[]"></td>' +
                     '<td><input type="text" name="area[]"></td>' +
                     '<td><input type="text" name="observation_category[]"></td>' +
                     '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
@@ -352,7 +352,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Date Due">Date of Initiation</label>
-                                                <input disabled type="text"
+                                                <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->intiation_date) }}"
                                                     name="intiation_date">
 
@@ -376,7 +376,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                                <input disabled type="text"
+                                                <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date">
                                                 {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
@@ -449,7 +449,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                                 <input type="text" name="initiator_group_code"
                                                     value="{{ $data->Initiator_Group }}" id="initiator_group_code"
-                                                    disabled>
+                                                    readonly>
 
                                             </div>
                                         </div>
@@ -464,11 +464,14 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity_level1">
+                                                <select name="severity_level">
                                                     <option value="0">-- Select --</option>
-                                                    <option value="minor">Minor</option>
-                                                    <option value="major">Major</option>
-                                                    <option value="critical">Critical</option>
+                                                    <option @if ($data->severity_level == 'minor') selected @endif
+                                                     value="minor">Minor</option>
+                                                    <option  @if ($data->severity_level == 'major') selected @endif 
+                                                    value="major">Major</option>
+                                                    <option @if ($data->severity_level == 'critical') selected @endif
+                                                    value="critical">Critical</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -568,27 +571,38 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="external_agencies">External Agencies</label>
                                                 <select name="external_agencies">
                                                     <option value="">-- Select --</option>
-                                                    <option value="jordan_fda">Jordan FDA</option>
-                                                    <option value="us_fda">USFDA</option>
-                                                    <option value="mhra">MHRA</option>
-                                                    <option value="anvisa">ANVISA</option>
-                                                    <option value="iso">ISO</option>
-                                                    <option value="who">WHO</option>
-                                                    <option value="local_fda">Local FDA</option>
-                                                    <option value="tga">TGA</option>
-                                                    <option value="others">Others</option>
+                                                    <option @if ($data->external_agencies == 'jordan_fda') selected @endif
+                                                         value="jordan_fda">Jordan FDA</option>
+                                                    <option @if ($data->external_agencies == 'us_fda') selected @endif 
+                                                         value="us_fda">USFDA</option>
+                                                    <option @if ($data->external_agencies == 'mhra') selected @endif
+                                                         value="mhra">MHRA</option>
+                                                    <option @if ($data->external_agencies == 'anvisa') selected @endif
+                                                         value="anvisa">ANVISA</option>
+                                                    <option @if ($data->external_agencies == 'iso') selected @endif
+                                                         value="iso">ISO</option>
+                                                    <option @if ($data->external_agencies == 'who') selected @endif
+                                                         value="who">WHO</option>
+                                                    <option @if ($data->external_agencies == 'local_fda') selected @endif
+                                                         value="local_fda">Local FDA</option>
+                                                    <option @if ($data->external_agencies == 'tga') selected @endif
+                                                         value="tga">TGA</option>
+                                                    <option value="others"
+                                                     @if ($data->external_agencies == 'others') selected @endif>Others
+                                                    </option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="others">Others</label>
-                                                <textarea name="others"></textarea>
+                                                <label for="others">Others<span
+                                                    class="text-danger d-none">*</span></label>
+                                                <textarea name="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}></textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Initial Comments">Initial Comments</label>
+                                                <label for="Initial Comments">Description</label>
                                                 <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
                                             </div>
                                         </div>
@@ -743,7 +757,7 @@ function addMultipleFiles(input, block_id) {
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Facility Name">Facility Name</label>
                                                 <select multiple name="Facility[]" placeholder="Select Facility Name"
@@ -774,8 +788,8 @@ function addMultipleFiles(input, block_id) {
 
                                                 </select>
                                             </div>
-                                        </div>
-                                        <div class="col-lg-6">
+                                        </div> --}}
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Group Name">Group Name</label>
                                                 <select multiple name="Group[]" placeholder="Select Group Name"
@@ -803,7 +817,7 @@ function addMultipleFiles(input, block_id) {
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Product/Material Name">Product/Material Name</label>
@@ -878,7 +892,7 @@ function addMultipleFiles(input, block_id) {
                                                     {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
                                                     Observation Details
@@ -982,7 +996,7 @@ function addMultipleFiles(input, block_id) {
                                                     </table>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Audit Team">Audit Team</label>
@@ -1060,10 +1074,14 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Audit Category">Audit Category</label>
                                                 <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
-                                                    <option value="1">Internal Audit/Self Inspection</option>
-                                                    <option value="2">Supplier Audit</option>
-                                                    <option value="3">Regulatory Audit</option>
-                                                    <option value="4">Consultant Audit</option>
+                                                    <option @if ($data->Audit_Category == '1') selected @endif
+                                                         value="1">Internal Audit/Self Inspection</option>
+                                                    <option  @if ($data->Audit_Category == '2') selected @endif
+                                                         value="2">Supplier Audit</option>
+                                                    <option @if ($data->Audit_Category == '3') selected @endif
+                                                         value="3">Regulatory Audit</option>
+                                                    <option @if ($data->Audit_Category == '4') selected @endif
+                                                         value="4">Consultant Audit</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1139,6 +1157,112 @@ function addMultipleFiles(input, block_id) {
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'audit_end_date')"/>
                                                     </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="audit-agenda-grid">
+                                                    Observation Details
+                                                    <button type="button" name="audit-agenda-grid"
+                                                      id="ObservationAdd">+</button>
+                                                    <span class="text-primary" data-bs-toggle="modal"
+                                                        data-bs-target="#observation-field-instruction-modal"
+                                                        style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
+                                                        (Launch Instruction)
+                                                    </span>
+                                                </label>
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="onservation-field-table"
+                                                        style="width: 150%;">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Row#</th>
+                                                                <th>Observation ID</th>
+                                                                <th>Date</th>
+                                                                <th>Auditor</th>
+                                                                <th>Auditee</th>
+                                                                <th>Observation Description</th>
+                                                                {{-- <th>Severity Level</th> --}}
+                                                                <th>Area/process</th>
+                                                                <th>Observation Category</th>
+                                                                <th>CAPA Required</th>
+                                                                <th>Auditee Response</th>
+                                                                <th>Auditor Review on Response</th>
+                                                                <th>QA Comments</th>
+                                                                <th>CAPA Details</th>
+                                                                <th>CAPA Due Date</th>
+                                                                <th>CAPA Owner</th>
+                                                                <th>Action Taken</th>
+                                                                <th>CAPA Completion Date</th>
+                                                                <th>Status</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="observationDetail">
+                                                            @if ($grid_data1->observation_id)
+                                                            @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
+                                                            <tr>
+                                                                    <td>{{ $key + 1 }}</td>
+                                                                    <td><input type="text" name="observation_id[]" value="{{ $tempData ? $tempData : "" }}"></td>
+                                                                    <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td>
+                                                                <td>
+                                                                    <select placeholder="Select..." name="auditorG[]">
+                                                                        <option value="">Select a value</option>
+                                                                        @foreach ($users as $datas)
+                                                                            <option value="{{ $datas->id }}">
+
+                                                                                {{ $datas->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <select placeholder="Select..." name="auditeeG[]">
+                                                                        <option value="">Select a value</option>
+                                                                        @foreach ($users as $datas)
+                                                                            <option value="{{ $datas->id }}">
+
+                                                                                {{ $datas->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td> 
+                                                                    <td><input type="text" name="observation_description[]" value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>
+                                                                    {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
+                                                                    <td><input type="text" name="area[]" value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td>
+                                                                    <td>
+                                                                        <select name="capa_required[]">
+                                                                            <option value="0">-- Select --</option>
+                                                                            <option value="yes">Yes</option>
+                                                                            <option value="no">No</option>
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input type="text" name="auditee_response[]" value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="qa_comment[]" value="{{unserialize($grid_data1->qa_comment)[$key] ? unserialize($grid_data1->qa_comment)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td>
+                                                                    <td><input type="date" name="capa_due_date[]" value="{{unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key]: "" }}"></td>
+                                                                    <td>
+                                                                        <select placeholder="Select..." name="capa_owner[]">
+                                                                            <option value="">Select a value</option>
+                                                                            @foreach ($users as $datas)
+                                                                                <option value="{{ $datas->id }}">
+                                                                                    {{ $datas->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </td>
+                                                                    <td><input type="text" name="action_taken[]" value="{{unserialize($grid_data1->action_taken)[$key] ? unserialize($grid_data1->action_taken)[$key]: "" }}"></td>
+                                                                    <td><input type="date" name="capa_completion_date[]" value="{{unserialize($grid_data1->capa_completion_date)[$key] ? unserialize($grid_data1->capa_completion_date)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td>
+                                                                </tr>
+                                                            @endforeach
+                                                            @endif
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
