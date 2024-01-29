@@ -91,7 +91,7 @@ class InternalauditController extends Controller
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
-        $internalAudit->audit_start_date = $request->audit_start_date;
+        $internalAudit->audit_start_date= $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
         
         $internalAudit->status = 'Opened';
@@ -758,7 +758,7 @@ class InternalauditController extends Controller
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assigend = $request->assigend;
-        $internalAudit->due_date = $request->due_date;
+        $internalAudit->due_date= $request->due_date;
         $internalAudit->initiator_group = $request->initiator_group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
         $internalAudit->short_description = $request->short_description;
@@ -782,6 +782,7 @@ class InternalauditController extends Controller
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
         // $internalAudit->Group = implode(',', $request->Group);
+        $internalAudit->external_agencies = $request->external_agencies;
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
@@ -792,10 +793,11 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
+        $internalAudit->severity_level_form= $request->severity_level_form;
 
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
-        $internalAudit->due_date = $request->due_date;
-        $internalAudit->audit_start_date = $request->audit_start_date;
+        $internalAudit->due_date= $request->due_date;
+        $internalAudit->audit_start_date= $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
 
         if (!empty($request->inv_attachment)) {
@@ -1379,7 +1381,7 @@ class InternalauditController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->audit_start_date != $internalAudit->audit_start_date || !empty($request->audit_start_date_comment)) {
+        if ($lastDocument->audit_start_date!= $internalAudit->audit_start_date || !empty($request->audit_start_date_comment)) {
 
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $id;

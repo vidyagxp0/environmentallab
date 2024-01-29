@@ -469,7 +469,6 @@
                                         <textarea name="initial_comments"></textarea>
                                     </div>
                                 </div>
-                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Initial Attachment</label>
