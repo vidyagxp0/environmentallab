@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('Initiator_Group')->nullable();
+            $table->string('initiator_group_code')->nullable();
             $table->string('due_date')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
@@ -44,7 +45,7 @@ return new class extends Migration
             $table->text('attachments')->nullable();
             $table->text('related_url')->nullable();
             $table->text('url_description')->nullable();
-            $table->text('suggested_audits')->nullable();
+            //$table->text('suggested_audits')->nullable();
             $table->string('zone')->nullable();
             $table->string('country')->nullable();
             $table->string('City')->nullable();
