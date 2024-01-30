@@ -256,13 +256,24 @@
                                 </div>
 
                             
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Team">CAPA Team</label>
                                         <select multiple id="select-state" placeholder="Select..." name="capa_team[]">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="CAPA Team">CAPA Team</label>
+                                        <select multiple name="capa_team[]" placeholder="Select CAPA Team"
+                                            data-search="false" data-silent-initial-value-set="true" id="Audit">
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
