@@ -88,7 +88,6 @@ class AuditeeController extends Controller
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
         $internalAudit->QA_Comments = $request->QA_Comments;
-        $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Audit_Category = $request->Audit_Category;
         $internalAudit->Supplier_Details = $request->Supplier_Details;
         $internalAudit->Supplier_Site = $request->Supplier_Site;
@@ -103,6 +102,19 @@ class AuditeeController extends Controller
         $internalAudit->status = 'Opened';
         $internalAudit->stage = 1;
         $internalAudit->external_agencies = $request->external_agencies;
+
+        if (!empty($request->file_attachment_guideline)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_guideline')) {
+                foreach ($request->file('file_attachment_guideline') as $file) {
+                    $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $internalAudit->file_attachment_guideline = json_encode($files);
+        }
 
         if (!empty($request->inv_attachment)) {
             $files = [];
@@ -778,7 +790,21 @@ class AuditeeController extends Controller
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
-        $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
+        if (!empty($request->file_attachment_guideline)) {
+            $files = [];
+            if ($request->hasfile('file_attachment_guideline')) {
+                
+                foreach ($request->file('file_attachment_guideline') as $file) {
+                    $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+
+            $internalAudit->file_attachment_guideline = json_encode($files);
+        }
+ 
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
@@ -802,6 +828,7 @@ class AuditeeController extends Controller
         if (!empty($request->file_attachment)) {
             $files = [];
             if ($request->hasfile('file_attachment')) {
+                
                 foreach ($request->file('file_attachment') as $file) {
                     $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);

@@ -55,6 +55,7 @@ class AuditProgramController extends Controller
 
 
         $data->Initiator_Group = $request->Initiator_Group;
+        $data->initiator_group_code = $request->initiator_group_code;
         $data->assign_to = $request->assign_to;
         $data->due_date = $request->due_date;
         $data->type = $request->type;
@@ -64,10 +65,10 @@ class AuditProgramController extends Controller
         $data->comments = $request->comments;
         $data->related_url = $request->related_url;
         $data->url_description = $request->url_description;
-        $data->suggested_audits = $request->suggested_audits;
+        //$data->suggested_audits = $request->suggested_audits;
         $data->zone = $request->zone;
         $data->country = $request->country;
-        $data->City = $request->city;
+        $data->City = $request->City;
         $data->state_district = $request->state;
         $data->severity1_level = $request->severity1_level;
 
@@ -255,19 +256,19 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
-        if (!empty($data->suggested_audits)) {
-            $history = new AuditProgramAuditTrial();
-            $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Suggested Audits';
-            $history->previous = "Null";
-            $history->current = $data->suggested_audits;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        // if (!empty($data->suggested_audits)) {
+        //     $history = new AuditProgramAuditTrial();
+        //     $history->AuditProgram_id = $data->id;
+        //     $history->activity_type = 'Suggested Audits';
+        //     $history->previous = "Null";
+        //     $history->current = $data->suggested_audits;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->save();
+        // }
 
         if (!empty($data->zone)) {
             $history = new AuditProgramAuditTrial();
@@ -365,6 +366,8 @@ class AuditProgramController extends Controller
 
         $data->assign_to = $request->assign_to;
         $data->due_date = $request->due_date;
+        $data->Initiator_Group = $request->Initiator_Group;
+        $data->initiator_group_code = $request->initiator_group_code;
         $data->type = $request->type;
         $data->year = $request->year;
         $data->Quarter = $request->Quarter;
@@ -373,11 +376,12 @@ class AuditProgramController extends Controller
         $data->comments = $request->comments;
         $data->related_url = $request->related_url;
         $data->url_description = $request->url_description;
-        $data->suggested_audits = $request->suggested_audits;
+        //$data->suggested_audits = $request->suggested_audits;
         $data->zone = $request->zone;
         $data->country = $request->country;
         $data->City = $request->City;
-        $data->state_district = $request->state_district;
+        $data->state_district = $request->state;
+        $data->severity1_level = $request->severity1_level;
         if (!empty($request->attachments)) {
             $files = [];
             if ($request->hasfile('attachments')) {
@@ -557,20 +561,20 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->suggested_audits != $data->suggested_audits || !empty($request->suggested_audits_comment)) {
+        // if ($lastDocument->suggested_audits != $data->suggested_audits || !empty($request->suggested_audits_comment)) {
 
-            $history = new AuditProgramAuditTrial();
-            $history->AuditProgram_id = $id;
-            $history->activity_type = 'Suggested Audits';
-            $history->previous = $lastDocument->suggested_audits;
-            $history->current = $data->suggested_audits;
-            $history->comment = $request->suggested_audits_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new AuditProgramAuditTrial();
+        //     $history->AuditProgram_id = $id;
+        //     $history->activity_type = 'Suggested Audits';
+        //     $history->previous = $lastDocument->suggested_audits;
+        //     $history->current = $data->suggested_audits;
+        //     $history->comment = $request->suggested_audits_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->zone != $data->zone || !empty($request->zone_comment)) {
 
             $history = new AuditProgramAuditTrial();

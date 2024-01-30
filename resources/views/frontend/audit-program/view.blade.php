@@ -356,65 +356,66 @@
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                                <input disabled type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                    name="due_date">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                     id="initiator-group">
+                                                     id="initiator_group">
                                                     <option value="CQA"
-                                                        @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
+                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
-                                                        @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
                                                         Assurance Biopharma</option>
                                                     <option value="CQC"
-                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CQC') selected @endif>Central
                                                         Quality Control</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
+                                                    <option value="MANU"
+                                                        @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
+                                                        @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
                                                         Sourcing Group</option>
                                                     <option value="CS"
-                                                        @if ($data->initiatorGroup == 'CS') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CS') selected @endif>Central
                                                         Stores</option>
                                                     <option value="ITG"
-                                                        @if ($data->initiatorGroup == 'ITG') selected @endif>Information
+                                                        @if ($data->Initiator_Group == 'ITG') selected @endif>Information
                                                         Technology Group</option>
                                                     <option value="MM"
-                                                        @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
+                                                        @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
                                                         Medicine</option>
                                                     <option value="CL"
-                                                        @if ($data->initiatorGroup == 'CL') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CL') selected @endif>Central
                                                         Laboratory</option>
                                                     <option value="TT"
-                                                        @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                                        @if ($data->Initiator_Group == 'TT') selected @endif>Tech
                                                         team</option>
                                                     <option value="QA"
-                                                        @if ($data->initiatorGroup == 'QA') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="QM"
-                                                        @if ($data->initiatorGroup == 'QM') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QM') selected @endif>Quality
                                                         Management</option>
                                                     <option value="IA"
-                                                        @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                                        @if ($data->Initiator_Group == 'IA') selected @endif>IT
                                                         Administration</option>
                                                     <option value="ACC"
-                                                        @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
+                                                        @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
                                                     </option>
                                                     <option value="LOG"
-                                                        @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
+                                                        @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
                                                     </option>
                                                     <option value="SM"
-                                                        @if ($data->initiatorGroup == 'SM') selected @endif>Senior
+                                                        @if ($data->Initiator_Group == 'SM') selected @endif>Senior
                                                         Management</option>
                                                     <option value="BA"
-                                                        @if ($data->initiatorGroup == 'BA') selected @endif>Business
+                                                        @if ($data->Initiator_Group == 'BA') selected @endif>Business
                                                         Administration</option>
 
                                                 </select>
@@ -424,8 +425,8 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                                 <input type="text" name="initiator_group_code"
-                                                    id="initiator_group_code" value="{{ $data->initiator_group }}"
-                                                    disabled>
+                                                    id="initiator_group_code" value="{{ $data->Initiator_Group }}"
+                                                    readonly>
                                             </div>
                                         </div>
                                         <div class="col-lg-4">
@@ -597,9 +598,12 @@
                                                 <label for="severity-level">Sevrity Level</label>
                                                 <select name="severity1_level">
                                                     <option value="0">-- Select --</option>
-                                                    <option value="minor">Minor</option>
-                                                    <option value="major">Major</option>
-                                                    <option value="critical">Critical</option>
+                                                    <option @if ($data->severity1_level == 'minor') selected @endif
+                                                     value="minor">Minor</option>
+                                                    <option  @if ($data->severity1_level == 'major') selected @endif 
+                                                    value="major">Major</option>
+                                                    <option @if ($data->severity1_level == 'critical') selected @endif
+                                                    value="critical">Critical</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -769,7 +773,7 @@
                                             <div class="group-input">
                                                 <label for="country">Country</label>
                                                 <select name="country" class="countries" id="countryId">
-                                                    <option value="">Select Country</option>
+                                                    <option value="{{ $data->country }}">Select Country</option>
                                                 </select>
                                                 {{--  <select name="country" id="country"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
@@ -779,18 +783,18 @@
                                             <div class="group-input">
                                                 <label for="State/District">State/District</label>
                                                 <select name="state" class="states" id="stateId">
-                                                    <option value="">Select State</option>
+                                                    <option value="{{ $data->state }}">Select State</option>
                                                 </select>
                                                 {{--  <select name="state" id="state"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
                                             </div>
-                                        </div>
+                                        </div>  
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                         
                                                 <label for="City">City</label>
-                                                <select name="city" class="cities" id="cityId">
-                                                    <option value="">Select City</option>
+                                                <select name="City" class="cities" id="cityId">
+                                                    <option value="{{ $data->City }}">Select City</option>
                                                 </select>
                                                 {{--  <select name="city" id="city"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}

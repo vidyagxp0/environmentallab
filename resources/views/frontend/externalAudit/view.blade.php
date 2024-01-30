@@ -379,8 +379,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date">
-                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
-                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
+                                                
 
                                             </div>
                                         </div>
@@ -388,57 +387,57 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                     id="initiator-group">
+                                                     id="initiator_group">
                                                     <option value="CQA"
-                                                        @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
+                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
-                                                        @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
                                                         Assurance Biopharma</option>
                                                     <option value="CQC"
-                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CQC') selected @endif>Central
                                                         Quality Control</option>
-                                                    <option value="CQC"
-                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
+                                                    <option value="MANU"
+                                                        @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
+                                                        @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
                                                         Sourcing Group</option>
                                                     <option value="CS"
-                                                        @if ($data->initiatorGroup == 'CS') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CS') selected @endif>Central
                                                         Stores</option>
                                                     <option value="ITG"
-                                                        @if ($data->initiatorGroup == 'ITG') selected @endif>Information
+                                                        @if ($data->Initiator_Group == 'ITG') selected @endif>Information
                                                         Technology Group</option>
                                                     <option value="MM"
-                                                        @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
+                                                        @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
                                                         Medicine</option>
                                                     <option value="CL"
-                                                        @if ($data->initiatorGroup == 'CL') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CL') selected @endif>Central
                                                         Laboratory</option>
                                                     <option value="TT"
-                                                        @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                                        @if ($data->Initiator_Group == 'TT') selected @endif>Tech
                                                         team</option>
                                                     <option value="QA"
-                                                        @if ($data->initiatorGroup == 'QA') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="QM"
-                                                        @if ($data->initiatorGroup == 'QM') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QM') selected @endif>Quality
                                                         Management</option>
                                                     <option value="IA"
-                                                        @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                                        @if ($data->Initiator_Group == 'IA') selected @endif>IT
                                                         Administration</option>
                                                     <option value="ACC"
-                                                        @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
+                                                        @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
                                                     </option>
                                                     <option value="LOG"
-                                                        @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
+                                                        @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
                                                     </option>
                                                     <option value="SM"
-                                                        @if ($data->initiatorGroup == 'SM') selected @endif>Senior
+                                                        @if ($data->Initiator_Group == 'SM') selected @endif>Senior
                                                         Management</option>
                                                     <option value="BA"
-                                                        @if ($data->initiatorGroup == 'BA') selected @endif>Business
+                                                        @if ($data->Initiator_Group == 'BA') selected @endif>Business
                                                         Administration</option>
 
                                                 </select>
@@ -612,7 +611,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Inv Attachments">Initial Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="inv_attachment1">
+                                                    <div class="file-attachment-list" id="inv_attachment">
                                                         @if ($data->inv_attachment)
                                                         @foreach(json_decode($data->inv_attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -757,67 +756,7 @@ function addMultipleFiles(input, block_id) {
                                                 </table>
                                             </div>
                                         </div>
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Facility Name">Facility Name</label>
-                                                <select multiple name="Facility[]" placeholder="Select Facility Name"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="Facility"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'readonly' : '' }}>
-                                                        <option value="Plant 1"
-                                                            {{ in_array('Plant 1', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            Plant 1</option>
-                                                        <option value="QA"
-                                                            {{ in_array('QA', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            QA</option>
-                                                        <option value="QC"
-                                                            {{ in_array('QC', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            QC</option>
-                                                        <option value="MFG"
-                                                            {{ in_array('MFG', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            MFG</option>
-                                                        <option value="Corporate"
-                                                            {{ in_array('Corporate', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            Corporate</option>
-                                                        <option value="Microbiology"
-                                                            {{ in_array('Microbiology', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            Microbiology</option>
-                                                        <option value="Others"
-                                                            {{ in_array('Others', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            Others</option>
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Group Name">Group Name</label>
-                                                <select multiple name="Group[]" placeholder="Select Group Name"
-                                                    data-search="false" data-silent-initial-value-set="true"
-                                                    id="Group"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'readonly' : '' }}>
-                                                        <option value="QA"
-                                                            {{ in_array('QA', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            QA</option>
-                                                        <option value="QC"
-                                                            {{ in_array('QC', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            QC</option>
-                                                        <option value="Manufacturing"
-                                                            {{ in_array('Manufacturing', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            Manufacturing</option>
-                                                        <option value="Warehouse"
-                                                            {{ in_array('Warehouse', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            Warehouse</option>
-                                                        <option value="RA"
-                                                            {{ in_array('RA', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            RA</option>
-                                                        <option value="R&D"
-                                                            {{ in_array('R&D', explode(',', $data->Facility)) ? 'selected' : '' }}>
-                                                            R&D</option>
-
-                                                </select>
-                                            </div>
-                                        </div> --}}
+                                       
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Product/Material Name">Product/Material Name</label>
@@ -871,19 +810,20 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="file-attachment-field">
                                                     <div disabled  class="file-attachment-list" id="file_attachment">
                                                         @if ($data->file_attachment)
-                                                        @foreach(json_decode($data->file_attachment) as $file)
-                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
-                                                            <b>{{ $file }}</b>
-                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-                                                        </h6>
-                                                   @endforeach
+                                                            @foreach(json_decode($data->file_attachment) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
                                                         @endif
 
                                                     </div>
                                                     <div  class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment[]" oninput="addMultipleFiles(this, 'file_attachment')"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment[]"
+                                                         oninput="addMultipleFiles(this, 'file_attachment')"
                                                             multiple>
                                                     </div>
                                                 </div>
@@ -1059,14 +999,27 @@ function addMultipleFiles(input, block_id) {
                                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                                         documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="file_attachment_guideline"></div>
+                                                    <div disabled  class="file-attachment-list" id="file_attachment_guideline">
+                                                        @if ($data->file_attachment_guideline)
+                                                            @foreach(json_decode($data->file_attachment_guideline) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
 
-                                                    <div class="add-btn">
+                                                    </div>
+                                                    <div  class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment_guideline"
-                                                            oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment_guideline[]"
+                                                            oninput="addMultipleFiles(this, 'file_attachment_guideline')"
+                                                            multiple>
                                                     </div>
                                                 </div>
+
+                                                
                                             </div>
                                         </div>
                                         <div class="col-12">

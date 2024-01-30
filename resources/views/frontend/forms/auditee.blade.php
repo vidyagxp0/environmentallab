@@ -288,40 +288,40 @@
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>Central
+                                            <option value="CQC" @if (old('Initiator_Group') == 'CQC') selected @endif>Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
-                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>Central
+                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central
                                                 Stores</option>
-                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
                                                 Information Technology Group</option>
-                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
                                                 Molecular Medicine</option>
-                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>Central
+                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>Central
                                                 Laboratory</option>
 
-                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
                                                 team</option>
-                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
-                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
                                                 Quality Management</option>
-                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
                                                 Accounting</option>
-                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
                                                 Logistics</option>
-                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
                                                 Senior Management</option>
-                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
                                                 Business Administration</option>
                                         </select>
                                     </div>
@@ -423,7 +423,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="external_agencies">External Agencies</label>
-                                        <select name="external_agencies">
+                                        <select name="external_agencies" 
+                                        onchange="otherController(this.value, 'others', 'external_agencies_req')">
                                             <option value="">-- Select --</option>
                                             <option value="jordan_fda">Jordan FDA</option>
                                             <option value="us_fda">USFDA</option>
@@ -438,11 +439,20 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
+                                    <div class="group-input" id="external_agencies_req">
+                                        <label for="others">Others<span class="text-danger d-none">*</span></label>
+                                        <textarea name="others"></textarea>
+                                        @error('if_other')
+                                            <p class="text-danger">this field is required</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="others">Others<span class="text-danger d-none">*</span></label>
                                         <textarea name="others"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial Comments">Description</label>
@@ -687,71 +697,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    {{-- <div class="group-input">
-                                        <label for="audit-agenda-grid">
-                                            Observation Details
-                                            <button type="button" name="audit-agenda-grid"
-                                                id="ObservationAdd">+</button>
-                                            <span class="text-primary" data-bs-toggle="modal"
-                                                data-bs-target="#observation-field-instruction-modal"
-                                                style="font-size: 0.8rem; font-weight: 400; cursor: pointer;">
-                                                (Launch Instruction)
-                                            </span>
-                                        </label>
-                                        <div class="table-responsive">
-                                            <table class="table table-bordered" id="onservation-field-table"
-                                                style="width: 150%;">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Row#</th>
-                                                        <th>Observation ID</th>
-                                                        <th>Date</th>
-                                                        <th>Auditor</th>
-                                                        <th>Auditee</th>
-                                                        <th>Observation Description</th>
-                                                        {{-- <th>Severity Level</th> --}}
-                                                        {{-- <th>Area/process</th>
-                                                        <th>Observation Category</th>
-                                                        <th>CAPA Required</th>
-                                                        <th>Auditee Response</th>
-                                                        <th>Auditor Review on Response</th>
-                                                        <th>QA Comments</th>
-                                                        <th>CAPA Details</th>
-                                                        <th>CAPA Due Date</th>
-                                                        <th>CAPA Owner</th>
-                                                        <th>Action Taken</th>
-                                                        <th>CAPA Completion Date</th>
-                                                        <th>Status</th>
-                                                        <th>Remarks</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr> --}}
-                                                        {{-- <td>AutoNumber</td>
-                                                        <td>String</td>
-                                                        <td>Date</td>
-                                                        <td>Person</td>
-                                                        <td>Person</td>
-                                                        <td>String</td>
-                                                        <td>Single Selection : Major, Minor, Critical, Recommendation</td>
-                                                        <td>String</td>
-                                                        <td>Single Selection : Documentation, Equipment, Cleanroom, Data Integrity</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>Date</td>
-                                                        <td>Person</td>
-                                                        <td>String</td>
-                                                        <td>Date</td>
-                                                        <td>String</td>
-                                                        <td>String</td> --}}
-                                                    {{-- </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>  --}}
+                                    
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
@@ -805,11 +751,13 @@
                                         <label for="Guideline Attachment">Guideline Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
+                                     
+
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="file_attachment_guideline"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="file_attachment_guideline"
+                                                <input type="file" id="myfile" name="file_attachment_guideline[]"
                                                     oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
                                             </div>
                                         </div>
