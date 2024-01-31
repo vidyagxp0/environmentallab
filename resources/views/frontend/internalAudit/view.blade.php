@@ -463,7 +463,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                                 <input type="text" name="initiator_group_code"
-                                                    value="{{ $data->initiator_group}}" id="initiator_group_code"
+                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>
@@ -613,7 +613,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input"id="external_agencies_req">
                                              <label for="others">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                     <textarea name="others"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}</textarea>
+                                     <textarea name="Others"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Others}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1088,7 +1088,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="file_attachment_guideline">
                                                         @if ($data->file_attachment_guideline)
-                                                        @foreach(json_decode($data->file_attachment) as $file)
+                                                        @foreach(json_decode($data->file_attachment_guideline) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(227, 39, 39);">
                                                             <b>{{ $file }}</b>
                                                             <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
@@ -1099,13 +1099,13 @@ function addMultipleFiles(input, block_id) {
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment_guideline"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="file_attachment_guideline[]"
                                                             oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Audit Category">Audit Category</label>
                                                 <select name="Audit Category">
@@ -1114,6 +1114,22 @@ function addMultipleFiles(input, block_id) {
                                                     <option value="2">Supplier Audit</option>
                                                     <option value="3">Regulatory Audit</option>
                                                     <option value="4">Consultant Audit</option>
+                                                </select>
+                                            </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Audit Category">Audit Category</label>
+                                                <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                    <option value="0">-- Select --</option>
+                                                    <option @if ($data->Audit_Category == '1') selected @endif
+                                                         value="1">Internal Audit/Self Inspection</option>
+                                                    <option  @if ($data->Audit_Category == '2') selected @endif
+                                                         value="2">Supplier Audit</option>
+                                                    <option @if ($data->Audit_Category == '3') selected @endif
+                                                         value="3">Regulatory Audit</option>
+                                                    <option @if ($data->Audit_Category == '4') selected @endif
+                                                         value="4">Consultant Audit</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1384,7 +1400,7 @@ function addMultipleFiles(input, block_id) {
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
+                                                        <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach

@@ -68,7 +68,7 @@ return new class extends Migration
             $table->text('External_Auditing_Agency')->nullable();
             $table->text('Relevant_Guideline')->nullable();
             $table->text('QA_Comments')->nullable();
-            $table->string('file_attachment_guideline')->nullable();
+            $table->text('file_attachment_guideline')->nullable();
             $table->text('Audit_Category')->nullable();
             $table->text('Supplier_Details')->nullable();
             $table->text('Supplier_Site')->nullable();

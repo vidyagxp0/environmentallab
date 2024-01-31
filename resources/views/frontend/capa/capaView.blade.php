@@ -189,6 +189,8 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Product Information</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
+                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
@@ -265,58 +267,58 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiator Group</label>
-                                                <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                     id="initiator-group">
+                                                <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                     id="initiator_group">
                                                     <option value="CQA"
-                                                        @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
+                                                        @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
-                                                        @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
+                                                        @if ($data->initiator_Group== 'QAB') selected @endif>Quality
                                                         Assurance Biopharma</option>
                                                     <option value="CQC"
-                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Central
+                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Central
                                                         Quality Control</option>
                                                     <option value="CQC"
-                                                        @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
+                                                        @if ($data->initiator_Group== 'CQC') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
+                                                        @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
                                                         Sourcing Group</option>
                                                     <option value="CS"
-                                                        @if ($data->initiatorGroup == 'CS') selected @endif>Central
+                                                        @if ($data->initiator_Group== 'CS') selected @endif>Central
                                                         Stores</option>
                                                     <option value="ITG"
-                                                        @if ($data->initiatorGroup == 'ITG') selected @endif>Information
+                                                        @if ($data->initiator_Group== 'ITG') selected @endif>Information
                                                         Technology Group</option>
                                                     <option value="MM"
-                                                        @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
+                                                        @if ($data->initiator_Group== 'MM') selected @endif>Molecular
                                                         Medicine</option>
                                                     <option value="CL"
-                                                        @if ($data->initiatorGroup == 'CL') selected @endif>Central
+                                                        @if ($data->initiator_Group== 'CL') selected @endif>Central
                                                         Laboratory</option>
                                                     <option value="TT"
-                                                        @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                                        @if ($data->initiator_Group== 'TT') selected @endif>Tech
                                                         team</option>
                                                     <option value="QA"
-                                                        @if ($data->initiatorGroup == 'QA') selected @endif>Quality
+                                                        @if ($data->initiator_Group== 'QA') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="QM"
-                                                        @if ($data->initiatorGroup == 'QM') selected @endif>Quality
+                                                        @if ($data->initiator_Group== 'QM') selected @endif>Quality
                                                         Management</option>
                                                     <option value="IA"
-                                                        @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                                        @if ($data->initiator_Group== 'IA') selected @endif>IT
                                                         Administration</option>
                                                     <option value="ACC"
-                                                        @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
+                                                        @if ($data->initiator_Group== 'ACC') selected @endif>Accounting
                                                     </option>
                                                     <option value="LOG"
-                                                        @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
+                                                        @if ($data->initiator_Group== 'LOG') selected @endif>Logistics
                                                     </option>
                                                     <option value="SM"
-                                                        @if ($data->initiatorGroup == 'SM') selected @endif>Senior
+                                                        @if ($data->initiator_Group== 'SM') selected @endif>Senior
                                                         Management</option>
                                                     <option value="BA"
-                                                        @if ($data->initiatorGroup == 'BA') selected @endif>Business
+                                                        @if ($data->initiator_Group== 'BA') selected @endif>Business
                                                         Administration</option>
 
                                                 </select>
@@ -325,8 +327,9 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input readonly type="text"
-                                                    value="{{ $data->general_initiator_group }}">
+                                                <input readonly type="text" name="initiator_group_code"
+                                                    value="{{ $data->initiator_Group}}" id="initiator_group_code"
+                                                    readonly>
                                                 {{-- <div class="static"></div> --}}
                                             </div>
                                         </div>
@@ -342,10 +345,10 @@
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
                                                 <select name="severity_level_form">
-                                                    <option value="0">-- Select --</option>
-                                                    <option value="minor">Minor</option>
-                                                    <option value="major">Major</option>
-                                                    <option value="critical">Critical</option>
+                                                    <option  value="0">-- Select --</option>
+                                                    <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
+                                                    <option @if ($data->severity_level_form=='major') selected @endif value="major">Major</option>
+                                                    <option @if ($data->severity_level_form=='critical') selected @endif value="critical">Critical</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -552,6 +555,8 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+                                                        
+                                                    </tbody>
                                                         @if ($data1->product_name)
                                                         @foreach (unserialize($data1->product_name) as $key => $temps)
                                                         <tr>
@@ -630,12 +635,12 @@
                                                             <td><input type="text" name="batch_desposition[]"
                                                                     value="{{ unserialize($data2->batch_desposition)[$key] ? unserialize($data2->batch_desposition)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="remark[]"
+                                                            {{-- <td><input type="text" name="remark[]"
                                                                     value="{{ unserialize($data2->remark)[$key] ? unserialize($data2->remark)[$key] : '' }}">
-                                                            </td>
-                                                            <td><input type="text" name="batch_status[]"
+                                                            </td> --}}
+                                                            {{-- <td><input type="text" name="batch_status[]"
                                                                     value="{{ unserialize($data2->batch_status)[$key] ? unserialize($data2->batch_status)[$key] : '' }}">
-                                                            </td>
+                                                            </td> --}}
                                                         </tr>
                                                     @endforeach
                                                         @endif
@@ -694,9 +699,9 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Details">Details</label>
-                                                <input type="text" name="details"
+                                                <input type="text" name="details_new"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                    value="{{ $data->details }}">
+                                                    value="{{ $data->details_new }}">
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -738,51 +743,51 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Protocol/Study Number">Initiator Group</label>
                                                 <select name="initiator_group"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="CQA"
-                                                        @if ($data->initiator_group == 'CQA') selected @endif>Corporate
+                                                        @if ($data->initiator_group== 'CQA') selected @endif>Corporate
                                                         Quality
                                                         Assurance
                                                     </option>
                                                     <option value="QAB"
-                                                        @if ($data->initiator_group == 'QAB') selected @endif>Quality
+                                                        @if ($data->initiator_group== 'QAB') selected @endif>Quality
                                                         Assurance
                                                         Biopharma
                                                     </option>
                                                     <option value="CQC"
-                                                        @if ($data->initiator_group == 'CQC') selected @endif>Central Quality
+                                                        @if ($data->initiator_group== 'CQC') selected @endif>Central Quality
                                                         Control
                                                     </option>
                                                     <option value="CQC"
-                                                        @if ($data->initiator_group == 'CQC') selected @endif>Manufacturing
+                                                        @if ($data->initiator_group== 'CQC') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->initiator_group == 'PSG') selected @endif>Plasma Sourcing
+                                                        @if ($data->initiator_group== 'PSG') selected @endif>Plasma Sourcing
                                                         Group
                                                     </option>
                                                     <option value="CS"
-                                                        @if ($data->initiator_group == 'CS') selected @endif>Central Stores
+                                                        @if ($data->initiator_group== 'CS') selected @endif>Central Stores
                                                     </option>
                                                     <option value="ITG"
-                                                        @if ($data->initiator_group == 'ITG') selected @endif>Information
+                                                        @if ($data->initiator_group== 'ITG') selected @endif>Information
                                                         Technology Group
                                                     </option>
                                                     <option value="MM"
-                                                        @if ($data->initiator_group == 'MM') selected @endif>Molecular
+                                                        @if ($data->initiator_group== 'MM') selected @endif>Molecular
                                                         Medicine
                                                     </option>
                                                     <option value="CL"
-                                                        @if ($data->initiator_group == 'CL') selected @endif>Central
+                                                        @if ($data->initiator_group== 'CL') selected @endif>Central
                                                         Laboratory
                                                     </option>
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Site Number">Site Number</label>
@@ -832,7 +837,318 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- <div id="CCForm8" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+                                    <div class="sub-head">
+                                        CFT Information
+                                    </div>
+                                    <div class="row">
 
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Microbiology">CFT Reviewer</label>
+                                                <select name="Microbiology">
+                                                    <option value="0">-- Select --</option>
+                                                    <option value="yes" selected>Yes</option>
+                                                    <option value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Microbiology-Person">CFT Reviewer Person</label>
+                                                <select  name="Microbiology_Person[]"
+                                                    placeholder="Select CFT Reviewers" data-search="false"
+                                                    data-silent-initial-value-set="true" id="cft_reviewer">
+                                                    <option value="0">-- Select --</option>
+                                                    @foreach ($cft as $data)
+                                                        <option value="{{ $data->id }}" selected>
+                                                            {{ $data->name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <div class="sub-head">
+                                        Concerned Information
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="group_review">Is Concerned Group Review Required?</label>
+                                                <select name="goup_review">
+                                                    <option value="0">-- Select --</option>
+                                                    <option {{ $info->goup_review == 'yes' ? 'selected' : '' }}
+                                                        value="yes">Yes</option>
+                                                    <option {{ $info->goup_review == 'no' ? 'selected' : '' }}
+                                                        value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Production">Production</label>
+                                                <select name="Production">
+                                                    <option value="0">-- Select --</option>
+                                                    <option {{ $info->Production == 'yes' ? 'selected' : '' }}
+                                                        value="yes">Yes</option>
+                                                    <option {{ $info->Production == 'no' ? 'selected' : '' }}
+                                                        value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Production-Person">Production Person</label>
+                                                <select name="Production_Person">
+                                                    <option value="0">-- Select --</option>
+                                                    @foreach ($users as $datas)
+                                                        <option
+                                                            {{ $info->Production_Person == $datas->id ? 'selected' : '' }}
+                                                            value="{{ $datas->id }}">{{ $datas->name }}</option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Quality-Approver">Quality Approver</label>
+                                                <select name="Quality_Approver">
+                                                    <option value="0">-- Select --</option>
+                                                    <option {{ $info->Quality_Approver == 'yes' ? 'selected' : '' }}
+                                                        value="yes">Yes</option>
+                                                    <option {{ $info->Quality_Approver == 'no' ? 'selected' : '' }}
+                                                        value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Quality-Approver-Person">Quality Approver Person</label>
+                                                <select name="Quality_Approver_Person">
+                                                    <option value="0">-- Select --</option>
+
+                                                    @foreach ($users as $datas)
+                                                        <option
+                                                            {{ $info->Quality_Approver_Person == $datas->id ? 'selected' : '' }}
+                                                            value="{{ $datas->id }}">{{ $datas->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="bd_domestic">Others</label>
+                                                <select name="bd_domestic">
+                                                    <option value="0">-- Select --</option>
+                                                    <option {{ $info->bd_domestic == 'yes' ? 'selected' : '' }}
+                                                        value="yes">Yes</option>
+                                                    <option {{ $info->bd_domestic == 'no' ? 'selected' : '' }}
+                                                        value="no">No</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="bd_domestic-Person">Others Person</label>
+                                                <select name="Bd_Person">
+                                                    <option value="0">-- Select --</option>
+
+                                                    @foreach ($users as $datas)
+                                                        <option {{ $info->Bd_Person == $datas->id ? 'selected' : '' }}
+                                                            value="{{ $datas->id }}">{{ $datas->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="additional_attachments">Additional Attachments</label>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="additional_attachments">
+                                                        @if ($info->additional_attachments)
+                                                            @foreach (json_decode($info->additional_attachments) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile"
+                                                            name="additional_attachments[]"
+                                                            oninput="addMultipleFiles(this, 'additional_attachments')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-block">
+                                        <button type="submit" class="saveButton">Save</button>
+                                        <button type="button" class="backButton"
+                                            onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    </div>
+                                </div>
+                            </div> --}}
+                               <!-- Group Commentes-->
+                               {{-- <div id="CCForm7" class="inner-block cctabcontent">
+                                <div class="inner-block-content">
+
+                                    <div class="sub-head">
+                                        CFT Feedback
+                                    </div>
+                                    <div class="row">
+
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="comments">CFT Comments</label>
+                                                <textarea name="cft_comments">{{ $comments->cft_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
+                                                <label for="comments">CFT Attachment</label>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="cft_attchament">
+                                                        @if ($comments->cft_attchament)
+                                                            @foreach (json_decode($comments->cft_attchament) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile" name="cft_attchament[]"
+                                                            oninput="addMultipleFiles(this, 'cft_attchament')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="sub-head">
+                                            Concerned Group Feedback
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">QA Comments</label>
+                                                <textarea name="qa_commentss">{{ $comments->qa_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">QA Head Designee Comments</label>
+                                                <textarea name="designee_comments">{{ $comments->designee_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">Warehouse Comments</label>
+                                                <textarea name="Warehouse_comments">{{ $comments->Warehouse_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">Engineering Comments</label>
+                                                <textarea name="Engineering_comments">{{ $comments->Engineering_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">Instrumentation Comments</label>
+                                                <textarea name="Instrumentation_comments">{{ $comments->Instrumentation_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">Validation Comments</label>
+                                                <textarea name="Validation_comments">{{ $comments->Validation_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">Others Comments</label>
+                                                <textarea name="Others_comments">{{ $comments->Others_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="comments">Group Comments</label>
+                                                <textarea name="Group_comments">{{ $comments->Group_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="group-attachments">Group Attachments</label>
+                                                <div class="file-attachment-field">
+                                                    <div class="file-attachment-list" id="group_attachments">
+                                                        @if ($comments->group_attachments)
+                                                            @foreach (json_decode($comments->group_attachments) as $file)
+                                                                <h6 type="button" class="file-container text-dark"
+                                                                    style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}"
+                                                                        target="_blank"><i
+                                                                            class="fa fa-eye text-primary"
+                                                                            style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input type="file" id="myfile"
+                                                            name="group_attachments[]"
+                                                            oninput="addMultipleFiles(this, 'group_attachments')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="button-block">
+                                        <button type="submit" class="saveButton">Save</button>
+                                        <button type="button" class="backButton"
+                                            onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    </div>
+                                </div>
+                            </div> --}}
                             <!-- CAPA Details content -->
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -1526,4 +1842,10 @@
                     }
                 }
             </script>
+                <script>
+                    document.getElementById('initiator_group').addEventListener('change', function() {
+                        var selectedValue = this.value;
+                        document.getElementById('initiator_group_code').value = selectedValue;
+                    });
+                </script>
         @endsection

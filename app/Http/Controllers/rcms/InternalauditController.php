@@ -73,9 +73,9 @@ class InternalauditController extends Controller
         $internalAudit->Relevant_Guideline= $request->Relevant_Guideline;
         $internalAudit->QA_Comments= $request->QA_Comments;
         $internalAudit->Others= $request->Others;
-        $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
-        $internalAudit->Audit_Category = $request->Audit_Category;
-        $internalAudit->Audit_Category = $request->Audit_Category;
+        // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
+        $internalAudit->Audit_Category= $request->Audit_Category;
+        
         $internalAudit->Supplier_Details= $request->Supplier_Details;
         $internalAudit->Supplier_Site= $request->Supplier_Site;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -89,7 +89,7 @@ class InternalauditController extends Controller
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
+        $internalAudit->refrence_record=  implode(',', $request->refrence_record);
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
@@ -125,7 +125,6 @@ class InternalauditController extends Controller
                 }
             }
 
-
             $internalAudit->file_attachment = json_encode($files);
         }
         if (!empty($request->file_attachment_guideline)) {
@@ -139,7 +138,7 @@ class InternalauditController extends Controller
             }
 
 
-            $internalAudit->file_attachment_guideline= json_encode($files);
+            $internalAudit->file_attachment_guideline = json_encode($files);
         }
 
 
@@ -633,19 +632,19 @@ class InternalauditController extends Controller
             $history->origin_state = $internalAudit->status;
             $history->save();
         }
-        if (!empty($internalAudit->file_attachment_guideline)) {
-            $history = new InternalAuditTrial();
-            $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'File Attachment';
-            $history->previous = "Null";
-            $history->current = $internalAudit->file_attachment_guideline;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $internalAudit->status;
-            $history->save();
-        }
+        // if (!empty($internalAudit->file_attachment_guideline)) {
+        //     $history = new InternalAuditTrial();
+        //     $history->InternalAudit_id = $internalAudit->id;
+        //     $history->activity_type = 'File Attachment';
+        //     $history->previous = "Null";
+        //     $history->current = $internalAudit->file_attachment_guideline;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $internalAudit->status;
+        //     $history->save();
+        // }
 
         if (!empty($internalAudit->Audit_file)) {
             $history = new InternalAuditTrial();
@@ -774,9 +773,10 @@ class InternalauditController extends Controller
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->repeat = $request->repeat;
         $internalAudit->QA_Comments= $request->QA_Comments;
-        $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
+        // $internalAudit->file_attachment_guideline = $request->file_attachment_guideline;
         $internalAudit->Supplier_Details= $request->Supplier_Details;
         $internalAudit->Supplier_Site= $request->Supplier_Site;
+        $internalAudit->Audit_Category= $request->Audit_Category;
         $internalAudit->repeat_nature = $request->repeat_nature;
         $internalAudit->due_date_extension = $request->due_date_extension;
         $internalAudit->External_Auditing_Agency= $request->External_Auditing_Agency;
@@ -798,7 +798,7 @@ class InternalauditController extends Controller
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->Reference_Recores1 =  implode(',', $request->refrence_record);
+        $internalAudit->refrence_record=implode(',', $request->refrence_record);
         $internalAudit->severity_level_form= $request->severity_level_form;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
@@ -1305,20 +1305,20 @@ class InternalauditController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->file_attachment_guideline != $internalAudit->file_attachment_guideline || !empty($request->file_attachment_comment)) {
+        // if ($lastDocument->file_attachment_guideline != $internalAudit->file_attachment_guideline || !empty($request->file_attachment_comment)) {
 
-            $history = new InternalAuditTrial();
-            $history->InternalAudit_id = $id;
-            $history->activity_type = 'File Attachment';
-            $history->previous = $lastDocument->file_attachment_guideline;
-            $history->current = $internalAudit->file_attachment_guideline;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new InternalAuditTrial();
+        //     $history->InternalAudit_id = $id;
+        //     $history->activity_type = 'File Attachment';
+        //     $history->previous = $lastDocument->file_attachment_guideline;
+        //     $history->current = $internalAudit->file_attachment_guideline;
+        //     $history->comment = $request->date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->Audit_file != $internalAudit->Audit_file || !empty($request->Audit_file_comment)) {
 
             $history = new InternalAuditTrial();

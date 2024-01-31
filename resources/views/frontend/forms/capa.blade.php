@@ -133,43 +133,43 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Group</label>
-                                        <select name="initiatorGroup" id="initiator_group">
+                                        <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQC') selected @endif>
                                                 Manufacturing</option>
-                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>
+                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>
                                                 Central
                                                 Stores</option>
-                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
                                                 Information Technology Group</option>
-                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
                                                 Molecular Medicine</option>
-                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>
+                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
                                                 Central
                                                 Laboratory</option>
-                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
                                                 team</option>
-                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
-                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
                                                 Quality Management</option>
-                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
                                                 Accounting</option>
-                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
                                                 Logistics</option>
-                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
                                                 Senior Management</option>
-                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
                                                 Business Administration</option>
                                         </select>
                                     </div>
@@ -254,9 +254,7 @@
                                         <textarea name="problem_description"></textarea>
                                     </div>
                                 </div>
-
-                            
-                                {{-- <div class="col-12">
+                                                      {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Team">CAPA Team</label>
                                         <select multiple id="select-state" placeholder="Select..." name="capa_team[]">
@@ -297,10 +295,8 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
-
-                                        <select multiple id="capa_related_record" name="capa_related_record[]"
-                                            id="">
-
+                               <select multiple id="capa_related_record" name="capa_related_record[]" id="">
+                             <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
@@ -376,7 +372,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Product Details">
-                                            Product Details<button type="button" name="ann"
+                                            Product Details1<button type="button" name="ann"
                                                 id="product">+</button>
                                         </label>
                                         <table class="table table-bordered" id="product_details">

@@ -337,7 +337,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="initiator-group">Initiator Group</label>
+                                                    <label for="initiator-group">Initiator Group1</label>
                                                     <select name="initiatorGroup" id="initiator-group">
                                                         <option value="CQA"
                                                             @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate

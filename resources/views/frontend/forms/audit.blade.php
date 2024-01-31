@@ -462,7 +462,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input" id="external_agencies_req">
                                         <label for="others">Others<span class="text-danger d-none">*</span></label>
-                                        <textarea name="others"></textarea>
+                                        <textarea name="Others"></textarea>
                                   @error('others')
                                             <p class="text-danger">this field is required</p>
                                         @enderror
@@ -788,7 +788,7 @@
                                             <div class="file-attachment-list" id="file_attachment_guideline"></div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="file_attachment_guideline"
+                                                <input type="file" id="myfile" name="file_attachment_guideline[]"
                                                     oninput="addMultipleFiles(this, 'file_attachment_guideline')" multiple>
                                             </div>
                                         </div>

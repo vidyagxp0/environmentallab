@@ -176,7 +176,7 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="group-input">
-                                                <label for="short-desc">Short Description<span class="text-danger">*</span></label>
+                                                <label for="short-desc">Short Description1<span class="text-danger">*</span></label>
                                                 <input type="text" id="Changeshort_description" name="short_description"
                                                     value="{{ $openStage->short_description }}">
                                             </div>

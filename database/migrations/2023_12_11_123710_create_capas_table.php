@@ -35,7 +35,6 @@ return new class extends Migration
             $table->text('effective_check_plan')->nullable();
             $table->text('due_date_extension')->nullable();
             $table->text('capa_type')->nullable();
-
             $table->integer('assign_id')->nullable();
             $table->string('initiator_group_code')->nullable();
             $table->string('severity_level_form')->nullable();
@@ -51,12 +50,11 @@ return new class extends Migration
             $table->string('cft_attchament_new')->nullable();
             $table->string('group_attachments_new')->nullable();
             $table->string('details_new')->nullable();
-
-
-            
+          
             $table->string('capa_team')->nullable();
+            $table->text('initiator_Group')->nullable();
             $table->string('capa_related_record')->nullable();
-            $table->string('reference_record')->nullable();
+            // $table->string('reference_record')->nullable();
             $table->string('initial_observation')->nullable();
             $table->string('interim_containnment')->nullable();
             $table->text('containment_comments')->nullable();
