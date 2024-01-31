@@ -809,6 +809,7 @@ class AuditeeController extends Controller
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
+        $internalAudit->severity_level = $request->severity_level;
 
         if (!empty($request->inv_attachment)) {
             $files = [];

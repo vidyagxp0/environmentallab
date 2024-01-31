@@ -57,6 +57,7 @@ class RiskManagementController extends Controller
         $data->assign_id = $request->assign_id;
         $data->due_date = $request->due_date;
         $data->Initiator_Group = $request->Initiator_Group;
+        $data->initiator_group_code = $request->initiator_group_code;
         $data->departments = implode(',', $request->departments);
         $data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
@@ -89,36 +90,36 @@ class RiskManagementController extends Controller
         $data->currency = $request->currency;
 
         $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
-        $data->measurement = json_encode($request->measurement);
-        $data->materials = json_encode($request->materials);
-        $data->methods = json_encode($request->methods);
-        $data->environment = json_encode($request->environment);
+        // $data->measurement = json_encode($request->measurement);
+        // $data->materials = json_encode($request->materials);
+        // $data->methods = json_encode($request->methods);
+        // $data->environment = json_encode($request->environment);
         //$data->manpower = json_encode($request->manpower);
         //$data->machine = json_encode($request->machine);
         //$data->problem_statement1 = ($request->problem_statement1);
-        $data->why_problem_statement = $request->why_problem_statement;
-        $data->why_1 = json_encode($request->why_1);
-        $data->why_2 = json_encode($request->why_2);
-        $data->why_3 = json_encode($request->why_3);
-        $data->why_4 = json_encode($request->why_4);
-        $data->why_5 = json_encode($request->why_5);
-        $data->root_cause = $request->root_cause;
-        $data->what_will_be = $request->what_will_be;
-        $data->what_will_not_be = $request->what_will_not_be;
-        $data->what_rationable = $request->what_rationable;
-        $data->where_will_be = $request->where_will_be;
-        $data->where_will_not_be = $request->where_will_not_be;
-        $data->where_rationable = $request->where_rationable;
-        $data->when_will_be = $request->when_will_be;
-        $data->when_will_not_be = $request->when_will_not_be;
-        $data->when_rationable = $request->when_rationable;
-        $data->coverage_will_be = $request->coverage_will_be;
-        $data->coverage_will_not_be = $request->coverage_will_not_be;
-        $data->coverage_rationable = $request->coverage_rationable;
-        $data->who_will_be = $request->who_will_be;
-        $data->who_will_not_be = $request->who_will_not_be;
-        $data->who_rationable = $request->who_rationable;
-        $data->training_require = $request->training_require;
+        // $data->why_problem_statement = $request->why_problem_statement;
+        // $data->why_1 = json_encode($request->why_1);
+        // $data->why_2 = json_encode($request->why_2);
+        // $data->why_3 = json_encode($request->why_3);
+        // $data->why_4 = json_encode($request->why_4);
+        // $data->why_5 = json_encode($request->why_5);
+        // $data->root_cause = $request->root_cause;
+        // $data->what_will_be = $request->what_will_be;
+        // $data->what_will_not_be = $request->what_will_not_be;
+        // $data->what_rationable = $request->what_rationable;
+        // $data->where_will_be = $request->where_will_be;
+        // $data->where_will_not_be = $request->where_will_not_be;
+        // $data->where_rationable = $request->where_rationable;
+        // $data->when_will_be = $request->when_will_be;
+        // $data->when_will_not_be = $request->when_will_not_be;
+        // $data->when_rationable = $request->when_rationable;
+        // $data->coverage_will_be = $request->coverage_will_be;
+        // $data->coverage_will_not_be = $request->coverage_will_not_be;
+        // $data->coverage_rationable = $request->coverage_rationable;
+        // $data->who_will_be = $request->who_will_be;
+        // $data->who_will_not_be = $request->who_will_not_be;
+        // $data->who_rationable = $request->who_rationable;
+        // $data->training_require = $request->training_require;
         $data->justification = $request->justification;
         $data->cost_of_risk = $request->cost_of_risk;
         $data->environmental_impact = $request->environmental_impact;
@@ -153,7 +154,9 @@ class RiskManagementController extends Controller
         $data->initial_rpn = $request->initial_rpn;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
-        $data->refrence_record =  implode(',', $request->refrence_record);
+        $data->Reference_Recores1 =  implode(',', $request->refrence_record);
+
+
 
         if (!empty($request->reference)) {
             $files = [];
@@ -704,6 +707,20 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        if (!empty($internalAudit->Reference_Recores1)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'Reference Recores';
+            $history->previous = "Null";
+            $history->current = $data->Reference_Recores1;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($data->risk_management_strategy)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -1003,7 +1020,8 @@ class RiskManagementController extends Controller
         $data->open_date = $request->open_date;
         $data->assign_id = $request->assign_id;
         $data->due_date = $request->due_date;
-        $data->initiator_group = $request->initiator_group;
+        $data->Initiator_Group = $request->Initiator_Group;
+        $data->initiator_group_code = $request->initiator_group_code;
         $data->departments = implode(',', $request->departments);
         $data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
@@ -1021,6 +1039,7 @@ class RiskManagementController extends Controller
         $data->building = $request->building;
         $data->floor = $request->floor;
         $data->room = $request->room;
+        $data->related_record = json_encode($request->related_record);
         $data->duration = $request->duration;
         $data->hazard = $request->hazard;
         $data->room2 = $request->room2;
@@ -1032,7 +1051,7 @@ class RiskManagementController extends Controller
         $data->currency = $request->currency;
 
         $data->root_cause_methodology = implode(',', $request->root_cause_methodology);
-        $data->training_require = $request->training_require;
+        //$data->training_require = $request->training_require;
         $data->justification = $request->justification;
         $data->cost_of_risk = $request->cost_of_risk;
         $data->environmental_impact = $request->environmental_impact;
@@ -1065,7 +1084,9 @@ class RiskManagementController extends Controller
         $data->due_date_extension = $request->due_date_extension;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
-        $data->refrence_record =  implode(',', $request->refrence_record);
+        $data->Reference_Recores1 =  implode(',', $request->refrence_record);
+
+
         if (!empty($request->reference)) {
             $files = [];
             if ($request->hasfile('reference')) {
@@ -1417,6 +1438,21 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        if ($lastDocument->Reference_Recores1 != $data->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
+
+            $history = new RiskAuditTrail();
+            $history->risk_id = $id;
+            $history->activity_type = 'Reference Recores';
+            $history->previous = $lastDocument->Reference_Recores1;
+            $history->current = $data->Reference_Recores1;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
         if ($lastDocument->risk_management_strategy != $data->risk_management_strategy || !empty($request->risk_management_strategy_comment)) {
 
             $history = new RiskAuditTrail();

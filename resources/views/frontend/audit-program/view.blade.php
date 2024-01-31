@@ -425,7 +425,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                                 <input type="text" name="initiator_group_code"
-                                                    id="initiator_group_code" value="{{ $data->Initiator_Group }}"
+                                                    value="{{ $data->Initiator_Group }}"  id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>
@@ -456,46 +456,40 @@
                                                 <select name="year"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
-                                                    <option value="2001"
-                                                        @if ($data->year == '2001') selected @endif>2001</option>
-                                                    <option value="2002"
-                                                        @if ($data->year == '2002') selected @endif>2002</option>
-                                                    <option value="2003"
-                                                        @if ($data->year == '2003') selected @endif>2003</option>
-                                                    <option value="2004"
-                                                        @if ($data->year == '2004') selected @endif>2004</option>
-                                                    <option value="2005"
-                                                        @if ($data->year == '2005') selected @endif>2005</option>
-                                                    <option value="2006"
-                                                        @if ($data->year == '2006') selected @endif>2006</option>
-                                                    <option value="2007"
-                                                        @if ($data->year == '2007') selected @endif>2007</option>
-                                                    <option value="2008"
-                                                        @if ($data->year == '2008') selected @endif>2008</option>
-                                                    <option value="2009"
-                                                        @if ($data->year == '2009') selected @endif>2009</option>
-                                                    <option value="2010"
-                                                        @if ($data->year == '2010') selected @endif>2010</option>
-                                                    <option value="2011"
-                                                        @if ($data->year == '2011') selected @endif>2011</option>
-                                                    <option value="2012"
-                                                        @if ($data->year == '2012') selected @endif>2012</option>
-                                                    <option value="2013"
-                                                        @if ($data->year == '2013') selected @endif>2013</option>
-                                                    <option value="2014"
-                                                        @if ($data->year == '2014') selected @endif>2014</option>
-                                                    <option value="2015"
-                                                        @if ($data->year == '2015') selected @endif>2015</option>
-                                                    <option value="2016"
-                                                        @if ($data->year == '2016') selected @endif>2016</option>
-                                                    <option value="2017"
-                                                        @if ($data->year == '2017') selected @endif>2017</option>
-                                                    <option value="2018"
-                                                        @if ($data->year == '2018') selected @endif>2018</option>
-                                                    <option value="2019"
-                                                        @if ($data->year == '2019') selected @endif>2019</option>
-                                                    <option value="2020"
-                                                        @if ($data->year == '2020') selected @endif>2020</option>
+                                                    <option value="2024"
+                                                        @if ($data->year == '2024') selected @endif>2024</option>
+                                                    <option value="2025"
+                                                        @if ($data->year == '2025') selected @endif>2025</option>
+                                                    <option value="2026"
+                                                        @if ($data->year == '2026') selected @endif>2026</option>
+                                                    <option value="2027"
+                                                        @if ($data->year == '2027') selected @endif>2027</option>
+                                                    <option value="2028"
+                                                        @if ($data->year == '2028') selected @endif>2028</option>
+                                                    <option value="2029"
+                                                        @if ($data->year == '2029') selected @endif>2029</option>
+                                                    <option value="2030"
+                                                        @if ($data->year == '2030') selected @endif>2030</option>
+                                                    <option value="2031"
+                                                        @if ($data->year == '2031') selected @endif>2031</option>
+                                                    <option value="2032"
+                                                        @if ($data->year == '2032') selected @endif>2032</option>
+                                                    <option value="2033"
+                                                        @if ($data->year == '2033') selected @endif>2033</option>
+                                                    <option value="2034"
+                                                        @if ($data->year == '2034') selected @endif>2034</option>
+                                                    <option value="2035"
+                                                        @if ($data->year == '2035') selected @endif>2035</option>
+                                                    <option value="2036"
+                                                        @if ($data->year == '2036') selected @endif>2036</option>
+                                                    <option value="2037"
+                                                        @if ($data->year == '2037') selected @endif>2037</option>
+                                                    <option value="2038"
+                                                        @if ($data->year == '2038') selected @endif>2038</option>
+                                                    <option value="2039"
+                                                        @if ($data->year == '2039') selected @endif>2039</option>
+                                                    <option value="2040"
+                                                        @if ($data->year == '2040') selected @endif>2040</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -662,6 +656,7 @@
                                                 <textarea name="repeat_nature">{{ $data->repeat_nature }}</textarea>
                                             </div>
                                         </div> --}}
+                                        
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="comments">Comments</label>

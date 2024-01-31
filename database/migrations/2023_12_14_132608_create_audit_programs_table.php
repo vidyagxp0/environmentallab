@@ -49,7 +49,7 @@ return new class extends Migration
             $table->string('zone')->nullable();
             $table->string('country')->nullable();
             $table->string('City')->nullable();
-            $table->string('state_district')->nullable();
+            $table->string('state')->nullable();
             $table->string('severity1_level')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
