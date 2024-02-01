@@ -367,55 +367,55 @@
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                      id="initiator_group">
                                                     <option value="CQA"
-                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
+                                                        @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
-                                                        @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
+                                                        @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
                                                         Assurance Biopharma</option>
                                                     <option value="CQC"
-                                                        @if ($data->Initiator_Group == 'CQC') selected @endif>Central
+                                                        @if ($data->Initiator_Group== 'CQC') selected @endif>Central
                                                         Quality Control</option>
                                                     <option value="MANU"
-                                                        @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
+                                                        @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
+                                                        @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
                                                         Sourcing Group</option>
                                                     <option value="CS"
-                                                        @if ($data->Initiator_Group == 'CS') selected @endif>Central
+                                                        @if ($data->Initiator_Group== 'CS') selected @endif>Central
                                                         Stores</option>
                                                     <option value="ITG"
-                                                        @if ($data->Initiator_Group == 'ITG') selected @endif>Information
+                                                        @if ($data->Initiator_Group== 'ITG') selected @endif>Information
                                                         Technology Group</option>
                                                     <option value="MM"
-                                                        @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
+                                                        @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
                                                         Medicine</option>
                                                     <option value="CL"
-                                                        @if ($data->Initiator_Group == 'CL') selected @endif>Central
+                                                        @if ($data->Initiator_Group== 'CL') selected @endif>Central
                                                         Laboratory</option>
                                                     <option value="TT"
-                                                        @if ($data->Initiator_Group == 'TT') selected @endif>Tech
+                                                        @if ($data->Initiator_Group== 'TT') selected @endif>Tech
                                                         team</option>
                                                     <option value="QA"
-                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality
+                                                        @if ($data->Initiator_Group== 'QA') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="QM"
-                                                        @if ($data->Initiator_Group == 'QM') selected @endif>Quality
+                                                        @if ($data->Initiator_Group== 'QM') selected @endif>Quality
                                                         Management</option>
                                                     <option value="IA"
-                                                        @if ($data->Initiator_Group == 'IA') selected @endif>IT
+                                                        @if ($data->Initiator_Group== 'IA') selected @endif>IT
                                                         Administration</option>
                                                     <option value="ACC"
-                                                        @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
+                                                        @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
                                                     </option>
                                                     <option value="LOG"
-                                                        @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
+                                                        @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
                                                     </option>
                                                     <option value="SM"
-                                                        @if ($data->Initiator_Group == 'SM') selected @endif>Senior
+                                                        @if ($data->Initiator_Group== 'SM') selected @endif>Senior
                                                         Management</option>
                                                     <option value="BA"
-                                                        @if ($data->Initiator_Group == 'BA') selected @endif>Business
+                                                        @if ($data->Initiator_Group== 'BA') selected @endif>Business
                                                         Administration</option>
 
                                                 </select>
@@ -425,7 +425,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                                 <input type="text" name="initiator_group_code"
-                                                    value="{{ $data->Initiator_Group }}"  id="initiator_group_code"
+                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>

@@ -394,55 +394,55 @@
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                      id="initiator_group">
                                                     <option value="CQA"
-                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
+                                                        @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
-                                                        @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
+                                                        @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
                                                         Assurance Biopharma</option>
                                                     <option value="CQC"
-                                                        @if ($data->Initiator_Group == 'CQC') selected @endif>Central
+                                                        @if ($data->Initiator_Group== 'CQC') selected @endif>Central
                                                         Quality Control</option>
                                                     <option value="MANU"
-                                                        @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
+                                                        @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
+                                                        @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
                                                         Sourcing Group</option>
                                                     <option value="CS"
-                                                        @if ($data->Initiator_Group == 'CS') selected @endif>Central
+                                                        @if ($data->Initiator_Group== 'CS') selected @endif>Central
                                                         Stores</option>
                                                     <option value="ITG"
-                                                        @if ($data->Initiator_Group == 'ITG') selected @endif>Information
+                                                        @if ($data->Initiator_Group== 'ITG') selected @endif>Information
                                                         Technology Group</option>
                                                     <option value="MM"
-                                                        @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
+                                                        @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
                                                         Medicine</option>
                                                     <option value="CL"
-                                                        @if ($data->Initiator_Group == 'CL') selected @endif>Central
+                                                        @if ($data->Initiator_Group== 'CL') selected @endif>Central
                                                         Laboratory</option>
                                                     <option value="TT"
-                                                        @if ($data->Initiator_Group == 'TT') selected @endif>Tech
+                                                        @if ($data->Initiator_Group== 'TT') selected @endif>Tech
                                                         team</option>
                                                     <option value="QA"
-                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality
+                                                        @if ($data->Initiator_Group== 'QA') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="QM"
-                                                        @if ($data->Initiator_Group == 'QM') selected @endif>Quality
+                                                        @if ($data->Initiator_Group== 'QM') selected @endif>Quality
                                                         Management</option>
                                                     <option value="IA"
-                                                        @if ($data->Initiator_Group == 'IA') selected @endif>IT
+                                                        @if ($data->Initiator_Group== 'IA') selected @endif>IT
                                                         Administration</option>
                                                     <option value="ACC"
-                                                        @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
+                                                        @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
                                                     </option>
                                                     <option value="LOG"
-                                                        @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
+                                                        @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
                                                     </option>
                                                     <option value="SM"
-                                                        @if ($data->Initiator_Group == 'SM') selected @endif>Senior
+                                                        @if ($data->Initiator_Group== 'SM') selected @endif>Senior
                                                         Management</option>
                                                     <option value="BA"
-                                                        @if ($data->Initiator_Group == 'BA') selected @endif>Business
+                                                        @if ($data->Initiator_Group== 'BA') selected @endif>Business
                                                         Administration</option>
 
                                                 </select>
@@ -452,7 +452,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
                                                 <input type="text" name="initiator_group_code" 
-                                                    value="{{ $data->Initiator_Group }}" id="initiator_group_code"
+                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>
@@ -788,7 +788,7 @@
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_record" name="related_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}">
+                                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/RA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
@@ -1047,16 +1047,28 @@
                                         Assignment Details
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
-                                                <input type="date" name="schedule_start_date1" value="{{$data->schedule_start_date}}">
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1)}}"
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="schedule_start_date1" class="hide-input"
+                                                        oninput="handleDateInput(this, 'schedule_start_date')" />
+                                                </div>
+                                                {{-- <input type="date" name="schedule_start_date1" value="{{$data->schedule_start_date1}}"> --}}
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
                                                 <label for="Scheduled End Date">Scheduled End Date</label>
-                                                <input type="date" name="schedule_end_date1" value="{{$data->schedule_end_date}}">
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="schedule_end_date" readonly value="{{Helpers::getdateFormat($data->schedule_end_date1)}}"
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="schedule_end_date1" class="hide-input"
+                                                        oninput="handleDateInput(this, 'schedule_end_date')" />
+                                                </div>
+                                                {{-- <input type="date" name="schedule_end_date1" value="{{$data->schedule_end_date}}"> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1683,7 +1695,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Severity Rate">Severity Rate</label>
-                                                <select name="severity_rate" id="analysisR"
+                                                <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->severity_rate == '1' ? 'selected' : '' }}
@@ -1700,7 +1712,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Occurrence">Occurrence</label>
-                                                <select name="occurrence" id="analysisP"
+                                                <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option
@@ -1720,7 +1732,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Detection">Detection</label>
-                                                <select name="detection" id="analysisN"
+                                                <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->detection == '5' ? 'selected' : '' }}
@@ -1931,11 +1943,17 @@
                                                 <textarea name="mitigation_plan">{{ $data->mitigation_plan }}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="mitigation-due-date">Mitigation Due Date</label>
-                                                <input type="date" name="mitigation_due_date"
-                                                    value="{{ $data->mitigation_due_date }}">
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="mitigation-due-date">Scheduled End Date</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="mitigation_due_date" readonly value="{{ Helpers::getdateFormat($data->mitigation_due_date)}}"
+                                                        name="mitigation_due_date" placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="mitigation_due_date" class="hide-input"  
+                                                        oninput="handleDateInput(this, 'mitigation_due_date')" />
+                                                </div>
+                                                {{-- <input type="date" name="mitigation_due_date"
+                                                    value="{{ $data->mitigation_due_date }}"> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -2051,10 +2069,10 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
+                                                        <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
@@ -2431,6 +2449,12 @@
                         currentStep--;
                     }
                 }
+            </script>
+             <script>
+                document.getElementById('initiator_group').addEventListener('change', function() {
+                    var selectedValue = this.value;
+                    document.getElementById('initiator_group_code').value = selectedValue;
+                });
             </script>
 
             <script>
