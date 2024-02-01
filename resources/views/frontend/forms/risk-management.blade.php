@@ -1486,7 +1486,7 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Reference Record</label>
-                                            <select multiple id="reference_record" name="refrence_record[]" id="">
+                                            <select multiple id="reference_record" name="refrence_record[]" >
                                                 <option value="">--Select---</option>
                                                 @foreach ($old_record as $new)
                                                     <option value="{{ $new->id }}">

@@ -154,7 +154,7 @@ class RiskManagementController extends Controller
         $data->initial_rpn = $request->initial_rpn;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
-        $data->Reference_Recores1 =  implode(',', $request->refrence_record);
+        $data->refrence_record =  implode(',', $request->refrence_record);
 
 
 
@@ -707,19 +707,19 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->Reference_Recores1)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'Reference Recores';
-            $history->previous = "Null";
-            $history->current = $data->Reference_Recores1;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        // if (!empty($internalAudit->refrence_record)) {
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $data->id;
+        //     $history->activity_type = 'Reference Recores';
+        //     $history->previous = "Null";
+        //     $history->current = $data->refrence_record;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->save();
+        // }
 
         if (!empty($data->risk_management_strategy)) {
             $history = new RiskAuditTrail();
@@ -1030,6 +1030,7 @@ class RiskManagementController extends Controller
         $data->priority_level = $request->priority_level;
         $data->zone = $request->zone;
         $data->country = $request->country;
+        $data->state = $request->state;
         $data->city = $request->city;
         $data->description = $request->description;
         $data->severity2_level = $request->severity2_level;
@@ -1047,6 +1048,8 @@ class RiskManagementController extends Controller
         $data->Number_of_employees = $request->Number_of_employees;
         $data->risk_management_strategy = $request->risk_management_strategy;
         $data->estimated_man_hours = $request->estimated_man_hours;
+        $data->schedule_start_date1 = $request->schedule_start_date1;
+        $data->schedule_end_date1 = $request->schedule_end_date1;
         $data->estimated_cost = $request->estimated_cost;
         $data->currency = $request->currency;
 
@@ -1084,7 +1087,7 @@ class RiskManagementController extends Controller
         $data->due_date_extension = $request->due_date_extension;
         //$data->severity = $request->severity;
         //$data->occurance = $request->occurance;
-        $data->Reference_Recores1 =  implode(',', $request->refrence_record);
+        $data->refrence_record =  implode(',', $request->refrence_record);
 
 
         if (!empty($request->reference)) {
@@ -1438,20 +1441,20 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Reference_Recores1 != $data->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
+        // if ($lastDocument->refrence_record != $data->refrence_record || !empty($request->refrence_record_comment)) {
 
-            $history = new RiskAuditTrail();
-            $history->risk_id = $id;
-            $history->activity_type = 'Reference Recores';
-            $history->previous = $lastDocument->Reference_Recores1;
-            $history->current = $data->Reference_Recores1;
-            $history->comment = $request->date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Reference Recores';
+        //     $history->previous = $lastDocument->refrence_record;
+        //     $history->current = $data->refrence_record;
+        //     $history->comment = $request->refrence_record_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         if ($lastDocument->risk_management_strategy != $data->risk_management_strategy || !empty($request->risk_management_strategy_comment)) {
 

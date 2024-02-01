@@ -92,7 +92,7 @@ class CCController extends Controller
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->parent_id = $request->parent_id;
         $openState->parent_type = $request->parent_type;
-        $openState->Inititator_Group = $request->initiatorGroup;
+        //$openState->Inititator_Group = $request->initiatorGroup;
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
@@ -411,17 +411,17 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $openState->id;
-        $history->activity_type = 'Inititator Group';
-        $history->previous = "Null";
-        $history->current = $openState->Inititator_Group;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $openState->id;
+        // $history->activity_type = 'Inititator Group';
+        // $history->previous = "Null";
+        // $history->current = $openState->Inititator_Group;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
@@ -1101,7 +1101,7 @@ class CCController extends Controller
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
         $openState->initiator_id = Auth::user()->id;
-        $openState->Inititator_Group = $request->initiatorGroup;
+        //$openState->Inititator_Group = $request->initiatorGroup;
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
@@ -1416,19 +1416,19 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Inititator_Group != $openState->Inititator_Group || !empty($request->document_name_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Inititator Group';
-            $history->previous = $lastDocument->Inititator_Group;
-            $history->current = $openState->Inititator_Group;
-            $history->comment = $request->Inititator_Group_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastDocument->Inititator_Group != $openState->Inititator_Group || !empty($request->document_name_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Inititator Group';
+        //     $history->previous = $lastDocument->Inititator_Group;
+        //     $history->current = $openState->Inititator_Group;
+        //     $history->comment = $request->Inititator_Group_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         if ($lastDocument->assign_to != $openState->assign_to || !empty($request->document_name_comment)) {
             $history = new RcmDocHistory;

@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('parent_type')->nullable();
             $table->longText('short_description')->nullable();
             $table->longText('severity_level1')->nullable();    
-            $table->longText('Inititator_Group')->nullable();
+            //$table->longText('Initiator_Group')->nullable();
             $table->integer('assign_to')->nullable();
             $table->string('due_date')->nullable();
             // $table->string('training_required')->default('No');
