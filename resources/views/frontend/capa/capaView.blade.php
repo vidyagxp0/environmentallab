@@ -189,8 +189,8 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Product Information</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
-                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
@@ -434,9 +434,8 @@
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     multiple id="capa_related_record" name="capa_related_record[]"
                                                     id="">
-
                                                     @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}">
+                                                        <option value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->capa_related_record)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
@@ -483,7 +482,7 @@
                                                 {{-- <input type="file" id="myfile" name="capa_attachment"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="capa_attachment1">
+                                                    <div class="file-attachment-list" id="capa_attachment">
                                                         @if ($data->capa_attachment)
                                                             @foreach (json_decode($data->capa_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -504,8 +503,8 @@
                                                         <div>Add</div>
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="myfile" name="capa_attachment1[]"
-                                                            oninput="addMultipleFiles(this, 'capa_attachment1')" multiple>
+                                                            type="file" id="myfile" name="capa_attachment[]"
+                                                            oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
@@ -837,7 +836,7 @@
                                     </div>
                                 </div>
                             </div>
-                            {{-- <div id="CCForm8" class="inner-block cctabcontent">
+                              <div id="CCForm8" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="sub-head">
                                         CFT Information
@@ -847,14 +846,14 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Microbiology">CFT Reviewer</label>
-                                                <select name="Microbiology">
+                                                <select name="Microbiology_new">
                                                     <option value="0">-- Select --</option>
-                                                    <option value="yes" selected>Yes</option>
-                                                    <option value="no">No</option>
+                                                    <option @if ($data->Microbiology_new=='yes') selected @endif value="yes" selected>Yes</option>
+                                                    <option @if ($data->Microbiology_new=='no') selected @endif value="no">No</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Microbiology-Person">CFT Reviewer Person</label>
                                                 <select  name="Microbiology_Person[]"
@@ -868,10 +867,10 @@
                                                 </select>
 
                                             </div>
-                                        </div>
+                                        </div> 
 
 
-                                    </div>
+                                     </div>
                                     <div class="sub-head">
                                         Concerned Information
                                     </div>
@@ -881,9 +880,9 @@
                                                 <label for="group_review">Is Concerned Group Review Required?</label>
                                                 <select name="goup_review">
                                                     <option value="0">-- Select --</option>
-                                                    <option {{ $info->goup_review == 'yes' ? 'selected' : '' }}
+                                                    <option {{$data->goup_review == 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
-                                                    <option {{ $info->goup_review == 'no' ? 'selected' : '' }}
+                                                    <option {{ $data->goup_review == 'no' ? 'selected' : '' }}
                                                         value="no">No</option>
                                                 </select>
                                             </div>
@@ -891,11 +890,11 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Production">Production</label>
-                                                <select name="Production">
+                                                <select name="Production_new">
                                                     <option value="0">-- Select --</option>
-                                                    <option {{ $info->Production == 'yes' ? 'selected' : '' }}
+                                                    <option {{ $data->Production_new== 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
-                                                    <option {{ $info->Production == 'no' ? 'selected' : '' }}
+                                                    <option {{ $data->Production_new== 'no' ? 'selected' : '' }}
                                                         value="no">No</option>
                                                 </select>
                                             </div>
@@ -907,7 +906,7 @@
                                                     <option value="0">-- Select --</option>
                                                     @foreach ($users as $datas)
                                                         <option
-                                                            {{ $info->Production_Person == $datas->id ? 'selected' : '' }}
+                                                            {{ $data->Production_Person == $datas->id ? 'selected' : '' }}
                                                             value="{{ $datas->id }}">{{ $datas->name }}</option>
                                                     @endforeach
 
@@ -919,9 +918,9 @@
                                                 <label for="Quality-Approver">Quality Approver</label>
                                                 <select name="Quality_Approver">
                                                     <option value="0">-- Select --</option>
-                                                    <option {{ $info->Quality_Approver == 'yes' ? 'selected' : '' }}
+                                                    <option {{ $data->Quality_Approver == 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
-                                                    <option {{ $info->Quality_Approver == 'no' ? 'selected' : '' }}
+                                                    <option {{ $data->Quality_Approver == 'no' ? 'selected' : '' }}
                                                         value="no">No</option>
                                                 </select>
                                             </div>
@@ -934,7 +933,7 @@
 
                                                     @foreach ($users as $datas)
                                                         <option
-                                                            {{ $info->Quality_Approver_Person == $datas->id ? 'selected' : '' }}
+                                                            {{ $data->Quality_Approver_Person== $datas->id ? 'selected' : '' }}
                                                             value="{{ $datas->id }}">{{ $datas->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -947,9 +946,9 @@
                                                 <label for="bd_domestic">Others</label>
                                                 <select name="bd_domestic">
                                                     <option value="0">-- Select --</option>
-                                                    <option {{ $info->bd_domestic == 'yes' ? 'selected' : '' }}
+                                                    <option {{ $data->bd_domestic == 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
-                                                    <option {{ $info->bd_domestic == 'no' ? 'selected' : '' }}
+                                                    <option {{ $data->bd_domestic == 'no' ? 'selected' : '' }}
                                                         value="no">No</option>
                                                 </select>
                                             </div>
@@ -961,20 +960,20 @@
                                                     <option value="0">-- Select --</option>
 
                                                     @foreach ($users as $datas)
-                                                        <option {{ $info->Bd_Person == $datas->id ? 'selected' : '' }}
+                                                        <option {{ $data->Bd_Person == $datas->id ? 'selected' : '' }}
                                                             value="{{ $datas->id }}">{{ $datas->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                          <div class="col-12">
                                             <div class="group-input">
-                                                <label for="additional_attachments">Additional Attachments</label>
+                                                <label for="Additional Attachments">Additional Attachments</label>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="additional_attachments">
-                                                        @if ($info->additional_attachments)
-                                                            @foreach (json_decode($info->additional_attachments) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
+                                                        @if ($data->additional_attachments)     
+                                                          {{-- @foreach(json_decode($data->additional_attachments) as $file) --}}
+                                                          <h6 type="button" class="file-container text-dark" 
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
@@ -986,10 +985,10 @@
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
-                                                            @endforeach
-                                                        @endif
-                                                    </div>
-                                                    <div class="add-btn">
+                                                            {{-- @endforeach --}}
+                                                             @endif
+                                                        </div> 
+                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile"
                                                             name="additional_attachments[]"
@@ -998,7 +997,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>  
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
@@ -1006,10 +1005,11 @@
                                             onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     </div>
-                                </div>
-                            </div> --}}
+                                </div>  
+                            </div> 
+                        </div>
                                <!-- Group Commentes-->
-                               {{-- <div id="CCForm7" class="inner-block cctabcontent">
+                             <div id="CCForm7" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
 
                                     <div class="sub-head">
@@ -1020,17 +1020,19 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="comments">CFT Comments</label>
-                                                <textarea name="cft_comments">{{ $comments->cft_comments }}</textarea>
+                                                <textarea name="cft_comments_form">{{ $data->cft_comments_form}}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="comments">CFT Attachment</label>
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="cft_attchament">
-                                                        @if ($comments->cft_attchament)
-                                                            @foreach (json_decode($comments->cft_attchament) as $file)
-                                                                <h6 type="button" class="file-container text-dark"
+                                                    <div class="file-attachment-list" id="cft_attchament_new">
+                                                        @if ($data->cft_attchament_new)
+                                                                    @if ($data !== null)
+
+                                                            {{-- @foreach (json_decode($data->cft_attchament_new) as $file) --}}
+                                                                 <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
@@ -1041,20 +1043,21 @@
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
-                                                                </h6>
-                                                            @endforeach
+                                                                </h6> 
+                                                            {{-- @endforeach --}}
+                                                             @endif
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="cft_attchament[]"
-                                                            oninput="addMultipleFiles(this, 'cft_attchament')"
+                                                        <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                            oninput="addMultipleFiles(this, 'cft_attchament_new')"
                                                             multiple>
                                                     </div>
                                                 </div>
 
-                                            </div>
-                                        </div>
+                                            </div> 
+                                        </div> 
                                     </div>
                                     <div class="row">
                                         <div class="sub-head">
@@ -1063,58 +1066,61 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">QA Comments</label>
-                                                <textarea name="qa_commentss">{{ $comments->qa_comments }}</textarea>
+                                                <textarea name="qa_comments_new">{{ $data->qa_comments_new}}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">QA Head Designee Comments</label>
-                                                <textarea name="designee_comments">{{ $comments->designee_comments }}</textarea>
+                                                <textarea name="designee_comments_new">{{ $data->designee_comments_new}}
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Warehouse Comments</label>
-                                                <textarea name="Warehouse_comments">{{ $comments->Warehouse_comments }}</textarea>
+                                                <textarea name="Warehouse_comments_new">{{ $data->Warehouse_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Engineering Comments</label>
-                                                <textarea name="Engineering_comments">{{ $comments->Engineering_comments }}</textarea>
+                                                <textarea name="Engineering_comments_new">{{ $data->Engineering_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Instrumentation Comments</label>
-                                                <textarea name="Instrumentation_comments">{{ $comments->Instrumentation_comments }}</textarea>
+                                                <textarea name="Instrumentation_comments_new">{{ $data->Instrumentation_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Validation Comments</label>
-                                                <textarea name="Validation_comments">{{ $comments->Validation_comments }}</textarea>
+                                                <textarea name="Validation_comments_new">{{ $data->Validation_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Others Comments</label>
-                                                <textarea name="Others_comments">{{ $comments->Others_comments }}</textarea>
+                                                <textarea name="Others_comments_new">{{ $data->Others_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Group Comments</label>
-                                                <textarea name="Group_comments">{{ $comments->Group_comments }}</textarea>
+                                                <textarea name="Group_comments_new">{{ $data->Group_comments_new}}</textarea>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="group-attachments">Group Attachments</label>
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="group_attachments">
-                                                        @if ($comments->group_attachments)
-                                                            @foreach (json_decode($comments->group_attachments) as $file)
+                                                    <div class="file-attachment-list" id="group_attachments_new">
+                                                        @if ($data->group_attachments_new)
+                                                        @if ($file!== null)
+                                                            {{-- @foreach (json_decode($data->group_attachments_new) as $file) --}}
                                                                 <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -1127,19 +1133,20 @@
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
-                                                            @endforeach
+                                                            {{-- @endforeach --}}
+                                                        @endif
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile"
-                                                            name="group_attachments[]"
-                                                            oninput="addMultipleFiles(this, 'group_attachments')"
+                                                            name="group_attachments_new[]"
+                                                            oninput="addMultipleFiles(this, 'group_attachments_new')"
                                                             multiple>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> 
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
@@ -1148,7 +1155,7 @@
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     </div>
                                 </div>
-                            </div> --}}
+                            </div>
                             <!-- CAPA Details content -->
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -1756,7 +1763,7 @@
 
             <script>
                 VirtualSelect.init({
-                    ele: '#Facility, #Group, #Audit, #Auditee , #capa_related_record'
+                    ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record'
                 });
 
                 function openCity(evt, cityName) {

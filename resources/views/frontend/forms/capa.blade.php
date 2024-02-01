@@ -353,6 +353,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Comments"> CAPA QA Comments </label>
+                                        <textarea name="capa_qa_comments"></textarea>
+                                    </div>
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
@@ -372,7 +378,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Product Details">
-                                            Product Details1<button type="button" name="ann"
+                                            Product Details<button type="button" name="ann"
                                                 id="product">+</button>
                                         </label>
                                         <table class="table table-bordered" id="product_details">
@@ -703,7 +709,7 @@
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
                                             <option value="0">-- Select --</option>
                                             @foreach ($cft as $data)
-                                                <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
+                                                <option value="{{ $data->id}}" selected>{{ $data->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -789,7 +795,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="additional_attachments">Additional Attachments</label>
+                                        <label for="Additional Attachments">Additional Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -833,7 +839,9 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cft_attchament_new"></div>
+                                            <div class="file-attachment-list" id="cft_attchament_new">
+                                                
+                                            </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="cft_attchament_new[]"
@@ -1156,7 +1164,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee , #capa_related_record'
+            ele: '#Facility, #Group, #Audit, #Auditee , #capa_related_record,#cft_reviewer'
         });
 
         function openCity(evt, cityName) {

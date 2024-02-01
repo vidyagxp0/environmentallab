@@ -471,7 +471,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Warehouse">Warehouse</label>
+                                        <label for="Warehouse">Warehouse1</label>
                                         <select name="Warehouse">
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
