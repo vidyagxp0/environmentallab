@@ -888,9 +888,7 @@ class ManagementReviewController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $agenda = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"agenda")->first();
-        return view('frontend.management-review.management_review', compact(
-            'data','agenda'
-        ));
+        return view('frontend.management-review.management_review', compact( 'data','agenda' ));
     }
 
 

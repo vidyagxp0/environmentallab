@@ -246,57 +246,57 @@
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                             id="initiator-group">
+                                             id="initiator_group">
                                             <option value="CQA"
-                                                @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
+                                                @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                 Quality Assurance</option>
                                             <option value="QAB"
-                                                @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
+                                                @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
                                                 Assurance Biopharma</option>
                                             <option value="CQC"
-                                                @if ($data->initiatorGroup == 'CQC') selected @endif>Central
+                                                @if ($data->Initiator_Group== 'CQC') selected @endif>Central
                                                 Quality Control</option>
                                             <option value="CQC"
-                                                @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
+                                                @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
                                             </option>
                                             <option value="PSG"
-                                                @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
+                                                @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
                                             <option value="CS"
-                                                @if ($data->initiatorGroup == 'CS') selected @endif>Central
+                                                @if ($data->Initiator_Group== 'CS') selected @endif>Central
                                                 Stores</option>
                                             <option value="ITG"
-                                                @if ($data->initiatorGroup == 'ITG') selected @endif>Information
+                                                @if ($data->Initiator_Group== 'ITG') selected @endif>Information
                                                 Technology Group</option>
                                             <option value="MM"
-                                                @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
+                                                @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
                                                 Medicine</option>
                                             <option value="CL"
-                                                @if ($data->initiatorGroup == 'CL') selected @endif>Central
+                                                @if ($data->Initiator_Group== 'CL') selected @endif>Central
                                                 Laboratory</option>
                                             <option value="TT"
-                                                @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                                @if ($data->Initiator_Group== 'TT') selected @endif>Tech
                                                 team</option>
                                             <option value="QA"
-                                                @if ($data->initiatorGroup == 'QA') selected @endif>Quality
+                                                @if ($data->Initiator_Group== 'QA') selected @endif>Quality
                                                 Assurance</option>
                                             <option value="QM"
-                                                @if ($data->initiatorGroup == 'QM') selected @endif>Quality
+                                                @if ($data->Initiator_Group== 'QM') selected @endif>Quality
                                                 Management</option>
                                             <option value="IA"
-                                                @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                                @if ($data->Initiator_Group== 'IA') selected @endif>IT
                                                 Administration</option>
                                             <option value="ACC"
-                                                @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
+                                                @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
                                             </option>
                                             <option value="LOG"
-                                                @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
+                                                @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
                                             </option>
                                             <option value="SM"
-                                                @if ($data->initiatorGroup == 'SM') selected @endif>Senior
+                                                @if ($data->Initiator_Group== 'SM') selected @endif>Senior
                                                 Management</option>
                                             <option value="BA"
-                                                @if ($data->initiatorGroup == 'BA') selected @endif>Business
+                                                @if ($data->Initiator_Group== 'BA') selected @endif>Business
                                                 Administration</option>
 
                                         </select>
@@ -305,7 +305,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{$data->Initiator_Group}}" disabled>
+                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" value="{{$data->Initiator_Group}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -318,11 +318,11 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity-level">
+                                        <select name="severity_level2">
                                             <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
+                                            <option @if ($data->severity_level2=='minor') selected @endif  value="minor">Minor</option>
+                                            <option @if ($data->severity_level2=='major') selected @endif value="major">Major</option>
+                                            <option @if ($data->severity_level2=='critical') selected @endif value="critical">Critical</option>
                                         </select>
                                     </div>
                                 </div>
@@ -357,15 +357,15 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
-                                        <select name="Incident_Category" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <select name="Incident_Category">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="Biological" @if ($data->Incident_Category == 'Biological') selected @endif>
+                                            <option value="Biological" @if ($data->Incident_Category== 'Biological') selected @endif>
                                                 Biological
                                             </option>
-                                            <option value="Chemical" @if ($data->Incident_Category == 'Chemical') selected @endif>
+                                            <option value="Chemical" @if ($data->Incident_Category== 'Chemical') selected @endif>
                                                 Chemical
                                             </option>
-                                            <option value="Others" @if ($data->Incident_Category == 'Others') selected @endif>
+                                            <option value="Others" @if ($data->Incident_Category== 'Others') selected @endif>
                                                 Others
                                             </option>
                                         </select>
@@ -374,13 +374,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
-                                        <select name="Invocation_Type" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <select name="Invocation_Type">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="1" @if ($data->Invocation_Type == '1') selected @endif>1
+                                            <option value="1" @if ($data->Invocation_Type== '1') selected @endif>1
                                             </option>
-                                            <option value="2" @if ($data->Invocation_Type == '2') selected @endif>2
+                                            <option value="2" @if ($data->Invocation_Type== '2') selected @endif>2
                                             </option>
-                                            <option value="3" @if ($data->Invocation_Type == '3') selected @endif>3
+                                            <option value="3" @if ($data->Invocation_Type== '3') selected @endif>3
                                             </option>
                                         </select>
                                     </div>
@@ -727,11 +727,22 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effect.Chesk Creation Date">Effect.Chesk Creation Date</label>
-                                        <input type="date" name="effect_check_date" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
+                                        <input type="date" name="effect_check_date" {{ $data->stage == 0 || $data->stage == 8 ? "readonly" : "" }}
                                             value="{{ $data->effect_check_date }}">
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Effectiveness Check Creation Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="effectivess_check_creation_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="effectivess_check_creation_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -764,7 +775,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <textarea name="due_date_extension"></textarea>
+                                        <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
                             </div>

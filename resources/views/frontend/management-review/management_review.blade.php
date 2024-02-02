@@ -296,7 +296,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="group-input">
+                                    <div class="group-input">   
                                         <label for="Attendees">Attendess</label>
                                         <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}></textarea>
                                     </div>
@@ -693,28 +693,28 @@
                         </div>
                     </div>
 
-                    <div id="CCForm5" class="inner-block cctabcontent">
+                     <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
-                                        <div class="static">{{ $data->completed_by }}</div>
+                                        {{-- <div class="static">{{ $data->completed_by }}</div> --}}
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed On">Completed On</label>
-                                        <div class="static">{{ $data->completed_on }}</div>
+                                        {{-- <div class="static">{{ $data->completed_on}}</div> --}}
                                     </div>
                                 </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton"
-                                    {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>Save</button>
+                                    {{$data->stage == 0 ||$data->stage == 3 ? 'disabled' : '' }}>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit"
-                                    {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>Submit</button>
+                                    {{$data->stage == 0 ||$data->stage == 3 ? 'disabled' : '' }}>Submit</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a>
                                 </button>

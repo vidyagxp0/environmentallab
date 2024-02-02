@@ -483,6 +483,8 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="capa_attachment">
+                                                        
+                                                        {{-- @if (is_array($data->capa_attachment)) --}}
                                                         @if ($data->capa_attachment)
                                                             @foreach (json_decode($data->capa_attachment) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -497,6 +499,7 @@
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
                                                             @endforeach
+                                                        {{-- @endif --}}
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
@@ -971,8 +974,9 @@
                                                 <label for="Additional Attachments">Additional Attachments</label>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="additional_attachments">
-                                                        @if ($data->additional_attachments)     
-                                                          {{-- @foreach(json_decode($data->additional_attachments) as $file) --}}
+                                                        {{-- @if (is_array($data->additional_attachments)) --}}
+                                                        @if ($data->additional_attachments)
+                                                           @foreach(json_decode($data->additional_attachments) as $file) 
                                                           <h6 type="button" class="file-container text-dark" 
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -985,7 +989,7 @@
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
-                                                            {{-- @endforeach --}}
+                                                         @endforeach 
                                                              @endif
                                                         </div> 
                                                      <div class="add-btn">
@@ -1028,11 +1032,10 @@
                                                 <label for="comments">CFT Attachment</label>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="cft_attchament_new">
-                                                        @if ($data->cft_attchament_new)
-                                                                    @if ($data !== null)
-
-                                                            {{-- @foreach (json_decode($data->cft_attchament_new) as $file) --}}
-                                                                 <h6 type="button" class="file-container text-dark"
+                                                        {{-- @if (is_array($data->cft_attchament_new)) --}}
+                                                                 @if ($data->cft_attchament_new)
+                                                                     @foreach (json_decode($data->cft_attchament_new) as $file) 
+                                                                  <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
@@ -1044,9 +1047,8 @@
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6> 
-                                                            {{-- @endforeach --}}
-                                                             @endif
-                                                        @endif
+                                                             @endforeach 
+                                                                 @endif
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
@@ -1113,17 +1115,20 @@
                                                 <textarea name="Group_comments_new">{{ $data->Group_comments_new}}</textarea>
                                             </div>
                                         </div>
+                                       
                                          <div class="col-12">
+                                    
                                             <div class="group-input">
                                                 <label for="group-attachments">Group Attachments</label>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="group_attachments_new">
+                                                       
+                                                        {{-- @if (is_array($data->group_attachments_new)) --}}
                                                         @if ($data->group_attachments_new)
-                                                        @if ($file!== null)
-                                                            {{-- @foreach (json_decode($data->group_attachments_new) as $file) --}}
+                                                             @foreach (json_decode($data->group_attachments_new) as $file) 
                                                                 <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
-                                                                    <b>{{ $file }}</b>
+                                                                    <b>{{ $file}}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i
                                                                             class="fa fa-eye text-primary"
@@ -1133,8 +1138,8 @@
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
-                                                            {{-- @endforeach --}}
-                                                        @endif
+                                                             @endforeach 
+                                                       
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">

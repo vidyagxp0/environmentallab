@@ -44,7 +44,7 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
+                                        <label for="originator">Originator1</label>
                                         <input type="text" name="originator" value="Amit Guru" disabled />
                                     </div>
                                 </div>

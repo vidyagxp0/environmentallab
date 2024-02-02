@@ -79,9 +79,9 @@ class CapaController extends Controller
        $capa->Validation_comments_new = $request->Validation_comments_new;
        $capa->Others_comments_new = $request->Others_comments_new;
        $capa->Group_comments_new = $request->Group_comments_new;
-       $capa->cft_attchament_new = json_encode($request->cft_attchament_new);
+    //    $capa->cft_attchament_new= json_encode($request->cft_attchament_new);
     //    $capa->additional_attachments= json_encode($request->additional_attachments);
-       $capa->group_attachments_new = json_encode($request->group_attachments_new);
+    //    $capa->group_attachments_new = json_encode($request->group_attachments_new);
        $capa->Microbiology_new= $request->Microbiology_new;
     //    $capa->Microbiology_Person = $request->Microbiology_Person;
        $capa->goup_review = $request->goup_review;
@@ -117,7 +117,7 @@ class CapaController extends Controller
                     $files[] = $name;
                 }
             }
-            $capa->cft_attchament_new = json_encode($files);
+            $capa->cft_attchament_new= json_encode($files);
         }
         if (!empty($request->additional_attachments)) {
             $files = [];
@@ -722,8 +722,8 @@ class CapaController extends Controller
        $capa->Quality_Approver_Person= $request->Quality_Approver_Person;
        $capa->Production_new = $request->Production_new;
        $capa->Group_comments_new = $request->Group_comments_new;
-       $capa->cft_attchament_new = json_encode($request->cft_attchament_new);
-       $capa->group_attachments_new = json_encode($request->group_attachments_new);
+    //    $capa->cft_attchament_new = json_encode($request->cft_attchament_new);
+    //    $capa->group_attachments_new = json_encode($request->group_attachments_new);
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;

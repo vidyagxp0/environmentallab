@@ -806,7 +806,6 @@
                                                     oninput="addMultipleFiles(this, 'additional_attachments')" multiple>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -839,9 +838,8 @@
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="cft_attchament_new">
-                                                
-                                            </div>
+                                            <div class="file-attachment-list" id="cft_attchament_new"> </div>
+                                                                                        
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="cft_attchament_new[]"
