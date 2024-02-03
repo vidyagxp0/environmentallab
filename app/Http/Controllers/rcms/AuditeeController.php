@@ -177,6 +177,8 @@ class AuditeeController extends Controller
             }
             $internalAudit->myfile = json_encode($files);
         }
+
+     
         //return $internalAudit;
         $internalAudit->save();
 

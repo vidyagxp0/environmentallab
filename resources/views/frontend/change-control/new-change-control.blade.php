@@ -91,7 +91,7 @@
                     <div id="CCForm1" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
@@ -156,53 +156,53 @@
                                     <div class="group-input">
                                         <label for="initiator-group">Initiator Group <span
                                                 class="text-danger">*</span></label>
-                                        <select name="initiatorGroup" id="initiator_group">
+                                        <select name="Initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                            <option value="CQA" @if (old('Initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                            <option value="QAB" @if (old('Initiator_Group') == 'QAB') selected @endif>Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                            <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
-                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                            <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>Central
+                                            <option value="CS" @if (old('Initiator_Group') == 'CS') selected @endif>Central
                                                 Stores</option>
-                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                            <option value="ITG" @if (old('Initiator_Group') == 'ITG') selected @endif>
                                                 Information Technology Group</option>
-                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                            <option value="MM" @if (old('Initiator_Group') == 'MM') selected @endif>
                                                 Molecular Medicine</option>
-                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>
+                                            <option value="CL" @if (old('Initiator_Group') == 'CL') selected @endif>
                                                 Central Laboratory</option>
-                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                            <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
                                                 team</option>
-                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                            <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
-                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                            <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
                                                 Quality Management</option>
-                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                            <option value="IA" @if (old('Initiator_Group') == 'IA') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                            <option value="ACC" @if (old('Initiator_Group') == 'ACC') selected @endif>
                                                 Accounting</option>
-                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                            <option value="LOG" @if (old('Initiator_Group') == 'LOG') selected @endif>
                                                 Logistics</option>
-                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                            <option value="SM" @if (old('Initiator_Group') == 'SM') selected @endif>
                                                 Senior Management</option>
-                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                            <option value="BA" @if (old('Initiator_Group') == 'BA') selected @endif>
                                                 Business Administration</option>
                                         </select>
-                                        @error('initiatorGroup')
+                                        {{-- @error('Initiator_Group')
                                             <p class="text-danger">{{ $message }}</p>
-                                        @enderror
+                                        @enderror --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" disabled>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -233,23 +233,15 @@
                                         <div><small class="text-primary">Please select related information</small></div>
                                         <select name="initiated_through"
                                             onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                            <option>Enter Your Selection Here</option>
-                                            <option @if (old('initiated_through') == 'recall') selected @endif value="recall">
-                                                Recall</option>
-                                            <option @if (old('initiated_through') == 'return') selected @endif value="return">
-                                                Return</option>
-                                            <option @if (old('initiated_through') == 'deviation') selected @endif value="deviation">
-                                                Deviation</option>
-                                            <option @if (old('initiated_through') == 'complaint') selected @endif value="complaint">
-                                                Complaint</option>
-                                            <option @if (old('initiated_through') == 'regulatory') selected @endif value="regulatory">
-                                                Regulatory</option>
-                                            <option @if (old('initiated_through') == 'lab-incident') selected @endif
-                                                value="lab-incident">Lab Incident</option>
-                                            <option @if (old('initiated_through') == 'improvement') selected @endif
-                                                value="improvement">Improvement</option>
-                                            <option @if (old('initiated_through') == 'others') selected @endif value="others">
-                                                Others</option>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="recall">Recall</option>
+                                            <option value="return">Return</option>
+                                            <option value="deviation">Deviation</option>
+                                            <option value="complaint">Complaint</option>
+                                            <option value="regulatory">Regulatory</option>
+                                            <option value="lab-incident">Lab Incident</option>
+                                            <option value="improvement">Improvement</option>
+                                            <option value="others">Others</option>
                                         </select>
                                     </div>
                                 </div>
@@ -257,23 +249,19 @@
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="initiated_through">Others<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through"{{ old('initiated_through') }}></textarea>
+                                        <textarea name="initiated_through_req"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="repeat">Repeat</label>
-                                        <div><small class="text-primary">Please select yes if it is has recurred in past
-                                                six months</small></div>
+                                        <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
                                         <select name="repeat"
                                             onchange="otherController(this.value, 'yes', 'repeat_nature')">
-                                            <option>Enter Your Selection Here</option>
-                                            <option @if (old('repeat') == 'yes') Selected @endif value="yes">Yes
-                                            </option>
-                                            <option @if (old('repeat') == 'no') Selected @endif value="no">No
-                                            </option>
-                                            <option @if (old('repeat') == 'na') Selected @endif value="na">NA
-                                            </option>
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="yes">Yes</option>
+                                            <option value="no">No</option>
+                                            <option value="na">NA</option>
                                         </select>
                                     </div>
                                 </div>
@@ -281,7 +269,7 @@
                                     <div class="group-input" id="repeat_nature">
                                         <label for="repeat_nature">Repeat Nature<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="repeat_nature">{{ old('repeat_nature') }}</textarea>
+                                        <textarea name="repeat_nature"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -294,6 +282,23 @@
                                             <option value="major">Major</option>
                                         </select>
                                         <div class="ai_text">AI Suggested option</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="nature-change">Nature Of Change</label>
+                                        <select name="natureChange">
+                                            <option value="0">-- Select --</option>
+                                            <option value="Temporary">Temporary</option>
+                                            <option value="Permanent">Permanent</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="others">If Others</label>
+                                        <textarea name="others"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -311,33 +316,6 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="nature-change">Nature Of Change</label>
-                                        <select name="natureChange">
-                                            <option value="0">-- Select --</option>
-                                            <option value="Temporary">Temporary</option>
-                                            <option value="Permanent">Permanent</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="others">If Others</label>
-                                        <textarea name="others"></textarea>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
-                                        <select name="severity-level">
-                                            <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
-                                        </select>
-                                    </div>
-                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="others">Initial attachment</label>
@@ -498,7 +476,7 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="qa_head">QA Attachments</label>
+                                        <label for="qa head">QA Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1022,8 +1000,6 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                        <!-- <input type="date" name="effective_check_date"> -->
-
                                         <div class="calenderauditee">                                     
                                         <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="effective_check_date" value=""

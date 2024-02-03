@@ -228,7 +228,7 @@ class AuditProgramController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
-
+        
         if (!empty($data->related_url)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -370,8 +370,7 @@ class AuditProgramController extends Controller
         $data->type = $request->type;
         $data->year = $request->year;
         $data->Quarter = $request->Quarter;
-        $data->description = $request->description;
-        $data->initiator_group = $request->initiator_group;
+        $data->description = $request->description; 
         $data->comments = $request->comments;
         $data->related_url = $request->related_url;
         $data->url_description = $request->url_description;
@@ -532,6 +531,7 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+    
         if ($lastDocument->related_url != $data->related_url || !empty($request->related_url_comment)) {
 
             $history = new AuditProgramAuditTrial();

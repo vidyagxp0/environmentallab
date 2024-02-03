@@ -337,58 +337,58 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="initiator-group">Initiator Group1</label>
-                                                    <select name="initiatorGroup" id="initiator-group">
+                                                    <label for="initiator-group">Initiator Group</label>
+                                                    <select name="Initiator_Group" id="initiator_group">
                                                         <option value="CQA"
-                                                            @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
+                                                            @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                             Quality Assurance</option>
                                                         <option value="QAB"
-                                                            @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
+                                                            @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
                                                             Assurance Biopharma</option>
                                                         <option value="CQC"
-                                                            @if ($data->initiatorGroup == 'CQC') selected @endif>Central
+                                                            @if ($data->Initiator_Group == 'CQC') selected @endif>Central
                                                             Quality Control</option>
-                                                        <option value="CQC"
-                                                            @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
+                                                        <option value="MANU"
+                                                            @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
                                                         </option>
                                                         <option value="PSG"
-                                                            @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
+                                                            @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
                                                             Sourcing Group</option>
                                                         <option value="CS"
-                                                            @if ($data->initiatorGroup == 'CS') selected @endif>Central
+                                                            @if ($data->Initiator_Group == 'CS') selected @endif>Central
                                                             Stores</option>
                                                         <option value="ITG"
-                                                            @if ($data->initiatorGroup == 'ITG') selected @endif>Information
+                                                            @if ($data->Initiator_Group == 'ITG') selected @endif>Information
                                                             Technology Group</option>
                                                         <option value="MM"
-                                                            @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
+                                                            @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
                                                             Medicine</option>
                                                         <option value="CL"
-                                                            @if ($data->initiatorGroup == 'CL') selected @endif>Central
+                                                            @if ($data->Initiator_Group == 'CL') selected @endif>Central
                                                             Laboratory</option>
                                                         <option value="TT"
-                                                            @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                                            @if ($data->Initiator_Group == 'TT') selected @endif>Tech
                                                             team</option>
                                                         <option value="QA"
-                                                            @if ($data->initiatorGroup == 'QA') selected @endif>Quality
+                                                            @if ($data->Initiator_Group == 'QA') selected @endif>Quality
                                                             Assurance</option>
                                                         <option value="QM"
-                                                            @if ($data->initiatorGroup == 'QM') selected @endif>Quality
+                                                            @if ($data->Initiator_Group == 'QM') selected @endif>Quality
                                                             Management</option>
                                                         <option value="IA"
-                                                            @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                                            @if ($data->Initiator_Group == 'IA') selected @endif>IT
                                                             Administration</option>
                                                         <option value="ACC"
-                                                            @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
+                                                            @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
                                                         </option>
                                                         <option value="LOG"
-                                                            @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
+                                                            @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
                                                         </option>
                                                         <option value="SM"
-                                                            @if ($data->initiatorGroup == 'SM') selected @endif>Senior
+                                                            @if ($data->Initiator_Group == 'SM') selected @endif>Senior
                                                             Management</option>
                                                         <option value="BA"
-                                                            @if ($data->initiatorGroup == 'BA') selected @endif>Business
+                                                            @if ($data->Initiator_Group == 'BA') selected @endif>Business
                                                             Administration</option>
 
                                                     </select>
@@ -396,9 +396,12 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="initiator-code">Initiator Group Code</label>
-                                                    <div class="default-name"> <span
-                                                            id="initiator-code">{{ $data->Inititator_Group }}</span></div>
+                                                    <label for="Initiator Group Code">Initiator Group Code</label>
+                                                    <input type="text" name="initiator_group_code"
+                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
+                                                    readonly>
+                                                    {{-- <div class="default-name"> <span
+                                                    id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                                 </div>
                                             </div>
                                             <div class="col-12">
@@ -411,27 +414,39 @@
                                                 <div class="group-input">
                                                     <label for="severity-level">Sevrity Level</label>
                                                     <select name="severity_level1">
-                                                        <option value="0">-- Select --</option>
-                                                        <option value="minor">Minor</option>
-                                                        <option value="major">Major</option>
-                                                        <option value="critical">Critical</option>
+                                                    <option value="0">-- Select --</option>
+                                                    <option @if ($data->severity_level1 == 'minor') selected @endif
+                                                     value="minor">Minor</option>
+                                                    <option  @if ($data->severity_level1 == 'major') selected @endif 
+                                                    value="major">Major</option>
+                                                    <option @if ($data->severity_level1 == 'critical') selected @endif
+                                                    value="critical">Critical</option>
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator Group">Initiated Through</label>
+                                                    <div><small class="text-primary">Please select related information</small></div>
                                                     <select name="initiated_through"
                                                         onchange="otherController(this.value, 'others', 'initiated_through_req')">
-                                                        <option>Enter Your Selection Here</option>
-                                                        <option value="recall">Recall</option>
-                                                        <option value="return">Return</option>
-                                                        <option value="deviation">Deviation</option>
-                                                        <option value="complaint">Complaint</option>
-                                                        <option value="regulatory">Regulatory</option>
-                                                        <option value="lab-incident">Lab Incident</option>
-                                                        <option value="improvement">Improvement</option>
-                                                        <option value="others">Others</option>
+                                                        <option value="">Enter Your Selection Here</option>
+                                                    <option @if ($data->initiated_through == 'recall') selected @endif
+                                                        value="recall">Recall</option>
+                                                    <option @if ($data->initiated_through == 'return') selected @endif
+                                                        value="return">Return</option>
+                                                    <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                        value="deviation">Deviation</option>
+                                                    <option @if ($data->initiated_through == 'complaint') selected @endif
+                                                        value="complaint">Complaint</option>
+                                                    <option @if ($data->initiated_through == 'regulatory') selected @endif
+                                                        value="regulatory">Regulatory</option>
+                                                    <option @if ($data->initiated_through == 'lab-incident') selected @endif
+                                                        value="lab-incident">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'improvement') selected @endif
+                                                        value="improvement">Improvement</option>
+                                                    <option @if ($data->initiated_through == 'others') selected @endif
+                                                        value="others">Others</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -439,18 +454,22 @@
                                                 <div class="group-input" id="initiated_through_req">
                                                     <label for="initiated_through">Others<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="initiated_through"></textarea>
+                                                    <textarea name="initiated_through_req">{{ $data->initiated_through_req }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="repeat">Repeat</label>
+                                                    <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
                                                     <select name="repeat"
                                                         onchange="otherController(this.value, 'yes', 'repeat_nature')">
-                                                        <option>Enter Your Selection Here</option>
-                                                        <option value="yes">Yes</option>
-                                                        <option value="no">No</option>
-                                                        <option value="na">NA</option>
+                                                        <option value="">Enter Your Selection Here</option>
+                                                        <option @if ($data->repeat == 'yes') selected @endif
+                                                            value="yes">Yes</option>
+                                                        <option @if ($data->repeat == 'no') selected @endif
+                                                            value="no">No</option>
+                                                        <option @if ($data->repeat == 'na') selected @endif
+                                                            value="na">NA</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -458,7 +477,7 @@
                                                 <div class="group-input" id="repeat_nature">
                                                     <label for="repeat_nature">Repeat Nature<span
                                                             class="text-danger d-none">*</span></label>
-                                                    <textarea name="repeat_nature"></textarea>
+                                                    <textarea name="repeat_nature">{{ $data->repeat_nature }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -485,26 +504,21 @@
                                                 <div class="group-input">
                                                     <label for="div_code">Division Code</label>
                                                     <select name="div_code">
-                                                        <option {{ $data->Division_Code == 'P1' ? 'selected' : '' }}
-                                                            value="P1">P1</option>
-                                                        <option {{ $data->Division_Code == 'P2' ? 'selected' : '' }}
-                                                            value="P2"> P2</option>
-                                                        <option {{ $data->Division_Code == 'P3' ? 'selected' : '' }}
-                                                            value="P3"> P3</option>
-                                                        <option {{ $data->Division_Code == 'P4A' ? 'selected' : '' }}
-                                                            value="P4A"> P4A</option>
-                                                        <option {{ $data->Division_Code == 'P4B' ? 'selected' : '' }}
-                                                            value="P4B"> P4B</option>
-                                                        <option {{ $data->Division_Code == 'P5' ? 'selected' : '' }}
-                                                            value="P5"> P5</option>
-                                                        <option {{ $data->Division_Code == 'P6' ? 'selected' : '' }}
-                                                            value="P6"> P6</option>
-                                                        <option {{ $data->Division_Code == 'P7' ? 'selected' : '' }}
-                                                            value="P7"> P7</option>
-                                                        <option {{ $data->Division_Code == 'RLS' ? 'selected' : '' }}
-                                                            value="RLS"> RLS</option>
-                                                        <option {{ $data->Division_Code == 'CRS' ? 'selected' : '' }}
-                                                            value="CRS"> CRS</option>
+                                                        <option value="0">-- Select --</option>
+                                                        <option {{ $data->Division_Code == 'Instrumental Lab' ? 'selected' : '' }}
+                                                            value="Instrumental Lab">Instrumental Lab</option>
+                                                        <option {{ $data->Division_Code == 'Microbiology Lab' ? 'selected' : '' }}
+                                                            value="Microbiology Lab"> Microbiology Lab</option>
+                                                        <option {{ $data->Division_Code == 'Molecular lab' ? 'selected' : '' }}
+                                                            value="Molecular lab"> Molecular lab</option>
+                                                        <option {{ $data->Division_Code == 'Physical Lab' ? 'selected' : '' }}
+                                                            value="Physical Lab"> Physical Lab</option>
+                                                        <option {{ $data->Division_Code == 'Stability Lab' ? 'selected' : '' }}
+                                                            value="Stability Lab"> Stability Lab</option>
+                                                        <option {{ $data->Division_Code == 'Wet Chemistry' ? 'selected' : '' }}
+                                                            value="Wet Chemistry"> Wet Chemistry</option>
+                                                        <option {{ $data->Division_Code == 'IPQA Lab' ? 'selected' : '' }}
+                                                            value="IPQA Lab"> IPQA Lab</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -512,6 +526,8 @@
                                                 <div class="group-input">
                                                     <label for="others">Initial attachment
                                                     </label>
+                                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="in_attachment">
                                                             @if ($data->in_attachment)
@@ -681,11 +697,11 @@
                                                     <label for="related_records">Related Records</label>
                                                     {{--  <input type="text" name="related_records"
                                                         value="{{ $review->related_records }}">  --}}
-                                                    <select multiple name="related_records[]"
+                                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true" id="related_records">
                                                         @foreach ($pre as $prix)
-                                                            <option value="{{ $prix->id }}">
+                                                            <option value="{{ $prix->id }}" {{ in_array($prix->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
                                                                 {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
                                                             </option>
                                                         @endforeach
@@ -694,7 +710,7 @@
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="qa_head">QA Attachments</label>
+                                                    <label for="qa head">QA Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="qa_head">
                                                             @if ($review->qa_head)
@@ -889,10 +905,8 @@
                                                     <label for="Quality-Approver-Person">Quality Approver Person</label>
                                                     <select name="Quality_Approver_Person">
                                                         <option value="0">-- Select --</option>
-
                                                         @foreach ($users as $datas)
-                                                            <option
-                                                                {{ $info->Quality_Approver_Person == $datas->id ? 'selected' : '' }}
+                                                            <option {{ $info->Quality_Approver_Person == $datas->id ? 'selected' : '' }}
                                                                 value="{{ $datas->id }}">{{ $datas->name }}</option>
                                                         @endforeach
                                                     </select>
@@ -1021,7 +1035,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="comments">QA Comments</label>
-                                                    <textarea name="qa_commentss">{{ $comments->qa_comments }}</textarea>
+                                                    <textarea name="qa_commentss">{{ $comments->qa_commentss }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -1326,28 +1340,35 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6 new-date-data-field">
-                                                <div class="group-input input-date">
-                                                    <label for="effective-check-date">Effectiveness Check Creation
-                                                        Date</label>
-                                                    <!-- <input type="date" name="effective_check_date"
-                                                        value="{{ $closure->effective_check_date }}"> -->
+                                            {{-- <div class="col-lg-6 new-date-data-field">
+                                               <div class="group-input input-date">
+                                                    <label for="effective-check-date">Effectiveness Check Creation Date</label>
                                                         <div class="calenderauditee">                                     
-                                                            <input type="text"  id="effective_check_date" value="{{ $closure->effective_check_date }}"  readonly placeholder="DD-MMM-YYYY" />
-                                                            <input type="date" name="effective_check_date" value=""
-                                                            class="hide-input"
+                                                            <input type="text"  id="effective_check_date"   readonly placeholder="DD-MMM-YYYY" />
+                                                            <input type="date" name="effective_check_date" value="" class="hide-input"
                                                             oninput="handleDateInput(this, 'effective_check_date')"/>
                                                         </div>
 
+                                                </div>
+                                            </div> --}}
+                                            <div class="col-lg-6 new-date-data-field">
+                                             <div class="group-input input-date">
+                                                    <label for="effective-check-date">Effectiveness Check Creation Date</label>
+                                                   <div class="calenderauditee">                                     
+                                                          <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
+                                                        <input type="date" name="effective_check_date" value=""  class="hide-input"
+                                                        oninput="handleDateInput(this, 'effective_check_date')"/>
+                                             </div>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Effectiveness_checker">Effectiveness Checker</label>
                                                     <select name="Effectiveness_checker">
-                                                        <option value="">Enter Your Selection Here</option>
+                                                        <option value="0">Enter Your Selection Here</option>
                                                         @foreach ($users as $datass)
-                                                            <option value="{{ $datass->id }}">{{ $datass->name }}
+                                                            <option {{ $info->Effectiveness_checker == $datass->id ? 'selected' : '' }}
+                                                                 value="{{ $datass->id }}">{{ $datass->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
@@ -1356,7 +1377,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                    <textarea name="effective_check_plan"></textarea>
+                                                    <textarea name="effective_check_plan">{{$data->effective_check_plan}}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12 sub-head">
@@ -1366,7 +1387,7 @@
                                                 <div class="group-input">
                                                     <label for="due_date_extension">Due Date Extension
                                                         Justification</label>
-                                                    <textarea name="due_date_extension"></textarea>
+                                                    <textarea name="due_date_extension">{{$data->due_date_extension}}</textarea>
                                                 </div>
                                             </div>
                                         </div>
