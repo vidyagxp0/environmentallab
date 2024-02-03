@@ -48,7 +48,9 @@ function addMultipleFiles(input, block_id) {
                     '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
                     '"></td>' +
                     '<td><input type="text" name="observation_id[]"></td>' +
-                    '<td><input type="date" name="date[]"></td>' +
+                    // '<td><input type="date" name="date[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
+
                     '<td><select name="auditorG[]">' +
                     '<option value="">Select a value</option>';
 
@@ -73,7 +75,9 @@ function addMultipleFiles(input, block_id) {
                     '<td><input type="text" name="auditor_review_on_response[]"></td>' +
                     '<td><input type="text" name="qa_comment[]"></td>' +
                     '<td><input type="text" name="capa_details[]"></td>' +
-                    '<td><input type="date" name="capa_due_date[]"></td>' +
+                    // '<td><input type="date" name="capa_due_date[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
+
                     '<td><select name="capa_owner[]">' +
                     '<option value="">Select a value</option>';
 
@@ -82,7 +86,9 @@ function addMultipleFiles(input, block_id) {
                 }
 
                 html += '</select></td>' +                    '<td><input type="text" name="action_taken[]"></td>' +
-                    '<td><input type="date" name="capa_completion_date[]"></td>' +
+                    // '<td><input type="date" name="capa_completion_date[]"></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
+
                     '<td><input type="text" name="status_Observation[]"></td>' +
                     '<td><input type="text" name="remark_observation[]"></td>' +
                     '</tr>';
@@ -709,15 +715,27 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="text" name="audit[]"
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="date" name="scheduled_start_date[]"
+                                                            {{-- <td><input type="date" name="scheduled_start_date[]"
                                                                     value="{{ unserialize($grid_data->start_date)[$key] ? unserialize($grid_data->start_date)[$key] : '' }}">
-                                                            </td>
+                                                            </td> --}}
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date ">
+                                                              <div class="calenderauditee">
+                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" name="scheduled_start_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>
                                                             <td><input type="time" name="scheduled_start_time[]"
                                                                     value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="date" name="scheduled_end_date[]"
+                                                            {{-- <td><input type="date" name="scheduled_end_date[]"
                                                                     value="{{ unserialize($grid_data->end_date)[$key] ? unserialize($grid_data->end_date)[$key] : '' }}">
-                                                            </td>
+                                                            </td> --}}
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date ">
+                                                                    <div class="calenderauditee">
+                                                                <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" name="scheduled_end_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
                                                             <td><input type="time" name="scheduled_end_time[]"
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                             </td>
@@ -1157,7 +1175,12 @@ function addMultipleFiles(input, block_id) {
                                                             <tr>
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input type="text" name="observation_id[]" value="{{ $tempData ? $tempData : "" }}"></td>
-                                                                    <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td>
+                                                                    {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
+                                                                <td> <div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div class="calenderauditee">
+                                                                        <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="date[]" class="hide-input" 
+                                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>
                                                                 <td>
                                                                     <select placeholder="Select..." name="auditorG[]">
                                                                         <option value="">Select a value</option>
@@ -1195,7 +1218,12 @@ function addMultipleFiles(input, block_id) {
                                                                     <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="qa_comment[]" value="{{unserialize($grid_data1->qa_comment)[$key] ? unserialize($grid_data1->qa_comment)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td>
-                                                                    <td><input type="date" name="capa_due_date[]" value="{{unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key]: "" }}"></td>
+                                                                    {{-- <td><input type="date" name="capa_due_date[]" value="{{unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key]: "" }}"></td> --}}
+                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div class="calenderauditee">
+                                                                        <input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="capa_due_date[]" class="hide-input" 
+                                                                        oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>
                                                                     <td>
                                                                         <select placeholder="Select..." name="capa_owner[]">
                                                                             <option value="">Select a value</option>
@@ -1207,7 +1235,12 @@ function addMultipleFiles(input, block_id) {
                                                                         </select>
                                                                     </td>
                                                                     <td><input type="text" name="action_taken[]" value="{{unserialize($grid_data1->action_taken)[$key] ? unserialize($grid_data1->action_taken)[$key]: "" }}"></td>
-                                                                    <td><input type="date" name="capa_completion_date[]" value="{{unserialize($grid_data1->capa_completion_date)[$key] ? unserialize($grid_data1->capa_completion_date)[$key]: "" }}"></td>
+                                                                    {{-- <td><input type="date" name="capa_completion_date[]" value="{{unserialize($grid_data1->capa_completion_date)[$key] ? unserialize($grid_data1->capa_completion_date)[$key]: "" }}"></td> --}}
+                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div class="calenderauditee">
+                                                                        <input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                        <input type="date" name="capa_completion_date[]" class="hide-input" 
+                                                                        oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>
                                                                     <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td>
                                                                 </tr>

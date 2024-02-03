@@ -47,6 +47,7 @@ return new class extends Migration
 
             $table->text('assign_id')->nullable();
             $table->text('Initiator_id')->nullable();
+            $table->text('initiator_Group')->nullable();
             $table->text('initiator_group_code')->nullable();
 
             $table->string('division_id')->nullable();

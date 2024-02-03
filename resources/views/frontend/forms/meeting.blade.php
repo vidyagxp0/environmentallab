@@ -103,42 +103,42 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiatorGroup" id="initiator_group">
+                                        <select name="initiator_Group" id="initiator_group">
                                             <option value="">-- Select --</option>
-                                            <option value="CQA" @if (old('initiatorGroup') == 'CQA') selected @endif>
+                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
                                                 Corporate Quality Assurance</option>
-                                            <option value="QAB" @if (old('initiatorGroup') == 'QAB') selected @endif>Quality
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQA') selected @endif>Central
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if (old('initiatorGroup') == 'CQC') selected @endif>
+                                            <option value="CQC" @if (old('initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
-                                            <option value="PSG" @if (old('initiatorGroup') == 'PSG') selected @endif>Plasma
+                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if (old('initiatorGroup') == 'CS') selected @endif>Central
+                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>Central
                                                 Stores</option>
-                                            <option value="ITG" @if (old('initiatorGroup') == 'ITG') selected @endif>
+                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
                                                 Information Technology Group</option>
-                                            <option value="MM" @if (old('initiatorGroup') == 'MM') selected @endif>
+                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
                                                 Molecular Medicine</option>
-                                            <option value="CL" @if (old('initiatorGroup') == 'CL') selected @endif>Central
+                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>Central
                                                 Laboratory</option>
 
-                                            <option value="TT" @if (old('initiatorGroup') == 'TT') selected @endif>Tech
+                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
                                                 team</option>
-                                            <option value="QA" @if (old('initiatorGroup') == 'QA') selected @endif>
+                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
-                                            <option value="QM" @if (old('initiatorGroup') == 'QM') selected @endif>
+                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
                                                 Quality Management</option>
-                                            <option value="IA" @if (old('initiatorGroup') == 'IA') selected @endif>IT
+                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC" @if (old('initiatorGroup') == 'ACC') selected @endif>
+                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
                                                 Accounting</option>
-                                            <option value="LOG" @if (old('initiatorGroup') == 'LOG') selected @endif>
+                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
                                                 Logistics</option>
-                                            <option value="SM" @if (old('initiatorGroup') == 'SM') selected @endif>
+                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
                                                 Senior Management</option>
-                                            <option value="BA" @if (old('initiatorGroup') == 'BA') selected @endif>
+                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
                                                 Business Administration</option>
                                         </select>
                                     </div>
@@ -163,7 +163,7 @@
                                     <div class="group-input">
                                         <label for="type">Type</label>
                                         <select name="type">
-                                            <option value="">Select Type</option>
+                                            <option value="0">Select Type</option>
                                             <option value="Other">Other</option>
                                             <option value="Training">Training</option>
                                             <option value="FinanceFinance">FinanceFinance</option>
@@ -204,8 +204,8 @@
                                         <label for="Date Due">Scheduled Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="start_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'start_date')" />
+                                            <input type="date" id="start_date_checkdate" name="start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -214,8 +214,8 @@
                                         <label for="Date Due">Scheduled End Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="end_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'end_date')" />
+                                            <input type="date" id="end_date_checkdate"  name="end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -1232,7 +1232,7 @@
                                 <textarea name="conclusion_new"></textarea>
                             </div>
                             <div class="group-input">
-                                <label for="closure_attachments">Closure Attachments</label>
+                                <label for="closure-attachments">Closure Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">

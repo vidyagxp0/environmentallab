@@ -180,56 +180,56 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
-                                        <select name="initiatorGroup"
+                                        <select name="initiator_Group"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
-                                            id="initiator-group">
-                                            <option value="CQA" @if ($data->initiatorGroup == 'CQA') selected @endif>
+                                            id="initiator_group">
+                                            <option value="CQA" @if ($data->initiator_Group == 'CQA') selected @endif>
                                                 Corporate
                                                 Quality Assurance</option>
-                                            <option value="QAB" @if ($data->initiatorGroup == 'QAB') selected @endif>
+                                            <option value="QAB" @if ($data->initiator_Group == 'QAB') selected @endif>
                                                 Quality
                                                 Assurance Biopharma</option>
-                                            <option value="CQC" @if ($data->initiatorGroup == 'CQC') selected @endif>
+                                            <option value="CQC" @if ($data->initiator_Group == 'CQC') selected @endif>
                                                 Central
                                                 Quality Control</option>
-                                            <option value="CQC" @if ($data->initiatorGroup == 'CQC') selected @endif>
+                                            <option value="CQC" @if ($data->initiator_Group == 'CQC') selected @endif>
                                                 Manufacturing
                                             </option>
-                                            <option value="PSG" @if ($data->initiatorGroup == 'PSG') selected @endif>
+                                            <option value="PSG" @if ($data->initiator_Group == 'PSG') selected @endif>
                                                 Plasma
                                                 Sourcing Group</option>
-                                            <option value="CS" @if ($data->initiatorGroup == 'CS') selected @endif>
+                                            <option value="CS" @if ($data->initiator_Group == 'CS') selected @endif>
                                                 Central
                                                 Stores</option>
-                                            <option value="ITG" @if ($data->initiatorGroup == 'ITG') selected @endif>
+                                            <option value="ITG" @if ($data->initiator_Group == 'ITG') selected @endif>
                                                 Information
                                                 Technology Group</option>
-                                            <option value="MM" @if ($data->initiatorGroup == 'MM') selected @endif>
+                                            <option value="MM" @if ($data->initiator_Group == 'MM') selected @endif>
                                                 Molecular
                                                 Medicine</option>
-                                            <option value="CL" @if ($data->initiatorGroup == 'CL') selected @endif>
+                                            <option value="CL" @if ($data->initiator_Group == 'CL') selected @endif>
                                                 Central
                                                 Laboratory</option>
-                                            <option value="TT" @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                            <option value="TT" @if ($data->initiator_Group == 'TT') selected @endif>Tech
                                                 team</option>
-                                            <option value="QA" @if ($data->initiatorGroup == 'QA') selected @endif>
+                                            <option value="QA" @if ($data->initiator_Group == 'QA') selected @endif>
                                                 Quality
                                                 Assurance</option>
-                                            <option value="QM" @if ($data->initiatorGroup == 'QM') selected @endif>
+                                            <option value="QM" @if ($data->initiator_Group == 'QM') selected @endif>
                                                 Quality
                                                 Management</option>
-                                            <option value="IA" @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                            <option value="IA" @if ($data->initiator_Group == 'IA') selected @endif>IT
                                                 Administration</option>
-                                            <option value="ACC" @if ($data->initiatorGroup == 'ACC') selected @endif>
+                                            <option value="ACC" @if ($data->initiator_Group == 'ACC') selected @endif>
                                                 Accounting
                                             </option>
-                                            <option value="LOG" @if ($data->initiatorGroup == 'LOG') selected @endif>
+                                            <option value="LOG" @if ($data->initiator_Group == 'LOG') selected @endif>
                                                 Logistics
                                             </option>
-                                            <option value="SM" @if ($data->initiatorGroup == 'SM') selected @endif>
+                                            <option value="SM" @if ($data->initiator_Group == 'SM') selected @endif>
                                                 Senior
                                                 Management</option>
-                                            <option value="BA" @if ($data->initiatorGroup == 'BA') selected @endif>
+                                            <option value="BA" @if ($data->initiator_Group == 'BA') selected @endif>
                                                 Business
                                                 Administration</option>
 
@@ -239,9 +239,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
-                                            value="{{ $data->initiator_group }}" disabled>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code"  value="{{ $data->initiator_Group}}" readonly>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -256,49 +254,56 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
-                                        <select name="type"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
-                                            <option value="Other">Other</option>
-                                            <option value="Training">Training</option>
-                                            <option value="Finance">Finance</option>
-                                            <option value="follow Up">Follow Up</option>
-                                            <option value="Marketing">Marketing</option>
-                                            <option value="Sales">Sales</option>
-                                            <option value="Account Service">Account Service</option>
-                                            <option value="Recent Product Launch">Recent Product Launch</option>
-                                            <option value="IT">IT</option>
+                                        <select name="type">
+                                            <option value="0">-- Select type --</option>
+                                            <option @if ($data->type=='Other') selected @endif value="Other">Other</option>
+                                            <option @if ($data->type=='Training') selected @endif value="Training">Training</option>
+                                            <option @if ($data->type=='Finance') selected @endif value="Finance">Finance</option>
+                                            <option @if ($data->type=='follow Up') selected @endif value="follow Up">Follow Up</option>
+                                            <option @if ($data->type=='Marketing') selected @endif value="Marketing">Marketing</option>
+                                            <option @if ($data->type=='Sales') selected @endif value="Sales">Sales</option>
+                                            <option @if ($data->type=='Account Service') selected @endif value="Account Service">Account Service</option>
+                                            <option @if ($data->type=='Recent Product Launch') selected @endif value="Recent Product Launch">Recent Product Launch</option>
+                                            <option @if ($data->type=='IT') selected @endif value="IT">IT</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Priority Level">Priority Level</label>
-                                        <select name="priority_level"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
-                                            <option value="High">High</option>
-                                            <option value="Medium">Medium</option>
-                                            <option value="Low">Low</option>
+                                        <select name="priority_level">
+                                            <option @if ($data->priority_level=='High') selected @endif value="High">High</option>
+                                            <option @if ($data->priority_level=='Medium') selected @endif value="Medium">Medium</option>
+                                            <option @if ($data->priority_level=='Low') selected @endif value="Low">Low</option>
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
-                                        <input type="date" name="start_date"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="start_date_checkdate" name="start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled end date</label>
-                                        <input type="date" name="end_date"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
+                                        {{-- <input type="date" name="end_date"
+                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}> --}}
+                                            <div class="calenderauditee">
+                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" />
+                                                <input type="date" id="end_date_checkdate"  name="end_date" class="hide-input"
+                                                    oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">   
                                         <label for="Attendees">Attendess</label>
-                                        <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}></textarea>
+                                        <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->attendees}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -350,7 +355,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Description">Description</label>
-                                        <textarea name="description" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}></textarea>
+                                        <textarea name="description" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->description}}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -394,7 +399,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="Operations"></textarea>
+                                <textarea name="Operations" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Operations }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="requirement_products_services">
@@ -405,7 +410,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="requirement_products_services"></textarea>
+                                <textarea name="requirement_products_services"  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->requirement_products_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="design_development_product_services">
@@ -416,7 +421,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="design_development_product_services"></textarea>
+                                <textarea name="design_development_product_services" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->design_development_product_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="control_externally_provide_services">
@@ -427,7 +432,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="control_externally_provide_services"></textarea>
+                                <textarea name="control_externally_provide_services"  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->control_externally_provide_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="production_service_provision">
@@ -438,7 +443,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="production_service_provision"></textarea>
+                                <textarea name="production_service_provision" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->production_service_provision}}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="release_product_services">
@@ -449,7 +454,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="release_product_services"></textarea>
+                                <textarea name="release_product_services" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->release_product_services }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="control_nonconforming_outputs">
@@ -460,7 +465,7 @@
                                         (Launch Instruction)
                                     </span>
                                 </label>
-                                <textarea name="control_nonconforming_outputs"></textarea>
+                                <textarea name="control_nonconforming_outputs" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->control_nonconforming_outputs }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="performance_evaluation">
@@ -506,39 +511,39 @@
                         <div class="inner-block-content">
                             <div class="group-input">
                                 <label for="risk_opportunities">Risk & Opportunities</label>
-                                <textarea name="risk_opportunities"></textarea>
+                                <textarea name="risk_opportunities" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->risk_opportunities}}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="external_supplier_performance">External Supplier Performance</label>
-                                <textarea name="external_supplier_performance"></textarea>
+                                <textarea name="external_supplier_performance" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->external_supplier_performance }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="customer_satisfaction_level">Customer Satisfaction Level</label>
-                                <textarea name="customer_satisfaction_level"></textarea>
+                                <textarea name="customer_satisfaction_level" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->customer_satisfaction_level }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="budget_estimates">Budget Estimates</label>
-                                <textarea name="budget_estimates"></textarea>
+                                <textarea name="budget_estimates" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->budget_estimates }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="completion_of_previous_tasks">Completion of Previous Tasks</label>
-                                <textarea name="completion_of_previous_tasks"></textarea>
+                                <textarea name="completion_of_previous_tasks" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->completion_of_previous_tasks }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="production">Production</label>
-                                <textarea name="production"></textarea>
+                                <textarea name="production_new" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->production_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="plans">Plans</label>
-                                <textarea name="plans"></textarea>
+                                <textarea name="plans_new" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->plans_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="forecast">Forecast</label>
-                                <textarea name="forecast"></textarea>
+                                <textarea name="forecast_new" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->forecast_new }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="additional_suport_required">Any Additional Support Required</label>
-                                <textarea name="additional_suport_required"></textarea>
+                                <textarea name="additional_suport_required" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->additional_suport_required }}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="file_attchment_if_any">File Attachment, if any</label>
@@ -597,8 +602,8 @@
                                         <td> <select id="select-state" placeholder="Select..."
                                                 name="responsible_person[]">
                                                 <option value="">Select a value</option>
-                                                @foreach ($users as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}
+                                                @foreach ($users as $undata)
+                                                    <option value="{{ $undata->id }}">{{ $undata->name }}
                                                     </option>
                                                 @endforeach
                                             </select></td>
@@ -639,8 +644,8 @@
                                         <td> <select id="select-state" placeholder="Select..."
                                                 name="responsible_person[]">
                                                 <option value="">Select a value</option>
-                                                @foreach ($users as $data)
-                                                    <option value="{{ $data->id }}">{{ $data->name }}
+                                                @foreach ($users as $udata)
+                                                    <option value="{{ $udata->id }}">{{ $udata->name }}
                                                     </option>
                                                 @endforeach
                                             </select></td>
@@ -649,17 +654,24 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="group-input">
-                                <label for="next_managment_review_date">Next Management Review Date</label>
-                                <input type="date" name='next_managment_review_date'>
+                             <div class="new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="next_managment_review_date">Next Management Review Date</label>
+                                    <div class="calenderauditee">
+                                        <input type="text" id="next_managment_review_date" readonly
+                                            placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="next_managment_review_date" class="hide-input"
+                                            oninput="handleDateInput(this, 'next_managment_review_date')" />
+                                    </div>
+                                </div>
                             </div>
                             <div class="group-input">
                                 <label for="summary_recommendation">Summary & Recommendation</label>
-                                <textarea name="summary_recommendation"></textarea>
+                                <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->summary_recommendation}}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="conclusion">Conclusion</label>
-                                <textarea name="conclusion"></textarea>
+                                <textarea name="conclusion_new"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->conclusion_new}}</textarea>
                             </div>
                             <div class="group-input">
                                 <label for="closure_attachments">Closure Attachments</label>
@@ -679,9 +691,8 @@
                             </div>
                             <div class="group-input">
                                 <label for="due_date_extension">Due Date Extension Justification</label>
-                                <div><small class="text-primary">Please Mention justification if due date is
-                                        crossed</small></div>
-                                <textarea name="due_date_extension"></textarea>
+                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
+                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->due_date_extension}}</textarea>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -710,11 +721,9 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton"
-                                    {{$data->stage == 0 ||$data->stage == 3 ? 'disabled' : '' }}>Save</button>
+                                <button type="submit" class="saveButton>Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit"
-                                    {{$data->stage == 0 ||$data->stage == 3 ? 'disabled' : '' }}>Submit</button>
+                                <button type="submit">Submit</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a>
                                 </button>
@@ -985,4 +994,11 @@
             }
         }
     </script>
+        <script>
+            // JavaScript
+            document.getElementById('initiator_group').addEventListener('change', function() {
+                var selectedValue = this.value;
+                document.getElementById('initiator_group_code').value = selectedValue;
+            });
+        </script>
 @endsection

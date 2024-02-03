@@ -54,15 +54,16 @@ class ManagementReviewController extends Controller
         // $management->assign_id = 1;//$request->assign_id;
          $management->priority_level = $request->priority_level;
          $management->assign_id = $request->assign_id;
-         $management->Operations = $request->Operations;
+         $management->Operations= $request->Operations;
          $management->requirement_products_services = $request->requirement_products_services;
          $management->design_development_product_services = $request->design_development_product_services; 
          $management->control_externally_provide_services = $request->control_externally_provide_services;
-         $management->production_service_provision = $request->production_service_provision;
+         $management->production_service_provision= $request->production_service_provision;
          $management->release_product_services = $request->release_product_services;
         $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
         $management->risk_opportunities = $request->risk_opportunities;
-        $management->initiator_group_code = $request->initiator_group_code;
+        $management->initiator_group_code= $request->initiator_group_code;
+        $management->initiator_Group= $request->initiator_Group;
        // $management->type = $request->type;
        // $management->serial_number = 1;
         //json_encode($request->serial_number);
@@ -124,7 +125,7 @@ class ManagementReviewController extends Controller
         $management->production_new = $request->production_new;
         $management->plans_new = $request->plans_new;
         $management->forecast_new = $request->forecast_new;
-        $management->due_date_extension = $request->due_date_extension;
+        $management->due_date_extension= $request->due_date_extension;
         $management->conclusion_new = $request->conclusion_new;
         $management->next_managment_review_date = $request->next_managment_review_date;
         $management->summary_recommendation = $request->summary_recommendation;
@@ -498,12 +499,13 @@ class ManagementReviewController extends Controller
         $management->priority_level = $request->priority_level;
         $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
         $management->assign_id = $request->assign_id;
-        $management->initiator_group_code = $request->initiator_group_code;
-        $management->Operations = $request->Operations;
+        $management->initiator_group_code= $request->initiator_group_code;
+        $management->Operations= $request->Operations;
+        $management->initiator_Group= $request->initiator_Group;
         $management->requirement_products_services = $request->requirement_products_services;
         $management->design_development_product_services = $request->design_development_product_services; 
         $management->control_externally_provide_services = $request->control_externally_provide_services;
-        $management->production_service_provision = $request->production_service_provision;
+        $management->production_service_provision= $request->production_service_provision;
         $management->release_product_services = $request->release_product_services;
        $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
          $management->external_supplier_performance = $request->external_supplier_performance;
@@ -518,7 +520,7 @@ class ManagementReviewController extends Controller
          $management->forecast_new = $request->forecast_new;
          $management->conclusion_new = $request->conclusion_new;
          $management->summary_recommendation = $request->summary_recommendation;
-         $management->due_date_extension = $request->due_date_extension;
+         $management->due_date_extension= $request->due_date_extension;
 
        
 
@@ -888,6 +890,7 @@ class ManagementReviewController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $agenda = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"agenda")->first();
+      // dd($data->stage);
         return view('frontend.management-review.management_review', compact( 'data','agenda' ));
     }
 

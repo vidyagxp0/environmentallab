@@ -549,12 +549,25 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select></td>
-                                                            <td><input type="date" name="start_date[]"
+                                                            {{-- <td><input type="date" name="start_date[]"
                                                                     value="{{ unserialize($AuditProgramGrid->start_date)[$key] ? unserialize($AuditProgramGrid->start_date)[$key] : '' }}">
                                                             </td>
                                                             <td><input type="date" name="end_date[]"
                                                                     value="{{ unserialize($AuditProgramGrid->end_date)[$key] ? unserialize($AuditProgramGrid->end_date)[$key] : '' }}">
-                                                            </td>
+                                                            </td> --}}
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date "><div
+                                                                 class="calenderauditee">
+                                                                <input type="text" id="start_date1" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="start_date1_checkdate" name="start_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, 'start_date1');checkDate('start_date1_checkdate','end_date1_checkdate')" /></div></div></div></td>
+                                                            {{-- <td><input type="date" name="end_date[]"></td> --}}
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date "><div
+                                                                 class="calenderauditee">
+                                                                <input type="text" id="end_date1" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="end_date1_checkdate"  name="end_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, 'end_date1');checkDate('start_date1_checkdate','end_date1_checkdate')" /></div></div></div></td>
                                                             <td> <select id="select-state" placeholder="Select..."
                                                                     name="lead_investigator[]">
                                                                     <option value="">-Select-</option>
