@@ -74,7 +74,7 @@ class DocumentController extends Controller
         $new->short_description = $request->short_description;
         $new->due_dateDoc = $request->due_dateDoc;
         $new->description = $request->description;
-        $new->notify_to = $request->notify_to;
+        //$new->notify_to = $request->notify_to;
         $new->reference_record = $request->reference_record;
         $new->department_id = $request->department_id;
         $new->document_type_id = $request->document_type_id;
@@ -491,7 +491,7 @@ class DocumentController extends Controller
             $document->next_review_date = $request->next_review_date;
             $document->review_period = $request->review_period;
             $document->training_required = $request->training_required;
-
+            $document->attach_draft_doocument = $request->attach_draft_doocument;
 
             if ($request->keywords) {
                 $document->keywords = implode(',', $request->keywords);
@@ -1518,7 +1518,7 @@ class DocumentController extends Controller
         $newdoc->short_description = $document->short_description;
         $newdoc->due_dateDoc = $document->due_dateDoc;
         $newdoc->description = $document->description;
-        $newdoc->notify_to = $document->notify_to;
+        //$newdoc->notify_to = $document->notify_to;
         $newdoc->reference_record = $document->reference_record;
         $newdoc->department_id = $document->department_id;
         $newdoc->document_type_id = $document->document_type_id;

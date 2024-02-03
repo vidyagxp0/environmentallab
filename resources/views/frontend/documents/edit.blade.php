@@ -9,14 +9,12 @@
     <div id="data-fields">
         <div class="container-fluid">
             <div class="tab">
-                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document
-                    information</button>
+                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button>
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &
-                    Retrieval</button>
-                <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button>
+                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
+                <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control</button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
             </div>
             <form method="POST" action="{{ route('documents.update', $document->id) }}" enctype="multipart/form-data">
@@ -130,14 +128,11 @@
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date</label>
-                                    <!-- <input type="date" name="due_date" id="due_dateDoc"
-                                        value="{{ $document->due_date }}"> -->
-                                    
                                     <div class="calenderauditee">                                     
-                                        <input type="text"  id="due_date" value="{{ $document->due_date }}"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" value=""
+                                        <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="due_dateDoc" value=""
                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"/>
+                                        oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -643,12 +638,11 @@
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="effective-date">Effective Date</label>
-                                    <!-- <input type="date" name="effectve_date" value="{{ $document->effectve_date }}" id="effectve_date"> -->
                                     <div class="calenderauditee">                                     
-                                        <input type="text"  id="effectve_date" value="{{ $document->effectve_date }} readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="effectve_date" value=""
+                                        <input type="text"  id="effective_date" value="{{ $document->effective_date }}" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="effective_date" value=""
                                         class="hide-input"
-                                        oninput="handleDateInput(this, 'effectve_date')"/>
+                                        oninput="handleDateInput(this, 'effective_date')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
                                         @if (

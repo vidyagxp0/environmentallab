@@ -78,12 +78,12 @@ class CCController extends Controller
     public function store(Request $request)
     {
         //dd($request);
-        $this->validate($request, [
-            'assign_to' => 'required',
-            'initiatorGroup' => 'required',
-            'short_description' => 'required|unique:open_stages,short_description',
-            'due_date' => 'required',
-        ]);
+        // $this->validate($request, [
+        //     'assign_to' => 'required',
+        //     'initiatorGroup' => 'required',
+        //     'short_description' => 'required|unique:open_stages,short_description',
+        //     'due_date' => 'required',
+        // ]);
         
         $openState = new CC();
         $openState->form_type = "CC";
@@ -179,7 +179,7 @@ class CCController extends Controller
         $openState->status = 'Opened';
         $openState->stage = 1;
         $openState->save();
-
+ 
         // Retrieve the current counter value
         $counter = DB::table('record_numbers')->value('counter');
         // Generate the record number with leading zeros
@@ -1050,18 +1050,18 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
-        // $history = new RcmDocHistory;
-        // $history->cc_id = $closure->id;
-        // $history->activity_type = 'List Of Attachments';
-        // $history->previous = "Null";
-        // $history->current = $closure->attach_list;
-        // $history->comment = "NA";
-        // $history->user_id = Auth::user()->id;
-        // $history->user_name = Auth::user()->name;
-        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        // $history->origin_state = $openState->status;
-        // $history->save();
-        // toastr()->success('Record is created Successfully ');
+        $history = new RcmDocHistory;
+        $history->cc_id = $closure->id;
+        $history->activity_type = 'List Of Attachments 2';
+        $history->previous = "Null";
+        $history->current = $closure->attach_list;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+       // toastr()->success('Record is created Successfully ');
 
         return redirect('rcms/qms-dashboard');
     }
@@ -1101,6 +1101,7 @@ class CCController extends Controller
 
     public function update(Request $request, $id)
     {
+   
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
         $openState->initiator_id = Auth::user()->id;
@@ -1188,7 +1189,7 @@ class CCController extends Controller
             $openState->in_attachment = json_encode($files);
         }
         $openState->update();
-
+ 
 
         $lastdocdetail = Docdetail::where('cc_id', $id)->first();
         $docdetail = Docdetail::where('cc_id', $id)->first();
@@ -1437,7 +1438,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-
+        
         if ($lastDocument->assign_to != $openState->assign_to || !empty($request->document_name_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2096,6 +2097,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        
         if ($lastclosure->effective_check_date != $closure->feedbackeffective_check_date || !empty($request->effective_check_date_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2112,7 +2114,7 @@ class CCController extends Controller
         if ($lastclosure->attach_list != $closure->attach_list || !empty($request->attach_list_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'List Of Attachments';
+            $history->activity_type = 'List Of Attachments 1';
             $history->previous = $lastclosure->attach_list;
             $history->current = $closure->attach_list;
             $history->comment = $request->attach_list_comment;
@@ -2121,10 +2123,10 @@ class CCController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
-            return $history;
+           // return $history;
         }
-
-        toastr()->success('Record is updated Successfully');
+       // dd($request);
+       // toastr()->success('Record is updated Successfully');
         return back();
     }
 

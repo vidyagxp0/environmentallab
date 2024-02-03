@@ -1051,10 +1051,10 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1)}}"
+                                                    <input type="text" id="schedule_start_date" readonly value="{{ $data->schedule_start_date1 }}"
                                                         placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="schedule_start_date1" class="hide-input"
-                                                        oninput="handleDateInput(this, 'schedule_start_date')" />
+                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" class="hide-input"
+                                                        oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_start_date1" value="{{$data->schedule_start_date1}}"> --}}
                                             </div>
@@ -1063,10 +1063,10 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled End Date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_end_date" readonly value="{{Helpers::getdateFormat($data->schedule_end_date1)}}"
+                                                    <input type="text" id="schedule_end_date" readonly value="{{ $data->schedule_end_date1 }}"
                                                         placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="schedule_end_date1" class="hide-input"
-                                                        oninput="handleDateInput(this, 'schedule_end_date')" />
+                                                    <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" class="hide-input"
+                                                        oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_end_date1" value="{{$data->schedule_end_date}}"> --}}
                                             </div>

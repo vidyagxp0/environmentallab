@@ -941,7 +941,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="additional_attachments">Additional Attachments</label>
+                                                    <label for="additional attachments">Additional Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="additional_attachments">
                                                             @if ($info->additional_attachments)
@@ -1356,10 +1356,10 @@
                                                     <label for="effective-check-date">Effectiveness Check Creation Date</label>
                                                    <div class="calenderauditee">                                     
                                                           <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="effective_check_date" value=""  class="hide-input"
+                                                        <input type="date" name="effective_check_date"  class="hide-input"
                                                         oninput="handleDateInput(this, 'effective_check_date')"/>
                                              </div>
-                                                </div>
+                                            </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">

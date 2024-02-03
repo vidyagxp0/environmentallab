@@ -647,6 +647,68 @@
             </tr>
         </tbody>
 
+        {{-- <tbody>
+            <tr>
+                <td>
+                    <table class="bordered" style="width: 100%; border-collapse: collapse; font-size: 0.8rem;">
+
+                        <thead style="display: table-header-group">
+                            <tr style="font-size: 1.2rem;">
+                                <th class="main-head" colspan="8">New Document</th>
+                            </tr>
+                            <tr style="background: #d7d9db;">
+                                <th>Record</th>
+                                <th>Division</th>
+                                <th>Process</th>
+                                <th>Short Description</th>
+                                <th>Date Opened</th>
+                                <th>Assigned To</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr>
+                                <td>0001</td>
+                                <td>Global</td>
+                                <td>Risk Assessment</td>
+                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
+                                <td>13 December, 2023</td>
+                                <td>Amit Guru</td>
+                                <td>13 December, 2023</td>
+                                <td>Under Review</td>
+                            </tr>
+                            <tr>
+                                <td>0002</td>
+                                <td>Jordan</td>
+                                <td>Risk Assessment</td>
+                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
+                                <td>13 December, 2023</td>
+                                <td>Amit Guru</td>
+                                <td>13 December, 2023</td>
+                                <td>Under Review</td>
+                            </tr>
+                            <tr>
+                                <td>0002</td>
+                                <td>QMS-EMEA</td>
+                                <td>Risk Assessment</td>
+                                <td>Lorem ipsum dolor sit amet, consectetur adipisicing.</td>
+                                <td>13 December, 2023</td>
+                                <td>Amit Guru</td>
+                                <td>13 December, 2023</td>
+                                <td>Under Review</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 8px">&nbsp;</td>
+            </tr>
+        </tbody> --}}
+
     </table>
 </body>
 

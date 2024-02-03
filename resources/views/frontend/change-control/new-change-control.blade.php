@@ -272,7 +272,7 @@
                                         <textarea name="repeat_nature"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="risk_level">Risk Level</label>
                                         <select name="risk_level" id="risk_level" class="mb-0">
@@ -283,7 +283,7 @@
                                         </select>
                                         <div class="ai_text">AI Suggested option</div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -336,9 +336,7 @@
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
-                                        Exit </a> </button>
-
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">Exit</a> </button>
                             </div>
                         </div>
                     </div>
@@ -663,7 +661,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="additional_attachments">Additional Attachments</label>
+                                        <label for="additional attachments">Additional Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">

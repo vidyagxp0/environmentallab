@@ -518,10 +518,10 @@
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="start_date" id="start_date" readonly
+                                            <input type="text" id="start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'start_date')" />
+                                            <input type="date" id="start_date_checkdate" name="start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
 
                                     </div>
@@ -530,10 +530,10 @@
                                     <div class="group-input input-date">
                                         <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="end_date" id="end_date" readonly
+                                            <input type="text" id="end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'end_date')" />
+                                            <input type="date" id="end_date_checkdate" name="end_date" class="hide-input" 
+                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
 
                                     </div>
@@ -582,7 +582,7 @@
                                                             <div  class="calenderauditee">
                                                                 <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                                 <input type="date" name="scheduled_end_date[]" class="hide-input" 
-                                                    oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" />
+                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -814,10 +814,10 @@
                                     <div class="group-input input-date">
                                         <label for="audit_start_date Date">Audit Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="audit_start_date" id="audit_start_date" readonly
+                                            <input type="text"  id="audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'audit_start_date')" />
+                                            <input type="date" id="audit_start_date_checkdate" name="audit_start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -826,10 +826,10 @@
                                         <div class="calenderauditee">
                                             <label for="Audit End Date">Audit End Date</label>
                                             <div class="calenderauditee">
-                                            <input type="text" name="audit_end_date" id="audit_end_date" readonly
+                                            <input type="text" id="audit_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" class="hide-input"
-                                                oninput="handleDateInput(this, 'audit_end_date')" />
+                                            <input type="date" id="audit_end_date_checkdate" name="audit_end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                         </div>
                                     </div>

@@ -39,8 +39,7 @@
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &
-                    Retrieval</button>
+                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
             </div>
@@ -380,8 +379,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                class="saveButton">Save</button>
+                            <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
                             <button type="button" class="nextButton" id="DocnextButton">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
                             </button> 
@@ -491,11 +489,9 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                class="saveButton">Save</button>
+                            <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="button" class="nextButton" id="DocnextButton"
-                                onclick="nextStep()">Next</button>
+                            <button type="button" class="nextButton" id="DocnextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" > Exit </a>
                             </button>
                         </div>
@@ -665,8 +661,7 @@
                             </div>
                         </div>
                         <div class="button-block">
-                            <button type="submit" value="save" name="submit" id="DocsaveButton"
-                                class="saveButton">Save</button>
+                            <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
@@ -1127,6 +1122,7 @@
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
                             <button type="submit">Submit</button>
+                            <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" href="#"> Exit </a> </button>
                         </div>
                     </div>
 
