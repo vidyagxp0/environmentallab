@@ -766,8 +766,7 @@
                                                             <h6 type="button" class="file-container text-dark"
                                                                 style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
-                                                                <a href="{{ asset('upload/' . $file) }}"
-                                                                    target="_blank"><i class="fa fa-eye text-primary"
+                                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
                                                                     data-file-name="{{ $file }}"><i
@@ -779,7 +778,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="qa_eval_attach[]"
+                                                    <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="qa_eval_attach[]"
                                                         oninput="addMultipleFiles(this, 'qa_eval_attach')" multiple>
                                                 </div>
                                             </div>
@@ -941,7 +940,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="additional attachments">Additional Attachments</label>
+                                                    <label for="additional_attachments">Additional Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="additional_attachments">
                                                             @if ($info->additional_attachments)
@@ -1340,35 +1339,25 @@
                                                     </select>
                                                 </div>
                                             </div>
-                                            {{-- <div class="col-lg-6 new-date-data-field">
-                                               <div class="group-input input-date">
-                                                    <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                                        <div class="calenderauditee">                                     
-                                                            <input type="text"  id="effective_check_date"   readonly placeholder="DD-MMM-YYYY" />
-                                                            <input type="date" name="effective_check_date" value="" class="hide-input"
-                                                            oninput="handleDateInput(this, 'effective_check_date')"/>
-                                                        </div>
-
-                                                </div>
-                                            </div> --}}
+                                           
                                             <div class="col-lg-6 new-date-data-field">
-                                             <div class="group-input input-date">
+                                                <div class="group-input input-date">
                                                     <label for="effective-check-date">Effectiveness Check Creation Date</label>
                                                    <div class="calenderauditee">                                     
                                                           <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="effective_check_date"  class="hide-input"
+                                                        <input type="date" name="effective_check_date" value=""  class="hide-input"
                                                         oninput="handleDateInput(this, 'effective_check_date')"/>
                                              </div>
-                                            </div>
+                                                </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="Effectiveness_checker">Effectiveness Checker</label>
                                                     <select name="Effectiveness_checker">
                                                         <option value="0">Enter Your Selection Here</option>
-                                                        @foreach ($users as $datass)
-                                                            <option {{ $info->Effectiveness_checker == $datass->id ? 'selected' : '' }}
-                                                                 value="{{ $datass->id }}">{{ $datass->name }}
+                                                        @foreach ($users as $datas)
+                                                            <option {{ $info->Effectiveness_checker == $datas->id ? 'selected' : '' }}
+                                                                 value="{{ $datas->id }}">{{ $datas->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>

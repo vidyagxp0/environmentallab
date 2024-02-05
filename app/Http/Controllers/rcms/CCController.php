@@ -117,7 +117,7 @@ class CCController extends Controller
         $openState->qa_head = json_encode($request->qa_head);
 
         $openState->qa_eval_comments = json_encode($request->qa_eval_comments);
-        $openState->qa_eval_attach = json_encode($request->qa_eval_attach);
+        //$openState->qa_eval_attach = json_encode($request->qa_eval_attach);
         $openState->training_required = $request->training_required;
         $openState->train_comments = $request->train_comments;
 
@@ -176,6 +176,7 @@ class CCController extends Controller
             }
             $openState->in_attachment = json_encode($files);
         }
+ 
         $openState->status = 'Opened';
         $openState->stage = 1;
         $openState->save();
@@ -220,10 +221,12 @@ class CCController extends Controller
         if ($request->related_records) {
             $review->related_records = implode(',', $request->related_records);
         }
+
         if (!empty($request->qa_head)) {
             $files = [];
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
+                  //  dd($file);
                     $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -231,7 +234,6 @@ class CCController extends Controller
             }
             $review->qa_head = json_encode($files);
         }
-
         $review->save();
 
         $evaluation = new Evaluation();
@@ -292,6 +294,7 @@ class CCController extends Controller
         $comments = new GroupComments();
         $comments->cc_id = $openState->id;
         $comments->qa_comments = $request->qa_comments;
+        $comments->qa_commentss = $request->qa_commentss;
         $comments->designee_comments = $request->designee_comments;
         $comments->Warehouse_comments = $request->Warehouse_comments;
         $comments->Engineering_comments = $request->Engineering_comments;
@@ -385,6 +388,7 @@ class CCController extends Controller
         }
 
         $closure->qa_closure_comments = $request->qa_closure_comments;
+        $closure->Effectiveness_checker = $request->Effectiveness_checker;
         $closure->effective_check = $request->effective_check;
         $closure->effective_check_date = $request->effective_check_date;
         if (!empty($request->attach_list)) {
@@ -564,6 +568,7 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
+        
         $history = new RcmDocHistory;
         $history->cc_id = $review->id;
         $history->activity_type = 'QA Attachments';
@@ -575,6 +580,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
+        
 
         $history = new RcmDocHistory;
         $history->cc_id = $review->id;
@@ -614,7 +620,7 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
-        if (!empty($evaluation->qa_eval_attach)){
+        // if (!empty($evaluation->qa_eval_attach)){
         $history = new RcmDocHistory;
         $history->cc_id = $evaluation->id;
         $history->activity_type = 'QA Evaluation Attachments';
@@ -626,7 +632,7 @@ class CCController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        }
+        
 
         $history = new RcmDocHistory;
         $history->cc_id = $evaluation->id;
@@ -1030,6 +1036,18 @@ class CCController extends Controller
         $history->cc_id = $closure->id;
         $history->activity_type = 'Migration Action';
         $history->previous = "Null";
+        $history->current = $closure->Effectiveness_checker;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+
+        $history = new RcmDocHistory;
+        $history->cc_id = $closure->id;
+        $history->activity_type = 'Migration Action';
+        $history->previous = "Null";
         $history->current = $closure->feedbackeffective_check;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
@@ -1189,7 +1207,6 @@ class CCController extends Controller
             $openState->in_attachment = json_encode($files);
         }
         $openState->update();
- 
 
         $lastdocdetail = Docdetail::where('cc_id', $id)->first();
         $docdetail = Docdetail::where('cc_id', $id)->first();
@@ -1296,6 +1313,7 @@ class CCController extends Controller
         $comments = GroupComments::where('cc_id', $id)->first();
         $comments->cc_id = $openState->id;
         $comments->qa_comments = $request->qa_comments;
+        $comments->qa_commentss = $request->qa_commentss;
         $comments->designee_comments = $request->designee_comments;
         $comments->Warehouse_comments = $request->Warehouse_comments;
         $comments->Engineering_comments = $request->Engineering_comments;
@@ -1392,6 +1410,7 @@ class CCController extends Controller
         }
 
         $closure->qa_closure_comments = $request->qa_closure_comments;
+        $closure->Effectiveness_checker = $request->Effectiveness_checker;
         $closure->effective_check = $request->effective_check;
         $closure->effective_check_date = $request->effective_check_date;
 
@@ -2077,6 +2096,20 @@ class CCController extends Controller
             $history->previous = $lastclosure->qa_closure_comments;
             $history->current = $closure->qa_closure_comments;
             $history->comment = $request->qa_closure_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+            // return $closure;
+        }
+        if ($lastclosure->Effectiveness_checker != $closure->Effectiveness_checker || !empty($request->Effectiveness_checker_comment)) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Migration Action';
+            $history->previous = $lastclosure->Effectiveness_checker;
+            $history->current = $closure->Effectiveness_checker;
+            $history->comment = $request->Effectiveness_checker_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

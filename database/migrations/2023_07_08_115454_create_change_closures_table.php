@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('attach_list')->nullable();
             $table->text('effective_check')->nullable();
             $table->date('effective_check_date')->nullable();
+            $table->text('Effectiveness_checker')->nullable();
             $table->timestamps();
         });
     }
