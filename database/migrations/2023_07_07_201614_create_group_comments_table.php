@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('cc_id');
             $table->text('qa_comments')->nullable();
+            $table->text('qa_commentss')->nullable();
             $table->text('designee_comments')->nullable();
             $table->text('Warehouse_comments')->nullable();
             $table->text('Engineering_comments')->nullable();

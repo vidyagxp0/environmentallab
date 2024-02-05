@@ -707,7 +707,7 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="text" name="audit[]"
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
-<<<<<<< Updated upstream
+
                                                             {{-- <td><input type="date" name="scheduled_start_date[]"
                                                                     value="{{ unserialize($grid_data->start_date)[$key] ? unserialize($grid_data->start_date)[$key] : '' }}">
                                                             </td> --}}
@@ -729,7 +729,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                                 <input type="date" name="scheduled_end_date[]" class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
-=======
+
                                                             <td>
                                                                 <div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date ">
@@ -761,7 +761,6 @@ function addMultipleFiles(input, block_id) {
                                                             {{-- <td><input type="date" name="scheduled_end_date[]"
                                                                     value="{{ unserialize($grid_data->end_date)[$key] ? unserialize($grid_data->end_date)[$key] : '' }}">
                                                             </td> --}}
->>>>>>> Stashed changes
                                                             <td><input type="time" name="scheduled_end_time[]"
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                             </td>
