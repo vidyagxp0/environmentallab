@@ -26,13 +26,13 @@ return new class extends Migration
             $table->string('due_date')->nullable();
             $table->string('audit_schedule_start_date')->nullable();
             $table->string('audit_schedule_end_date')->nullable();
-            $table->string('record_number')->nullable();
+           // $table->string('record_number')->nullable();
             $table->string('external_agencies')->nullable();
             $table->string('severity_level_form')->nullable();
 
  
 
-            $table->integer('record')->nullable();
+             $table->integer('record')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->integer('assigend')->nullable();

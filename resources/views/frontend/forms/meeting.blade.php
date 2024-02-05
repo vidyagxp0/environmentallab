@@ -62,8 +62,7 @@
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input readonly type="text" name="Initiator_id"
-                                            value="{{ Auth::user()->name }}">
+                                        <input disabled type="text" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

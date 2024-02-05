@@ -341,7 +341,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
-                                                <input type="hidden" name="record_number">
+                                                <input type="hidden" name="record">
                                                 {{-- <div class="static">QMS-EMEA/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}</div> --}}
                                                 <input disabled type="text"
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
@@ -1209,6 +1209,7 @@ function addMultipleFiles(input, block_id) {
                                                     </div>
                                             </div>
                                         </div>
+                                       
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">

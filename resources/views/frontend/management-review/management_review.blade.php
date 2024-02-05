@@ -132,9 +132,9 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
+                                        <input type="hidden" name="initiator_id">
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
-                                            value="{{ $data->initiator_name }}">
+                                        <input disabled type="text" value="{{ $data->initiator_name}}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -156,8 +156,8 @@
                                         <select id="select-state" placeholder="Select..." name="assign_id"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @foreach ($users as $key=> $value)
+                                                <option value="{{ $value->id }}"@if ($data->assign_id== $value->id) selected @endif>{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -360,14 +360,24 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <label for="Inv Attachments">File Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
                                             </small>
                                         </div>
                                         <div class="file-attachment-field">
-                                            <div class="file-attachment-list" id="audit_file_attachment"></div>
+                                            <div disabled class="file-attachment-list" id="audit_file_attachment">
+                                                @if ($data->inv_attachment)
+                                                @foreach(json_decode($data->inv_attachment) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="inv_attachment[]"
@@ -550,7 +560,18 @@
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="file_attchment_if_any"></div>
+                                    <div disabled class="file-attachment-list" id="file_attchment_if_any">
+                                        @if ($data->file_attchment_if_any)
+                                        @foreach(json_decode($data->file_attchment_if_any) as $file)
+                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                   @endforeach
+                                        @endif
+
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="file_attchment_if_any[]"
@@ -677,8 +698,18 @@
                                 <label for="closure_attachments">Closure Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
-                                <div class="file-attachment-field">
-                                    <div class="file-attachment-list" id="closure_attachments"></div>
+                                <div  class="file-attachment-field">
+                                    <div disabled class="file-attachment-list" id="closure_attachments">
+                                        @if ($data->closure_attachments)
+                                        @foreach(json_decode($data->closure_attachments) as $file)
+                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                            <b>{{ $file }}</b>
+                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                        </h6>
+                                   @endforeach
+                                        @endif
+                                    </div>
                                     <div class="add-btn">
                                         <div>Add</div>
                                         <input type="file" id="myfile" name="closure_attachments[]"

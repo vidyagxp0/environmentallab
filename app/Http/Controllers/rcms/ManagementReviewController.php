@@ -12,7 +12,6 @@ use App\Models\EffectivenessCheck;
 use App\Models\InternalAudit;
 use App\Models\LabIncident;
 use App\Models\ManagementReview;
-// use App\Models\MeetingSummary;
 use App\Models\RecordNumber;
 use App\Models\ManagementAuditTrial;
 use App\Models\ManagementReviewDocDetails;
@@ -53,7 +52,7 @@ class ManagementReviewController extends Controller
         //$management->record_number = ($request->record_number);
         // $management->assign_id = 1;//$request->assign_id;
          $management->priority_level = $request->priority_level;
-         $management->assign_id = $request->assign_id;
+         $management->assign_id= $request->assign_id;
          $management->Operations= $request->Operations;
          $management->requirement_products_services = $request->requirement_products_services;
          $management->design_development_product_services = $request->design_development_product_services; 
@@ -79,10 +78,10 @@ class ManagementReviewController extends Controller
         $management->form_type = "management-review";
         $management->division_id = $request->division_id;
         //$management->record = ((RecordNumber::first()->value('counter')) + 1);
-        //$management->initiator_id = Auth::user()->id;
+        $management->initiator_id = Auth::user()->id;
         $management->intiation_date = $request->intiation_date;
         $management->division_code = $request->division_code;
-        $management->Initiator_id = $request->Initiator_id;
+        // $management->Initiator_id = $request->Initiator_id;
         $management->short_description = $request->short_description;
         $management->assigned_to = $request->assigned_to;
         $management->due_date = $request->due_date;
@@ -93,7 +92,7 @@ class ManagementReviewController extends Controller
         $management->agenda = $request->agenda;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
-         $management->inv_attachment = json_encode($request->inv_attachment);
+        //  $management->inv_attachment = json_encode($request->inv_attachment);
         $management->actual_start_date = $request->actual_start_date;
         $management->actual_end_date = $request->actual_end_date;
         $management->meeting_minute = $request->meeting_minute;
@@ -108,6 +107,44 @@ class ManagementReviewController extends Controller
         $management->updated_at = $request->updated_at;
         $management->status = 'Opened';
         $management->stage = 1;
+       
+        if (!empty($request->inv_attachment)) {
+            $files = [];
+            if ($request->hasfile('inv_attachment')) {
+                foreach ($request->file('inv_attachment') as $file) {
+                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            
+            $management->inv_attachment= json_encode($files);
+        }
+        if (!empty($request->file_attchment_if_any)) {
+            $files = [];
+            if ($request->hasfile('file_attchment_if_any')) {
+                foreach ($request->file('file_attchment_if_any') as $file) {
+                    $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            
+            $management->file_attchment_if_any= json_encode($files);
+        }
+        if (!empty($request->closure_attachments)) {
+            $files = [];
+            if ($request->hasfile('closure_attachments')) {
+                foreach ($request->file('closure_attachments') as $file) {
+                    $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            
+            $management->closure_attachments= json_encode($files);
+        }
+        
         $management->save();
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -130,7 +167,7 @@ class ManagementReviewController extends Controller
         $management->next_managment_review_date = $request->next_managment_review_date;
         $management->summary_recommendation = $request->summary_recommendation;
         $management->additional_suport_required = $request->additional_suport_required;
-        $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
+        // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
        
         $management->save();
 
@@ -314,6 +351,18 @@ class ManagementReviewController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $management->status;
         $history->save();
+         
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'File Attachment';
+        $history->previous = "Null";
+        $history->current = $management->closure_attachments;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $management->status;
+        $history->save();
 
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
@@ -473,7 +522,7 @@ class ManagementReviewController extends Controller
         $management = ManagementReview::find($id);
         $management->initiator_id = Auth::user()->id;
         $management->division_code = $request->division_code;
-        $management->Initiator_id = $request->Initiator_id;
+        // $management->Initiator_id= $request->Initiator_id;
         $management->short_description = $request->short_description;
         $management->assigned_to = $request->assigned_to;
         $management->due_date = $request->due_date;
@@ -484,7 +533,7 @@ class ManagementReviewController extends Controller
         $management->agenda = $request->agenda;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
-        $management->inv_attachment = json_encode($request->inv_attachment);
+        // $management->inv_attachment = json_encode($request->inv_attachment);
         $management->actual_start_date = $request->actual_start_date;
         $management->actual_end_date = $request->actual_end_date;
         $management->meeting_minute = $request->meeting_minute;
@@ -497,7 +546,7 @@ class ManagementReviewController extends Controller
         $management->floor = $request->floor;
         $management->room = $request->room;
         $management->priority_level = $request->priority_level;
-        $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
+        // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
         $management->assign_id = $request->assign_id;
         $management->initiator_group_code= $request->initiator_group_code;
         $management->Operations= $request->Operations;
@@ -522,6 +571,39 @@ class ManagementReviewController extends Controller
          $management->summary_recommendation = $request->summary_recommendation;
          $management->due_date_extension= $request->due_date_extension;
 
+         if (!empty($request->inv_attachment)) {
+            $files = [];
+            if ($request->hasfile('inv_attachment')) {
+                foreach ($request->file('inv_attachment') as $file) {
+                    $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $management->inv_attachment = json_encode($files);
+        }
+        if (!empty($request->file_attchment_if_any)) {
+            $files = [];
+            if ($request->hasfile('file_attchment_if_any')) {
+                foreach ($request->file('file_attchment_if_any') as $file) {
+                    $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $management->file_attchment_if_any = json_encode($files);
+        }
+        if (!empty($request->closure_attachments)) {
+            $files = [];
+            if ($request->hasfile('closure_attachments')) {
+                foreach ($request->file('closure_attachments') as $file) {
+                    $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            $management->closure_attachments = json_encode($files);
+        }
        
 
 
@@ -697,6 +779,20 @@ class ManagementReviewController extends Controller
             $history->previous = $lastDocument->file_attchment_if_any;
             $history->current = $management->file_attchment_if_any;
             $history->comment = $request->file_attchment_if_any_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if ($lastDocument->closure_attachments != $management->closure_attachments || !empty($request->closure_attachments_comment)) {
+
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Closure Attachment';
+            $history->previous = $lastDocument->closure_attachments;
+            $history->current = $management->closure_attachments;
+            $history->comment = $request->closure_attachments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

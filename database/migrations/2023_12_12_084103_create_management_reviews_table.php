@@ -46,7 +46,7 @@ return new class extends Migration
     
 
             $table->text('assign_id')->nullable();
-            $table->text('Initiator_id')->nullable();
+            $table->text('initiator_id')->nullable();
             $table->text('initiator_Group')->nullable();
             $table->text('initiator_group_code')->nullable();
 
@@ -69,6 +69,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('attachment')->nullable();
             $table->string('inv_attachment')->nullable();
+            $table->string('closure_attachments')->nullable();
             $table->string('file_attchment_if_any')->nullable();
             $table->date('actual_start_date')->nullable();
             $table->date('actual_end_date')->nullable();
