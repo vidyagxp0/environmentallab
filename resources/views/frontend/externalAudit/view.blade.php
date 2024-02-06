@@ -176,8 +176,8 @@ function addMultipleFiles(input, block_id) {
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button>
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowexternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
@@ -617,7 +617,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Inv Attachments">Initial Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div class="file-attachment-list" id="inv_attachment">
+                                                    <div disabled class="file-attachment-list" id="inv_attachment">
                                                         @if ($data->inv_attachment)
                                                         @foreach(json_decode($data->inv_attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -658,9 +658,9 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->start_date }}"
+                                                    <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="start_date_checkdate" name="start_date" value="" class="hide-input"
+                                                    <input type="date" id="start_date_checkdate" name="start_date" value="{{ $data->start_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -669,9 +669,9 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input  input-date">
                                                 <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                                 <div class="calenderauditee">                                     
-                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->end_date }}"
+                                                    <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="end_date_checkdate" name="end_date" value="" class="hide-input"
+                                                    <input type="date" id="end_date_checkdate" name="end_date" value="{{ $data->end_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -1128,9 +1128,9 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
                                                     <div class="calenderauditee">                                     
-                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ $data->audit_start_date }}"
+                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" value=""
+                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>    
@@ -1140,9 +1140,9 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
                                                     <div class="calenderauditee">                                     
-                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ $data->audit_end_date }}"
+                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" value=""
+                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" value="{{ $data->audit_end_date }}"
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>

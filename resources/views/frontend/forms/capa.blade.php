@@ -48,7 +48,7 @@
             <!-- Tab links -->
             <div class="cctab">
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Product Information</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button>
@@ -156,7 +156,7 @@
                                                 Central
                                                 Laboratory</option>
                                             <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
+                                                Team</option>
                                             <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
                                             <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
@@ -372,7 +372,7 @@
                     <div id="CCForm2" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Product Details
                                 </div>
                                 <div class="col-12">
@@ -443,7 +443,7 @@
                                             </tbody> --}}
                                         </table>
                                     </div>
-                                </div>
+                                {{-- </div> --}}
                                 <div class="col-12 sub-head">
                                     Material Details
                                 </div>

@@ -181,8 +181,8 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button>
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('showAuditProgramTrial', $data->id) }}"> Audit Trail </a> </button>
 
@@ -193,9 +193,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
+                            </button> --}}
                         @elseif($data->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
@@ -395,7 +395,7 @@
                                                         Laboratory</option>
                                                     <option value="TT"
                                                         @if ($data->Initiator_Group== 'TT') selected @endif>Tech
-                                                        team</option>
+                                                        Team</option>
                                                     <option value="QA"
                                                         @if ($data->Initiator_Group== 'QA') selected @endif>Quality
                                                         Assurance</option>

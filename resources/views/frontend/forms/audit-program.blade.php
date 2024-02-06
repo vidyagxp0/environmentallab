@@ -274,7 +274,7 @@
                                                 Assurance Biopharma</option>
                                             <option value="CQC" @if (old('Initiator_Group') == 'CQA') selected @endif>Central
                                                 Quality Control</option>
-                                            <option value="MANU" @if (old('Initiator_Group') == 'MANu') selected @endif>
+                                            <option value="MANU" @if (old('Initiator_Group') == 'MANU') selected @endif>
                                                 Manufacturing</option>
                                             <option value="PSG" @if (old('Initiator_Group') == 'PSG') selected @endif>Plasma
                                                 Sourcing Group</option>
@@ -288,7 +288,7 @@
                                                 Laboratory</option>
 
                                             <option value="TT" @if (old('Initiator_Group') == 'TT') selected @endif>Tech
-                                                team</option>
+                                                Team</option>
                                             <option value="QA" @if (old('Initiator_Group') == 'QA') selected @endif>
                                                 Quality Assurance</option>
                                             <option value="QM" @if (old('Initiator_Group') == 'QM') selected @endif>
@@ -385,6 +385,7 @@
                                             <option value="annual">Annual</option>
                                             <option value="monthly">Monthly</option>
                                             <option value="quarterly">Quarterly</option>
+
                                         </select>
                                     </div>
                                 </div>

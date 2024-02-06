@@ -37,7 +37,7 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button>
+                        {{-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> --}}
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
@@ -330,9 +330,11 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="group-input">
-                                                    <label for="due-date">Due Date</label>
-                                                    <input type="text"
-                                                        value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                    <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                                    <input readonly type="text"
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                        name="due_date">
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -524,12 +526,10 @@
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="others">Initial attachment
-                                                    </label>
-                                                    <div><small class="text-primary">Please Attach all relevant or supporting
-                                                        documents</small></div>
+                                                    <label for="others">Initial attachment</label>
+                                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                     <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="in_attachment">
+                                                        <div disabled class="file-attachment-list" id="in_attachment">
                                                             @if ($data->in_attachment)
                                                                 @foreach (json_decode($data->in_attachment) as $file)
                                                                     <h6 type="button" class="file-container text-dark"
@@ -549,7 +549,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input type="file" id="myfile" name="in_attachment[]"
+                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="in_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'in_attachment')" multiple>
                                                         </div>
                                                     </div>
@@ -1344,9 +1344,10 @@
                                                 <div class="group-input input-date">
                                                     <label for="effective-check-date">Effectiveness Check Creation Date</label>
                                                    <div class="calenderauditee">                                     
-                                                          <input type="text"  id="effective_check_date"  readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" name="effective_check_date" value=""  class="hide-input"
-                                                        oninput="handleDateInput(this, 'effective_check_date')"/>
+                                                          <input type="text"  id="effective_check_date"  readonly value="{{ Helpers::getdateFormat($data->effective_check_date)}}"
+                                                           name="effective_check_date"  placeholder="DD-MMM-YYYY" />
+                                                          <input type="date" name="effective_check_date" value="{{ $data->effective_check_date }}"  class="hide-input"
+                                                           oninput="handleDateInput(this, 'effective_check_date')"/>
                                              </div>
                                                 </div>
                                             </div>

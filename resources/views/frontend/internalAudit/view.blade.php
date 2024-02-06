@@ -184,8 +184,8 @@ function addMultipleFiles(input, block_id) {
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        <button class="button_theme1" onclick="window.print();return false;"
-                            class="new-doc-btn">Print</button>
+                        {{-- <button class="button_theme1" onclick="window.print();return false;"
+                            class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
@@ -217,9 +217,9 @@ function addMultipleFiles(input, block_id) {
                                 data-bs-target="#rejection-modal">
                                 Reject
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
+                            </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Issue Report</button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
@@ -1639,7 +1639,7 @@ function addMultipleFiles(input, block_id) {
                                         <input type="hidden" name="parent_name" value="Internal_audit">
                                         <input type="hidden" name="due_date" value="{{ $data->due_date }}">
                                         <input type="radio" name="child_type" value="extension">
-                                        extension
+                                        Extension
                                     </label>
 
                                 </div>
@@ -1805,9 +1805,23 @@ function addMultipleFiles(input, block_id) {
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations
                                     </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="extension">
+                                        Extension
+                                    </label>
                                 </div>
 
                             </div>
+                            {{-- <div class="modal-body">
+                                <div class="group-input">
+                                    <label for="major">
+                                        <input type="hidden" name="parent_name" value="Internal_audit">
+                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
+                                        <input type="radio" name="child_type" value="extension">
+                                        Extension
+                                    </label>
+                                </div>
+                            </div> --}}
 
                             <!-- Modal footer -->
                             <div class="modal-footer">

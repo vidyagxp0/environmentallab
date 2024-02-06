@@ -174,8 +174,8 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
-                            class="new-doc-btn">Print</button></a>
+                        {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
+                            class="new-doc-btn">Print</button></a> --}}
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('riskAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
@@ -381,7 +381,6 @@
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                                {{-- <input type="hidden" value="{{ $due_date }}" name="due_date"> --}}
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"  
                                                     name="due_date">
@@ -1051,9 +1050,9 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_start_date" readonly value="{{ $data->schedule_start_date1 }}"
+                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}"
                                                         placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" class="hide-input"
+                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" class="hide-input" 
                                                         oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_start_date1" value="{{$data->schedule_start_date1}}"> --}}
@@ -1063,9 +1062,9 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled End Date">Scheduled End Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_end_date" readonly value="{{ $data->schedule_end_date1 }}"
+                                                    <input type="text" id="schedule_end_date" readonly value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}" 
                                                         placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" class="hide-input"
+                                                    <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" value="{{ $data->schedule_end_date1 }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_end_date1" value="{{$data->schedule_end_date}}"> --}}
@@ -1949,7 +1948,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="mitigation_due_date" readonly value="{{ Helpers::getdateFormat($data->mitigation_due_date)}}"
                                                         name="mitigation_due_date" placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="mitigation_due_date" class="hide-input"  
+                                                    <input type="date" name="mitigation_due_date" value="{{ $data->mitigation_due_date }}" class="hide-input"  
                                                         oninput="handleDateInput(this, 'mitigation_due_date')" />
                                                 </div>
                                                 {{-- <input type="date" name="mitigation_due_date"
