@@ -1296,8 +1296,8 @@
                                                 {{-- <input type="date" name="effect_check_date"> --}}
                                                 <div class="calenderauditee">
                                                     <input type="text"  id="effect_check_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="effect_check_date" class="hide-input"
+                                                        placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->effect_check_date) }}"/>
+                                                    <input type="date" name="effect_check_date" value="{{ $data->effect_check_date }}"class="hide-input"
                                                         oninput="handleDateInput(this,'effect_check_date')" />
                                                 </div>
                                             </div>

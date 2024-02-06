@@ -31,16 +31,12 @@ class InternalauditController extends Controller
         $due_date = $formattedDate->format('Y-m-d');
         // return $old_record;
         
-
         return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record'));
+    
     }
-
-
     public function create(request $request)
     {
-        
-        
-        $internalAudit = new InternalAudit();
+       $internalAudit = new InternalAudit();
         $internalAudit->form_type = "internal-audit";
         $internalAudit->record = ((RecordNumber::first()->value('counter')) + 1);
         $internalAudit->initiator_id = Auth::user()->id;

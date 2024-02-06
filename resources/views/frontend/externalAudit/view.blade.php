@@ -209,9 +209,9 @@ function addMultipleFiles(input, block_id) {
                                 data-bs-target="#rejection-modal">
                                 Reject
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
+                            </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Issue Report</button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
@@ -1567,7 +1567,7 @@ function addMultipleFiles(input, block_id) {
                         <form action="{{ route('extension_child', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
-                            <div class="modal-body">
+                            {{-- <div class="modal-body">
                                 <div class="group-input">
                                     <label for="major">
                                         <input type="hidden" name="parent_name" value="External_audit">
@@ -1578,7 +1578,7 @@ function addMultipleFiles(input, block_id) {
 
                                 </div>
 
-                            </div>
+                            </div> --}}
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
@@ -1738,6 +1738,10 @@ function addMultipleFiles(input, block_id) {
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations
+                                    </label>
+                                    <label for="major">
+                                        <input type="radio" name="child_type" value="extension">
+                                        Extension
                                     </label>
                                 </div>
 

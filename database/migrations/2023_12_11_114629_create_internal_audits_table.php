@@ -29,9 +29,7 @@ return new class extends Migration
            // $table->string('record_number')->nullable();
             $table->string('external_agencies')->nullable();
             $table->string('severity_level_form')->nullable();
-
  
-
              $table->integer('record')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();

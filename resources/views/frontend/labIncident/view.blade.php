@@ -212,9 +212,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}" name="intiation_date">
-
-
+                                        <input disabled type="text" name="intiation_date"
+                                         value="{{ Helpers::getdateFormat($data->intiation_date)}}" >
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -739,8 +738,8 @@
                                         <label for="Date Due">Effectiveness Check Creation Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="effectivess_check_creation_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="effectivess_check_creation_date" class="hide-input"
+                                                placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->effectivess_check_creation_date) }}"/>
+                                            <input type="date" name="effectivess_check_creation_date" value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
                                     </div>

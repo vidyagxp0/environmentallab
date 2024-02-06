@@ -282,8 +282,9 @@
                                     <div class="group-input input-date">
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="start_date_checkdate" name="start_date" class="hide-input"
+                                            <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
+                                            <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
+                                            name="start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -294,8 +295,9 @@
                                         {{-- <input type="date" name="end_date"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}> --}}
                                             <div class="calenderauditee">
-                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" />
-                                                <input type="date" id="end_date_checkdate"  name="end_date" class="hide-input"
+                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
+                                                <input type="date" id="end_date_checkdate"  name="end_date" value="{{ $data->end_date }} "
+                                                class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
                                     </div>
@@ -329,8 +331,12 @@
                                                     <tr>
                                                         <td><input type="text" name="serial_number[]"
                                                                 value="{{ $key + 1 }}"></td>
-                                                        <td><input type="date" name="date[]"
-                                                                value="{{ $temps ? $temps : ' ' }}"></td>
+                                                        {{-- <td><input type="date" name="date[]"
+                                                                value="{{ $temps ? $temps : ' ' }}"></td> --}}
+                                                                <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
+                                                                    <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                    <input type="date" name="date[]" class="hide-input" 
+                                                                    oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'
                                                         <td><input type="text" name="topic[]"
                                                                 value="{{ unserialize($agenda->topic)[$key] ? unserialize($agenda->topic)[$key] : '' }}">
                                                         </td>
@@ -680,8 +686,9 @@
                                     <label for="next_managment_review_date">Next Management Review Date</label>
                                     <div class="calenderauditee">
                                         <input type="text" id="next_managment_review_date" readonly
-                                            placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="next_managment_review_date" class="hide-input"
+                                            placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}"/>
+                                        <input type="date" name="next_managment_review_date"value="{{ $data->next_managment_review_date }} "
+                                        class="hide-input"
                                             oninput="handleDateInput(this, 'next_managment_review_date')" />
                                     </div>
                                 </div>
