@@ -203,9 +203,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Audit Preparation
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button>
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
@@ -236,9 +234,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 No CAPAs Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button>
+                           
                         @elseif($data->stage == 5)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
@@ -477,12 +473,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} name="severity_level_form">
-                                                    {{-- <option value="0">-- Select --</option>
-                                                    <option value="minor">Minor</option>
-                                                    <option value="major">Major</option>
-                                                    <option value="critical">Critical</option> --}}
-                                                     
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
                                                     <option  value="0">-- Select --</option>
                                                     <option @if ($data->severity_level_form =='minor') selected @endif
                                                         value="minor">Minor</option>
@@ -1808,10 +1799,6 @@ function addMultipleFiles(input, block_id) {
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations
-                                    </label>
-                                    <label for="major">
-                                        <input type="radio" name="child_type" value="extension">
-                                        Extension
                                     </label>
                                 </div>
 

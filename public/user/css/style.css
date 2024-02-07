@@ -3577,12 +3577,26 @@ section#pdf-page .watermark {
     margin-bottom: 5px;
 }
 
+#signature-modal .group-input input,
+#signature-modal .group-input select {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
 #cancel-modal .group-input input,
 #cancel-modal .group-input select {
     display: block;
     width: 100%;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+#signature-modal .modal-footer button {
+    color: white;
+    background: #4274da;
+    border: 1px solid rgb(202, 202, 202);
 }
 
 #cancel-modal .modal-footer button {

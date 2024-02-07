@@ -200,9 +200,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button>
+                            
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
@@ -1028,10 +1026,7 @@
                                         <input type="radio" name="child_type" value="External_Audit">
                                         External Audit
                                     </label>
-                                    <label for="minor">
-                                        <input type="radio" name="child_type" value="extension">
-                                        Extension
-                                    </label>
+                                    
                                 </div>
 
                             </div>

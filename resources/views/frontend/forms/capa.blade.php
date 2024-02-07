@@ -959,7 +959,7 @@
                                     <div class="group-input">
                                         <label for="Effectiveness Check Required">Effectiveness Check
                                             Required?</label>
-                                        <select name="effect_check">
+                                        <select name="effect_check" onChange="setCurrentDate(this.value)">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
@@ -1253,5 +1253,14 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
+        
+        function setCurrentDate(item){
+            if(item == 'yes'){
+                $('#effect_check_date').val('{{ date('d-M-Y')}}');
+            }
+            else{
+                $('#effect_check_date').val('');
+            }
+        }
     </script>
 @endsection

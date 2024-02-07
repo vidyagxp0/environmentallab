@@ -376,7 +376,7 @@
                                         <textarea name="repeat_nature"></textarea>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Type">Type</label>
                                         <select name="type">
@@ -389,7 +389,14 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="type">Type(Others)<span
+                                                class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_through_req"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Year">Year</label>
                                         <select name="year">
@@ -414,7 +421,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quarter">Quarter</label>
                                         <select name="Quarter">

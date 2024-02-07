@@ -195,9 +195,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Audit Preparation
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button>
+                           
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
@@ -228,9 +226,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 No CAPAs Required
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button>
+                           
                         @elseif($data->stage == 5)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
@@ -1739,12 +1735,7 @@ function addMultipleFiles(input, block_id) {
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations
                                     </label>
-                                    <label for="major">
-                                        <input type="radio" name="child_type" value="extension">
-                                        Extension
-                                    </label>
                                 </div>
-
                             </div>
 
                             <!-- Modal footer -->

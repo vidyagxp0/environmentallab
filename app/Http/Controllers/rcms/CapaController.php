@@ -11,8 +11,10 @@ use App\Models\CapaAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\CapaGrid;
 use App\Models\Extension;
+use App\Models\CC;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use PDF;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -1288,6 +1290,9 @@ class CapaController extends Controller
         $data2 = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
         $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        // $MaterialsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.MaterialsQuery.lims');
+        // dd( $MaterialsQueryData->json());
+        
 
         return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
     }
@@ -1468,11 +1473,12 @@ class CapaController extends Controller
         $parent_initiator_id = Capa::where('id', $id)->value('initiator_id');
         $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
         $parent_short_description = Capa::where('id', $id)->value('short_description');
-
+        $hod = User::where('role', 4)->get();
+        $pre = CC::all();
 
         // return $capa_data;
         if ($request->child_type == "Change_control") {
-            return view('frontend.change-control.new-change-control', compact('parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";

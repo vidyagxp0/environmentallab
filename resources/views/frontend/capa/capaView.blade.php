@@ -81,9 +81,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
+                            </button> --}}  
                         @elseif($data->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
@@ -1485,8 +1485,8 @@
                                     <label for="major">
                                         <input type="hidden" name="parent_name" value="Capa">
                                         <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="extension">
-                                        extension
+                                        <input type="radio" name="child_type" value="effectiveness_check">
+                                        Effectiveness Check
                                     </label>
 
                                 </div>
@@ -1520,21 +1520,16 @@
                                         <label for="major">
 
                                         </label>
-                                        {{-- <label for="major">
+                                         <label for="major">
                                             <input type="radio" name="child_type" value="Change_control">
                                             Change Control
-                                        </label> --}}
+                                        </label>
                                         <label for="major">
                                             <input type="radio" name="child_type" value="Action_Item">
                                             Action Item
                                         </label>
-                                        <label for="major">
-                                            <input type="hidden" name="parent_name" value="Capa">
-                                            <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                            <input type="radio" name="child_type" value="extension">
-                                            Extension
-                                        </label>
                                     @endif
+                                    
                                     @if ($data->stage == 6)
                                         <label for="major">
                                             <input type="radio" name="child_type" value="effectiveness_check">
