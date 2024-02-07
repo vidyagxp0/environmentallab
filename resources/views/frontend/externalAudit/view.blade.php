@@ -360,7 +360,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Date Due">Date of Initiation</label>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                    name="intiation_date">
+                                                    name="intiation_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
 
                                             </div>
                                         </div>
@@ -384,7 +384,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div><small class="text-primary">Please mention expected date of completion</small></div>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date">
+                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 
 
                                             </div>
@@ -452,7 +452,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code"
+                                                <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     value="{{ $data->Initiator_Group }}" id="initiator_group_code"
                                                     readonly>
 
@@ -469,7 +469,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity_level">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity_level == 'minor') selected @endif
                                                      value="minor">Minor</option>
@@ -602,7 +602,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="others">Others<span
                                                     class="text-danger d-none">*</span></label>
-                                                <textarea name="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}></textarea>
+                                                <textarea name="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -660,7 +660,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="calenderauditee">                                     
                                                     <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="start_date_checkdate" name="start_date" value="{{ $data->start_date }}" class="hide-input"
+                                                    <input type="date" id="start_date_checkdate" name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -671,7 +671,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="calenderauditee">                                     
                                                     <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="end_date_checkdate" name="end_date" value="{{ $data->end_date }}" class="hide-input"
+                                                    <input type="date" id="end_date_checkdate" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -1130,7 +1130,7 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="calenderauditee">                                     
                                                         <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" value="{{ $data->audit_start_date }}"
+                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>    
@@ -1142,7 +1142,7 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="calenderauditee">                                     
                                                     <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" value="{{ $data->audit_end_date }}"
+                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>
@@ -1290,7 +1290,7 @@ function addMultipleFiles(input, block_id) {
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input type="file" id="myfile" name="Audit_file[]"
+                                                            <input type="file" id="myfile" name="Audit_file[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                 oninput="addMultipleFiles(this, 'Audit_file')" multiple>
                                                         </div>
                                                     </div>
@@ -1406,7 +1406,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                                 <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                            <textarea name="due_date_extension">{{$data->due_date_extension}}</textarea>
+                                            <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
                                             </div>
                                         </div>
                                     </div>

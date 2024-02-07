@@ -327,7 +327,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input readonly type="text" name="initiator_group_code"
+                                                <input readonly type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     value="{{ $data->initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                                 {{-- <div class="static"></div> --}}
@@ -338,13 +338,13 @@
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
-                                                <textarea name="short_description">{{ $data->short_description }}</textarea>
+                                                <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity_level_form">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
                                                     <option  value="0">-- Select --</option>
                                                     <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
                                                     <option @if ($data->severity_level_form=='major') selected @endif value="major">Major</option>
@@ -356,7 +356,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
                                                 <div><small class="text-primary">Please select related information</small></div>
-                                                <select name="initiated_through"
+                                                <select name="initiated_through"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->initiated_through == 'recall') selected @endif
@@ -382,14 +382,14 @@
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="initiated_through">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea name="initiated_through_req"> {{ $data->initiated_through_req }}</textarea>
+                                                <textarea name="initiated_through_req"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->initiated_through_req }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="repeat">Repeat</label>
                                                 <div><small class="text-primary">Please select yes if it is has recurred in past six months</small></div>
-                                                <select name="repeat"
+                                                <select name="repeat"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     onchange="otherController(this.value, 'Yes', 'repeat_nature')">
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->repeat == 'Yes') selected @endif
@@ -405,13 +405,13 @@
                                             <div class="group-input" id="repeat_nature">
                                                 <label for="repeat_nature">Repeat Nature<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea name="repeat_nature">{{ $data->repeat_nature }}</textarea>
+                                                <textarea name="repeat_nature"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->repeat_nature }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Problem Description">Problem Description</label>
-                                                <textarea name="problem_description">{{ $data->problem_description }}</textarea>
+                                                <textarea name="problem_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_description }}</textarea>
                                             </div>
                                         </div>
 
@@ -849,7 +849,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Microbiology">CFT Reviewer</label>
-                                                <select name="Microbiology_new">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Microbiology_new">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->Microbiology_new=='yes') selected @endif value="yes" selected>Yes</option>
                                                     <option @if ($data->Microbiology_new=='no') selected @endif value="no">No</option>
@@ -859,7 +859,7 @@
                                          <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Microbiology-Person">CFT Reviewer Person</label>
-                                                <select  name="Microbiology_Person[]"
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  name="Microbiology_Person[]"
                                                     placeholder="Select CFT Reviewers" data-search="false"
                                                     data-silent-initial-value-set="true" id="cft_reviewer">
                                                     <option value="0">-- Select --</option>
@@ -881,7 +881,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="group_review">Is Concerned Group Review Required?</label>
-                                                <select name="goup_review">
+                                                <select name="goup_review"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option {{$data->goup_review == 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
@@ -893,7 +893,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Production">Production</label>
-                                                <select name="Production_new">
+                                                <select name="Production_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option {{ $data->Production_new== 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
@@ -905,7 +905,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Production-Person">Production Person</label>
-                                                <select name="Production_Person">
+                                                <select name="Production_Person"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     @foreach ($users as $datas)
                                                         <option
@@ -919,7 +919,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Quality-Approver">Quality Approver</label>
-                                                <select name="Quality_Approver">
+                                                <select name="Quality_Approver"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option {{ $data->Quality_Approver == 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
@@ -931,7 +931,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Quality-Approver-Person">Quality Approver Person</label>
-                                                <select name="Quality_Approver_Person">
+                                                <select name="Quality_Approver_Person"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
 
                                                     @foreach ($users as $datas)
@@ -947,7 +947,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="bd_domestic">Others</label>
-                                                <select name="bd_domestic">
+                                                <select name="bd_domestic"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option {{ $data->bd_domestic == 'yes' ? 'selected' : '' }}
                                                         value="yes">Yes</option>
@@ -959,7 +959,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="bd_domestic-Person">Others Person</label>
-                                                <select name="Bd_Person">
+                                                <select name="Bd_Person"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
 
                                                     @foreach ($users as $datas)
@@ -995,7 +995,7 @@
                                                      <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile"
-                                                            name="additional_attachments[]"
+                                                            name="additional_attachments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'additional_attachments')"
                                                             multiple>
                                                     </div>
@@ -1024,7 +1024,7 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="comments">CFT Comments</label>
-                                                <textarea name="cft_comments_form">{{ $data->cft_comments_form}}</textarea>
+                                                <textarea name="cft_comments_form"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->cft_comments_form}}</textarea>
                                             </div>
                                         </div>
                                          <div class="col-lg-12">
@@ -1052,7 +1052,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                        <input type="file" id="myfile" name="cft_attchament_new[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'cft_attchament_new')"
                                                             multiple>
                                                     </div>
@@ -1068,51 +1068,51 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">QA Comments</label>
-                                                <textarea name="qa_comments_new">{{ $data->qa_comments_new}}
+                                                <textarea name="qa_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_comments_new}}
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">QA Head Designee Comments</label>
-                                                <textarea name="designee_comments_new">{{ $data->designee_comments_new}}
+                                                <textarea name="designee_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->designee_comments_new}}
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Warehouse Comments</label>
-                                                <textarea name="Warehouse_comments_new">{{ $data->Warehouse_comments_new}}</textarea>
+                                                <textarea name="Warehouse_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Warehouse_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Engineering Comments</label>
-                                                <textarea name="Engineering_comments_new">{{ $data->Engineering_comments_new}}</textarea>
+                                                <textarea name="Engineering_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Engineering_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Instrumentation Comments</label>
-                                                <textarea name="Instrumentation_comments_new">{{ $data->Instrumentation_comments_new}}</textarea>
+                                                <textarea name="Instrumentation_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Instrumentation_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Validation Comments</label>
-                                                <textarea name="Validation_comments_new">{{ $data->Validation_comments_new}}</textarea>
+                                                <textarea name="Validation_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Validation_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Others Comments</label>
-                                                <textarea name="Others_comments_new">{{ $data->Others_comments_new}}</textarea>
+                                                <textarea name="Others_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Others_comments_new}}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="comments">Group Comments</label>
-                                                <textarea name="Group_comments_new">{{ $data->Group_comments_new}}</textarea>
+                                                <textarea name="Group_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Group_comments_new}}</textarea>
                                             </div>
                                         </div>
                                        
@@ -1145,7 +1145,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile"
-                                                            name="group_attachments_new[]"
+                                                            name="group_attachments_new[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'group_attachments_new')"
                                                             multiple>
                                                     </div>
@@ -1170,7 +1170,7 @@
                                         <label for="search">
                                             CAPA Type<span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="capa_type">
+                                        <select id="select-state" placeholder="Select..." name="capa_type"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             <option {{ $data->capa_type == "Corrective Action" ? 'selected' : '' }} value="Corrective Action">Corrective Action</option>
                                             <option {{ $data->capa_type == "Preventive Action" ? 'selected' : '' }} value="Preventive Action">Preventive Action</option>
@@ -1251,7 +1251,7 @@
                                                         <div>Add</div>
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="myfile" name="closure_attachment[]"
+                                                            type="file" id="myfile" name="closure_attachment[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'closure_attachment1')"
                                                             multiple>
                                                     </div>
@@ -1265,7 +1265,7 @@
                                             <div class="group-input">
                                                 <label for="Effectiveness Check required">Effectiveness Check
                                                     required</label>
-                                                <select name="effect_check"
+                                                <select name="effect_check"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->effect_check == 'yes' ? 'selected' : '' }}
@@ -1305,7 +1305,7 @@
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                                <select name="Effectiveness_checker">
+                                                <select name="Effectiveness_checker">{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     <option value="">Enter Your Selection Here</option>
                                                     @foreach ($users as $value)
                                                         <option
@@ -1319,7 +1319,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                <textarea name="effective_check_plan"> {{ $data->effective_check_plan }}</textarea>
+                                                <textarea name="effective_check_plan"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->effective_check_plan }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12 sub-head">
@@ -1329,7 +1329,7 @@
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                                 <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                                <textarea name="due_date_extension">{{ $data->due_date_extension }}</textarea>
+                                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1351,28 +1351,28 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Plan Proposed By">Plan Proposed By</label>
-                                                <input type="hidden" name="plan_proposed_by">
+                                                <input type="hidden" name="plan_proposed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_proposed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Plan Proposed On">Plan Proposed On</label>
-                                                <input type="hidden" name="plan_proposed_on">
+                                                <input type="hidden" name="plan_proposed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_proposed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Plan Approved By">Plan Approved By</label>
-                                                <input type="hidden" name="plan_approved_by">
+                                                <input type="hidden" name="plan_approved_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Plan Approved On">Plan Approved On</label>
-                                                <input type="hidden" name="plan_approved_on">
+                                                <input type="hidden" name="plan_approved_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->Plan_approved_on }}</div>
                                             </div>
                                         </div>
@@ -1380,7 +1380,7 @@
                                             <div class="group-input">
                                                 <label for="QA More Info Required By">QA More Info Required
                                                     By</label>
-                                                <input type="hidden" name="qa_more_info_required_by">
+                                                <input type="hidden" name="qa_more_info_required_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_more_info_required_by }}</div>
                                             </div>
                                         </div>
@@ -1388,42 +1388,42 @@
                                             <div class="group-input">
                                                 <label for="QA More Info Required On">QA More Info Required
                                                     On</label>
-                                                <input type="hidden" name="qa_more_info_required_on">
+                                                <input type="hidden" name="qa_more_info_required_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->qa_more_info_required_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
-                                                <input type="hidden" name="cancelled_by">
+                                                <input type="hidden" name="cancelled_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
-                                                <input type="hidden" name="cancelled_on">
+                                                <input type="hidden" name="cancelled_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Completed By">Completed By</label>
-                                                <input type="hidden" name="completed_by">
+                                                <input type="hidden" name="completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Completed On">Completed On</label>
-                                                <input type="hidden" name="completed_on">
+                                                <input type="hidden" name="completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->completed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Approved By">Approved By</label>
-                                                <input type="hidden" name="approved_by">
+                                                <input type="hidden" name="approved_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
 
                                                 <div class="static">{{ $data->approved_by }}</div>
                                             </div>
@@ -1431,21 +1431,21 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Approved On">Approved On</label>
-                                                <input type="hidden" name="approved_on">
+                                                <input type="hidden" name="approved_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected By">Rejected By</label>
-                                                <input type="hidden" name="rejected_by">
+                                                <input type="hidden" name="rejected_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected On">Rejected On</label>
-                                                <input type="hidden" name="rejected_on">
+                                                <input type="hidden" name="rejected_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>

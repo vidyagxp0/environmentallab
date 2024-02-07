@@ -311,7 +311,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Division Code"><b>Site/Location Code</b></label>
-                                                <input readonly type="text" name="division_code"
+                                                <input readonly type="text" name="division_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static">QMS-North America</div> --}}
                                             </div>
@@ -358,7 +358,7 @@
                                                 <div><small class="text-primary">Please mention expected date of completion</small></div>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}" 
-                                                    name="due_date">
+                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -424,7 +424,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code"
+                                                <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ $data->Initiator_Group}}" id="initiator_group_code"
                                                     readonly>
                                             </div>
@@ -603,7 +603,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity1_level">
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="severity1_level">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity1_level == 'minor') selected @endif
                                                      value="minor">Minor</option>
@@ -618,7 +618,7 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
                                                 <div><small class="text-primary">Please select related information</small></div>
-                                                <select name="initiated_through"
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="initiated_through"
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->initiated_through == 'recall') selected @endif
@@ -644,7 +644,7 @@
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="initiated_through">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea name="initiated_through_req">{{ $data->initiated_through_req }}</textarea>
+                                                <textarea name="initiated_through_req"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -690,10 +690,8 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                    <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
-                                                                            class="fa-solid fa-circle-xmark"
-                                                                            style="color:red; font-size:20px;"></i></a>
+                                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+
                                                                 </h6>
                                                             @endforeach
                                                         @endif
@@ -780,8 +778,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="country">Country</label>
-                                                <select name="country" class="countries" id="countryId">
-                                                    <option value="{{ $data->country }}">Select Country</option>
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}    name="country" class="countries" id="countryId">
+                                                    <option  value="{{ $data->country }}">Select Country</option>
                                                 </select>
                                                 {{--  <select name="country" id="country"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
@@ -790,7 +788,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="State/District">State/District</label>
-                                                <select name="state" class="states" id="stateId">
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="state"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="states" id="stateId">
                                                     <option value="{{ $data->state }}">Select State</option>
                                                 </select>
                                                 {{--  <select name="state" id="state"
@@ -801,7 +799,7 @@
                                             <div class="group-input">
                                         
                                                 <label for="City">City</label>
-                                                <select name="City" class="cities" id="cityId">
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="City" class="cities" id="cityId">
                                                     <option value="{{ $data->City }}">Select City</option>
                                                 </select>
                                                 {{--  <select name="city" id="city"
@@ -816,7 +814,7 @@
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                                 <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                                <textarea name="due_date_extension">{{$data->due_date_extension}}</textarea>
+                                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
                                             </div>
                                         </div>
                                     </div>
