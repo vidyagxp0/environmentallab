@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -16,4 +17,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('userLogin', [UserLoginController::class, 'loginapi']);
+Route::get('getProfile', [ApiController::class, 'getProfile']);
 
