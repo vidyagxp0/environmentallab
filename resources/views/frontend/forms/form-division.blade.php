@@ -20,7 +20,7 @@
                             </div>
                             <div class="tab">
                                 @php
-                                    $division = DB::table('q_m_s_divisions')->get();
+                                    $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
                                 @endphp
                                 @foreach ($division as $temp)
                                     <div class="divisionlinks">

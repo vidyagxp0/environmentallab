@@ -18,7 +18,7 @@ class QMSProcessController extends Controller
                 'q_m_s_divisions.name as dname',
                 'q_m_s_processes.*'
             )->orderBy('id', "desc")->get();
-        $division = DB::table('q_m_s_divisions')->get();
+        $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
 
         return view('admin.QMSprocess.process', compact('process', 'division'));
     }
@@ -80,7 +80,7 @@ class QMSProcessController extends Controller
 
     {
         $process = QMSProcess::find($id);
-        $division = DB::table('q_m_s_divisions')->get();
+        $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
 
 
         return view('admin.QMSprocess.edit', ['process' => $process], ['division' => $division]);

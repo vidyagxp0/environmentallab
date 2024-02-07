@@ -51,8 +51,10 @@
                     }
 
                     html += '</select></td>' +
-                        '<td><input type="date" name="start_date[]"></td>' +
-                        '<td><input type="date" name="end_date[]"></td>' +
+                        // '<td><input type="date" name="start_date[]"></td>' +
+
+                        // '<td><input type="date" name="end_date[]"></td>' +
+
                         '<td><select name="lead_investigator[]">' +
                         '<option value="">Select a value</option>';
 
@@ -556,16 +558,18 @@
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
-                                                                <input type="text" id="start_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="start_date1_checkdate" name="start_date[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, 'start_date1');checkDate('start_date1_checkdate','end_date1_checkdate')" /></div></div></div></td>
+                                                                <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
+                                                                <input type="date" id="start_date_checkdate" name="start_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
                                                             {{-- <td><input type="date" name="end_date[]"></td> --}}
+
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
-                                                                <input type="text" id="end_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="end_date1_checkdate"  name="end_date[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, 'end_date1');checkDate('start_date1_checkdate','end_date1_checkdate')" /></div></div></div></td>
+                                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
+                                                                <input type="date" id="end_date_checkdate"  name="end_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
+
                                                             <td> <select id="select-state" placeholder="Select..."
                                                                     name="lead_investigator[]">
                                                                     <option value="">-Select-</option>
@@ -1100,10 +1104,10 @@
                         '<select name="auditees[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>'
 
                     var cell3 = newRow.insertCell(2);
-                    cell3.innerHTML = "<input type='date' name='date_start[]'>";
+                    cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" class="hide-input" oninput="handleDateInput(this, `start_date' + currentRowCount +'`)" /></div></div></div></td>';
 
                     var cell4 = newRow.insertCell(3);
-                    cell4.innerHTML = "<input type='date' name='date_end[]'>";
+                    cell4.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" class="hide-input"  oninput="handleDateInput(this, `end_date' + currentRowCount +'`)" /></div></div></div></td>';
 
                     var cell5 = newRow.insertCell(4);
                     // cell5.innerHTML = "<input type='text' name='lead_investigator'>";

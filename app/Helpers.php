@@ -34,7 +34,7 @@ class Helpers
 
     public static function getDivisionName($id)
     {
-        $name = DB::table('q_m_s_divisions')->where('id', $id)->value('name');
+        $name = DB::table('q_m_s_divisions')->where('id', $id)->where('status', 1)->value('name');
         return $name;
     }
     public static function recordFormat($number)

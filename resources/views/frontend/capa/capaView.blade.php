@@ -1292,7 +1292,7 @@
 
                                         <div class="col-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Effect Check Creation Date">Effectiveness Check Creation Date</label>
+                                                <label for="Effect Check Creation Date">Effectiveness Check Creation Date1</label>
                                                 {{-- <input type="date" name="effect_check_date"> --}}
                                                 <div class="calenderauditee">
                                                     <input type="text"  id="effect_check_date" readonly
