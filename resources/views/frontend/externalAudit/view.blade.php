@@ -579,7 +579,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="external_agencies">External Agencies</label>
-                                                <select name="external_agencies">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="external_agencies">
                                                     <option value="">-- Select --</option>
                                                     <option @if ($data->external_agencies == 'jordan_fda') selected @endif
                                                          value="jordan_fda">Jordan FDA</option>
@@ -719,7 +719,7 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
-                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->scheduled_end_date) }}" />
                                                                 <input type="date" name="scheduled_start_date[]" class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>
                                                             <td><input type="time" name="scheduled_start_time[]"
@@ -735,34 +735,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <input type="date" name="scheduled_end_date[]" class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
 
-                                                            <td>
-                                                                <div class="group-input new-date-data-field mb-0">
-                                                                    <div class="input-date ">
-                                                                        <div class="calenderauditee">
-                                                                            <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                            <input type="date" name="scheduled_start_date[]" class="hide-input" 
-                                                                            oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
+                                                            
                                                             {{-- <td><input type="date" name="scheduled_start_date[]"
                                                                     value="{{ unserialize($grid_data->start_date)[$key] ? unserialize($grid_data->start_date)[$key] : '' }}">
                                                             </td> --}}
-                                                            <td><input type="time" name="scheduled_start_time[]"
-                                                                    value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
-                                                            </td>
-                                                            <td>
-                                                                <div class="group-input new-date-data-field mb-0">
-                                                                    <div class="input-date ">
-                                                                        <div  class="calenderauditee">
-                                                                            <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                            <input type="date" name="scheduled_end_date[]" class="hide-input" 
-                                                                             oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" />
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
+                                                           
                                                             {{-- <td><input type="date" name="scheduled_end_date[]"
                                                                     value="{{ unserialize($grid_data->end_date)[$key] ? unserialize($grid_data->end_date)[$key] : '' }}">
                                                             </td> --}}

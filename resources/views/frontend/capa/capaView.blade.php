@@ -11,7 +11,7 @@
         header {
             display: none;
         }
-        /* .remove-file  {
+        .remove-file  {
             color: white;
             cursor: pointer;
             margin-left: 10px;
@@ -19,7 +19,7 @@
 
         .remove-file :hover {
             color: white;
-        } */
+        }
     </style>
 
 
@@ -1486,7 +1486,7 @@
                         <div class="modal-header">
                             <h4 class="modal-title">Child</h4>
                         </div>
-                        <form action="{{ route('extension_child', $data->id) }}" method="POST">
+                        <form action="{{ route('capa_effectiveness_check', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">
@@ -1864,7 +1864,7 @@
                         document.getElementById('initiator_group_code').value = selectedValue;
                     });
                 </script>
-                {{-- <script>
+                 <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const removeButtons = document.querySelectorAll('.remove-file');
         
@@ -1880,5 +1880,5 @@
                             });
                         });
                     });
-                </script> --}}
+                </script> 
         @endsection
