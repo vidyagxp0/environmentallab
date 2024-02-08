@@ -34,7 +34,7 @@ class ActionItemController extends Controller
     }
     public function index()
     {
-
+       
         $document = ActionItem::all();
 
         foreach ($document as $data) {
@@ -51,17 +51,12 @@ class ActionItemController extends Controller
 
     public function store(Request $request)
     {
-
-        if (!$request->short_description) {
-            toastr()->error("Short description is required");
-            return redirect()->back();
-        }
-
         $openState = new ActionItem();
         $openState->cc_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->parent_id = $request->parent_id;
+        $openState->division_code = $request->division_code;
         $openState->parent_type = $request->parent_type;
         $openState->division_id = $request->division_id;
         $openState->parent_id = $request->parent_id;
@@ -69,10 +64,10 @@ class ActionItemController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_id = $request->assign_id;
         $openState->due_date = $request->due_date;
-        $openState->related_records = implode(',', $request->related_records);
+        // $openState->related_records = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
-        $openState->hod_preson = implode(',', $request->hod_preson);
+        $openState->hod_preson= implode(',', $request->hod_preson);
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
@@ -90,10 +85,12 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
+                      
                     $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
+            
             }
             $openState->file_attach = json_encode($files);
         }
@@ -101,12 +98,14 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
+                    
                     $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            }
+            
             $openState->Support_doc = json_encode($files);
+            }
         }
         $openState->save();
         $counter = DB::table('record_numbers')->value('counter');
@@ -139,10 +138,10 @@ class ActionItemController extends Controller
 
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
-        $openState->related_records = $request->related_records;
+        // $openState->related_records = $request->related_records;
         $openState->description = $request->description;
         $openState->title = $request->title;
-        $openState->hod_preson = $request->hod_preson;
+        $openState->hod_preson = json_encode($request->hod_preson);
         $openState->dept = $request->dept;
         $openState->initiatorGroup = $request->initiatorGroup;
         $openState->action_taken = $request->action_taken;
@@ -153,34 +152,35 @@ class ActionItemController extends Controller
         $openState->status = 'Opened';
         $openState->stage = 1;
 
-        if (!empty($request->hasfile('file_attach'))) {
-
-            $image = $request->file('file_attach');
-
-            $ext = $image->getClientOriginalExtension();
-
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-
-            $image->move('upload/document/', $image_name);
-
-            $openState->file_attach = $image_name;
+        if (!empty($request->file_attach)) {
+            $files = [];
+            if ($request->hasfile('file_attach')) {
+                foreach ($request->file('file_attach') as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            }
+            $openState->file_attach = json_encode($files);
         }
 
-
-
-
-        if (!empty($request->hasfile('Support_doc'))) {
-
-            $image = $request->file('Support_doc');
-
-            $ext = $image->getClientOriginalExtension();
-
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-
-            $image->move('upload/document/', $image_name);
-
-            $openState->Support_doc = $image_name;
+        if (!empty($request->Support_doc)) {
+            $files = [];
+            if ($request->hasfile('Support_doc')) {
+                foreach ($request->file('Support_doc') as $file) {
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+            }
+            $openState->Support_doc = json_encode($files);
         }
+
+        
         $openState->update();
 
 
@@ -212,20 +212,21 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->save();
-        }
-        if ($lastopenState->related_records != $openState->related_records || !empty($request->related_records_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Action Item Related Records';
-            $history->previous = $lastopenState->related_records;
-            $history->current = $openState->related_records;
-            $history->comment = $request->related_records_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->save();
-        }
+        }   
+          
+        // if ($lastopenState->related_records != $openState->related_records || !empty($request->related_records_comment)) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Action Item Related Records';
+        //     $history->previous = $lastopenState->related_records;
+        //     $history->current = $openState->related_records;
+        //     $history->comment = $request->related_records_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->save();
+        // }
 
         if ($lastopenState->description != $openState->description || !empty($request->description_comment)) {
             $history = new ActionItemHistory;

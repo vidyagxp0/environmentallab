@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use GuzzleHttp\Client;
 
 class AuditProgramController extends Controller
 {
@@ -658,6 +659,15 @@ class AuditProgramController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $AuditProgramGrid = AuditProgramGrid::where('audit_program_id', $id)->first();
+
+        $client = new Client();
+        $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
+        $data->stateArr = json_decode($stateList->getBody(), true);
+        $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
+        $data->cityArr = json_decode($cityList->getBody(), true); 
+        $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
+        $data->countryArr = json_decode($countryList->getBody(), true);
+ 
 
         return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid'));
     }

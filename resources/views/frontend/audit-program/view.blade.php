@@ -781,7 +781,18 @@
                                             <div class="group-input">
                                                 <label for="country">Country</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}    name="country" class="countries" id="countryId">
-                                                    <option  value="{{ $data->country }}">Select Country</option>
+                                                    <option  value="">Select Country</option>
+
+                                                    @foreach ($data->countryArr as $key => $country)
+                                                         @foreach ($country as $key1 => $country1)
+
+                                                         <option value="{{ $country1['id'] }}" stateid="{{$country1['id']}}"
+                                                            @if ($data->country == $country1['id']) selected @endif>
+                                                            {{ $country1['name'] }}</option>
+
+                                                            @endforeach
+                                                    @endforeach
+                                                
                                                 </select>
                                                 {{--  <select name="country" id="country"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
@@ -791,7 +802,17 @@
                                             <div class="group-input">
                                                 <label for="State/District">State/District</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="state"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="states" id="stateId">
-                                                    <option value="{{ $data->state }}">Select State</option>
+                                                    <option value="">Select State</option>
+                                                    @foreach ($data->stateArr as $key => $state)
+                                                         @foreach ($state as $key1 => $state1)
+
+                                                         <option value="{{ $state1['id'] }}" stateid="{{$state1['id']}}"
+                                                            @if ($data->state == $state1['id']) selected @endif>
+                                                            {{ $state1['name'] }}</option>
+
+                                                            @endforeach
+                                                    @endforeach
+                                    
                                                 </select>
                                                 {{--  <select name="state" id="state"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
@@ -802,7 +823,17 @@
                                         
                                                 <label for="City">City</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="City" class="cities" id="cityId">
-                                                    <option value="{{ $data->City }}">Select City</option>
+                                                    <option value="">Select City</option>
+                                                    @foreach ($data->cityArr as $key => $city)
+                                                         @foreach ($city as $key1 => $city1)
+
+                                                         <option value="{{ $city1['id'] }}" stateid="{{$city1['id']}}"
+                                                            @if ($data->City == $city1['id']) selected @endif>
+                                                            {{ $city1['name'] }}</option>
+
+                                                            @endforeach
+                                                    @endforeach
+
                                                 </select>
                                                 {{--  <select name="city" id="city"
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
