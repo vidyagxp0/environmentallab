@@ -1292,8 +1292,10 @@ class CapaController extends Controller
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // $MaterialsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.MaterialsQuery.lims');
         // dd( $MaterialsQueryData->json());
-        
 
+        // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
+        // dd( $EquipmentsQueryData->json());
+        
         return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
     }
 
@@ -1460,6 +1462,7 @@ class CapaController extends Controller
 
     public function child_change_control(Request $request, $id)
     {
+        $cft =[];
         $parent_id = $id;
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -1475,7 +1478,8 @@ class CapaController extends Controller
         $parent_short_description = Capa::where('id', $id)->value('short_description');
         $hod = User::where('role', 4)->get();
         $pre = CC::all();
-
+        $changeControl = OpenStage::find(1);
+        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // return $capa_data;
         if ($request->child_type == "Change_control") {
             return view('frontend.change-control.new-change-control', compact('pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
