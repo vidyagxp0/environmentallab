@@ -20,14 +20,13 @@ class UserLoginController extends Controller
         $timezones =  $this->getTimezone();
         return view('frontend.login', compact('timezones'));
     }
-
 	
 	/*******************************************************************************
      * @ Get Profile API
      * 
      *********************************************************************************/
-    public function getProfile(Request $request){ 
-        try{
+    public function getProfile(Request $request){
+          try{
             $user = User::where('id', 1)->first();
             if(!is_null($user)){
                 return response()->json([

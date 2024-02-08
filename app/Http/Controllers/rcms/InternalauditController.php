@@ -890,6 +890,33 @@ class InternalauditController extends Controller
 
         $internalAudit->update();
 
+        $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','internal_audit')->first();
+        if (!empty($request->audit)) {
+            $data3->area_of_audit = serialize($request->audit);
+        }
+        if (!empty($request->scheduled_start_date)) {
+            $data3->start_date = serialize($request->scheduled_start_date);
+        }
+        if (!empty($request->scheduled_start_time)) {
+            $data3->start_time = serialize($request->scheduled_start_time);
+        }
+        if (!empty($request->scheduled_end_date)) {
+            $data3->end_date = serialize($request->scheduled_end_date);
+        }
+        if (!empty($request->scheduled_end_time)) {
+            $data3->end_time = serialize($request->scheduled_end_time);
+        }
+        if (!empty($request->auditor)) {
+            $data3->auditor = serialize($request->auditor);
+        }
+        if (!empty($request->auditee)) {
+            $data3->auditee = serialize($request->auditee);
+        }
+        if (!empty($request->remark)) {
+            $data3->remark = serialize($request->remark);
+        }
+        $data3->update();
+
         $data4 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','Observation_field')->first();
 
         if (!empty($request->observation_id)) {
