@@ -59,11 +59,18 @@ class EffectivenessCheckController extends Controller
         $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->originator = CC::where('id', $request->cc_id)->value('initiator_id');
+        $openState->assign_id = $request->assign_id;
         $openState->short_description = $request->short_description;
         $openState->Effectiveness_check_Plan = $request->Effectiveness_check_Plan;
         $openState->Effectiveness_Summary = $request->Effectiveness_Summary;
+        $openState->effect_summary = $request->effect_summary;
+        $openState->Quality_Reviewer = $request->Quality_Reviewer;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+        $openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
+        $openState->Addendum_Attachment = $request->Addendum_Attachment;
+        $openState->Attachment = $request->Attachment;
+        $openState->refer_record = $request->refer_record;
         $openState->Comments = $request->Comments;
         $openState->status = "Opened";
         $openState->stage = 1;
@@ -93,12 +100,17 @@ class EffectivenessCheckController extends Controller
     {
 
         $openState =  EffectivenessCheck::find($id);
-
+        $openState->assign_id = $request->assign_id;
         $openState->short_description = $request->short_description;
         $openState->Effectiveness_check_Plan = $request->Effectiveness_check_Plan;
+        $openState->Quality_Reviewer = $request->Quality_Reviewer;
         $openState->Effectiveness_Summary = $request->Effectiveness_Summary;
+        $openState->effect_summary = $request->effect_summary;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+        $openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
+        $openState->Addendum_Attachment = $request->Addendum_Attachment;
+        $openState->Attachment = $request->Attachment;
         $openState->Comments = $request->Comments;
         $openState->update();
         toastr()->success('Record Updated succesfully');
