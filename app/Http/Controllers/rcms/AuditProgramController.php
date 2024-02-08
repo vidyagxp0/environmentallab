@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\AuditProgram;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
+use App\Models\InternalAudit;
 use App\Models\User;
 use App\Models\AuditProgramGrid;
 use Carbon\Carbon;
@@ -777,10 +778,11 @@ class AuditProgramController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
+        $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Internal_Audit") {
-            return view('frontend.forms.audit', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
         } else {
-            return view('frontend.forms.auditee', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
         }
     }
 
