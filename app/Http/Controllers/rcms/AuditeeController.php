@@ -886,7 +886,7 @@ class AuditeeController extends Controller
         }
 
         $internalAudit->update();
-        $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','internal_audit')->first();
+        $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','external_audit')->first();
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
         }

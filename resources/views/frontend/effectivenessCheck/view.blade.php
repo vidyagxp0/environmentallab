@@ -203,7 +203,7 @@
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option {{ $data->assign_id == $value->id ? 'selected' : '' }}
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    value= "{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
 
@@ -262,7 +262,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea name="Effectiveness_Summary">{{ $data->Effectiveness_Summary }}</textarea>
+                                        <input type="text" name="effect_summary"  value="{{ $data->effect_summary }}">
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -320,13 +320,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Attachments"><b>Attachment</b></label>
-                                        <input type="file" id="myfile" name="myfile">
+                                        <input type="file" id="myfile" name="Attachment">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Records"><b>Reference Records</b></label>
-                                        <div class="static">Ref.Record</div>
+                                        <input type="file" id="myfile" name="refer_record">
+                                        <!-- <div class="static">Ref.Record</div> -->
                                     </div>
                                 </div>
                             </div>

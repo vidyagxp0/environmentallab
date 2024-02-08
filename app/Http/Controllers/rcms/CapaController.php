@@ -1292,8 +1292,10 @@ class CapaController extends Controller
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // $MaterialsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.MaterialsQuery.lims');
         // dd( $MaterialsQueryData->json());
-        
 
+        // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
+        // dd( $EquipmentsQueryData->json());
+        
         return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
     }
 
@@ -1460,7 +1462,6 @@ class CapaController extends Controller
 
     public function child_change_control(Request $request, $id)
     {
-
         $cft =[];
         $parent_id = $id;
         $parent_type = "Audit_Program";
