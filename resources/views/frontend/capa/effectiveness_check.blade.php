@@ -67,6 +67,7 @@
                             <div class="group-input">
                                 <label for="Assigned to"><b>Assigned to</b></label>
                                 <div class="static">Shaleen Mishra</div>
+                                <textarea name="assign_id"></textarea>
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -78,6 +79,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
+                                <textarea name="Quality_Reviewer"></textarea>
                                 <div class="static">Shaleen Mishra</div>
                             </div>
                         </div>

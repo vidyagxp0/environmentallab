@@ -110,7 +110,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select id="select-state" placeholder="Select..." name="quality_reviewer">
+                                        <select id="select-state" placeholder="Select..." name="Quality_Reviewer">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -138,7 +138,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="effect_plan_check">
+                                        <input type="text" name="Effectiveness_check_Plan">
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea name="effect_summary"></textarea>
+                                        <input type="text" name="effect_summary">
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -170,14 +170,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <input type="text" name="effect_result">
+                                        <input type="text" name="Effectiveness_Results">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments"><b>Effectiveness check
                                                 Attachment</b></label>
-                                        <input type="file" id="myfile" name="effect_attachment">
+                                        <input type="file" id="myfile" name="Effectiveness_check_Attachment">
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -186,13 +186,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
-                                        <input type="text" name="addendum">
+                                        <input type="text" name="Addendum_Comments">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                        <input type="file" id="myfile" name="addendum_attachment">
+                                        <input type="file" id="myfile" name="Addendum_Attachment">
                                     </div>
                                 </div>
                             </div>
@@ -215,19 +215,19 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments"><b>Comments</b></label>
-                                        <textarea name="comment"></textarea>
+                                        <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Attachments"><b>Attachment</b></label>
-                                        <input type="file" id="myfile" name="attachement">
+                                        <input type="file" id="myfile" name="Attachment">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Records"><b>Reference Records</b></label>
-                                        {{-- <div class="static"></div> --}}
+                                         <!-- <div class="static"></div>  -->
                                         <input type="file" id="myfile" name="refer_record">
                                     </div>
                                 </div>

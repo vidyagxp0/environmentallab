@@ -20,6 +20,71 @@ class UserLoginController extends Controller
         $timezones =  $this->getTimezone();
         return view('frontend.login', compact('timezones'));
     }
+	
+	// /*******************************************************************************
+    //  * @ Get Profile API
+    //  * 
+    //  *********************************************************************************/
+    // public function getProfile(Request $request){
+    //     try{
+    //         $user = User::where('id', 1)->first();
+    //         if(!is_null($user)){
+    //             return response()->json([
+    //                 'status' => true,
+	// 				'authenticate' => true,
+    //                 'data'  =>  $user,
+    //                 'message' => 'Profile details'
+    //             ], 200);
+    //         }
+    //         else{
+    //             return response()->json([
+    //                 'status' => false,
+    //                 'authenticate' => false,
+    //                 'message' => 'Unauthorized.'
+    //             ], 200);
+    //         }
+    //     }
+    //     catch (\Throwable $th) {
+    //         return response()->json([
+    //             'status' => false,
+    //             'authenticate' => false,
+    //             'message' => $th->getMessage()
+    //         ], 200);
+    //     }		
+    // }
+
+	
+	/*******************************************************************************
+     * @ Get Profile API
+     * 
+     *********************************************************************************/
+    public function getProfile(Request $request){
+        try{
+            $user = User::where('id', 1)->first();
+            if(!is_null($user)){
+                return response()->json([
+                    'status' => true,
+					'authenticate' => true,
+                    'data'  =>  $user,
+                    'message' => 'Profile details'
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status' => false,
+                    'authenticate' => false,
+                    'message' => 'Unauthorized.'
+                ], 200);
+            }
+        }
+        catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'authenticate' => false,
+                'message' => $th->getMessage()
+            ], 200);
+        }		
+    }
 
     public function logincheck(Request $request)
     {
