@@ -1460,6 +1460,8 @@ class CapaController extends Controller
 
     public function child_change_control(Request $request, $id)
     {
+
+        $cft =[];
         $parent_id = $id;
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -1475,10 +1477,11 @@ class CapaController extends Controller
         $parent_short_description = Capa::where('id', $id)->value('short_description');
         $hod = User::where('role', 4)->get();
         $pre = CC::all();
-
+        $changeControl = OpenStage::find(1);
+        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // return $capa_data;
         if ($request->child_type == "Change_control") {
-            return view('frontend.change-control.new-change-control', compact('pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
