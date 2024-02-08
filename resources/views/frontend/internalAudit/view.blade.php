@@ -9,6 +9,8 @@ $users = DB::table('users')
     <style>
         textarea.note-codable {
             display: none !important;
+
+            
         }
 
         header {
