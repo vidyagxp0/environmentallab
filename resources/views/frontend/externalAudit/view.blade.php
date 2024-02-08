@@ -14,6 +14,15 @@ $users = DB::table('users')
         header {
             display: none;
         }
+        .remove-file  {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
     </style>
     <script>
         $(document).ready(function () {
@@ -1853,4 +1862,22 @@ function addMultipleFiles(input, block_id) {
                     document.getElementById('initiator_group_code').value = selectedValue;
                 });
             </script>
+                      <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const removeButtons = document.querySelectorAll('.remove-file');
+            
+                            removeButtons.forEach(button => {
+                                button.addEventListener('click', function () {
+                                    const fileName = this.getAttribute('data-file-name');
+                                    const fileContainer = this.closest('.file-container');
+            
+                                    // Hide the file container
+                                    if (fileContainer) {
+                                        fileContainer.style.display = 'none';
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+
         @endsection
