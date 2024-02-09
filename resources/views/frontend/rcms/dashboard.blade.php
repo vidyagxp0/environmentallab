@@ -138,8 +138,8 @@
                                                     <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/1">
                                                         <div class="icon" onclick="showChild()" data-bs-toggle="tooltip"
                                                             title="Related Records">
-                                                            <img src="{{ asset('user/images/single.png') }}" alt="..."
-                                                                class="w-100 h-100">
+                                                            {{-- <img src="{{ asset('user/images/single.png') }}" alt="..."
+                                                                class="w-100 h-100"> --}}
                                                         </div>
                                                     </a>
                                                     {{-- -----------------------by pankaj-------------------- --}}
@@ -152,8 +152,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/internal_audit">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -166,8 +166,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/risk_assesment">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -180,8 +180,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/lab_incident">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -194,8 +194,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/external_audit">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -208,8 +208,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/audit_program">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -222,8 +222,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/observation">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -237,8 +237,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/action_item">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -251,8 +251,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/extension">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -265,8 +265,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/effectivness">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -278,8 +278,8 @@
                                                         <a href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/capa">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -292,8 +292,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -306,8 +306,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/root_cause_analysis">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
