@@ -132,7 +132,7 @@
 
 
         </div>
-        <form action="{{ route('effectiveness.update', $data->id) }}" method="POST">
+        <form action="{{ route('effectiveness.update', $data->id) }}" method="POST" enctype="multipart/form-data">
 
             @csrf
             @method('PUT')
