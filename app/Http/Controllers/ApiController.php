@@ -93,4 +93,41 @@ class ApiController extends Controller
             ], 200);
         }		
     }
+    /***************************
+     * @ Get Capa Record
+     * 
+     ***************************/
+    public function capaStatus(Request $request){
+        $result = Capa::orderByDesc('id')->get();
+        try{
+            $response = [];
+            if($result->count() > 0){
+                foreach($result as $res){
+                    $data['id'] = $res->id;
+                    $data['status'] = $res->status;
+                    $response[] = $data;
+                }
+                return response()->json([
+                    'status' => true,
+					'authenticate' => true,
+                    'data'  =>  $response,
+                    'message' => 'Dashboard record'
+                ], 200);
+            }
+            else{
+                return response()->json([
+                    'status' => false,
+                    'authenticate' => false,
+                    'message' => 'Record not found.'
+                ], 200);
+            }
+        }
+        catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'authenticate' => false,
+                'message' => $th->getMessage()
+            ], 200);
+        }		
+    }
 }

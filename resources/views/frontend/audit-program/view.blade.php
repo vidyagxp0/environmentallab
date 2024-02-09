@@ -1053,9 +1053,13 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
+                                    
+                                    <label for="major">
+
+                                    </label>
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Internal_Audit">
-                                        Internal Audit
+                                         Internal Audit
                                     </label>
                                     <label for="minor">
                                         <input type="radio" name="child_type" value="External_Audit">

@@ -20,4 +20,5 @@ Route::post('userLogin', [UserLoginController::class, 'loginapi']);
 
 Route::get('dashboardStatus', [ApiController::class, 'dashboardStatus']);
 Route::get('getProfile', [ApiController::class, 'getProfile']);
+Route::get('capaStatus', [ApiController::class, 'capaStatus']);
 
