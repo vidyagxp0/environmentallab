@@ -96,18 +96,9 @@
                                     <i class="fa-solid fa-angle-down"></i>
                                 </div>
                                 <div class="icon-block small-block">
-                                    <div class="image">
-                                        @if (Auth::user()->id == 1)
-                                            <img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
-                                                class="w-100 h-100">
-                                        @else
-                                            <img src="{{ asset('user/images/logo.png') }}" alt="..."
-                                                class="w-100 h-100">
-                                        @endif
-                                    </div>
-                                    <div data-bs-toggle="modal" data-bs-target="#setting-modal">Settings</div>
+                                    {{-- <div data-bs-toggle="modal" data-bs-target="#setting-modal">Settings</div> --}}
                                     <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
-                                    <div><a href="#">Help</a></div>
+                                    {{-- <div><a href="#">Help</a></div> --}}
                                     <div><a href="/rcms/helpdesk-personnel">Helpdesk Personnel</a></div>
                                     <div><a href="{{ url('rcms/logout') }}">Log Out</a></div>
                                 </div>
@@ -128,24 +119,24 @@
                                 <i class="fa-solid fa-house-user"></i>
                             </a>
                             <div onclick="window.open('/rcms_desktop', '_blank', 'width=1200, height=900, top=0, left=0');"
-                                data-bs-toggle="tooltip" title="Dashboard">
+                                data-bs-toggle="tooltip" title="Logs">
                                 <i class="fa-solid fa-gauge-high"></i>
                             </div>
-                            <a href="/rcms_reports" data-bs-toggle="tooltip" title="Analytics">
+                            {{-- <a href="/rcms_reports" data-bs-toggle="tooltip" title="Analytics">
                                 <svg width="20" height="20" viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path fill="#000000" fill-rule="evenodd"
                                         d="M3.6 2.25A1.35 1.35 0 0 0 2.25 3.6v16.8c0 .746.604 1.35 1.35 1.35h16.8a1.35 1.35 0 0 0 1.35-1.35V3.6a1.35 1.35 0 0 0-1.35-1.35zM16.75 8a.75.75 0 0 0-1.5 0v8a.75.75 0 0 0 1.5 0zM12 10.25a.75.75 0 0 1 .75.75v5a.75.75 0 0 1-1.5 0v-5a.75.75 0 0 1 .75-.75M8.75 13a.75.75 0 0 0-1.5 0v3a.75.75 0 0 0 1.5 0z"
                                         clip-rule="evenodd" />
                                 </svg>
-                            </a>
-                            <div data-bs-toggle="tooltip" title="Standards">
+                            </a> --}}
+                            {{-- <div data-bs-toggle="tooltip" title="Standards">
                                 <svg width="17" height="22" viewBox="0 0 8 8" xmlns="http://www.w3.org/2000/svg"
                                     data-bs-toggle="modal" data-bs-target="#standards-modal">
                                     <path fill="#000000"
                                         d="M1 0C.93 0 .87.01.81.03C.42.11.11.42.03.81C0 .87 0 .93 0 1v5.5C0 7.33.67 8 1.5 8H7V7H1.5c-.28 0-.5-.22-.5-.5s.22-.5.5-.5H7V.5c0-.28-.22-.5-.5-.5H6v3L5 2L4 3V0z" />
                                 </svg>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="right-block">

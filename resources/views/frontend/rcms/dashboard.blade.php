@@ -91,6 +91,13 @@
                                     <option value="risk_assement">Risk Assesment</option>
                                     <option value="root_cause_analysis">Root Cause Analysis</option>
                                     <option value="management_review">Management Review</option>
+                                    <option value="document">Document</option>
+                                    <option value="extension">Extension</option>
+                                    <option value="observation">Observation</option>
+                                    <option value="change_control">Change Control</option>
+                                    <option value="action_item">Action Item</option>
+                                    <option value="effectiveness_check">Effectiveness Check</option>
+                                    <option value="tms">TMS</option>
                                 </select>
                             </div>
                             <div class="group-input">
@@ -100,9 +107,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
