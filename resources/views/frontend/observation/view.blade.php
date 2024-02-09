@@ -60,7 +60,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4)
+                        @elseif($data->stage == 4)               
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
@@ -73,7 +73,7 @@
                             </a> </button>
 
 
-                    </div>
+                    </div>               
 
                 </div>
                 <div class="status">
@@ -344,10 +344,35 @@
                                 <div class="col-12">
                                     <div class="sub-head">Further Information</div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files1">Attached Files</label>
                                         <input type="file" name="attach_files1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->attach_files1 }}"/>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files1">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="attach_files1">
+                                                @if ($data->attach_files1)
+                                                @foreach(json_decode($data->attach_files1) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->attach_files1 }}" type="file" id="myfile" name="attach_files1[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files1')"
+                                                    multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -375,10 +400,35 @@
                                         <textarea name="recommend_action" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->recommend_action }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_observations">Related Obsevations</label>
                                         <input type="file" name="related_observations" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->related_observations }}"/>
+                                    </div>
+                                </div> --}}
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="related_observations">Related Obsevations</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="related_observations">
+                                            @if ($data->related_observations)
+                                            @foreach(json_decode($data->related_observations) as $file)
+                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                       @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->related_observations }}" type="file" id="myfile" name="related_observations[]"
+                                                oninput="addMultipleFiles(this, 'related_observations')"
+                                                multiple>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -421,7 +471,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to2">Assigned To</label>
-                                        <select name="assign_to" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
+                                        <select name="assign_to2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $value)
                                             <option {{ $data->assign_to2 == $value->id ? 'selected' : '' }}
@@ -648,10 +698,35 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files">Attached Files</label>
                                         <input type="file" name="attach_files2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->attach_files2 }}">
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="attach_files2">
+                                                @if ($data->attach_files2)
+                                                @foreach(json_decode($data->attach_files2) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->attach_files2 }}" type="file" id="myfile" name="attach_files2[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files2')"
+                                                    multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -1030,6 +1105,23 @@
                 currentStep--;
             }
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeButtons = document.querySelectorAll('.remove-file');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
+                });
+            });
+        });
     </script>
 @endsection
 

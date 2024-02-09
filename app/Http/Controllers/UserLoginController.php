@@ -100,8 +100,8 @@ class UserLoginController extends Controller
     {
         Auth::logout();
        
-        return redirect('rcms/rcms');
-        // return redirect('/login');
+        // return redirect('rcms/rcms');
+        return redirect('/login');
     }
 
     public function rcmscheck(Request $request)

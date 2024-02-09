@@ -52,12 +52,25 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        if ($request->hasfile('attach_files1')) {
-            $image = $request->file('attach_files1');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files1 = $image_name;
+        // if ($request->hasfile('attach_files1')) {
+        //     $image = $request->file('attach_files1');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files1 = $image_name;
+        // }
+
+        if (!empty($request->attach_files1)) {
+            $files = [];
+            if ($request->hasfile('attach_files1')) {
+                foreach ($request->file('attach_files1') as $file) {
+                    $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files1 = json_encode($files);
         }
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
@@ -82,19 +95,43 @@ class ObservationController extends Controller
         $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
-        if ($request->hasfile('related_observations')) {
-            $image = $request->file('related_observations');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->related_observations = $image_name;
+        // if ($request->hasfile('related_observations')) {
+        //     $image = $request->file('related_observations');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->related_observations = $image_name;
+        // }
+        if (!empty($request->related_observations)) {
+            $files = [];
+            if ($request->hasfile('related_observations')) {
+                foreach ($request->file('related_observations') as $file) {
+                    $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->related_observations = json_encode($files);
         }
-        if ($request->hasfile('attach_files2')) {
-            $image = $request->file('attach_files2');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files2 = $image_name;
+        // if ($request->hasfile('attach_files2')) {
+        //     $image = $request->file('attach_files2');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files2 = $image_name;
+        // }
+        if (!empty($request->attach_files2)) {
+            $files = [];
+            if ($request->hasfile('attach_files2')) {
+                foreach ($request->file('attach_files2') as $file) {
+                    $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files2 = json_encode($files);
         }
         $data->status = 'Opened';
         $data->stage = 1;
@@ -576,12 +613,25 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        if ($request->hasfile('attach_files1')) {
-            $image = $request->file('attach_files1');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files1 = $image_name;
+        // if ($request->hasfile('attach_files1')) {
+        //     $image = $request->file('attach_files1');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files1 = $image_name;
+        // }
+
+        if (!empty($request->attach_files1)) {
+            $files = [];
+            if ($request->hasfile('attach_files1')) {
+                foreach ($request->file('attach_files1') as $file) {
+                    $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files1 = json_encode($files);
         }
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
@@ -606,19 +656,43 @@ class ObservationController extends Controller
         $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
-        if ($request->hasfile('related_observations')) {
-            $image = $request->file('related_observations');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->related_observations = $image_name;
+        // if ($request->hasfile('related_observations')) {
+        //     $image = $request->file('related_observations');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->related_observations = $image_name;
+        // }
+        if (!empty($request->related_observations)) {
+            $files = [];
+            if ($request->hasfile('related_observations')) {
+                foreach ($request->file('related_observations') as $file) {
+                    $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->related_observations = json_encode($files);
         }
-        if ($request->hasfile('attach_files2')) {
-            $image = $request->file('attach_files2');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files2 = $image_name;
+        // if ($request->hasfile('attach_files2')) {
+        //     $image = $request->file('attach_files2');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files2 = $image_name;
+        // }
+        if (!empty($request->attach_files2)) {
+            $files = [];
+            if ($request->hasfile('attach_files2')) {
+                foreach ($request->file('attach_files2') as $file) {
+                    $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files2 = json_encode($files);
         }
         $data->status = 'Opened';
         $data->stage = 1;
