@@ -472,13 +472,13 @@
                                      <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="start_date">Actual Start Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="start_date" value="{{ $data->start_date }}">
+                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="start_date" value="{{ Helpers::getdateFormat($data->start_date) }}">
                                         </div>
                                     </div> 
                                       <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="end_date">Actual End Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="end_date" value="{{ $data->end_date }}">
+                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="end_date"value="{{ Helpers::getdateFormat($data->end_date) }}">
                                         </div>
                                     </div> 
                                      <!-- <div class="col-12">
