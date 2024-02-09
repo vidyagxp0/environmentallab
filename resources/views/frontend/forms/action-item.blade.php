@@ -370,9 +370,10 @@
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="due_date_extension">Due Date Extension Justification</label>
+                                        <label for="due-dateextension">Due Date Extension Justification</label>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>

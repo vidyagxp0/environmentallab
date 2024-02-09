@@ -208,7 +208,7 @@
                                                     value="33">QMS-EMEA/PROD/2023/33</option>
                                                 <option {{ $data->related_records == '34' ? 'selected' : '' }}
                                                     value="34">QMS-EMEA/PROD/2023/34</option>
-                                                <option {{ $data->related_records == '35' ? 'selected' : '' }}
+                                                <option {{ $data->related_records== '35' ? 'selected' : '' }}
                                                     value="35">QMS-EMEA/PROD/2023/35</option>
                                                 <option {{ $data->related_records == '36' ? 'selected' : '' }}
                                                     value="36">QMS-EMEA/PROD/2023/36</option>
@@ -469,24 +469,48 @@
                                             <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="start_date">Actual Start Date</label>
                                             <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="start_date" value="{{ $data->start_date }}">
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
+                                    </div> 
+                                      <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="end_date">Actual End Date</label>
                                             <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="end_date" value="{{ $data->end_date }}">
                                         </div>
-                                    </div>
-                                    <div class="col-12">
+                                    </div> 
+                                     <!-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="comments">{{ $data->comments }}</textarea>
                                         </div>
-                                    </div>
+                                    </div> 
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                                <label for="Audit Start Date">Actual Start Date</label>
+                                                 <div class="calenderauditee">
+                                                        <input type="text" id="start_date" readonly
+                                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
+                                                        <!-- <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
+                                                        name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                            oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
+                                                <!-- </div>
+                                     </div>
+                                 </div>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Audit End Date">Actual End Date</label>
+                                                   <div class="calenderauditee">
+                                                        <input type="text"  id="end_date" readonly
+                                                            placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/> -->
+                                                        <!-- <input type="date" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }} "
+                                                        id="end_date_checkdate" class="hide-input"
+                                                            oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
+                                                    <!-- </div>
+                                            </div>
+                                        </div> --> 
                                     {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Support_doc">Supporting Documents</label>
@@ -523,7 +547,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="due_date_extension">Due Date Extension Justification</label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="due_date_extension">{{ $data->due_date_extension }}</textarea>
+                                            <textarea  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}name="due_date_extension">{{ $data->due_date_extension }}</textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -883,4 +907,23 @@
             });
         });
     </script>
+     <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const removeButtons = document.querySelectorAll('.remove-file');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+
+                        // Hide the file container
+                        
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        </script>
+
 @endsection
