@@ -29,7 +29,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->string('title')->nullable();
             $table->string('dept')->nullable();
-            $table->string('hod_preson')->nullable();
+            $table->text('hod_preson')->nullable();
             $table->text('file_attach')->nullable();
             $table->string('initiatorGroup')->nullable();
             $table->text('action_taken')->nullable();

@@ -72,7 +72,11 @@ class ActionItemController extends Controller
         $openState->related_records = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
+<<<<<<< Updated upstream
         $openState->hod_preson = implode(',', $request->hod_preson);
+=======
+          $openState->hod_preson= implode(',', $request->hod_preson);
+>>>>>>> Stashed changes
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
@@ -81,7 +85,7 @@ class ActionItemController extends Controller
         $openState->start_date = $request->start_date;
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
-        $openState->due_date_extension = $request->due_date_extension;
+        $openState->due_date_extension= $request->due_date_extension;
         $openState->qa_comments = $request->qa_comments;
         $openState->status = 'Opened';
         $openState->stage = 1;
@@ -142,7 +146,11 @@ class ActionItemController extends Controller
         $openState->related_records = $request->related_records;
         $openState->description = $request->description;
         $openState->title = $request->title;
+<<<<<<< Updated upstream
         $openState->hod_preson = $request->hod_preson;
+=======
+        // $openState->hod_preson= json_encode($request->hod_preson);
+>>>>>>> Stashed changes
         $openState->dept = $request->dept;
         $openState->initiatorGroup = $request->initiatorGroup;
         $openState->action_taken = $request->action_taken;
@@ -150,6 +158,14 @@ class ActionItemController extends Controller
         $openState->end_date = $request->end_date;
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
+        $openState->due_date_extension= $request->due_date_extension;
+        $openState->assign_id = $request->assign_id;
+        $openState->departments = $request->departments;
+
+        $openState->short_description = $request->short_description;
+
+
+
         $openState->status = 'Opened';
         $openState->stage = 1;
 
@@ -256,6 +272,7 @@ class ActionItemController extends Controller
         if ($lastopenState->initiatorGroup != $openState->initiatorGroup || !empty($request->initiatorGroup_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
+
             $history->activity_type = 'Inititator Group';
             $history->previous = $lastopenState->initiatorGroup;
             $history->current = $openState->initiatorGroup;
@@ -325,6 +342,19 @@ class ActionItemController extends Controller
             $history->previous = $lastopenState->qa_comments;
             $history->current = $openState->qa_comments;
             $history->comment = $request->qa_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->save();
+        }
+        if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'QA Review Comments';
+            $history->previous = $lastopenState->due_date_extension;
+            $history->current = $openState->due_date_extension;
+            $history->comment = $request->due_date_extension_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

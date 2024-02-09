@@ -21,6 +21,7 @@ class UserLoginController extends Controller
         return view('frontend.login', compact('timezones'));
     }
 	
+<<<<<<< Updated upstream
 	/*******************************************************************************
      * @ Get Profile API
      * 
@@ -53,6 +54,9 @@ class UserLoginController extends Controller
         }		
     }
 
+=======
+	
+>>>>>>> Stashed changes
 	
 	/*******************************************************************************
      * @ Get Profile API
