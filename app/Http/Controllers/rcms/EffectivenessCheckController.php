@@ -67,10 +67,60 @@ class EffectivenessCheckController extends Controller
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
-        $openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
-        $openState->Addendum_Attachment = $request->Addendum_Attachment;
-        $openState->Attachment = $request->Attachment;
-        $openState->refer_record = $request->refer_record;
+        //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
+
+        if (!empty($request->Effectiveness_check_Attachment)) {
+            $files = [];
+            if ($request->hasfile('Effectiveness_check_Attachment')) {
+                foreach ($request->file('Effectiveness_check_Attachment') as $file) {
+                    $name = $request->name . 'Effectiveness_check_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Effectiveness_check_Attachment = json_encode($files);
+        }
+
+      //  $openState->Addendum_Attachment = $request->Addendum_Attachment;
+        if (!empty($request->Addendum_Attachment)) {
+            $files = [];
+            if ($request->hasfile('Addendum_Attachment')) {
+                foreach ($request->file('Addendum_Attachment') as $file) {
+                    $name = $request->name . 'Addendum_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Addendum_Attachment = json_encode($files);
+        }
+       // $openState->Attachment = $request->Attachment;
+        if (!empty($request->Attachment)) {
+            $files = [];
+            if ($request->hasfile('Attachment')) {
+                foreach ($request->file('Attachment') as $file) {
+                    $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Attachment = json_encode($files);
+        }
+       // $openState->refer_record = $request->refer_record;
+       if (!empty($request->refer_record)) {
+        $files = [];
+        if ($request->hasfile('refer_record')) {
+            foreach ($request->file('refer_record') as $file) {
+                $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                $file->move('upload/', $name);
+                $files[] = $name;
+            }
+        }
+
+        $openState->refer_record = json_encode($files);
+    }
         $openState->Comments = $request->Comments;
         $openState->status = "Opened";
         $openState->stage = 1;
@@ -108,9 +158,59 @@ class EffectivenessCheckController extends Controller
         $openState->effect_summary = $request->effect_summary;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
-        $openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
-        $openState->Addendum_Attachment = $request->Addendum_Attachment;
-        $openState->Attachment = $request->Attachment;
+        //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
+
+        if (!empty($request->Effectiveness_check_Attachment)) {
+            $files = [];
+            if ($request->hasfile('Effectiveness_check_Attachment')) {
+                foreach ($request->file('Effectiveness_check_Attachment') as $file) {
+                    $name = $request->name . 'Effectiveness_check_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Effectiveness_check_Attachment = json_encode($files);
+        }
+
+       // $openState->Addendum_Attachment = $request->Addendum_Attachment;
+        if (!empty($request->Addendum_Attachment)) {
+            $files = [];
+            if ($request->hasfile('Addendum_Attachment')) {
+                foreach ($request->file('Addendum_Attachment') as $file) {
+                    $name = $request->name . 'Addendum_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Addendum_Attachment = json_encode($files);
+        }
+     //   $openState->Attachment = $request->Attachment;
+        if (!empty($request->Attachment)) {
+            $files = [];
+            if ($request->hasfile('Attachment')) {
+                foreach ($request->file('Attachment') as $file) {
+                    $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Attachment = json_encode($files);
+        }
+        if (!empty($request->refer_record)) {
+            $files = [];
+            if ($request->hasfile('refer_record')) {
+                foreach ($request->file('refer_record') as $file) {
+                    $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+    
+            $openState->refer_record = json_encode($files);
+        }
         $openState->Comments = $request->Comments;
         $openState->update();
         toastr()->success('Record Updated succesfully');

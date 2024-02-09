@@ -142,7 +142,6 @@
                     QMS-North America / Effectiveness-Check
                 </div>
                 <div class="button-bar">
-                    <button type="submit">Save</button>
                     {{--  <button type="button">Cancel</button>
                 <button type="button">New</button>
                 <button type="button">Copy</button>
@@ -249,6 +248,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
                         </div>
                     </div>
 
@@ -275,14 +283,39 @@
                                             value="{{ $data->Effectiveness_Results }}">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments"><b>Effectiveness check
                                                 Attachment</b></label>
                                         <input type="file" id="myfile" name="Effectiveness_check_Attachment"
                                             value="{{ $data->Effectiveness_check_Attachment }}">
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-6">
+                                            <div class="group-input">
+                                                <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="Effectiveness_check_Attachment">
+                                                        @if ($data->Effectiveness_check_Attachment)
+                                                        @foreach(json_decode($data->Effectiveness_check_Attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->Effectiveness_check_Attachment }}" type="file" id="myfile" name="Effectiveness_check_Attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  </div>
                                 <div class="col-12 sub-head">
                                     Reopen
                                 </div>
@@ -293,14 +326,49 @@
                                             value= "{{ $data->Addendum_Comments }}">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
                                         <input type="file" id="myfile" name="Addendum_Attachment"
                                             value="{{ $data->Addendum_Attachment }}">
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-6">
+                                            <div class="group-input">
+                                                <label for="Addendum Attachments">Addendum Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="myfile">
+                                                        @if ($data->Addendum_Attachment)
+                                                        @foreach(json_decode($data->Addendum_Attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Addendum_Attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Addendum_Attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                             </div>
+                            <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
                         </div>
                     </div>
 
@@ -317,20 +385,81 @@
                                         <textarea name="Comments">{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Attachments"><b>Attachment</b></label>
                                         <input type="file" id="myfile" name="Attachment">
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> -->
+                                <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachments">Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="myfile">
+                                                        @if ($data->Attachment)
+                                                        @foreach(json_decode($data->Attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->Attachment }}" type="file" id="myfile" name="Attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Records"><b>Reference Records</b></label>
                                         <input type="file" id="myfile" name="refer_record">
-                                        <!-- <div class="static">Ref.Record</div> -->
+                                         <div class="static">Ref.Record</div>
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Reference Records">Reference Records</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="refer_record">
+                                                        @if ($data->refer_record)
+                                                        @foreach(json_decode($data->refer_record) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->refer_record }}" type="file" id="myfile" name="refer_record[]"
+                                                            oninput="addMultipleFiles(this, 'refer_record')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  </div>
                             </div>
+                            <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
                         </div>
                     </div>
 
@@ -542,6 +671,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
                     </div>
 
 
@@ -875,6 +1015,24 @@
                 confirmButtonColor: '#3085d6', // Customize the confirm button color
             });
         </script>
+        
         @php session()->forget('errorMessages'); @endphp
     @endif
+    <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const removeButtons = document.querySelectorAll('.remove-file');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+
+                        // Hide the file container
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        </script>
 @endsection

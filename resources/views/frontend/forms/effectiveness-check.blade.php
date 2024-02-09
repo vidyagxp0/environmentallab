@@ -96,17 +96,20 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">  --}}
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" name="due_date">
+                                          <!-- <input type="hidden" value="{{ $due_date }}" name="due_date"> -->
+                                        <!-- <input disabled type="text"
+                                            value="{{ Helpers::getdateFormat($due_date) }}">   -->
+                                        <div class="calenderauditee">
+                                           <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" class="hide-input"
+                                           oninput="handleDateInput(this, 'due_date')"/> 
+                                         </div>
                                     </div>
                                 </div>
-
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
@@ -173,11 +176,25 @@
                                         <input type="text" name="Effectiveness_Results">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments"><b>Effectiveness check
                                                 Attachment</b></label>
                                         <input type="file" id="myfile" name="Effectiveness_check_Attachment">
+                                    </div>
+                                </div> -->
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Effectiveness_check_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Effectiveness_check_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -189,10 +206,26 @@
                                         <input type="text" name="Addendum_Comments">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
                                         <input type="file" id="myfile" name="Addendum_Attachment">
+                                    </div>
+                                </div> -->
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="Addendum Attachments">Addendum Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Addendum_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Addendum_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Addendum_Attachment')" multiple>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -218,17 +251,49 @@
                                         <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Attachments"><b>Attachment</b></label>
                                         <input type="file" id="myfile" name="Attachment">
                                     </div>
+                                </div> -->
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Attachments">Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Records"><b>Reference Records</b></label>
-                                         <!-- <div class="static"></div>  -->
+                                          <div class="static"></div>  
                                         <input type="file" id="myfile" name="refer_record">
+                                    </div>
+                                </div> -->
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Reference Records">Reference Records</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="refer_record"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="refer_record[]"
+                                                    oninput="addMultipleFiles(this, 'refer_record')" multiple>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

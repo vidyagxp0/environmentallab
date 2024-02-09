@@ -496,9 +496,7 @@
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
                                         <div class="calenderauditee">
                                         <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input
-                                        type="date"
-                                        class="hide-input"
+                                        <input type="date" class="hide-input"
                                         oninput="handleDateInput(this, 'due_date')"
                                         />
                                          </div>
