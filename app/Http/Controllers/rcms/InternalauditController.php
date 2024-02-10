@@ -1657,17 +1657,17 @@ class InternalauditController extends Controller
         return view('frontend.internalAudit.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
 
-    public function internal_audit_child(Request $request, $id)
-    {
-        $parent_id = $id;
-        $parent_type = "Observations";
-        $record_number = ((RecordNumber::first()->value('counter')) + 1);
-        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $currentDate = Carbon::now();
-        $formattedDate = $currentDate->addDays(30);
-        $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
-    }
+        public function internal_audit_child(Request $request, $id)
+        {
+            $parent_id = $id;
+            $parent_type = "Observations";
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            $currentDate = Carbon::now();
+            $formattedDate = $currentDate->addDays(30);
+            $due_date = $formattedDate->format('d-M-Y');
+            return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
 
 
     public static function singleReport($id)

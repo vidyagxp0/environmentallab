@@ -473,7 +473,7 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Effectiveness Check Creation Date</label>
+                                        <label fo                                                                                                                                             r="Date Due">Effectiveness Check Creation Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="effectivess_check_creation_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
