@@ -960,6 +960,7 @@ class ManagementReviewController extends Controller
 
     public function ManagementReviewAuditTrial($id)
     {
+        
         $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDESC('id')->get()->unique('activity_type');
         $today = Carbon::now()->format('d-m-y');
         $document = ManagementReview::where('id', $id)->first();

@@ -67,6 +67,7 @@ class EffectivenessCheckController extends Controller
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+       // $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
 
         if (!empty($request->Effectiveness_check_Attachment)) {
@@ -158,6 +159,7 @@ class EffectivenessCheckController extends Controller
         $openState->effect_summary = $request->effect_summary;
         $openState->Effectiveness_Results = $request->Effectiveness_Results;
         $openState->Addendum_Comments = $request->Addendum_Comments;
+     //   $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
 
         if (!empty($request->Effectiveness_check_Attachment)) {
