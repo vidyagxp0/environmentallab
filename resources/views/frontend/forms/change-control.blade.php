@@ -38,7 +38,7 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active">General Information</button>
+                <button class="cctablinks active">General Information1</button>
                 <button class="cctablinks">Change Details</button>
                 <button class="cctablinks">Risk Assessment</button>
                 <button class="cctablinks">QA Review</button>

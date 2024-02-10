@@ -1301,12 +1301,12 @@
 
                                         <div class="col-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Effect Check Creation Date">Effectiveness Check Creation Date1</label>
+                                                <label for="Effect Check Creation Date">Effectiveness Check Creation Date</label>
                                                 {{-- <input type="date" name="effect_check_date"> --}}
                                                 <div class="calenderauditee">
                                                     <input type="text"  id="effect_check_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->effect_check_date) }}"/>
-                                                    <input type="date" name="effect_check_date" value="{{ $data->effect_check_date }}"class="hide-input"
+                                                    <input type="date" name="effect_check_date" value=""class="hide-input"
                                                         oninput="handleDateInput(this,'effect_check_date')" />
                                                 </div>
                                             </div>

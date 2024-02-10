@@ -23,7 +23,7 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
+                <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information1</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Risk Assessment</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
