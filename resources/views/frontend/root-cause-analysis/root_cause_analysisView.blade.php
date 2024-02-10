@@ -148,12 +148,12 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Chemical Analysis</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Water Analysis</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QC Head/Designee Eval Comments</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button> --}}
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button> --}}
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QC Head/Designee Eval Comments</button> --}}
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
 
@@ -161,7 +161,7 @@
                     @csrf
                     <div id="step-form">
 
-                        <div id="CCForm1" class="inner-block cctabcontent">
+                         {{-- <div id="CCForm1" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="col-lg-6">
@@ -178,13 +178,13 @@
                                             <input disabled type="text" name="division_code"
                                                 value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                             {{-- <div class="static">QMS-North America</div> --}}
-                                        </div>
+                                        {{-- </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator</b></label>
                                             {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                            <input disabled type="text" name="division_code"
+                                            {{-- <input disabled type="text" name="division_code"
                                                 value="{{ $data->initiator_name }}">
                                         </div>
                                     </div>
@@ -200,8 +200,8 @@
                                     <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="search">
-                                                Assigned To <span class="text-danger"></span>
-                                            </label>
+                                                Assigned To <span class="text-danger"></span> --}}
+                                            {{-- </label>
                                             <select id="select-state" placeholder="Select..." name="assign_id"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 <option value="">Select a value</option>
@@ -225,7 +225,7 @@
                                                 value="{{ Helpers::getdateFormat($data->due_date) }}">
                                             {{-- <div class="static"> {{ $data->due_date }}</div> --}}
 
-                                        </div>
+                                        {{-- </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -245,8 +245,8 @@
                                                     @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
                                                 </option>
                                                 <option value="PSG"
-                                                    @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
-                                                    Sourcing Group</option>
+                                                    @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma --}}
+                                                    {{-- Sourcing Group</option>
                                                 <option value="CS"
                                                     @if ($data->initiatorGroup == 'CS') selected @endif>Central
                                                     Stores</option>
@@ -286,7 +286,7 @@
 
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group Code">Initiator Group Code</label>
@@ -314,8 +314,8 @@
                                                     Demo 1</option>
                                                 <option value="Demo2" @if ($data->Sample_Types == 'Demo2') selected @endif>
                                                     Demo 2</option>
-                                                <option value="Demo3" @if ($data->Sample_Types == 'Demo3') selected @endif>
-                                                    Demo 3</option>
+                                                <option value="Demo3" @if ($data->Sample_Types == 'Demo3') selected @endif> --}}
+                                                    {{-- Demo 3</option>
                                                 <option value="Demo4" @if ($data->Sample_Types == 'Demo4') selected @endif>
                                                     Demo 4</option>
                                                 <option value="Demo5" @if ($data->Sample_Types == 'Demo5') selected @endif>
@@ -385,9 +385,9 @@
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                         @endforeach
-                                                    @endif
+                                                    @endif --}}
 
-                                                </div>
+                                                {{-- </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -413,9 +413,202 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
+                        </div>   --}} 
+                        <div id="CCForm1" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="originator">Originator</label>
+                                            <input readonly  type="text" name="originator_id" value="Amit Guru"  />
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="date-opened">Date Opened </label>
+                                            <div><small class="text-primary">When was this Investigation record opened?</small>
+                                            </div>
+                                            <input type="text" name="date_opened" value="{{date('d-M-Y')}}" readonly>
+                                            <input type="hidden" value="{{ date('Y-m-d') }}" name="date_opened">
+    
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input ">
+                                            <label for="Date Due"><b>Date of Initiation</b></label>
+                                            <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                            <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="short_description">Short Description</label>
+                                            <div><small class="text-primary">Investigation short description to be presented on
+                                                    desktop</small></div>
+                                            <textarea name="short_description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="severity-level">Sevrity Level</label>
+                                            <select name="severity_level">
+                                                <option value="0">-- Select --</option>
+                                                <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="assigned-to">Assigned to</label>
+                                            <div><small class="text-primary">Lead Investigator</small></div>
+                                            <select name="assigned_to">
+                                                <option value="0">-- Select --</option>
+                                                <option value="1">Amit Guru</option>
+                                                <option value="2">Shaleen Mishra</option>
+                                                <option value="3">Madhulika Mishra</option>
+                                                <option value="4">Amit Patel</option>
+                                                <option value="5">Harsh Mishra</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Date Due">Date Due</label>
+                                            <div><small class="text-danger">Last date this Investigation should be closed
+                                                    by</small></div>
+                                            <div class="calenderauditee">
+                                            <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'due_date')"/>
+                                            </div>
+    
+                                            {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
+                                            <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
+                                            {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                value="" name="due_date"> --}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Type">Type</label>
+                                            <select name="Type">
+                                                <option value="0">-- Select --</option>
+                                                <option value="1">Facillties</option>
+                                                <option value="2">Other</option>
+                                                <option value="3">Stabillity</option>
+                                                <option value="4">Raw Material</option>
+                                                <option value="5">Clinical Production</option>
+                                                <option value="6">Commercial Production</option>
+                                                <option value="7">Labellling</option>
+                                                <option value="8">laboratory</option>
+                                                <option value="9">Utillities</option>
+                                                <option value="10">Validation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="priority_level">Priority Level</label>
+                                            <div><small class="text-primary">Choose high if Immidiate actions are
+                                                    required</small></div>
+                                            <select name="priority_level">
+                                                <option value="0">-- Select --</option>
+                                                <option value="low">Low</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="high">High</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="investigators">Additional Investigators</label>
+                                            <select multiple name="investigators" placeholder="Select Investigators"
+                                                data-search="false" data-silent-initial-value-set="true" id="investigators">
+                                                <option value="1">Amit Guru</option>
+                                                <option value="2">Shaleen Mishra</option>
+                                                <option value="3">Madhulika Mishra</option>
+                                                <option value="4">Amit Patel</option>
+                                                <option value="5">Harsh Mishra</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="department">Department(s)</label>
+                                            <select name="department" placeholder="Select Department(s)"
+                                                data-search="false" data-silent-initial-value-set="true" id="department">
+                                                <option value="1">Work Instruction</option>
+                                                <option value="2">Quality Assurance</option>
+                                                <option value="3">Specifications</option>
+                                                <option value="4">Production</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="sub-head">Investigatiom details</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="description">Description</label>
+                                            <textarea name="description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="comments">Comments</label>
+                                            <textarea name="comments"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">Initial Attachment</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="root_cause_initial_attachment"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="root_cause_initial_attachment[]"
+                                                        oninput="addMultipleFiles(this, 'root_cause_initial_attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="severity-level">Sevrity Level</label>
+                                            <select name="severity-level">
+                                                <option value="0">-- Select --</option>
+                                                <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="related_url">Related URL</label>
+                                            <input type="url" name="related_url" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-block">
+                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                </div>
+                            </div>
                         </div>
-
-                        <div id="CCForm2" class="inner-block cctabcontent">
+    
+                        {{-- <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
                                     Chemical Analysis I
@@ -595,9 +788,386 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
+                        </div> --}}
+                        <div id="CCForm2" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root-cause-methodology">Root Cause Methodology</label>
+                                            <select name="root_cause_methodology[]"  placeholder="-- Select --"
+                                                data-search="false" data-silent-initial-value-set="true"
+                                                id="root-cause-methodology">
+                                                <option value="1">Why-Why Chart</option>
+                                                <option value="2">Failure Mode and Efect Analysis</option>
+                                                <option value="3">Fishbone or Ishikawa Diagram</option>
+                                                <option value="4">Is/Is Not Analysis</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root_cause">
+                                                Root Cause
+                                                <button type="button"
+                                                onclick="add4Input('root-cause-first-table')">+</button>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="root-cause-first-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row #</th>
+                                                            <th>Root Cause Category</th>
+                                                            <th>Root Cause Sub-Category</th>
+                                                            <th>Probability</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12 mb-4">
+                                        <div class="group-input">
+                                            <label for="agenda">
+                                                Failure Mode and Effect Analysis
+                                                <button type="button" name="agenda"
+                                                    onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                                <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" style="width: 200%"
+                                                    id="risk-assessment-risk-management">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row #</th>
+                                                            <th>Risk Factor</th>
+                                                            <th>Risk element </th>
+                                                            <th>Probable cause of risk element</th>
+                                                            <th>Existing Risk Controls</th>
+                                                            <th>Initial Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Initial RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Proposed Additional Risk control measure (Mandatory for Risk
+                                                                elements having RPN>4)</th>
+                                                            <th>Residual Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Residual RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
+                                                                OQ or
+                                                                PQ)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="fishbone">
+                                                Fishbone or Ishikawa Diagram
+                                                <button type="button" name="agenda"
+                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+                                                <button type="button" name="agenda" class="fishbone-del-btn"
+                                                    onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#fishbone-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="fishbone-ishikawa-diagram">
+                                                <div class="left-group">
+                                                    <div class="grid-field field-name">
+                                                        <div>Measurement</div>
+                                                        <div>Materials</div>
+                                                        <div>Methods</div>
+                                                    </div>
+                                                    <div class="top-field-group">
+                                                        <div class="grid-field fields top-field">
+                                                            <div><input type="text" name="measurement[]"></div>
+                                                            <div><input type="text" name="materials[]"></div>
+                                                            <div><input type="text" name="methods[]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mid"></div>
+                                                    <div class="bottom-field-group">
+                                                        <div class="grid-field fields bottom-field">
+                                                            <div><input type="text" name="environment[]"></div>
+                                                            <div><input type="text" name="manpower[]"></div>
+                                                            <div><input type="text" name="machine[]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="grid-field field-name">
+                                                        <div>Environment</div>
+                                                        <div>Manpower</div>
+                                                        <div>Machine</div>
+                                                    </div>
+                                                </div>
+                                                <div class="right-group">
+                                                    <div class="field-name">
+                                                        Problem Statement
+                                                    </div>
+                                                    <div class="field">
+                                                        <textarea name="problem_statement"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Why-Why Chart
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#why_chart-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr style="background: #f4bb22">
+                                                            <th style="width:150px;">Problem Statement :</th>
+                                                            <td>
+                                                                <textarea name="why_problem_statement"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 1 <span
+                                                                    onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_1_block">
+                                                                    <textarea name="why_1[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 2 <span
+                                                                    onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_2_block">
+                                                                    <textarea name="why_2[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 3 <span
+                                                                    onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_3_block">
+                                                                    <textarea name="why_3[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 4 <span
+                                                                    onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_4_block">
+                                                                    <textarea name="why_4[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 5 <span
+                                                                    onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_5_block">
+                                                                    <textarea name="why_5[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background: #0080006b;">
+                                                            <th style="width:150px;">Root Cause :</th>
+                                                            <td>
+                                                                <textarea name="root-cause"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Is/Is Not Analysis
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#is_is_not-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>&nbsp;</th>
+                                                            <th>Will Be</th>
+                                                            <th>Will Not Be</th>
+                                                            <th>Rationale</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">What</th>
+                                                            <td>
+                                                                <textarea name="what_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Where</th>
+                                                            <td>
+                                                                <textarea name="where_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">When</th>
+                                                            <td>
+                                                                <textarea name="when_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Coverage</th>
+                                                            <td>
+                                                                <textarea name="coverage_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Who</th>
+                                                            <td>
+                                                                <textarea name="who_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root_cause_description">Root Cause Description</label>
+                                            <textarea name="root_cause_description"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="investigation_summary">Investigation Summary</label>
+                                            <textarea name="investigation_summary"></textarea>
+                                        </div>
+                                    </div>
+                                 <div class="col-12">
+                                        <div class="sub-head">Geographic Information</div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Zone">Zone</label>
+                                            <select name="zone" id="zone">
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option value="Asia">Asia</option>
+                                                <option value="Europe">Europe</option>
+                                                <option value="Africa">Africa</option>
+                                                <option value="Central_America">Central America</option>
+                                                <option value="South_America">South America</option>
+                                                <option value="Oceania">Oceania</option>
+                                                <option value="North_America">North America</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Country">Country</label>
+                                            <select name="country" class="countries" id="country">
+                                                <option value="">Select Country</option>
+    
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="State/District">State/District</label>
+                                            <select name="state" class="states" id="stateId">
+                                                <option value="">Select State</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="City">City</label>
+                                            <select name="city" class="cities" id="city">
+                                                <option value="">Select City</option>
+    
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"  class="text-white"> Exit </a> </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="CCForm3" class="inner-block cctabcontent">
+                        {{-- <div id="CCForm3" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
                                     Water Analysis I
@@ -787,8 +1357,114 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
+                        </div> --}}
+                        <div id="CCForm4" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                {{-- <div class="sub-head">
+                                    CFT Feedback
+                                </div> --}}
+                                <div class="row">
+    
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">Final Comments</label>
+                                            <textarea name="cft_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">Final Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="cft_attchament_new"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                        oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="row">
+                                    <div class="sub-head">
+                                        Concerned Group Feedback
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">QA Comments</label>
+                                            <textarea name="qa_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">QA Head Designee Comments</label>
+                                            <textarea name="designee_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Warehouse Comments</label>
+                                            <textarea name="Warehouse_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Engineering Comments</label>
+                                            <textarea name="Engineering_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Instrumentation Comments</label>
+                                            <textarea name="Instrumentation_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Validation Comments</label>
+                                            <textarea name="Validation_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Others Comments</label>
+                                            <textarea name="Others_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Group Comments</label>
+                                            <textarea name="Group_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="group-attachments">Group Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="group_attachments_new"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="group_attachments_new[]"
+                                                        oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+    
+                                </div>
+                            </div>
                         </div>
-
                         <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
@@ -1202,38 +1878,38 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submitted_By..">Submitted By..</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <label for="Acknowledge_By..">Acknowledge By</label>
+                                            <div class="static">{{ $data->acknowledge_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submitted_On">Submitted On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <label for="Acknowledge_On">Acknowledge On</label>
+                                            <div class="static">{{ $data->acknowledge_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Report_Result_By">Report Result By</label>
-                                            <div class="static">{{ $data->report_result_by }}</div>
+                                            <label for="Submit_By">Submit By</label>
+                                            <div class="static">{{ $data->submit_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Report_Result_On">Report Result On</label>
-                                            <div class="static">{{ $data->report_result_on }}</div>
+                                            <label for="Submit_On">Submit On</label>
+                                            <div class="static">{{ $data->submit_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Evaluation_Complete_By">Evaluation Complete By</label>
-                                            <div class="static">{{ $data->evaluation_complete_by }}</div>
+                                            <label for="QA_Review_Complete_By">QA Review Complete By</label>
+                                            <div class="static">{{ $data->qa_review_complete_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Evaluation_Complete_On">Evaluation Complete On</label>
-                                            <div class="static">{{ $data->evaluation_complete_on }}</div>
+                                            <label for="QA_Review_Complete_On">QA Review Complete On</label>
+                                            <div class="static">{{ $data->qa_review_complete_on }}</div>
                                         </div>
                                     </div>
                                 </div>

@@ -34,7 +34,7 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Group Comments</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
             </div>
@@ -616,20 +616,20 @@
                     </div>
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="sub-head">
+                            {{-- <div class="sub-head">
                                 CFT Feedback
-                            </div>
+                            </div> --}}
                             <div class="row">
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments">CFT Comments</label>
+                                        <label for="comments">Final Comments</label>
                                         <textarea name="cft_comments_new"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments">CFT Attachment</label>
+                                        <label for="comments">Final Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -643,7 +643,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="sub-head">
                                     Concerned Group Feedback
                                 </div>
@@ -710,7 +710,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

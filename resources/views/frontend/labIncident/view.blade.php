@@ -222,7 +222,9 @@
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assigend" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
-                                            <option value="">Select a value</option>
+                                            <option value="">Se
+                                                
+                                            lect a value</option>
                                             @foreach ($users as $value)
                                                 <option  @if ($data->assigend == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach

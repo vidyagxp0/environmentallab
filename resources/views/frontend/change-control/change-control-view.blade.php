@@ -117,7 +117,7 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="rls">Record Number</label>
+                                                <label for="rls">Record Number1</label>
                                                 <div class="statis">Record- {{ $openStage->recordData }}</div>
                                             </div>
                                         </div>

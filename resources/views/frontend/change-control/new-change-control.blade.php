@@ -509,6 +509,7 @@
                                 <label for="qa-eval-comments">QA Evaluation Comments</label>
                                 <textarea name="qa_eval_comments"></textarea>
                             </div>
+                            <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="qa-eval-attach">QA Evaluation Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
@@ -522,6 +523,8 @@
                                     </div>
                                 </div>
                             </div>
+                         </div>
+                        </div>   
                             <div class="sub-head">
                                 Training Information
                             </div>
@@ -672,7 +675,6 @@
                                                     oninput="addMultipleFiles(this, 'additional_attachments')" multiple>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
