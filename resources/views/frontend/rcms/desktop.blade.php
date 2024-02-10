@@ -85,6 +85,14 @@
                 querySelect.options.add(new Option('Close - done', '3'));
 
             }
+
+            else if (scopeValue === 'extension') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - done', '3'));
+
+            }
+
             // Add more conditions based on other scope values
 
         }
@@ -102,10 +110,16 @@
             <div onclick="openTab('capa', this)">CAPA</div>
             <div onclick="openTab('audit-program', this)">Audit Program</div>
             <div onclick="openTab('lab-incident', this)">Lab Incident</div>
-            <div onclick="openTab('change-control', this)">Change Control</div>
+            <div onclick="openTab('CC', this)">Change Control</div>
             <div onclick="openTab('risk-assessment', this)">Risk Assessment</div>
             <div onclick="openTab('root-cause-analysis', this)">Root Cause Analysis</div>
             <div onclick="openTab('management-review', this)">Management Review</div>
+            {{-- <div onclick="openTab('documents', this)">Documents</div>
+            <div onclick="openTab('extension', this)">Extension</div>
+            <div onclick="openTab('observation', this)">Observation</div>
+            <div onclick="openTab('action_item', this)">Action Item</div>
+            <div onclick="openTab('effectiveness_check', this)">Effectiveness Check</div>
+            <div onclick="openTab('tms', this)">TMS</div> --}}
         </div>
 
         <div class="main-content">
@@ -173,9 +187,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -222,9 +236,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -270,9 +284,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -318,9 +332,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -366,9 +380,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -414,9 +428,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -463,9 +477,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -511,9 +525,9 @@
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="6">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
@@ -549,7 +563,7 @@
                             </table>
                         </div>
                     </div>
-
+                    
                 </div>
             </div>
         </div>
