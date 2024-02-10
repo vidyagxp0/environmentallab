@@ -1126,7 +1126,17 @@ class LabIncidentController extends Controller
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         return view('frontend.labIncident.view', compact('data'));
     }
-
+    public function lab_incident_capa_child(Request $request, $id)
+    {
+        $parent_id = $id;
+        $parent_type = "Capa";
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+    }
 
     public function LabIncidentStateChange(Request $request, $id)
     {

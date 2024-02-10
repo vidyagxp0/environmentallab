@@ -236,7 +236,7 @@
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <input disabled type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                        <input readonly type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                         {{-- <div class="static"> {{ $data->due_date }}</div> --}}
 
                                     </div>
@@ -347,7 +347,7 @@
                                     <div class="group-input">
                                         <label for="Assigned to">Assigned to</label>
                                         <select name="assigend">
-                                            @foreach ($users as $value)
+                                            @($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -356,7 +356,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
-                                        <select name="Incident_Category">
+                                        <select {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} name="Incident_Category">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Biological" @if ($data->Incident_Category== 'Biological') selected @endif>
                                                 Biological
@@ -373,7 +373,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
-                                        <select name="Invocation_Type">
+                                        <select  name="Invocation_Type">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1" @if ($data->Invocation_Type== '1') selected @endif>1
                                             </option>
@@ -738,8 +738,8 @@
                                         <label for="Date Due">Effectiveness Check Creation Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="effectivess_check_creation_date" readonly
-                                                placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->effectivess_check_creation_date) }}"/>
-                                            <input type="date" name="effectivess_check_creation_date" value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
+                                                placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{ Helpers::getdateFormat($data->effectivess_check_creation_date) }}"/>
+                                            <input type="date" name="effectivess_check_creation_date"  value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
                                     </div>
@@ -1198,4 +1198,21 @@
             document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
+     <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const removeButtons = document.querySelectorAll('.remove-file');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+
+                        // Hide the file container
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        </script>
 @endsection
