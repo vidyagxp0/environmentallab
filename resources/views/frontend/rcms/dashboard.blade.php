@@ -36,7 +36,15 @@
             querySelect.options.add(new Option('Pending Actions Completion', '5'));
             querySelect.options.add(new Option('Closed - Done', '6'));
 
-        } else if (scopeValue === 'lab_incident') {
+        }
+        else if (scopeValue === 'audit_program') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending Approval', '2'));
+            querySelect.options.add(new Option('Pending Audit', '3'));
+            querySelect.options.add(new Option('Closed - Done', '4'));
+
+        }
+         else if (scopeValue === 'lab_incident') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Incident Review ', '2'));
             querySelect.options.add(new Option('Pending Investigation', '3'));
@@ -69,6 +77,46 @@
             querySelect.options.add(new Option('Close - done', '3'));
 
         }
+        else if (scopeValue === 'extension') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - done', '3'));
+
+            }
+        else if (scopeValue === 'documents') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - done', '3'));
+
+            }
+            else if (scopeValue === 'observation') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - done', '3'));
+
+            }
+
+            else if (scopeValue === 'action_item') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - done', '3'));
+
+            }
+
+            else if (scopeValue === 'effectiveness_check') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - done', '3'));
+
+            }
+            else if (scopeValue === 'CC') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - done', '3'));
+
+            }
+
+            
         // Add more conditions based on other scope values
 
     }
@@ -87,14 +135,15 @@
                                     <option value="internal_audit">Internal Audit</option>
                                     <option value="external_audit">External Audit</option>
                                     <option value="capa">Capa</option>
+                                    <option value="audit_program">Audit Program</option>
                                     <option value="lab_incident">Lab Incident</option>
                                     <option value="risk_assement">Risk Assesment</option>
                                     <option value="root_cause_analysis">Root Cause Analysis</option>
                                     <option value="management_review">Management Review</option>
-                                    <option value="document">Document</option>
+                                    <option value="documents">Document</option>
                                     <option value="extension">Extension</option>
                                     <option value="observation">Observation</option>
-                                    <option value="change_control">Change Control</option>
+                                    <option value="CC">Change Control</option>
                                     <option value="action_item">Action Item</option>
                                     <option value="effectiveness_check">Effectiveness Check</option>
                                     <option value="tms">TMS</option>
@@ -142,7 +191,7 @@
                                                     <a href="{{ route('CC.show', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
-                                                    <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/1">
+                                                    <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/CC">
                                                         <div class="icon" onclick="showChild()" data-bs-toggle="tooltip"
                                                             title="Related Records">
                                                             {{-- <img src="{{ asset('user/images/single.png') }}" alt="..."
@@ -206,6 +255,7 @@
                                                             </div>
                                                         </a>
                                                     @endif
+                                                    
                                                 @elseif ($datas->type == 'Audit-Program')
                                                     <a href="{{ route('ShowAuditProgram', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -269,7 +319,7 @@
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/effectivness">
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/effectiveness_check">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
                                                                 {{-- <img src="{{ asset('user/images/parent.png') }}"
