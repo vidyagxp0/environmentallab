@@ -248,7 +248,7 @@
                                            <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
                                                         <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="date[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'                                         
+                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>                                       
                                                     <td><input type="text" name="topic[]"></td>
                                                     <td><input type="text" name="responsible[]"></td>
                                                     <td><input type="time" name="start_time[]"></td>
@@ -502,7 +502,7 @@
                                                     <th>Major</th>
                                                     <th>Minor</th>
                                                     <th>Recommendation</th>
-                                                    <th>CAPA Details, if any</th>
+                                                    <th>CAPA Details if any</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -525,7 +525,7 @@
                                                     <th>Major</th>
                                                     <th>Minor</th>
                                                     <th>Recommendation</th>
-                                                    <th>CAPA Details, if any</th>
+                                                    <th>CAPA Details if any</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1138,14 +1138,14 @@
 
 
                                         <td><input type="text" name="record[]"></td>
-                                         <td><input type="text" name="capa_type[]"></td> 
+                                         <!-- <td><input type="text" name="capa_type[]"></td> 
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
                                             <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_opened[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>
+                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td> -->
 
                                     </tbody>
                                 </table>
@@ -1201,7 +1201,7 @@
                                              class="calenderauditee">
                                             <input type="text" id="date_closed11' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_closed[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_closed11' + serialNumber +'`)" /></div></div></div></td>' 
+                                            oninput="handleDateInput(this, `date_closed11' + serialNumber +'`)" /></div></div></div></td>
 
                                         <td><input type="text" name="record[]"></td>
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}

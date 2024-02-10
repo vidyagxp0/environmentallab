@@ -7,6 +7,15 @@
         header {
             display: none;
         }
+           .remove-file  {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
     </style>
     {{-- ======================================
                 CHANGE CONTROL VIEW
@@ -192,13 +201,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description</label>
-                                        <textarea name="short_description">{{ $data->short_description }}</textarea>
+                                        <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="">Assign To</label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
+                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="assign_id">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option {{ $data->assign_id == $value->id ? 'selected' : '' }}
@@ -219,10 +228,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select id="select-state" placeholder="Select..." name="Quality_Reviewer">
+                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
-                                                <option {{ $data->assign_id == $value->id ? 'selected' : '' }}
+                                                <option {{ $data->Quality_Reviewer == $value->id ? 'selected' : '' }}
                                                     value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
@@ -243,7 +252,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="Effectiveness_check_Plan"
+                                        <input type="text" name="Effectiveness_check_Plan" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                             value="{{ $data->Effectiveness_check_Plan }}">
                                     </div>
                                 </div>
@@ -270,7 +279,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <input type="text" name="effect_summary"  value="{{ $data->effect_summary }}">
+                                        <input type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6? 'disabled' : '' }} value="{{ $data->effect_summary }}">
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -279,7 +288,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <input type="text" name="Effectiveness_Results"
+                                        <input type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                             value="{{ $data->Effectiveness_Results }}">
                                     </div>
                                 </div>
@@ -321,8 +330,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Addendum Comments"><b>Addendum Comments</b></label>
-                                        <input type="text" name="Addendum_Comments"
+                                        <label for="Addendum Comments"><b>Addendum Comments</b><span
+                                                        class="text-danger">*</span></label>
+                                        <input type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                             value= "{{ $data->Addendum_Comments }}">
                                     </div>
                                 </div>
@@ -338,7 +348,7 @@
                                                 <label for="Addendum Attachments">Addendum Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="myfile">
+                                                    <div disabled class="file-attachment-list" id="Addendum_Attachment">
                                                         @if ($data->Addendum_Attachment)
                                                         @foreach(json_decode($data->Addendum_Attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -381,8 +391,9 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b>Comments</b></label>
-                                        <textarea name="Comments">{{ $data->Comments }}</textarea>
+                                        <label for="Comments"><b>Comments</b> <span
+                                                        class="text-danger">*</span></label>
+                                        <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -396,7 +407,7 @@
                                                 <label for="Attachments">Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="myfile">
+                                                    <div disabled class="file-attachment-list" id="Attachment">
                                                         @if ($data->Attachment)
                                                         @foreach(json_decode($data->Attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
