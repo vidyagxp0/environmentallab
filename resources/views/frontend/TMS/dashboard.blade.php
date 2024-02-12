@@ -326,11 +326,11 @@
                     @endif
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-lg-4">
                         <div class="inner-block progress-block">
                             <div class="head">
-                                Training Past Due
+                                Training Past Due11111
                             </div>
                             <div id="chart-tms1"></div>
                         </div>
@@ -351,9 +351,9 @@
                             <div id="chart-tms3"></div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="number-grid">
+                {{-- <div class="number-grid">
                     <div class="number-block">
                         <div class="top">
                             <div class="icon color-1">
@@ -398,9 +398,9 @@
                             Completed Trainigs
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 30px;">
+                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 30px;">
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
@@ -456,8 +456,8 @@
                             </div>
                             <div id="chart-tms11"></div>
                         </div>
-                </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px;">
+                </div> --}}
+                {{-- <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px;">
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
@@ -478,8 +478,8 @@
                             </div>
                             <div id="chart-tms14"></div>
                         </div>
-                </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
+                </div> --}}
+                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
                         <div class="inner-block table-block">
                             <div class="head">CAPA Extension Rate (Term)</div>
                             <div class="dash-table">
@@ -587,7 +587,7 @@
                                 </table>
                             </div>
                         </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
