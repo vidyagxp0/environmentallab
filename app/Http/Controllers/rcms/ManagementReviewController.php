@@ -1058,12 +1058,15 @@ class ManagementReviewController extends Controller
     public function child_management_Review(Request $request, $id)
     {
         $parent_id = $id;
+        $parent_initiator_id = $id;
         $parent_type = "Action-Item";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $parent_record = $record_number;
         $currentDate = Carbon::now();
+        $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
     }
 }

@@ -72,6 +72,7 @@ class LabIncidentController extends Controller
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date= $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
+        $data->Incident_Category_others = $request->Incident_Category_others;
         $data->due_date_extension= $request->due_date_extension;
         $data->status = 'Opened';
         $data->stage = 1;
@@ -616,6 +617,7 @@ class LabIncidentController extends Controller
         $data->Conclusion = $request->Conclusion;
         $data->effect_check_date= $request->effect_check_date;
         $data->occurance_date = $request->occurance_date;
+        $data->Incident_Category_others = $request->Incident_Category_others;
         $data->due_date_extension= $request->due_date_extension;
         $data->severity_level2= $request->severity_level2;
 
