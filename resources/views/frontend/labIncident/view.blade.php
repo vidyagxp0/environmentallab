@@ -319,7 +319,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
-                                        <select name="severity_level2">
+                                        <select name="severity_level2"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >
                                             <option value="0">-- Select --</option>
                                             <option @if ($data->severity_level2=='minor') selected @endif  value="minor">Minor</option>
                                             <option @if ($data->severity_level2=='major') selected @endif value="major">Major</option>
@@ -371,13 +371,13 @@
                                             <div class="group-input" id="Incident_Category_others">
                                                 <label for="Incident_Category">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea name="Incident_Category_others">{{ $data->Incident_Category_others }}</textarea>
+                                                <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Incident_Category_others }}</textarea>
                                             </div>
                                         </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
-                                        <select  name="Invocation_Type">
+                                        <select  name="Invocation_Type" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1" @if ($data->Invocation_Type== '1') selected @endif>1
                                             </option>
