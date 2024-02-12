@@ -52,7 +52,7 @@
             querySelect.options.add(new Option('Pending CAPA', '5'));
             querySelect.options.add(new Option('Pending QA Review', '6'));
             querySelect.options.add(new Option('Pending QA Head Approve', '7'));
-            querySelect.options.add(new Option('Close - done', '8'));
+            querySelect.options.add(new Option('Close - Done', '8'));
 
         } else if (scopeValue === 'risk_assement') {
             querySelect.options.add(new Option('Opened', '1'));
@@ -61,7 +61,7 @@
             querySelect.options.add(new Option('Pending HOD Approval ', '4'));
             querySelect.options.add(new Option('Actions Items in Progress', '5'));
             querySelect.options.add(new Option('Residual Risk Evaluation', '6'));
-            querySelect.options.add(new Option('Close - done', '7'));
+            querySelect.options.add(new Option('Close - Done', '7'));
 
         } else if (scopeValue === 'root_cause_analysis') {
             querySelect.options.add(new Option('Opened', '1'));
@@ -69,51 +69,54 @@
             querySelect.options.add(new Option('Pending Group Review Discussion', '3'));
             querySelect.options.add(new Option('Pending Group Review', '4'));
             querySelect.options.add(new Option('Pending QA Review', '5'));
-            querySelect.options.add(new Option('Close - done', '6'));
+            querySelect.options.add(new Option('Close - Done', '6'));
 
         } else if (scopeValue === 'management_review') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('In Progress', '2'));
-            querySelect.options.add(new Option('Close - done', '3'));
+            querySelect.options.add(new Option('Close - Done', '3'));
 
         }
         else if (scopeValue === 'extension') {
                 querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
+                querySelect.options.add(new Option('Pending Approval', '2'));
+                querySelect.options.add(new Option('Close - Done', '3'));
 
             }
         else if (scopeValue === 'documents') {
                 querySelect.options.add(new Option('Opened', '1'));
                 querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
+                querySelect.options.add(new Option('Close - Done', '3'));
 
             }
             else if (scopeValue === 'observation') {
                 querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
-
+                querySelect.options.add(new Option('Pending CAPA Plan', '2'));
+                querySelect.options.add(new Option('Pending Approval', '3'));
+                querySelect.options.add(new Option('Pending Final Approval', '4'));
+                querySelect.options.add(new Option('Close - Done', '5'));
             }
 
             else if (scopeValue === 'action_item') {
                 querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
+                querySelect.options.add(new Option('Work in Progress', '2'));
+                querySelect.options.add(new Option('Close - Done', '3'));
 
             }
 
             else if (scopeValue === 'effectiveness_check') {
                 querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
+                querySelect.options.add(new Option('Check Effectiveness', '2'));
+                querySelect.options.add(new Option('Close - Done', '3'));
 
             }
             else if (scopeValue === 'CC') {
                 querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
-
+                querySelect.options.add(new Option('Under HOD Review', '2'));
+                querySelect.options.add(new Option('Pending QA Review', '3'));
+                querySelect.options.add(new Option('CFT Review', '4'));
+                querySelect.options.add(new Option('Pending Change Implementation', '5'));
+                querySelect.options.add(new Option('Close - Done', '6'));
             }
 
             
@@ -146,7 +149,7 @@
                                     <option value="CC">Change Control</option>
                                     <option value="action_item">Action Item</option>
                                     <option value="effectiveness_check">Effectiveness Check</option>
-                                    <option value="tms">TMS</option>
+                                    {{-- <option value="tms">TMS</option> --}}
                                 </select>
                             </div>
                             <div class="group-input">
@@ -425,9 +428,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="scope-pagination">
+                        {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>

@@ -737,73 +737,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div> --}}
-                                        <div class="col-12">
-                                            <div class="sub-head">Geographical Information</div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="zone">Zone</label>
-                                                <select name="zone"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                    <option value="{{ $data->zone }}">-- Select --</option>
-                                                    <option value="Asia"
-                                                        @if ($data->zone == 'Asia') selected @endif>Asia
-                                                    </option>
-                                                    <option value="Europe"
-                                                        @if ($data->zone == 'Europe') selected @endif>Europe
-                                                    </option>
-                                                    <option value="Africa"
-                                                        @if ($data->zone == 'Africa') selected @endif>Africa
-                                                    </option>
-                                                    <option value="Africa"
-                                                        @if ($data->zone == 'Africa') selected @endif>Africa
-                                                    </option>
-                                                    <option value="Central_America"
-                                                        @if ($data->zone == 'Central_America') selected @endif>Central America
-                                                    </option>
-                                                    <option value="South_America"
-                                                        @if ($data->zone == 'South_America') selected @endif>South America
-                                                    </option>
-                                                    <option value="Oceania"
-                                                        @if ($data->zone == 'Oceania') selected @endif>Oceania
-                                                    </option>
-                                                    <option value="North_America"
-                                                        @if ($data->zone == 'North_America') selected @endif>North America
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="country">Country</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}    name="country" class="countries" id="countryId">
-                                                    <option  value="{{ $data->country }}">Select Country</option>
-                                                </select>
-                                                {{--  <select name="country" id="country"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="State/District">State/District</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="state"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="states" id="stateId">
-                                                    <option value="{{ $data->state }}">Select State</option>
-                                                </select>
-                                                {{--  <select name="state" id="state"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
-                                            </div>
-                                        </div>  
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                        
-                                                <label for="City">City</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="City" class="cities" id="cityId">
-                                                    <option value="{{ $data->City }}">Select City</option>
-                                                </select>
-                                                {{--  <select name="city" id="city"
-                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}></select>  --}}
-                                            </div>
-                                        </div>
+                                       
                                         
                                         <div class="col-12 sub-head">
                                             Extension Justification
@@ -832,7 +766,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Submitted_By..">Submitted By..</label>
+                                                <label for="Submitted_By..">Submitted By</label>
                                                 <div class="static">{{ $data->submitted_by }}</div>
                                             </div>
                                         </div>
@@ -854,6 +788,30 @@
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
+                                         <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit_Completed_By">Audit Completed By</label>
+                                        <div class="static">{{ $data->Audit_Completed_By }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Audit_Completed_On">Audit Completed On</label>
+                                        <div class="static">{{ $data->Audit_Completed_On }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled_By">Cancelled By</label>
+                                        <div class="static">{{ $data->Cancelled_By }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled_On">Cancelled On</label>
+                                        <div class="static">{{ $data->Cancelled_On }}</div>
+                                    </div>
+                                </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
