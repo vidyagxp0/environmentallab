@@ -9,7 +9,7 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                                Record - 00000{{ $detail->InternalAudit_id }}
+                                Record - 000{{ $detail->InternalAudit_id }}
                             </div>
                             <div class="info-list">
 
