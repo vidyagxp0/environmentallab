@@ -83,14 +83,14 @@
                             </button>
                         @elseif($data->stage == 7)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                QA Head Approval
+                                QA Head Approval Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Return to QA Review
                             </button>
-                            <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                            <!-- <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                     Exit
-                                </a> </button>
+                                </a> </button> -->
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -141,9 +141,9 @@
                                 <div class="">Pending QA Review</div>
                             @endif
                             @if ($data->stage >= 7)
-                                <div class="active">Pending QA Head Approval</div>
+                                <div class="active">Pending QA Head Approval Complete</div>
                             @else
-                                <div class="">Pending QA Head Approval</div>
+                                <div class="">Pending QA Head Approval Complete</div>
                             @endif
                             @if ($data->stage >= 8)
                                 <div class="bg-danger">Closed - Done</div>
@@ -316,7 +316,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
+                                        <label for="severity-level">Severity Level</label>
                                         <select name="severity_level2">
                                             <option value="0">-- Select --</option>
                                             <option @if ($data->severity_level2=='minor') selected @endif  value="minor">Minor</option>
@@ -325,12 +325,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Other Ref.Doc.No">Other Ref.Doc.No</label>
-                                        <input type="text" name="Other_Ref" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{ $data->Other_Ref }}">
-                                    </div>
-                                </div>
+                                
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
@@ -370,6 +365,13 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                            <div class="group-input" id="Incident_Category_others">
+                                                <label for="Incident_Category">Others<span
+                                                        class="text-danger d-none">*</span></label>
+                                                <textarea name="Incident_Category_others">{{ $data->Incident_Category_others }}</textarea>
+                                            </div>
+                                        </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
@@ -596,7 +598,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Currective Action">Currective Action</label>
+                                        <label for="Currective Action">Corrective Action</label>
                                         <textarea name="Currective_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Currective_Action }}</textarea>
                                     </div>
                                 </div>
@@ -713,7 +715,7 @@
                                         <textarea name="QA_Head" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->QA_Head }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Check required?">Effectiveness Check
                                             required?</label>
@@ -743,7 +745,7 @@
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Type">Incident Type</label>
@@ -764,7 +766,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
-                                        <textarea name="Conclusion" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Conclusion }}</textarea>
+                                        <textarea name="Conclusion" >{{ $data->Conclusion }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -831,20 +833,6 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Inv andCAPA Review Comp. By">Inv andCAPA Review Comp.
-                                            By</label>
-                                        <div class="static">{{ $data->inv_andCAPA_review_comp_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Inv andCAPA Review Comp. On">Inv andCAPA Review Comp.
-                                            On</label>
-                                        <div class="Date">{{ $data->inv_andCAPA_review_comp_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
                                         <div class="static">{{ $data->qA_review_completed_by }}</div>
                                     </div>
@@ -879,6 +867,30 @@
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date">{{ $data->cancelled_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed By">All Activities Completed By</label>
+                                        <div class="static">{{ $data->all_activities_completed_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed On">All Activities Completed On</label>
+                                        <div class="Date">{{ $data->all_activities_completed_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed By">Review Completed By</label>
+                                        <div class="static">{{$data->review_completed_by}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed On">Review Completed On</label>
+                                        <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
                                 </div>
                             </div>

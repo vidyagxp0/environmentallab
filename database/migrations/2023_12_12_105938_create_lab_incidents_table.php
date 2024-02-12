@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('short_desc')->nullable();
             $table->string('severity_level2')->nullable();
             $table->string('Initiator_Group')->nullable();
+            $table->text('Incident_Category_others')->nullable();
+
             $table->string('initiator_group_code')->nullable();
             $table->string('Other_Ref')->nullable();
             // $table->string('due_date')->nullable();
