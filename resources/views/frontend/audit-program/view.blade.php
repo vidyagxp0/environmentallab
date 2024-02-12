@@ -553,6 +553,7 @@
                                                                     value="{{ unserialize($AuditProgramGrid->start_date)[$key] ? unserialize($AuditProgramGrid->start_date)[$key] : '' }}">
                                                             </td>
                                                             <td><input type="date" name="end_date[]"
+                                                            
                                                                     value="{{ unserialize($AuditProgramGrid->end_date)[$key] ? unserialize($AuditProgramGrid->end_date)[$key] : '' }}">
                                                             </td> --}}
                                                             <td><div class="group-input new-date-data-field mb-0">
