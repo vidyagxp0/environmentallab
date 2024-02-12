@@ -445,7 +445,7 @@
                                             <label for="short_description">Short Description</label>
                                             <div><small class="text-primary">Investigation short description to be presented on
                                                     desktop</small></div>
-                                            <textarea name="short_description"></textarea>
+                                            <textarea name="short_description"> {{ $data->short_description }} </textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -453,10 +453,17 @@
                                             <label for="severity-level">Sevrity Level</label>
                                             <select name="severity_level">
                                                 <option value="0">-- Select --</option>
-                                                <option value="minor">Minor</option>
+                                                <option @if ($data->severity_level_form =='minor') selected @endif
+                                                    value="minor">Minor</option>
+                                                    <option @if ($data->severity_level_form =='major') selected @endif
+                                                        value="major">Major</option>
+                                                        <option @if ($data->severity_level_form =='critical') selected @endif
+                                                            value="critical">Critical</option>
+                                            </select>
+                                                {{-- <option value="minor">Minor</option>
                                                 <option value="major">Major</option>
                                                 <option value="critical">Critical</option>
-                                            </select>
+                                            </select> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -464,12 +471,17 @@
                                             <label for="assigned-to">Assigned to</label>
                                             <div><small class="text-primary">Lead Investigator</small></div>
                                             <select name="assigned_to">
-                                                <option value="0">-- Select --</option>
+                                                @foreach ($users as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                    @if ($data->assigend == $value->id) selected @endif>
+                                                    {{ $value->name }}</option>
+                                            @endforeach
+                                                {{-- <option value="0">-- Select --</option>
                                                 <option value="1">Amit Guru</option>
                                                 <option value="2">Shaleen Mishra</option>
                                                 <option value="3">Madhulika Mishra</option>
                                                 <option value="4">Amit Patel</option>
-                                                <option value="5">Harsh Mishra</option>
+                                                <option value="5">Harsh Mishra</option> --}}
                                             </select>
                                         </div>
                                     </div>
@@ -515,10 +527,17 @@
                                             <div><small class="text-primary">Choose high if Immidiate actions are
                                                     required</small></div>
                                             <select name="priority_level">
-                                                <option value="0">-- Select --</option>
+                                                {{-- <option value="0">-- Select --</option>
                                                 <option value="low">Low</option>
                                                 <option value="medium">Medium</option>
-                                                <option value="high">High</option>
+                                                <option value="high">High</option> --}}
+                                                <option value="0">-- Select --</option>
+                                                <option @if ($data->priority_level == 'low') selected @endif
+                                                 value="low">Low</option>
+                                                <option  @if ($data->priority_level == 'medium') selected @endif 
+                                                value="medium">Medium</option>
+                                                <option @if ($data->priority_level == 'high') selected @endif
+                                                value="high">High</option>
                                             </select>
                                         </div>
                                     </div>
