@@ -35,22 +35,22 @@ class AuditProgramController extends Controller
     public function create(request $request)
     {
         // return $request;
-        if (!$request->short_description) {
-            toastr()->info("Short Description is required");
-            return redirect()->back()->withInput();
-        }
-        if (!$request->country) {
-            toastr()->info("Country is required");
-            return redirect()->back()->withInput();
-        }
-        if (!$request->state) {
-            toastr()->info("State is required");
-            return redirect()->back()->withInput();
-        }
-        if (!$request->City) {
-            toastr()->info("City is required");
-            return redirect()->back()->withInput();
-        }
+        // if (!$request->short_description) {
+        //     toastr()->info("Short Description is required");
+        //     return redirect()->back()->withInput();
+        // }
+        // if (!$request->country) {
+        //     toastr()->info("Country is required");
+        //     return redirect()->back()->withInput();
+        // }
+        // if (!$request->state) {
+        //     toastr()->info("State is required");
+        //     return redirect()->back()->withInput();
+        // }
+        // if (!$request->City) {
+        //     toastr()->info("City is required");
+        //     return redirect()->back()->withInput();
+        // }
         $data = new AuditProgram();
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
