@@ -984,6 +984,10 @@
                                         <input type="radio" name="child_type" value="External_Audit">
                                         External Audit
                                     </label>
+                                    <label for="minor">
+                                        <input type="radio" name="child_type" value="extension">
+                                        Extension
+                                    </label>
                                     
                                 </div>
 
