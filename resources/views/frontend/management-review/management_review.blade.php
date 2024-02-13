@@ -385,7 +385,7 @@
                                             </div>
                                             <div class="add-btn">
                                                 <div>Add</div>
-                                                <input type="file" id="myfile" name="inv_attachment[]"
+                                                <input type="file" id="audit_file_attachment" name="inv_attachment[]"
                                                     {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                                     oninput="addMultipleFiles(this, 'audit_file_attachment')" multiple>
                                             </div>

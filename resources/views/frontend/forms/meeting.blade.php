@@ -46,8 +46,8 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/MR/{{ date('Y') }}/{{ $record_number }}">
+                                        <!-- {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}} -->
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -291,7 +291,14 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-
+                                            <td><input type="text" name="serial_number[]" value="1"></td>
+                                            <td><input type="text" name="invited_Person[]"></td>
+                                            <td><input type="text" name="Designee[]"></td>
+                                            <td><input type="text" name="Department[]"></td>
+                                            <td><input type="text" name="Meeting_Attended[]"></td>
+                                            <td><input type="text" name="Designee_Name[]"></td>
+                                            <td><input type="text" name="Designee_Department[]"></td>
+                                            <td><input type="text" name="Remarks[]"></td>
                                             </tr>
                                         </tbody>
                                     </table>

@@ -30,6 +30,7 @@ class ManagementReviewController extends Controller
 
     public function meeting()
     {
+       // $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -77,7 +78,7 @@ class ManagementReviewController extends Controller
       // $management = new ManagementReview();
         $management->form_type = "management-review";
         $management->division_id = $request->division_id;
-        //$management->record = ((RecordNumber::first()->value('counter')) + 1);
+        $management->record = ((RecordNumber::first()->value('counter')) + 1);
         $management->initiator_id = Auth::user()->id;
         $management->intiation_date = $request->intiation_date;
         $management->division_code = $request->division_code;
@@ -1066,4 +1067,5 @@ class ManagementReviewController extends Controller
         $due_date = $formattedDate->format('d-M-Y');
         return view('frontend.forms.action-item', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
     }
+    
 }
