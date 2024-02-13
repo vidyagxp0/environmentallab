@@ -293,12 +293,12 @@
                                             <tr>
                                             <td><input type="text" name="serial_number[]" value="1"></td>
                                             <td><input type="text" name="invited_Person[]"></td>
-                                            <td><input type="text" name="Designee[]"></td>
-                                            <td><input type="text" name="Department[]"></td>
-                                            <td><input type="text" name="Meeting_Attended[]"></td>
-                                            <td><input type="text" name="Designee_Name[]"></td>
-                                            <td><input type="text" name="Designee_Department[]"></td>
-                                            <td><input type="text" name="Remarks[]"></td>
+                                            <td><input type="text" name="designee[]"></td>
+                                            <td><input type="text" name="department[]"></td>
+                                            <td><input type="text" name="meeting_Attended[]"></td>
+                                            <td><input type="text" name="designee_Name[]"></td>
+                                            <td><input type="text" name="designee_Department[]"></td>
+                                            <td><input type="text" name="remarks[]"></td>
                                             </tr>
                                         </tbody>
                                     </table>

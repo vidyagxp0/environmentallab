@@ -91,6 +91,7 @@ class ManagementReviewController extends Controller
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
         $management->agenda = $request->agenda;
+       // $management->management_review_participants = $management_review_participants;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         //  $management->inv_attachment = json_encode($request->inv_attachment);
@@ -200,6 +201,32 @@ class ManagementReviewController extends Controller
         }
         $data1->save();
 
+        $data2 = new ManagementReviewDocDetails();
+        $data2->review_id = $management->id;
+        $data2->type = "management_review_participants";
+        if (!empty($request->invited_Person)) {
+            $data2->invited_Person = serialize($request->invited_Person);
+        }
+        if (!empty($request->designee)) {
+            $data2->designee = serialize($request->designee);
+        }
+        if (!empty($request->department)) {
+            $data2->department = serialize($request->department);
+        }
+        if (!empty($request->meeting_Attended)) {
+            $data2->meeting_Attended = serialize($request->meeting_Attended);
+        }
+        if (!empty($request->designee_Name)) {
+            $data2->designee_Name = serialize($request->designee_Name);
+        }
+        if (!empty($request->designee_Department)) {
+            $data2->designee_Department = serialize($request->designee_Department);
+        }
+        if (!empty($request->remarks)) {
+            $data2->remarks = serialize($request->remarks);
+        }
+        $data2->save();
+
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Short Description';
@@ -295,6 +322,18 @@ class ManagementReviewController extends Controller
         $history->activity_type = 'Agenda';
         $history->previous = "Null";
         $history->current = $management->agenda;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $management->status;
+        $history->save();
+
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'management_review_participants';
+        $history->previous = "Null";
+        $history->current = $management->management_review_participants;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -532,6 +571,7 @@ class ManagementReviewController extends Controller
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
         $management->agenda = $request->agenda;
+       // $management->management_review_participants = $management->management_review_participants;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         // $management->inv_attachment = json_encode($request->inv_attachment);
@@ -723,6 +763,20 @@ class ManagementReviewController extends Controller
             $history->previous = $lastDocument->agenda;
             $history->current = $management->agenda;
             $history->comment = $request->agenda_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if ($lastDocument->management_review_participants != $management->management_review_participants || !empty($request->management_review_participants_comment)) {
+
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'management_review_participants';
+            $history->previous = $lastDocument->management_review_participants;
+            $history->current = $management->management_review_participants;
+            $history->comment = $request->management_review_participants_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -988,8 +1042,9 @@ class ManagementReviewController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $agenda = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"agenda")->first();
+        $management_review_participants = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"management_review_participants")->first();
       // dd($data->stage);
-        return view('frontend.management-review.management_review', compact( 'data','agenda' ));
+        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants' ));
     }
 
 

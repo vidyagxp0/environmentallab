@@ -23,6 +23,13 @@ return new class extends Migration
             $table->text('start_time')->nullable();
             $table->text('end_time')->nullable();
             $table->text('comment')->nullable();
+            $table->text('invited_Person')->nullable();
+            $table->text('designee')->nullable();
+            $table->text('department')->nullable();
+            $table->text('meeting_Attended')->nullable();
+            $table->text('designee_Name')->nullable();
+            $table->text('designee_Department')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }
