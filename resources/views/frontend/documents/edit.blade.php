@@ -270,7 +270,7 @@
                                     <label for="doc-num">Document Number</label>
                                     <div class="default-name">{{ $document->division_name }}
                                         /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
-                                        /SOP-0000{{ $document->id }}</div>
+                                        /SOP-000{{ $document->id }}</div>
                                 </div>
                             </div>
 
@@ -1923,7 +1923,7 @@
                                                     <td class="copy-name">{{ $document->document_name }}</td>
                                                     <td class="copy-name">{{ $document->division_name }}
                                                         /{{ $document->document_type_name }} /{{ $year }}
-                                                        /SOP-0000{{ $document->id }}</td>
+                                                        /SOP-000{{ $document->id }}</td>
                                                     <td class="copy-name">{{ $print_historys->user_name }}</td>
                                                     <td class="copy-name">{{ $print_historys->created_at }}</td>
                                                     <td class="copy-num">1</td>

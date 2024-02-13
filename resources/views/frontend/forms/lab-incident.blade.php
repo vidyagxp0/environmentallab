@@ -161,6 +161,7 @@
                                         </select>
                                     </div>
                                 </div>
+<<<<<<< HEAD
                                 <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
@@ -168,6 +169,15 @@
                                                 <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
                                             </div>
                                         </div>
+=======
+                                <!-- <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="initiated_through">Others<span
+                                                class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_through_req"></textarea>
+                                    </div>
+                                </div> -->
+>>>>>>> Aditya-
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>

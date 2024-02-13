@@ -87,7 +87,7 @@
                         </form>
                     </div>
                     <div class="icon-grid">
-                        <div class="icon-drop">
+                        <!-- <div class="icon-drop">
                             <div class="icon">
                                 <i class="fa-solid fa-user-gear"></i>
                                 <i class="fa-solid fa-angle-down"></i>
@@ -104,7 +104,7 @@
                                 <div><a href="#">Translate Terms</a></div>
                                 <div><a href="/designate-proxy">Designate Proxy</a></div>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="icon-drop">
                             <div class="icon">
                                 <i class="fa-solid fa-user-tie"></i>
@@ -116,7 +116,7 @@
                                 <i class="fa-solid fa-angle-down"></i>
                             </div>
                             <div class="icon-block small-block">
-                                <div class="image">
+                                <!-- <div class="image">
                                     @if (Auth::user())
                                         @if (Auth::user()->role == 3)
                                             <img src="{{ asset('user/images/amit_guru.jpg') }}" alt="..."
@@ -130,11 +130,11 @@
                                             class="w-100 h-100">
                                     @endif
 
-                                </div>
-                                <div data-bs-toggle="modal" data-bs-target="#setting-modal">Settings</div>
+                                </div> -->
+                                <!-- <div data-bs-toggle="modal" data-bs-target="#setting-modal">Settings</div> -->
                                 <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
-                                <div><a href="#">Help</a></div>
-                                <div><a href="/helpdesk-personnel">Helpdesk Personnel</a></div>
+                                <!-- <div><a href="#">Help</a></div> -->
+                                <div><a href="/helpdesk-personnel">Helpdesk Personel</a></div>
                                 <div><a href="{{ route('logout') }}">Log Out</a></div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                     <div>
                         <a href="/TMS">TMS Dashboard</a>
                     </div>
-                    <div><a href="/rcms/qms-dashboard">QMS-Dshboard</a></div>
+                    <div><a href="/rcms/qms-dashboard">QMS-Dashboard</a></div>
                     @if (Auth::user())
                         @if (Auth::user()->role == 3 || Auth::user()->role == 1 || Auth::user()->role == 2)
                             <div>

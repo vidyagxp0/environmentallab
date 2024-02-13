@@ -328,7 +328,7 @@
                                     </div>
                                 </div>
                                 
-                                {{-- <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
                                         <input type="date" name="occurance_date" value="{{ $data->occurance_date }}">
@@ -344,12 +344,12 @@
                                     <div class="group-input">
                                         <label for="Assigned to">Assigned to</label>
                                         <select name="assigend">
-                                            @($users as $value)
+                                            @foreach($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div> -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
