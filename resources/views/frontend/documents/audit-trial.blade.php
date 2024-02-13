@@ -11,7 +11,7 @@
                     <div class="main-head">
                         <div class="default-name">{{ $document->division }}
                             /{{ $document->doctype }} /{{ date('Y') }}
-                            /SOP-0000{{ $document->id }}</div>
+                            /SOP-000{{ $document->id }}</div>
 
                         <div class="btn-group">
                             <button class="button_theme1" onclick="window.print();return false;" type="button">Print</button>

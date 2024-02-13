@@ -325,13 +325,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Other Ref.Doc.No">Other Ref.Doc.No</label>
-                                        <input type="text" name="Other_Ref" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{ $data->Other_Ref }}">
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
+                                
+                                 <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
                                         <input type="date" name="occurance_date" value="{{ $data->occurance_date }}">
@@ -347,12 +342,12 @@
                                     <div class="group-input">
                                         <label for="Assigned to">Assigned to</label>
                                         <select name="assigend">
-                                            @foreach ($users as $value)
+                                            @foreach($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+                                </div>  -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>

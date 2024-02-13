@@ -160,12 +160,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Other Ref.Doc.No">Other Ref.Doc.No</label>
-                                        <input type="text" name="Other_Ref">
+                                <!-- <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="initiated_through">Others<span
+                                                class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_through_req"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>

@@ -51,7 +51,7 @@
                             <div class="bottom-block">
                                 <div>
                                     <div class="head">Document Number</div>
-                                    <div>SOP-0000{{ $document->id }}</div>
+                                    <div>SOP-000{{ $document->id }}</div>
                                 </div>
                                 <div>
                                     <div class="head">Department</div>

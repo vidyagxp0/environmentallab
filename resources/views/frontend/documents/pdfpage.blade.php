@@ -325,7 +325,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num w-100">{{ $data->document_division }} /{{ $data->document_type_code }}
-                        /{{ $data->year }} /SOP-0000{{ $data->id }}</td>
+                        /{{ $data->year }} /SOP-000{{ $data->id }}</td>
                 </tr>
             </tbody>
         </table>

@@ -711,7 +711,6 @@ class DashboardController extends Controller
                     Actions
                 </div>
                 <div class="block-list">
-                    <a href="' . $audit . '" class="list-item">View History</a>
                     <a href="send-notification" class="list-item">Send Notification</a>
                     <div class="list-drop">
                         <div class="list-item" onclick="showAction()">
