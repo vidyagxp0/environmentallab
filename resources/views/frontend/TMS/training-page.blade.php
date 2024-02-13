@@ -104,13 +104,13 @@ window.addEventListener("popstate", function(event) {
             --seconds;
             minutes = (seconds < 0) ? --minutes : minutes;
             if (minutes < 0) clearInterval(interval);
-            seconds = (seconds < 0) ? 59 : seconds;
+            seconds = (seconds < 0) ? 600 : seconds;
             seconds = (seconds < 10) ? '0' + seconds : seconds;
             if (minutes == 0 && seconds == 0) {
 
                 $("#complete-training").removeClass("d-none");
 
-                alert('training compete');
+                alert('Time Complete Now Continue With Question');
             }
             //minutes = (minutes < 10) ?  minutes : minutes;
             $('.countdown').html(minutes + ':' + seconds);

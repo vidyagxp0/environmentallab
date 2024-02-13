@@ -228,8 +228,7 @@ class TMSController extends Controller
        $audit->training_id = $document_training->training_plan;
        $audit->sop_id = $id;
        $audit->save();
-
-       if($countAudit <= 3 ){
+       if($countAudit <= 2000 ){
             $TrainingHistory = new TrainingHistory();
             $TrainingHistory->plan_id = $training->id;
             $TrainingHistory->sop_id = $id;
