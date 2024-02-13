@@ -282,8 +282,8 @@
                                     <div class="group-input input-date">
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="start_date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                            <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
+                                            <input type="text" id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
+                                            <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }} "
                                             name="start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
@@ -295,8 +295,8 @@
                                         {{-- <input type="date" name="end_date"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}> --}}
                                             <div class="calenderauditee">
-                                                <input type="text" id="end_date"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
-                                                <input type="date" id="end_date_checkdate"  name="end_date" value="{{ $data->end_date }} "
+                                                <input type="text" id="end_date"    readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
+                                                <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="end_date_checkdate"  name="end_date" value="{{ $data->end_date }} "
                                                 class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -362,6 +362,44 @@
                                         <label for="Description">Description</label>
                                         <textarea name="description" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->description}}</textarea>
                                     </div>
+                                </div>
+                                <div class="group-input">
+                                    <label for="management-review-participants">
+                                        Management Review Participants
+                                        <button type="button"
+                                            onclick="addManagementReviewParticipants('management-review-participants')">+</button>
+                                    </label>
+                                    <div class="instruction">
+                                        <small class="text-primary">
+                                            Refer Attached Performance Evaluation Grid
+                                        </small>
+                                    </div>
+                                    <table class="table table-bordered" id="management-review-participants">
+                                        <thead>
+                                            <tr>
+                                                <th>Row #</th>
+                                                <th>Invited Person</th>
+                                                <th>Designee</th>
+                                                <th>Department</th>
+                                                <th>Meeting Attended</th>
+                                                <th>Designee Name</th>
+                                                <th>Designee Department/Designation</th>
+                                                <th>Remarks</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                            <td><input type="text" name="serial_number[]" value="1"></td>
+                                            <td><input type="text" name="invited_Person[]"></td>
+                                            <td><input type="text" name="Designee[]"></td>
+                                            <td><input type="text" name="Department[]"></td>
+                                            <td><input type="text" name="Meeting_Attended[]"></td>
+                                            <td><input type="text" name="Designee_Name[]"></td>
+                                            <td><input type="text" name="Designee_Department[]"></td>
+                                            <td><input type="text" name="Remarks[]"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -640,7 +678,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="capa-details">
-                                    CAPA Details<button type="button" name="capa-details" id="capa_detail"">+</button>
+                                    CAPA Details<button type="button" name="capa-details" id="capa_detail">+</button>
                                 </label>
                                 <table class="table table-bordered" id="capa_detail_details">
                                     <thead>
