@@ -128,8 +128,10 @@
     <div id="rcms-dashboard">
         <div class="container-fluid">
             <div class="dash-grid">
+                
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
+                        
                         <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process</label>

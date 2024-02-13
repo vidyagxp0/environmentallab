@@ -43,6 +43,43 @@
     <script src="https://cdn.amcharts.com/lib/5/geodata/usaLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/geodata/worldLow.js"></script>
     <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+    <style>
+     .bottom-links {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    margin-left: 10px;
+    position: relative;
+}
+
+ .bottom-links div {
+    height: 35px;
+    margin-right: 15px;
+    display: grid;
+    place-items: center;
+}
+
+ .bottom-links a {
+    color: black;
+    width: 100%;
+    display: grid;
+    place-items: center;
+    height: 100%;
+    transition: all 0.3s linear;
+    text-decoration: none;
+}
+
+ .bottom-links a:hover {
+    color: #4274da;
+    text-decoration: none;
+}
+
+.bottom-links .notification {
+    position: absolute;
+    right: 0;
+    font-size: 1.2rem;
+}
+</style>
 </head>
 
 <body>
@@ -153,6 +190,53 @@
                     </div>
                 </div>
             </div>
+            <div class="header-bottom">
+                            <div class="container-fluid">
+                                <div class="bottom-links">
+                                    <div>
+                                        <a href="#"><i class="fa-solid fa-braille"></i></a>
+                                    </div>
+                                    <div>
+                                        <a href="/dashboard">DMS Dashboard</a>
+                                    </div>
+                                    <div>
+                                        <a href="/TMS">TMS Dashboard</a>
+                                    </div>
+                                    <div><a href="/rcms/qms-dashboard">QMS-Dshboard</a></div>
+                                    @if (Auth::user())
+                                        @if (Auth::user()->role == 3 || Auth::user()->role == 1 || Auth::user()->role == 2)
+                                            <div>
+                                                <a href="/mydms">My DMS</a>
+                                            </div>
+                                        @endif
+                                        @if (Auth::user()->role == 3)
+                                            <div>
+                                                <a href="{{ route('documents.index') }}">Documents</a>
+                                            </div>
+                                        @endif
+                                        @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+                                            <div>
+                                                <a href="{{ url('mytaskdata') }}">My Tasks</a>
+                                            </div>
+                                        @endif
+                                        @if (Auth::user()->role == 4 || Auth::user()->role == 5 || Auth::user()->role == 3)
+                                            <div>
+                                                <a href="{{ route('change-control.index') }}">My Tasks</a>
+                                            </div>
+                                        @endif
+                                    @endif
+
+
+                                    {{-- <div class="notification">
+                                        <a href="/notifications"><i class="fa-solid fa-bell"></i></a>
+                                    </div> --}}
+                                    <!-- <div id="create-record-button">
+                                        <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
+                                                Record</button> </a>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
         </div>
 
 
