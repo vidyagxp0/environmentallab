@@ -64,6 +64,7 @@ class LabIncidentController extends Controller
         $data->Root_Cause = $request->Root_Cause;
         $data->Currective_Action = $request->Currective_Action;
         $data->Preventive_Action = $request->Preventive_Action;
+        $data->Corrective_Preventive_Action = $request->Corrective_Preventive_Action;
         $data->QA_Review_Comments = $request->QA_Review_Comments;
         $data->QA_Head = $request->QA_Head;
         $data->Effectiveness_Check = $request->Effectiveness_Check;
@@ -406,6 +407,20 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
+        if (!empty($data->Corrective_Preventive_Action)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = "Null";
+            $history->current = $data->Corrective_Preventive_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($data->QA_Review_Comments)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -608,6 +623,7 @@ class LabIncidentController extends Controller
         $data->Root_Cause = $request->Root_Cause;
         $data->Currective_Action = $request->Currective_Action;
         $data->Preventive_Action = $request->Preventive_Action;
+        $data->Corrective_Preventive_Action = $request->Corrective_Preventive_Action;
         $data->QA_Review_Comments = $request->QA_Review_Comments;
         $data->QA_Head = $request->QA_Head;
         $data->Effectiveness_Check = $request->Effectiveness_Check;
@@ -944,6 +960,22 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        if ($lastDocument->Corrective_Preventive_Action != $data->Corrective_Preventive_Action || !empty($request->Corrective_Preventive_Action_comment)) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = $lastDocument->Corrective_Preventive_Action;
+            $history->current = $data->Corrective_Preventive_Action;
+            $history->comment = $request->Corrective_Preventive_Action_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
         if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments || !empty($request->QA_Review_Comments_comment)) {
 
             $history = new LabIncidentAuditTrial();

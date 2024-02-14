@@ -605,27 +605,29 @@
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
-                                            <th>Record Number</th>
+                                            {{-- <th>Record Number</th> --}}
                                             <th>Short Description</th>
-                                            <th>CAPA Type (Corrective Action / Preventive Action)</th>
-                                            <th>Date Opened</th>
+                                            {{-- <th>CAPA Type (Corrective Action / Preventive Action)</th> --}}
+                                            <th>Due Date</th>
                                             <th>Site / Division</th>
-                                            <th>Date Due</th>
-                                            <th>Current Status</th>
+                                            {{-- <th>Date Due</th> --}}
                                             <th>Person Responsible</th>
+                                            <th>Current Status</th>
+                                            {{-- <th>Person Responsible</th> --}}
                                             <th>Date Closed</th>
+                                            <th>Remark</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
-                                        <td><input type="text" name="record[]"></td>
-                                        <td><input type="text" name="short_desc[]"></td>
-                                        <td><input type="text" name="capa_type[]"></td>
+                                        {{-- <td><input type="text" name="record[]"></td>  --}}
+                                        <td><input type="text" name="short_desc[]"></td> 
+                                        {{-- <td><input type="text" name="capa_type[]"></td>  --}}
                                         <td><input type="date" name="date_opened[]"></td>
                                         <td><input type="text" name="site[]"></td>
-                                        <td><input type="date" name="date_due[]"></td>
-                                        <td><input type="text" name="current_status[]"></td>
+                                        {{-- <td><input type="date" name="date_due[]"></td> --}}
+                                        {{-- <td><input type="text" name="current_status[]"></td> --}}
                                         <td> <select id="select-state" placeholder="Select..."
                                                 name="responsible_person[]">
                                                 <option value="">Select a value</option>
@@ -634,7 +636,10 @@
                                                     </option>
                                                 @endforeach
                                             </select></td>
+                                            <td><input type="text" name="current_status[]"></td>
+                                    
                                         <td><input type="date" name="date_closed[]"></td>
+                                        <td><input type="text" name="record[]"></td>
 
                                     </tbody>
                                 </table>
@@ -647,37 +652,55 @@
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
-                                            <th>Record Number</th>
-                                            <th>Short Description</th>
-                                            <th>CAPA Type (Corrective Action / Preventive Action)</th>
-                                            <th>Date Opened</th>
+                                            <th>CAPA Details</th>
+                                            <th>CAPA Type</th>
+                                            {{-- <th>CAPA Type (Corrective Action / Preventive Action)</th>
+                                            <th>Date Opened</th> --}}
                                             <th>Site / Division</th>
-                                            <th>Date Due</th>
-                                            <th>Current Status</th>
                                             <th>Person Responsible</th>
+                                            {{-- <th>Date Due</th> --}}
+                                            <th>Current Status</th>
+                                            {{-- <th>Person Responsible</th> --}}
                                             <th>Date Closed</th>
+                                            <th>Remark</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
-                                        <td><input type="text" name="record[]"></td>
-                                        <td><input type="text" name="short_desc[]"></td>
-                                        <td><input type="text" name="capa_type[]"></td>
-                                        <td><input type="date" name="date_opened[]"></td>
-                                        <td><input type="text" name="site[]"></td>
-                                        <td><input type="date" name="date_due[]"></td>
-                                        <td><input type="text" name="current_status[]"></td>
+                                        <td><input type="text" name="record[]"></td> 
+                                        <td>
+                                            <select id="select-state" placeholder="Select..."
+                                                name="capa_type[]">
+                                                <option value="">Select a value</option>
+                                                <option value="corrective">Corrective Action</option>
+                                                <option value="preventive">Preventive Action</option>
+                                                <option value="corrective_preventive">Corrective & Preventive Action</option>
+                                            </select>
+                                        </td>
+                                        {{-- <td><input type="text" name="capa_type[]"></td> 
+                                        <td><input type="date" name="date_opened[]"></td>  --}}
+                                        <td><input type="text" name="site[]"></td> 
                                         <td> <select id="select-state" placeholder="Select..."
+                                            name="responsible_person[]">
+                                            <option value="">Select a value</option>
+                                            @foreach ($users as $udata)
+                                                <option  value="{{ $udata->id }}">{{ $udata->name }}
+                                                </option>
+                                            @endforeach
+                                        </select></td>
+                                        {{-- <td><input type="date" name="date_due[]"></td>  --}}
+                                        <td><input type="text" name="current_status[]"></td> 
+                                        {{-- <td> <select id="select-state" placeholder="Select..."
                                                 name="responsible_person[]">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $udata)
-                                                    <option value="{{ $udata->id }}">{{ $udata->name }}
+                                                    <option  value="{{ $udata->id }}">{{ $udata->name }}
                                                     </option>
                                                 @endforeach
-                                            </select></td>
-                                        <td><input type="date" name="date_closed[]"></td>
-
+                                            </select></td> --}}
+                                        <td><input type="date"  name="date_closed[]"></td>
+                                        <td><input type="text" name="record[]"></td>
                                     </tbody>
                                 </table>
                             </div>

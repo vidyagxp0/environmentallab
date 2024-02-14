@@ -52,6 +52,7 @@ return new class extends Migration
             $table->text('Root_Cause')->nullable();
             $table->text('Currective_Action')->nullable();
             $table->text('Preventive_Action')->nullable();
+            $table->text('Corrective_Preventive_Action')->nullable();
             $table->text('CAPA_Attachment')->nullable();
             $table->text('QA_Review_Comments')->nullable();
             $table->text('QA_Head_Attachment')->nullable();
