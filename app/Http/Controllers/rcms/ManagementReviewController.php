@@ -201,31 +201,31 @@ class ManagementReviewController extends Controller
         }
         $data1->save();
 
-        $data2 = new ManagementReviewDocDetails();
-        $data2->review_id = $management->id;
-        $data2->type = "management_review_participants";
-        if (!empty($request->invited_Person)) {
-            $data2->invited_Person = serialize($request->invited_Person);
-        }
-        if (!empty($request->designee)) {
-            $data2->designee = serialize($request->designee);
-        }
-        if (!empty($request->department)) {
-            $data2->department = serialize($request->department);
-        }
-        if (!empty($request->meeting_Attended)) {
-            $data2->meeting_Attended = serialize($request->meeting_Attended);
-        }
-        if (!empty($request->designee_Name)) {
-            $data2->designee_Name = serialize($request->designee_Name);
-        }
-        if (!empty($request->designee_Department)) {
-            $data2->designee_Department = serialize($request->designee_Department);
-        }
-        if (!empty($request->remarks)) {
-            $data2->remarks = serialize($request->remarks);
-        }
-        $data2->save();
+        // $data2 = new ManagementReviewDocDetails();
+        // $data2->review_id = $management->id;
+        // $data2->type = "management_review_participants";
+        // if (!empty($request->invited_Person)) {
+        //     $data2->invited_Person = serialize($request->invited_Person);
+        // }
+        // if (!empty($request->designee)) {
+        //     $data2->designee = serialize($request->designee);
+        // }
+        // if (!empty($request->department)) {
+        //     $data2->department = serialize($request->department);
+        // }
+        // if (!empty($request->meeting_Attended)) {
+        //     $data2->meeting_Attended = serialize($request->meeting_Attended);
+        // }
+        // if (!empty($request->designee_Name)) {
+        //     $data2->designee_Name = serialize($request->designee_Name);
+        // }
+        // if (!empty($request->designee_Department)) {
+        //     $data2->designee_Department = serialize($request->designee_Department);
+        // }
+        // if (!empty($request->remarks)) {
+        //     $data2->remarks = serialize($request->remarks);
+        // }
+        // $data2->save();
 
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;

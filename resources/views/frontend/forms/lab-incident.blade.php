@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
+                                        <label for="severity-level">Severity Level</label>
                                         <select name="severity_level2">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -160,14 +160,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
-                                        <label for="initiated_through">Others<span
-                                                class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through_req"></textarea>
-                                    </div>
-                                </div> 
-                                <div class="col-lg-6">
+                               
+                             {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
                                         <input type="date" name="occurance_date">
@@ -201,6 +195,13 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req1">
+                                        <label for="Incident_Category">Others<span
+                                                class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_through_req1"></textarea>
+                                    </div>
+                                </div> 
                                  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
@@ -373,7 +374,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Currective Action">Currective Action</label>
+                                        <label for="Currective Action">Corrective Action</label>
                                         <textarea name="Currective_Action"></textarea>
                                     </div>
                                 </div>
@@ -381,6 +382,12 @@
                                     <div class="group-input">
                                         <label for="Preventive Action">Preventive Action</label>
                                         <textarea name="Preventive_Action"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                        <textarea name="Corrective_Preventive_Action"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -456,7 +463,7 @@
                                         <textarea name="QA_Head"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Check required?">Effectiveness Check required?</label>
                                         <select name="Effectiveness_Check">
@@ -464,7 +471,7 @@
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
@@ -472,7 +479,7 @@
                                         <input type="date" name="effect_check_date">
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Effectiveness Check Creation Date</label>
                                         <div class="calenderauditee">
@@ -482,7 +489,7 @@
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Type">Incident Type</label>
@@ -560,7 +567,7 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Inv andCAPA Review Comp. By">Inv andCAPA Review Comp. By</label>
                                         <div class="static"></div>
@@ -571,7 +578,7 @@
                                         <label for="Inv andCAPA Review Comp. On">Inv andCAPA Review Comp. On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
@@ -593,6 +600,30 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed By">All Activities Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed On">All Activities Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed By">Review Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>

@@ -368,10 +368,10 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                            <div class="group-input" id="Incident_Category_others">
+                                            <div class="group-input" id="initiated_through_req1">
                                                 <label for="Incident_Category">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Incident_Category_others }}</textarea>
+                                                <textarea name="initiated_through_req1" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->initiated_through_req1 }}</textarea>
                                             </div>
                                         </div>
                                 <div class="col-lg-6">
@@ -608,6 +608,12 @@
                                     <div class="group-input">
                                         <label for="Preventive Action">Preventive Action</label>
                                         <textarea name="Preventive_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Preventive_Action }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                        <textarea name="Corrective_Preventive_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Corrective_Preventive_Action }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -857,6 +863,31 @@
                                         <label for="QA Head Approval Completed On">QA Head Approval Completed
                                             On</label>
                                         <div class="Date">{{ $data->qA_head_approval_completed_on }}</div>
+                                    </div>
+                                </div>
+                               
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed By">All Activities Completed By</label>
+                                        <div class="static">{{ $data->all_activities_completed_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed On">All Activities Completed On</label>
+                                        <div class="Date">{{ $data->all_activities_completed_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed By">Review Completed By</label>
+                                        <div class="static">{{$data->review_completed_by}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed On">Review Completed On</label>
+                                        <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

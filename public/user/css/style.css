@@ -4161,7 +4161,7 @@ section#pdf-page .watermark {
 /*!              CHANGE CONTROL FIELDS            */
 /*! ============================================= */
 #change-control-fields {
-    padding: 20px 0px;
+    /* padding: 20px 0px; */
     background: #4274da;
     min-height: calc(100vh - 150px);
 }
