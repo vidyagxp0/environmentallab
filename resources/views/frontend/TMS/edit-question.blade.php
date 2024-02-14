@@ -43,13 +43,13 @@
                                 <div class="option-group">
                                         <input type="text" id="option" name="options[]"
                                             value="{{ $data }}">
-                                            <input type="radio" class="answer" name="answer" value="1">
+                                            <input type="radio" class="answer" name="answer" value="0">
                                 </div>
                             @endif
                             @endforeach
                             @else
                             <input type="text" id="option" name="options[]">
-                            <input type="radio" class="answer" name="answer" value="1">
+                            <input type="radio" class="answer" name="answer" value="0">
                             @endif
 
                             <div id="optionsdiv"></div>

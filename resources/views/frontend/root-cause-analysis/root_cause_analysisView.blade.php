@@ -148,7 +148,7 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation12</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button> --}}
@@ -491,7 +491,7 @@
                                             <div><small class="text-danger">Last date this Investigation should be closed
                                                     by</small></div>
                                             <div class="calenderauditee">
-                                            <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                             <input type="date" name="due_date" value=""
                                             class="hide-input"
                                             oninput="handleDateInput(this, 'due_date')"/>
@@ -546,11 +546,11 @@
                                             <label for="investigators">Additional Investigators</label>
                                             <select multiple name="investigators" placeholder="Select Investigators"
                                                 data-search="false" data-silent-initial-value-set="true" id="investigators">
-                                                <option @if ($data->investigators== '1') selected @endif value="1">Amit Guru</option>
-                                                <option  @if ($data->investigators== '2') selected @endif value="2">Shaleen Mishra</option>
-                                                <option  @if ($data->investigators== '3') selected @endif value="3">Madhulika Mishra</option>
-                                                <option @if ($data->investigators== '4') selected @endif value="4">Amit Patel</option>
-                                                <option @if ($data->investigators== '5') selected @endif value="5">Harsh Mishra</option>
+                                                <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
+                                                <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
+                                                <option @if ($data->investigators=='3') selected @endif value="3">Madhulika Mishra</option>
+                                                <option @if ($data->investigators=='4') selected @endif value="4">Amit Patel</option>
+                                                <option @if ($data->investigators=='5') selected @endif value="5">Harsh Mishra</option>
                                             </select>
                                         </div>
                                     </div>
@@ -560,10 +560,10 @@
                                             <label for="department">Department(s)</label>
                                             <select name="department" placeholder="Select Department(s)"
                                                 data-search="false" data-silent-initial-value-set="true" id="department">
-                                                <option @if ($data->investigators== '1') selected @endif  value="1">Work Instruction</option>
-                                                <option @if ($data->investigators== '1') selected @endif value="2">Quality Assurance</option>
-                                                <option @if ($data->investigators== '1') selected @endif value="3">Specifications</option>
-                                                <option @if ($data->investigators== '1') selected @endif value="4">Production</option>
+                                                <option @if ($data->department== '1') selected @endif  value="1">Work Instruction</option>
+                                                <option @if ($data->department== '2') selected @endif value="2">Quality Assurance</option>
+                                                <option @if ($data->department== '3') selected @endif value="3">Specifications</option>
+                                                <option @if ($data->department== '4') selected @endif value="4">Production</option>
                                             </select>
                                         </div>
                                     </div>
@@ -579,7 +579,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="comments">Comments</label>
-                                            <textarea name="comments">{{ $data->comments }}</textarea>
+                                            <textarea input type="url" name="comments">{{ $data->comments }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -615,7 +615,9 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="related_url">Related URL</label>
-                                            <input type="url" name="related_url" {{ $data->related_url }}/>
+                                            <textarea name="related_url">{{ $data->related_url }}</textarea>
+                                        
+                                          
                                         </div>
                                     </div>
                                 </div>

@@ -1801,7 +1801,7 @@
                     <div class="division-tabs">
                         <div class="tab">
                             @php
-                                $division = DB::table('divisions')->get();
+                                $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
                             @endphp
                             @foreach ($division as $temp)
                                 <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
@@ -1814,7 +1814,7 @@
                             $process = DB::table('processes')->get();
                         @endphp
                         @foreach ($process as $temp)
-                            <div id="{{ $temp->division_id }}" class="divisioncontent">
+                            <div id="{{ $temp->division_id }}" class="">
                                 @php
                                     $pro = DB::table('processes')
                                         ->where('division_id', $temp->division_id)
