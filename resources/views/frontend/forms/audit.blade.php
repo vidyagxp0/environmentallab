@@ -151,17 +151,17 @@
                     //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     // }
                     // html += '</select></td>' 
-                        +'<td><input type="text" name="observation_description[]"></td>' +
+                        '<td><input type="text" name="observation_description[]"></td>' +
                         // '<td><input type="text" name="severity_level[]"></td>' +
                         '<td><input type="text" name="area[]"></td>' +
                         // '<td><input type="text" name="observation_category[]"></td>' +
                         //'<td><select name="observation_category[]"><option value="">Select A Value</option><option value="Major">Major</option><option value="Minor">Minor</option><option value="Critical">Critical</option><option value="Recommendation">Recommendation</option></select></td>'
                       // + '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                       + '<td><input type="text" name="auditee_response[]"></td>' 
+                        '<td><input type="text" name="auditee_response[]"></td>' 
                        // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
                         //'<td><input type="text" name="qa_comment[]"></td>' +
-                        +
-                        '//<td><input type="text" name="capa_details[]"></td>' +
+                        
+                        // '//<td><input type="text" name="capa_details[]"></td>' +
                         // '<td><input type="date" name="capa_due_date[]"></td>'
                         // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
                         // '<td><select name="capa_owner[]">' +
@@ -171,7 +171,8 @@
                         html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
 
-                    html += '</select></td>' + '<td><input type="text" name="action_taken[]"></td>' +
+                    html += '</select></td>' +
+                    //  '<td><input type="text" name="action_taken[]"></td>' +
                         // '<td><input type="date" name="capa_completion_date[]"></td>'
                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
                         +

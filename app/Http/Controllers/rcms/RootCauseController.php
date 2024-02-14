@@ -63,10 +63,11 @@ use Illuminate\Support\Facades\Hash;
         $root->Group_comments_new = $request->Group_comments_new;
         $root->cft_attchament_new = json_encode($request->cft_attchament_new);
         $root->group_attachments_new = json_encode($request->group_attachments_new);
-        $root->Type = ($request->Type);
+        $root->Type= ($request->Type);
         $root->investigators = ($request->investigators);
         $root->department = ($request->department);
         $root->description = ($request->description);
+        $root->comments = ($request->comments);
         $root->root_cause_initial_attachment = json_encode($request->root_cause_initial_attachment);
         $root->related_url = ($request->related_url);
         $root->root_cause_methodology = json_encode($request->root_cause_methodology);
@@ -113,6 +114,8 @@ use Illuminate\Support\Facades\Hash;
         $root->intiation_date = $request->intiation_date;
         $root->initiator_Group = $request->initiator_Group;
         $root->short_description = $request->short_description;
+        // $root->severity_level = $request->severity_level;
+
         $root->due_date = $request->due_date;
         $root->assign_id = $request->assign_id;
         $root->Sample_Types = $request->Sample_Types;
@@ -539,12 +542,22 @@ use Illuminate\Support\Facades\Hash;
         // $root->intiation_date = $request->intiation_date;
         $root->initiator_Group = $request->initiator_Group;
         $root->short_description = $request->short_description;
+        $root->severity_level= $request->severity_level;
+        $root->Type= ($request->Type);
+        $root->priority_level = ($request->priority_level);
+        $root->department = ($request->department);
+        $root->description = ($request->description);
+        $root->investigation_summary = ($request->investigation_summary);
+        $root->root_cause_description = ($request->root_cause_description);
+        $root->cft_comments_new = ($request->cft_comments_new);
+
+
         // $root->due_date = $request->due_date;
         $root->assign_id = $request->assign_id;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
-        $root->investigators =  implode(',', $request->investigators);
+        // $root->investigators =  implode(',', $request->investigators);
 
         if (!empty($request->attachments)) {
             $files = [];

@@ -148,7 +148,7 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation12</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                     {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button> --}}
@@ -451,13 +451,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Sevrity Level</label>
-                                            <select name="severity_level">
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level">
                                                 <option value="0">-- Select --</option>
-                                                <option @if ($data->severity_level_form =='minor') selected @endif
+                                                <option @if ($data->severity_level =='minor') selected @endif
                                                     value="minor">Minor</option>
-                                                    <option @if ($data->severity_level_form =='major') selected @endif
+                                                    <option @if ($data->severity_level =='major') selected @endif
                                                         value="major">Major</option>
-                                                        <option @if ($data->severity_level_form =='critical') selected @endif
+                                                        <option @if ($data->severity_level =='critical') selected @endif
                                                             value="critical">Critical</option>
                                             </select>
                                                 {{-- <option value="minor">Minor</option>
@@ -506,18 +506,18 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Type">Type</label>
-                                            <select name="Type">
+                                            <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
                                                 <option value="0">-- Select --</option>
-                                                <option value="1">Facillties</option>
-                                                <option value="2">Other</option>
-                                                <option value="3">Stabillity</option>
-                                                <option value="4">Raw Material</option>
-                                                <option value="5">Clinical Production</option>
-                                                <option value="6">Commercial Production</option>
-                                                <option value="7">Labellling</option>
-                                                <option value="8">laboratory</option>
-                                                <option value="9">Utillities</option>
-                                                <option value="10">Validation</option>
+                                                <option @if ($data->Type =='1') selected @endif value="1">Facillties</option>
+                                                <option @if ($data->Type =='2') selected @endif value="2">Other</option>
+                                                <option @if ($data->Type =='3') selected @endif value="3">Stabillity</option>
+                                                <option @if ($data->Type =='4') selected @endif value="4">Raw Material</option>
+                                                <option @if ($data->Type =='5') selected @endif value="5">Clinical Production</option>
+                                                <option @if ($data->Type =='6') selected @endif value="6">Commercial Production</option>
+                                                <option  @if ($data->Type =='7') selected @endif  value="7">Labellling</option>
+                                                <option @if ($data->Type =='8') selected @endif value="8">laboratory</option>
+                                                <option @if ($data->Type =='9') selected @endif value="9">Utillities</option>
+                                                <option  @if ($data->Type =='10') selected @endif value="10">Validation</option>
                                             </select>
                                         </div>
                                     </div>
@@ -546,11 +546,11 @@
                                             <label for="investigators">Additional Investigators</label>
                                             <select multiple name="investigators" placeholder="Select Investigators"
                                                 data-search="false" data-silent-initial-value-set="true" id="investigators">
-                                                <option value="1">Amit Guru</option>
-                                                <option value="2">Shaleen Mishra</option>
-                                                <option value="3">Madhulika Mishra</option>
-                                                <option value="4">Amit Patel</option>
-                                                <option value="5">Harsh Mishra</option>
+                                                <option @if ($data->investigators== '1') selected @endif value="1">Amit Guru</option>
+                                                <option  @if ($data->investigators== '2') selected @endif value="2">Shaleen Mishra</option>
+                                                <option  @if ($data->investigators== '3') selected @endif value="3">Madhulika Mishra</option>
+                                                <option @if ($data->investigators== '4') selected @endif value="4">Amit Patel</option>
+                                                <option @if ($data->investigators== '5') selected @endif value="5">Harsh Mishra</option>
                                             </select>
                                         </div>
                                     </div>
@@ -560,10 +560,10 @@
                                             <label for="department">Department(s)</label>
                                             <select name="department" placeholder="Select Department(s)"
                                                 data-search="false" data-silent-initial-value-set="true" id="department">
-                                                <option value="1">Work Instruction</option>
-                                                <option value="2">Quality Assurance</option>
-                                                <option value="3">Specifications</option>
-                                                <option value="4">Production</option>
+                                                <option @if ($data->investigators== '1') selected @endif  value="1">Work Instruction</option>
+                                                <option @if ($data->investigators== '1') selected @endif value="2">Quality Assurance</option>
+                                                <option @if ($data->investigators== '1') selected @endif value="3">Specifications</option>
+                                                <option @if ($data->investigators== '1') selected @endif value="4">Production</option>
                                             </select>
                                         </div>
                                     </div>
@@ -573,13 +573,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description</label>
-                                            <textarea name="description"></textarea>
+                                            <textarea name="description">{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="comments">Comments</label>
-                                            <textarea name="comments"></textarea>
+                                            <textarea name="comments">{{ $data->comments }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -615,7 +615,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="related_url">Related URL</label>
-                                            <input type="url" name="related_url" />
+                                            <input type="url" name="related_url" {{ $data->related_url }}/>
                                         </div>
                                     </div>
                                 </div>
@@ -1123,13 +1123,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description</label>
-                                            <textarea name="root_cause_description"></textarea>
+                                            <textarea name="root_cause_description"> {{ $data->root_cause_description }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
-                                            <textarea name="investigation_summary"></textarea>
+                                            <textarea name="investigation_summary"> {{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                  <div class="col-12">
@@ -1387,7 +1387,7 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">Final Comments</label>
-                                            <textarea name="cft_comments_new"></textarea>
+                                            <textarea name="cft_comments_new">{{ $data->cft_comments_new }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
