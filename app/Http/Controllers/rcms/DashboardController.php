@@ -16,6 +16,7 @@ use App\Models\Auditee;
 use App\Models\AuditProgram;
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
+use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
@@ -700,7 +701,7 @@ class DashboardController extends Controller
             $data->short_description . '
         </div>
         <div class="division">
-            QMS - EMEA / ' . $type . '
+        ' . Helpers::getDivisionName(session()->get('division')) . '/ ' . $type . '
         </div>
         <div class="status">' .
             $data->status . '
