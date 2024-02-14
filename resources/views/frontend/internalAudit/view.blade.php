@@ -151,7 +151,8 @@ function addMultipleFiles(input, block_id) {
                     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
 
-                html += '</select></td>' +  '<td><input type="text" name="action_taken[]"></td>' +
+                html += '</select></td>' + 
+                //  '<td><input type="text" name="action_taken[]"></td>' +
                    // '<td><input type="date" name="capa_completion_date[]"></td>' +
                 //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
 
@@ -1281,8 +1282,10 @@ function addMultipleFiles(input, block_id) {
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
-                                                                </td>             --}}
-                                  {{-- <td><input type="text" name="observation_description[]" value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>  --}}
+                                                                </td> --}}
+                                           <td><input type="text" name="observation_description[]" value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>  
+                                    {{-- <td><input type="text" name="observation_description[]" value="{{ is_array($observation_description = unserialize($grid_data1->observation_description)) && isset($observation_description[$key]) ? $observation_description[$key] : '' }}"></td> --}}
+
                                                                     {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
                                                                     <td><input type="text" name="area[]" value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
@@ -1293,10 +1296,12 @@ function addMultipleFiles(input, block_id) {
                                                                             <option value="no">No</option>
                                                                         </select>
                                                                     </td> --}}
-                                                                    {{-- <td><input type="text" name="auditee_response[]" value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
+                                                                      <td><input type="text" name="auditee_response[]" value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td> 
+                                                                     {{-- <td><input type="text" name="auditee_response[]" value="{{ is_array($auditee_response = unserialize($grid_data1->auditee_response)) && isset($auditee_response[$key]) ? $observation_description[$key] : '' }}"></td> --}}
+
+                                                                    {{-- <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="qa_comment[]" value="{{unserialize($grid_data1->qa_comment)[$key] ? unserialize($grid_data1->qa_comment)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td> --}}
+                                                                    <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td> --}} 
                                                                     {{-- <td><input type="date" name="capa_due_date[]" value="{{unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key]: "" }}"></td> --}}
                                                                     {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
