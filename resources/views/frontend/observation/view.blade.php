@@ -179,26 +179,35 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="sub-head">Gneral Information</div>
+                                    <div class="sub-head">General Information</div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}"">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input type="hidden" name="record_number">
+                                        <input disabled type="text"
+                                            value="{{ $data->division_code }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="date_opened">Date Opened</label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
+                                        <input readonly type="text" name="division_code"
+                                            value="{{ $data->division_code }} ">
+                                        {{-- <div class="static">QMS-North America</div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="originator">Initiator</label>
+                                        <input disabled type="text" value="{{ Auth::user()->name }}">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="date_opened">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input  type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description"><b>Short Description <span
-                                            class="text-danger">*</span></b></label>
-                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -213,12 +222,29 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="date_due">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description"><b>Short Description <span
+                                            class="text-danger">*</span></b></label>
+                                        <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_due">Date Due</label>
                                         <input disabled type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}">
                                     </div>
-                                </div>
+                                </div> --}}
+                                
                                 <div class="col-12">
                                     <div class="sub-head">Observation Details</div>
                                 </div>

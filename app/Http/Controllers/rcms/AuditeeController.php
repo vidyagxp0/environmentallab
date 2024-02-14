@@ -749,7 +749,7 @@ class AuditeeController extends Controller
     {
         $lastDocument = Auditee::find($id);
         $internalAudit = Auditee::find($id);
-        // $internalAudit->division_id = $request->division_id;
+        //$internalAudit->division_id = $request->division_id;
         //$internalAudit->parent_id = $request->parent_id;
         //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;

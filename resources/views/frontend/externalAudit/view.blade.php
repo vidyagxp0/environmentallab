@@ -391,8 +391,6 @@ function addMultipleFiles(input, block_id) {
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                
-
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
