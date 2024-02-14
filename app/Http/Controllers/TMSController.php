@@ -739,7 +739,9 @@ class TMSController extends Controller
                 $json_option = unserialize($question->options);
                 $options = [];
                 foreach($json_option as $key => $value){
-                   array_push($options,$value);
+                    if(!is_null($value)){
+                        array_push($options,$value);
+                    }
                 }
                 $question->choices =$options;
                 //Answers
