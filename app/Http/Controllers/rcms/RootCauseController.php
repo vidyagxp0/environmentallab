@@ -121,7 +121,7 @@ use Illuminate\Support\Facades\Hash;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
-        $root->investigators =  $request->investigators;
+        // $root->investigators =  $request->investigators;
 
         if (!empty($request->root_cause_initial_attachment)) {
             $files = [];
@@ -550,6 +550,9 @@ use Illuminate\Support\Facades\Hash;
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
+        $root->investigators = ($request->investigators);
+        $root->related_url = ($request->related_url);
+
 
 
         // $root->due_date = $request->due_date;
@@ -704,7 +707,7 @@ use Illuminate\Support\Facades\Hash;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
-            $history->save();
+            $history->save();   
         }
         if ($lastDocument->investigators != $root->investigators || !empty($request->investigators_comment)) {
 

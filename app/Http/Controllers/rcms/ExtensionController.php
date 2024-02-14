@@ -33,6 +33,9 @@ class ExtensionController extends Controller
 
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        if($request->child_type=='documents'){
+            return redirect('documents/create');
+        }
         return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
     }
     public function index()

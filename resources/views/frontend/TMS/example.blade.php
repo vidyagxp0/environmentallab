@@ -41,7 +41,7 @@
                                     </div>
                                 </fieldset>
                                 <div class="quiz-buttons">
-                                    {{-- <button type="button" id="next-btn">Next</button> --}}
+                                    <button type="button" id="next-btn">Next</button>
                                     <button type="button" id="submit-btn">Submit</button>
                                 </div>
                                 <div id="summary-container" style="display: none;">

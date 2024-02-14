@@ -1755,15 +1755,17 @@
                                 Extension
                                 <input type="hidden" name="parent_name" value="Change_control">
                                 <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-
-
-                                <h5 id="set-division" data-bs-dismiss="modal">New Document</h5>
                             </label>
+                            <label for="major">
+                                <input type="radio" name="child_type" value="documents">
+                                New Document                               
+                            </label>
+  
 
 
 
                         </div>
-
+ 
                     </div>
 
                     <!-- Modal footer -->
