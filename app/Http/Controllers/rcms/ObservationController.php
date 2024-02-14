@@ -7,7 +7,10 @@ use App\Models\AuditTrialObservation;
 use App\Models\Observation;
 use App\Models\RecordNumber;
 use App\Models\User;
+use App\Models\OpenStage;
+use App\Models\Capa;
 use Carbon\Carbon;
+use Helpers;
 use App\Models\RoleGroup;
 use App\Models\ObservationGrid;
 use Illuminate\Support\Facades\Auth;
@@ -1359,14 +1362,18 @@ class ObservationController extends Controller
 
     public function observation_child(Request $request, $id)
     {
+        $cft = [];
         $parent_id = $id;
         $parent_type = "Capa";
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        $changeControl = OpenStage::find(1);
+        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
     }
 
 

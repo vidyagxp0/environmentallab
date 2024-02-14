@@ -61,32 +61,31 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="sub-head">Gneral Information</div>
+                                    <div class="sub-head">General Information</div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}"">
+                                        <label for="originator">Initiator</label>
+                                        <input disabled type="text" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="date_opened">Date Opened</label>
+                                        <label for="date_opened">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input  type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
@@ -103,11 +102,24 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_due">Date Due</label>
                                         <input  type="hidden" value="{{ $due_date }}" name="due_date">
                                         <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}" >
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="date_due">Due Date<span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="due_date" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
