@@ -160,9 +160,6 @@
                                         </select>
                                     </div>
                                 </div>
-
-                               
-
                                 <!-- <div class="col-lg-6">
                                     <div class="group-input" id="initiated_through_req">
                                         <label for="initiated_through">Others<span
@@ -170,8 +167,7 @@
                                         <textarea name="initiated_through_req"></textarea>
                                     </div>
                                 </div> -->
-
-                                 <!-- <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
                                         <input type="date" name="occurance_date">
