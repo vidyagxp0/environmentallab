@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Hash;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        //return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
+        return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
         return view("frontend.forms.root-cause-analysis");
     }
 
