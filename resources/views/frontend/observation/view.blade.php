@@ -594,7 +594,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="date_response_due">Date Rsponse Due</label>
+                                        <label for="date_response_due">Date Response Due</label>
                                         <input type="date" name="date_response_due1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_response_due1 }}">
                                     </div>
                                 </div>
