@@ -407,7 +407,7 @@
                             
                                         <div class="calenderauditee">                                     
                                         <input type="text"  id="recomendation_capa_date_due"  readonly placeholder="DD-MMM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
-                                        value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}"/>
+                                        value="{{ ($data->recomendation_capa_date_due) }}"/>
                                         {{-- <input type="date" name="recomendation_capa_date_due" value="{{ $data->recomendation_capa_date_due }}"
                                         class="hide-input" 
                                         oninput="handleDateInput(this, 'recomendation_capa_date_due')"  /> --}}
@@ -563,8 +563,10 @@
                                             </thead>
                                             <tbody>
                                                 @foreach (unserialize($griddata->action) as $key => $temps)
-                                                <tr>
-                                                    <td><input type="text" name="serial_number[]" value="{{ $key+1 }}"></td>
+                                                <tr> 
+                                                    <!-- <td><input type="text" name="serial_number[]" value="{{ $key+1 }}"></td> -->
+                                                    <td><input disabled type="text" name="serial_number[]" value="1">
+                                                </td>
                                                     <td><input type="text" name="action[]" value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
                                                     {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
                                                     <td> <select id="select-state" placeholder="Select..."
@@ -573,8 +575,8 @@
                                                         <option value="">-Select-</option>
                                                         @foreach ($users as $value)
                                                             <option
-                                                                @if($grid_data && unserialize($grid_data->auditee)[$key])
-                                                              {{ unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : '' }}
+                                                                @if($grid_data && unserialize($grid_data->responsible)[$key])
+                                                              {{ unserialize($grid_data->responsible)[$key] == $value->id ? 'selected' : '' }}
                                                                @endif
 
                                                                 value="{{ $value->id }}">
@@ -583,6 +585,17 @@
                                                         @endforeach
                                                     </select></td>
                                                     <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                <!-- <input type="date" name="deadline[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
+                                                    <!-- <td>
                                                         <div class="group-input new-date-data-field mb-0">
                                                             <div class="input-date ">
                                                                 <div class="calenderauditee">
@@ -592,7 +605,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                    </td> 
+                                                    </td>  -->
                                                     {{-- <td><input type="text" name="deadline[]" value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
                                                     <td><input type="text" name="item_status[]" value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
                                                 </tr>
@@ -755,7 +768,7 @@
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="date_response_due1">Date Rsponse Due</label>
+                                        <label for="date_response_due1">Date Response Due</label>
                                         <div class="calenderauditee"> 
                                             <input type="text"  id="date_response_due1"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
