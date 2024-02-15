@@ -173,8 +173,8 @@
                             Results</button>
                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference
                             Info/Comments</button>
-                        <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity
-                            History</button>
+                        {{-- <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity
+                            History</button> --}}
                     </div>
 
                     <!-- General Information -->
@@ -225,7 +225,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
                                         <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
@@ -236,7 +236,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Original Date Due"><b>Original Date Due</b></label>
@@ -466,19 +466,22 @@
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                         @endif
+
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
+                                        <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
                                     </div>
                         </div>
                     </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">
+                            <div class="row"> --}}
                                 <!-- Activity History -->
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Data History
                                 </div>
                                 <div class="col-lg-6">
@@ -590,7 +593,7 @@
                                             <div class="static">{{ $temp->created_at }}</div>
                                         @endforeach
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Complete By"><b>Addendum Complete By</b></label>
@@ -603,7 +606,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         @php
                                             $submit = DB::table('c_c_stage_histories')
@@ -625,7 +628,7 @@
                                             <div class="static">{{ $temp->created_at }}</div>
                                         @endforeach
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
@@ -650,7 +653,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Cancellation Details
                                 </div>
                                 <div class="col-lg-6">
@@ -681,8 +684,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="button-block">
+                        </div> --}}
+                        {{-- <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
@@ -693,7 +696,7 @@
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
-                    </div>
+                    </div> --}}
 
 
                 </div>

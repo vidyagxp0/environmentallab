@@ -35,7 +35,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference Info/Comments</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity History</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity History</button> --}}
             </div>
 
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
@@ -110,7 +110,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
                                         <select id="select-state" placeholder="Select..." name="Quality_Reviewer">
@@ -120,7 +120,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description</label>
@@ -306,11 +306,11 @@
                         </div>
                     </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">
+                            <div class="row"> --}}
                                 <!-- Activity History -->
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Data History
                                 </div>
                                 <div class="col-lg-6">
@@ -442,13 +442,13 @@
                                         <textarea name="cancel_justification"></textarea>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="button-block">
+                            </div> --}}
+                            {{-- <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a class="text-white" href="#"> Exit </a> </button>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

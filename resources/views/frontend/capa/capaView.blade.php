@@ -159,9 +159,9 @@
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">CFT/SME Review</div>
+                                <div class="active">QA Review</div>
                             @else
-                                <div class="">CFT/SME Review</div>
+                                <div class="">QA Review</div>
                             @endif
 
 
@@ -198,8 +198,8 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button>
+                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button> --}}
+                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
@@ -1536,6 +1536,10 @@
                                         <label for="major">
                                             <input type="radio" name="child_type" value="Action_Item">
                                             Action Item
+                                        </label>
+                                        <label for="major">
+                                            <input type="radio" name="child_type" value="extension">
+                                            Extension
                                         </label>
                                     @endif
                                     

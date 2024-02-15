@@ -51,8 +51,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
             </div>
