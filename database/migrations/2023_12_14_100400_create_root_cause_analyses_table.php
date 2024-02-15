@@ -87,6 +87,8 @@ return new class extends Migration
             $table->string('initiator_Group')->nullable();
             $table->integer('assign_id')->nullable();
             $table->string('Sample_Types')->nullable();
+            $table->text('initiated_through')->nullable();
+            $table->text('initiated_if_other')->nullable();
             $table->string('test_lab')->nullable();
             $table->string('ten_trend')->nullable();
             // $table->text('attachments')->nullable();
