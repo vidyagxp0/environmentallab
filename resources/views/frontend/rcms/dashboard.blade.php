@@ -328,7 +328,7 @@
                                                 @if ($datas->division_id)
                                                     {{ Helpers::getDivisionName($datas->division_id) }}
                                                 @else
-                                                    QMS-North America
+                                                    KSA
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

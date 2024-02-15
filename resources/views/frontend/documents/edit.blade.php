@@ -9,7 +9,7 @@
     <div id="data-fields">
         <div class="container-fluid">
             <div class="tab">
-                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button>
+                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information1</button>
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>

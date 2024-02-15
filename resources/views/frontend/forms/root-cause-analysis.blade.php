@@ -43,17 +43,40 @@
                 @csrf
 
                 <div id="step-form">
+                                                    <!--Investigation-->
 
                     <div id="CCForm1" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
+                         <div class="inner-block-content">
+                            <div class="row"> 
+                      
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/">
+
+                                    </div>
+                                </div>
+                            
+                           
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Division Code"><b>Site/Location Code </b></label>
+                                <input readonly type="text" name="division_code"
+                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                {{-- <div class="static">QMS-North America</div> --}}
+                            </div>
+                        </div>
+                        
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="originator">Initiator</label>
                                         <input readonly  type="text" name="originator_id" value="Amit Guru"  />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                              
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date-opened">Date Opened </label>
                                         <div><small class="text-primary">When was this Investigation record opened?</small>
@@ -62,12 +85,62 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="date_opened">
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <select name="initiator_Group" id="initiator_group">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
+                                                Central Laboratory</option>
+
+                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
+                                                Business Administration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                              value="" readonly> 
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -105,7 +178,7 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due</label>
+                                        <label for="Date Due"> Due Date </label>
                                         <div><small class="text-danger">Last date this Investigation should be closed
                                                 by</small></div>
                                         <div class="calenderauditee">
@@ -119,6 +192,31 @@
                                         <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
                                         {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="" name="due_date"> --}}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Initiated Through</label>
+                                        <div><small class="text-primary">Please select related information</small></div>
+                                        <select name="initiated_through"
+                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                            <option value="">-- select --</option>
+                                            <option value="recall">Recall</option>
+                                            <option value="return">Return</option>
+                                            <option value="deviation">Deviation</option>
+                                            <option value="complaint">Complaint</option>
+                                            <option value="regulatory">Regulatory</option>
+                                            <option value="lab-incident">Lab Incident</option>
+                                            <option value="improvement">Improvement</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="If Other">Others<span class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_if_other"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -561,10 +659,10 @@
                                         <textarea name="investigation_summary"></textarea>
                                     </div>
                                 </div>
-                             <div class="col-12">
+                             {{-- <div class="col-12">
                                     <div class="sub-head">Geographic Information</div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Zone">Zone</label>
                                         <select name="zone" id="zone">
@@ -604,7 +702,7 @@
 
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -955,4 +1053,10 @@
             row.querySelector('.residual-rpn').value = result;
         }
     </script>
+        <script>
+            document.getElementById('initiator_group').addEventListener('change', function() {
+                var selectedValue = this.value;
+                document.getElementById('initiator_group_code').value = selectedValue;
+            });
+        </script>
 @endsection
