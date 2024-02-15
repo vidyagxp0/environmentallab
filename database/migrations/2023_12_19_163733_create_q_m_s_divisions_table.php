@@ -16,10 +16,18 @@ return new class extends Migration
         Schema::create('q_m_s_divisions', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->tinyInteger('status')->length(2)->default(0);
             $table->timestamps();
 
 
         });
+        // Schema::create('q_m_s_divisions', function (Blueprint $table) {
+        //     $table->id();
+        //     $table->string('name');
+        //     $table->timestamps();
+
+
+        // });
     }
 
     /**

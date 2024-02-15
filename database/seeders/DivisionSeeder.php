@@ -48,12 +48,15 @@ class DivisionSeeder extends Seeder
 
         $division = new QMSDivision();
         $division->name = "KSA";
+        $division->status = 1;
         $division->save();
         $division = new QMSDivision();
         $division->name = "Egypt";
+        $division->status = 1;
         $division->save();
         $division = new QMSDivision();
         $division->name = "Estonia";
+        $division->status = 1;
         $division->save();
         $division = new QMSDivision();
         $division->name = "EHS - North America";
@@ -65,6 +68,7 @@ class DivisionSeeder extends Seeder
 
         $division = new QMSDivision();
         $division->name = "Jordan";
+        $division->status = 1;
         $division->save();
 
         $division = new QMSDivision();
