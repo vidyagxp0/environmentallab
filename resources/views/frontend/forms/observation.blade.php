@@ -325,7 +325,7 @@
                                     <div class="group-input">
                                         <label for="action-plan-grid">
                                             Action Plan<button type="button" name="action-plan-grid"
-                                                id="observation-table">+</button>
+                                                id="observation_table">+</button>
                                         </label>
                                         <table class="table table-bordered" id="observation">
                                             <thead>
@@ -338,7 +338,11 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+<<<<<<< Updated upstream
                                                 <td><input type="text" name="serial_number[]" value="1"></td>
+=======
+                                            <td><input disabled type="text" name="serial_number[]" value="1"></td>
+>>>>>>> Stashed changes
                                                 <td><input type="text" name="action[]"></td>
                                                 <td><input type="text" name="responsible[]"></td>
                                                 <td><input type="text" name="deadline[]"></td>
@@ -666,4 +670,39 @@
             }
         }
     </script>
+    <script>
+                $(document).ready(function() {
+                    $('#observation_table').click(function(e) {
+                        function generateTableRow(serialNumber) {
+                            var users = @json($users);
+                            console.log(users);
+                            var html =
+                            '<tr>' +
+                                '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                '<td><input type="text" name="action[]"></td>' +
+                                '<td><select name="responsible[]">' +
+                                    '<option value="">Select a value</option>';
+
+                                for (var i = 0; i < users.length; i++) {
+                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                }
+
+                                html += '</select></td>' +
+                                '<td><input type="date" name="deadline[]"></td>' +
+                                '<td><input type="text" name="item_static[]"></td>' +
+                                '</tr>';
+
+
+
+                            return html;
+                        }
+
+                        var tableBody = $('#observation tbody');
+                        var rowCount = tableBody.children('tr').length;
+                        var newRow = generateTableRow(rowCount + 1);
+                        tableBody.append(newRow);
+                    });                    
+                });
+            </script>
+    
 @endsection
