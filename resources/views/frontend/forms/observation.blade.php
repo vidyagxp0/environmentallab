@@ -391,9 +391,36 @@
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor">
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $data)
+                                            <option title="Amit Guru" value="1">
+                                                Amit Guru
+                                            </option>
+                                            <option title="Shaleen Mishra" value="2">
+                                                Shaleen Mishra
+                                            </option>
+                                            <option title="Vikas Prajapati" value="3">
+                                                Vikas Prajapati
+                                            </option>
+                                            <option title="Anshul Patel" value="4">
+                                                Anshul Patel
+                                            </option>
+                                            <option title="Amit Patel" value="5">
+                                                Amit Patel
+                                            </option>
+                                            <option title="Madhulika Mishra" value="6">
+                                                Madhulika Mishra
+                                            </option>
+                                            <option title="Jim Kim" value="7">
+                                                Jim Kim
+                                            </option>
+                                            <option title="Akash Asthana" value="8">
+                                                Akash Asthana
+                                            </option>
+                                            <option title="Not Applicable" value="9">
+                                                Not Applicable
+                                            </option>
+                                            {{-- @foreach ($users as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
@@ -416,8 +443,26 @@
                                             <tbody>
                                                 <td><input type="text" name="serial_number[]" value="1"></td>
                                                 <td><input type="text" name="action[]"></td>
-                                                <td><input type="text" name="responsible[]"></td>
-                                                <td><input type="text" name="deadline[]"></td>
+                                                {{-- <td><input type="text" name="responsible[]"></td> --}}
+                                                <td> <select id="select-state" placeholder="Select..." name="responsible[]">
+                                                    <option value="">Select a value</option>
+                                                    @foreach ($users as $data)
+                                                        <option value="{{ $data->id }}">{{ $data->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select></td>
+                                                {{-- <td><input type="text" name="deadline[]"></td> --}}
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" name="deadline[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
                                                 <td><input type="text" name="item_status[]"></td>
                                             </tbody>
                                         </table>

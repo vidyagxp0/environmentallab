@@ -13,6 +13,7 @@ use Carbon\Carbon;
 use Helpers;
 use App\Models\RoleGroup;
 use App\Models\ObservationGrid;
+use App\Models\InternalAuditGrid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -1231,9 +1232,10 @@ class ObservationController extends Controller
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
+        $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
         $griddata = ObservationGrid::where('observation_id',$data->id)->first();
 
-        return view('frontend.observation.view', compact('data','griddata'));
+        return view('frontend.observation.view', compact('data','griddata','grid_data'));
     }
     public function observation_send_stage(Request $request, $id)
     {
