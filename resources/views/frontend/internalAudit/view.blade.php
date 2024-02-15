@@ -713,8 +713,7 @@ function addMultipleFiles(input, block_id) {
                                                         @if ($grid_data)
                                                         @foreach (unserialize($grid_data->start_date) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"
-                                                                    value="{{ $key + 1 }}"></td>
+                                                            <td><input type="text" name="serial_number[]"value="{{ $key + 1 }}"></td>
 
                                                             <td><input type="text" name="audit[]"
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">

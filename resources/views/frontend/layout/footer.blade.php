@@ -831,8 +831,10 @@
                     '<tr>' +
                     '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     '<td><input type="text" name="action[]"></td>' +
-                    '<td><input type="text" name="responsible[]"></td>' +
-                    '<td><input type="text" name="deadline[]"></td>' +
+                     '<td><input type="text" name="responsible[]"></td>' +
+                    // '<td><input type="text" name="deadline[]"></td>' +
+'<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+
                     '<td><input type="text" name="item_status[]"></td>'
                 '</tr>';
                 return html;
@@ -850,7 +852,7 @@
                     '<tr>' +
                     '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     // '<td><input type="date" name="date[]"></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
                     '<td><input type="text" name="topic[]"></td>' +
                     '<td><input type="text" name="responsible[]"></td>' +
                     '<td><input type="time" name="start_time[]"></td>' +

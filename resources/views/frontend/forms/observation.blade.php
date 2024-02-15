@@ -161,7 +161,7 @@
                                             <option title="Clinical Trial Report" value="4">
                                                 Clinical Trial Report
                                             </option>
-                                            <option title="Compliance" value="5" selected="">
+                                            <option title="Compliance" value="5" >
                                                 Compliance
                                             </option>
                                             <option title="Computerized systems" value="6">
@@ -441,16 +441,16 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input type="text" name="serial_number[]" value="1"></td>
+                                            <td><input disabled type="text" name="serial_number[]" value="1">
                                                 <td><input type="text" name="action[]"></td>
                                                 {{-- <td><input type="text" name="responsible[]"></td> --}}
                                                 <td> <select id="select-state" placeholder="Select..." name="responsible[]">
-                                                    <option value="">Select a value</option>
-                                                    @foreach ($users as $data)
-                                                        <option value="{{ $data->id }}">{{ $data->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select></td>
+                                                        <option value="">Select a value</option>
+                                                        @foreach ($users as $data)
+                                                            <option value="{{ $data->id }}">{{ $data->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select></td>
                                                 {{-- <td><input type="text" name="deadline[]"></td> --}}
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
