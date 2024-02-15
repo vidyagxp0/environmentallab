@@ -511,10 +511,37 @@
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $value)
+                                            <option title="Amit Guru" value="1" {{ $data->cro_vendor == '1' ? 'selected' : '' }}>
+                                                Amit Guru
+                                            </option>
+                                            <option title="Shaleen Mishra" value="2" {{ $data->cro_vendor == '2' ? 'selected' : '' }}>
+                                                Shaleen Mishra
+                                            </option>
+                                            <option title="Vikas Prajapati" value="3" {{ $data->cro_vendor == '3' ? 'selected' : '' }}>
+                                                Vikas Prajapati
+                                            </option>
+                                            <option title="Anshul Patel" value="4" {{ $data->cro_vendor == '4' ? 'selected' : '' }}>
+                                                Anshul Patel
+                                            </option>
+                                            <option title="Amit Patel" value="5" {{ $data->cro_vendor == '5' ? 'selected' : '' }}>
+                                                Amit Patel
+                                            </option>
+                                            <option title="Madhulika Mishra" value="6" {{ $data->cro_vendor == '6' ? 'selected' : '' }}>
+                                                Madhulika Mishra
+                                            </option>
+                                            <option title="Jim Kim" value="7" {{ $data->cro_vendor == '7' ? 'selected' : '' }}>
+                                                Jim Kim
+                                            </option>
+                                            <option title="Akash Asthana" value="8" {{ $data->cro_vendor == '8' ? 'selected' : '' }}>
+                                                Akash Asthana
+                                            </option>
+                                            <option title="Not Applicable" value="9" {{ $data->cro_vendor == '9' ? 'selected' : '' }}>
+                                                Not Applicable
+                                            </option>
+                                            {{-- @foreach ($users as $value)
                                             <option {{ $data->cro_vendor == $value->id ? 'selected' : '' }}
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
@@ -539,8 +566,34 @@
                                                 <tr>
                                                     <td><input type="text" name="serial_number[]" value="{{ $key+1 }}"></td>
                                                     <td><input type="text" name="action[]" value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
-                                                    <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td>
-                                                    <td><input type="text" name="deadline[]" value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td>
+                                                    {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
+                                                    <td> <select id="select-state" placeholder="Select..."
+                                                        name="responsible[]">
+                                                        
+                                                        <option value="">-Select-</option>
+                                                        @foreach ($users as $value)
+                                                            <option
+                                                                @if($grid_data && unserialize($grid_data->auditee)[$key])
+                                                              {{ unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : '' }}
+                                                               @endif
+
+                                                                value="{{ $value->id }}">
+                                                                {{ $value->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select></td>
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date ">
+                                                                <div class="calenderauditee">
+                                                                    {{-- <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /> --}}
+                                                                    <input type="date" name="deadline[]" class="hide-input" 
+                                                                    oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td> 
+                                                    {{-- <td><input type="text" name="deadline[]" value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
                                                     <td><input type="text" name="item_status[]" value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
                                                 </tr>
                                                 @endforeach
