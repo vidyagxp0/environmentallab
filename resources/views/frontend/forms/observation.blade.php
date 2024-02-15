@@ -621,29 +621,18 @@
                                 </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="date_response_due">Date Rsponse Due</label>
+                                        <label for="date_response_due">Date Response Due</label>
                                         <input type="date" name="date_response_due1">
                                     </div>
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="date_response_due">Date Rsponse Due</label>
+                                        <label for="date_response_due">Date Response Due</label>
                                         <div class="calenderauditee">
                                             <input type="text" name="date_response_due1" id="date_response_due1" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'date_response_due1')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date ">
-                                        <label for="response_date">Date of Response</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" name="response_date" id="response_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'response_date')" />
                                         </div>
                                     </div>
                                 </div>

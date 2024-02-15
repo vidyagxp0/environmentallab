@@ -133,10 +133,7 @@ class LabIncidentController extends Controller
             }
             $data->QA_Head_Attachment = json_encode($files);
         }
-
-
-
-        $data->save();
+         $data->save();
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
