@@ -273,6 +273,46 @@ class UserLoginSeeder extends Seeder
         $user->save();
 
         $user  = new User();
+        $user->name = "User 1";
+        $user->email = "user1tp@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "User 2";
+        $user->email = "user2tp@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "User 3";
+        $user->email = "user3tp@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "User 4";
+        $user->email = "user4tp@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "User 5";
+        $user->email = "user5tp@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+        $user  = new User();
         $user->name = "Jin Kim";
         $user->email = "jin.kim@mydemosoftware.com";
         $user->password = Hash::make('Dms@123');
