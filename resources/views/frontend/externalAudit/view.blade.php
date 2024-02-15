@@ -1717,6 +1717,7 @@ function addMultipleFiles(input, block_id) {
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
+                                    <label></lable>
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations
