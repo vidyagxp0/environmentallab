@@ -109,6 +109,18 @@ class EffectivenessCheckController extends Controller
 
             $openState->Attachment = json_encode($files);
         }
+        if (!empty($request->Attachments)) {
+            $files = [];
+            if ($request->hasfile('Attachments')) {
+                foreach ($request->file('Attachments') as $file) {
+                    $name = $request->name . 'Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Attachments = json_encode($files);
+        }
        // $openState->refer_record = $request->refer_record;
        if (!empty($request->refer_record)) {
         $files = [];
@@ -200,6 +212,18 @@ class EffectivenessCheckController extends Controller
             }
 
             $openState->Attachment = json_encode($files);
+        }
+        if (!empty($request->Attachments)) {
+            $files = [];
+            if ($request->hasfile('Attachments')) {
+                foreach ($request->file('Attachments') as $file) {
+                    $name = $request->name . 'Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $openState->Attachments = json_encode($files);
         }
         if (!empty($request->refer_record)) {
             $files = [];
