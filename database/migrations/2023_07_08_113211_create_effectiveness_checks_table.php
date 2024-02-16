@@ -40,6 +40,7 @@ return new class extends Migration
             $table->longText('Addendum_Attachment')->nullable();
             $table->string('Comments')->nullable();
             $table->longText('Attachment')->nullable();
+            $table->longText('Attachments')->nullable();
             $table->longText('refer_record')->nullable();
             $table->string('status')->default('Opened');
             $table->string('stage')->default(1);

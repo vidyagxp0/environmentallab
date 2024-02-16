@@ -136,6 +136,10 @@ class ActionItemController extends Controller
     public function update(Request $request, $id)
     {
 
+        if (!$request->short_description) {
+            toastr()->error("Short description is required");
+            return redirect()->back();
+        }
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
         // $openState->related_records = $request->related_records;
