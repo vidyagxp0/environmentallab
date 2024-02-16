@@ -257,6 +257,33 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachment">Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="Attachments">
+                                                        @if ($data->Attachments)
+                                                        @foreach(json_decode($data->Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Attachments[]"
+                                                            oninput="addMultipleFiles(this, 'Attachments')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                             
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
@@ -279,17 +306,23 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <input type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6? 'disabled' : '' }} value="{{ $data->effect_summary }}">
+                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
                                     </div>
                                 </div>
+                                <!-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description</label>
+                                        <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                    </div>
+                                </div> -->
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <input type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                            value="{{ $data->Effectiveness_Results }}">
+                                        <textarea type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            >{{ $data->Effectiveness_Results }}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -332,8 +365,8 @@
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b><span
                                                         class="text-danger">*</span></label>
-                                        <input type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                            value= "{{ $data->Addendum_Comments }}">
+                                        <textarea type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            >{{ $data->Addendum_Comments }}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -474,10 +507,10 @@
                         </div>
                     </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <!-- Activity History -->
+                                {{-- Activity History --}}
                                 <div class="col-12 sub-head">
                                     Data History
                                 </div>
@@ -693,7 +726,7 @@
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
-                    </div>
+                    </div> -->
 
 
                 </div>

@@ -338,11 +338,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-<<<<<<< Updated upstream
                                                 <td><input type="text" name="serial_number[]" value="1"></td>
-=======
-                                            <td><input disabled type="text" name="serial_number[]" value="1"></td>
->>>>>>> Stashed changes
                                                 <td><input type="text" name="action[]"></td>
                                                 <td><input type="text" name="responsible[]"></td>
                                                 <td><input type="text" name="deadline[]"></td>
@@ -459,6 +455,17 @@
                                     <div class="group-input">
                                         <label for="actual_start_date">Actual Start Date</label>
                                         <input type="date" name="actual_start_date">
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="actual_start_date"></label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="actual_start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="actual_start_date" name="actual_start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

@@ -145,6 +145,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="group-input">
+                                        <label for="Attachments">Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Attachments')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -161,10 +175,10 @@
                                 <div class="col-12 sub-head">
                                     Effectiveness Summary
                                 </div>
-                                <div class="col-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <input type="text" name="effect_summary">
+                                        <textarea type="text" name="effect_summary"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -173,7 +187,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <input type="text" name="Effectiveness_Results">
+                                        <textarea type="text" name="Effectiveness_Results"></textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -183,7 +197,7 @@
                                         <input type="file" id="myfile" name="Effectiveness_check_Attachment">
                                     </div>
                                 </div> -->
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
@@ -203,7 +217,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
-                                        <input type="text" name="Addendum_Comments">
+                                        <textarea type="text" name="Addendum_Comments"></textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -212,7 +226,7 @@
                                         <input type="file" id="myfile" name="Addendum_Attachment">
                                     </div>
                                 </div> -->
-                                <div class="col-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
