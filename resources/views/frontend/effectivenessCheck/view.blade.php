@@ -236,14 +236,19 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> --}}
+<<<<<<< Updated upstream
+                                </div>
                                 <div class="col-lg-6">
+=======
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
+>>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="Original Date Due"><b>Original Date Due</b></label>
                                         <input disabled type="text"
                                             value="{{ Helpers::getdateFormat($data->due_date) }}">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="sub-head">
                                 Effectiveness Planning Information
