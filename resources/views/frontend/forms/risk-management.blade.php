@@ -163,10 +163,10 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk Assesment</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity Assesment</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Analysis</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
@@ -326,7 +326,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Sourcd of Risk">Source of Risk</label>
+                                            <label for="Sourcd of Risk">Source of Risk/Opportunity</label>
                                             <select name="source_of_risk" id="source_of_risk">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="Audit">Audit</option>
@@ -346,10 +346,11 @@
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="Other">Other</option>
                                                 <option value="Business_Risk">Business Risk</option>
-                                                <option value="custumer_Related">custumer-Related Risk(Complaint)</option>
+                                                <option value="custumer_Related">Customer-Related Risk(Complaint)</option>
+                                                <option value="Opportunity">Opportunity</option>
                                                 <option value="Market">Market</option>
                                                 <option value="Operational_Risk">Operational Risk</option>
-                                                <option value="Strategic_Rick">Strategic Rick</option>
+                                                <option value="Strategic_Risk">Strategic Risk</option>
                                             </select>
                                         </div>
                                     </div>
@@ -407,7 +408,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="group-input">
-                                            <label for="Description">Description</label>
+                                            <label for="Description">Risk/Opportunity Description</label>
                                             <textarea name="description" id="description"></textarea>
                                         </div>
                                     </div>
@@ -421,7 +422,7 @@
                                    
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="Comments">Comments</label>
+                                            <label for="Comments">Risk/Opportunity Comments</label>
                                             <textarea name="comments" id="comments"></textarea>
                                         </div>
                                     </div>
@@ -457,7 +458,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Sourcd of Risk">Source of Risk </label>
+                                            <label for="Sourcd of Risk">Source of Risk</label>
                                             <select name="source_of_risk2" id="sourcd_of_risk">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="Audit">Audit</option>

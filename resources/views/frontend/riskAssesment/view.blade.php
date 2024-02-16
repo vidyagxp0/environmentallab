@@ -305,10 +305,10 @@
 
                     <!-- Tab links -->
                     <div class="cctab">
-                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk Assesment</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk Details</button>
+                        <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Risk/Opportunity Assesment</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Risk/Opportunity details </button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Work Group Assignment</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk Analysis</button>
+                        <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
@@ -537,7 +537,7 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Sourcd of Risk">Source of Risk</label>
+                                                <label for="Sourcd of Risk">Source of Risk/Opportunity</label>
                                                 <select name="source_of_risk" id="source_of_risk"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
@@ -563,14 +563,17 @@
                                                     <option {{ $data->type == 'Business_Risk' ? 'selected' : '' }}
                                                         value="Business_Risk">Business Risk</option>
                                                     <option {{ $data->type == 'custumer_Related' ? 'selected' : '' }}
-                                                        value="custumer_Related">custumer-Related Risk(Complaint)
+                                                        value="custumer_Related">Customer-Related Risk(Complaint)
+                                                    </option>
+                                                    <option {{ $data->type == 'Opportunity' ? 'selected' : '' }}
+                                                        value="Opportunity">Opportunity
                                                     </option>
                                                     <option {{ $data->type == 'Market' ? 'selected' : '' }}
                                                         value="Market">Market</option>
                                                     <option {{ $data->type == 'Operational_Risk' ? 'selected' : '' }}
                                                         value="Operational_Risk">Operational Risk</option>
                                                     <option {{ $data->type == 'Strategic_Rick' ? 'selected' : '' }}
-                                                        value="Strategic_Rick">Strategic Rick</option>
+                                                        value="Strategic_Risk">Strategic Risk</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -640,14 +643,14 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="group-input">
-                                                <label for="Description">Description</label>
+                                                <label for="Description">Risk/Opportunity Description</label>
                                                 <textarea name="description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="description">{{ $data->description }}</textarea>
                                             </div>
                                         </div>
                                        
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Comments">Comments</label>
+                                                <label for="Comments">Risk/Opportunity Comments</label>
                                                 <textarea name="comments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="comments">{{ $data->comments }}</textarea>
                                             </div>
                                         </div>
