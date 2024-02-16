@@ -4,8 +4,10 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Capa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\RootCauseAnalysis;
 use App\Models\RecordNumber;
 use App\Models\LabIncidentAuditTrial;
 use App\Models\RoleGroup;
@@ -13,7 +15,7 @@ use App\Models\User;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\OpenStage;
 use App\Models\LabIncident;
 use Illuminate\Support\Facades\App;
 
@@ -1159,6 +1161,22 @@ class LabIncidentController extends Controller
     }
     public function lab_incident_capa_child(Request $request, $id)
     {
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Capa";
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $changeControl = OpenStage::find(1);
+         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_record','cft'));
+    }
+
+    public function lab_incident_root_child(Request $request, $id)
+    {
         $parent_id = $id;
         $parent_type = "Capa";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -1166,9 +1184,8 @@ class LabIncidentController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.rootcause', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
     }
-
     public function LabIncidentStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
