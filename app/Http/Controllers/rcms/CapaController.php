@@ -42,10 +42,10 @@ class CapaController extends Controller
     {
         // return $request;
 
-        // if (!$request->short_description) {
-        //     toastr()->error("Short description is required");
-        //     return redirect()->back();
-        // }
+        if (!$request->short_description) {
+            toastr()->error("Short description is required");
+            return redirect()->back();
+        }
         $capa = new Capa();
         $capa->form_type = "capa";
         $capa->record = ((RecordNumber::first()->value('counter')) + 1);
