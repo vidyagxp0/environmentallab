@@ -276,9 +276,10 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-num">Document Number</label>
-                                    <div class="default-name">{{ $document->division_name }}
+                                    <div class="default-name">{{ Helpers::getDivisionName(session()->get('division')) }}
                                         /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
                                         /SOP-000{{ $document->id }}</div>
+                                        {{-- {{ $document->division_name }} --}}
                                 </div>
                             </div>
 
@@ -397,6 +398,58 @@
                                 </div>
                             </div>
 
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="major">Major</label>
+                                    <select  name="major">
+                                        <option  value="0">-- Select --</option>
+                                        <option @if ($document->major =='1') selected @endif
+                                            value="1">1</option>
+                                            <option @if ($document->major =='2') selected @endif
+                                                value="2">2</option>
+                                            <option @if ($document->major =='3') selected @endif
+                                                value="3">3</option>
+                                            <option @if ($document->major =='4') selected @endif
+                                                value="4">4</option>
+                                                <option @if ($document->major =='5') selected @endif
+                                                    value="5">5</option>
+                                                    <option @if ($document->major =='6') selected @endif
+                                                        value="6">6</option>
+                                                        <option @if ($document->major =='7') selected @endif
+                                                            value="7">7</option>
+                                                            <option @if ($document->major =='8') selected @endif
+                                                                value="8">8</option>
+                                                                <option @if ($document->major =='9') selected @endif
+                                                                    value="9">9</option>
+                                    </select>
+                                </div>  
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="minor">Minor</label>
+                                    <select  name="minor">
+                                        <option  value="0">-- Select --</option>
+                                        <option @if ($document->minor =='1') selected @endif
+                                            value="1">1</option>
+                                            <option @if ($document->minor =='2') selected @endif
+                                                value="2">2</option>
+                                            <option @if ($document->minor =='3') selected @endif
+                                                value="3">3</option>
+                                            <option @if ($document->minor =='4') selected @endif
+                                                value="4">4</option>
+                                                <option @if ($document->minor =='5') selected @endif
+                                                    value="5">5</option>
+                                                    <option @if ($document->minor =='6') selected @endif
+                                                        value="6">6</option>
+                                                        <option @if ($document->minor =='7') selected @endif
+                                                            value="7">7</option>
+                                                            <option @if ($document->minor =='8') selected @endif
+                                                                value="8">8</option>
+                                                                <option @if ($document->minor =='9') selected @endif
+                                                                    value="9">9</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-type">Document Type</label>
@@ -1109,6 +1162,20 @@
                                 @endif
 
                             </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="revision-type">Revision Type</label>
+                                    <select  name="revision_type">
+                                        <option  value="0">-- Select --</option>
+                                        <option @if ($document->revision_type =='minor') selected @endif
+                                            value="minor">Minor</option>
+                                            <option @if ($document->revision_type =='major') selected @endif
+                                                value="major">Major</option>
+                                                <option @if ($document->revision_type =='NA') selected @endif
+                                                    value="NA">NA</option>
+                                    </select>
+                                </div>
+                            </div>
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -1396,6 +1463,7 @@
                                         Responsibility<button type="button" id="responsibilitybtnadd"
                                             name="button">+</button>
                                     </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     @if (!empty($document->document_content->responsibility))
                                         @foreach (unserialize($document->document_content->responsibility) as $data)
                                             <input type="text" name="responsibility[]" class="myclassname"
@@ -1444,6 +1512,7 @@
                                         Abbreviation<button type="button" id="abbreviationbtnadd"
                                             name="button">+</button>
                                     </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     @if (!empty($document->document_content->abbreviation))
                                         @foreach (unserialize($document->document_content->abbreviation) as $data)
                                             <input type="text" name="abbreviation[]" class="myclassname"
@@ -1490,6 +1559,7 @@
                                     <label for="abbreviation" id="definition">
                                         Definition<button type="button" id="Definitionbtnadd" name="button">+</button>
                                     </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     @if (!empty($document->document_content->defination))
                                         @foreach (unserialize($document->document_content->defination) as $data)
                                             <input type="text" name="defination[]" class="myclassname"
@@ -1537,6 +1607,7 @@
                                         Materials and Equipments<button type="button" id="materialsbtadd"
                                             name="button">+</button>
                                     </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     @if (!empty($document->document_content->materials_and_equipments))
                                         @foreach (unserialize($document->document_content->materials_and_equipments) as $data)
                                             <input type="text" name="materials_and_equipments[]" class="myclassname"
@@ -1584,6 +1655,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     <textarea name="procedure" id="summernote">{{ $document->document_content->procedure }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -1619,6 +1691,7 @@
                                     <label for="reporting" id="newreport">
                                         Reporting<button type="button" id="reportingbtadd" name="button">+</button>
                                     </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     @if (!empty($document->document_content->reporting))
                                         @foreach (unserialize($document->document_content->reporting) as $data)
                                             <input type="text" name="reporting[]" class="myclassname"
@@ -1664,10 +1737,21 @@
 
                             <div class="col-md-12">
                                 <div class="group-input">
+
                                     <label for="references" id="references">
-                                        References
+                                        References<button type="button" id="referencesbtadd" name="button">+</button>
                                     </label>
-                                    <input type="file" name="references" class="myclassname">
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    @if (!empty($document->document_content->references))
+                                        @foreach (unserialize($document->document_content->references) as $data)
+                                            <input type="text" name="references[]" class="myclassname"
+                                                value="{{ $data }}">
+                                        @endforeach
+                                    @else
+                                        <input type="text" name="references[]" class="myclassname">
+                                    @endif
+
+                                    <div id="referencesdiv"></div>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'References' && !empty($tempHistory->comment))
                                             @php
@@ -1681,9 +1765,13 @@
                                             <input class="input-field"
                                                 style="background: #ffff0061;
                                     color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                                type="text" value="{{ $tempHistory->references }}" disabled>
                                         @endif
                                     @endforeach
+
+                                   
+                                    
+                                   
                                 </div>
                             </div>
 
@@ -1706,6 +1794,7 @@
                                     <label for="annexure">
                                         Annexure<button type="button" name="ann" id="annexurebtnadd">+</button>
                                     </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     <table class="table-bordered table" id="annexure">
                                         <thead>
 
@@ -1755,6 +1844,7 @@
                                         Revision History<button type="button" name="reporting"
                                             onclick="addDocRow('revision')">+</button>
                                     </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                     <table class="table-bordered table" id="revision">
                                         <thead>
                                             <tr>

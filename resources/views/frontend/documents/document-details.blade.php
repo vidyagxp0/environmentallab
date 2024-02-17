@@ -31,6 +31,8 @@
                                     @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif
+                                    <button>Obsolete</button>
+                                    <button>Revise</button>
                                 </div>
                             </div>
                             <div class="bottom-block">
@@ -160,12 +162,15 @@
                                             <div class="">Traning-Complete</div>
                                         @endif
                                     @endif
-
-
                                     @if ($document->stage >= 8)
                                         <div class="active">Effective</div>
                                     @else
                                         <div class="">Effective</div>
+                                    @endif
+                                    @if ($document->stage >= 9)
+                                        <div class="active">Obsolete</div>
+                                    @else
+                                        <div class="">Obsolete</div>
                                     @endif
                                     {{-- <div class="{{ $document->stage == 0 ? 'active' : '' }}">Draft</div>
                                     <div class="{{ $document->stage == 1 ? 'active' : '' }}">Reviewed</div>
@@ -754,8 +759,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
+                </div>                
                 <!-- Modal body -->
                 <form action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
