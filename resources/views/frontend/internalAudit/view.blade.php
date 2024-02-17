@@ -362,7 +362,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input disabled type="text" value="{{ $data->initiator_name }} ">
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        <!-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Date Due">Date of Initiation</label>
                                                 <input readonly type="text"
@@ -370,7 +370,17 @@ function addMultipleFiles(input, block_id) {
                                                     name="intiation_date">
 
                                             </div>
-                                        </div>
+                                        </div> -->
+                                        
+                                        <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Date Due"><b>Date of Initiation</b></label>
+                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="intiation_date"> --}}
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                    </div>
+                                </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
@@ -384,18 +394,22 @@ function addMultipleFiles(input, block_id) {
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                                <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
-                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
-                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
-
-                                            </div>
+                                        
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Start Date">Due Date<span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        {{-- <input type="date" name="due_date"> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text"  id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" 
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
+                                            <input type="date" name="due_date" id="due_date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date');checkDate('due_date_checkdate','due_date_checkdate')" />
                                         </div>
+                                    </div>
+                                </div>
+                                        
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -1167,13 +1181,14 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        {{-- <div class="col-lg-6">
+                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Due Date">Due Date</label>
-                                                <input type="hidden" name="due_date" value="{{ $data->due_date }}">
+                                                <input type="text" name="due_date" value="{{ $data->due_date }}">
                                                 <div class="static">{{ $data->due_date }}</div>
                                             </div>
-                                        </div> --}}
+                                        </div> 
+                                        
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
@@ -1686,16 +1701,25 @@ function addMultipleFiles(input, block_id) {
                                     <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
-                                <div class="group-input">
+                                <!-- <div class="group-input">
                                     <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
+                                    <input type="comment" name="comment"  required>
+                                </div> -->
+                                <div class="group-input">
+                                    <label for="comment">Comment </label>
+                                    <input type="comment" name="comment" >
                                 </div>
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                   <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                
                             </div>
                         </form>
                     </div>
@@ -1737,9 +1761,14 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                   <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                
                             </div>
                         </form>
                     </div>
@@ -1780,9 +1809,14 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                                   <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                                
                             </div>
                         </form>
                     </div>
