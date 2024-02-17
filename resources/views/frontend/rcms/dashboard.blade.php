@@ -430,7 +430,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{-- <div class="scope-pagination">
+                     <div class="scope-pagination">
                             {{ $datag->links() }}
                         </div> 
                     </div>
