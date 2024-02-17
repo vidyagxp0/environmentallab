@@ -1184,7 +1184,7 @@ class LabIncidentController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.rootcause', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
     }
     public function LabIncidentStateChange(Request $request, $id)
     {

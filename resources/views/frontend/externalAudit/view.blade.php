@@ -472,7 +472,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="severity-level">Sevrity Level</label>
+                                                <label for="severity-level">Severity Level</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity_level == 'minor') selected @endif
