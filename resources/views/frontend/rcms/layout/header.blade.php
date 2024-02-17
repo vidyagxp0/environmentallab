@@ -162,6 +162,55 @@
                     </div>
                 </div>
             </div>
+            <div class="header-bottom">
+                            <div class="container-fluid">
+                                <div class="bottom-links">
+                                    <div>
+                                        <a href="#"><i class="fa-solid fa-braille"></i></a>
+                                    </div>
+                                    <div>
+                                        <a href="/dashboard">DMS Dashboard</a>
+                                    </div>
+                                    <div>
+                                        <a href="/TMS">TMS Dashboard</a>
+                                    </div>
+                                    <div>
+                                        <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
+                                    </div>
+                                    @if (Auth::user())
+                                        @if (Auth::user()->role == 3 || Auth::user()->role == 1 || Auth::user()->role == 2)
+                                            <div>
+                                                <a href="/mydms">My DMS</a>
+                                            </div>
+                                        @endif
+                                        @if (Auth::user()->role == 3)
+                                            <div>
+                                                <a href="{{ route('documents.index') }}">Documents</a>
+                                            </div>
+                                        @endif
+                                        @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+                                            <div>
+                                                <a href="{{ url('mytaskdata') }}">My Tasks</a>
+                                            </div>
+                                        @endif
+                                        @if (Auth::user()->role == 4 || Auth::user()->role == 5 || Auth::user()->role == 3)
+                                            <div>
+                                                <a href="{{ route('change-control.index') }}">My Tasks</a>
+                                            </div>
+                                        @endif
+                                    @endif
+
+
+                                    {{-- <div class="notification">
+                                        <a href="/notifications"><i class="fa-solid fa-bell"></i></a>
+                                    </div> --}}
+                                    <!-- <div id="create-record-button">
+                                        <a href="{{ url('rcms/form-division') }}"> <button class="button_theme1">Create
+                                                Record</button> </a>
+                                    </div> -->
+                                </div>
+                            </div>
+                        </div>
         </div>
 
 

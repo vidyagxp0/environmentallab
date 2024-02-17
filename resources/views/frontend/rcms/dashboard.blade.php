@@ -370,7 +370,7 @@
                         </div>
                         <div class="scope-pagination">
                             {{ $datag->links() }}
-                        </div>
+                        </div> 
                     </div>
                 </div>
             </div>
