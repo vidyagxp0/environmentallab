@@ -57,11 +57,14 @@
 
         <div class="container-fluid">
             <div class="tab">
-                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button>
-                {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>
+                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button> 
+                {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>  
                 <button class="tablinks" onclick="openData(event, 'doc-instru')">Instrument SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-instrumental')">Instrumental Chemistry SOP</button>
-                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> --}}
+                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> 
+                <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
+                <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button> 
+                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>                --}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
@@ -472,6 +475,12 @@
                             </button> 
                         </div>
                     </div>
+
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
+<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
+
                     <div id="add-doc" class="tabcontent">
                         <div class="orig-head">
                             Training Information
