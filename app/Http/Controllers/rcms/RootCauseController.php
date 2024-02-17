@@ -108,6 +108,10 @@ use Illuminate\Support\Facades\Hash;
         $root->state = ($request->state);
         $root->city = ($request->city);
         $root->submitted_by = ($request->submitted_by);
+        $root->Root_Cause_Category = ($request->Root_Cause_Category);
+        $root->Root_Cause_Sub_Category = ($request->Root_Cause_Sub_Category);
+        $root->Probability = ($request->Probability);
+        $root->Remarks = ($request->Remarks);
 
 
         $root->record = ((RecordNumber::first()->value('counter')) + 1);
@@ -353,6 +357,24 @@ use Illuminate\Support\Facades\Hash;
              $data4->when_rationable = $request->when_rationable;
          }
          $data4->save();
+
+         $data5 = new RiskAssesmentGrid();
+         $data5->risk_id = $root->id;
+         $data5->type = "grid1";
+         if (!empty($request->Root_Cause_Category  )) {
+             $data5->Root_Cause_Category = $request->Root_Cause_Category;
+         }
+         if (!empty($request->Root_Cause_Sub_Category)) {
+             $data5->Root_Cause_Sub_Category= $request->Root_Cause_Sub_Category;
+         }
+         if (!empty($request->Probability)) {
+             $data5->Probability = $request->Probability;
+         }
+         if (!empty($request->Remarks)) {
+             $data5->Remarks = $request->Remarks;
+         }
+         $data5->save();
+
 
         // ----------------------------chemical analysis 1---------------------------------
         $data1 = new RootcauseAnalysisDocDetails();
@@ -889,6 +911,12 @@ use Illuminate\Support\Facades\Hash;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
+        $root->submitted_by = ($request->submitted_by);
+        $root->Root_Cause_Category = ($request->Root_Cause_Category);
+        $root->Root_Cause_Sub_Category = ($request->Root_Cause_Sub_Category);
+        $root->Probability = ($request->Probability);
+        $root->Remarks = ($request->Remarks);
+
         // $root->investigators =  implode(',', $request->investigators);
 
         if (!empty($request->attachments)) {
@@ -1172,6 +1200,7 @@ use Illuminate\Support\Facades\Hash;
         $fishbone = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"fishbone")->first();
         $whyChart = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"why_Chart")->first();
         $what_who_where = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"what_who_where")->first();
+        $grid1 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"grid1")->first();
 
 
 
@@ -1194,7 +1223,8 @@ use Illuminate\Support\Facades\Hash;
             'riskEffectAnalysis',
             'fishbone',
             'whyChart',
-            'what_who_where'
+            'what_who_where',
+            'grid1'
 
         ));
     }

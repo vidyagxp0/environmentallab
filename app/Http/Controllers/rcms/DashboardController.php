@@ -316,8 +316,8 @@ class DashboardController extends Controller
         // return $table;
         // $paginatedData = json_encode($table);
 
-        $datag = $this->paginate($table);
-
+      //  $datag = $this->paginate($table);
+      $datag = $this->paginate($table);
         //   $paginatedData = json_encode($datag);
 
         return view('frontend.rcms.dashboard', compact('datag'));
@@ -732,7 +732,7 @@ class DashboardController extends Controller
 
     //----------PAginator
 
-    public function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'mytaskdata'])
+    public function paginate($items, $perPage = 100000, $page = null, $options = ['path' => 'mytaskdata'])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);

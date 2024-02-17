@@ -38,7 +38,7 @@
                         <input type="radio" name="dash-tabs" data-target="tms-all-block" checked>
                         <div><i class="fa-solid fa-bars-progress"></i>&nbsp;All</div>
                     </div>
-                    <div class="inner-block tab-btn">
+                    {{-- <div class="inner-block tab-btn">
                         <input type="radio" name="dash-tabs" data-target="tms-due-block">
                         <div><i class="fa-solid fa-clock-rotate-left fa-flip-horizontal"></i>&nbsp;Past Due</div>
                     </div>
@@ -49,7 +49,7 @@
                     <div class="inner-block tab-btn">
                         <input type="radio" name="dash-tabs" data-target="tms-completed-block">
                         <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="inner-block tms-block" id="tms-all-block">

@@ -145,10 +145,11 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="short_description">Short Description</label>
+                                        <label for="short_description">Short Description<span
+                                        class="text-danger">*</span></label>
                                         <div><small class="text-primary">Investigation short description to be presented on
                                                 desktop</small></div>
-                                        <textarea name="short_description"></textarea>
+                                        <textarea name="short_description" ></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -369,6 +370,10 @@
                                                         <th>Remarks</th>
                                                     </tr>
                                                 </thead>
+                                                <tbody>
+                                                    <td><input disabled type="text" name="serial_number[]" value="1">
+                                                    </td>
+                                                    <td><input type="text" name="Root_Cause_Category"></td>
                                             </table>
                                         </div>
                                     </div>
