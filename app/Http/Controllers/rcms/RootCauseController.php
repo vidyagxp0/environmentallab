@@ -62,8 +62,6 @@ use Illuminate\Support\Facades\Hash;
         $root->Validation_comments_new = $request->Validation_comments_new;
         $root->Others_comments_new = $request->Others_comments_new;
         $root->Group_comments_new = $request->Group_comments_new;
-        $root->cft_attchament_new = json_encode($request->cft_attchament_new);
-        $root->group_attachments_new = json_encode($request->group_attachments_new);
         $root->Type= ($request->Type);
         $root->investigators = ($request->investigators);
         $root->initiated_through = ($request->initiated_through);
@@ -71,7 +69,6 @@ use Illuminate\Support\Facades\Hash;
         $root->department = ($request->department);
         $root->description = ($request->description);
         $root->comments = ($request->comments);
-        $root->root_cause_initial_attachment = json_encode($request->root_cause_initial_attachment);
         $root->related_url = ($request->related_url);
         $root->root_cause_methodology = json_encode($request->root_cause_methodology);
         $root->measurement = json_encode($request->measurement);
@@ -1167,6 +1164,7 @@ use Illuminate\Support\Facades\Hash;
         $dataAnalysis12 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"environment_monitoring_4")->first();
         $dataAnalysis13 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"environment_monitoring_5")->first();
         $dataAnalysis14 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"environment_monitoring_6")->first();
+        $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"effect_analysis")->first();
 
 
 
@@ -1186,6 +1184,7 @@ use Illuminate\Support\Facades\Hash;
             'dataAnalysis12',
             'dataAnalysis13',
             'dataAnalysis14',
+            'riskEffectAnalysis'
 
         ));
     }

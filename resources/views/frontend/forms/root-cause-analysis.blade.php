@@ -153,7 +153,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
+                                        <label for="severity-level">Severity Level</label>
                                         <select name="severity_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -725,7 +725,26 @@
                                         <textarea name="cft_comments_new"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="cft_attchament_new"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="comments">Final Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -740,7 +759,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             {{-- <div class="row">
                                 <div class="sub-head">
                                     Concerned Group Feedback

@@ -9,6 +9,77 @@
             display: none;
         }
     </style>
+     <script>
+        function addFishBone(top, bottom) {
+            let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
+            let topBlock = mainBlock.querySelector(top)
+            let bottomBlock = mainBlock.querySelector(bottom)
+
+            let topField = document.createElement('div')
+            topField.className = 'grid-field fields top-field'
+
+            let measurement = document.createElement('div')
+            let measurementInput = document.createElement('input')
+            measurementInput.setAttribute('type', 'text')
+            measurementInput.setAttribute('name', 'measurement[]')
+            measurement.append(measurementInput)
+            topField.append(measurement)
+
+            let materials = document.createElement('div')
+            let materialsInput = document.createElement('input')
+            materialsInput.setAttribute('type', 'text')
+            materialsInput.setAttribute('name', 'materials[]')
+            materials.append(materialsInput)
+            topField.append(materials)
+
+            let methods = document.createElement('div')
+            let methodsInput = document.createElement('input')
+            methodsInput.setAttribute('type', 'text')
+            methodsInput.setAttribute('name', 'methods[]')
+            methods.append(methodsInput)
+            topField.append(methods)
+
+            topBlock.prepend(topField)
+
+            let bottomField = document.createElement('div')
+            bottomField.className = 'grid-field fields bottom-field'
+
+            let environment = document.createElement('div')
+            let environmentInput = document.createElement('input')
+            environmentInput.setAttribute('type', 'text')
+            environmentInput.setAttribute('name', 'environment[]')
+            environment.append(environmentInput)
+            bottomField.append(environment)
+
+            let manpower = document.createElement('div')
+            let manpowerInput = document.createElement('input')
+            manpowerInput.setAttribute('type', 'text')
+            manpowerInput.setAttribute('name', 'manpower[]')
+            manpower.append(manpowerInput)
+            bottomField.append(manpower)
+
+            let machine = document.createElement('div')
+            let machineInput = document.createElement('input')
+            machineInput.setAttribute('type', 'text')
+            machineInput.setAttribute('name', 'machine[]')
+            machine.append(machineInput)
+            bottomField.append(machine)
+
+            bottomBlock.append(bottomField)
+        }
+
+        function deleteFishBone(top, bottom) {
+            let mainBlock = document.querySelector('.fishbone-ishikawa-diagram');
+            let topBlock = mainBlock.querySelector(top)
+            let bottomBlock = mainBlock.querySelector(bottom)
+            if (topBlock.firstChild) {
+                topBlock.removeChild(topBlock.firstChild);
+            }
+            if (bottomBlock.lastChild) {
+                bottomBlock.removeChild(bottomBlock.lastChild);
+            }
+        }
+    </script>
 
     <div class="form-field-head">
 
@@ -470,7 +541,7 @@
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="severity-level">Sevrity Level</label>
+                                            <label for="severity-level">Severity Level</label>
                                             <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level">
                                                 <option value="0">-- Select --</option>
                                                 <option @if ($data->severity_level =='minor') selected @endif
@@ -714,7 +785,7 @@
                                             </div>
                                             <div class="file-attachment-field">
                                                 <div disabled class="file-attachment-list" id="root_cause_initial_attachment">
-                                                    {{-- @if ($data->root_cause_initial_attachment)
+                                                    @if ($data->root_cause_initial_attachment)
                                                     @foreach(json_decode($data->root_cause_initial_attachment) as $file)
                                                     <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                         <b>{{ $file }}</b>
@@ -722,7 +793,7 @@
                                                         <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                     </h6>
                                                @endforeach
-                                                    @endif --}}
+                                                    @endif
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
@@ -1883,7 +1954,7 @@
                                                     documents</small></div>
                                             <div  class="file-attachment-field">
                                                 <div disabled class="file-attachment-list" id="cft_attchament_new">
-                                                    @if(!is_null($data->cft_attchament_new) && is_array(json_decode($data->cft_attchament_new)))
+                                                    {{-- @if(!is_null($data->cft_attchament_new) && is_array(json_decode($data->cft_attchament_new))) --}}
                                                     @if ($data->cft_attchament_new)
                                                         @foreach(json_decode($data->cft_attchament_new) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -1892,7 +1963,7 @@
                                                             <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                         </h6>
                                                     @endforeach
-                                                   @endif
+                                                   {{-- @endif --}}
                                                    @endif
                                                 </div>
                                                 <div class="add-btn">

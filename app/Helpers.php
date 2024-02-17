@@ -19,12 +19,14 @@ class Helpers
     public static function getdateFormat($date)
 {
     if(empty($date)) {
-        return null; // or any default value you prefer
+        return ''; // or any default value you prefer
+    }
+    else{        
+        $date = Carbon::parse($date);
+        $formatted_date = $date->format("d-M-Y");
+        return $formatted_date;
     }
 
-    $date = Carbon::parse($date);
-    $formatted_date = $date->format("d-M-Y");
-    return $formatted_date;
 }
     public static function getdateFormat1($date)
     {
