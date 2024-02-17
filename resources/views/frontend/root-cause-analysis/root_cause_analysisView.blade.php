@@ -80,6 +80,15 @@
             }
         }
     </script>
+     <script>
+        function addWhyField(con_class, name) {
+            let mainBlock = document.querySelector('.why-why-chart')
+            let container = mainBlock.querySelector(`.${con_class}`)
+            let textarea = document.createElement('textarea')
+            textarea.setAttribute('name', name);
+            container.append(textarea)
+        }
+    </script>
 
     <div class="form-field-head">
 
@@ -1016,7 +1025,7 @@
                         <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="root-cause-methodology">Root Cause Methodology</label>
                                             <select name="root_cause_methodology[]"  placeholder="-- Select --"
@@ -1026,6 +1035,30 @@
                                                 <option @if ($data->root_cause_methodology== '2') selected @endif value="2">Failure Mode and Efect Analysis</option>
                                                 <option @if ($data->root_cause_methodology== '3') selected @endif value="3">Fishbone or Ishikawa Diagram</option>
                                                 <option @if ($data->root_cause_methodology== '4') selected @endif value="4">Is/Is Not Analysis</option>
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root-cause-methodology">Root Cause Methodology</label>
+                                            <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                placeholder="-- Select --" data-search="false"
+                                                data-silent-initial-value-set="true" id="root-cause-methodology">
+                                                <option value="0">-- Select --</option>
+                                                <option value="1"
+                                                    {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Why-Why Chart</option>
+                                                <option value="2"
+                                                    {{ in_array('2', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Failure Mode and Efect Analysis</option>
+                                                <option value="3"
+                                                    {{ in_array('3', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Fishbone or Ishikawa Diagram</option>
+                                                <option value="4"
+                                                    {{ in_array('4', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Is/Is Not Analysis</option>
+
+
                                             </select>
                                         </div>
                                     </div>
@@ -1590,7 +1623,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12 sub-head"></div>
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="why-why-chart">
                                                 Is/Is Not Analysis
@@ -1669,6 +1702,92 @@
                                                             </td>
                                                             <td>
                                                                 <textarea name="who_rationable"> </textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Is/Is Not Analysis
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#is_is_not-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>&nbsp;</th>
+                                                            <th>Will Be</th>
+                                                            <th>Will Not Be</th>
+                                                            <th>Rationale</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">What</th>
+                                                            <td>
+                                                                <textarea name="what_will_be">{{ $what_who_where->what_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_will_not_be">{{ $what_who_where->what_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_rationable"> {{ $what_who_where->what_rationable }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Where</th>
+                                                            <td>
+                                                                <textarea name="where_will_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_will_not_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_rationable"> {{ $what_who_where->where_will_be }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">When</th>
+                                                            <td>
+                                                                <textarea name="when_will_be"> {{ $what_who_where->when_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_will_not_be">{{ $what_who_where->when_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_rationable"> {{ $what_who_where->when_rationable }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Coverage</th>
+                                                            <td>
+                                                                <textarea name="coverage_will_be"> {{ $what_who_where->coverage_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_will_not_be"> {{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_rationable"> {{ $what_who_where->coverage_rationable }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Who</th>
+                                                            <td>
+                                                                <textarea name="who_will_be"> {{ $what_who_where->who_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_will_not_be"> {{ $what_who_where->who_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_rationable"> {{ $what_who_where->who_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>

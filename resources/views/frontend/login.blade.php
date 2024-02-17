@@ -158,11 +158,16 @@
             text-align: center;
         }
 
-        #rcms_login_block input,
-        #rcms_login_block select {
+        #rcms_login_block input{
             border: 0;
             outline: none;
             background: transparent;
+            color: white
+        }
+        #rcms_login_block select {
+            border: 0;
+            outline: none;
+            background: #162e67;
             color: white
         }
 

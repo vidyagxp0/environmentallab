@@ -70,7 +70,9 @@ use Illuminate\Support\Facades\Hash;
         $root->description = ($request->description);
         $root->comments = ($request->comments);
         $root->related_url = ($request->related_url);
-        $root->root_cause_methodology = json_encode($request->root_cause_methodology);
+        // $root->root_cause_methodology = json_encode($request->root_cause_methodology);
+        $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
+
         $root->measurement = json_encode($request->measurement);
         $root->materials = json_encode($request->materials);
         $root->methods = json_encode($request->methods);
@@ -876,8 +878,10 @@ use Illuminate\Support\Facades\Hash;
         $root->cft_comments_new = ($request->cft_comments_new);
         $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
-        $root->root_cause_methodology = json_encode($request->root_cause_methodology);
-        $root->root_cause_methodology = ($request->root_cause_methodology);
+        // $root->root_cause_methodology = json_encode($request->root_cause_methodology);
+        // $root->root_cause_methodology = ($request->root_cause_methodology);
+        $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
+
         $root->country = ($request->country);
         $root->methods = json_encode($request->methods);
          $root->due_date = $request->due_date;
@@ -1165,6 +1169,9 @@ use Illuminate\Support\Facades\Hash;
         $dataAnalysis13 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"environment_monitoring_5")->first();
         $dataAnalysis14 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"environment_monitoring_6")->first();
         $riskEffectAnalysis = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"effect_analysis")->first();
+        $fishbone = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"fishbone")->first();
+        $whyChart = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"why_Chart")->first();
+        $what_who_where = RiskAssesmentGrid::where('risk_id',$data->id)->where('type',"what_who_where")->first();
 
 
 
@@ -1184,7 +1191,10 @@ use Illuminate\Support\Facades\Hash;
             'dataAnalysis12',
             'dataAnalysis13',
             'dataAnalysis14',
-            'riskEffectAnalysis'
+            'riskEffectAnalysis',
+            'fishbone',
+            'whyChart',
+            'what_who_where'
 
         ));
     }
