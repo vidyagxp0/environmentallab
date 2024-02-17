@@ -57,7 +57,14 @@
 
         <div class="container-fluid">
             <div class="tab">
-                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button>                
+                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button> 
+                {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>  
+                <button class="tablinks" onclick="openData(event, 'doc-instru')">Instrument SOP</button>
+                <button class="tablinks" onclick="openData(event, 'doc-instrumental')">Instrumental Chemistry SOP</button>
+                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> 
+                <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
+                <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button> 
+                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>                --}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
@@ -211,6 +218,40 @@
                                         <div class="default-name"> <span id="department-code">Not selected</span></div>
                                     </div>
                                 </div>
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="major">Major</label>
+                                        <select name="major">
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="minor">Minor</label>
+                                        <select name="minor">
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Type<span class="text-danger">*</span></label>
@@ -228,9 +269,8 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-code">Document Type Code</label>
-                                        <div class="default-name"> <span id="document_type_code">Not selected</span>
-                                        </div>
-                                    </div>
+                                        <div class="default-name"> <span id="document_type_code">Not selected</span></div>               
+                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -243,7 +283,6 @@
                                             @endforeach
                                         </select>
                                     </div>
-
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -407,6 +446,17 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="revision-type">Revision Type</label>
+                                        <select name="revision_type">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="NA">NA</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="summary">Revision Summary</label>
@@ -426,8 +476,7 @@
 
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-
-
+<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
 
                     <div id="add-doc" class="tabcontent">
                         <div class="orig-head">
@@ -560,9 +609,11 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
+                                        
                                         <label for="responsibility" id="responsibility">
                                             Responsibility<button type="button" id="responsibilitybtnadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="responsibility[]" class="myclassname">
@@ -578,6 +629,7 @@
                                         <label for="abbreviation" id="abbreviation">
                                             Abbreviation<button type="button" id="abbreviationbtnadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="abbreviation[]" class="myclassname">
@@ -594,6 +646,7 @@
                                         <label for="abbreviation" id="definition">
                                             Definition<button type="button" id="Definitionbtnadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="defination[]" class="myclassname">
@@ -607,6 +660,7 @@
                                         <label for="reporting" id="newreport">
                                             Materials and Equipments<button type="button" id="materialsbtadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="materials_and_equipments[]" class="myclassname">
@@ -619,6 +673,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="procedure">Procedure</label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="procedure" id="summernote">
                                     </textarea>
                                     </div>
@@ -628,7 +683,7 @@
                                         <label for="reporting" id="newreport">
                                             Reporting<button type="button" id="reportingbtadd" name="button">+</button>
                                         </label>
-
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <input type="text" name="reporting[]" class="myclassname">
 
 
@@ -640,16 +695,19 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="references" id="references">
-                                            References<button type="button" onclick="addReference()">+</button>
+                                            References<button type="button" id="referencesbtadd" >+</button>
                                         </label>
-                                        <div class="row reference-data">
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <input type="text" name="references[]" class="myclassname">
+                                        <div id="referencesdiv"></div>
+                                        {{-- <div class="row reference-data">
                                             <div class="col-lg-6">
                                                 <input type="text" name="reference-text">
                                             </div>
                                             <div class="col-lg-6">
                                                 <input type="file" name="references" class="myclassname">
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -658,6 +716,7 @@
                                             Annexure<button type="button" name="ann" id="annexurebtnadd">+</button>
                                         </label>
                                         <table class="table-bordered table" id="annexure">
+                                            <div><small class="text-primary">Please mention brief summary</small></div>
                                             <thead>
                                                 <tr>
                                                     <th class="sr-num">Sr. No.</th>
@@ -682,6 +741,7 @@
                                             Revision History<button type="button" name="reporting"
                                                 onclick="addRevRow('revision')">+</button>
                                         </label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <table class="table-bordered table" id="revision">
                                             <thead>
                                                 <tr>
@@ -1228,6 +1288,8 @@
                 <input type="text" name="reference-text">
             </div>
             <div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div><div class="col-lg-6">
                 <input type="file" name="references" class="myclassname">
             </div>
         `;

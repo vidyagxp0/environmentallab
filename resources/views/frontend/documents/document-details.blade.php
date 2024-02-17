@@ -31,6 +31,9 @@
                                     @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif
+                                    <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button>
+                                    {{-- <button>Obsolete</button> --}}
+                                    <button>Revise</button>
                                 </div>
                             </div>
                             <div class="bottom-block">
@@ -160,12 +163,15 @@
                                             <div class="">Traning-Complete</div>
                                         @endif
                                     @endif
-
-
                                     @if ($document->stage >= 8)
                                         <div class="active">Effective</div>
                                     @else
                                         <div class="">Effective</div>
+                                    @endif
+                                    @if ($document->stage >= 9)
+                                        <div class="active">Obsolete</div>
+                                    @else
+                                        <div class="">Obsolete</div>
                                     @endif
                                     {{-- <div class="{{ $document->stage == 0 ? 'active' : '' }}">Draft</div>
                                     <div class="{{ $document->stage == 1 ? 'active' : '' }}">Reviewed</div>
@@ -754,8 +760,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
+                </div>                
                 <!-- Modal body -->
                 <form action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
@@ -833,7 +838,46 @@
         </div>
     </div>
 
-
+    <div class="modal fade" id="signature-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">E-Signature</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('AuditStateChange', $document->id) }}" method="POST">
+                    @csrf
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="mb-3 text-justify">
+                            Please select a meaning and an outcome for this task and enter your username
+                            and password for this task. You are performing an electronic signature,
+                            which is the legally binding equivalent of a handwritten signature.
+                        </div>
+                        <div class="group-input">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" name="username" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" name="password" required>
+                        </div>
+                        <div class="group-input">
+                            <label for="comment">Comment</label>
+                            <input type="comment" name="comment"  required>
+                        </div> 
+                    </div>
+    
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="submit">Submit</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="modal fade" id="child-modal">
         <div class="modal-dialog modal-dialog-centered">
@@ -886,6 +930,12 @@
             var pdfDocument = pdfObject.contentDocument;
             var firstPage = pdfDocument.querySelector('.page:first-of-type');
             firstPage.style.display = 'none';
+        });
+    </script>
+    <script>
+        // JavaScript to open modal when obsolete button is clicked
+        document.getElementById('obsolete-button').addEventListener('click', function() {
+            $('#signature-modal').modal('show');
         });
     </script>
 @endsection

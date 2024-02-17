@@ -59,10 +59,9 @@ class DocumentController extends Controller
     }
     public function division_old(Request $request)
     {
-        //  $request->dd();
-        //  return $request;
- 
-
+        // $request->dd();
+        // return $request;
+        
         $new = new Document;
         $new->originator_id = $request->originator_id;
         $new->division_id = $request->division_id;
@@ -91,6 +90,9 @@ class DocumentController extends Controller
         $new->reviewers_group = $request->reviewers_group;
         $new->approver_group = $request->approver_group;
         $new->revision_summary = $request->revision_summary;
+        $new->revision_type = $request->revision_type;
+        $new->major = $request->major;
+        $new->minor = $request->minor;
         $new->stage = $request->stage;
         $new->status = $request->status;
         $new->document = $request->document;
@@ -130,8 +132,10 @@ class DocumentController extends Controller
     {
         //
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
-        $division->dname = Division::where('id', $division->division_id)->value('name');
-        $division->pname = Process::where('id', $division->process_id)->value('process_name');
+        if(!empty( $division)){
+            $division->dname = Division::where('id', $division->division_id)->value('name');
+            $division->pname = Process::where('id', $division->process_id)->value('process_name');
+        }
         $users = User::all();
         if (! empty($users)) {
             foreach ($users as $data) {
@@ -231,6 +235,9 @@ class DocumentController extends Controller
             $document->training_required = $request->training_required;
             $document->trainer = $request->trainer;
             $document->comments = $request->comments;
+            $document->revision_type = $request->revision_type;
+            $document->major = $request->major;
+            $document->minor = $request->minor;
             //$document->purpose = $request->purpose;
 
             if ($request->keywords) {
@@ -348,18 +355,21 @@ class DocumentController extends Controller
             if (! empty($request->reporting)) {
                 $content->reporting = serialize($request->reporting);
             }
-            if ($request->hasfile('references')) {
-
-                $image = $request->file('references');
-
-                $ext = $image->getClientOriginalExtension();
-
-                $image_name = date('y-m-d').'-'.rand().'.'.$ext;
-
-                $image->move('upload/document/', $image_name);
-
-                $content->references = $image_name;
+            if (! empty($request->references)) {
+                $content->references = serialize($request->references);
             }
+            // if ($request->hasfile('references')) {
+
+            //     $image = $request->file('references');
+
+            //     $ext = $image->getClientOriginalExtension();
+
+            //     $image_name = date('y-m-d').'-'.rand().'.'.$ext;
+
+            //     $image->move('upload/document/', $image_name);
+
+            //     $content->references = $image_name;
+            // }
 
             if (! empty($request->annexuredata)) {
                 $content->annexuredata = serialize($request->annexuredata);
@@ -441,7 +451,7 @@ class DocumentController extends Controller
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
-
+ 
         return view('frontend.documents.edit', compact(
             'document',
             'departments',
@@ -530,6 +540,9 @@ class DocumentController extends Controller
                 $document->attach_effective_docuement = $image_name;
             }
             $document->revision_summary = $request->revision_summary;
+            $document->revision_type = $request->revision_type;
+            $document->major = $request->major;
+            $document->minor = $request->minor;
             if (! empty($request->reviewers)) {
                 $document->reviewers = implode(',', $request->reviewers);
             }
@@ -898,18 +911,21 @@ class DocumentController extends Controller
             if (! empty($request->materials_and_equipments)) {
                 $documentcontet->materials_and_equipments = serialize($request->materials_and_equipments);
             }
-            if ($request->hasfile('references')) {
-
-                $image = $request->file('references');
-
-                $ext = $image->getClientOriginalExtension();
-
-                $image_name = date('y-m-d').'-'.rand().'.'.$ext;
-
-                $image->move('upload/document/', $image_name);
-
-                $documentcontet->references = $image_name;
+            if (! empty($request->references)) {
+                $documentcontet->references = serialize($request->references);
             }
+            // if ($request->hasfile('references')) {
+
+            //     $image = $request->file('references');
+
+            //     $ext = $image->getClientOriginalExtension();
+
+            //     $image_name = date('y-m-d').'-'.rand().'.'.$ext;
+
+            //     $image->move('upload/document/', $image_name);
+
+            //     $documentcontet->references = $image_name;
+            // }
 
             if (! empty($request->annexuredata)) {
                 $documentcontet->annexuredata = serialize($request->annexuredata);
