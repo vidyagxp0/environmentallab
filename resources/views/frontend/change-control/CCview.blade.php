@@ -1813,7 +1813,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -1945,7 +1946,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -1988,7 +1990,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -2030,7 +2033,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
