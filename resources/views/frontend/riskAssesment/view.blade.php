@@ -465,9 +465,9 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="severity-level">Sevrity Level</label>
-                                                <select name="severity2_level">
-                                                    <option value="0">-- Select --</option>
+                                                <label for="severity-level">Severity Level</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="severity2_level">
+                                                    <option  value="0">-- Select --</option>
                                                     <option @if ($data->severity2_level == 'minor') selected @endif
                                                      value="minor">Minor</option>
                                                     <option  @if ($data->severity2_level == 'major') selected @endif 
@@ -618,7 +618,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Country">Country</label>
-                                                <select name="country" class="countries" id="country">
+                                                <select name="country" class="countries" id="country" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="{{ $data->country }}">Select Country</option>
 
                                                 </select>
@@ -627,7 +627,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="State/District">State/District</label>
-                                                <select name="state" class="states" id="stateId">
+                                                <select name="state" class="states" id="stateId" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="{{ $data->state }}">Select State</option>
                                                 </select>
                                             </div>
@@ -635,7 +635,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="City">City</label>
-                                                <select name="city" class="cities" id="city">
+                                                <select name="city" class="cities" id="city" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="{{ $data->city }}">Select City</option>
 
                                                 </select>
@@ -787,7 +787,7 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Related Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_record" name="related_record[]" id="">
+                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="related_record" name="related_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
@@ -1053,9 +1053,9 @@
                                             <div class="group-input input-date">
                                                 <label for="Scheduled Start Date">Scheduled Start Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}"
+                                                    <input type="text" id="schedule_start_date" readonly value="{{ Helpers::getdateFormat($data->schedule_start_date1) }}" 
                                                         placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" class="hide-input" 
+                                                    <input type="date" id="schedule_start_date_checkdate" name="schedule_start_date1" value="{{ $data->schedule_start_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input" 
                                                         oninput="handleDateInput(this, 'schedule_start_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_start_date1" value="{{$data->schedule_start_date1}}"> --}}
@@ -1067,7 +1067,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="schedule_end_date" readonly value="{{ Helpers::getdateFormat($data->schedule_end_date1) }}" 
                                                         placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" value="{{ $data->schedule_end_date1 }}" class="hide-input"
+                                                    <input type="date" id="schedule_end_date_checkdate" name="schedule_end_date1" value="{{ $data->schedule_end_date1 }}" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} class="hide-input"
                                                         oninput="handleDateInput(this, 'schedule_end_date');checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                 </div>
                                                 {{-- <input type="date" name="schedule_end_date1" value="{{$data->schedule_end_date}}"> --}}
@@ -1187,7 +1187,7 @@
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Justification / Rationale">Justification / Rationale</label>
-                                                <textarea name="justification" id="justification">{{ $data->justification }}</textarea>
+                                                <textarea name="justification" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="justification">{{ $data->justification }} </textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1276,7 +1276,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="reference[]"
+                                                            <input {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} type="file" id="myfile" name="reference[]"
                                                                 oninput="addMultipleFiles(this, 'reference')" multiple>
                                                         </div>
                                                     </div>
@@ -1304,7 +1304,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="root-cause-methodology">Root Cause Methodology</label>
-                                                <select name="root_cause_methodology[]" multiple
+                                                <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
                                                     <option value="0">-- Select --</option>
@@ -1680,13 +1680,13 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="root_cause_description">Root Cause Description</label>
-                                                <textarea name="root_cause_description">{{ $data->root_cause_description }}</textarea>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="root_cause_description">{{ $data->root_cause_description }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="investigation_summary">Investigation Summary</label>
-                                                <textarea name="investigation_summary">{{ $data->investigation_summary }}</textarea>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="investigation_summary">{{ $data->investigation_summary }}</textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -1754,7 +1754,7 @@
                                             <div class="group-input">
                                                 <label for="RPN">RPN</label>
                                                 <div><small class="text-primary">Auto - Calculated</small></div>
-                                                    {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                    
                                                     <input readonly type="text" name="rpn" id="analysisRPN" value="{{$data->rpn}}">
 
                                             </div>
@@ -1786,7 +1786,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Residual Risk Impact">Residual Risk Impact</label>
-                                                <select name="residual_risk_impact" id="analysisR2"
+                                                <select name="residual_risk_impact" id="analysisR2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 onchange='calculateRiskAnalysis2(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="1" {{ $data->residual_risk_impact == '1' ? 'selected' : '' }}>High</option>
@@ -1799,7 +1799,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Residual Risk Probability">Residual Risk Probability</label>
-                                                <select name="residual_risk_probability" id="analysisP2" onchange='calculateRiskAnalysis2(this)'>
+                                                <select name="residual_risk_probability" id="analysisP2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} onchange='calculateRiskAnalysis2(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="1" {{ $data->residual_risk_probability == '1' ? 'selected' : '' }}>High</option>
                                                     <option value="2" {{ $data->residual_risk_probability == '2' ? 'selected' : '' }}>Medium</option>
@@ -1810,7 +1810,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Detection">Residual Detection</label>
-                                                <select name="detection2" id="analysisN2" onchange='calculateRiskAnalysis2(this)'>
+                                                <select name="detection2" id="analysisN2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} onchange='calculateRiskAnalysis2(this)'>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option value="5" {{ $data->detection2 == '5' ? 'selected' : '' }}>Impossible</option>
                                                     <option value="4" {{ $data->detection2 == '4' ? 'selected' : '' }}>Rare</option>
@@ -1852,7 +1852,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="mitigation_plan_details">
-                                                    Mitigation Plan Details<button type="button" name="ann"
+                                                    Mitigation Plan Details<button type="button" name="ann"  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         onclick="add5Input('mitigation_plan_details')">+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="mitigation_plan_details">
@@ -1930,7 +1930,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Department(s)">Mitigation Required</label>
-                                                <select name="mitigation_required" placeholder="Select Departments" data-search="false"
+                                                <select name="mitigation_required" placeholder="Select Departments" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} data-search="false"
                                                     data-silent-initial-value-set="true" id="" >
                                                     <option value="">Select Mitigation </option>
                                                     <option value="yes"  {{ $data->mitigation_required == 'yes' ? 'selected' : '' }}>Yes</option>
@@ -1942,7 +1942,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="mitigation-plan">Mitigation Plan</label>
-                                                <textarea name="mitigation_plan">{{ $data->mitigation_plan }}</textarea>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="mitigation_plan">{{ $data->mitigation_plan }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
@@ -1951,7 +1951,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="mitigation_due_date" readonly value="{{ Helpers::getdateFormat($data->mitigation_due_date)}}"
                                                         name="mitigation_due_date" placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="mitigation_due_date" value="{{ $data->mitigation_due_date }}" class="hide-input"  
+                                                    <input type="date" name="mitigation_due_date" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} value="{{ $data->mitigation_due_date }}" class="hide-input"  
                                                         oninput="handleDateInput(this, 'mitigation_due_date')" />
                                                 </div>
                                                 {{-- <input type="date" name="mitigation_due_date"
@@ -1961,7 +1961,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="mitigation-status">Status of Mitigation</label>
-                                                <select name="mitigation_status">
+                                                <select name="mitigation_status" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option value="green"
                                                         {{ $data->mitigation_status == 'green' ? 'selected' : '' }}>Green
@@ -1979,7 +1979,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="mitigation-status-comments">Mitigation Status Comments</label>
-                                                <textarea name="mitigation_status_comments">{{ $data->mitigation_status_comments }}</textarea>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="mitigation_status_comments">{{ $data->mitigation_status_comments }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -1988,7 +1988,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="impact">Impact</label>
-                                                <select name="impact">
+                                                <select name="impact" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->impact == 'high' ? 'selected' : '' }}>High</option>
@@ -2004,7 +2004,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="criticality">Criticality</label>
-                                                <select name="criticality">
+                                                <select name="criticality" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->criticality == 'high' ? 'selected' : '' }}>High</option>
@@ -2019,13 +2019,13 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="impact-analysis">Impact Analysis</label>
-                                                <textarea name="impact_analysis">{{ $data->impact_analysis }}</textarea>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="impact_analysis">{{ $data->impact_analysis }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="risk-analysis">Risk Analysis</label>
-                                                <textarea name="risk_analysis">{{ $data->risk_analysis }}</textarea>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="risk_analysis">{{ $data->risk_analysis }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -2071,7 +2071,7 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
+                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
@@ -2088,7 +2088,7 @@
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
                                                 <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                                <textarea name="due_date_extension">{{$data->due_date_extension}}</textarea>
+                                                <textarea {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="due_date_extension">{{$data->due_date_extension}}</textarea>
                                             </div>
                                         </div>
                                     </div>
