@@ -374,6 +374,10 @@
                                                     <td><input disabled type="text" name="serial_number[]" value="1">
                                                     </td>
                                                     <td><input type="text" name="Root_Cause_Category"></td>
+                                                    <td><input type="text" name="Root_Cause_Sub_Category"></td>
+                                                    <td><input type="text" name="Probability"></td>
+                                                    <td><input type="text" name="Remarks"></td>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>

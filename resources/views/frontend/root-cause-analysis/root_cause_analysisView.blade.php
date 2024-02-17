@@ -128,7 +128,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 5)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Group/ CFT Review
                                 Required
@@ -151,7 +151,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Group Feedback
                             </button>
-                        @elseif($data->stage == 5)
+                        @elseif($data->stage == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
                             </button>
@@ -189,7 +189,7 @@
                             @endif
 
 
-                            @if ($data->stage >= 3)
+                            {{-- @if ($data->stage >= 3)
                                 <div class="active">Pending Group Review Discussion</div>
                             @else
                                 <div class="">Pending Group Review Discussion</div>
@@ -199,10 +199,10 @@
                                 <div class="active">Pending Group Review</div>
                             @else
                                 <div class="">Pending Group Review</div>
-                            @endif
+                            @endif --}}
 
 
-                            @if ($data->stage >= 5)
+                            @if ($data->stage >= 3)
                                 <div class="active">Pending QA Review</div>
                             @else
                                 <div class="">Pending QA Review</div>
@@ -545,7 +545,7 @@
                                             <label for="short_description">Short Description</label>
                                             <div><small class="text-primary">Investigation short description to be presented on
                                                     desktop</small></div>
-                                            <textarea name="short_description"> {{ $data->short_description }} </textarea>
+                                            <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->short_description }} </textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -570,7 +570,7 @@
                                         <div class="group-input">
                                             <label for="assigned-to">Assigned to</label>
                                             <div><small class="text-primary">Lead Investigator</small></div>
-                                            <select name="assigned_to">
+                                            <select name="assigned_to"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 @foreach ($users as $key => $value)
                                                 <option value="{{ $value->id }}"
                                                     @if ($data->assigend == $value->id) selected @endif>
@@ -592,7 +592,7 @@
                                                     by</small></div>
                                             <div class="calenderauditee">
                                             <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                            <input type="date" name="due_date" value=""
+                                            <input type="date" name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value=""
                                             class="hide-input"
                                             oninput="handleDateInput(this, 'due_date')"/>
                                             </div>
@@ -709,7 +709,7 @@
                                         <div class="group-input">
                                             <label for="Type">Type</label>
                                             <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
-                                                <option value="0">-- Select --</option>
+                                                <option {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="0">-- Select --</option>
                                                 <option @if ($data->Type =='1') selected @endif value="1">Facillties</option>
                                                 <option @if ($data->Type =='2') selected @endif value="2">Other</option>
                                                 <option @if ($data->Type =='3') selected @endif value="3">Stabillity</option>
@@ -728,7 +728,7 @@
                                             <label for="priority_level">Priority Level</label>
                                             <div><small class="text-primary">Choose high if Immidiate actions are
                                                     required</small></div>
-                                            <select name="priority_level">
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="priority_level">
                                                 {{-- <option value="0">-- Select --</option>
                                                 <option value="low">Low</option>
                                                 <option value="medium">Medium</option>
@@ -746,7 +746,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="investigators">Additional Investigators</label>
-                                            <select multiple name="investigators" placeholder="Select Investigators"
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple name="investigators" placeholder="Select Investigators"
                                                 data-search="false" data-silent-initial-value-set="true" id="investigators">
                                                 <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
                                                 <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
@@ -760,7 +760,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="department">Department(s)</label>
-                                            <select name="department" placeholder="Select Department(s)"
+                                            <select name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
                                                 data-search="false" data-silent-initial-value-set="true" id="department">
                                                 <option @if ($data->department== '1') selected @endif  value="1">Work Instruction</option>
                                                 <option @if ($data->department== '2') selected @endif value="2">Quality Assurance</option>
@@ -775,13 +775,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="description">Description</label>
-                                            <textarea name="description">{{ $data->description }}</textarea>
+                                            <textarea name="description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="comments">Comments</label>
-                                            <textarea input type="url" name="comments">{{ $data->comments }}</textarea>
+                                            <textarea  name="comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -806,7 +806,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="root_cause_initial_attachment[]"
+                                                    <input type="file" id="myfile" name="root_cause_initial_attachment[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'root_cause_initial_attachment')"
                                                         multiple>
                                                 </div>
@@ -827,7 +827,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="related_url">Related URL</label>
-                                            <textarea name="related_url">{{ $data->related_url }}</textarea>
+                                            <textarea name="related_url"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->related_url }}</textarea>
                                         
                                           
                                         </div>
@@ -1377,7 +1377,7 @@
                                         <div class="group-input">
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
-                                                    onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                                    onclick="addRiskAssessment('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" style="width: 200%"
@@ -1425,8 +1425,7 @@
                                                                 </td>
                                                                 <td>{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ? unserialize($riskEffectAnalysis->initial_probability)[$key] : '' }}
                                                                 </td>
-                                                                {{-- <td>{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ? unserialize($riskEffectAnalysis->initial_rpn)[$key] : '' }}  --}}
-                                                                </td>
+                                                                 {{-- <td>{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ? unserialize($riskEffectAnalysis->initial_rpn)[$key] : '' }}   --}}</td>
                                                                 <td>{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance)[$key] : '' }}
                                                                 </td>
                                                                 <td>{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ? unserialize($riskEffectAnalysis->risk_control_measure)[$key] : '' }}
@@ -1437,7 +1436,7 @@
                                                                 </td>
                                                                 <td>{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ? unserialize($riskEffectAnalysis->residual_detectability)[$key] : '' }}
                                                                 </td>
-                                                                {{-- <td>{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ? unserialize($riskEffectAnalysis->residual_rpn)[$key] : '' }} --}}
+                                                                {{-- - <td>{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ? unserialize($riskEffectAnalysis->residual_rpn)[$key] : '' }}  --}}
                                                                 </td>
                                                                 <td>{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance2)[$key] : '' }}
                                                                 </td>
@@ -1456,7 +1455,7 @@
                                             <label for="fishbone">
                                                 Fishbone or Ishikawa Diagram
                                                 <button type="button" name="agenda"
-                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
+                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 <button type="button" name="agenda" class="fishbone-del-btn"
                                                     onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
                                                     <i class="fa-solid fa-trash-can"></i>
@@ -1546,16 +1545,16 @@
                                                             <th style="width:150px;">Problem Statement :</th>
                                                             <td>
 
-                                                                <textarea name="why_problem_statement"></textarea>
+                                                                <textarea name="why_problem_statement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
                                                             </td>
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 1 <span
-                                                                    onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                                                                    onclick="addWhyField('why_1_block', 'why_1[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_1_block">
+                                                                <div class="why_1_block"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                     @if (!empty($whyChart->why_1))
                                                                         @foreach (unserialize($whyChart->why_1) as $key => $measure)
                                                                             <textarea name="why_1[]">{{ $measure }}</textarea>
@@ -1628,7 +1627,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="root_cause"></textarea>
+                                                                <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1747,61 +1746,61 @@
                                                         <tr>
                                                             <th style="background: #0039bd85">What</th>
                                                             <td>
-                                                                <textarea name="what_will_be">{{ $what_who_where->what_will_be }}</textarea>
+                                                                <textarea name="what_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->what_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_will_not_be">{{ $what_who_where->what_will_not_be }}</textarea>
+                                                                <textarea name="what_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->what_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_rationable"> {{ $what_who_where->what_rationable }}</textarea>
+                                                                <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->what_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Where</th>
                                                             <td>
-                                                                <textarea name="where_will_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_will_not_be"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_rationable"> {{ $what_who_where->where_will_be }}</textarea>
+                                                                <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">When</th>
                                                             <td>
-                                                                <textarea name="when_will_be"> {{ $what_who_where->when_will_be }}</textarea>
+                                                                <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->when_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_will_not_be">{{ $what_who_where->when_will_not_be }}</textarea>
+                                                                <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->when_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_rationable"> {{ $what_who_where->when_rationable }}</textarea>
+                                                                <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->when_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Coverage</th>
                                                             <td>
-                                                                <textarea name="coverage_will_be"> {{ $what_who_where->coverage_will_be }}</textarea>
+                                                                <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_will_not_be"> {{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                                <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_rationable"> {{ $what_who_where->coverage_rationable }}</textarea>
+                                                                <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Who</th>
                                                             <td>
-                                                                <textarea name="who_will_be"> {{ $what_who_where->who_will_be }}</textarea>
+                                                                <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_will_not_be"> {{ $what_who_where->who_will_not_be }}</textarea>
+                                                                <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_rationable"> {{ $what_who_where->who_rationable }}</textarea>
+                                                                <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1813,13 +1812,13 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root_cause_description">Root Cause Description</label>
-                                            <textarea name="root_cause_description"> {{ $data->root_cause_description }}</textarea>
+                                            <textarea name="root_cause_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->root_cause_description }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="investigation_summary">Investigation Summary</label>
-                                            <textarea name="investigation_summary"> {{ $data->investigation_summary }}</textarea>
+                                            <textarea name="investigation_summary"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->investigation_summary }}</textarea>
                                         </div>
                                     </div>
                                  {{-- <div class="col-12">
@@ -1867,12 +1866,12 @@
                                         </div>
                                     </div> --}}
                                 </div>
-                                <div class="button-block">
+                                {{-- <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton">Next</button>
                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"  class="text-white"> Exit </a> </button>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
 
@@ -2077,7 +2076,7 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="comments">Final Comments</label>
-                                            <textarea name="cft_comments_new">{{ $data->cft_comments_new }}</textarea>
+                                            <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
                                         </div>
                                     </div>
                                     <div class="col-lg-12">
@@ -2101,7 +2100,7 @@
                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
-                                                    <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                    <input type="file" id="myfile" name="cft_attchament_new[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
                                                 </div>
                                             </div>
@@ -2186,7 +2185,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div id="CCForm4" class="inner-block cctabcontent">
+                        {{-- <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
                                     Environmental Monitoring I
@@ -2488,7 +2487,7 @@
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                         </div>
                                     </div> --}}
-
+{{-- 
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">Lab Investigator Attachments</label>
@@ -2531,9 +2530,9 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div id="CCForm6" class="inner-block cctabcontent">
+                        {{-- <div id="CCForm6" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="col-12">
@@ -2541,7 +2540,7 @@
                                             <label for="qc_head_comments">QC Head Evaluation Comments</label>
                                             <textarea name="qc_head_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="inv_attach">Investigation Attachments</label>
@@ -2550,7 +2549,7 @@
                                         </div>
                                     </div> --}}
 
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">Investigation Attachments</label>
                                             <div class="file-attachment-field">
@@ -2592,7 +2591,7 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}} 
 
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
@@ -2659,7 +2658,7 @@
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">E-Signature</h4>
+                        <h4 class="modal-title">E-Signature11</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -2687,10 +2686,15 @@
                         </div>
 
                         <!-- Modal footer -->
-                        <div class="modal-footer">
+                        {{-- <div class="modal-footer">
                             <button type="submit" data-bs-dismiss="modal">Submit</button>
                             <button>Close</button>
-                        </div>
+                        </div> --}}
+                        <div class="modal-footer">
+                            <button type="submit">Submit</button>
+                              <button type="button" data-bs-dismiss="modal">Close</button>
+                            
+                   </div>
                     </form>
                 </div>
             </div>
@@ -2731,7 +2735,8 @@
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                            {{-- <button>Close</button> --}}
                         </div>
                     </form>
                 </div>
@@ -2772,7 +2777,8 @@
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="submit" data-bs-dismiss="modal">Submit</button>
-                            <button>Close</button>
+                            <button type="button" data-bs-dismiss="modal">Close</button>
+                            {{-- <button>Close</button> --}}
                         </div>
                     </form>
                 </div>

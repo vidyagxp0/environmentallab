@@ -358,20 +358,20 @@ use Illuminate\Support\Facades\Hash;
          }
          $data4->save();
 
-         $data5 = new RiskAssesmentGrid();
-         $data5->risk_id = $root->id;
+         $data5 = new RootCauseAnalysis();
+        //  $data5->risk_id = $root->id;
          $data5->type = "grid1";
          if (!empty($request->Root_Cause_Category  )) {
-             $data5->Root_Cause_Category = $request->Root_Cause_Category;
+             $data5->Root_Cause_Category = serialize($request->Root_Cause_Category);
          }
          if (!empty($request->Root_Cause_Sub_Category)) {
-             $data5->Root_Cause_Sub_Category= $request->Root_Cause_Sub_Category;
+             $data5->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
          }
          if (!empty($request->Probability)) {
-             $data5->Probability = $request->Probability;
+             $data5->Probability = serialize($request->Probability);
          }
          if (!empty($request->Remarks)) {
-             $data5->Remarks = $request->Remarks;
+             $data5->Remarks = serialize($request->Remarks);
          }
          $data5->save();
 
@@ -1387,7 +1387,7 @@ use Illuminate\Support\Facades\Hash;
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $data->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Root-cause' . $id . '.pdf');
         }
     }
@@ -1413,7 +1413,7 @@ use Illuminate\Support\Facades\Hash;
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $doc->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Root-Audit' . $id . '.pdf');
         }
     }
