@@ -80,6 +80,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Request More Info
+                            </button>
                         @elseif($data->stage == 6 && Auth::user()->role == 6)
                             @if ($evaluation->training_required == 'yes')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -1938,7 +1941,7 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment">
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
 
