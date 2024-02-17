@@ -565,12 +565,12 @@
                                                 @foreach (unserialize($griddata->action) as $key => $temps)
                                                 <tr> 
                                                     <!-- <td><input type="text" name="serial_number[]" value="{{ $key+1 }}"></td> -->
-                                                    <td><input disabled type="text" name="serial_number[]" value="1">
+                                                    <td><input disabled type="text" name="serial_number[]"  value="1">
                                                 </td>
-                                                    <td><input type="text" name="action[]" value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
+                                                    <td><input type="text" name="action[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
                                                     {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
                                                     <td> <select id="select-state" placeholder="Select..."
-                                                        name="responsible[]">
+                                                        name="responsible[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} >
                                                         
                                                         <option value="">-Select-</option>
                                                         @foreach ($users as $value)
@@ -606,8 +606,8 @@
                                                             </div>
                                                         </div>
                                                     </td>  -->
-                                                    {{-- <td><input type="text" name="deadline[]" value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
-                                                    <td><input type="text" name="item_status[]" value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
+                                                    {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
+                                                    <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>

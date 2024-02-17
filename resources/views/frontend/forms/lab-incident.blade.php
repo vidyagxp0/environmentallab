@@ -197,9 +197,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input" id="initiated_through_req1">
-                                        <label for="Incident_Category">Others<span
+                                        <label for="Incident_Category_others">Others<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through_req1"></textarea>
+                                        <textarea name="Incident_Category_others"></textarea>
                                     </div>
                                 </div> 
                                  <div class="col-lg-6">

@@ -51,6 +51,10 @@ class ActionItemController extends Controller
 
     public function store(Request $request)
     {
+        if (!$request->short_description) {
+            toastr()->error("Short description is required");
+            return redirect()->back();
+        }
         $openState = new ActionItem();
         $openState->cc_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;

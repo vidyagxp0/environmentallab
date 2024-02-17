@@ -95,7 +95,7 @@ class DashboardController extends Controller
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
-                "short_description" => $data->description ? $data->description : "-",
+                "short_description" => $data->short_description ? $data->short_description : "-",
                 "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
