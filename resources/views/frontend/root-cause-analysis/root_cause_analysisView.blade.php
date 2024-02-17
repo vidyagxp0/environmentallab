@@ -1041,7 +1041,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root-cause-methodology">Root Cause Methodology</label>
-                                            <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                            <select name="root_cause_methodology[]"  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                 placeholder="-- Select --" data-search="false"
                                                 data-silent-initial-value-set="true" id="root-cause-methodology">
                                                 <option value="0">-- Select --</option>
@@ -1080,6 +1080,20 @@
                                                             <th>Remarks</th>
                                                         </tr>
                                                     </thead>
+                                                    <tbody>
+                                                        @if (!empty($grid1->Root_Cause_Category))
+                                                        @foreach (unserialize($grid1->Root_Cause_Category) as $key => $Root_Cause_Category)
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>{{ $Root_Cause_Category }}</td>
+                                                            <td>{{ unserialize($grid1->Root_Cause_Sub_Category)[$key] ? unserialize($grid1->Root_Cause_Sub_Category)[$key] : '' }}
+                                                            </td>
+                                                            <td>{{ unserialize($grid1->Probability)[$key] ? unserialize($grid1->Probability)[$key] : '' }}
+                                                            </td>
+                                                            <td>{{ unserialize($grid1->Remarks)[$key] ? unserialize($grid1->Remarks)[$key] : '' }}
+                                                            </td>
+                                                            @endforeach
+                                                            @endif
+                                                    </tbody>
                                                 </table>
                                             </div>
                                         </div>

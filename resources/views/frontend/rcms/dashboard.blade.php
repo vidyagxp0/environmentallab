@@ -79,30 +79,39 @@
             <div class="dash-grid">
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
-                        <div class="grid-block">
+                        
+                       <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process</label>
-                                <select id="scope" name="form" onchange="updateQueryOptions()">
+                                <select id="scope" name="form">
                                     <option value="all_records">All Records</option>
-                                    <option value="internal_audit">Internal Audit</option>
-                                    <option value="external_audit">External Audit</option>
-                                    <option value="capa">Capa</option>
-                                    <option value="lab_incident">Lab Incident</option>
-                                    <option value="risk_assement">Risk Assesment</option>
-                                    <option value="root_cause_analysis">Root Cause Analysis</option>
-                                    <option value="management_review">Management Review</option>
+                                    <option value="Internal-Audit">Internal Audit</option>
+                                    <option value="External-Audit">External Audit</option>
+                                    <option value="Capa">Capa</option>
+                                    <option value="Audit-Program">Audit Program</option>
+                                    <option value="Lab Incident">Lab Incident</option>
+                                    <option value="Risk Assesment">Risk Assesment</option>
+                                    <option value="Root-Cause-Analysis">Root Cause Analysis</option>
+                                    <option value="Management Review">Management Review</option>
+                                    <option value="Document">Document</option>
+                                    <option value="Extension">Extension</option>
+                                    <option value="Observation">Observation</option>
+                                    <option value="Change Control">Change Control</option>
+                                    <option value="Action Item">Action Item</option>
+                                    <option value="Effectiveness Check">Effectiveness Check</option>
+                                     <option value="tms">TMS</option> 
                                 </select>
                             </div>
                             <div class="group-input">
                                 <label for="query">Criteria</label>
-                                <select id="query" name="stage">
+                                <select id="query" name="stage" >
                                     <option value="all_records">All Records</option>
-                                    <option value="1">Closed Records</option>
-                                    <option value="2">Opened Records</option>
-                                    <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
-                                    <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                    <option value="Closed">Closed Records</option>
+                                    <option value="Opened">Opened Records</option>
+                                    <option value="Cancelled">Cancelled Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
+                                    <option value="Assigned">Assigned To Me</option>
+                                    <option value="Records">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>

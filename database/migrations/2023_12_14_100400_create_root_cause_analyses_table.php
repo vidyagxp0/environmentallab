@@ -55,6 +55,10 @@ return new class extends Migration
             $table->string('why_2')->nullable();
             $table->string('why_3')->nullable();
             $table->string('why_4')->nullable();
+            $table->text('Root_Cause_Category')->nullable();
+            $table->text('Root_Cause_Sub_Category')->nullable();
+            $table->text('Probability')->nullable();
+            $table->text('Remarks')->nullable();
             $table->string('why_5')->nullable();
             $table->string('root-cause')->nullable();
             $table->string('what_will_be')->nullable();
