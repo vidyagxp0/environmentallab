@@ -371,6 +371,13 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
+                                            <div class="group-input" id="initiated_through_req1">
+                                                <label for="Incident_Category_others">Others<span
+                                                        class="text-danger d-none">*</span></label>
+                                                <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Incident_Category_others }}</textarea>
+                                            </div>
+                                        </div>
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Invocation Type">Invocation Type</label>
                                         <select name="Invocation_Type">
@@ -1080,7 +1087,7 @@
                         <div class="group-input">
                             <label for="major">
                                 <input type="radio" name="revision" id="major" value="Action-Item">
-                                Capa
+                                CAPA
                             </label>
                         </div>
 

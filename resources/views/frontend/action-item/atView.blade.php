@@ -470,16 +470,30 @@
                                             <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                     <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="start_date">Actual Start Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="start_date" value="{{ Helpers::getdateFormat($data->start_date) }}">
+                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="text" name="start_date" value="{{ Helpers::getdateFormat($data->start_date) }}">
                                         </div>
+                                    </div>  -->
+                                    <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="start_date">Actual Start Date</label>
+                                        <!-- <input type="date" name="start_date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="start_date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'start_date')"/>
+                                        </div>
+
                                     </div>
-                                    <div class="col-lg-6">
+                                </div>
+                                      <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="end_date">Actual End Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="end_date"value="{{ Helpers::getdateFormat($data->end_date) }}">
+                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="text" name="end_date"value="{{ Helpers::getdateFormat($data->end_date) }}">
                                         </div>
                                     </div>
                                     <div class="col-12">
