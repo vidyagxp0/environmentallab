@@ -15,6 +15,12 @@ function addMultipleFiles(input, block_id) {
         let viewLink = document.createElement("a");
         viewLink.href = URL.createObjectURL(files[i]);
         viewLink.textContent = "<View>";
+
+        let fileClone = files[i].slice();
+        viewLink.addEventListener('click',function(e){
+            e.preventDefault();
+            window.open(viewLink.href,'_blank');
+        });
         div.appendChild(viewLink);
         block.appendChild(div);
     }
