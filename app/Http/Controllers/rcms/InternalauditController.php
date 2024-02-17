@@ -1663,7 +1663,7 @@ class InternalauditController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $data->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Internal-Audit' . $id . '.pdf');
         }
     }
@@ -1689,7 +1689,7 @@ class InternalauditController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $doc->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Internal-Audit' . $id . '.pdf');
         }
     }
