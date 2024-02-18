@@ -131,10 +131,31 @@
 
                             @endif
 
-
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="sop_type">SOP Type</label>
+                                    <select name="sop_type">
+                                        <option  value="0">-- Select --</option>
+                                        <option @if ($document->sop_type =='Chemistry SOP') selected @endif
+                                            value="Chemistry SOP">Chemistry SOP</option>
+                                            <option @if ($document->sop_type =='Instrument SOP') selected @endif
+                                                value="Instrument SOP">Instrument SOP</option>
+                                                <option @if ($document->sop_type =='Analytical SOP') selected @endif
+                                                    value="Analytical SOP">Analytical SOP</option>
+                                                    <option @if ($document->sop_type =='Microbiology SOP') selected @endif
+                                                        value="Microbiology SOP">Microbiology SOP</option>
+                                                        <option @if ($document->sop_type =='Quality Policies') selected @endif
+                                                            value="Quality Policies">Quality Policies</option>
+                                                            <option @if ($document->sop_type =='Others') selected @endif
+                                                                value="Others">Others</option>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date</label>
+                                    <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                    </div>
                                     <div class="calenderauditee">                                     
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_dateDoc" value=""
@@ -275,9 +296,21 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-num">Document Number</label>
-                                    <div class="default-name">{{ Helpers::getDivisionName(session()->get('division')) }}
+                                    <div class="default-name">
+                                        @if($document->revised === 'Yes') 
+                                           
+                                            {{ Helpers::getDivisionName(session()->get('division')) }}
                                         /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
-                                        /SOP-000{{ $document->id }}</div>
+                                        /SOP-000{{ $document->revised_doc }}/R{{$document->major}}.{{$document->minor}}
+
+                                        @else
+                                          {{ Helpers::getDivisionName(session()->get('division')) }}
+                                        /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
+                                        /SOP-000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
+                                        
+                                    @endif
+                                    </div>
+                                        
                                         {{-- {{ $document->division_name }} --}}
                                 </div>
                             </div>
@@ -289,8 +322,9 @@
                                         data-search="false" data-silent-initial-value-set="true" id="reference_record">
                                         @if (!empty($document_data))
                                             @foreach ($document_data as $temp)
+                                            
                                                 <option value="{{ $temp->id }}">
-                                                    {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-0000{{ $temp->id }}
+                                                    {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-000{{ $temp->id }}
                                                 </option>
                                             @endforeach
                                         @endif
@@ -337,11 +371,65 @@
                                     <label for="depart-name">Department Name</label>
                                     <select name="department_id" id="depart-name">
                                         <option value="">Enter your Selection</option>
-                                        @foreach ($departments as $department)
+                                            <option value="CQA"
+                                                @if ($document->department_id == 'CQA') selected @endif>Corporate
+                                                Quality Assurance</option>
+                                            <option value="QAB"
+                                                @if ($document->department_id == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC"
+                                                @if ($document->department_id == 'CQC') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="MANU"
+                                                @if ($document->department_id == 'MANU') selected @endif>Manufacturing
+                                            </option>
+                                            <option value="PSG"
+                                                @if ($document->department_id == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS"
+                                                @if ($document->department_id == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG"
+                                                @if ($document->department_id == 'ITG') selected @endif>Information
+                                                Technology Group</option>
+                                            <option value="MM"
+                                                @if ($document->department_id == 'MM') selected @endif>Molecular
+                                                Medicine</option>
+                                            <option value="CL"
+                                                @if ($document->department_id == 'CL') selected @endif>Central
+                                                Laboratory</option>
+                                            <option value="TT"
+                                                @if ($document->department_id == 'TT') selected @endif>Tech
+                                                Team</option>
+                                            <option value="QA"
+                                                @if ($document->department_id == 'QA') selected @endif>Quality
+                                                Assurance</option>
+                                            <option value="QM"
+                                                @if ($document->department_id == 'QM') selected @endif>Quality
+                                                Management</option>
+                                            <option value="IA"
+                                                @if ($document->department_id == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC"
+                                                @if ($document->department_id == 'ACC') selected @endif>Accounting
+                                            </option>
+                                            <option value="LOG"
+                                                @if ($document->department_id == 'LOG') selected @endif>Logistics
+                                            </option>
+                                            <option value="SM"
+                                                @if ($document->department_id == 'SM') selected @endif>Senior
+                                                Management</option>
+                                            <option value="BA"
+                                                @if ($document->department_id == 'BA') selected @endif>Business
+                                                Administration</option>
+                                            <option value="BA"
+                                                @if ($document->department_id == 'others') selected @endif>Others
+                                                </option>
+                                        {{-- @foreach ($departments as $department)
                                             <option data-id="{{ $department->dc }}" value="{{ $department->id }}"
                                                 {{ $department->id == $document->department_id ? 'selected' : '' }}>
                                                 {{ $department->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                     </select>
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -427,7 +515,9 @@
                                 <div class="group-input">
                                     <label for="minor">Minor</label>
                                     <select  name="minor">
-                                        <option  value="0">-- Select --</option>
+                                        <option  value="00">-- Select --</option>
+                                        <option @if ($document->minor =='0') selected @endif
+                                            value="0">0</option>
                                         <option @if ($document->minor =='1') selected @endif
                                             value="1">1</option>
                                             <option @if ($document->minor =='2') selected @endif
@@ -516,7 +606,7 @@
                             </div>
                                                                      <p id="doc-typeError" style="color:red">**Document Type is required</p>
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-type">Document Sub Type</label>
                                     <select name="document_subtype_id" id="doc-subtype">
@@ -551,7 +641,7 @@
 
 
                                 @if (Auth::user()->role != 3)
-                                    {{-- Add Comment  --}}
+                                 Add Comment  
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -563,9 +653,9 @@
                                     </div>
                                 @endif
 
-                            </div>
+                            </div> --}}
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="doc-code">Document Type Code</label>
                                     <div class="default-name"> <span id="document_type_code">
@@ -579,7 +669,7 @@
 
                                         </span> </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-md-6">
                                 <div class="group-input">
@@ -1340,7 +1430,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="test">
-                                        Survey(0)<button type="button" name="reporting"
+                                        Survey(0)<button type="button" name="reporting1"
                                             onclick="addTrainRow('survey')">+</button>
                                     </label>
                                     <table class="table-bordered table" id="survey">
@@ -1765,7 +1855,7 @@
                                             <input class="input-field"
                                                 style="background: #ffff0061;
                                     color: black;"
-                                                type="text" value="{{ $tempHistory->references }}" disabled>
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
                                         @endif
                                     @endforeach
 
@@ -1789,7 +1879,7 @@
                                 </div>
                             @endif
 
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">   --Aditya
                                 <div class="group-input">
                                     <label for="annexure">
                                         Annexure<button type="button" name="ann" id="annexurebtnadd">+</button>
@@ -1806,7 +1896,7 @@
 
                                         </thead>
                                         <tbody>
-                                            {{-- @if (!empty($annexure))
+                                            @if (!empty($annexure))
                                                 @foreach (unserialize($annexure->sno) as $key => $data)
                                                     <tr>
                                                         <td><input type="text" name="serial_number[]"
@@ -1819,12 +1909,52 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                            @endif --}}
+                                            @endif
                                             <div id="annexurediv"></div>
                                         </tbody>
                                     </table>
                                 </div>
+                            </div> --}}
+                            <div class="col-md-12">
+                                <div class="group-input">
+
+                                    <label for="ann" id="ann">
+                                        Annexure<button type="button" id="annbtadd" name="button">+</button>
+                                    </label>
+                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    @if (!empty($document->document_content->ann))
+                                        @foreach (unserialize($document->document_content->ann) as $data)
+                                            <input type="text" name="ann[]" class="myclassname"
+                                                value="{{ $data }}">
+                                        @endforeach
+                                    @else
+                                        <input type="text" name="ann[]" class="myclassname">
+                                    @endif
+
+                                    <div id="anndiv"></div>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'ann' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+
+                                   
+                                    
+                                   
+                                </div>
                             </div>
+
                             @if (Auth::user()->role != 3)
 
                                 {{-- Add Comment  --}}
@@ -1833,7 +1963,7 @@
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
                                             {{ date('d-M-Y h:i:s') }}</p>
 
-                                        <input class="input-field" type="text" name="comment">
+                                        <input class="input-field" type="text" name="ann_comment">
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
@@ -1841,7 +1971,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="test">
-                                        Revision History<button type="button" name="reporting"
+                                        Revision History<button type="button" name="reporting2"
                                             onclick="addDocRow('revision')">+</button>
                                     </label>
                                     <div><small class="text-primary">Please mention brief summary</small></div>

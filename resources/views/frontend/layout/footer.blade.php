@@ -229,6 +229,14 @@
             $('#referencesdiv').append(html);
 
         });
+        $('#annbtadd').click(function(e) {
+
+            var html =
+              '<div class="resrow"><input type="text" name="ann[]" class="myclassname"></div>';
+
+            $('#anndiv').append(html);
+
+});
 
         $('#materialsbtadd').click(function(e) {
 
