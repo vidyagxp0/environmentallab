@@ -93,6 +93,8 @@ class ManagementReviewController extends Controller
         $management->agenda = $request->agenda;
         $management->performance_evaluation = $request->performance_evaluation;
         $management->management_review_participants = $request->management_review_participants;
+        $management->action_item_details =$request->action_item_details;
+        $management->capa_detail_details = $request->capa_detail_details;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         //  $management->inv_attachment = json_encode($request->inv_attachment);
@@ -245,6 +247,58 @@ class ManagementReviewController extends Controller
         }
         $data3->save();
 
+        $data4 = new ManagementReviewDocDetails();
+        $data4->review_id = $management->id;
+        $data4->type = "action_item_details";
+        if (!empty($request->short_desc)) {
+            $data4->short_desc = serialize($request->short_desc);
+        }
+        if (!empty($request->date_due)) {
+            $data4->date_due = serialize($request->date_due);
+        }
+        if (!empty($request->site)) {
+            $data4->site = serialize($request->site);
+        }
+        if (!empty($request->responsible_person)) {
+            $data4->responsible_person = serialize($request->responsible_person);
+        }
+        if (!empty($request->current_status)) {
+            $data4->current_status = serialize($request->current_status);
+        }
+        if (!empty($request->date_closed)) {
+            $data4->date_closed = serialize($request->date_closed);
+        }
+        if (!empty($request->remark)) {
+            $data4->remark = serialize($request->remark);
+        }
+        $data4->save();
+
+        $data5 = new ManagementReviewDocDetails();
+        $data5->review_id = $management->id;
+        $data5->type = "capa_detail_details";
+        if (!empty($request->Details)) {
+            $data5->Details = serialize($request->Details);
+        }
+        if (!empty($request->capa_type)) {
+            $data5->capa_type = serialize($request->capa_type);
+        }
+        if (!empty($request->site2)) {
+            $data5->site2 = serialize($request->site2);
+        }
+        if (!empty($request->responsible_person2)) {
+            $data5->responsible_person2 = serialize($request->responsible_person2);
+        }
+        if (!empty($request->current_status2)) {
+            $data5->current_status2 = serialize($request->current_status2);
+        }
+        if (!empty($request->date_closed2)) {
+            $data5->date_closed2 = serialize($request->date_closed2);
+        }
+        if (!empty($request->remark2)) {
+            $data5->remark2 = serialize($request->remark2);
+        }
+        $data5->save();
+
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'Short Description';
@@ -365,6 +419,30 @@ class ManagementReviewController extends Controller
         $history->activity_type = 'Management Review Participants';
         $history->previous = "Null";
         $history->current = $management->management_review_participants;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $management->status;
+        $history->save();
+
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Action Item Details';
+        $history->previous = "Null";
+        $history->current = $management->action_item_details;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $management->status;
+        $history->save();
+
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'CAPA Details';
+        $history->previous = "Null";
+        $history->current = $management->capa_detail_details;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -604,6 +682,8 @@ class ManagementReviewController extends Controller
         $management->agenda = $request->agenda;
         $management->performance_evaluation = $request->performance_evaluation;
        $management->management_review_participants = $management->management_review_participants;
+       $management->action_item_details =$request->action_item_details;
+       $management->capa_detail_details = $request->capa_detail_details;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         // $management->inv_attachment = json_encode($request->inv_attachment);
@@ -823,6 +903,35 @@ class ManagementReviewController extends Controller
             $history->previous = $lastDocument->management_review_participants;
             $history->current = $management->management_review_participants;
             $history->comment = $request->management_review_participants_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->action_item_details != $management->action_item_details || !empty($request->action_item_details_comment)) {
+
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = ' Action Item Details';
+            $history->previous = $lastDocument->action_item_details;
+            $history->current = $management->action_item_details;
+            $history->comment = $request->action_item_details_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if ($lastDocument->capa_detail_details != $management->capa_detail_details || !empty($request->capa_detail_details_comment)) {
+
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = '  CAPA Details';
+            $history->previous = $lastDocument->capa_detail_details;
+            $history->current = $management->capa_detail_details;
+            $history->comment = $request->capa_detail_details_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1090,8 +1199,9 @@ class ManagementReviewController extends Controller
         $agenda = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"agenda")->first();
         $management_review_participants = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"management_review_participants")->first();
         $performance_evaluation = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"performance_evaluation")->first();
-     
-        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation' ));
+        $action_item_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"action_item_details")->first();
+        $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
+        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));
     }
 
 

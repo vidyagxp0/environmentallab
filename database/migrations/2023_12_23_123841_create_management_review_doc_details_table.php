@@ -34,6 +34,21 @@ return new class extends Migration
             $table->text('measurement')->nullable();
             $table->text('analysis')->nullable();
             $table->text('evaluation')->nullable();
+            $table->text('short_desc')->nullable();
+            $table->text('site')->nullable();
+            $table->text('responsible_person')->nullable();
+            $table->text('current_status')->nullable();
+            $table->text('remark')->nullable();
+            $table->text('date_due')->nullable();
+            $table->text('date_closed')->nullable();
+            $table->text('Details')->nullable();
+            $table->text('capa_type')->nullable();
+            $table->text('site2')->nullable();
+            $table->text('responsible_person2')->nullable();
+            $table->text('current_status2')->nullable();
+            $table->text('date_closed2')->nullable();
+            $table->text('remark2')->nullable();
+        
             $table->timestamps();
         });
     }
