@@ -48,7 +48,7 @@
         </div>
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} /    
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Document 
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
     </div>
@@ -124,10 +124,10 @@
                                             <option>Enter Your Selection Here</option>
                                             <option>Chemistry SOP</option>
                                             <option>Instrument SOP</option>
-                                            <option>Instrumental Chemistry SOP</option>
+                                            <option>Analytical SOP</option>
                                             <option> Microbiology SOP</option>
-                                            <option>Good Laboratory Practices</option>
-                                            <option>Wet Chemistry</option>
+                                            <option>Quality Policies</option>
+                                            {{-- <option>Wet Chemistry</option> --}}
                                             <option>Others</option>
                                         </select>
                                         {{-- <p id="sop_typeError" style="color:red">**SOP type is required</p> --}}
@@ -138,6 +138,8 @@
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
                                         <div class="calenderauditee"> 
                                             <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />                                    
                                         <input
@@ -192,7 +194,7 @@
                                             @if (!empty($document))
                                                 @foreach ($document as $temp)
                                                     <option value="{{ $temp->id }}">
-                                                        {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-0000{{ $temp->id }}
+                                                        {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-000{{ $temp->id }}
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -202,12 +204,48 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
-                                        <select name="department_id" id="depart-name1" required>
+                                        <select name="department_id" id="depart-name" required>
                                             <option value="" selected>Enter your Selection</option>
-                                            @foreach ($departments as $department)
+                                            <option value="CQA" @if (old('department_id') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('department_id') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('department_id') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="MANU" @if (old('department_id') == 'MANU') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('department_id') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('department_id') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('department_id') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('department_id') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('department_id') == 'CL') selected @endif>
+                                                Central Laboratory</option>
+                                            <option value="TT" @if (old('department_id') == 'TT') selected @endif>Tech
+                                                Team</option>
+                                            <option value="QA" @if (old('department_id') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('department_id') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('department_id') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('department_id') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('department_id') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('department_id') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('department_id') == 'BA') selected @endif>
+                                                Business Administration</option>
+                                            <option value="others" @if (old('department_id') == 'others') selected @endif>
+                                                Others</option>
+                                            {{-- @foreach ($departments as $department)
                                                 <option data-id="{{ $department->dc }}" value="{{ $department->id }}">
                                                     {{ $department->name }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                     <p id="depart-nameError" style="color:red">** Department is required</p>
@@ -220,8 +258,8 @@
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="major">Major</label>
-                                        <select name="major">
+                                        <label for="major">Major<span class="text-danger">*</span></label>
+                                        <select name="major" id="major" required>
                                             <option value="0">-- Select --</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
@@ -234,12 +272,14 @@
                                             <option value="9">9</option>
                                         </select>
                                     </div>
+                                    {{-- <p id="majorError" style="color:red">** Department is required</p> --}}
                                 </div>
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="minor">Minor</label>
-                                        <select name="minor">
-                                            <option value="0">-- Select --</option>
+                                        <label for="minor">Minor<span class="text-danger">*</span></label>
+                                        <select name="minor" id="minor" required>
+                                            <option value="00">-- Select --</option>
+                                            <option value="0">0</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -251,6 +291,7 @@
                                             <option value="9">9</option>
                                         </select>
                                     </div>
+                                    {{-- <p id="minorError" style="color:red">** Department is required</p> --}}
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -272,7 +313,7 @@
                                         <div class="default-name"> <span id="document_type_code">Not selected</span></div>               
                                      </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Sub Type<span class="text-danger">*</span></label>
                                         <select name="document_subtype_id" id="doc-subtype">
@@ -283,14 +324,14 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> --}}
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-code">Document SubType Code</label>
                                         <div class="default-name"> <span id="document_subtype_code">Not selected</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-lang">Document Language</label>
@@ -553,7 +594,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="test">
-                                            Survey(0)<button type="button" name="reporting"
+                                            Survey(0)<button type="button" name="reporting1"
                                                 onclick="addTrainRow('survey')">+</button>
                                         </label>
                                         <table class="table-bordered table" id="survey">
@@ -712,6 +753,24 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
+                                        <label for="ann" id="ann">
+                                            Annexure<button type="button" id="annbtadd" >+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <input type="text" name="ann[]" class="myclassname">
+                                        <div id="anndiv"></div>
+                                        {{-- <div class="row reference-data">
+                                            <div class="col-lg-6">
+                                                <input type="text" name="reference-text">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="file" name="references" class="myclassname">
+                                            </div>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-12">  ---By Aditya
+                                    <div class="group-input">
                                         <label for="annexure">
                                             Annexure<button type="button" name="ann" id="annexurebtnadd">+</button>
                                         </label>
@@ -726,7 +785,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="text" name="serial_number[]"></td>
+                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
                                                     <td><input type="text" name="annexure_number[]"></td>
                                                     <td><input type="text" name="annexure_data[]"></td>
                                                 </tr>
@@ -734,11 +793,11 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="test">
-                                            Revision History<button type="button" name="reporting"
+                                            Revision History<button type="button" name="reporting2"
                                                 onclick="addRevRow('revision')">+</button>
                                         </label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>

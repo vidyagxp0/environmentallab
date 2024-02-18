@@ -47,9 +47,9 @@
                                                             data-bs-target="#division-modal">
                                                             SOP-ID
                                                         </th>
-                                                        <th class="division">
+                                                        {{-- <th class="division">
                                                             SOP Type
-                                                        </th>
+                                                        </th> --}}
                                                         <th class="short-desc">
                                                             Short Description
                                                         </th>
@@ -77,9 +77,9 @@
                                                                         SOP-{{ $temp->id }}
                                                                     </a>
                                                                 </td>
-                                                                <td class="division">
+                                                                {{-- <td class="division">
                                                                     {{ $temp->type }}
-                                                                </td>
+                                                                </td> --}}
 
                                                                 <td class="short-desc">
                                                                     {{ $temp->short_description }}
