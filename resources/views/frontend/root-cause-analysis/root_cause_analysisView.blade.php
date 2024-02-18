@@ -299,8 +299,7 @@
                                     <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                            <div><small class="text-primary">Please mention expected date of
-                                                    completion</small></div>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                             <input disabled type="text"
                                                 value="{{ Helpers::getdateFormat($data->due_date) }}">
                                             {{-- <div class="static"> {{ $data->due_date }}</div> --}}

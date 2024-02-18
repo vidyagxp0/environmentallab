@@ -78,7 +78,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="assign_id">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>

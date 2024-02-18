@@ -180,8 +180,7 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date </label>
-                                        <div><small class="text-danger">Last date this Investigation should be closed
-                                                by</small></div>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                         <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_date" value=""

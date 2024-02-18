@@ -233,6 +233,7 @@
                                         <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due-date">Due Date<span class="text-danger">*</span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <!-- <input type="date" name="due_date" id="Changedue_date"
                                                     value="{{ $openStage->due_date }}"> -->
 

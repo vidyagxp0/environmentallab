@@ -261,8 +261,8 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                                <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 @if (!empty($revised_date))
                                                 <input readonly type="text"
                                                 value="{{ Helpers::getdateFormat($revised_date) }}">

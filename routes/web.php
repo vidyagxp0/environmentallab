@@ -207,9 +207,9 @@ Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
 //Route::post('RejectStateChange/{id}', [RootCauseController::class, 'RejectStateChange'])->name('RejectStateChange');
 // Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
 // Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
-Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange'])->name('RejectStateChange');
-Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
-
+Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
+Route::post('StageChangeLabIncident/{id}', [LabIncidentController::class, 'LabIncidentStateChange']);
+Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancelStage']);
 
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
 

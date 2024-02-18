@@ -51,9 +51,9 @@ class ManagementReviewController extends Controller
         }
         $management = new ManagementReview();
         //$management->record_number = ($request->record_number);
-        // $management->assign_id = 1;//$request->assign_id;
+        // $management->assign_to = 1;//$request->assign_to;
          $management->priority_level = $request->priority_level;
-         $management->assign_id= $request->assign_id;
+         $management->assign_to= $request->assign_to;
          $management->Operations= $request->Operations;
          $management->requirement_products_services = $request->requirement_products_services;
          $management->design_development_product_services = $request->design_development_product_services; 
@@ -620,7 +620,7 @@ class ManagementReviewController extends Controller
         $management->room = $request->room;
         $management->priority_level = $request->priority_level;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
-        $management->assign_id = $request->assign_id;
+        $management->assign_to = $request->assign_to;
         $management->initiator_group_code= $request->initiator_group_code;
         $management->Operations= $request->Operations;
         $management->initiator_Group= $request->initiator_Group;
@@ -1085,7 +1085,7 @@ class ManagementReviewController extends Controller
 
         $data = ManagementReview::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+        $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $agenda = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"agenda")->first();
         $management_review_participants = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"management_review_participants")->first();

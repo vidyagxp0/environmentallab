@@ -56,7 +56,7 @@ return new class extends Migration
             $table->string('designee_Department')->nullable();
             $table->string('remarks')->nullable();
 
-            $table->text('assign_id')->nullable();
+            $table->text('assign_to')->nullable();
             $table->text('initiator_id')->nullable();
             $table->text('initiator_Group')->nullable();
             $table->text('initiator_group_code')->nullable();
