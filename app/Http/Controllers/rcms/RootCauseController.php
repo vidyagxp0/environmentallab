@@ -931,8 +931,8 @@ use Illuminate\Support\Facades\Hash;
             $capa = RootCauseAnalysis::find($id);
 
             if ($capa->stage == 3) {
-                $capa->stage = "5";
-                $capa->status = "Pending QA Review";
+                $capa->stage = "2";
+                $capa->status = "Investigation in Progress";
                 $capa->update();
 
                 toastr()->success('Document Sent');
