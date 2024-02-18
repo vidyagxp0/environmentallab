@@ -391,7 +391,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="State/District">State/District</label>
-                                            <select name="state" class="states" id="stateId">
+                                            <select name="state" class="states" id="state">
                                                 <option value="">Select State</option>
                                             </select>
                                         </div>

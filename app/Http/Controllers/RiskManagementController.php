@@ -525,6 +525,20 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        if (!empty($data->state)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'State/District';
+            $history->previous = "Null";
+            $history->current = $data->state;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($data->city)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -1257,6 +1271,20 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        if ($lastDocument->state != $data->state || !empty($request->state_comment)) {
+
+            $history = new RiskAuditTrail();
+            $history->risk_id = $id;
+            $history->activity_type = 'State/District';
+            $history->previous = $lastDocument->state;
+            $history->current = $data->state;
+            $history->comment = $request->state_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if ($lastDocument->city != $data->city || !empty($request->city_comment)) {
 
             $history = new RiskAuditTrail();
