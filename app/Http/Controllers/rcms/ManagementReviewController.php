@@ -45,10 +45,10 @@ class ManagementReviewController extends Controller
          //$request->dd();
         //  return $request;
 
-        // if (!$request->short_description) {
-        //     toastr()->error("Short description is required");
-        //     return redirect()->back();
-        // }
+        if (!$request->short_description) {
+            toastr()->error("Short description is required");
+            return redirect()->back();
+        }
         $management = new ManagementReview();
         //$management->record_number = ($request->record_number);
         // $management->assign_id = 1;//$request->assign_id;
@@ -91,7 +91,8 @@ class ManagementReviewController extends Controller
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
         $management->agenda = $request->agenda;
-       // $management->management_review_participants = $management_review_participants;
+        $management->performance_evaluation = $request->performance_evaluation;
+        $management->management_review_participants = $request->management_review_participants;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         //  $management->inv_attachment = json_encode($request->inv_attachment);
@@ -203,29 +204,46 @@ class ManagementReviewController extends Controller
 
         $data2 = new ManagementReviewDocDetails();
         $data2->review_id = $management->id;
-        $data2->type = "management_review_participants";
-        if (!empty($request->invited_Person)) {
-            $data2->invited_Person = serialize($request->invited_Person);
+        $data2->type = "performance_evaluation";
+        if (!empty($request->monitoring)) {
+            $data2->monitoring = serialize($request->monitoring);
         }
-        if (!empty($request->designee)) {
-            $data2->designee = serialize($request->designee);
+        if (!empty($request->measurement)) {
+            $data2->measurement = serialize($request->measurement);
         }
-        if (!empty($request->department)) {
-            $data2->department = serialize($request->department);
+        if (!empty($request->analysis)) {
+            $data2->analysis = serialize($request->analysis);
         }
-        if (!empty($request->meeting_Attended)) {
-            $data2->meeting_Attended = serialize($request->meeting_Attended);
-        }
-        if (!empty($request->designee_Name)) {
-            $data2->designee_Name = serialize($request->designee_Name);
-        }
-        if (!empty($request->designee_Department)) {
-            $data2->designee_Department = serialize($request->designee_Department);
-        }
-        if (!empty($request->remarks)) {
-            $data2->remarks = serialize($request->remarks);
+        if (!empty($request->evaluation)) {
+            $data2->evaluation = serialize($request->evaluation);
         }
         $data2->save();
+
+        $data3 = new ManagementReviewDocDetails();
+        $data3->review_id = $management->id;
+        $data3->type = "management_review_participants";
+        if (!empty($request->invited_Person)) {
+            $data3->invited_Person = serialize($request->invited_Person);
+        }
+        if (!empty($request->designee)) {
+            $data3->designee = serialize($request->designee);
+        }
+        if (!empty($request->department)) {
+            $data3->department = serialize($request->department);
+        }
+        if (!empty($request->meeting_Attended)) {
+            $data3->meeting_Attended = serialize($request->meeting_Attended);
+        }
+        if (!empty($request->designee_Name)) {
+            $data3->designee_Name = serialize($request->designee_Name);
+        }
+        if (!empty($request->designee_Department)) {
+            $data3->designee_Department = serialize($request->designee_Department);
+        }
+        if (!empty($request->remarks)) {
+            $data3->remarks = serialize($request->remarks);
+        }
+        $data3->save();
 
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
@@ -329,9 +347,22 @@ class ManagementReviewController extends Controller
         $history->origin_state = $management->status;
         $history->save();
 
+        
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
-        $history->activity_type = 'management_review_participants';
+        $history->activity_type = 'Performance Evaluation';
+        $history->previous = "Null";
+        $history->current = $management->performance_evaluation;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $management->status;
+        $history->save();
+
+        $history = new ManagementAuditTrial();
+        $history->ManagementReview_id = $management->id;
+        $history->activity_type = 'Management Review Participants';
         $history->previous = "Null";
         $history->current = $management->management_review_participants;
         $history->comment = "NA";
@@ -571,7 +602,8 @@ class ManagementReviewController extends Controller
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
         $management->agenda = $request->agenda;
-       // $management->management_review_participants = $management->management_review_participants;
+        $management->performance_evaluation = $request->performance_evaluation;
+       $management->management_review_participants = $management->management_review_participants;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         // $management->inv_attachment = json_encode($request->inv_attachment);
@@ -769,11 +801,25 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        if ($lastDocument->performance_evaluation != $management->performance_evaluation || !empty($request->performance_evaluation_comment)) {
+
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = 'Performance Evaluation';
+            $history->previous = $lastDocument->performance_evaluation;
+            $history->current = $management->performance_evaluation;
+            $history->comment = $request->performance_evaluation_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if ($lastDocument->management_review_participants != $management->management_review_participants || !empty($request->management_review_participants_comment)) {
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'management_review_participants';
+            $history->activity_type = 'Management Review Participants';
             $history->previous = $lastDocument->management_review_participants;
             $history->current = $management->management_review_participants;
             $history->comment = $request->management_review_participants_comment;
@@ -1043,8 +1089,9 @@ class ManagementReviewController extends Controller
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $agenda = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"agenda")->first();
         $management_review_participants = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"management_review_participants")->first();
-      // dd($data->stage);
-        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants' ));
+        $performance_evaluation = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"performance_evaluation")->first();
+     
+        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation' ));
     }
 
 

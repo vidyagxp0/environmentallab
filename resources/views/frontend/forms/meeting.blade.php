@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Desc.">Short Description<span
+                                        <label for="short_description">Short Description<span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
@@ -265,18 +265,19 @@
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
+                                <div class="col-12">
                                 <div class="group-input">
-                                    <label for="management-review-participants">
+                                    <label for="management_review_participants">
                                         Management Review Participants
                                         <button type="button"
-                                            onclick="addManagementReviewParticipants('management-review-participants')">+</button>
+                                            onclick="addManagementReviewParticipants('management_review_participants')">+</button>
                                     </label>
                                     <div class="instruction">
                                         <small class="text-primary">
                                             Refer Attached Performance Evaluation Grid
                                         </small>
                                     </div>
-                                    <table class="table table-bordered" id="management-review-participants">
+                                    <table class="table table-bordered" id="management_review_participants">
                                         <thead>
                                             <tr>
                                                 <th>Row #</th>
@@ -302,6 +303,7 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -1012,11 +1014,11 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input type="text" name="row_no" value="1" disabled></td>
-                                            {{-- ignore   --}} <td><input type="text" name="monitoring"></td>
-                                            <td><input type="text" name="measurement"></td>
-                                            <td><input type="text" name="analysis"></td>
-                                            <td><input type="text" name="evaluation"></td>
+                                            <td><input type="text" name="serial_number[]" value="1" disabled></td>
+                                            {{-- ignore   --}} <td><input type="text" name="monitoring[]"></td>
+                                            <td><input type="text" name="measurement[]"></td>
+                                            <td><input type="text" name="analysis[]"></td>
+                                            <td><input type="text" name="evaluation[]"></td>
                                         </tr>
                                     </tbody>
 
