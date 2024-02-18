@@ -363,18 +363,19 @@
                                         <textarea name="description" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->description}}</textarea>
                                     </div>
                                 </div>
+                                <div class="col-12">
                                 <div class="group-input">
-                                    <label for="management-review-participants">
+                                    <label for="management_review_participants">
                                         Management Review Participants
                                         <button type="button"
-                                            onclick="addManagementReviewParticipants('management-review-participants')">+</button>
+                                            onclick="addManagementReviewParticipants('management_review_participants')">+</button>
                                     </label>
                                     <div class="instruction">
                                         <small class="text-primary">
                                             Refer Attached Performance Evaluation Grid
                                         </small>
                                     </div>
-                                    <table class="table table-bordered" id="management-review-participants">
+                                    <table class="table table-bordered" id="management_review_participants">
                                         <thead>
                                             <tr>
                                                 <th>Row #</th>
@@ -417,6 +418,7 @@
                                                 @endforeach
                                             </tbody>
                                     </table>
+                                </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -673,25 +675,21 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="group-input">
-                                <label for="action-item-details">
-                                    Action Item Details<button type="button" name="action-item-details"
+                                <label for="action_item_details">
+                                    Action Item Details<button type="button" name="action_item_details"
                                         id="action_item">+</button>
                                 </label>
                                 <table class="table table-bordered" id="action_item_details">
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
-                                            {{-- <th>Record Number</th> --}}
                                             <th>Short Description</th>
-                                            {{-- <th>CAPA Type (Corrective Action / Preventive Action)</th> --}}
                                             <th>Due Date</th>
                                             <th>Site / Division</th>
-                                            {{-- <th>Date Due</th> --}}
                                             <th>Person Responsible</th>
                                             <th>Current Status</th>
-                                            {{-- <th>Person Responsible</th> --}}
                                             <th>Date Closed</th>
-                                            <th>Remark</th>
+                                            <th>Remarks</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -718,6 +716,7 @@
                                         <td><input type="text" name="record[]"></td>
 
                                     </tbody>
+                                    
                                 </table>
                             </div>
                             <div class="group-input">
