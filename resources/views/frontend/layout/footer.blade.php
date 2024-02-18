@@ -1102,6 +1102,34 @@
     })
 </script>
 
+<script>
+    // Get the textarea element
+    var textArea = document.getElementById('textArea');
+    // Get the paragraph element to display character count
+    var charCountDisplay = document.getElementById('charCount');
+
+    // Function to count characters in the textarea
+    function countCharacters() {
+      var text = textArea.value;
+      // Display the character count
+      charCountDisplay.textContent = 'Character count: ' + text.length;
+    }
+
+    // Add an event listener to the textarea to trigger character count on input
+    textArea.addEventListener('input', function() {
+      countCharacters();
+      // Limit the text to 2500 characters
+      if (textArea.value.length > 2500) {
+        textArea.value = textArea.value.slice(0, 2500);
+        countCharacters(); // Update character count after truncation
+      }
+    });
+
+    // Call the countCharacters function initially to display character count for any existing text
+    countCharacters();
+  </script>
+
+
 
 </body>
 

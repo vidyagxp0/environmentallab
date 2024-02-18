@@ -1706,8 +1706,8 @@ function addMultipleFiles(input, block_id) {
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
+                                    <label for="comment">Comment  </label>
+                                    <input type="comment" name="comment"  >
                                 </div>
                             </div>
 

@@ -28,13 +28,15 @@ return new class extends Migration
             $table->string('short_desc')->nullable();
             $table->string('severity_level2')->nullable();
             $table->string('Initiator_Group')->nullable();
+            $table->longtext('Incident_Category_others')->nullable();
+
             $table->string('initiator_group_code')->nullable();
             $table->string('Other_Ref')->nullable();
             // $table->string('due_date')->nullable();
             $table->date('effect_check_date')->nullable();
             $table->date('occurance_date')->nullable();
             $table->string('due_date_extension')->nullable();
-            $table->string('assigend')->nullable();
+            $table->string('assign_to')->nullable();
             $table->string('Incident_Category')->nullable();
             $table->string('Invocation_Type')->nullable();
             $table->text('Initial_Attachment')->nullable();
@@ -55,11 +57,11 @@ return new class extends Migration
             $table->text('CAPA_Attachment')->nullable();
             $table->text('QA_Review_Comments')->nullable();
             $table->text('QA_Head_Attachment')->nullable();
-            $table->text('QA_Head')->nullable();
+            $table->longtext('QA_Head')->nullable();
             $table->string('Effectiveness_Check')->nullable();
             $table->date('effectivess_check_creation_date')->nullable();
             $table->string('Incident_Type')->nullable();
-            $table->string('Conclusion')->nullable();
+            $table->longtext('Conclusion')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
 
@@ -77,6 +79,9 @@ return new class extends Migration
             $table->string('inv_andCAPA_review_comp_on')->nullable();
             $table->string('qA_review_completed_on')->nullable();
             $table->string('qA_head_approval_completed_on')->nullable();
+            $table->string('review_completed_by')->nullable();
+            $table->string('review_completed_on')->nullable();
+            $table->string('cancelled_by')->nullable();
             $table->string('cancelled_on')->nullable();
             $table->timestamps();
         });

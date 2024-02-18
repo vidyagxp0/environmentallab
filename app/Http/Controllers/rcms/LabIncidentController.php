@@ -49,7 +49,7 @@ class LabIncidentController extends Controller
         $data->initiator_group_code= $request->initiator_group_code;
         $data->Other_Ref= $request->Other_Ref;
         $data->due_date = $request->due_date;
-        $data->assigend = $request->assigend;
+        $data->assign_to = $request->assign_to;
         $data->Incident_Category= $request->Incident_Category;
         $data->Invocation_Type = $request->Invocation_Type;
         $data->Incident_Details = $request->Incident_Details;
@@ -140,7 +140,7 @@ class LabIncidentController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        if (!empty($data->short_desc)) {
+        if(!empty($data->short_desc)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Short Description';
@@ -196,12 +196,12 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->assigend)) {
+        if (!empty($data->assign_to)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $data->assigend;
+            $history->current = $data->assign_to;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -593,7 +593,7 @@ class LabIncidentController extends Controller
         $data->initiator_group_code= $request->initiator_group_code;
         $data->Other_Ref= $request->Other_Ref;
         $data->due_date = $request->due_date;
-        $data->assigend = $request->assigend;
+        $data->assign_to = $request->assign_to;
         $data->Incident_Category= $request->Incident_Category;
         $data->Invocation_Type = $request->Invocation_Type;
         $data->Incident_Details = $request->Incident_Details;
@@ -734,14 +734,14 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assigend != $data->assigend || !empty($request->assigend_comment)) {
+        if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assigend;
-            $history->current = $data->assigend;
-            $history->comment = $request->assigend_comment;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $data->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
