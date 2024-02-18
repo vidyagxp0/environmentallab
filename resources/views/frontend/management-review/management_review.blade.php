@@ -388,17 +388,34 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                            <td><input type="text" name="serial_number[]" value="1"></td>
-                                            <td><input type="text" name="invited_Person[]"></td>
-                                            <td><input type="text" name="Designee[]"></td>
-                                            <td><input type="text" name="Department[]"></td>
-                                            <td><input type="text" name="Meeting_Attended[]"></td>
-                                            <td><input type="text" name="Designee_Name[]"></td>
-                                            <td><input type="text" name="Designee_Department[]"></td>
-                                            <td><input type="text" name="Remarks[]"></td>
-                                            </tr>
-                                        </tbody>
+                                                @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
+                                                    <tr>
+                                                        <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ $key + 1 }}"></td>
+                                                        <td><input type="text" name="invited_Person[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($management_review_participants->invited_Person)[$key] ? unserialize($management_review_participants->invited_Person)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="designee[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($management_review_participants->designee)[$key] ? unserialize($management_review_participants->designee)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="department[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($management_review_participants->department)[$key] ? unserialize($management_review_participants->department)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="meeting_Attended[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($management_review_participants->meeting_Attended)[$key] ? unserialize($management_review_participants->meeting_Attended)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="designee_Name[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($management_review_participants->designee_Name)[$key] ? unserialize($management_review_participants->designee_Name)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="designee_Department[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($management_review_participants->designee_Department)[$key] ? unserialize($management_review_participants->designee_Department)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="remarks[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($management_review_participants->remarks)[$key] ? unserialize($management_review_participants->remarks)[$key] : '' }}">
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
                                     </table>
                                 </div>
                                 <div class="col-12">
@@ -520,10 +537,11 @@
                                 </label>
                                 <textarea name="control_nonconforming_outputs" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->control_nonconforming_outputs }}</textarea>
                             </div>
+                            <div class="col-12">
                             <div class="group-input">
                                 <label for="performance_evaluation">
                                     Performance Evaluation
-                                    <button type="button" onclick="add4Input('performance_evaluation')">+</button>
+                                    <button type="button" name="performance_evaluation" onclick="add4Input('performance_evaluation')">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-performance_evaluation-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
@@ -540,7 +558,7 @@
                                             <th>Evalutaion</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <!-- <tbody>
                                         <tr>
                                             <td><input type="text" name="row_no" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  value="1" disabled></td>
                                             <td><input type="text" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="monitoring"></td>
@@ -548,8 +566,29 @@
                                             <td><input type="text" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="analysis"></td>
                                             <td><input type="text" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="evaluation"></td>
                                         </tr>
-                                    </tbody>
+                                    </tbody> -->
+                                    <tbody>
+                                                @foreach (unserialize($performance_evaluation->monitoring) as $key => $temps)
+                                                    <tr>
+                                                        <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ $key + 1 }}"></td>
+                                                        <td><input type="text" name="monitoring[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($performance_evaluation->monitoring)[$key] ? unserialize($performance_evaluation->monitoring)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="measurement[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($performance_evaluation->measurement)[$key] ? unserialize($performance_evaluation->measurement)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="analysis[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($performance_evaluation->analysis)[$key] ? unserialize($performance_evaluation->analysis)[$key] : '' }}">
+                                                        </td>
+                                                        <td><input type="text" name="evaluation[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
+                                                                value="{{ unserialize($performance_evaluation->evaluation)[$key] ? unserialize($performance_evaluation->evaluation)[$key] : '' }}">
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
                                 </table>
+                            </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>

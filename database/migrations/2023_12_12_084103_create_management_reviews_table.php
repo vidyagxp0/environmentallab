@@ -43,7 +43,18 @@ return new class extends Migration
             $table->string('responsible')->nullable();
             $table->string('start_time')->nullable();
             $table->string('comment')->nullable();
-    
+            $table->string('monitoring')->nullable();
+            $table->string('measurement')->nullable();
+            $table->string('analysis')->nullable();
+            $table->string('evaluation')->nullable();
+
+            $table->string('invited_Person')->nullable();
+            $table->string('designee')->nullable();
+            $table->string('department')->nullable();
+            $table->string('meeting_Attended')->nullable();
+            $table->string('designee_Name')->nullable();
+            $table->string('designee_Department')->nullable();
+            $table->string('remarks')->nullable();
 
             $table->text('assign_id')->nullable();
             $table->text('initiator_id')->nullable();
@@ -66,6 +77,8 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->string('attendees')->nullable();
             $table->text('agenda')->nullable();
+            $table->text('performance_evaluation')->nullable();
+            $table->text('management_review_participants')->nullable();
             $table->text('description')->nullable();
             $table->text('attachment')->nullable();
             $table->string('inv_attachment')->nullable();
