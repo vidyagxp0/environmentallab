@@ -56,6 +56,23 @@ return new class extends Migration
             $table->string('designee_Department')->nullable();
             $table->string('remarks')->nullable();
 
+            $table->string('short_desc')->nullable();
+            $table->string('site')->nullable();
+            $table->string('responsible_person')->nullable();
+            $table->string('current_status')->nullable();
+            $table->string('remark')->nullable();
+            $table->date('date_due')->nullable();
+            $table->date('date_closed')->nullable();
+
+            $table->string('Details')->nullable();
+            $table->string('capa_type')->nullable();
+            $table->string('site2')->nullable();
+            $table->string('responsible_person2')->nullable();
+            $table->string('current_status2')->nullable();
+            $table->date('date_closed2')->nullable();
+            $table->string('remark2')->nullable();
+        
+
             $table->text('assign_to')->nullable();
             $table->text('initiator_id')->nullable();
             $table->text('initiator_Group')->nullable();
@@ -79,6 +96,8 @@ return new class extends Migration
             $table->text('agenda')->nullable();
             $table->text('performance_evaluation')->nullable();
             $table->text('management_review_participants')->nullable();
+            $table->text('action_item_details')->nullable();
+            $table->text('capa_detail_details')->nullable();
             $table->text('description')->nullable();
             $table->text('attachment')->nullable();
             $table->string('inv_attachment')->nullable();

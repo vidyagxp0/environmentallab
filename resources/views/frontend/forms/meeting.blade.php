@@ -1113,8 +1113,7 @@
                                 <label for="action_item_details">
                                     Action Item Details<button type="button" name="action_item_details"
                                         id="action_item">+</button>
-                                </label>
-                                <table class="table table-bordered" id="action_item_details">
+                                </label><table class="table table-bordered" id="action_item_details">
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
@@ -1135,9 +1134,9 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_due' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_due[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>
+                                            oninput="handleDateInput(this, `date_due' + serialNumber +'`)" /></div></div></div></td>
                                         <td><input type="text" name="site[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
@@ -1154,12 +1153,12 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_closed00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_closed[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_closed00' + serialNumber +'`)" /></div></div></div></td>
+                                            oninput="handleDateInput(this, `date_closed' + serialNumber +'`)" /></div></div></div></td>
 
 
-                                        <td><input type="text" name="record[]"></td>
+                                        <td><input type="text" name="remark[]"></td>
                                          <!-- <td><input type="text" name="capa_type[]"></td> 
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
                                         <td><div class="group-input new-date-data-field mb-0">
@@ -1180,22 +1179,20 @@
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
-                                            {{-- <th>Record Number</th> --}}
                                             <th>CAPA Details</th>
                                             <th>CAPA Type</th>
                                             <th>Site / Division</th>
                                             <th>Person Responsible</th>
                                             <th>Current Status</th>
                                             <th>Date Closed</th>
-                                            <th>Remarks</th>
-                                            {{-- <th>Date Opened</th> --}}
-                                            {{-- <th>Date Due</th> --}}
+                                            <th>Remark</th>
+                
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
-                                        <td><input type="text" name="short_desc[]"></td>
+                                        <td><input type="text" name="Details[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
                                                 name="capa_type[]">
@@ -1205,10 +1202,10 @@
                                                 <option value="corrective_preventive">Corrective & Preventive Action</option>
                                             </select>
                                         </td>
-                                        <td><input type="text" name="site[]"></td>
+                                        <td><input type="text" name="site2[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
-                                                name="responsible_person[]">
+                                                name="responsible_person2[]">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $data)
                                                     <option value="{{ $data->id }}">{{ $data->name }}
@@ -1216,16 +1213,16 @@
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input type="text" name="current_status[]"></td>
+                                        <td><input type="text" name="current_status2[]"></td>
                                          {{-- <td><input type="date" name="date_closed[]"></td>  --}}
                                          <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_closed11' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_closed[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_closed11' + serialNumber +'`)" /></div></div></div></td>
+                                            <input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_closed2[]" class="hide-input" 
+                                            oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>
 
-                                        <td><input type="text" name="record[]"></td>
+                                        <td><input type="text" name="remark2[]"></td>
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
                                         {{-- <td><input type="date" name="date_due[]"></td> --}}
 
