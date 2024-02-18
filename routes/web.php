@@ -205,8 +205,11 @@ Route::post('child_external/{id}', [AuditeeController::class, 'child_external'])
 //----------------------Lab Incident view-----------------
 Route::get('lab-incident', [LabIncidentController::class, 'labincident']);
 //Route::post('RejectStateChange/{id}', [RootCauseController::class, 'RejectStateChange'])->name('RejectStateChange');
+// Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
+// Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
 Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
 Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
+
 
 Route::get('audit-program', [AuditProgramController::class, 'auditprogram']);
 

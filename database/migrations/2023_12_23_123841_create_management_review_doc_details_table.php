@@ -30,6 +30,10 @@ return new class extends Migration
             $table->text('designee_Name')->nullable();
             $table->text('designee_Department')->nullable();
             $table->text('remarks')->nullable();
+            $table->text('monitoring')->nullable();
+            $table->text('measurement')->nullable();
+            $table->text('analysis')->nullable();
+            $table->text('evaluation')->nullable();
             $table->timestamps();
         });
     }
