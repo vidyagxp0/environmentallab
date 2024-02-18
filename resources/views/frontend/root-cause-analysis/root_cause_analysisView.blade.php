@@ -122,7 +122,7 @@
                                 Acknowledge
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
-                                cancel
+                                Cancel
                             </button>
                         @elseif($data->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -152,7 +152,7 @@
                                 Group Feedback
                             </button>
                         @elseif($data->stage == 3)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 QA Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
