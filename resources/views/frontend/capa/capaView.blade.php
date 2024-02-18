@@ -342,13 +342,26 @@
                                                 {{-- <div class="static"></div> --}}
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                            </div>
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+        
+                                        </div>
+        
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -531,7 +544,7 @@
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -725,8 +738,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1214,8 +1227,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1345,8 +1358,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1462,7 +1475,7 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
                                         <button type="submit"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
                                         <button type="button"> <a class="text-white"
@@ -1901,4 +1914,11 @@
                         });
                     });
                 </script> 
+                <script>
+                    var maxLength = 255;
+                    $('#docname').keyup(function() {
+                        var textlen = maxLength - $(this).val().length;
+                        $('#rchars').text(textlen);});
+                </script>
+                
         @endsection
