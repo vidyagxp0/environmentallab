@@ -33,9 +33,9 @@
 
                     html += '</select></td>' +
                         // '<td><input type="date" name="start_date[]"></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" class="hide-input" oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" id="start_date_checkdate"   name="start_date[]" class="hide-input" oninput="handleDateInput(this, `start_date' + serialNumber +'`);checkDate('start_date_checkdate','end_date_checkdate')"" /></div></div></div></td>' +
                         // '<td><input type="date" name="end_date[]"></td>' 
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>'
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" id="end_date_checkdate"  name="end_date[]" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`);checkDate('start_date_checkdate','end_date_checkdate')"" /></div></div></div></td>'
                         +
                         '<td><select name="lead_investigator[]">' +
                         '<option value="">Select a value</option>';
@@ -251,7 +251,7 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Date Due</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         {{-- <input type="date"
                                             value="" name="due_date"> --}}
@@ -323,7 +323,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
+                                        <label for="severity-level">Severity Level</label>
                                         <select name="severity1_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -530,48 +530,7 @@
                                         <input type="text" name="suggested_audits" />
                                     </div>
                                 </div> --}}
-                                <div class="col-12">
-                                    <div class="sub-head">Geographical Information</div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="zone">Zone</label>
-                                        <select name="zone">
-                                            <option value="">-- Select --</option>
-                                            <option value="Asia">Asia</option>
-                                            <option value="Europe">Europe</option>
-                                            <option value="Africa">Africa</option>
-                                            <option value="Central_America">Central America</option>
-                                            <option value="South_America">South America</option>
-                                            <option value="Oceania">Oceania</option>
-                                            <option value="North_America">North America</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="country">Country</label>
-                                        <select name="country" class="countries" id="countryId">
-                                            <option value="">Select Country</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="State/District">State/District</label>
-                                        <select name="state" class="states" id="stateId">
-                                            <option value="">Select State</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="City">City</label>
-                                        <select name="City" class="cities" id="cityId">
-                                            <option value="">Select City</option>
-                                        </select>
-                                    </div>
-                                </div>                              
+                                                             
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>

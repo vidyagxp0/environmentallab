@@ -58,48 +58,49 @@ function addMultipleFiles(input, block_id) {
                     '"></td>' +
                     '<td><input type="text" name="observation_id[]"></td>' +
                     // '<td><input type="date" name="date[]"></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
+                    // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
 
-                    '<td><select name="auditorG[]">' +
+                    // '<td><select name="auditorG[]">' +
                     '<option value="">Select a value</option>';
 
-                for (var i = 0; i < users.length; i++) {
-                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                }
+                // for (var i = 0; i < users.length; i++) {
+                //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                // }
 
                 html += '</select></td>' +
-                    '<td><select name="auditeeG[]">' +
-                    '<option value="">Select a value</option>';
+                    // '<td><select name="auditeeG[]">' +
+                    // '<option value="">Select a value</option>';
 
-                for (var i = 0; i < users.length; i++) {
-                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                }
-                html += '</select></td>' +
+                // for (var i = 0; i < users.length; i++) {
+                //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                // }
+                // html += '</select></td>' +
                     '<td><input type="text" name="observation_description[]"></td>' +
                     // '<td><input type="text" name="severity_level[]"></td>' +
                     '<td><input type="text" name="area[]"></td>' +
-                    '<td><input type="text" name="observation_category[]"></td>' +
-                    '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                    '<td><input type="text" name="auditee_response[]"></td>' +
-                    '<td><input type="text" name="auditor_review_on_response[]"></td>' +
-                    '<td><input type="text" name="qa_comment[]"></td>' +
-                    '<td><input type="text" name="capa_details[]"></td>' +
+                    // '<td><input type="text" name="observation_category[]"></td>' +
+                    // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
+                     '<td><input type="text" name="auditee_response[]"></td>' +
+                    // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
+                    // '<td><input type="text" name="qa_comment[]"></td>' +
+                    // '<td><input type="text" name="capa_details[]"></td>' +
                     // '<td><input type="date" name="capa_due_date[]"></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
+                    // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
 
-                    '<td><select name="capa_owner[]">' +
+                    // '<td><select name="capa_owner[]">' +
                     '<option value="">Select a value</option>';
 
                 for (var i = 0; i < users.length; i++) {
                     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                 }
 
-                html += '</select></td>' +                    '<td><input type="text" name="action_taken[]"></td>' +
+                html += '</select></td>' +      
+                            //   '<td><input type="text" name="action_taken[]"></td>' +
                     // '<td><input type="date" name="capa_completion_date[]"></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
+                    // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
 
-                    '<td><input type="text" name="status_Observation[]"></td>' +
-                    '<td><input type="text" name="remark_observation[]"></td>' +
+                    // '<td><input type="text" name="status_Observation[]"></td>' +
+                    // '<td><input type="text" name="remark_observation[]"></td>' +
                     '</tr>';
 
                 return html;
@@ -372,12 +373,12 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
-                                                <select name="assigend"
+                                                <select name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
                                                         <option value="{{ $value->id }}"
-                                                            @if ($data->assigend == $value->id) selected @endif>
+                                                            @if ($data->assign_to == $value->id) selected @endif>
                                                             {{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -386,12 +387,10 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                
-
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -473,7 +472,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="severity-level">Sevrity Level</label>
+                                                <label for="severity-level">Severity Level</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity_level == 'minor') selected @endif
@@ -719,10 +718,11 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
-                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->scheduled_end_date) }}" />
-                                                                <input type="date" name="scheduled_start_date[]" class="hide-input" 
+                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
+                                                                <input type="date" name="scheduled_start_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>
-                                                            <td><input type="time" name="scheduled_start_time[]"
+                                                           
+                                                                <td><input type="time" name="scheduled_start_time[]" 
                                                                     value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
                                                             </td>
                                                             {{-- <td><input type="date" name="scheduled_end_date[]"
@@ -731,8 +731,8 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
-                                                                <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" name="scheduled_end_date[]" class="hide-input" 
+                                                                <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                <input type="date" name="scheduled_end_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
 
                                                             
@@ -1134,7 +1134,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
                                                     Observation Details
-                                                    <button type="button" name="audit-agenda-grid"
+                                                    <button type="button" name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                       id="ObservationAdd">+</button>
                                                     <span class="text-primary" data-bs-toggle="modal"
                                                         data-bs-target="#observation-field-instruction-modal"
@@ -1144,21 +1144,21 @@ function addMultipleFiles(input, block_id) {
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" id="onservation-field-table"
-                                                        style="width: 150%;">
+                                                        style="width: 100%;">
                                                         <thead>
                                                             <tr>
                                                                 <th>Row#</th>
-                                                                <th>Observation ID</th>
-                                                                <th>Date</th>
+                                                                <th>Observation Details</th>
+                                                                {{-- <th>Date</th>
                                                                 <th>Auditor</th>
-                                                                <th>Auditee</th>
-                                                                <th>Observation Description</th>
+                                                                <th>Auditee</th>--}}
+                                                                <th>Pre Comments</th>
                                                                 {{-- <th>Severity Level</th> --}}
-                                                                <th>Area/process</th>
-                                                                <th>Observation Category</th>
-                                                                <th>CAPA Required</th>
-                                                                <th>Auditee Response</th>
-                                                                <th>Auditor Review on Response</th>
+                                                                 <th>CAPA Details if any</th>
+                                                                {{-- <th>Observation Category</th>
+                                                                <th>CAPA Required</th> --}}
+                                                                <th>Post Comments</th>
+                                                                {{-- <th>Auditor Review on Response</th>
                                                                 <th>QA Comments</th>
                                                                 <th>CAPA Details</th>
                                                                 <th>CAPA Due Date</th>
@@ -1166,7 +1166,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <th>Action Taken</th>
                                                                 <th>CAPA Completion Date</th>
                                                                 <th>Status</th>
-                                                                <th>Remarks</th>
+                                                                <th>Remarks</th>   --}}
                                                             </tr>
                                                         </thead>
                                                         <tbody id="observationDetail">
@@ -1176,13 +1176,13 @@ function addMultipleFiles(input, block_id) {
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input type="text" name="observation_id[]" value="{{ $tempData ? $tempData : "" }}"></td>
                                                                     {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
-                                                                <td> <div class="group-input new-date-data-field mb-0">
+                                                                {{-- <td> <div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div class="calenderauditee">
-                                                                        <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                        <input type="date" name="date[]" class="hide-input" 
+                                                                        <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date) }}"/>
+                                                                        <input type="date" name="date[]" value="{{ $data->date }}" class="hide-input" 
                                                                         oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>
-                                                                <td>
-                                                                    <select placeholder="Select..." name="auditorG[]">
+                                                                <td> --}}
+                                                                    {{-- <select placeholder="Select..." name="auditorG[]">
                                                                         <option value="">Select a value</option>
                                                                         @foreach ($users as $datas)
                                                                             <option value="{{ $datas->id }}">
@@ -1202,27 +1202,27 @@ function addMultipleFiles(input, block_id) {
                                                                             </option>
                                                                         @endforeach
                                                                     </select>
-                                                                </td> 
-                                                                    <td><input type="text" name="observation_description[]" value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>
+                                                                </td> --}}
+                                                                    <td><input type="text" name="observation_description[]" value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td> 
                                                                     {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
-                                                                    <td><input type="text" name="area[]" value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td>
+                                                                     <td><input type="text" name="area[]" value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
+                                                                    {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td>
                                                                     <td>
                                                                         <select name="capa_required[]">
                                                                             <option value="0">-- Select --</option>
                                                                             <option value="yes">Yes</option>
                                                                             <option value="no">No</option>
                                                                         </select>
-                                                                    </td>
+                                                                    </td> --}}
                                                                     <td><input type="text" name="auditee_response[]" value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
+                                                                    {{-- <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="qa_comment[]" value="{{unserialize($grid_data1->qa_comment)[$key] ? unserialize($grid_data1->qa_comment)[$key]: "" }}"></td>
                                                                     <td><input type="text" name="capa_details[]" value="{{unserialize($grid_data1->capa_details)[$key] ? unserialize($grid_data1->capa_details)[$key]: "" }}"></td>
                                                                     {{-- <td><input type="date" name="capa_due_date[]" value="{{unserialize($grid_data1->capa_due_date)[$key] ? unserialize($grid_data1->capa_due_date)[$key]: "" }}"></td> --}}
-                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                    {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div class="calenderauditee">
-                                                                        <input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                        <input type="date" name="capa_due_date[]" class="hide-input" 
+                                                                        <input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_due_date) }}"/>
+                                                                        <input type="date" name="capa_due_date[]" value="{{ $data->capa_due_date }}" class="hide-input" 
                                                                         oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>
                                                                     <td>
                                                                         <select placeholder="Select..." name="capa_owner[]">
@@ -1234,15 +1234,15 @@ function addMultipleFiles(input, block_id) {
                                                                             @endforeach
                                                                         </select>
                                                                     </td>
-                                                                    <td><input type="text" name="action_taken[]" value="{{unserialize($grid_data1->action_taken)[$key] ? unserialize($grid_data1->action_taken)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="action_taken[]" value="{{unserialize($grid_data1->action_taken)[$key] ? unserialize($grid_data1->action_taken)[$key]: "" }}"></td> --}}
                                                                     {{-- <td><input type="date" name="capa_completion_date[]" value="{{unserialize($grid_data1->capa_completion_date)[$key] ? unserialize($grid_data1->capa_completion_date)[$key]: "" }}"></td> --}}
-                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                    {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div class="calenderauditee">
-                                                                        <input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                        <input type="date" name="capa_completion_date[]" class="hide-input" 
+                                                                        <input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->capa_completion_date) }}"/>
+                                                                        <input type="date" name="capa_completion_date[]" value="{{ $data->capa_completion_date }}" class="hide-input" 
                                                                         oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>
                                                                     <td><input type="text" name="status_Observation[]" value="{{unserialize($grid_data1->status)[$key] ? unserialize($grid_data1->status)[$key]: "" }}"></td>
-                                                                    <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="remark_observation[]" value="{{unserialize($grid_data1->remark)[$key] ? unserialize($grid_data1->remark)[$key]: "" }}"></td> --}} 
                                                                 </tr>
                                                             @endforeach
                                                             @endif
@@ -1607,9 +1607,13 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -1651,9 +1655,13 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -1694,9 +1702,13 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -1717,6 +1729,7 @@ function addMultipleFiles(input, block_id) {
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
+                                    <label></lable>
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations

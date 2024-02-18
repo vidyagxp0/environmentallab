@@ -15,6 +15,12 @@ function addMultipleFiles(input, block_id) {
         let viewLink = document.createElement("a");
         viewLink.href = URL.createObjectURL(files[i]);
         viewLink.textContent = "<View>";
+
+        let fileClone = files[i].slice();
+        viewLink.addEventListener('click',function(e){
+            e.preventDefault();
+            window.open(viewLink.href,'_blank');
+        });
         div.appendChild(viewLink);
         block.appendChild(div);
     }
@@ -476,26 +482,26 @@ function addManagementReviewParticipants(tableId) {
     newRow.setAttribute("id", "row" + currentRowCount);
 
     let cell1 = newRow.insertCell(0);
-    cell1.innerHTML = currentRowCount-1;
+    cell1.innerHTML = currentRowCount;
 
     let cell2 = newRow.insertCell(1)
-    cell2.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
-
-    let cel3 = newRow.insertCell(2)
-    cel3.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
-
+   // cell2.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    cell2.innerHTML = "<input type='text'>";
+    let cell3 = newRow.insertCell(2)
+   // cel3.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    cell3.innerHTML = "<input type='text'>";
     let cell4 = newRow.insertCell(3)
-    cell4.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
-
+   // cell4.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+    cell4.innerHTML = "<input type='text'>";
     let cell5 = newRow.insertCell(4)
-    cell5.innerHTML = "<select><option value='0'>-- Select --</option><option value='Yes'>Yes</option><option value='No'>No</option></select>"
-
+   // cell5.innerHTML = "<select><option value='0'>-- Select --</option><option value='Yes'>Yes</option><option value='No'>No</option></select>"
+    cell5.innerHTML = "<input type='text'>";
     let cell6 = newRow.insertCell(5)
-    cell6.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
-
+  //  cell6.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    cell6.innerHTML = "<input type='text'>";
     let cell7 = newRow.insertCell(6)
-    cell7.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
-
+   // cell7.innerHTML = "<select><option value='0'>-- Select --</option><option value='QA'>Quality Assurance</option><option value='QC'>Quality Control</option><option value='Prod'>Production</option></select>"
+    cell7.innerHTML = "<input type='text'>";
     let cell8 = newRow.insertCell(7);
     cell8.innerHTML = "<input type='text'>";
 

@@ -32,7 +32,7 @@ window.addEventListener("popstate", function(event) {
 
             <div class="inner-block pdf-block">
                 <div class="main-head">
-                    SOP-0000{{ $document->id }}
+                    SOP-000{{ $document->id }}
                 </div>
                 <div class="inner-block-content">
                     <iframe id="theFrame" width="100%" height="800"
@@ -93,28 +93,32 @@ window.addEventListener("popstate", function(event) {
         </div>
     </div>
     <script>
-        var timer2 = "01:01";
-        var interval = setInterval(function() {
+    var timer2 = "1:00"; // Set the initial time to 10 minutes
+    var interval = setInterval(function() {
+        var timer = timer2.split(':');
+        var minutes = parseInt(timer[0], 10);
+        var seconds = parseInt(timer[1], 10);
 
+        --seconds;
 
-            var timer = timer2.split(':');
-            //by parsing integer, I avoid all extra string processing
-            var minutes = parseInt(timer[0], 10);
-            var seconds = parseInt(timer[1], 10);
-            --seconds;
-            minutes = (seconds < 0) ? --minutes : minutes;
-            if (minutes < 0) clearInterval(interval);
-            seconds = (seconds < 0) ? 59 : seconds;
-            seconds = (seconds < 10) ? '0' + seconds : seconds;
-            if (minutes == 0 && seconds == 0) {
+        minutes = (seconds < 0) ? --minutes : minutes;
+        if (minutes < 0) clearInterval(interval);
 
-                $("#complete-training").removeClass("d-none");
+        seconds = (seconds < 0) ? 59 : seconds; // Adjust seconds when it reaches 0
 
-                alert('training compete');
-            }
-            //minutes = (minutes < 10) ?  minutes : minutes;
-            $('.countdown').html(minutes + ':' + seconds);
-            timer2 = minutes + ':' + seconds;
-        }, 1000);
-    </script>
+        seconds = (seconds < 10) ? '0' + seconds : seconds;
+
+        if (minutes == 0 && seconds == 0) {
+            $("#complete-training").removeClass("d-none");
+            alert('Time Complete Now Continue With Question');
+            clearInterval(interval);
+        }
+
+        $('.countdown').html(minutes + ':' + seconds);
+        timer2 = minutes + ':' + seconds;
+    }, 1000);
+</script>
+
+      
+
 @endsection

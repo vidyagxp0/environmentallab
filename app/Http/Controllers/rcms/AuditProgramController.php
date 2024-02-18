@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\AuditProgram;
 use App\Models\RecordNumber;
 use App\Models\RoleGroup;
+use App\Models\InternalAudit;
 use App\Models\User;
 use App\Models\AuditProgramGrid;
 use Carbon\Carbon;
@@ -16,6 +17,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use GuzzleHttp\Client;
 
 class AuditProgramController extends Controller
 {
@@ -33,10 +35,22 @@ class AuditProgramController extends Controller
     public function create(request $request)
     {
         // return $request;
-        if (!$request->short_description) {
-            toastr()->info("Short Description is required");
-            return redirect()->back()->withInput();
-        }
+        // if (!$request->short_description) {
+        //     toastr()->info("Short Description is required");
+        //     return redirect()->back()->withInput();
+        // }
+        // if (!$request->country) {
+        //     toastr()->info("Country is required");
+        //     return redirect()->back()->withInput();
+        // }
+        // if (!$request->state) {
+        //     toastr()->info("State is required");
+        //     return redirect()->back()->withInput();
+        // }
+        // if (!$request->City) {
+        //     toastr()->info("City is required");
+        //     return redirect()->back()->withInput();
+        // }
         $data = new AuditProgram();
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
@@ -659,6 +673,15 @@ class AuditProgramController extends Controller
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $AuditProgramGrid = AuditProgramGrid::where('audit_program_id', $id)->first();
 
+        $client = new Client();
+        $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
+        $data->stateArr = json_decode($stateList->getBody(), true);
+        $cityList = $client->get('https://geodata.phplift.net/api/index.php?type=getCities&countryId=&stateId='.$data->state);
+        $data->cityArr = json_decode($cityList->getBody(), true); 
+        $countryList = $client->get('https://geodata.phplift.net/api/index.php?type=getCountries');
+        $data->countryArr = json_decode($countryList->getBody(), true);
+ 
+
         return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid'));
     }
 
@@ -777,10 +800,24 @@ class AuditProgramController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
+        $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
         if ($request->child_type == "Internal_Audit") {
-            return view('frontend.forms.audit', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
-        } else {
-            return view('frontend.forms.auditee', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
+        }
+        if ($request->child_type == "extension") {
+            $parent_due_date = "";
+            $parent_id = $id;
+            $parent_name = $request->parent_name;
+            if ($request->due_date) {
+                $parent_due_date = $request->due_date;
+            }
+
+            $record_number = ((RecordNumber::first()->value('counter')) + 1);
+            $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+            return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
+        }
+        else {
+            return view('frontend.forms.auditee', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
         }
     }
 
@@ -804,7 +841,7 @@ class AuditProgramController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $data->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Audit-Program' . $id . '.pdf');
         }
     }
@@ -830,7 +867,7 @@ class AuditProgramController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $doc->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('AuditProgram-AuditTrial' . $id . '.pdf');
         }
     }

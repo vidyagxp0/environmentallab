@@ -36,7 +36,15 @@
             querySelect.options.add(new Option('Pending Actions Completion', '5'));
             querySelect.options.add(new Option('Closed - Done', '6'));
 
-        } else if (scopeValue === 'lab_incident') {
+        }
+        else if (scopeValue === 'audit_program') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending Approval', '2'));
+            querySelect.options.add(new Option('Pending Audit', '3'));
+            querySelect.options.add(new Option('Closed - Done', '4'));
+
+        }
+         else if (scopeValue === 'lab_incident') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Incident Review ', '2'));
             querySelect.options.add(new Option('Pending Investigation', '3'));
@@ -44,7 +52,7 @@
             querySelect.options.add(new Option('Pending CAPA', '5'));
             querySelect.options.add(new Option('Pending QA Review', '6'));
             querySelect.options.add(new Option('Pending QA Head Approve', '7'));
-            querySelect.options.add(new Option('Close - done', '8'));
+            querySelect.options.add(new Option('Close - Done', '8'));
 
         } else if (scopeValue === 'risk_assement') {
             querySelect.options.add(new Option('Opened', '1'));
@@ -53,7 +61,7 @@
             querySelect.options.add(new Option('Pending HOD Approval ', '4'));
             querySelect.options.add(new Option('Actions Items in Progress', '5'));
             querySelect.options.add(new Option('Residual Risk Evaluation', '6'));
-            querySelect.options.add(new Option('Close - done', '7'));
+            querySelect.options.add(new Option('Close - Done', '7'));
 
         } else if (scopeValue === 'root_cause_analysis') {
             querySelect.options.add(new Option('Opened', '1'));
@@ -61,14 +69,57 @@
             querySelect.options.add(new Option('Pending Group Review Discussion', '3'));
             querySelect.options.add(new Option('Pending Group Review', '4'));
             querySelect.options.add(new Option('Pending QA Review', '5'));
-            querySelect.options.add(new Option('Close - done', '6'));
+            querySelect.options.add(new Option('Close - Done', '6'));
 
         } else if (scopeValue === 'management_review') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('In Progress', '2'));
-            querySelect.options.add(new Option('Close - done', '3'));
+            querySelect.options.add(new Option('Close - Done', '3'));
 
         }
+        else if (scopeValue === 'extension') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Pending Approval', '2'));
+                querySelect.options.add(new Option('Close - Done', '3'));
+
+            }
+        else if (scopeValue === 'documents') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Close - Cancel', '2'));
+                querySelect.options.add(new Option('Close - Done', '3'));
+
+            }
+            else if (scopeValue === 'observation') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Pending CAPA Plan', '2'));
+                querySelect.options.add(new Option('Pending Approval', '3'));
+                querySelect.options.add(new Option('Pending Final Approval', '4'));
+                querySelect.options.add(new Option('Close - Done', '5'));
+            }
+
+            else if (scopeValue === 'action_item') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Work in Progress', '2'));
+                querySelect.options.add(new Option('Close - Done', '3'));
+
+            }
+
+            else if (scopeValue === 'effectiveness_check') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Check Effectiveness', '2'));
+                querySelect.options.add(new Option('Close - Done', '3'));
+
+            }
+            else if (scopeValue === 'CC') {
+                querySelect.options.add(new Option('Opened', '1'));
+                querySelect.options.add(new Option('Under HOD Review', '2'));
+                querySelect.options.add(new Option('Pending QA Review', '3'));
+                querySelect.options.add(new Option('CFT Review', '4'));
+                querySelect.options.add(new Option('Pending Change Implementation', '5'));
+                querySelect.options.add(new Option('Close - Done', '6'));
+            }
+
+            
         // Add more conditions based on other scope values
 
     }
@@ -77,32 +128,42 @@
     <div id="rcms-dashboard">
         <div class="container-fluid">
             <div class="dash-grid">
+                
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
-                        <div class="grid-block">
+                        
+                       <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process</label>
-                                <select id="scope" name="form" onchange="updateQueryOptions()">
-                                    <option value="all_records">All Records</option>
-                                    <option value="internal_audit">Internal Audit</option>
-                                    <option value="external_audit">External Audit</option>
-                                    <option value="capa">Capa</option>
-                                    <option value="lab_incident">Lab Incident</option>
-                                    <option value="risk_assement">Risk Assesment</option>
-                                    <option value="root_cause_analysis">Root Cause Analysis</option>
-                                    <option value="management_review">Management Review</option>
+                                <select id="scope" name="form">
+                                    <option value="">All Records</option>
+                                    <option value="Internal-Audit">Internal Audit</option>
+                                    <option value="External-Audit">External Audit</option>
+                                    <option value="Capa">Capa</option>
+                                    <option value="Audit-Program">Audit Program</option>
+                                    <option value="Lab Incident">Lab Incident</option>
+                                    <option value="Risk Assesment">Risk Assesment</option>
+                                    <option value="Root-Cause-Analysis">Root Cause Analysis</option>
+                                    <option value="Management Review">Management Review</option>
+                                    <option value="Document">Document</option>
+                                    <option value="Extension">Extension</option>
+                                    <option value="Observation">Observation</option>
+                                    <option value="Change Control">Change Control</option>
+                                    <option value="Action Item">Action Item</option>
+                                    <option value="Effectiveness Check">Effectiveness Check</option>
+                                     <option value="tms">TMS</option> 
                                 </select>
                             </div>
                             <div class="group-input">
                                 <label for="query">Criteria</label>
-                                <select id="query" name="stage">
-                                    <option value="all_records">All Records</option>
-                                    <option value="1">Closed Records</option>
-                                    <option value="2">Opened Records</option>
-                                    <option value="3">Cancelled Records</option>
-                                    <option value="4">Overdue Records</option>
-                                    <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option>
+                                <select id="query" name="stage" >
+                                    <option value="">All Records</option>
+                                    <option value="Closed">Closed Records</option>
+                                    <option value="Opened">Opened Records</option>
+                                    <option value="Cancelled">Cancelled Records</option>
+                                    {{-- <option value="4">Overdue Records</option>
+                                    <option value="Assigned">Assigned To Me</option>
+                                    <option value="Records">Records Created Today</option> --}}
                                 </select>
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
@@ -135,11 +196,11 @@
                                                     <a href="{{ route('CC.show', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
                                                     </a>
-                                                    <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/1">
+                                                    <a href="{{ url('rcms/qms-dashboard', $datas->id) }}/CC">
                                                         <div class="icon" onclick="showChild()" data-bs-toggle="tooltip"
                                                             title="Related Records">
-                                                            <img src="{{ asset('user/images/single.png') }}" alt="..."
-                                                                class="w-100 h-100">
+                                                            {{-- <img src="{{ asset('user/images/single.png') }}" alt="..."
+                                                                class="w-100 h-100"> --}}
                                                         </div>
                                                     </a>
                                                     {{-- -----------------------by pankaj-------------------- --}}
@@ -152,8 +213,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/internal_audit">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -166,8 +227,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/risk_assesment">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -180,8 +241,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/lab_incident">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -194,11 +255,12 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/external_audit">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
+                                                    
                                                 @elseif ($datas->type == 'Audit-Program')
                                                     <a href="{{ route('ShowAuditProgram', $datas->id) }}">
                                                         {{ str_pad($datas->record, 4, '0', STR_PAD_LEFT) }}
@@ -208,8 +270,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/audit_program">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -222,8 +284,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/observation">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -237,8 +299,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/action_item">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -251,8 +313,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/extension">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -262,11 +324,11 @@
                                                     </a>
                                                     @if (!empty($datas->parent_id))
                                                         <a
-                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/effectivness">
+                                                            href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/effectiveness_check">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -278,8 +340,8 @@
                                                         <a href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/capa">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -292,8 +354,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/management_review">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -306,8 +368,8 @@
                                                             href="{{ url('rcms/qms-dashboard_new', $datas->id) }}/root_cause_analysis">
                                                             <div class="icon" onclick="showChild()"
                                                                 data-bs-toggle="tooltip" title="Related Records">
-                                                                <img src="{{ asset('user/images/parent.png') }}"
-                                                                    alt="..." class="w-100 h-100">
+                                                                {{-- <img src="{{ asset('user/images/parent.png') }}"
+                                                                    alt="..." class="w-100 h-100"> --}}
                                                             </div>
                                                         </a>
                                                     @endif
@@ -328,7 +390,7 @@
                                                 @if ($datas->division_id)
                                                     {{ Helpers::getDivisionName($datas->division_id) }}
                                                 @else
-                                                    QMS-North America
+                                                    KSA
                                                 @endif
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
@@ -336,7 +398,7 @@
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->type }}
                                             </td>
-                                            <td class="td_desc viewdetails" data-id="{{ $datas->id }}"
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{ $datas->short_description }}
@@ -349,7 +411,8 @@
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ $datas->assign_to }}
+                                                {{-- {{ $datas->assign_to }} --}}
+                                                {{ Helpers::getInitiatorName($datas->assign_to) }}
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
@@ -368,9 +431,9 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="scope-pagination">
+                     {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
-                        </div>
+                        </div>  --}}
                     </div>
                 </div>
             </div>

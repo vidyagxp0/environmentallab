@@ -42,10 +42,10 @@ class CapaController extends Controller
     {
         // return $request;
 
-        // if (!$request->short_description) {
-        //     toastr()->error("Short description is required");
-        //     return redirect()->back();
-        // }
+        if (!$request->short_description) {
+            toastr()->error("Short description is required");
+            return redirect()->back();
+        }
         $capa = new Capa();
         $capa->form_type = "capa";
         $capa->record = ((RecordNumber::first()->value('counter')) + 1);
@@ -1292,8 +1292,10 @@ class CapaController extends Controller
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // $MaterialsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.MaterialsQuery.lims');
         // dd( $MaterialsQueryData->json());
-        
 
+        // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
+        // dd( $EquipmentsQueryData->json());
+        
         return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
     }
 
@@ -1460,7 +1462,6 @@ class CapaController extends Controller
 
     public function child_change_control(Request $request, $id)
     {
-
         $cft =[];
         $parent_id = $id;
         $parent_type = "Audit_Program";
@@ -1538,7 +1539,7 @@ class CapaController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $data->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('CAPA' . $id . '.pdf');
         }
     }
@@ -1564,7 +1565,7 @@ class CapaController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $doc->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('CAPA-Audit' . $id . '.pdf');
         }
     }

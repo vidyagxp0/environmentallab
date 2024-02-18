@@ -117,7 +117,7 @@
                                     <div class="row">
                                         <div class="col-lg-4">
                                             <div class="group-input">
-                                                <label for="rls">Record Number</label>
+                                                <label for="rls">Record Number1</label>
                                                 <div class="statis">Record- {{ $openStage->recordData }}</div>
                                             </div>
                                         </div>
@@ -233,6 +233,7 @@
                                         <div class="col-md-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due-date">Due Date<span class="text-danger">*</span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <!-- <input type="date" name="due_date" id="Changedue_date"
                                                     value="{{ $openStage->due_date }}"> -->
 
@@ -2306,10 +2307,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
                 </form>
             </div>
         </div>
@@ -2323,7 +2328,7 @@
                     <div class="division-tabs">
                         <div class="tab">
                             @php
-                                $division = DB::table('divisions')->get();
+                                $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
                             @endphp
                             @foreach ($division as $temp)
                                 <input type="hidden" value="{{ $temp->id }}" name="division_id" required>

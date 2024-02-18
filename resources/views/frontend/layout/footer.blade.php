@@ -229,6 +229,14 @@
             $('#referencesdiv').append(html);
 
         });
+        $('#annbtadd').click(function(e) {
+
+            var html =
+              '<div class="resrow"><input type="text" name="ann[]" class="myclassname"></div>';
+
+            $('#anndiv').append(html);
+
+});
 
         $('#materialsbtadd').click(function(e) {
 
@@ -465,6 +473,73 @@
         });
 
 
+        $("#query").on("change", function() {
+            
+            var value = $(this).val().toLowerCase();
+            if(value!==''){
+                $("#searchTable tr").filter(function() {
+                    $(this).toggle(true)
+                    var selectedText = $("#scope option:selected").val();
+                    // alert(selectedText);
+                    if(selectedText!==''){
+                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(this).text().toLowerCase().indexOf(value)) > -1)
+                    }else{
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    }
+                });  
+            
+            }else{
+                var selectedText = $("#scope option:selected").val();
+                                
+                if(selectedText!==''){
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle(true)
+                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
+                    });
+                }
+                else{
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle(true)
+                    });
+                }
+                
+            }
+        });
+
+        $("#scope").on("change", function() {
+           
+            var value = $(this).val().toLowerCase();
+            if(value!==''){
+                
+                $("#searchTable tr").filter(function() {
+                    $(this).toggle(true)
+                    var selectedText = $("#query option:selected").val();
+                    if(selectedText!==''){
+                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(this).text().toLowerCase().indexOf(value)) > -1)
+                    }else{
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    } 
+                });
+
+                
+            }else{
+                
+                $("#searchTable tr").filter(function() {
+                    $(this).toggle(true)
+                });
+                var selectedText = $("#query option:selected").val();
+                 
+                if(selectedText!==''){
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle(true)
+                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
+                    });
+                }
+                    
+                
+            }    
+        });
+        
         $('#annexurebtnadd').click(function(e) {
             function generateTableRow(serialNumber) {
                 var html =
@@ -831,8 +906,10 @@
                     '<tr>' +
                     '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     '<td><input type="text" name="action[]"></td>' +
-                    '<td><input type="text" name="responsible[]"></td>' +
-                    '<td><input type="text" name="deadline[]"></td>' +
+                     '<td><input type="text" name="responsible[]"></td>' +
+                    // '<td><input type="text" name="deadline[]"></td>' +
+'<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+
                     '<td><input type="text" name="item_status[]"></td>'
                 '</tr>';
                 return html;
@@ -850,7 +927,7 @@
                     '<tr>' +
                     '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     // '<td><input type="date" name="date[]"></td>' +
-                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
+                    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline'+ serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
                     '<td><input type="text" name="topic[]"></td>' +
                     '<td><input type="text" name="responsible[]"></td>' +
                     '<td><input type="time" name="start_time[]"></td>' +
@@ -1041,6 +1118,34 @@
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
 </script>
+
+<script>
+    // Get the textarea element
+    var textArea = document.getElementById('textArea');
+    // Get the paragraph element to display character count
+    var charCountDisplay = document.getElementById('charCount');
+
+    // Function to count characters in the textarea
+    function countCharacters() {
+      var text = textArea.value;
+      // Display the character count
+      charCountDisplay.textContent = 'Character count: ' + text.length;
+    }
+
+    // Add an event listener to the textarea to trigger character count on input
+    textArea.addEventListener('input', function() {
+      countCharacters();
+      // Limit the text to 2500 characters
+      if (textArea.value.length > 2500) {
+        textArea.value = textArea.value.slice(0, 2500);
+        countCharacters(); // Update character count after truncation
+      }
+    });
+
+    // Call the countCharacters function initially to display character count for any existing text
+    countCharacters();
+  </script>
+
 
 
 </body>

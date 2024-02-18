@@ -158,11 +158,16 @@
             text-align: center;
         }
 
-        #rcms_login_block input,
-        #rcms_login_block select {
+        #rcms_login_block input{
             border: 0;
             outline: none;
             background: transparent;
+            color: white
+        }
+        #rcms_login_block select {
+            border: 0;
+            outline: none;
+            background: #162e67;
             color: white
         }
 
@@ -793,7 +798,7 @@
                 <img src="{{ asset('user/images/login.jpg') }}" alt="..." class="w-100 h-100">
             </div>
             <div class="form-block">
-                <div class="logo-container">
+                <div class="logo-container11">
                     <div class="logo">
                         <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
                     </div>

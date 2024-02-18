@@ -80,6 +80,9 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
                             </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Request More Info
+                            </button>
                         @elseif($data->stage == 6 && Auth::user()->role == 6)
                             @if ($evaluation->training_required == 'yes')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -269,7 +272,7 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm10')">Activity Log</button>
                         </div>
-                        <form id="CCFormInput" action="{{ route('CC.update', $data->id) }}" method="POST">
+                        <form id="CCFormInput" action="{{ route('CC.update', $data->id) }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -331,7 +334,7 @@
                                             <div class="col-md-6">
                                                 <div class="group-input">
                                                     <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                    <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                                    <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                     <input readonly type="text"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                         name="due_date">
@@ -414,7 +417,7 @@
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="severity-level">Sevrity Level</label>
+                                                    <label for="severity-level">Severity Level</label>
                                                     <select name="severity_level1">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity_level1 == 'minor') selected @endif
@@ -1765,7 +1768,7 @@
 
 
                         </div>
-
+ 
                     </div>
 
                     <!-- Modal footer -->
@@ -1815,7 +1818,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -1940,14 +1944,15 @@
                         </div>
                         <div class="group-input">
                             <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment">
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -1990,7 +1995,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -2032,7 +2038,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>

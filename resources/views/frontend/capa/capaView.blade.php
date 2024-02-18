@@ -109,9 +109,9 @@
                                 Approve
 
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
+                            </button> -->
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
@@ -159,9 +159,9 @@
                             @endif
 
                             @if ($data->stage >= 4)
-                                <div class="active">CFT/SME Review</div>
+                                <div class="active">QA Review</div>
                             @else
-                                <div class="">CFT/SME Review</div>
+                                <div class="">QA Review</div>
                             @endif
 
 
@@ -198,8 +198,8 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                         {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button>
-                        <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button>
+                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Additional Information</button> --}}
+                        {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Group Comments</button> --}}
                         <button class="cctablinks" onclick="openCity(event, 'CCForm5')">CAPA Closure</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Activity Log</button>
                     </div>
@@ -261,8 +261,8 @@
                                         </div>
                                         <!-- <div class="col-md-6">
                                             <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                                <label for="due-date">Due Date <span class="text-danger">*</span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 @if (!empty($revised_date))
                                                 <input readonly type="text"
                                                 value="{{ Helpers::getdateFormat($revised_date) }}">
@@ -354,13 +354,26 @@
                                                 {{-- <div class="static"></div> --}}
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                            </div>
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+        
+                                        </div>
+        
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -543,7 +556,7 @@
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -737,8 +750,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1226,8 +1239,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1313,12 +1326,12 @@
 
                                         <div class="col-6 new-date-data-field">
                                             <div class="group-input input-date">
-                                                <label for="Effect Check Creation Date">Effectiveness Check Creation Date1</label>
+                                                <label for="Effect Check Creation Date">Effectiveness Check Creation Date</label>
                                                 {{-- <input type="date" name="effect_check_date"> --}}
                                                 <div class="calenderauditee">
                                                     <input type="text"  id="effect_check_date" readonly
                                                         placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->effect_check_date) }}"/>
-                                                    <input type="date" name="effect_check_date" value="{{ $data->effect_check_date }}"class="hide-input"
+                                                    <input type="date" name="effect_check_date" value=""class="hide-input"
                                                         oninput="handleDateInput(this,'effect_check_date')" />
                                                 </div>
                                             </div>
@@ -1355,10 +1368,9 @@
                                         </div>
                                     </div>
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="submit" class="saveButton">Save</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1471,18 +1483,16 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="button-block">
-                                        <button type="submit" class="saveButton"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
-                                        <button type="button"> <a class="text-white"
-                                                href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                        <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
+                                        <button type="submit"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        <button type="button"> <a class="text-white"href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
-
+                             
                         </div>
                     </form>
 
@@ -1628,23 +1638,27 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -1671,23 +1685,27 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -1726,9 +1744,13 @@
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -1767,9 +1789,13 @@
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                            <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
@@ -1897,4 +1923,11 @@
                         });
                     });
                 </script> 
+                <script>
+                    var maxLength = 255;
+                    $('#docname').keyup(function() {
+                        var textlen = maxLength - $(this).val().length;
+                        $('#rchars').text(textlen);});
+                </script>
+                
         @endsection

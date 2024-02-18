@@ -10,12 +10,24 @@ use Illuminate\Support\Facades\Mail;
 
 class Helpers
 {
+    // public static function getdateFormat($date)
+    // {
+    //     $date = Carbon::parse($date);
+    //     $formatted_date = $date->format("d-M-Y");
+    //     return $formatted_date;
+    // }
     public static function getdateFormat($date)
-    {
+{
+    if(empty($date)) {
+        return ''; // or any default value you prefer
+    }
+    else{        
         $date = Carbon::parse($date);
         $formatted_date = $date->format("d-M-Y");
         return $formatted_date;
     }
+
+}
     public static function getdateFormat1($date)
     {
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');

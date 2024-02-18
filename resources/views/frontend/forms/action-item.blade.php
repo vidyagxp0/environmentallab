@@ -52,17 +52,17 @@
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 General Information
-                            </div>
+                            </div> <!-- RECORD NUMBER -->
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="group-input">
+                                    <div class="group-input"> 
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $parent_record }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6">  
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
                                         <input disabled type="text" name="division_code"
@@ -71,7 +71,7 @@
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-6">  
                                     @if (!empty($cc->id))
                                         <input type="hidden" name="ccId" value="{{ $cc->id }}">
                                     @endif
@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Date Opened">Date of Initiation</label>
+                                        <label for="Date Opened">Date of Initiation1</label>
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         <input disabled type="text"
                                             value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
@@ -133,7 +133,8 @@
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label>
-                                        <textarea name="short_description"></textarea>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <textarea name="short_description" required></textarea>
                                     </div>
                                 </div>
 

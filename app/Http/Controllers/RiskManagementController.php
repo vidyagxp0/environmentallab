@@ -525,6 +525,20 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        if (!empty($data->state)) {
+            $history = new RiskAuditTrail();
+            $history->risk_id = $data->id;
+            $history->activity_type = 'State/District';
+            $history->previous = "Null";
+            $history->current = $data->state;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($data->city)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -1257,6 +1271,20 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        if ($lastDocument->state != $data->state || !empty($request->state_comment)) {
+
+            $history = new RiskAuditTrail();
+            $history->risk_id = $id;
+            $history->activity_type = 'State/District';
+            $history->previous = $lastDocument->state;
+            $history->current = $data->state;
+            $history->comment = $request->state_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if ($lastDocument->city != $data->city || !empty($request->city_comment)) {
 
             $history = new RiskAuditTrail();
@@ -1907,7 +1935,7 @@ class RiskManagementController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $data->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Risk-assesment' . $id . '.pdf');
         }
     }
@@ -1933,7 +1961,7 @@ class RiskManagementController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $doc->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Risk-Audit-Trial' . $id . '.pdf');
         }
     }

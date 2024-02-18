@@ -38,7 +38,7 @@
                         <input type="radio" name="dash-tabs" data-target="tms-all-block" checked>
                         <div><i class="fa-solid fa-bars-progress"></i>&nbsp;All</div>
                     </div>
-                    <div class="inner-block tab-btn">
+                    {{-- <div class="inner-block tab-btn">
                         <input type="radio" name="dash-tabs" data-target="tms-due-block">
                         <div><i class="fa-solid fa-clock-rotate-left fa-flip-horizontal"></i>&nbsp;Past Due</div>
                     </div>
@@ -49,7 +49,7 @@
                     <div class="inner-block tab-btn">
                         <input type="radio" name="dash-tabs" data-target="tms-completed-block">
                         <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="inner-block tms-block" id="tms-all-block">
@@ -71,7 +71,7 @@
                                     @foreach ($documents as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                             <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -107,7 +107,7 @@
                                 <tbody id="searchTable">
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
@@ -145,7 +145,7 @@
                                     @foreach ($due as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                                 <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -175,7 +175,7 @@
                                 <tbody>
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
@@ -211,7 +211,7 @@
                                     @foreach ($pending as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                                 <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -241,7 +241,7 @@
                                 <tbody>
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
@@ -277,7 +277,7 @@
                                     @foreach ($complete as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                                 <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -308,7 +308,7 @@
                                 <tbody>
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
@@ -326,11 +326,11 @@
                     @endif
                 </div>
 
-                <div class="row">
+                {{-- <div class="row">
                     <div class="col-lg-4">
                         <div class="inner-block progress-block">
                             <div class="head">
-                                Training Past Due
+                                Training Past Due11111
                             </div>
                             <div id="chart-tms1"></div>
                         </div>
@@ -351,9 +351,9 @@
                             <div id="chart-tms3"></div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div class="number-grid">
+                {{-- <div class="number-grid">
                     <div class="number-block">
                         <div class="top">
                             <div class="icon color-1">
@@ -398,9 +398,9 @@
                             Completed Trainigs
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 30px;">
+                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:0 30px;">
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
@@ -456,8 +456,8 @@
                             </div>
                             <div id="chart-tms11"></div>
                         </div>
-                </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px;">
+                </div> --}}
+                {{-- <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:30px;">
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
@@ -478,8 +478,8 @@
                             </div>
                             <div id="chart-tms14"></div>
                         </div>
-                </div>
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
+                </div> --}}
+                {{-- <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
                         <div class="inner-block table-block">
                             <div class="head">CAPA Extension Rate (Term)</div>
                             <div class="dash-table">
@@ -587,7 +587,7 @@
                                 </table>
                             </div>
                         </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>

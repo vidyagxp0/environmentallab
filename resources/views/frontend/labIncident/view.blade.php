@@ -221,10 +221,10 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assigend" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
+                                        <select id="select-state" placeholder="Select..." name="assign_to" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                             <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option  @if ($data->assigend == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
+                                            @foreach ($users as $key=> $value)
+                                                <option  @if ($data->assign_to == $value->id) selected @endif  value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -232,6 +232,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                {{-- <div class="col-md-6">
 <<<<<<< Updated upstream
                                 <div class="col-md-6">
 =======
@@ -239,15 +240,13 @@
 >>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <input readonly type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                         {{-- <div class="static"> {{ $data->due_date }}</div> --}}
 
-<<<<<<< Updated upstream
-=======
-                                    </div>
-                                </div>  -->
-                                <!-- <div class="col-md-6">
+                                    {{-- </div>
+                                </div> --}} 
+                                <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
@@ -258,7 +257,7 @@
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
 
                                     {{-- </div>
-                                </div> --}}  -->
+                                </div> --}} 
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -269,7 +268,6 @@
                                         {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
 
->>>>>>> Stashed changes
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -338,12 +336,23 @@
                                         <input type="text" id="initiator_group_code"  name="initiator_group_code" value="{{$data->Initiator_Group}}" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_desc" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_desc }}</textarea>
                                     </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        
+                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_desc }}</textarea>
+                                    </div>
+                                    <p id="docnameError" style="color:red">**Short Description is required</p>
+
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -362,6 +371,7 @@
 =======
                                 <div class="col-lg-6">
 >>>>>>> Stashed changes
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
                                         <input type="date" name="occurance_date" value="{{ $data->occurance_date }}">
@@ -377,11 +387,12 @@
                                     <div class="group-input">
                                         <label for="Assigned to">Assigned to</label>
                                         <select name="assigend">
-                                            @($users as $value)
+                                            @foreach($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+                                </div> -->
 <<<<<<< Updated upstream
                                 </div> --}}
 =======
@@ -405,8 +416,8 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                            <div class="group-input" id="Incident_Category_others">
-                                                <label for="Incident_Category">Others<span
+                                            <div class="group-input" id="initiated_through_req1">
+                                                <label for="Incident_Category_others">Others<span
                                                         class="text-danger d-none">*</span></label>
                                                 <textarea name="Incident_Category_others" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Incident_Category_others }}</textarea>
                                             </div>
@@ -649,6 +660,12 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
+                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                        <textarea name="Corrective_Preventive_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Corrective_Preventive_Action }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="CAPA_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
@@ -805,7 +822,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Conclusion">Conclusion</label>
-                                        <textarea name="Conclusion" >{{ $data->Conclusion }}</textarea>
+                                        <textarea name="Conclusion"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >{{ $data->Conclusion }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -896,18 +913,7 @@
                                         <div class="Date">{{ $data->qA_head_approval_completed_on }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
-                                        <div class="static">{{ $data->cancelled_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
-                                        <div class="Date">{{ $data->cancelled_on }}</div>
-                                    </div>
-                                </div>
+                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>
@@ -932,6 +938,42 @@
                                         <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <div class="static">{{ $data->cancelled_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Cancelled On</label>
+                                        <div class="Date">{{ $data->cancelled_on }}</div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed By">All Activities Completed By</label>
+                                        <div class="static">{{ $data->all_activities_completed_by }}</div>
+                                    </div>
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed On">All Activities Completed On</label>
+                                        <div class="Date">{{ $data->all_activities_completed_on }}</div>
+                                    </div>
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed By">Review Completed By</label>
+                                        <div class="static">{{$data->review_completed_by}}</div>
+                                    </div>
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed On">Review Completed On</label>
+                                        <div class="Date">{{$data->review_completed_on}}</div>
+                                    </div>
+                                </div> --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>Save</button>
@@ -958,7 +1000,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ url('RejectStateChange', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/RejectStateChangeEsign', $data->id) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -978,16 +1020,22 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <input type="comment" name="comment">
+                            <label for="comment">Comment <span
+                                class="text-danger">*</span></label>
+                            <input type="comment" name="comment" required>
                         </div>
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                              
+                     </div>
                 </form>
             </div>
         </div>
@@ -1028,10 +1076,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                   </div>
                 </form>
             </div>
         </div>
@@ -1076,10 +1128,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                   </div>
                 </form>
             </div>
         </div>
@@ -1107,10 +1163,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         <button type="submit">Continue</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                   </div>
                 </form>
 
             </div>
@@ -1131,17 +1191,21 @@
                         <div class="group-input">
                             <label for="major">
                                 <input type="radio" name="revision" id="major" value="Action-Item">
-                                Capa
+                                CAPA
                             </label>
                         </div>
 
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         <button type="submit">Continue</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                             <button type="button" data-bs-dismiss="modal">Close</button>                         
+                   </div>
                 </form>
 
             </div>
@@ -1264,6 +1328,13 @@
                         }
                     });
                 });
+            });
+        </script>
+        <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);
             });
         </script>
 @endsection

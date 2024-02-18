@@ -59,7 +59,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4)
+                        @elseif($data->stage == 4)               
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
@@ -72,7 +72,7 @@
                             </a> </button>
 
 
-                    </div>
+                    </div>               
 
                 </div>
                 <div class="status">
@@ -178,22 +178,25 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="sub-head">Gneral Information</div>
+                                    <div class="sub-head">General Information</div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}"">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input type="hidden" name="record_number">
+                                        <input disabled type="text"
+                                            value="{{ $data->division_code }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="date_opened">Date Opened</label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input  type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
+                                        <input readonly type="text" name="division_code"
+                                            value="{{ $data->division_code }} ">
+                                        {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
                                         <input disabled type="text" value="{{ Auth::user()->name }}">
@@ -371,10 +374,35 @@
                                 <div class="col-12">
                                     <div class="sub-head">Further Information</div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files1">Attached Files</label>
                                         <input type="file" name="attach_files1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->attach_files1 }}"/>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files1">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="attach_files1">
+                                                @if ($data->attach_files1)
+                                                @foreach(json_decode($data->attach_files1) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->attach_files1 }}" type="file" id="myfile" name="attach_files1[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files1')"
+                                                    multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -385,7 +413,7 @@
                                         value="{{ ($data->recomendation_capa_date_due) }}"/>
                                         {{-- <input type="date" name="recomendation_capa_date_due" value="{{ $data->recomendation_capa_date_due }}"
                                         class="hide-input" 
-                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')"  />
+                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')"  /> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -401,10 +429,35 @@
                                         <textarea name="recommend_action" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->recommend_action }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_observations">Related Obsevations</label>
                                         <input type="file" name="related_observations" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->related_observations }}"/>
+                                    </div>
+                                </div> --}}
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="related_observations">Related Obsevations</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div disabled class="file-attachment-list" id="related_observations">
+                                            @if ($data->related_observations)
+                                            @foreach(json_decode($data->related_observations) as $file)
+                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                <b>{{ $file }}</b>
+                                                <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                            </h6>
+                                       @endforeach
+                                            @endif
+                                        </div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->related_observations }}" type="file" id="myfile" name="related_observations[]"
+                                                oninput="addMultipleFiles(this, 'related_observations')"
+                                                multiple>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -427,23 +480,27 @@
                                         <label for="date_Response_due1">Date Response Due</label>
                                         <!-- <input type="date" name="date_Response_due2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}"/> -->
                                         <div class="calenderauditee">                                     
-                                        <input type="text"  id="date_Response_due2"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}" />
-                                        <input type="date" name="date_Response_due2" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'date_Response_due2')" />
+                                        <input type="text"  id="date_Response_due2"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
+                                        value="{{ Helpers::getdateFormat($data->date_Response_due2) }}" />
+                                        {{-- <input type="date" name="date_Response_due2" value="{{ $data->date_Response_due2 }}"
+                                        class="hide-input" --}}
+                                        {{-- oninput="handleDateInput(this, 'date_Response_due2')" /> --}}
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="date_due">Date Due</label>
-                                        <input type="date" name="capa_date_due" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->capa_date_due }}">
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="date_due"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
+                                            value="{{ Helpers::getdateFormat($data->date_due) }}" />
+                                        </div>
                                     </div>
                                 </div>
                                  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to2">Assigned To</label>
-                                        <select name="assign_to" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
+                                        <select name="assign_to2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $value)
                                             <option {{ $data->assign_to2 == $value->id ? 'selected' : '' }}
@@ -457,10 +514,37 @@
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $value)
+                                            <option title="Amit Guru" value="1" {{ $data->cro_vendor == '1' ? 'selected' : '' }}>
+                                                Amit Guru
+                                            </option>
+                                            <option title="Shaleen Mishra" value="2" {{ $data->cro_vendor == '2' ? 'selected' : '' }}>
+                                                Shaleen Mishra
+                                            </option>
+                                            <option title="Vikas Prajapati" value="3" {{ $data->cro_vendor == '3' ? 'selected' : '' }}>
+                                                Vikas Prajapati
+                                            </option>
+                                            <option title="Anshul Patel" value="4" {{ $data->cro_vendor == '4' ? 'selected' : '' }}>
+                                                Anshul Patel
+                                            </option>
+                                            <option title="Amit Patel" value="5" {{ $data->cro_vendor == '5' ? 'selected' : '' }}>
+                                                Amit Patel
+                                            </option>
+                                            <option title="Madhulika Mishra" value="6" {{ $data->cro_vendor == '6' ? 'selected' : '' }}>
+                                                Madhulika Mishra
+                                            </option>
+                                            <option title="Jim Kim" value="7" {{ $data->cro_vendor == '7' ? 'selected' : '' }}>
+                                                Jim Kim
+                                            </option>
+                                            <option title="Akash Asthana" value="8" {{ $data->cro_vendor == '8' ? 'selected' : '' }}>
+                                                Akash Asthana
+                                            </option>
+                                            <option title="Not Applicable" value="9" {{ $data->cro_vendor == '9' ? 'selected' : '' }}>
+                                                Not Applicable
+                                            </option>
+                                            {{-- @foreach ($users as $value)
                                             <option {{ $data->cro_vendor == $value->id ? 'selected' : '' }}
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
@@ -482,12 +566,51 @@
                                             </thead>
                                             <tbody>
                                                 @foreach (unserialize($griddata->action) as $key => $temps)
-                                                <tr>
-                                                    <td><input type="text" name="serial_number[]" value="{{ $key+1 }}"></td>
-                                                    <td><input type="text" name="action[]" value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
-                                                    <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td>
-                                                    <td><input type="text" name="deadline[]" value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td>
-                                                    <td><input type="text" name="item_status[]" value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
+                                                <tr> 
+                                                    <!-- <td><input type="text" name="serial_number[]" value="{{ $key+1 }}"></td> -->
+                                                    <td><input disabled type="text" name="serial_number[]"  value="1">
+                                                </td>
+                                                    <td><input type="text" name="action[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
+                                                    {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
+                                                    <td> <select id="select-state" placeholder="Select..."
+                                                        name="responsible[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} >
+                                                        
+                                                        <option value="">-Select-</option>
+                                                        @foreach ($users as $value)
+                                                            <option
+                                                                @if($grid_data && unserialize($grid_data->responsible)[$key])
+                                                              {{ unserialize($grid_data->responsible)[$key] == $value->id ? 'selected' : '' }}
+                                                               @endif
+
+                                                                value="{{ $value->id }}">
+                                                                {{ $value->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select></td>
+                                                    <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                <!-- <input type="date" name="deadline[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
+                                                    <!-- <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date ">
+                                                                <div class="calenderauditee">
+                                                                    {{-- <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /> --}}
+                                                                    <input type="date" name="deadline[]" class="hide-input" 
+                                                                    oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>  -->
+                                                    {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
+                                                    <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -579,7 +702,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RPN">RPN</label>
-                                        <input type="text" name="analysisRPN" id="analysisRPN" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->analysisRPN }}" disabled>
+                                        <input type="text" name="analysisRPN" id="analysisRPN" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->analysisRPN }}" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -644,22 +767,65 @@
                                 <div class="col-12">
                                     <div class="sub-head">Response Summary</div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_response_due">Date Response Due</label>
                                         <input type="date" name="date_response_due1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_response_due1 }}">
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="date_response_due1">Date Response Due</label>
+                                        <div class="calenderauditee"> 
+                                            <input type="text"  id="date_response_due1"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="response_date">Date of Response</label>
                                         <input type="date" name="response_date" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->response_date }}">
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="response_date">Date of Response</label>
+                                        <div class="calenderauditee"> 
+                                            <input type="text"  id="response_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->response_date) }}"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files">Attached Files</label>
                                         <input type="file" name="attach_files2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->attach_files2 }}">
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="attach_files2">
+                                                @if ($data->attach_files2)
+                                                @foreach(json_decode($data->attach_files2) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->attach_files2 }}" type="file" id="myfile" name="attach_files2[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files2')"
+                                                    multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -810,10 +976,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                 </div>
                 </form>
             </div>
         </div>
@@ -856,10 +1026,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
                 </form>
             </div>
         </div>
@@ -901,10 +1075,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
                 </form>
             </div>
         </div>
@@ -1038,6 +1216,23 @@
                 currentStep--;
             }
         }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const removeButtons = document.querySelectorAll('.remove-file');
+
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
+
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
+                });
+            });
+        });
     </script>
 @endsection
 

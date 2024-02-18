@@ -9010,7 +9010,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
       }
 
       return img.src = file.dataURL;
-    } // Goes through the queue and processes files if there aren't too many already.
+    } // Goes through the queue and  files if there aren't too many already.
 
   }, {
     key: "processQueue",

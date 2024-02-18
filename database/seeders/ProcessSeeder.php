@@ -16,160 +16,160 @@ class ProcessSeeder extends Seeder
      */
     public function run()
     {
-        $process  = new Process();
-        $process->division_id = 1;
-        $process->process_name = "Equipment";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 1;
+        // $process->process_name = "Equipment";
+        // $process->save();
+
+        // $process  = new Process();
+        // $process->division_id = 1;
+        // $process->process_name = "CAPA";
+        // $process->save();
+
+        // $process  = new Process();
+        // $process->division_id = 1;
+        // $process->process_name = "Audit";
+        // $process->save();
 
         $process  = new Process();
         $process->division_id = 1;
-        $process->process_name = "CAPA";
-        $process->save();
-
-        $process  = new Process();
-        $process->division_id = 1;
-        $process->process_name = "Audit";
-        $process->save();
-
-        $process  = new Process();
-        $process->division_id = 1;
         $process->process_name = "New Document";
         $process->save();
 
-        $process  = new Process();
-        $process->division_id = 2;
-        $process->process_name = "Change Control";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 2;
+        // $process->process_name = "Change Control";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 2;
-        $process->process_name = "CAPA";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 2;
+        // $process->process_name = "CAPA";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 2;
-        $process->process_name = "Deviation";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 2;
+        // $process->process_name = "Deviation";
+        // $process->save();
 
         $process  = new Process();
         $process->division_id = 2;
         $process->process_name = "New Document";
         $process->save();
 
-        $process  = new Process();
-        $process->division_id = 3;
-        $process->process_name = "Equipment";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 3;
+        // $process->process_name = "Equipment";
+        // $process->save();
+
+        // $process  = new Process();
+        // $process->division_id = 3;
+        // $process->process_name = "CAPA";
+        // $process->save();
+
+        // $process  = new Process();
+        // $process->division_id = 3;
+        // $process->process_name = "Audit";
+        // $process->save();
 
         $process  = new Process();
         $process->division_id = 3;
-        $process->process_name = "CAPA";
-        $process->save();
-
-        $process  = new Process();
-        $process->division_id = 3;
-        $process->process_name = "Audit";
-        $process->save();
-
-        $process  = new Process();
-        $process->division_id = 3;
         $process->process_name = "New Document";
         $process->save();
 
-        $process  = new Process();
-        $process->division_id = 4;
-        $process->process_name = "Change Control";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 4;
+        // $process->process_name = "Change Control";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 4;
-        $process->process_name = "CAPA";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 4;
+        // $process->process_name = "CAPA";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 4;
-        $process->process_name = "Deviation";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 4;
+        // $process->process_name = "Deviation";
+        // $process->save();
 
         $process  = new Process();
         $process->division_id = 4;
         $process->process_name = "New Document";
         $process->save();
 
-        $process  = new Process();
-        $process->division_id = 5;
-        $process->process_name = "Equipment";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 5;
+        // $process->process_name = "Equipment";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 5;
-        $process->process_name = "CAPA";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 5;
+        // $process->process_name = "CAPA";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 5;
-        $process->process_name = "Audit";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 5;
+        // $process->process_name = "Audit";
+        // $process->save();
 
         $process  = new Process();
         $process->division_id = 5;
         $process->process_name = "New Document";
         $process->save();
 
-        $process  = new Process();
-        $process->division_id = 6;
-        $process->process_name = "Change Control";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 6;
+        // $process->process_name = "Change Control";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 6;
-        $process->process_name = "CAPA";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 6;
+        // $process->process_name = "CAPA";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 6;
-        $process->process_name = "Deviation";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 6;
+        // $process->process_name = "Deviation";
+        // $process->save();
 
         $process  = new Process();
         $process->division_id = 6;
         $process->process_name = "New Document";
         $process->save();
 
-        $process  = new Process();
-        $process->division_id = 7;
-        $process->process_name = "Equipment";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 7;
+        // $process->process_name = "Equipment";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 7;
-        $process->process_name = "CAPA";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 7;
+        // $process->process_name = "CAPA";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 7;
-        $process->process_name = "Audit";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 7;
+        // $process->process_name = "Audit";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 7;
-        $process->process_name = "New Document";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 7;
+        // $process->process_name = "New Document";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 8;
-        $process->process_name = "Change Control";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 8;
+        // $process->process_name = "Change Control";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 8;
-        $process->process_name = "CAPA";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 8;
+        // $process->process_name = "CAPA";
+        // $process->save();
 
-        $process  = new Process();
-        $process->division_id = 8;
-        $process->process_name = "Deviation";
-        $process->save();
+        // $process  = new Process();
+        // $process->division_id = 8;
+        // $process->process_name = "Deviation";
+        // $process->save();
 
         $process  = new Process();
         $process->division_id = 8;

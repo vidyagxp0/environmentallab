@@ -7,7 +7,7 @@
             <div class="inner-block">
                 <div class="main-head">
                     <div class="default-name">{{ date('Y') }}
-                        /Record-0000{{ $document->id }}</div>
+                        /Record-000{{ $document->id }}</div>
 
                     <div class="btn-group">
                         <button onclick="window.print();return false;" type="button">Print</button>

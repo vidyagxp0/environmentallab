@@ -168,6 +168,7 @@
                                         <div class="group-input">
                                             <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label>
+                                                    <div><small class="text-primary">Please mention brief summary</small></div>
                                             <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="short_description">{{ $data->short_description }}</textarea>
                                         </div>
                                     </div>
@@ -469,18 +470,32 @@
                                             <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
-                                     <div class="col-lg-6">
+                                     <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="start_date">Actual Start Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="start_date" value="{{ $data->start_date }}">
+                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="text" name="start_date" value="{{ Helpers::getdateFormat($data->start_date) }}">
                                         </div>
-                                    </div> 
+                                    </div>  -->
+                                    <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="start_date">Actual Start Date</label>
+                                        <!-- <input type="date" name="start_date"> -->
+
+                                        <div class="calenderauditee">                                     
+                                            <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="start_date" value=""
+                                            class="hide-input"
+                                            oninput="handleDateInput(this, 'start_date')"/>
+                                        </div>
+
+                                    </div>
+                                </div>
                                       <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="end_date">Actual End Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="date" name="end_date" value="{{ $data->end_date }}">
+                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="text" name="end_date"value="{{ Helpers::getdateFormat($data->end_date) }}">
                                         </div>
-                                    </div> 
+                                    </div>  --}}
                                      <!-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
@@ -493,7 +508,7 @@
                                                  <div class="calenderauditee">
                                                         <input type="text" id="start_date" readonly
                                                             placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                                        <!-- <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
+                                                         <input type="date" id="start_date_checkdate" value="{{ $data->start_date }} "
                                                         name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
                                                             oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /> -->
                                                 <!-- </div>
@@ -518,6 +533,32 @@
                                                 value="{{ $data->Support_doc }}">
                                         </div>
                                     </div> --}}
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Audit Schedule Start Date">Actual Start Date</label>
+                                            {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
+                                            
+                                            <div class="calenderauditee">
+                                                <input type="text" 
+                                                    id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}" />
+                                                <input type="date" id="start_date_checkdate" value="{{ $data->start_date }}" name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                            </div> 
+                                        </div>
+                                    </div>
+                        <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">Actual End Date</label>
+                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
+                                <div class="calenderauditee">
+                                    <input type="text" 
+                                        id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"  />
+                                    <input type="date" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="end_date_checkdate" value="{{ $data->end_date }}" class="hide-input"
+                                        oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                </div>
+                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  --}}
+                            </div>
+                        </div>
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
@@ -791,7 +832,7 @@
                     <div class="division-tabs">
                         <div class="tab">
                             @php
-                                $division = DB::table('divisions')->get();
+                                $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
                             @endphp
                             @foreach ($division as $temp)
                                 <input type="hidden" value="{{ $temp->id }}" name="division_id" required>

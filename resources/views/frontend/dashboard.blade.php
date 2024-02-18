@@ -13,7 +13,7 @@
             <div class="dashboard-container">
 
                 <div class="row">
-                    <div class="col-lg-9">
+                    <div class="col-lg-12">
                         <div class="dashboard-left-block">
                             <div class="inner-block main-block">
                                 <div class="top">
@@ -29,13 +29,13 @@
                                     <div class="doc-links d-flex">
                                         {{-- <a href="{{ route('change-control.create') }}" id="set-OpenDcrDivision">Open DCR</a> --}}
                                         <a href="#" id="set-division">Open DCR</a>
-                                        <a href="javascript:window.location.reload(true)">Refresh</a>
-                                        <a data-bs-toggle="modal" data-bs-target="#subscribe-modal">Subscribe</a>
+                                        {{-- <a href="javascript:window.location.reload(true)">Refresh</a>
+                                        <a data-bs-toggle="modal" data-bs-target="#subscribe-modal">Subscribe</a> --}}
                                         <a href="#" class="open-ccdivision"><i class="fa-solid fa-caret-down"></i></a>
                                     </div>
                                 </div>
                             </div>
-                            <div class="chart-grid">
+                            {{-- <div class="chart-grid">
                                 <div class="inner-block chart-block">
                                     <div class="chart-container">
                                         <div class="head">
@@ -60,9 +60,9 @@
                                         <div id="chart-20"></div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row">
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="inner-block search-block">
                                         <div class="title">
                                             Search Documents
@@ -84,11 +84,11 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3">
+                    {{-- <div class="col-lg-3">
                         <div class="dashboard-right-block">
                             <div class="inner-block recent-record">
                                 <div class="head">
@@ -138,17 +138,17 @@
                                 <a herf="#" class="link">Go to Helpdesk</a>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
 
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:30px;">
+                <div>
 
                         <div class="inner-block calendar-block">
                             <div id='calendar'></div>
                         </div>
-
+{{-- 
                         <div class="inner-block table-block cal-table">
                             <div class="head">Batch Failure Rate</div>
                             <div class="table-container">
@@ -309,9 +309,9 @@
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="inner-block chart-block">
+                        {{-- <div class="inner-block chart-block">
                             <div class="chart-container">
                                 <div class="head">
                                     Batch Failure Rate (Term)
@@ -477,9 +477,9 @@
                                 </div>
                                 <div id="chart-11"></div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="inner-block table-block">
+                        {{-- <div class="inner-block table-block">
                             <div class="head">Effectivenss Check Failure Rate (Term)</div>
                             <div class="table-container">
                                 <table class="table table-bordered">
@@ -1053,9 +1053,9 @@
                                 </div>
                                 <div id="chart-6"></div>
                             </div>
-                        </div>
+                        </div> --}}
 
-                        <div class="inner-block chart-block">
+                        {{-- <div class="inner-block chart-block">
                             <div class="chart-container">
                                 <div class="head">
                                     Batch Failure Rate (Term)
@@ -1180,7 +1180,7 @@
                         </table>
 
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -1801,7 +1801,7 @@
                     <div class="division-tabs">
                         <div class="tab">
                             @php
-                                $division = DB::table('divisions')->get();
+                                $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
                             @endphp
                             @foreach ($division as $temp)
                                 <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
@@ -1814,7 +1814,7 @@
                             $process = DB::table('processes')->get();
                         @endphp
                         @foreach ($process as $temp)
-                            <div id="{{ $temp->division_id }}" class="divisioncontent">
+                            <div id="{{ $temp->division_id }}" class="">
                                 @php
                                     $pro = DB::table('processes')
                                         ->where('division_id', $temp->division_id)

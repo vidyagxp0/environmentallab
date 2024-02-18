@@ -23,7 +23,7 @@ class ProcessController extends Controller
                 'divisions.name as dname',
                 'processes.*'
             )->orderBy('id', "desc")->get();
-        $division = DB::table('divisions')->get();
+        $division = DB::table('divisions')->where('status', 1)->get();
 
         return view('admin.process.process', compact('process', 'division'));
     }
@@ -85,7 +85,7 @@ class ProcessController extends Controller
 
     {
         $process = Process::find($id);
-        $division = DB::table('divisions')->get();
+        $division = DB::table('divisions')->where('status', 1)->get();
 
 
         return view('admin.process.edit', ['process' => $process], ['division' => $division]);

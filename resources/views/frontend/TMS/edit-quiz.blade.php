@@ -69,14 +69,14 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <!-- <div class="col-lg-6">
                             <div class="checkbox">
                                 <label for="feedback">
                                     <input type="checkbox" name="feedback" id="feedback">
                                     Show Feedback
                                 </label>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-12">
                             <div class="group-input">
                                 <label for="question-bank">Choose Question Bank</label>

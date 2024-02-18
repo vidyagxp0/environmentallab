@@ -46,8 +46,8 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/MR/{{ date('Y') }}/{{ $record_number }}">
+                                        <!-- {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}} -->
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -78,7 +78,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="assign_id">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -89,12 +89,25 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                <!-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="due_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Date Due</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -149,15 +162,24 @@
                                             value="" disabled>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Desc.">Short Description<span
+                                        <label for="short_description">Short Description<span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
-                                </div>
-                               
+                                </div> -->
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short_Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <textarea id="docname" type="text" name="short_description" maxlength="255" required></textarea>
+                                        <p id="docnameError" style="color:red">**Short Description is required</p>
+                                    </div>
+                                </div>  
+                                    
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -248,7 +270,7 @@
                                            <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
                                                         <input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="date[]" class="hide-input" 
-                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'                                         
+                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>                                       
                                                     <td><input type="text" name="topic[]"></td>
                                                     <td><input type="text" name="responsible[]"></td>
                                                     <td><input type="time" name="start_time[]"></td>
@@ -265,18 +287,19 @@
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
+                                <div class="col-12">
                                 <div class="group-input">
-                                    <label for="management-review-participants">
+                                    <label for="management_review_participants">
                                         Management Review Participants
                                         <button type="button"
-                                            onclick="addManagementReviewParticipants('management-review-participants')">+</button>
+                                            onclick="addManagementReviewParticipants('management_review_participants')">+</button>
                                     </label>
                                     <div class="instruction">
                                         <small class="text-primary">
                                             Refer Attached Performance Evaluation Grid
                                         </small>
                                     </div>
-                                    <table class="table table-bordered" id="management-review-participants">
+                                    <table class="table table-bordered" id="management_review_participants">
                                         <thead>
                                             <tr>
                                                 <th>Row #</th>
@@ -291,10 +314,18 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-
+                                            <td><input type="text" name="serial_number[]" value="1"></td>
+                                            <td><input type="text" name="invited_Person[]"></td>
+                                            <td><input type="text" name="designee[]"></td>
+                                            <td><input type="text" name="department[]"></td>
+                                            <td><input type="text" name="meeting_Attended[]"></td>
+                                            <td><input type="text" name="designee_Name[]"></td>
+                                            <td><input type="text" name="designee_Department[]"></td>
+                                            <td><input type="text" name="remarks[]"></td>
                                             </tr>
                                         </tbody>
                                     </table>
+                                </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -502,7 +533,7 @@
                                                     <th>Major</th>
                                                     <th>Minor</th>
                                                     <th>Recommendation</th>
-                                                    <th>CAPA Details, if any</th>
+                                                    <th>CAPA Details if any</th>
                                                 </tr>
                                             </thead>
                                         </table>
@@ -525,7 +556,7 @@
                                                     <th>Major</th>
                                                     <th>Minor</th>
                                                     <th>Recommendation</th>
-                                                    <th>CAPA Details, if any</th>
+                                                    <th>CAPA Details if any</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1005,11 +1036,11 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><input type="text" name="row_no" value="1" disabled></td>
-                                            {{-- ignore   --}} <td><input type="text" name="monitoring"></td>
-                                            <td><input type="text" name="measurement"></td>
-                                            <td><input type="text" name="analysis"></td>
-                                            <td><input type="text" name="evaluation"></td>
+                                            <td><input type="text" name="serial_number[]" value="1" disabled></td>
+                                            {{-- ignore   --}} <td><input type="text" name="monitoring[]"></td>
+                                            <td><input type="text" name="measurement[]"></td>
+                                            <td><input type="text" name="analysis[]"></td>
+                                            <td><input type="text" name="evaluation[]"></td>
                                         </tr>
                                     </tbody>
 
@@ -1088,11 +1119,10 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="group-input">
-                                <label for="action-item-details">
-                                    Action Item Details<button type="button" name="action-item-details"
+                                <label for="action_item_details">
+                                    Action Item Details<button type="button" name="action_item_details"
                                         id="action_item">+</button>
-                                </label>
-                                <table class="table table-bordered" id="action_item_details">
+                                </label><table class="table table-bordered" id="action_item_details">
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
@@ -1113,9 +1143,9 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_due[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>
+                                            <input type="text" id="date_due' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_due[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                            oninput="handleDateInput(this, `date_due' + serialNumber +'`)" /></div></div></div></td>
                                         <td><input type="text" name="site[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
@@ -1132,20 +1162,19 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_closed00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_closed' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_closed[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_closed00' + serialNumber +'`)" /></div></div></div></td>
-
-
-                                        <td><input type="text" name="record[]"></td>
-                                         <td><input type="text" name="capa_type[]"></td> 
+                                            oninput="handleDateInput(this, `date_closed' + serialNumber +'`)" /></div></div></div></td>
+                    
+                                        <td><input type="text" name="remark[]"></td>
+                                         <!-- <td><input type="text" name="capa_type[]"></td> 
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
                                             <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_opened[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>
+                                            oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td> -->
 
                                     </tbody>
                                 </table>
@@ -1158,22 +1187,20 @@
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
-                                            {{-- <th>Record Number</th> --}}
                                             <th>CAPA Details</th>
                                             <th>CAPA Type</th>
                                             <th>Site / Division</th>
                                             <th>Person Responsible</th>
                                             <th>Current Status</th>
                                             <th>Date Closed</th>
-                                            <th>Remarks</th>
-                                            {{-- <th>Date Opened</th> --}}
-                                            {{-- <th>Date Due</th> --}}
+                                            <th>Remark</th>
+                
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <td><input disabled type="text" name="serial_number[]" value="1">
                                         </td>
-                                        <td><input type="text" name="short_desc[]"></td>
+                                        <td><input type="text" name="Details[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
                                                 name="capa_type[]">
@@ -1183,10 +1210,10 @@
                                                 <option value="corrective_preventive">Corrective & Preventive Action</option>
                                             </select>
                                         </td>
-                                        <td><input type="text" name="site[]"></td>
+                                        <td><input type="text" name="site2[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
-                                                name="responsible_person[]">
+                                                name="responsible_person2[]">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $data)
                                                     <option value="{{ $data->id }}">{{ $data->name }}
@@ -1194,16 +1221,16 @@
                                                 @endforeach
                                             </select>
                                         </td>
-                                        <td><input type="text" name="current_status[]"></td>
-                                         {{-- <td><input type="date" name="date_closed[]"></td>  --}}
+                                        <td><input type="text" name="current_status2[]"></td>
+
                                          <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_closed11' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_closed[]" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_closed11' + serialNumber +'`)" /></div></div></div></td>' 
+                                            <input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_closed2[]" class="hide-input" 
+                                            oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>
 
-                                        <td><input type="text" name="record[]"></td>
+                                        <td><input type="text" name="remark2[]"></td>
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
                                         {{-- <td><input type="date" name="date_due[]"></td> --}}
 
@@ -2207,5 +2234,11 @@
                 tableBody.append(newRow);
             });
         });
+    </script>
+     <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection

@@ -61,32 +61,31 @@
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-12">
-                                    <div class="sub-head">Gneral Information</div>
+                                    <div class="sub-head">General Information</div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/{{ $record_number }}">
-                                        {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
+                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input disabled type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
-                                        <input disabled type="text" value="{{ Auth::user()->name }}"">
+                                        <label for="originator">Initiator</label>
+                                        <input disabled type="text" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="date_opened">Date Opened</label>
+                                        <label for="date_opened">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input  type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
@@ -103,11 +102,25 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_due">Date Due</label>
                                         <input  type="hidden" value="{{ $due_date }}" name="due_date">
                                         <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}" >
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="date_due">Due Date<span class="text-danger"></span></label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.
+                                        </small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="due_date" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -149,7 +162,7 @@
                                             <option title="Clinical Trial Report" value="4">
                                                 Clinical Trial Report
                                             </option>
-                                            <option title="Compliance" value="5" selected="">
+                                            <option title="Compliance" value="5" >
                                                 Compliance
                                             </option>
                                             <option title="Computerized systems" value="6">
@@ -242,16 +255,43 @@
                                 <div class="col-12">
                                     <div class="sub-head">Further Information</div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files1">Attached Files</label>
                                         <input type="file" name="attach_files1" />
                                     </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files1">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attach_files1"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="attach_files1[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files1')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="capa_date_due">Recomendation Date Due for CAPA</label>
                                         <input type="date" name="recomendation_capa_date_due" />
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="capa_date_due">Recomendation Date Due for CAPA</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -266,10 +306,25 @@
                                         <textarea name="recommend_action"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
-                                        <label for="related_observations">Related Obsevations</label>
+                                        <label for="related_observations">`</label>
                                         <input type="file" name="related_observations" />
+                                    </div>
+                                </div> --}}
+                            </div>
+                            <div class="col-12">
+                                <div class="group-input">
+                                    <label for="related_observations">Related Obsevations</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting
+                                            documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="related_observations"></div>
+                                        <div class="add-btn">
+                                            <div>Add</div>
+                                            <input type="file" id="myfile" name="related_observations[]"
+                                                oninput="addMultipleFiles(this, 'related_observations')" multiple>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -287,18 +342,40 @@
                                 <div class="col-12">
                                     <div class="sub-head">CAPA Plan Details</div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_Response_due">Date Response Due</label>
                                         <input type="date" name="date_Response_due2" />
                                     </div>
+                                </div> --}}
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="date_Response_due1">Date Response Due</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="date_Response_due2" id="date_Response_due2" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'date_Response_due2')" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="date_due">Date Due</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="capa_date_due" id="date_due" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'date_due')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_due">Date Due</label>
                                         <input type="date" name="capa_date_due">
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to2">Assigned To</label>
@@ -315,9 +392,36 @@
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor">
                                             <option value="">-- Select --</option>
-                                            @foreach ($users as $data)
+                                            <option title="Amit Guru" value="1">
+                                                Amit Guru
+                                            </option>
+                                            <option title="Shaleen Mishra" value="2">
+                                                Shaleen Mishra
+                                            </option>
+                                            <option title="Vikas Prajapati" value="3">
+                                                Vikas Prajapati
+                                            </option>
+                                            <option title="Anshul Patel" value="4">
+                                                Anshul Patel
+                                            </option>
+                                            <option title="Amit Patel" value="5">
+                                                Amit Patel
+                                            </option>
+                                            <option title="Madhulika Mishra" value="6">
+                                                Madhulika Mishra
+                                            </option>
+                                            <option title="Jim Kim" value="7">
+                                                Jim Kim
+                                            </option>
+                                            <option title="Akash Asthana" value="8">
+                                                Akash Asthana
+                                            </option>
+                                            <option title="Not Applicable" value="9">
+                                                Not Applicable
+                                            </option>
+                                            {{-- @foreach ($users as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                        @endforeach
+                                        @endforeach --}}
                                         </select>
                                     </div>
                                 </div>
@@ -325,7 +429,7 @@
                                     <div class="group-input">
                                         <label for="action-plan-grid">
                                             Action Plan<button type="button" name="action-plan-grid"
-                                                id="observation-table">+</button>
+                                                id="observation_table">+</button>
                                         </label>
                                         <table class="table table-bordered" id="observation">
                                             <thead>
@@ -340,8 +444,26 @@
                                             <tbody>
                                                 <td><input type="text" name="serial_number[]" value="1"></td>
                                                 <td><input type="text" name="action[]"></td>
-                                                <td><input type="text" name="responsible[]"></td>
-                                                <td><input type="text" name="deadline[]"></td>
+                                                {{-- <td><input type="text" name="responsible[]"></td> --}}
+                                                <td> <select id="select-state" placeholder="Select..." name="responsible[]">
+                                                        <option value="">Select a value</option>
+                                                        @foreach ($users as $data)
+                                                            <option value="{{ $data->id }}">{{ $data->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select></td>
+                                                {{-- <td><input type="text" name="deadline[]"></td> --}}
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" name="deadline[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
                                                 <td><input type="text" name="item_status[]"></td>
                                             </tbody>
                                         </table>
@@ -432,7 +554,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RPN">RPN</label>
-                                        <input type="text" name="analysisRPN" id="analysisRPN" disabled>
+                                        <input type="text" name="analysisRPN" id="analysisRPN" readonly>
                                     </div>
                                 </div>
                             </div>
@@ -451,7 +573,7 @@
                                 <div class="col-12">
                                     <div class="sub-head">Action Summary</div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="actual_start_date">Actual Start Date</label>
                                         <input type="date" name="actual_start_date">
@@ -490,7 +612,7 @@
                                 <div class="col-12">
                                     <div class="sub-head">Response Summary</div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_response_due">Date Response Due</label>
                                         <input type="date" name="date_response_due1">
@@ -507,16 +629,31 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="response_date">Date of Response</label>
                                         <input type="date" name="response_date">
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files">Attached Files</label>
                                         <input type="file" name="attach_files2">
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="attach_files2"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="attach_files2[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files2')" multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -695,4 +832,39 @@
             }
         }
     </script>
+    <script>
+                $(document).ready(function() {
+                    $('#observation_table').click(function(e) {
+                        function generateTableRow(serialNumber) {
+                            var users = @json($users);
+                            console.log(users);
+                            var html =
+                            '<tr>' +
+                                '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                '<td><input type="text" name="action[]"></td>' +
+                                '<td><select name="responsible[]">' +
+                                    '<option value="">Select a value</option>';
+
+                                for (var i = 0; i < users.length; i++) {
+                                    html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                                }
+
+                                html += '</select></td>' +
+                                '<td><input type="date" name="deadline[]"></td>' +
+                                '<td><input type="text" name="item_static[]"></td>' +
+                                '</tr>';
+
+
+
+                            return html;
+                        }
+
+                        var tableBody = $('#observation tbody');
+                        var rowCount = tableBody.children('tr').length;
+                        var newRow = generateTableRow(rowCount + 1);
+                        tableBody.append(newRow);
+                    });                    
+                });
+            </script>
+    
 @endsection

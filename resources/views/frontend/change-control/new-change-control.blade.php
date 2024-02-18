@@ -142,7 +142,7 @@
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" name="due_date" id="due_date" readonly
@@ -218,7 +218,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
+                                        <label for="severity-level">Severity Level</label>
                                         <select name="severity_level1">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -509,6 +509,7 @@
                                 <label for="qa-eval-comments">QA Evaluation Comments</label>
                                 <textarea name="qa_eval_comments"></textarea>
                             </div>
+                            <div class="col-lg-12">
                             <div class="group-input">
                                 <label for="qa-eval-attach">QA Evaluation Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small>
@@ -522,6 +523,8 @@
                                     </div>
                                 </div>
                             </div>
+                         </div>
+                        </div>   
                             <div class="sub-head">
                                 Training Information
                             </div>
@@ -672,7 +675,6 @@
                                                     oninput="addMultipleFiles(this, 'additional_attachments')" multiple>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

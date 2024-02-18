@@ -38,7 +38,7 @@
 
             <!-- Tab links -->
             <div class="cctab">
-                <button class="cctablinks active">General Information</button>
+                <button class="cctablinks active">General Information1</button>
                 <button class="cctablinks">Change Details</button>
                 <button class="cctablinks">Risk Assessment</button>
                 <button class="cctablinks">QA Review</button>
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date</label>
+                                        <label for="due-date">Due Date <span>If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</span></label>
                                         {{--  <input type="date" name="due_date">  --}}
                                         <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" name="due_date"> -->
 

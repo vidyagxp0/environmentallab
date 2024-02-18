@@ -25,7 +25,7 @@ return new class extends Migration
             $table->text('short_description')->nullable();
             $table->text('assign_to1')->nullable();
             $table->string('grading')->nullable();
-            $table->string('category_observation')->nullable();
+            $table->text('category_observation')->nullable();
             $table->string('reference_guideline')->nullable();
             $table->text('description')->nullable();
             $table->text('attach_files1')->nullable();

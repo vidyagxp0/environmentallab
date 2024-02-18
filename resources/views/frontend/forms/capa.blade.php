@@ -51,8 +51,8 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Equipment/Material Info</button>
                 {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Project/Study</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">CAPA Details</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button> --}}
                 <button class="cctablinks" onclick="openCity(event, 'CCForm7')">CAPA Closure</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm8')">Activity Log</button>
             </div>
@@ -119,8 +119,8 @@
                                 </div>
                                 <!-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="due-date">Due Date<span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        <label for="due-date">Due Date<span class="text-danger">*</span></label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
@@ -194,14 +194,23 @@
                                             value="" >
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    </div>
+                                </div>  
+                                    <p id="docnameError" style="color:red">**Short Description is required</p>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
@@ -375,7 +384,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -578,8 +587,8 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -643,8 +652,8 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -692,8 +701,8 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -824,8 +833,8 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
 
@@ -1275,5 +1284,11 @@
                 $('#effect_check_date').val('');
             }
         }
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection

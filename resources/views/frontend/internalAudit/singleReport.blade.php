@@ -176,7 +176,7 @@
                     <strong>Internal Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->id, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -199,6 +199,12 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Record Number<</th>
+                        <td class="w-30">@if($data->record_number){{ $data->record_number }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code<</th>
+                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
@@ -215,6 +221,10 @@
                         <td class="w-30">
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-30">
+                            @if($data->severity_level_form){{ $data->severity_level_form }}@else Not Applicable @endif
+                        </td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
@@ -229,12 +239,23 @@
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
                         <th class="w-20">If Others</th>
                         <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initial Comments</th>
+                        <th class="w-20">Description</th>
                         <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }}@else Not Applicable @endif</td>
+                        <th class="w-20">Type of Audit</th>
+                        <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
                         <th class="w-20">Audit start date</th>
                         <td class="w-30">@if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif</td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">External Agencies</th>
+                        <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }}@else Not Applicable @endif</td>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->Others){{ $data->Others }}@else Not Applicable @endif</td>
 
                     </tr>
 
@@ -276,9 +297,9 @@
                     <table>
                         <tr>
                             <th class="w-30">Audit Schedule Start Date</th>
-                            <td class="w-20">@if($data->start_date){{ $data->start_date }}@else Not Applicable @endif</td>
+                            <td class="w-20">@if($data->audit_schedule_start_date){{ $data->audit_schedule_start_date }}@else Not Applicable @endif</td>
                             <th class="w-30">Audit Schedule End Date</th>
-                            <td class="w-20">@if($data->end_date){{ $data->end_date }}@else Not Applicable @endif</td>
+                            <td class="w-20">@if($data->audit_schedule_end_date){{ $data->audit_schedule_end_date }}@else Not Applicable @endif</td>
 
                         </tr>
 
@@ -330,6 +351,13 @@
                         <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
                         <th class="w-20">External Auditor Details</th>
                         <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
+                        <th class="w-20">External Auditing Agencys</th>
+                        <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
+                        <th class="w-20">Relevant Guidelines /
+                            Industry Standards</th>
+                        <td class="w-30">@if($data->Relevant_Guideline){{ $data->Relevant_Guideline }}@else Not Applicable @endif</td>
+                        <th class="w-20">QA Comments</th>
+                        <td class="w-30">@if($data->QA_Comments){{ $data->QA_Comments }}@else Not Applicable @endif</td>
                     </tr>
 
                     <tr>
@@ -358,11 +386,21 @@
                         <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
                         <th class="w-20">Audit Comments</th>
                         <td class="w-30">@if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif</td>
+                        <th class="w-20">Audit Category</th>
+                        <td class="w-30">@if($data->Audit_Category){{ $data->Audit_Category }}@else Not Applicable @endif</td>
+                        <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
+                        <td class="w-30">@if($data->due_date_extension){{ $data->Supplier_Site }}@else Not Applicable @endif</td>
+                        <th class="w-20">Due Date Extension Justification</th>
+                        <td class="w-30">@if($data->Supplier_Site){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                     </tr>
+
                     <tr>
                         <th class="w-20">Remarks</th>
                         <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
+                        <th class="w-20">Reference Record</th>
+                        <td class="w-80" colspan="3">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
                     </tr>
+
                 </table>
             </div>
             <div class="border-table">
@@ -515,6 +553,12 @@
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
                         <th class="w-20">Audit Schedule On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Audit preparation completed by</th>
+                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
+                        <th class="w-20">Audit preparation completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit preparation completed by</th>

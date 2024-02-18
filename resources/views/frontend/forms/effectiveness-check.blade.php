@@ -35,7 +35,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference Info/Comments</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity History</button>
+                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity History</button> --}}
             </div>
 
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
@@ -96,28 +96,31 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="group-input">
+                                <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">  --}}
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
-                                        <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="" name="due_date">
+                                          <!-- <input type="hidden" value="{{ $due_date }}" name="due_date"> -->
+                                        <!-- <input disabled type="text"
+                                            value="{{ Helpers::getdateFormat($due_date) }}">   -->
+                                        <div class="calenderauditee">
+                                           <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" class="hide-input"
+                                           oninput="handleDateInput(this, 'due_date')"/> 
+                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-6">
+                                
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select id="select-state" placeholder="Select..." name="quality_reviewer">
+                                        <select id="select-state" placeholder="Select..." name="Quality_Reviewer">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description</label>
@@ -138,10 +141,24 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="effect_plan_check">
+                                        <input type="text" name="Effectiveness_check_Plan">
                                     </div>
                                 </div>
                             </div>
+                            <div class="group-input">
+                                        <label for="Attachments">Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Attachments"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Attachments[]"
+                                                    oninput="addMultipleFiles(this, 'Attachments')" multiple>
+                                            </div>
+                                        </div>
+
+                                    </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -158,10 +175,10 @@
                                 <div class="col-12 sub-head">
                                     Effectiveness Summary
                                 </div>
-                                <div class="col-12">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea name="effect_summary"></textarea>
+                                        <textarea type="text" name="effect_summary"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -170,14 +187,28 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <input type="text" name="effect_result">
+                                        <textarea type="text" name="Effectiveness_Results"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments"><b>Effectiveness check
                                                 Attachment</b></label>
-                                        <input type="file" id="myfile" name="effect_attachment">
+                                        <input type="file" id="myfile" name="Effectiveness_check_Attachment">
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Effectiveness_check_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Effectiveness_check_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')" multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-12 sub-head">
@@ -186,13 +217,29 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
-                                        <input type="text" name="addendum">
+                                        <textarea type="text" name="Addendum_Comments"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                        <input type="file" id="myfile" name="addendum_attachment">
+                                        <input type="file" id="myfile" name="Addendum_Attachment">
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Addendum Attachments">Addendum Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Addendum_Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Addendum_Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Addendum_Attachment')" multiple>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -215,20 +262,52 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Comments"><b>Comments</b></label>
-                                        <textarea name="comment"></textarea>
+                                        <textarea name="Comments"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Attachments"><b>Attachment</b></label>
-                                        <input type="file" id="myfile" name="attachement">
+                                        <input type="file" id="myfile" name="Attachment">
+                                    </div>
+                                </div> -->
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Attachments">Attachment</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="Attachment"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="Attachment[]"
+                                                    oninput="addMultipleFiles(this, 'Attachment')" multiple>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Records"><b>Reference Records</b></label>
-                                        {{-- <div class="static"></div> --}}
+                                          <div class="static"></div>  
                                         <input type="file" id="myfile" name="refer_record">
+                                    </div>
+                                </div> -->
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Reference Records">Reference Records</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting
+                                                documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="refer_record"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="refer_record[]"
+                                                    oninput="addMultipleFiles(this, 'refer_record')" multiple>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -241,11 +320,11 @@
                         </div>
                     </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row">
+                            <div class="row"> --}}
                                 <!-- Activity History -->
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Data History
                                 </div>
                                 <div class="col-lg-6">
@@ -377,13 +456,13 @@
                                         <textarea name="cancel_justification"></textarea>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="button-block">
+                            </div> --}}
+                            {{-- <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a class="text-white" href="#"> Exit </a> </button>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

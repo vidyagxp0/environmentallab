@@ -171,7 +171,7 @@ header .header_rcms_bottom {
 
 header .header_rcms_bottom .bottom-head {
     display: grid;
-    grid-template-columns: 205px 1fr;
+    grid-template-columns: 100px 1fr;
     align-items: center;
 }
 

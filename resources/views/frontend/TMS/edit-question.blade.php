@@ -39,11 +39,13 @@
                             </label>
                             @if (!empty($question->options))
                             @foreach (unserialize($question->options) as $data)
-                            <div class="option-group">
-                                    <input type="text" id="option" name="options[]"
-                                        value="{{ $data }}">
-                                        <input type="radio" class="answer" name="answer" value="0">
-                            </div>
+                            @if (!is_null($data))                                
+                                <div class="option-group">
+                                        <input type="text" id="option" name="options[]"
+                                            value="{{ $data }}">
+                                            <input type="radio" class="answer" name="answer" value="0">
+                                </div>
+                            @endif
                             @endforeach
                             @else
                             <input type="text" id="option" name="options[]">

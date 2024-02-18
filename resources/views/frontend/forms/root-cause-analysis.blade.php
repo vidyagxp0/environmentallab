@@ -34,7 +34,7 @@
 
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
-                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Group Comments</button>
+                <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
                 
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Signatures</button>
             </div>
@@ -43,17 +43,40 @@
                 @csrf
 
                 <div id="step-form">
+                                                    <!--Investigation-->
 
                     <div id="CCForm1" class="inner-block cctabcontent">
-                        <div class="inner-block-content">
-                            <div class="row">
+                         <div class="inner-block-content">
+                            <div class="row"> 
+                      
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ date('Y') }}/{{ $record_number }}">
+
+                                    </div>
+                                </div>
+                            
+                           
+                        <div class="col-lg-6">
+                            <div class="group-input">
+                                <label for="Division Code"><b>Site/Location Code </b></label>
+                                <input readonly type="text" name="division_code"
+                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                {{-- <div class="static">QMS-North America</div> --}}
+                            </div>
+                        </div>
+                        
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="originator">Initiator</label>
                                         <input readonly  type="text" name="originator_id" value="Amit Guru"  />
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                              
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date-opened">Date Opened </label>
                                         <div><small class="text-primary">When was this Investigation record opened?</small>
@@ -62,7 +85,7 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="date_opened">
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input ">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -70,17 +93,77 @@
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <select name="initiator_Group" id="initiator_group">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
+                                                Central Laboratory</option>
+
+                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
+                                                Business Administration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Group Code1</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                              value="" readonly> 
+                                    </div>
+                                </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="short_description">Short Description</label>
+                                        <label for="Short_Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <textarea id="docname" type="text" name="short_description" maxlength="255" required></textarea>
+                                        <p id="docnameError" style="color:red">**Short Description is required</p>
+                                    </div>
+                                </div>  
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="short_description">Short Description<span
+                                        class="text-danger">*</span></label>
                                         <div><small class="text-primary">Investigation short description to be presented on
                                                 desktop</small></div>
-                                        <textarea name="short_description"></textarea>
+                                        <textarea name="short_description" ></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="severity-level">Sevrity Level</label>
+                                        <label for="severity-level">Severity Level</label>
                                         <select name="severity_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -91,34 +174,54 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assigned-to">Assigned to</label>
+                                        <label for="search">Assigned to</label>
                                         <div><small class="text-primary">Lead Investigator</small></div>
-                                        <select name="assigned_to">
-                                            <option value="0">-- Select --</option>
-                                            <option value="1">Amit Guru</option>
-                                            <option value="2">Shaleen Mishra</option>
-                                            <option value="3">Madhulika Mishra</option>
-                                            <option value="4">Amit Patel</option>
-                                            <option value="5">Harsh Mishra</option>
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                            <option value="assign_id">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('assign_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due</label>
-                                        <div><small class="text-danger">Last date this Investigation should be closed
-                                                by</small></div>
+                                        <label for="Date Due"> Due Date </label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                         <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"/>
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
                                         </div>
 
-                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> --}}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Initiated Through</label>
+                                        <div><small class="text-primary">Please select related information</small></div>
+                                        <select name="initiated_through"
+                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                            <option value="">-- select --</option>
+                                            <option value="recall">Recall</option>
+                                            <option value="return">Return</option>
+                                            <option value="deviation">Deviation</option>
+                                            <option value="complaint">Complaint</option>
+                                            <option value="regulatory">Regulatory</option>
+                                            <option value="lab-incident">Lab Incident</option>
+                                            <option value="improvement">Improvement</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="If Other">Others<span class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_if_other"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -271,6 +374,14 @@
                                                         <th>Remarks</th>
                                                     </tr>
                                                 </thead>
+                                                <tbody>
+                                                    <td><input disabled type="text" name="serial_number[]" value="1">
+                                                    </td>
+                                                    <td><input type="text" name="Root_Cause_Category"></td>
+                                                    <td><input type="text" name="Root_Cause_Sub_Category"></td>
+                                                    <td><input type="text" name="Probability"></td>
+                                                    <td><input type="text" name="Remarks"></td>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -561,10 +672,10 @@
                                         <textarea name="investigation_summary"></textarea>
                                     </div>
                                 </div>
-                             <div class="col-12">
+                             {{-- <div class="col-12">
                                     <div class="sub-head">Geographic Information</div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Zone">Zone</label>
                                         <select name="zone" id="zone">
@@ -604,7 +715,7 @@
 
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
@@ -616,20 +727,39 @@
                     </div>
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="sub-head">
+                            {{-- <div class="sub-head">
                                 CFT Feedback
-                            </div>
+                            </div> --}}
                             <div class="row">
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments">CFT Comments</label>
+                                        <label for="comments">Final Comments</label>
                                         <textarea name="cft_comments_new"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                <div class="col-12">
                                     <div class="group-input">
-                                        <label for="comments">CFT Attachment</label>
+                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <div>
+                                            <small class="text-primary">
+                                                Please Attach all relevant or supporting documents
+                                            </small>
+                                        </div>
+                                        <div class="file-attachment-field">
+                                            <div class="file-attachment-list" id="cft_attchament_new"></div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input type="file" id="myfile" name="cft_attchament_new[]"
+                                                    oninput="addMultipleFiles(this, 'cft_attchament_new')"
+                                                    multiple>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="comments">Final Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -642,8 +772,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
+                            </div> --}}
+                            {{-- <div class="row">
                                 <div class="sub-head">
                                     Concerned Group Feedback
                                 </div>
@@ -710,7 +840,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -954,5 +1084,17 @@
             let result = R * P * N;
             row.querySelector('.residual-rpn').value = result;
         }
+    </script>
+        <script>
+            document.getElementById('initiator_group').addEventListener('change', function() {
+                var selectedValue = this.value;
+                document.getElementById('initiator_group_code').value = selectedValue;
+            });
+        </script>
+             <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection

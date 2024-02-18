@@ -16,6 +16,7 @@
         td,
         th {
             text-align: center;
+            
         }
 
         .w-5 {
@@ -64,6 +65,7 @@
 
         .w-55 {
             width: 55%;
+            
         }
 
         .w-60 {
@@ -180,6 +182,7 @@
 
         .text-left {
             text-align: left;
+            word-wrap: break-word;
         }
 
         .text-right {
@@ -188,6 +191,7 @@
 
         .text-justify {
             text-align: justify;
+            
         }
 
         .text-center {
@@ -205,17 +209,20 @@
         table.table-bordered {
             border-collapse: collapse;
             border: 1px solid grey;
+
         }
 
         table.table-bordered td,
         table.table-bordered th {
             border: 1px solid grey;
             padding: 5px 10px;
+
         }
 
         table.small-content td,
         table.small-content th {
             font-size: 0.85rem;
+
         }
 
         td.title {
@@ -227,16 +234,19 @@
             width: 100%;
             max-width: 100px;
             aspect-ratio: 1/0.35;
+
         }
 
         td.doc-num {
             font-size: 1rem;
             font-weight: bold;
+
         }
 
         .doc-control .head {
             max-width: 600px;
             margin: 0 auto 30px;
+
         }
 
         .doc-control .head div:nth-child(1) {
@@ -244,6 +254,7 @@
             text-align: center;
             font-weight: bold;
             margin-bottom: 5px;
+
         }
 
         .doc-control .body .block-head {
@@ -257,6 +268,7 @@
             size: A4;
             margin-top: 220px;
             margin-bottom: 80px;
+
         }
 
         header {
@@ -266,6 +278,7 @@
             right: 0;
             left: 0;
             display: block;
+
         }
 
         .footer {
@@ -277,23 +290,28 @@
 
         .other-container {
             margin: 40px 0;
+
         }
 
         .other-container>table {
             margin: 0px 0 0;
+
         }
 
         .scope-block,
         .procedure-block {
             margin: 10px 0 30px;
+            word-wrap: break-word;
         }
 
         .annexure-block {
             margin: 40px 0 0;
+
         }
 
         .empty-page {
             page-break-after: always;
+
         }
 
         #pdf-page {
@@ -325,7 +343,7 @@
             <tbody>
                 <tr>
                     <td class="doc-num w-100">{{ $data->document_division }} /{{ $data->document_type_code }}
-                        /{{ $data->year }} /SOP-0000{{ $data->id }}</td>
+                        /{{ $data->year }} /SOP-000{{ $data->id }}</td>
                 </tr>
             </tbody>
         </table>
@@ -400,7 +418,7 @@
                                             @foreach (unserialize($data->document_content->responsibility) as $res)
                                                 <tr>
                                                     <td class="w-5 vertical-baseline">3.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-justify">
+                                                    <td class="w-95 text-left">
 
                                                         {{ $res }}
 
@@ -592,11 +610,85 @@
                 </tbody>
             </table>
 
-            @php
-                $annexure = DB::table('annexures')->where('document_id',$data->id)->first();
-            @endphp
+            <table class="mb-20">
+                <tbody>
+                    <tr>
+                        <th class="w-5 vertical-baseline">9.</th>
+                        <th class="w-95 text-left">
+                            <div class="bold mb-10"> References</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div>
+                                <table>
+                                    <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @if (!empty($data->document_content->references))
+                                            @foreach (unserialize($data->document_content->references) as $res)
+                                                <tr>
+                                                    <td class="w-5 vertical-baseline">9.<?php echo $i; ?></td>
+                                                    <td class="w-95 text-left">
+                                                        {{ $res }}
+                                                    </td>
+                                                    @php
+                                                        $i = $i + 1;
+                                                    @endphp
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
             <table class="mb-20">
+                <tbody>
+                    <tr>
+                        <th class="w-5 vertical-baseline">10.</th>
+                        <th class="w-95 text-left">
+                            <div class="bold mb-10">Annexure</div>
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <div>
+                                <table>
+                                    <tbody>
+                                        @php
+                                            $i = 1;
+                                        @endphp
+                                        @if (!empty($data->document_content->ann))
+                                            @foreach (unserialize($data->document_content->ann) as $res)
+                                                <tr>
+                                                    <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
+                                                    <td class="w-95 text-left">
+                                                        {{ $res }}
+                                                    </td>
+                                                    @php
+                                                        $i = $i + 1;
+                                                    @endphp
+                                                </tr>
+                                            @endforeach
+                                        @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            {{-- @php
+                $annexure = DB::table('annexures')->where('document_id',$data->id)->first();
+            @endphp --}}
+
+            {{-- <table class="mb-20">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">9.</th>
@@ -623,7 +715,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
 
             {{--  <table class="mb-20">
                 <tbody>
@@ -770,12 +862,12 @@
                                     <th class="w-30 text-left vertical-baseline">Retention</th>
                                     <td class="w-70 text-left">Lorem ipsum dolor sit amet.</td>
                                 </tr> --}}
-                                <tr>
+                                {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Authors(Dept)</th>
                                     <td class="w-70 text-left">{{ $data->originator }}
                                         ({{ $data->department->name }})</td>
-                                </tr>
-                                <tr>
+                                </tr> --}}
+                                {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Readers</th>
                                     <td class="w-70 text-left">
                                         <table class="table-bordered small-content">
@@ -812,12 +904,12 @@
                                             </tbody>
                                         </table>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <div class="block mb-40">
+                {{-- <div class="block mb-40">
                     <div class="block-head">
                         Key Dates
                     </div>
@@ -874,7 +966,7 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> --}}
                 <div class="block mb-40">
                     <div class="block-head">
                         Reviews
@@ -1141,7 +1233,7 @@
                             <tbody>
                                 <tr>
                                     <td class="text-left w-25">{{ $data->originator }}</td>
-                                    <td class="text-left w-25">{{ $data->department->name }}</td>
+                                    {{-- <td class="text-left w-25">{{ $data->department->name }}</td> --}}
                                     <td class="text-left w-25">{{ $data->created_at }}</td>
                                     <td class="text-left w-25">{{ $data->originator_email }}</td>
                                 </tr>

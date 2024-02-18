@@ -42,6 +42,10 @@ return new class extends Migration
             $table->longtext('reviewers_group')->nullable();
             $table->longtext('approver_group')->nullable();
             $table->longtext('revision_summary')->nullable();
+            $table->string('revision_type')->nullable();
+            $table->integer('major')->nullable();
+            $table->integer('minor')->nullable();
+            $table->longtext('sop_type')->nullable();
             $table->longtext('training_required')->nullable();
             $table->integer('stage')->default(1);
             $table->string('status');

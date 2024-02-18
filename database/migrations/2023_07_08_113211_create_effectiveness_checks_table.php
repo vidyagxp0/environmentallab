@@ -27,16 +27,21 @@ return new class extends Migration
             $table->string('record')->nullable();
             $table->string('originator')->nullable();
             $table->string('short_description')->nullable();
-            $table->string('assign_to')->nullable();
+            //$table->string('assign_to')->nullable();
+            $table->string('assign_id')->nullable();
             $table->string('Q_A')->nullable();
+            $table->string('Quality_Reviewer')->nullable();
             $table->string('Effectiveness_check_Plan')->nullable();
             $table->string('Effectiveness_Summary')->nullable();
             $table->string('Effectiveness_Results')->nullable();
-            $table->string('Effectiveness_check_Attachment')->nullable();
+            $table->longText('Effectiveness_check_Attachment')->nullable();
+            $table->string('effect_summary')->nullable();
             $table->string('Addendum_Comments')->nullable();
-            $table->string('Addendum_Attachment')->nullable();
+            $table->longText('Addendum_Attachment')->nullable();
             $table->string('Comments')->nullable();
-            $table->string('Attachment')->nullable();
+            $table->longText('Attachment')->nullable();
+            $table->longText('Attachments')->nullable();
+            $table->longText('refer_record')->nullable();
             $table->string('status')->default('Opened');
             $table->string('stage')->default(1);
 

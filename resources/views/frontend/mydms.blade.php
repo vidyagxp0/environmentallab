@@ -8,14 +8,14 @@
 
                     <div class="top-filter">
                         <div>
-                            <div class="group-input">
+                            {{-- <div class="group-input">
                                 <label for="filter">Filter</label>
                                 <select name="filter">
                                     <option value="al" selected>All</option>
                                     <option value="my-doc">Change Control</option>
                                     <option value="my-doc">Document Management System</option>
                                 </select>
-                            </div>
+                            </div> --}}
                         </div>
                         <div>
                             <a href="#" id="set-division" class="new-doc-btn">New Document</a>
@@ -29,7 +29,7 @@
 
                     <div class="main-block">
                         <div class="row">
-                            <div class="col-md-9">
+                            <div class="col-md-12">
                                 <div class="doc-block">
                                     @if (Auth::user()->role == 3)
                                         <div class="sub-block inner-block" id="draft">
@@ -47,9 +47,9 @@
                                                             data-bs-target="#division-modal">
                                                             SOP-ID
                                                         </th>
-                                                        <th class="division">
+                                                        {{-- <th class="division">
                                                             SOP Type
-                                                        </th>
+                                                        </th> --}}
                                                         <th class="short-desc">
                                                             Short Description
                                                         </th>
@@ -77,9 +77,9 @@
                                                                         SOP-{{ $temp->id }}
                                                                     </a>
                                                                 </td>
-                                                                <td class="division">
+                                                                {{-- <td class="division">
                                                                     {{ $temp->type }}
-                                                                </td>
+                                                                </td> --}}
 
                                                                 <td class="short-desc">
                                                                     {{ $temp->short_description }}
@@ -1539,7 +1539,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            {{-- <div class="col-md-3">
                                 <div class="sub-filter inner-block">
                                     <div class="filter-block">
                                         <div class="head">DMS Summary by Status</div>
@@ -1638,7 +1638,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -1656,7 +1656,7 @@
                     <div class="division-tabs">
                         <div class="tab">
                             @php
-                                $division = DB::table('divisions')->get();
+                                $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
                             @endphp
                             @foreach ($division as $temp)
                                 <input type="hidden" value="{{ $temp->id }}" name="division_id" required>

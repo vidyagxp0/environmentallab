@@ -55,6 +55,10 @@ return new class extends Migration
             $table->string('why_2')->nullable();
             $table->string('why_3')->nullable();
             $table->string('why_4')->nullable();
+            $table->text('Root_Cause_Category')->nullable();
+            $table->text('Root_Cause_Sub_Category')->nullable();
+            $table->text('Probability')->nullable();
+            $table->text('Remarks')->nullable();
             $table->string('why_5')->nullable();
             $table->string('root-cause')->nullable();
             $table->string('what_will_be')->nullable();
@@ -77,7 +81,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
-            
+            $table->text('initial_rpn')->nullable();
             $table->integer('record')->nullable();
             // $table->string('division_id')->nullable();
             $table->integer('initiator_id')->nullable();
@@ -85,8 +89,10 @@ return new class extends Migration
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('initiator_Group')->nullable();
-            $table->integer('assign_id')->nullable();
+            $table->text('assign_to')->nullable();
             $table->string('Sample_Types')->nullable();
+            $table->text('initiated_through')->nullable();
+            $table->text('initiated_if_other')->nullable();
             $table->string('test_lab')->nullable();
             $table->string('ten_trend')->nullable();
             // $table->text('attachments')->nullable();
@@ -104,9 +110,9 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
             $table->string('submitted_by')->nullable();
-            // $table->string('report_result_by')->nullable();
+             $table->string('report_result_by')->nullable();
             // $table->string('evaluation_complete_by')->nullable();
-            // $table->string('submitted_on')->nullable();
+             $table->string('submitted_on')->nullable();
             // $table->string('report_result_on')->nullable();
             // $table->string('evaluation_complete_on')->nullable();
             $table->timestamps();

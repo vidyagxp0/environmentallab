@@ -16,47 +16,15 @@ class UserLoginController extends Controller
     public function userlogin()
     {
         // dd(TotalLogin::userCheck());
+        if (Auth::check()) {
+            // If the user is already authenticated, redirect them to the dashboard
+            return redirect('/rcms/qms-dashboard');
+        }
         TotalLogin::userCheck();
         $timezones =  $this->getTimezone();
         return view('frontend.login', compact('timezones'));
     }
 	
-<<<<<<< Updated upstream
-	/*******************************************************************************
-     * @ Get Profile API
-     * 
-     *********************************************************************************/
-    public function getProfile(Request $request){ dd()
-        try{
-            $user = User::where('id', 1)->first();
-            if(!is_null($user)){
-                return response()->json([
-                    'status' => true,
-					'authenticate' => true,
-                    'data'  =>  $user,
-                    'message' => 'Profile details'
-                ], 200);
-            }
-            else{
-                return response()->json([
-                    'status' => false,
-                    'authenticate' => false,
-                    'message' => 'Unauthorized.'
-                ], 200);
-            }
-        }
-        catch (\Throwable $th) {
-            return response()->json([
-                'status' => false,
-                'authenticate' => false,
-                'message' => $th->getMessage()
-            ], 200);
-        }		
-    }
-
-=======
-	
->>>>>>> Stashed changes
 	
 	/*******************************************************************************
      * @ Get Profile API
@@ -137,8 +105,8 @@ class UserLoginController extends Controller
     {
         Auth::logout();
        
-        return redirect('rcms/rcms');
-        // return redirect('/login');
+        // return redirect('rcms/rcms');
+        return redirect('/login');
     }
 
     public function rcmscheck(Request $request)

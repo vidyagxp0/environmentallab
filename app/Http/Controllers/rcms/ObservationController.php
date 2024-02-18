@@ -7,9 +7,13 @@ use App\Models\AuditTrialObservation;
 use App\Models\Observation;
 use App\Models\RecordNumber;
 use App\Models\User;
+use App\Models\OpenStage;
+use App\Models\Capa;
 use Carbon\Carbon;
+use Helpers;
 use App\Models\RoleGroup;
 use App\Models\ObservationGrid;
+use App\Models\InternalAuditGrid;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -52,12 +56,25 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        if ($request->hasfile('attach_files1')) {
-            $image = $request->file('attach_files1');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files1 = $image_name;
+        // if ($request->hasfile('attach_files1')) {
+        //     $image = $request->file('attach_files1');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files1 = $image_name;
+        // }
+
+        if (!empty($request->attach_files1)) {
+            $files = [];
+            if ($request->hasfile('attach_files1')) {
+                foreach ($request->file('attach_files1') as $file) {
+                    $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files1 = json_encode($files);
         }
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
@@ -82,19 +99,43 @@ class ObservationController extends Controller
         $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
-        if ($request->hasfile('related_observations')) {
-            $image = $request->file('related_observations');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->related_observations = $image_name;
+        // if ($request->hasfile('related_observations')) {
+        //     $image = $request->file('related_observations');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->related_observations = $image_name;
+        // }
+        if (!empty($request->related_observations)) {
+            $files = [];
+            if ($request->hasfile('related_observations')) {
+                foreach ($request->file('related_observations') as $file) {
+                    $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->related_observations = json_encode($files);
         }
-        if ($request->hasfile('attach_files2')) {
-            $image = $request->file('attach_files2');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files2 = $image_name;
+        // if ($request->hasfile('attach_files2')) {
+        //     $image = $request->file('attach_files2');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files2 = $image_name;
+        // }
+        if (!empty($request->attach_files2)) {
+            $files = [];
+            if ($request->hasfile('attach_files2')) {
+                foreach ($request->file('attach_files2') as $file) {
+                    $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files2 = json_encode($files);
         }
         $data->status = 'Opened';
         $data->stage = 1;
@@ -181,17 +222,17 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
 
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Short Description';
-        $history->previous = "Null";
-        $history->current = $data->short_description;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->save();
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Short Description';
+        // $history->previous = "Null";
+        // $history->current = $data->short_description;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->save();
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -576,12 +617,25 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        if ($request->hasfile('attach_files1')) {
-            $image = $request->file('attach_files1');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files1 = $image_name;
+        // if ($request->hasfile('attach_files1')) {
+        //     $image = $request->file('attach_files1');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files1 = $image_name;
+        // }
+
+        if (!empty($request->attach_files1)) {
+            $files = [];
+            if ($request->hasfile('attach_files1')) {
+                foreach ($request->file('attach_files1') as $file) {
+                    $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files1 = json_encode($files);
         }
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
@@ -606,19 +660,43 @@ class ObservationController extends Controller
         $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
-        if ($request->hasfile('related_observations')) {
-            $image = $request->file('related_observations');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->related_observations = $image_name;
+        // if ($request->hasfile('related_observations')) {
+        //     $image = $request->file('related_observations');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->related_observations = $image_name;
+        // }
+        if (!empty($request->related_observations)) {
+            $files = [];
+            if ($request->hasfile('related_observations')) {
+                foreach ($request->file('related_observations') as $file) {
+                    $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->related_observations = json_encode($files);
         }
-        if ($request->hasfile('attach_files2')) {
-            $image = $request->file('attach_files2');
-            $ext = $image->getClientOriginalExtension();
-            $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-            $image->move('upload/document/', $image_name);
-            $data->attach_files2 = $image_name;
+        // if ($request->hasfile('attach_files2')) {
+        //     $image = $request->file('attach_files2');
+        //     $ext = $image->getClientOriginalExtension();
+        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
+        //     $image->move('upload/document/', $image_name);
+        //     $data->attach_files2 = $image_name;
+        // }
+        if (!empty($request->attach_files2)) {
+            $files = [];
+            if ($request->hasfile('attach_files2')) {
+                foreach ($request->file('attach_files2') as $file) {
+                    $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = $name;
+                }
+            }
+
+            $data->attach_files2 = json_encode($files);
         }
         $data->status = 'Opened';
         $data->stage = 1;
@@ -675,6 +753,19 @@ class ObservationController extends Controller
             $history->previous = $lastDocument->division_code;
             $history->current = $data->division_code;
             $history->comment = $request->division_code_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if (!empty($lastDocument->short_description)) {
+            $history = new AuditTrialObservation();
+            $history->ExternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $lastDocument->short_description;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1154,9 +1245,10 @@ class ObservationController extends Controller
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
+        $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
         $griddata = ObservationGrid::where('observation_id',$data->id)->first();
 
-        return view('frontend.observation.view', compact('data','griddata'));
+        return view('frontend.observation.view', compact('data','griddata','grid_data'));
     }
     public function observation_send_stage(Request $request, $id)
     {
@@ -1285,14 +1377,18 @@ class ObservationController extends Controller
 
     public function observation_child(Request $request, $id)
     {
+        $cft = [];
         $parent_id = $id;
         $parent_type = "Capa";
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        $changeControl = OpenStage::find(1);
+        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
     }
 
 

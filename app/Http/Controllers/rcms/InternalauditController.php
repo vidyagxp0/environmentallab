@@ -48,7 +48,7 @@ class InternalauditController extends Controller
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assigend = $request->assigend;
+        $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
@@ -224,60 +224,60 @@ class InternalauditController extends Controller
         if (!empty($request->observation_id)) {
             $data4->observation_id = serialize($request->observation_id);
         }
-        if (!empty($request->date)) {
-            $data4->date = serialize($request->date);
-        }
-        if (!empty($request->auditorG)) {
-            $data4->auditor = serialize($request->auditorG);
-        }
-        if (!empty($request->auditeeG)) {
-            $data4->auditee = serialize($request->auditeeG);
-        }
+        // if (!empty($request->date)) {
+        //     $data4->date = serialize($request->date);
+        // }
+        // if (!empty($request->auditorG)) {
+        //     $data4->auditor = serialize($request->auditorG);
+        // }
+        // if (!empty($request->auditeeG)) {
+        //     $data4->auditee = serialize($request->auditeeG);
+        // }
         if (!empty($request->observation_description)) {
             $data4->observation_description = serialize($request->observation_description);
         }
-        if (!empty($request->severity_level)) {
-            $data4->severity_level = serialize($request->severity_level);
-        }
+        // if (!empty($request->severity_level)) {
+        //     $data4->severity_level = serialize($request->severity_level);
+        // }
         if (!empty($request->area)) { 
             $data4->area = serialize($request->area);
         }
-        if (!empty($request->observation_category)) {
-            $data4->observation_category = serialize($request->observation_category);
-        }
-         if (!empty($request->capa_required)) {
-            $data4->capa_required = serialize($request->capa_required);
-        }
+        // if (!empty($request->observation_category)) {
+        //     $data4->observation_category = serialize($request->observation_category);
+        // }
+        //  if (!empty($request->capa_required)) {
+        //     $data4->capa_required = serialize($request->capa_required);
+        // }
          if (!empty($request->auditee_response)) {
             $data4->auditee_response = serialize($request->auditee_response);
         }
-        if (!empty($request->auditor_review_on_response)) {
-            $data4->auditor_review_on_response = serialize($request->auditor_review_on_response);
-        }
-        if (!empty($request->qa_comment)) {
-            $data4->qa_comment = serialize($request->qa_comment);
-        }
-        if (!empty($request->capa_details)) {
-            $data4->capa_details = serialize($request->capa_details);
-        }
-        if (!empty($request->capa_due_date)) {
-            $data4->capa_due_date = serialize($request->capa_due_date);
-        }
-        if (!empty($request->capa_owner)) {
-            $data4->capa_owner = serialize($request->capa_owner);
-        }
-        if (!empty($request->action_taken)) {
-            $data4->action_taken = serialize($request->action_taken);
-        }
-        if (!empty($request->capa_completion_date)) {
-            $data4->capa_completion_date = serialize($request->capa_completion_date);
-        }
-        if (!empty($request->status_Observation)) {
-            $data4->status = serialize($request->status_Observation);
-        }
-        if (!empty($request->remark_observation)) {
-            $data4->remark = serialize($request->remark_observation);
-        }
+        // if (!empty($request->auditor_review_on_response)) {
+        //     $data4->auditor_review_on_response = serialize($request->auditor_review_on_response);
+        // }
+        // if (!empty($request->qa_comment)) {
+        //     $data4->qa_comment = serialize($request->qa_comment);
+        // }
+        // if (!empty($request->capa_details)) {
+        //     $data4->capa_details = serialize($request->capa_details);
+        // }
+        // if (!empty($request->capa_due_date)) {
+        //     $data4->capa_due_date = serialize($request->capa_due_date);
+        // }
+        // if (!empty($request->capa_owner)) {
+        //     $data4->capa_owner = serialize($request->capa_owner);
+        // }
+        // if (!empty($request->action_taken)) {
+        //     $data4->action_taken = serialize($request->action_taken);
+        // }
+        // if (!empty($request->capa_completion_date)) {
+        //     $data4->capa_completion_date = serialize($request->capa_completion_date);
+        // }
+        // if (!empty($request->status_Observation)) {
+        //     $data4->status = serialize($request->status_Observation);
+        // }
+        // if (!empty($request->remark_observation)) {
+        //     $data4->remark = serialize($request->remark_observation);
+        // }
         $data4->save();
         if (!empty($internalAudit->date)) {
             $history = new InternalAuditTrial();
@@ -293,12 +293,12 @@ class InternalauditController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->assigend)) {
+        if (!empty($internalAudit->assign_to)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $internalAudit->assigend;
+            $history->current = $internalAudit->assign_to;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -755,7 +755,7 @@ class InternalauditController extends Controller
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assigend = $request->assigend;
+        $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date= $request->due_date;
         $internalAudit->initiator_group= $request->initiator_group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
@@ -912,8 +912,8 @@ class InternalauditController extends Controller
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
         }
-        if (!empty($request->remarks)) {
-            $data3->remark = serialize($request->remarks);
+        if (!empty($request->remark)) {
+            $data3->remark = serialize($request->remark);
         }
         $data3->update();
 
@@ -992,13 +992,13 @@ class InternalauditController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assigend != $internalAudit->assigend || !empty($request->assigend_comment)) {
+        if ($lastDocument->assign_to != $internalAudit->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assigend;
-            $history->current = $internalAudit->assigend;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $internalAudit->assign_to;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1512,6 +1512,9 @@ class InternalauditController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+
+            
+            
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -1690,7 +1693,7 @@ class InternalauditController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $data->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Internal-Audit' . $id . '.pdf');
         }
     }
@@ -1716,7 +1719,7 @@ class InternalauditController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $doc->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Internal-Audit' . $id . '.pdf');
         }
     }

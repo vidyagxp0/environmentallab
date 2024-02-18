@@ -48,7 +48,7 @@ function locationInfo() {
                     jQuery.each(data['result'], function(key, val) {
 
                         var option = jQuery('<option />');
-                        option.attr('value', val.name).text(val.name);
+                        option.attr('value', val.id).text(val.name);
                         jQuery('.cities').append(option);
                     });
                 }
@@ -75,7 +75,7 @@ function locationInfo() {
 
                 jQuery.each(data['result'], function(key, val) {
                     var option = jQuery('<option />');
-                    option.attr('value', val.name).text(val.name);
+                    option.attr('value', val.id).text(val.name);
                     option.attr('stateid', val.id);
                     jQuery('.states').append(option);
                 });
@@ -95,7 +95,7 @@ function locationInfo() {
             jQuery.each(data['result'], function(key, val) {
                 var option = jQuery('<option />');
 
-                option.attr('value', val.name).text(val.name);
+                option.attr('value', val.id).text(val.name);
                 option.attr('countryid', val.id);
 
                 jQuery('.countries').append(option);

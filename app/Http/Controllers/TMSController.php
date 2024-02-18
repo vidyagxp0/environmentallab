@@ -228,8 +228,7 @@ class TMSController extends Controller
        $audit->training_id = $document_training->training_plan;
        $audit->sop_id = $id;
        $audit->save();
-
-       if($countAudit <= 3 ){
+       if($countAudit <= 2000 ){
             $TrainingHistory = new TrainingHistory();
             $TrainingHistory->plan_id = $training->id;
             $TrainingHistory->sop_id = $id;
@@ -740,7 +739,9 @@ class TMSController extends Controller
                 $json_option = unserialize($question->options);
                 $options = [];
                 foreach($json_option as $key => $value){
-                   array_push($options,$value);
+                    if(!is_null($value)){
+                        array_push($options,$value);
+                    }
                 }
                 $question->choices =$options;
                 //Answers

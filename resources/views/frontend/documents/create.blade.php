@@ -16,6 +16,30 @@
             margin: 0 !important;
             padding: 0 !important;
         }
+        .sop-type-header {
+    display: grid;
+    grid-template-columns: 135px 1fr;
+    border: 2px solid #000000;
+    margin-bottom: 20px;
+        }
+        .main-head {
+    display: grid;
+    place-items: center;
+    align-content: center;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border-left: 2px solid #000000;
+}
+.sub-head-2 {
+    text-align: center;
+    background: #4274da;
+    margin-bottom: 20px;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    color: #fff;
+    border: 2px solid #000000;
+    border-radius: 40px;
+}
     </style>
 
     <div id="data-field-head">
@@ -24,7 +48,7 @@
         </div>
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / New Document
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Document 
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
     </div>
@@ -34,13 +58,13 @@
         <div class="container-fluid">
             <div class="tab">
                 <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button> 
-                <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>  
+                {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>  
                 <button class="tablinks" onclick="openData(event, 'doc-instru')">Instrument SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-instrumental')">Instrumental Chemistry SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> 
                 <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
                 <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button> 
-                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>               
+                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>                --}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
@@ -88,16 +112,34 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="short-desc">Short Description<span class="text-danger">*</span></label>
-                                        <input type="text" id="short_desc" name="   short_desc">
+                                        <input type="text" id="short_desc" name="short_desc">
                                     </div>
                                     <p id="short_descError" style="color:red">**Short description is required</p>
 
                                 </div>
-                               
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
+                                        <select name="sop_type">
+                                            <option>Enter Your Selection Here</option>
+                                            <option>Chemistry SOP</option>
+                                            <option>Instrument SOP</option>
+                                            <option>Analytical SOP</option>
+                                            <option> Microbiology SOP</option>
+                                            <option>Quality Policies</option>
+                                            {{-- <option>Wet Chemistry</option> --}}
+                                            <option>Others</option>
+                                        </select>
+                                        {{-- <p id="sop_typeError" style="color:red">**SOP type is required</p> --}}
+                                    </div>
+
+                                </div>
 
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
                                         <div class="calenderauditee"> 
                                             <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />                                    
                                         <input
@@ -152,7 +194,7 @@
                                             @if (!empty($document))
                                                 @foreach ($document as $temp)
                                                     <option value="{{ $temp->id }}">
-                                                        {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-0000{{ $temp->id }}
+                                                        {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-000{{ $temp->id }}
                                                     </option>
                                                 @endforeach
                                             @endif
@@ -162,12 +204,48 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
-                                        <select name="department_id" id="depart-name1" required>
+                                        <select name="department_id" id="depart-name" required>
                                             <option value="" selected>Enter your Selection</option>
-                                            @foreach ($departments as $department)
+                                            <option value="CQA" @if (old('department_id') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('department_id') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('department_id') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="MANU" @if (old('department_id') == 'MANU') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('department_id') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('department_id') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('department_id') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('department_id') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('department_id') == 'CL') selected @endif>
+                                                Central Laboratory</option>
+                                            <option value="TT" @if (old('department_id') == 'TT') selected @endif>Tech
+                                                Team</option>
+                                            <option value="QA" @if (old('department_id') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('department_id') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('department_id') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('department_id') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('department_id') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('department_id') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('department_id') == 'BA') selected @endif>
+                                                Business Administration</option>
+                                            <option value="others" @if (old('department_id') == 'others') selected @endif>
+                                                Others</option>
+                                            {{-- @foreach ($departments as $department)
                                                 <option data-id="{{ $department->dc }}" value="{{ $department->id }}">
                                                     {{ $department->name }}</option>
-                                            @endforeach
+                                            @endforeach --}}
                                         </select>
                                     </div>
                                     <p id="depart-nameError" style="color:red">** Department is required</p>
@@ -177,6 +255,43 @@
                                         <label for="depart-code">Department Code</label>
                                         <div class="default-name"> <span id="department-code">Not selected</span></div>
                                     </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="major">Major<span class="text-danger">*</span></label>
+                                        <select name="major" id="major" required>
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+                                    </div>
+                                    {{-- <p id="majorError" style="color:red">** Department is required</p> --}}
+                                </div>
+                                <div class="col-6">
+                                    <div class="group-input">
+                                        <label for="minor">Minor<span class="text-danger">*</span></label>
+                                        <select name="minor" id="minor" required>
+                                            <option value="00">-- Select --</option>
+                                            <option value="0">0</option>
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
+                                        </select>
+                                    </div>
+                                    {{-- <p id="minorError" style="color:red">** Department is required</p> --}}
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
@@ -198,7 +313,7 @@
                                         <div class="default-name"> <span id="document_type_code">Not selected</span></div>               
                                      </div>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-type">Document Sub Type<span class="text-danger">*</span></label>
                                         <select name="document_subtype_id" id="doc-subtype">
@@ -209,14 +324,14 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
+                                </div> --}}
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-code">Document SubType Code</label>
                                         <div class="default-name"> <span id="document_subtype_code">Not selected</span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-lang">Document Language</label>
@@ -372,6 +487,17 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="revision-type">Revision Type</label>
+                                        <select name="revision_type">
+                                            <option value="0">-- Select --</option>
+                                            <option value="minor">Minor</option>
+                                            <option value="major">Major</option>
+                                            <option value="NA">NA</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="summary">Revision Summary</label>
@@ -391,1577 +517,6 @@
 
 
 <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-<div id="doc-chem" class="tabcontent">
-    <div class="sop-type-header"><div class="logo">                       
-    <img src="{{ asset('user/images/customer.png') }}" alt="..." class="w-100 h-100">
-    </div>
-    <div class="main-head">
-        <h2>Standard Operating Procedure</h2>
-        <h5>Environmental Laboratory</h5>
-        </div>
-    </div>
-    <div class="sub-head-2">Chemistry SOP</div>
-    <div class="input-fields">
-        <div class="row">           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="purpose">1.0 Purpose<span
-                            class="text-danger">*</span></label><span id="rchars"> To establish a plan for</span>
-                    <input id="purpose" type="text" name="purpose" maxlength="255" required>
-                </div>
-                {{-- <p id="docnameError" style="color:red">**Document Name is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="scope_of_aplication">2.0 Scope/Field of Application<span class="text-danger">*</span></label>
-                    <span>All test samples received at the laboratory plant and required</span>
-                    <input type="text" id="scope_of_aplication" name="scope_of_aplication">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="responsibility">3.0 Responsibilities<span class="text-danger">*</span></label>
-                    <select multiple_id = "responsibility">
-                        <option>Select All</option>
-                        <option>Amit</option>
-                        <option>Manish</option>
-                        <option>Piyush</option>
-                    </select>
-                    {{-- <p id="sop_typeError" style="color:red">**3.0 Responsibilities is required</p>  --}}
-                </div>
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Chemical_Required">4.0 Materials/Chemical Required<span class="text-danger">*</span></label>
-                    <input type="text" id="Chemical_Required" name="Chemical_Required">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Instruments_Used">5.0 Equipment/Instruments Used<span class="text-danger">*</span></label>
-                    <input type="text" id="Instruments_Used" name="Instruments_Used">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Safety_Precautions">6.0 Safety Precautions<span class="text-danger">*</span></label>
-                    <input type="text" id="Safety_Precautions" name="Safety_Precautions">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Procedure">7.0 Procedure<span class="text-danger">*</span></label>
-                    <input type="text" id="Procedure" name="Procedure">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="interpretation_of_result">
-                        8.0 Interpretation of Result<button type="button" name="interpretation_of_result"
-                            id="interpretation_of_result">+</button>
-                    </label>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Reference_Forms">9.0 Reference Procedures/Forms<span class="text-danger">*</span></label>
-                    <span>Related SOP's, QPS Forms etc.</span>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="References">10.0 References<span class="text-danger">*</span></label>
-                    <input type="text" id="References" name="References">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">11.0 Change Control<span class="text-danger">*</span></label>
-                    <span>Add referenced Change Control records</span>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                    <span>Add relevant attachments, if any.</span>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-            </div>
-            
-        </div>
-    </div>
-    <div class="button-block">
-        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
-        <button type="button" class="nextButton" id="DocnextButton">Next</button>
-        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-        </button> 
-    </div>
-</div>
-<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-<div id="doc-instru" class="tabcontent">
-    <div class="sop-type-header"><div class="logo">                       
-    <img src="{{ asset('user/images/customer.png') }}" alt="..." class="w-100 h-100">
-    </div>
-    <div class="main-head">
-        <h2>Standard Operating Procedure</h2>
-        <h5>Environmental Laboratory</h5>
-        </div>
-    </div>
-    <div class="sub-head-2">Instrument SOP</div>
-    <div class="input-fields">
-        <div class="row">           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="purpose">1.0 Purpose<span
-                            class="text-danger">*</span></label>
-                            <span id="rchars">To establish a plan for handling, operating, calibration and maintaining of instrumentation</span>
-                    <input id="purpose" type="text" name="purpose" maxlength="255" required>
-                </div>
-                {{-- <p id="docnameError" style="color:red">**Document Name is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="scope_of_aplication">2.0 Scope/Field of Application<span class="text-danger">*</span></label>
-                    {{-- <span>All test samples received at the laboratory plant and required</span> --}}
-                    <input type="text" id="scope_of_aplication" name="scope_of_aplication">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="responsibility">3.0 Responsibilities<span class="text-danger">*</span></label>
-                    <select id = "responsibility">
-                        <option>Select All</option>
-                        <option>Amit</option>
-                        <option>Manish</option>
-                        <option>Piyush</option>
-                    </select>
-                    {{-- <p id="sop_typeError" style="color:red">**3.0 Responsibilities is required</p>  --}}
-                </div>
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Materials_Required">4.0 Materials Required                        <span class="text-danger">*</span></label>
-                    <input type="text" id="materials_Required" name="materials_Required">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Procedure">5.0 Procedure<span class="text-danger">*</span></label>
-                    <input type="text" id="procedure" name="procedure">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Operations">6.0 Operations                        
-                        <span class="text-danger">*</span></label>
-                    <input type="text" id="Operations" name="Operations">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Authorization_Matrix">7.0 Authorization Matrix
-                        <span class="text-danger">*</span></label>
-                    <input type="text" id=" authorization_matrix" name="authorization_matrix">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Reference_Forms">8.0 References
-                        <span class="text-danger">*</span></label>
-                    <input type="text" id="reference" name="reference">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="C_control">
-                        9.0 Change Control<button type="button" name="c_control"
-                            id="c_control">+</button>
-                    </label>
-                    <table class="table table-bordered" id="change_c">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                    <label for="C_control">
-                        File Attatchment<button type="button" name="c_control"
-                            id="c_control">+</button>
-                    </label>
-                    <table class="table table-bordered" id="change_c">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>             
-        </div>
-    </div>
-    <div class="button-block">
-        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
-        <button type="button" class="nextButton" id="DocnextButton">Next</button>
-        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-        </button> 
-    </div>
-</div> 
-<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
- <div id="doc-instrumental" class="tabcontent">
-    <div class="sop-type-header"><div class="logo">                       
-    <img src="{{ asset('user/images/customer.png') }}" alt="..." class="w-100 h-100">
-    </div>
-    <div class="main-head">
-        <h2>Standard Operating Procedure</h2>
-        <h5>Environmental Laboratory</h5>
-        </div>
-    </div>
-    <div class="sub-head-2">Instrumental Chemistry SOP</div>
-    <div class="input-fields">
-        <div class="row">           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="purpose">1.0 Purpose<span
-                            class="text-danger">*</span></label>
-                            <span id="rchars">To establish a plan for</span>
-                    <input id="purpose" type="text" name="purpose" maxlength="255" required>
-                </div>
-                {{-- <p id="docnameError" style="color:red">**Document Name is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="scope_of_aplication">2.0 Scope/Field of Application<span class="text-danger">*</span></label>
-                    <span>All test samples received at the laboratory plant and required</span>
-                    <input type="text" id="scope_of_aplication" name="scope_of_aplication">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="responsibility">3.0 Responsibilities<span class="text-danger">*</span></label>
-                    <span>The performance of the tests should be done by
-                    </span>
-                    <select multiple_id = "responsibility">
-                        <option>Select All</option>
-                        <option>Amit</option>
-                        <option>Manish</option>
-                        <option>Piyush</option>
-                    </select>
-                    {{-- <p id="sop_typeError" style="color:red">**3.0 Responsibilities is required</p>  --}}
-                </div>
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Chemical_Required">4.0 Materials/Chemical Required<span class="text-danger">*</span></label>
-                    <input type="text" id="Chemical_Required" name="Chemical_Required">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Instruments_Used">5.0 Equipment/Instruments Used<span class="text-danger">*</span></label>
-                    <input type="text" id="Instruments_Used" name="Instruments_Used">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Safety_Precautions">6.0 Safety Precautions<span class="text-danger">*</span></label>
-                    <input type="text" id="Safety_Precautions" name="Safety_Precautions">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Procedure">7.0 Procedure<span class="text-danger">*</span></label>
-                    <input type="text" id="Procedure" name="Procedure">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="interpretation_of_result">
-                        8.0 Critical Steps<button type="button" name="interpretation_of_result"
-                            id="interpretation_of_result">+</button>
-                    </label>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Reference_Forms">9.0 Software Processing Steps                        <span class="text-danger">*</span></label>
-                    <input type="text" id="Reference_Forms" name="Reference_Forms">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="References">10.0 Calculation                        <span class="text-danger">*</span></label>
-                    <input type="text" id="References" name="References">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">11.0 References<span class="text-danger">*</span></label>
-                    <input type="text" id="11_Change_Control" name="11_Change_Control">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">
-                        12.0 Change Control<button type="button" name="11_Change_Control"
-                            id="11_Change_Control">+</button>
-                    </label>
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="button-block">
-        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
-        <button type="button" class="nextButton" id="DocnextButton">Next</button>
-        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-        </button> 
-    </div>
-</div>
-<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
- <div id="doc-micro" class="tabcontent">
-    <div class="sop-type-header"><div class="logo">                       
-    <img src="{{ asset('user/images/customer.png') }}" alt="..." class="w-100 h-100">
-    </div>
-    <div class="main-head">
-        <h2>Standard Operating Procedure</h2>
-        <h5>Environmental Laboratory</h5>
-        </div>
-    </div>
-    <div class="sub-head-2">Microbiology SOP</div>
-    <div class="input-fields">
-        <div class="row">           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="purpose">1.0 Purpose<span
-                            class="text-danger">*</span></label>
-                            <span id="rchars">To establish a plan for handling, operating, calibration and maintaining of instrumentation</span>
-                    <input id="purpose" type="text" name="purpose" maxlength="255" required>
-                </div>
-                {{-- <p id="docnameError" style="color:red">**Document Name is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="scope_of_aplication">2.0 Scope/Field of Application<span class="text-danger">*</span></label>
-                    <span>All test samples received at the laboratory plant and required</span>
-                    <input type="text" id="scope_of_aplication" name="scope_of_aplication">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="responsibility">3.0 Responsibilities<span class="text-danger">*</span></label>
-                    <select multiple_id = "responsibility">
-                        <option>Select All</option>
-                        <option>Amit</option>
-                        <option>Manish</option>
-                        <option>Piyush</option>
-                    </select>
-                    {{-- <p id="sop_typeError" style="color:red">**3.0 Responsibilities is required</p>  --}}
-                </div>
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Chemical_Required">4.0 Materials/Chemical Required<span class="text-danger">*</span></label>
-                    <input type="text" id="Chemical_Required" name="Chemical_Required">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Instruments_Used">5.0 Equipment/Instruments Used<span class="text-danger">*</span></label>
-                    <input type="text" id="Instruments_Used" name="Instruments_Used">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Safety_Precautions">6.0 Safety Precautions<span class="text-danger">*</span></label>
-                    <input type="text" id="Safety_Precautions" name="Safety_Precautions">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Procedure">7.0 Procedure<span class="text-danger">*</span></label>
-                    <input type="text" id="Procedure" name="Procedure">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="interpretation_of_result">
-                        8.0 Interpretation of Result<button type="button" name="interpretation_of_result"
-                            id="interpretation_of_result">+</button>
-                    </label>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="References">9.0 References<span class="text-danger">*</span></label>
-                    <input type="text" id="References" name="References">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-    
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">
-                        11.0 Change Control<button type="button" name="11_Change_Control"
-                            id="11_Change_Control">+</button>
-                    </label>
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="button-block">
-        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
-        <button type="button" class="nextButton" id="DocnextButton">Next</button>
-        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-        </button> 
-    </div>
-</div> 
-<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-<div id="doc-lab" class="tabcontent">
-    <div class="sop-type-header"><div class="logo">                       
-    <img src="{{ asset('user/images/customer.png') }}" alt="..." class="w-100 h-100">
-    </div>
-    <div class="main-head">
-        <h2>Standard Operating Procedure</h2>
-        <h5>Environmental Laboratory</h5>
-        </div>
-    </div>
-    <div class="sub-head-2">Good Laboratorty Practices</div>
-    <div class="input-fields">
-        <div class="row">           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="purpose">1.0 Purpose<span
-                            class="text-danger">*</span></label>
-                            <span id="rchars">To establish a plan for handling, operating, calibration and maintaining of instrumentation</span>
-                    <input id="purpose" type="text" name="purpose" maxlength="255" required>
-                </div>
-                {{-- <p id="docnameError" style="color:red">**Document Name is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="scope_of_aplication">2.0 Scope/Field of Application<span class="text-danger">*</span></label>
-                    <span>All test samples received at the laboratory plant and required</span>
-                    <input type="text" id="scope_of_aplication" name="scope_of_aplication">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="responsibility">3.0 Responsibilities<span class="text-danger">*</span></label>
-                    <select multiple_id = "responsibility">
-                        <option>Select All</option>
-                        <option>Amit</option>
-                        <option>Manish</option>
-                        <option>Piyush</option>
-                    </select>
-                    {{-- <p id="sop_typeError" style="color:red">**3.0 Responsibilities is required</p>  --}}
-                </div>
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Chemical_Required">4.0 Materials/Chemical Required<span class="text-danger">*</span></label>
-                    <input type="text" id="Chemical_Required" name="Chemical_Required">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Instruments_Used">5.0 Equipment/Instruments Used<span class="text-danger">*</span></label>
-                    <input type="text" id="Instruments_Used" name="Instruments_Used">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Safety_Precautions">6.0 Safety Precautions<span class="text-danger">*</span></label>
-                    <input type="text" id="Safety_Precautions" name="Safety_Precautions">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Procedure">7.0 Procedure<span class="text-danger">*</span></label>
-                    <input type="text" id="Procedure" name="Procedure">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="interpretation_of_result">
-                        8.0 Interpretation of Result<button type="button" name="interpretation_of_result"
-                            id="interpretation_of_result">+</button>
-                    </label>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="References">9.0 References<span class="text-danger">*</span></label>
-                    <input type="text" id="References" name="References">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-    
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">
-                        11.0 Change Control<button type="button" name="11_Change_Control"
-                            id="11_Change_Control">+</button>
-                    </label>
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="button-block">
-        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
-        <button type="button" class="nextButton" id="DocnextButton">Next</button>
-        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-        </button> 
-    </div>
-</div> 
-<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-<div id="doc-wet" class="tabcontent">
-    <div class="sop-type-header"><div class="logo">                       
-    <img src="{{ asset('user/images/customer.png') }}" alt="..." class="w-100 h-100">
-    </div>
-    <div class="main-head">
-        <h2>Standard Operating Procedure</h2>
-        <h5>Environmental Laboratory</h5>
-        </div>
-    </div>
-    <div class="sub-head-2">Wet Chemistry</div>
-    <div class="input-fields">
-        <div class="row">           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="purpose">1.0 Purpose<span
-                            class="text-danger">*</span></label>
-                            <span id="rchars">To establish a plan for handling, operating, calibration and maintaining of instrumentation</span>
-                    <input id="purpose" type="text" name="purpose" maxlength="255" required>
-                </div>
-                {{-- <p id="docnameError" style="color:red">**Document Name is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="scope_of_aplication">2.0 Scope/Field of Application<span class="text-danger">*</span></label>
-                    <span>All test samples received at the laboratory plant and required</span>
-                    <input type="text" id="scope_of_aplication" name="scope_of_aplication">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="responsibility">3.0 Responsibilities<span class="text-danger">*</span></label>
-                    <select multiple_id = "responsibility">
-                        <option>Select All</option>
-                        <option>Amit</option>
-                        <option>Manish</option>
-                        <option>Piyush</option>
-                    </select>
-                    {{-- <p id="sop_typeError" style="color:red">**3.0 Responsibilities is required</p>  --}}
-                </div>
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Chemical_Required">4.0 Materials/Chemical Required<span class="text-danger">*</span></label>
-                    <input type="text" id="Chemical_Required" name="Chemical_Required">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Instruments_Used">5.0 Equipment/Instruments Used<span class="text-danger">*</span></label>
-                    <input type="text" id="Instruments_Used" name="Instruments_Used">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Safety_Precautions">6.0 Safety Precautions<span class="text-danger">*</span></label>
-                    <input type="text" id="Safety_Precautions" name="Safety_Precautions">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Procedure">7.0 Procedure<span class="text-danger">*</span></label>
-                    <input type="text" id="Procedure" name="Procedure">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="interpretation_of_result">
-                        8.0 Interpretation of Result<button type="button" name="interpretation_of_result"
-                            id="interpretation_of_result">+</button>
-                    </label>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="References">9.0 References<span class="text-danger">*</span></label>
-                    <input type="text" id="References" name="References">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-    
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">
-                        11.0 Change Control<button type="button" name="11_Change_Control"
-                            id="11_Change_Control">+</button>
-                    </label>
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Result</th>
-                                <th>Interpretation</th>
-                                <th>Time Restriction (Date)</th>
-                                <th>Time Restriction (Time)</th>
-                                <th>Precaution/Notes (If any)</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="button-block">
-        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
-        <button type="button" class="nextButton" id="DocnextButton">Next</button>
-        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-        </button> 
-    </div>
-</div>
-<!-- ---------------------------------------------------------------------------------------------------------------------------- -->
-<div id="doc-others" class="tabcontent">
-    <div class="sop-type-header"><div class="logo">                       
-    <img src="{{ asset('user/images/customer.png') }}" alt="..." class="w-100 h-100">
-    </div>
-    <div class="main-head">
-        <h2>Standard Operating Procedure</h2>
-        <h5>Environmental Laboratory</h5>
-        </div>
-    </div>
-    <div class="sub-head-2">Wet Chemistry</div>
-    <div class="input-fields">
-        <div class="row">           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="purpose">1.0 Purpose<span
-                            class="text-danger">*</span></label><span id="rchars"> To establish a plan for</span>
-                    <input id="purpose" type="text" name="purpose" maxlength="255" required>
-                </div>
-                {{-- <p id="docnameError" style="color:red">**Document Name is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="scope_of_aplication">2.0 Scope/Field of Application<span class="text-danger">*</span></label>
-                    <span>All test samples received at the laboratory plant and required</span>
-                    <input type="text" id="scope_of_aplication" name="scope_of_aplication">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="responsibility">3.0 Responsibilities<span class="text-danger">*</span></label>
-                    <select multiple_id = "responsibility">
-                        <option>Select All</option>
-                        <option>Amit</option>
-                        <option>Manish</option>
-                        <option>Piyush</option>
-                    </select>
-                    {{-- <p id="sop_typeError" style="color:red">**3.0 Responsibilities is required</p>  --}}
-                </div>
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Chemical_Required">4.0 Materials/Chemical Required<span class="text-danger">*</span></label>
-                    <input type="text" id="Chemical_Required" name="Chemical_Required">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Instruments_Used">5.0 Equipment/Instruments Used<span class="text-danger">*</span></label>
-                    <input type="text" id="Instruments_Used" name="Instruments_Used">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Safety_Precautions">6.0 Safety Precautions<span class="text-danger">*</span></label>
-                    <input type="text" id="Safety_Precautions" name="Safety_Precautions">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Procedure">7.0 Procedure<span class="text-danger">*</span></label>
-                    <input type="text" id="Procedure" name="Procedure">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="interpretation_of_result">
-                        8.0 Critical Steps<button type="button" name="interpretation_of_result"
-                            id="interpretation_of_result">+</button>
-
-                    </label>
-                    <table class="table table-bordered" id="interpretation_of">
-                        <thead>
-                            <tr>
-                                <th>Row</th>
-                                <th>Step</th>
-                                <th>Reasons</th>
-                                <th>Expected Tests Outcomes</th>
-                                <th>Acceptable values, if any</th>
-                                <th>Attachment, if any</th>
-                                <th>Remarks</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="Reference_Forms">9.0 Software Processing Steps<span class="text-danger">*</span></label>
-                    <input type="text" id="Reference_Forms" name="Reference_Forms">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-           
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="References">10.0 Calculation <span class="text-danger">*</span></label>
-                    <input type="text" id="References" name="References">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-
-            </div>
-            <div class="col-md-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">11.0 References<span class="text-danger">*</span></label>
-                    <input type="text" id="11_Change_Control" name="11_Change_Control">
-                </div>
-                {{-- <p id="short_descError" style="color:red">**Short description is required</p> --}}
-            </div>
-            <div class="col-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">
-                        12.0 Change Control<button type="button" name="11_Change_Control"
-                            id="11_Change_Control">+</button>
-                            <span>Add referenced Change Control records</span>
-                    </label>
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                            <th>Record ID</th>
-                                <th>Division	</th>
-                                <th>Process</th>
-                                <th>Short Description</th>
-                                <th>Date Opened</th>
-                                <th>Assigned To</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-
-                    <!-- <div class="col-12">
-                <div class="group-input">
-                    <label for="11_Change_Control">
-                       File Attachment<button type="button" name="11_Change_Control"
-                            id="11_Change_Control">+</button>
-                            <span>Add relevant attachments, if any.</span>
-
-                    </label> -->
-                    <table class="table table-bordered" id="11_Change">
-                        <thead>
-                            <tr>
-                            <th>Row</th>
-                                <th>Title of Document</th>
-                                <th>Attached File</th>
-                                <th>Remark</th>
-                                <th>Action</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <td><input disabled type="text" name="serial_number[]" value="1">
-                            </td>
-                            <td><input type="text" name="result[]"></td>
-                            <td><input type="text" name="interpretation[]"></td>
-                            
-                            <td>
-                                <div class="group-input new-date-data-field mb-0">
-                                    <div class="input-date ">
-                                        <div  class="calenderauditee">
-                                            <input type="text" id="time_restriction_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="time_restriction_date[]" class="hide-input" 
-                                             oninput="handleDateInput(this, time_restriction_date' + serialNumber +')" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td><input type="time" name="time_restriction_time[]"></td>
-
-                            <td><input type="text" name="Precaution_Notes[]"></td>
-                            <td><input type="text" name="Action[]"></td>
-                        </tbody>
-                    </table>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="button-block">
-        <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
-        <button type="button" class="nextButton" id="DocnextButton">Next</button>
-        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-        </button> 
-    </div>
-    
-</div>
 <!-- ---------------------------------------------------------------------------------------------------------------------------- -->
 
                     <div id="add-doc" class="tabcontent">
@@ -2039,7 +594,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="test">
-                                            Survey(0)<button type="button" name="reporting"
+                                            Survey(0)<button type="button" name="reporting1"
                                                 onclick="addTrainRow('survey')">+</button>
                                         </label>
                                         <table class="table-bordered table" id="survey">
@@ -2095,9 +650,11 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
+                                        
                                         <label for="responsibility" id="responsibility">
                                             Responsibility<button type="button" id="responsibilitybtnadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="responsibility[]" class="myclassname">
@@ -2113,6 +670,7 @@
                                         <label for="abbreviation" id="abbreviation">
                                             Abbreviation<button type="button" id="abbreviationbtnadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="abbreviation[]" class="myclassname">
@@ -2129,6 +687,7 @@
                                         <label for="abbreviation" id="definition">
                                             Definition<button type="button" id="Definitionbtnadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="defination[]" class="myclassname">
@@ -2142,6 +701,7 @@
                                         <label for="reporting" id="newreport">
                                             Materials and Equipments<button type="button" id="materialsbtadd"
                                                 name="button">+</button>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                         </label>
 
                                         <input type="text" name="materials_and_equipments[]" class="myclassname">
@@ -2154,6 +714,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="procedure">Procedure</label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="procedure" id="summernote">
                                     </textarea>
                                     </div>
@@ -2163,7 +724,7 @@
                                         <label for="reporting" id="newreport">
                                             Reporting<button type="button" id="reportingbtadd" name="button">+</button>
                                         </label>
-
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <input type="text" name="reporting[]" class="myclassname">
 
 
@@ -2175,24 +736,46 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="references" id="references">
-                                            References<button type="button" onclick="addReference()">+</button>
+                                            References<button type="button" id="referencesbtadd" >+</button>
                                         </label>
-                                        <div class="row reference-data">
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <input type="text" name="references[]" class="myclassname">
+                                        <div id="referencesdiv"></div>
+                                        {{-- <div class="row reference-data">
                                             <div class="col-lg-6">
                                                 <input type="text" name="reference-text">
                                             </div>
                                             <div class="col-lg-6">
                                                 <input type="file" name="references" class="myclassname">
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="ann" id="ann">
+                                            Annexure<button type="button" id="annbtadd" >+</button>
+                                        </label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <input type="text" name="ann[]" class="myclassname">
+                                        <div id="anndiv"></div>
+                                        {{-- <div class="row reference-data">
+                                            <div class="col-lg-6">
+                                                <input type="text" name="reference-text">
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <input type="file" name="references" class="myclassname">
+                                            </div>
+                                        </div> --}}
+                                    </div>
+                                </div>
+                                {{-- <div class="col-md-12">  ---By Aditya
                                     <div class="group-input">
                                         <label for="annexure">
                                             Annexure<button type="button" name="ann" id="annexurebtnadd">+</button>
                                         </label>
                                         <table class="table-bordered table" id="annexure">
+                                            <div><small class="text-primary">Please mention brief summary</small></div>
                                             <thead>
                                                 <tr>
                                                     <th class="sr-num">Sr. No.</th>
@@ -2202,7 +785,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td><input type="text" name="serial_number[]"></td>
+                                                    <td><input disabled type="text" name="serial_number[]" value="1"></td>
                                                     <td><input type="text" name="annexure_number[]"></td>
                                                     <td><input type="text" name="annexure_data[]"></td>
                                                 </tr>
@@ -2210,13 +793,14 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="test">
-                                            Revision History<button type="button" name="reporting"
+                                            Revision History<button type="button" name="reporting2"
                                                 onclick="addRevRow('revision')">+</button>
                                         </label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
                                         <table class="table-bordered table" id="revision">
                                             <thead>
                                                 <tr>
@@ -2763,6 +1347,8 @@
                 <input type="text" name="reference-text">
             </div>
             <div class="col-lg-6">
+                <input type="file" name="references" class="myclassname">
+            </div><div class="col-lg-6">
                 <input type="file" name="references" class="myclassname">
             </div>
         `;

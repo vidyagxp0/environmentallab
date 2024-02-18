@@ -4,8 +4,10 @@ namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Capa;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\RootCauseAnalysis;
 use App\Models\RecordNumber;
 use App\Models\LabIncidentAuditTrial;
 use App\Models\RoleGroup;
@@ -13,7 +15,7 @@ use App\Models\User;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\OpenStage;
 use App\Models\LabIncident;
 use Illuminate\Support\Facades\App;
 
@@ -49,7 +51,7 @@ class LabIncidentController extends Controller
         $data->initiator_group_code= $request->initiator_group_code;
         $data->Other_Ref= $request->Other_Ref;
         $data->due_date = $request->due_date;
-        $data->assigend = $request->assigend;
+        $data->assign_to = $request->assign_to;
         $data->Incident_Category= $request->Incident_Category;
         $data->Invocation_Type = $request->Invocation_Type;
         $data->Incident_Details = $request->Incident_Details;
@@ -64,6 +66,7 @@ class LabIncidentController extends Controller
         $data->Root_Cause = $request->Root_Cause;
         $data->Currective_Action = $request->Currective_Action;
         $data->Preventive_Action = $request->Preventive_Action;
+        $data->Corrective_Preventive_Action = $request->Corrective_Preventive_Action;
         $data->QA_Review_Comments = $request->QA_Review_Comments;
         $data->QA_Head = $request->QA_Head;
         $data->Effectiveness_Check = $request->Effectiveness_Check;
@@ -138,7 +141,7 @@ class LabIncidentController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        if (!empty($data->short_desc)) {
+        if(!empty($data->short_desc)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Short Description';
@@ -194,12 +197,12 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->assigend)) {
+        if (!empty($data->assign_to)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $data->assigend;
+            $history->current = $data->assign_to;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -404,6 +407,20 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
+        if (!empty($data->Corrective_Preventive_Action)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = "Null";
+            $history->current = $data->Corrective_Preventive_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($data->QA_Review_Comments)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
@@ -591,7 +608,7 @@ class LabIncidentController extends Controller
         $data->initiator_group_code= $request->initiator_group_code;
         $data->Other_Ref= $request->Other_Ref;
         $data->due_date = $request->due_date;
-        $data->assigend = $request->assigend;
+        $data->assign_to = $request->assign_to;
         $data->Incident_Category= $request->Incident_Category;
         $data->Invocation_Type = $request->Invocation_Type;
         $data->Incident_Details = $request->Incident_Details;
@@ -606,6 +623,7 @@ class LabIncidentController extends Controller
         $data->Root_Cause = $request->Root_Cause;
         $data->Currective_Action = $request->Currective_Action;
         $data->Preventive_Action = $request->Preventive_Action;
+        $data->Corrective_Preventive_Action = $request->Corrective_Preventive_Action;
         $data->QA_Review_Comments = $request->QA_Review_Comments;
         $data->QA_Head = $request->QA_Head;
         $data->Effectiveness_Check = $request->Effectiveness_Check;
@@ -733,14 +751,14 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assigend != $data->assigend || !empty($request->assigend_comment)) {
+        if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assigend;
-            $history->current = $data->assigend;
-            $history->comment = $request->assigend_comment;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $data->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -943,6 +961,22 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        if ($lastDocument->Corrective_Preventive_Action != $data->Corrective_Preventive_Action || !empty($request->Corrective_Preventive_Action_comment)) {
+
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = $lastDocument->Corrective_Preventive_Action;
+            $history->current = $data->Corrective_Preventive_Action;
+            $history->comment = $request->Corrective_Preventive_Action_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
         if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments || !empty($request->QA_Review_Comments_comment)) {
 
             $history = new LabIncidentAuditTrial();
@@ -1127,6 +1161,22 @@ class LabIncidentController extends Controller
     }
     public function lab_incident_capa_child(Request $request, $id)
     {
+        $cft = [];
+        $parent_id = $id;
+        $parent_type = "Capa";
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
+        $changeControl = OpenStage::find(1);
+         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_record','cft'));
+    }
+
+    public function lab_incident_root_child(Request $request, $id)
+    {
         $parent_id = $id;
         $parent_type = "Capa";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
@@ -1134,9 +1184,8 @@ class LabIncidentController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.root-cause-analysis', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
     }
-
     public function LabIncidentStateChange(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -1330,7 +1379,7 @@ class LabIncidentController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $data->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('Lab-Incident' . $id . '.pdf');
         }
     }
@@ -1356,7 +1405,7 @@ class LabIncidentController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 3, $height / 2, $doc->status, null, 60, [0, 0, 0], 2, 6, -20);
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
             return $pdf->stream('LabIncident-AuditTrial' . $id . '.pdf');
         }
     }

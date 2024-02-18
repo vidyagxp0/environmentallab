@@ -7,6 +7,15 @@
         header {
             display: none;
         }
+           .remove-file  {
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+
+        .remove-file :hover {
+            color: white;
+        }
     </style>
     {{-- ======================================
                 CHANGE CONTROL VIEW
@@ -132,7 +141,7 @@
 
 
         </div>
-        <form action="{{ route('effectiveness.update', $data->id) }}" method="POST">
+        <form action="{{ route('effectiveness.update', $data->id) }}" method="POST" enctype="multipart/form-data">
 
             @csrf
             @method('PUT')
@@ -142,7 +151,6 @@
                     QMS-North America / Effectiveness-Check
                 </div>
                 <div class="button-bar">
-                    <button type="submit">Save</button>
                     {{--  <button type="button">Cancel</button>
                 <button type="button">New</button>
                 <button type="button">Copy</button>
@@ -165,8 +173,8 @@
                             Results</button>
                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference
                             Info/Comments</button>
-                        <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity
-                            History</button>
+                        {{-- <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity
+                            History</button> --}}
                     </div>
 
                     <!-- General Information -->
@@ -193,17 +201,17 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description</label>
-                                        <textarea name="short_description">{{ $data->short_description }}</textarea>
+                                        <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="">Assign To</label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
+                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="assign_id">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option {{ $data->assign_id == $value->id ? 'selected' : '' }}
-                                                    value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    value= "{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
 
@@ -217,25 +225,30 @@
 
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select id="select-state" placeholder="Select..." name="Quality_Reviewer">
+                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
-                                                <option {{ $data->assign_id == $value->id ? 'selected' : '' }}
+                                                <option {{ $data->Quality_Reviewer == $value->id ? 'selected' : '' }}
                                                     value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+<<<<<<< Updated upstream
                                 </div>
                                 <div class="col-lg-6">
+=======
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
+>>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="Original Date Due"><b>Original Date Due</b></label>
                                         <input disabled type="text"
                                             value="{{ Helpers::getdateFormat($data->due_date) }}">
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="sub-head">
                                 Effectiveness Planning Information
@@ -244,11 +257,47 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="Effectiveness_check_Plan"
+                                        <input type="text" name="Effectiveness_check_Plan" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                             value="{{ $data->Effectiveness_check_Plan }}">
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachment">Attachments</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="Attachments">
+                                                        @if ($data->Attachments)
+                                                        @foreach(json_decode($data->Attachments) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Attachments[]"
+                                                            oninput="addMultipleFiles(this, 'Attachments')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                             
+                            <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
                         </div>
                     </div>
 
@@ -262,45 +311,112 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea name="Effectiveness_Summary">{{ $data->Effectiveness_Summary }}</textarea>
+                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
                                     </div>
                                 </div>
+                                <!-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description</label>
+                                        <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                    </div>
+                                </div> -->
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <input type="text" name="Effectiveness_Results"
-                                            value="{{ $data->Effectiveness_Results }}">
+                                        <textarea type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            >{{ $data->Effectiveness_Results }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments"><b>Effectiveness check
                                                 Attachment</b></label>
                                         <input type="file" id="myfile" name="Effectiveness_check_Attachment"
                                             value="{{ $data->Effectiveness_check_Attachment }}">
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-6">
+                                            <div class="group-input">
+                                                <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="Effectiveness_check_Attachment">
+                                                        @if ($data->Effectiveness_check_Attachment)
+                                                        @foreach(json_decode($data->Effectiveness_check_Attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->Effectiveness_check_Attachment }}" type="file" id="myfile" name="Effectiveness_check_Attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  </div>
                                 <div class="col-12 sub-head">
                                     Reopen
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Addendum Comments"><b>Addendum Comments</b></label>
-                                        <input type="text" name="Addendum_Comments"
-                                            value= "{{ $data->Addendum_Comments }}">
+                                        <label for="Addendum Comments"><b>Addendum Comments</b><span
+                                                        class="text-danger">*</span></label>
+                                        <textarea type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            >{{ $data->Addendum_Comments }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
                                         <input type="file" id="myfile" name="Addendum_Attachment"
                                             value="{{ $data->Addendum_Attachment }}">
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-6">
+                                            <div class="group-input">
+                                                <label for="Addendum Attachments">Addendum Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="Addendum_Attachment">
+                                                        @if ($data->Addendum_Attachment)
+                                                        @foreach(json_decode($data->Addendum_Attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Addendum_Attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Addendum_Attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                             </div>
+                            <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
                         </div>
                     </div>
 
@@ -313,30 +429,96 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b>Comments</b></label>
-                                        <textarea name="Comments">{{ $data->Comments }}</textarea>
+                                        <label for="Comments"><b>Comments</b> <span
+                                                        class="text-danger">*</span></label>
+                                        <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Attachments"><b>Attachment</b></label>
-                                        <input type="file" id="myfile" name="myfile">
+                                        <input type="file" id="myfile" name="Attachment">
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> -->
+                                <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Attachments">Attachment</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="Attachment">
+                                                        @if ($data->Attachment)
+                                                        @foreach(json_decode($data->Attachment) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->Attachment }}" type="file" id="myfile" name="Attachment[]"
+                                                            oninput="addMultipleFiles(this, 'Attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                            </div>
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reference Records"><b>Reference Records</b></label>
-                                        <div class="static">Ref.Record</div>
+                                        <input type="file" id="myfile" name="refer_record">
+                                         <div class="static">Ref.Record</div>
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Reference Records">Reference Records</label>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div class="file-attachment-field">
+                                                    <div disabled class="file-attachment-list" id="refer_record">
+                                                        @if ($data->refer_record)
+                                                        @foreach(json_decode($data->refer_record) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                   @endforeach
+                                                        @endif
+                                                    </div>
+                                                    <div class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->refer_record }}" type="file" id="myfile" name="refer_record[]"
+                                                            oninput="addMultipleFiles(this, 'refer_record')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                  </div>
                             </div>
+                            <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                        <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                    </div>
                         </div>
                     </div>
 
-                    <div id="CCForm4" class="inner-block cctabcontent">
+                    <!-- <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
-                                <!-- Activity History -->
+                                {{-- Activity History --}}
                                 <div class="col-12 sub-head">
                                     Data History
                                 </div>
@@ -449,7 +631,7 @@
                                             <div class="static">{{ $temp->created_at }}</div>
                                         @endforeach
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Addendum Complete By"><b>Addendum Complete By</b></label>
@@ -462,7 +644,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         @php
                                             $submit = DB::table('c_c_stage_histories')
@@ -484,7 +666,7 @@
                                             <div class="static">{{ $temp->created_at }}</div>
                                         @endforeach
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{--  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
@@ -509,7 +691,7 @@
                                         <div class="static">17-04-2023 11:12PM</div>
                                     </div>
                                 </div>  --}}
-                                <div class="col-12 sub-head">
+                                {{-- <div class="col-12 sub-head">
                                     Cancellation Details
                                 </div>
                                 <div class="col-lg-6">
@@ -540,8 +722,19 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        </div> --}}
+                        {{-- <div class="button-block">
+                                        @if ($data->stage != 0)
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                        @endif
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="submit"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
+                                                class="text-white"> Exit </a> </button>
+                                    </div>
+                    </div> -->
 
 
                 </div>
@@ -583,10 +776,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
                 </form>
             </div>
         </div>
@@ -687,10 +884,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
                 </form>
             </div>
         </div>
@@ -730,10 +931,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
                         <button>Close</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
                 </form>
             </div>
         </div>
@@ -746,7 +951,7 @@
                     <div class="division-tabs">
                         <div class="tab">
                             @php
-                                $division = DB::table('divisions')->get();
+                                $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
                             @endphp
                             @foreach ($division as $temp)
                                 <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
@@ -818,10 +1023,14 @@
                     </div>
 
                     <!-- Modal footer -->
-                    <div class="modal-footer">
+                    <!-- <div class="modal-footer">
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         <button type="submit">Submit</button>
-                    </div>
+                    </div> -->
+                    <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
                 </form>
 
             </div>
@@ -874,6 +1083,24 @@
                 confirmButtonColor: '#3085d6', // Customize the confirm button color
             });
         </script>
+        
         @php session()->forget('errorMessages'); @endphp
     @endif
+    <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const removeButtons = document.querySelectorAll('.remove-file');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+
+                        // Hide the file container
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        </script>
 @endsection

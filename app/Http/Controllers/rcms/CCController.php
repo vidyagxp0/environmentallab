@@ -2495,16 +2495,16 @@ class CCController extends Controller
 
         $parent_data = CC::where('id', $id)->select('record','division_id','initiator_id','short_description')->first();
         $parent_data1 = CC::select('record','division_id','initiator_id','id')->get();
-        // $parent_record = CC::where('id', $id)->value('record');
-        // $parent_division_id = CC::where('id', $id)->value('division_id');
-        // $parent_initiator_id = CC::where('id', $id)->value('initiator_id');
-        // $parent_intiation_date = CC::where('id', $id)->value('intiation_date');
-        // $parent_short_description = CC::where('id', $id)->value('short_description');
+        $parent_record = CC::where('id', $id)->value('record');
+        $parent_division_id = CC::where('id', $id)->value('division_id');
+        $parent_initiator_id = CC::where('id', $id)->value('initiator_id');
+        $parent_intiation_date = '';//CC::where('id', $id)->value('intiation_date');
+        $parent_short_description = CC::where('id', $id)->value('short_description');
 
 
         if($request->revision == "Action-Item"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item',compact('parent_name','record_number','cc','parent_data','parent_data1'));
+            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id'));
         }
         if($request->revision == "Extension"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
@@ -2775,11 +2775,11 @@ class CCController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 3,
+                $width / 4,
                 $height / 2,
                 $data->status,
                 null,
-                60,
+                25,
                 [0, 0, 0],
                 2,
                 6,
@@ -2817,11 +2817,11 @@ class CCController extends Controller
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
         $canvas->page_text(
-            $width / 3,
+            $width / 4,
             $height / 2,
             "Opened",
             null,
-            60,
+            25,
             [0, 0, 0],
             2,
             6,

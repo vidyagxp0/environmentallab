@@ -16,6 +16,7 @@ use App\Models\Auditee;
 use App\Models\AuditProgram;
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
+use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
@@ -75,7 +76,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -94,8 +95,8 @@ class DashboardController extends Controller
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
-                "short_description" => $data->description ? $data->description : "-",
-                "assign_to" => "Amit Guru",
+                "short_description" => $data->short_description ? $data->short_description : "-",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -114,7 +115,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->revised_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -133,7 +134,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -152,7 +153,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -172,7 +173,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $revised_date ? $revised_date : $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -191,7 +192,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -210,7 +211,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -228,7 +229,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_desc ? $data->short_desc : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -247,7 +248,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -266,7 +267,7 @@ class DashboardController extends Controller
                 "parent_type" => $data->parent_type,
                 "division_id" => $data->division_id,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -285,7 +286,7 @@ class DashboardController extends Controller
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -304,7 +305,7 @@ class DashboardController extends Controller
                 "parent_id" => $data->parent_id,
                 "parent_type" => $data->parent_type,
                 "short_description" => $data->short_description ? $data->short_description : "-",
-                "assign_to" => "Amit Guru",
+                "assign_to" => $data->assign_to,
                 "due_date" => $data->due_date,
                 "stage" => $data->status,
                 "date_open" => $data->create,
@@ -315,8 +316,8 @@ class DashboardController extends Controller
         // return $table;
         // $paginatedData = json_encode($table);
 
-        $datag = $this->paginate($table);
-
+      //  $datag = $this->paginate($table);
+      $datag = $this->paginate($table);
         //   $paginatedData = json_encode($datag);
 
         return view('frontend.rcms.dashboard', compact('datag'));
@@ -335,7 +336,7 @@ class DashboardController extends Controller
                     "record" => $data->record,
                     "type" => "Action-Item",
                     "short_description" => $data->short_description ? $data->short_description : "-",
-                    "assign_to" => "Amit Guru",
+                    "assign_to" => $data->assign_to,
                     "due_date" => $data->due_date,
                     "stage" => $data->status,
                     "date_open" => $data->created_at,
@@ -350,7 +351,7 @@ class DashboardController extends Controller
                     "record" => $data->record,
                     "type" => "Extension",
                     "short_description" => $data->short_description ? $data->short_description : "-",
-                    "assign_to" => "Amit Guru",
+                    "assign_to" => $data->assign_to,
                     "due_date" => $data->due_date,
                     "stage" => $data->status,
                     "date_open" => $data->created_at,
@@ -370,7 +371,7 @@ class DashboardController extends Controller
                         "record" => $data->record,
                         "type" => "Change-Control",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data->due_date,
                         "stage" => $data->status,
                         "date_open" => $data->created_at,
@@ -385,7 +386,7 @@ class DashboardController extends Controller
                         "record" => $data->record,
                         "type" => "Action-Item",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data->due_date,
                         "stage" => $data->status,
                         "date_open" => $data->created_at,
@@ -400,7 +401,7 @@ class DashboardController extends Controller
                         "record" => $data->record,
                         "type" => "Extension",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data->due_date,
                         "stage" => $data->status,
                         "date_open" => $data->created_at,
@@ -419,7 +420,7 @@ class DashboardController extends Controller
                         "record" => $data->record,
                         "type" => "Change-Control",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data->due_date,
                         "stage" => $data->status,
                         "date_open" => $data->created_at,
@@ -434,7 +435,7 @@ class DashboardController extends Controller
                         "record" => $data->record,
                         "type" => "Action-Item",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data->due_date,
                         "stage" => $data->status,
                         "date_open" => $data->created_at,
@@ -449,7 +450,7 @@ class DashboardController extends Controller
                         "record" => $data->record,
                         "type" => "Extension",
                         "short_description" => $data->short_description ? $data->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data->due_date,
                         "stage" => $data->status,
                         "date_open" => $data->created_at,
@@ -484,7 +485,7 @@ class DashboardController extends Controller
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
                         "short_description" => $data2->short_description ? $data2->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data2->due_date,
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
@@ -506,7 +507,7 @@ class DashboardController extends Controller
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
                         "short_description" => $data2->short_description ? $data2->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data2->due_date,
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
@@ -528,7 +529,7 @@ class DashboardController extends Controller
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
                         "short_description" => $data2->short_description ? $data2->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data2->due_date,
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
@@ -550,7 +551,7 @@ class DashboardController extends Controller
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
                         "short_description" => $data2->short_description ? $data2->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data2->due_date,
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
@@ -572,7 +573,7 @@ class DashboardController extends Controller
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
                         "short_description" => $data2->short_description ? $data2->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data2->due_date,
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
@@ -594,7 +595,7 @@ class DashboardController extends Controller
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
                         "short_description" => $data2->short_description ? $data2->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data2->due_date,
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
@@ -616,7 +617,7 @@ class DashboardController extends Controller
                         "parent_type" => $data2->parent_type,
                         "division_id" => $data2->division_id,
                         "short_description" => $data2->short_description ? $data2->short_description : "-",
-                        "assign_to" => "Amit Guru",
+                        "assign_to" => $data->assign_to,
                         "due_date" => $data2->due_date,
                         "stage" => $data2->status,
                         "date_open" => $data2->create,
@@ -700,7 +701,7 @@ class DashboardController extends Controller
             $data->short_description . '
         </div>
         <div class="division">
-            QMS - EMEA / ' . $type . '
+        ' . Helpers::getDivisionName(session()->get('division')) . '/ ' . $type . '
         </div>
         <div class="status">' .
             $data->status . '
@@ -711,7 +712,6 @@ class DashboardController extends Controller
                     Actions
                 </div>
                 <div class="block-list">
-                    <a href="' . $audit . '" class="list-item">View History</a>
                     <a href="send-notification" class="list-item">Send Notification</a>
                     <div class="list-drop">
                         <div class="list-item" onclick="showAction()">
@@ -732,7 +732,7 @@ class DashboardController extends Controller
 
     //----------PAginator
 
-    public function paginate($items, $perPage = 10, $page = null, $options = ['path' => 'mytaskdata'])
+    public function paginate($items, $perPage = 100000, $page = null, $options = ['path' => 'mytaskdata'])
     {
         $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
         $items = $items instanceof Collection ? $items : Collection::make($items);
