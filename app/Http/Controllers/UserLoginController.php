@@ -16,6 +16,10 @@ class UserLoginController extends Controller
     public function userlogin()
     {
         // dd(TotalLogin::userCheck());
+        if (Auth::check()) {
+            // If the user is already authenticated, redirect them to the dashboard
+            return redirect('/rcms/qms-dashboard');
+        }
         TotalLogin::userCheck();
         $timezones =  $this->getTimezone();
         return view('frontend.login', compact('timezones'));
