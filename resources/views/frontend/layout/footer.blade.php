@@ -466,23 +466,26 @@
 
 
         $("#query").on("change", function() {
+            
             var value = $(this).val().toLowerCase();
             if(value!==''){
                 $("#searchTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-                var selectedText = $("#scope option:selected").val();
-                // alert(selectedText);
-                if(selectedText!==''){
-                    $("#searchTable tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
-                    });
-                }
+                    $(this).toggle(true)
+                    var selectedText = $("#scope option:selected").val();
+                    // alert(selectedText);
+                    if(selectedText!==''){
+                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(this).text().toLowerCase().indexOf(value)) > -1)
+                    }else{
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    }
+                });  
+            
             }else{
                 var selectedText = $("#scope option:selected").val();
                                 
                 if(selectedText!==''){
                     $("#searchTable tr").filter(function() {
+                        $(this).toggle(true)
                         $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
                     });
                 }
@@ -496,18 +499,21 @@
         });
 
         $("#scope").on("change", function() {
+           
             var value = $(this).val().toLowerCase();
             if(value!==''){
+                
                 $("#searchTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    $(this).toggle(true)
+                    var selectedText = $("#query option:selected").val();
+                    if(selectedText!==''){
+                        $(this).toggle(($(this).text().toLowerCase().indexOf(selectedText) && $(this).text().toLowerCase().indexOf(value)) > -1)
+                    }else{
+                        $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                    } 
                 });
 
-                var selectedText = $("#query option:selected").val();
-                if(selectedText!==''){
-                    $("#searchTable tr").filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
-                    });
-                }
+                
             }else{
                 
                 $("#searchTable tr").filter(function() {
@@ -517,6 +523,7 @@
                  
                 if(selectedText!==''){
                     $("#searchTable tr").filter(function() {
+                        $(this).toggle(true)
                         $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
                     });
                 }
