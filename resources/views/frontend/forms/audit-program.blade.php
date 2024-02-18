@@ -251,7 +251,7 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Date Due</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         {{-- <input type="date"
                                             value="" name="due_date"> --}}

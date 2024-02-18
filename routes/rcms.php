@@ -89,10 +89,8 @@ Route::group(['prefix' => 'rcms'], function () {
 
             Route::post('labcreate', [LabIncidentController::class, 'create'])->name('labIncidentCreate');
             Route::get('LabIncidentShow/{id}', [LabIncidentController::class, 'LabIncidentShow'])->name('ShowLabIncident');
-            // Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
             Route::post('LabIncidentStateChange/{id}', [LabIncidentController::class, 'LabIncidentStateChange'])->name('StageChangeLabIncident');
-            // Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange']);
-            Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'RejectStateChange'])->name('RejectStateChange');
+            Route::post('RejectStateChange/{id}', [LabIncidentController::class, 'c']);
             Route::post('updateLabIncident/{id}', [LabIncidentController::class, 'updateLabIncident'])->name('LabIncidentUpdate');
             Route::post('LabIncidentCancel/{id}', [LabIncidentController::class, 'LabIncidentCancel'])->name('LabIncidentCancel');
             Route::post('LabIncidentChildCapa/{id}', [LabIncidentController::class, 'lab_incident_capa_child'])->name('lab_incident_capa_child');

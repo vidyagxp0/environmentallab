@@ -153,11 +153,11 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id"
+                                        <select id="select-state" placeholder="Select..." name="assign_to"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
                                             <option value="">Select a value</option>
                                             @foreach ($users as $key=> $value)
-                                                <option value="{{ $value->id }}"@if ($data->assign_id== $value->id) selected @endif>{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}"@if ($data->assign_to== $value->id) selected @endif>{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                         @error('assign_to')
@@ -168,7 +168,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         {{-- <input type="hidden" value="{{ $due_date }}" name="due_date"> --}}
                                         <input disabled type="text"
