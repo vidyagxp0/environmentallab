@@ -146,7 +146,7 @@
         <div class="container-fluid header-bottom">
             <div class="container-fluid">
                 <div class="bottom-links">
-                    <div>
+                    <div >
                         <a href="#"><i class="fa-solid fa-braille"></i></a>
                     </div>
                     <div>

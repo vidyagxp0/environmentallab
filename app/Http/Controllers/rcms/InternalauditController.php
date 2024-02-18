@@ -48,7 +48,7 @@ class InternalauditController extends Controller
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assigend = $request->assigend;
+        $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
@@ -293,12 +293,12 @@ class InternalauditController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->assigend)) {
+        if (!empty($internalAudit->assign_to)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $internalAudit->assigend;
+            $history->current = $internalAudit->assign_to;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -755,7 +755,7 @@ class InternalauditController extends Controller
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assigend = $request->assigend;
+        $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date= $request->due_date;
         $internalAudit->initiator_group= $request->initiator_group;
         $internalAudit->initiator_group_code= $request->initiator_group_code;
@@ -992,13 +992,13 @@ class InternalauditController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assigend != $internalAudit->assigend || !empty($request->assigend_comment)) {
+        if ($lastDocument->assign_to != $internalAudit->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assigend;
-            $history->current = $internalAudit->assigend;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $internalAudit->assign_to;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

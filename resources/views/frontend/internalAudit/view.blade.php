@@ -374,11 +374,11 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
-                                                <select name="assigend"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <select name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
                                                         <option value="{{ $value->id }}"
-                                                            @if ($data->assigend == $value->id) selected @endif>
+                                                            @if ($data->assign_to == $value->id) selected @endif>
                                                             {{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -396,6 +396,31 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div>
+                                        
+                                {{-- <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Audit Start Date">Due Date<span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        {{-- <input type="date" name="due_date"> --}}
+                                        {{-- <div class="calenderauditee">
+                                            <input type="text"  id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" 
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
+                                            <input type="date" name="due_date" id="due_date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date');checkDate('due_date_checkdate','due_date_checkdate')" />
+                                        </div>
+                                    </div>
+                                </div> --}} 
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                    </div>
+                                </div>
+                                        
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -1168,14 +1193,7 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                        {{-- <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Due Date">Due Date</label>
-                                                <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                                <div class="static">{{ $data->due_date }}</div>
-                                            </div>
-                                        </div> --}}
-                                        <div class="col-lg-6 new-date-data-field">
+                                           <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
                                                 {{-- <input type="date" name="audit_start_date"

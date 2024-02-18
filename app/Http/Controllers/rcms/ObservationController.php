@@ -35,7 +35,7 @@ class ObservationController extends Controller
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
         $data = new Observation();
 
@@ -181,17 +181,17 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
 
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Short Description';
-        $history->previous = "Null";
-        $history->current = $data->short_description;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->save();
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Short Description';
+        // $history->previous = "Null";
+        // $history->current = $data->short_description;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->save();
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -675,6 +675,19 @@ class ObservationController extends Controller
             $history->previous = $lastDocument->division_code;
             $history->current = $data->division_code;
             $history->comment = $request->division_code_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if (!empty($lastDocument->short_description)) {
+            $history = new AuditTrialObservation();
+            $history->ExternalAudit_id = $lastDocument->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $lastDocument->short_description;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
