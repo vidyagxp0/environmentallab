@@ -1005,10 +1005,10 @@
                                         <input type="radio" name="child_type" value="External_Audit">
                                         External Audit
                                     </label>
-                                    <label for="minor">
+                                    <!-- <label for="minor">
                                         <input type="radio" name="child_type" value="extension">
                                         Extension
-                                    </label>
+                                    </label> -->
                                     
                                 </div>
 
@@ -1040,8 +1040,8 @@
                                     <label for="major">
                                         <input type="hidden" name="parent_name" value="Audit_program">
                                         <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="extension">
-                                        Extension
+                                        <!-- <input type="radio" name="child_type" value="extension">
+                                        Extension -->
                                     </label>
 
                                 </div>

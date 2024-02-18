@@ -1326,7 +1326,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="sub-head">
+                                        <!-- <div class="sub-head">
                                             Effectiveness Check Information
                                         </div>
                                         <div class="row">
@@ -1383,7 +1383,7 @@
                                                     <textarea name="due_date_extension">{{$data->due_date_extension}}</textarea>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton"
@@ -1753,12 +1753,12 @@
                     <div class="modal-body">
                         <div class="group-input">
 
-                            <label for="major">
+                            <!-- <label for="major">
                                 <input type="radio" name="child_type" value="extension">
                                 Extension
                                 <input type="hidden" name="parent_name" value="Change_control">
                                 <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                            </label>
+                            </label> -->
                             <label for="major">
                                 <input type="radio" name="child_type" value="documents">
                                 New Document                               

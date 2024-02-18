@@ -952,10 +952,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12 sub-head">
+                                <!-- <div class="col-12 sub-head">
                                     Effectiveness Check Details
-                                </div>
-                                <div class="col-12">
+                                </div> -->
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Check Required">Effectiveness Check
                                             Required?</label>
@@ -965,8 +965,8 @@
                                             <option value="no">No</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-6 new-date-data-field">
+                                </div> -->
+                                <!-- <div class="col-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="EffectCheck Creation Date">Effectiveness Check Creation Date</label>
                                         {{-- <input type="date" name="effect_check_date"> --}}
@@ -977,8 +977,8 @@
                                                 oninput="handleDateInput(this, 'effect_check_date')" />
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-6">
+                                </div> -->
+                                <!-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="Effectiveness_checker">Effectiveness Checker</label>
                                         <select id="select-state" placeholder="Select..." name="Effectiveness_checker">
@@ -988,13 +988,13 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-12">
+                                </div> -->
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="effective_check_plan">Effectiveness Check Plan</label>
                                         <textarea name="effective_check_plan"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>

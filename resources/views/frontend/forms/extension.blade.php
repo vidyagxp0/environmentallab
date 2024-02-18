@@ -86,12 +86,12 @@
 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="due-date">Current Parent Due Date <span class="text-danger"></span></label>
+                                        <label for="due-date">Current Parent Due Date<span class="text-danger"></span></label>
                                         {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
+                                        <input  type="text"
                                             value="{{ Helpers::getdateFormat($due_date) }}">  --}}
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
-                                        <input disabled type="text"
+                                        <!-- {{-- <div class="static"> {{ $due_date }}</div> --}} -->
+                                        <input  type="date"
                                             value="{{ Helpers::getdateFormat($parent_due_date) }}" name="due_date">
                                         <input type="hidden" value="{{ $parent_due_date }}" name="due_date">
                                     </div>
@@ -100,10 +100,10 @@
                                     <div class="group-input">
                                         <label for="due-date">Revised Due Date <span class="text-danger"></span></label>
                                         {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text"
+                                        <input  type="text"
                                             value="{{ Helpers::getdateFormat($due_date) }}">  --}}
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
-                                        <input type="date" min="{{ $parent_due_date }}"
+                                        <input  type="date" min="{{ $parent_due_date }}"
                                             value="" name="revised_date">
                                     </div>
                                 </div>

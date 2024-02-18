@@ -374,7 +374,8 @@ function addMultipleFiles(input, block_id) {
                                         
                                         <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Date Due"><b>Date of Initiation</b></label>
+                                        <label for="Date Due"><b>Date of Initiate
+                                        </b></label>
                                         {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="intiation_date"> --}}
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
@@ -654,10 +655,10 @@ function addMultipleFiles(input, block_id) {
                                        
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Inv Attachments">Initial Attachment</label>
+                                                <label for="Inv Attachments">Initial Attachment </label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled  class="file-attachment-list" id="inv_attachment1">
+                                                    <div disabled  class="file-attachment-list" id="inv_attachment1" >
                                                         @if ($data->inv_attachment)
                                                         @foreach(json_decode($data->inv_attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -1719,8 +1720,8 @@ function addMultipleFiles(input, block_id) {
                                     <input type="comment" name="comment"  required>
                                 </div> -->
                                 <div class="group-input">
-                                    <label for="comment">Comment </label>
-                                    <input type="comment" name="comment" >
+                                    <label for="comment">Comment <span class="text-danger">*</span> </label>
+                                    <input type="comment" name="comment" required >
                                 </div>
                             </div>
 
