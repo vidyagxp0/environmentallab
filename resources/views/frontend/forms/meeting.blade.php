@@ -89,12 +89,25 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                <!-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="due_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Date Due</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -1097,8 +1110,8 @@
                     <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="group-input">
-                                <label for="action-item-details">
-                                    Action Item Details<button type="button" name="action-item-details"
+                                <label for="action_item_details">
+                                    Action Item Details<button type="button" name="action_item_details"
                                         id="action_item">+</button>
                                 </label>
                                 <table class="table table-bordered" id="action_item_details">
@@ -1123,7 +1136,7 @@
                                             <div class="input-date "><div
                                              class="calenderauditee">
                                             <input type="text" id="date_due00' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_due[]" class="hide-input" 
+                                            <input type="date" name="date_due[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                             oninput="handleDateInput(this, `date_due00' + serialNumber +'`)" /></div></div></div></td>
                                         <td><input type="text" name="site[]"></td>
                                         <td>
