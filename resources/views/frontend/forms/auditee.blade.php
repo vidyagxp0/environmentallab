@@ -259,7 +259,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assigend">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -270,7 +270,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
@@ -279,6 +279,19 @@
                                             <input type="text" name="due_date" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>

@@ -56,7 +56,7 @@ class AuditeeController extends Controller
         //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->division_code = $request->division_code;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assigend = $request->assigend;
+        $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
@@ -294,12 +294,12 @@ class AuditeeController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->assigend)) {
+        if (!empty($internalAudit->assign_to)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $internalAudit->assigend;
+            $history->current = $internalAudit->assign_to;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -753,7 +753,7 @@ class AuditeeController extends Controller
         //$internalAudit->parent_id = $request->parent_id;
         //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assigend = $request->assigend;
+        $internalAudit->assign_to = $request->assign_to;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
@@ -987,13 +987,13 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assigend != $internalAudit->assigend || !empty($request->assigend_comment)) {
+        if ($lastDocument->assign_to != $internalAudit->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assigend;
-            $history->current = $internalAudit->assigend;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $internalAudit->assign_to;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

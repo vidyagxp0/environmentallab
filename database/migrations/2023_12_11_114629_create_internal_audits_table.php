@@ -29,11 +29,12 @@ return new class extends Migration
            // $table->string('record_number')->nullable();
             $table->string('external_agencies')->nullable();
             $table->string('severity_level_form')->nullable();
+             $table->integer('assign_to')->nullable();
  
              $table->integer('record')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
-            $table->integer('assigend')->nullable();
+            // $table->integer('assigend')->nullable();
             $table->string('Initiator_Group')->nullable();
             $table->text('short_description')->nullable();
             $table->string('audit_type')->nullable();

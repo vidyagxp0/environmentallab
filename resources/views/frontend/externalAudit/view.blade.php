@@ -373,12 +373,12 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
-                                                <select name="assigend"
+                                                <select name="assign_to"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
                                                         <option value="{{ $value->id }}"
-                                                            @if ($data->assigend == $value->id) selected @endif>
+                                                            @if ($data->assign_to == $value->id) selected @endif>
                                                             {{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
