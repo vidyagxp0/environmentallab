@@ -35,7 +35,7 @@ class ObservationController extends Controller
 
         if (!$request->short_description) {
             toastr()->error("Short description is required");
-            return redirect()->back();
+            //return redirect()->back();
         }
         $data = new Observation();
 

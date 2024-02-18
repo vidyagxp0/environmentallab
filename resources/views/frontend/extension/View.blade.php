@@ -137,7 +137,8 @@
                                             <div class="group-input">
                                                 <label for="due-date">Current Parent Due Date <span
                                                         class="text-danger"></span></label>
-                                                <input disabled type="text" name="intiation_date"
+                                                        
+                                                <input  type="text" name="intiation_date"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}">
                                             </div>
                                         </div>
@@ -220,12 +221,13 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Approver Comments">Approver Comments</label>
-                                                <textarea name="approver_comments">{{ $data->approver_comments }}</textarea>
+                                                <textarea name="approver_comments">{{ $data->approver_comments }} {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} </textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="closure-attachments">Closure Attachments</label>
+                                                <textarea name="closure-attachments">{{ $data->closure-attachments }} {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} </textarea>
                                                 <input type="file" name="closure_attachments[]" multiple>
                                             </div>
                                         </div> --}}
@@ -948,4 +950,21 @@
             });
         });
     </script>
+    <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const removeButtons = document.querySelectorAll('.remove-file');
+
+                removeButtons.forEach(button => {
+                    button.addEventListener('click', function () {
+                        const fileName = this.getAttribute('data-file-name');
+                        const fileContainer = this.closest('.file-container');
+
+                        // Hide the file container
+                        if (fileContainer) {
+                            fileContainer.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        </script>
 @endsection

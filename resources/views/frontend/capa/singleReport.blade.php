@@ -200,14 +200,27 @@
                     <tr>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <th class="w-20">Date Initiation</th>
+                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                  
                     </tr>
-                    <tr>
+                     <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-80">@if($data->general_initiator_group){{ $data->general_initiator_group }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-80">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Assigned to</th>
+                        <td class="w-80">@if($data->assign_id){{ $data->assign_id }} @else Not Applicable @endif</td>
+                        <th class="w-20">Assigned to</th>
+                        <td class="w-80">@if($data->assign_id){{ $data->assign_id}} @else Not Applicable @endif</td>
+                    </tr> 
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-80">@if($data->severity_level_form){{ $data->initiator_group_code }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -227,7 +240,8 @@
                     <tr>
                         <th class="w-20">Repeat</th>
                         <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-
+                        <th class="w-20">Initiator Group Code</th>
+                        <td class="w-80">@if($data->initiator_group_code){{ $data->initiator_group_code }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
@@ -244,7 +258,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initial Observation</th>
-                        <td class="w-80">@if($data->initial_observation){{ $data->initial_observation }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->assign_id){{ $data->assign_id }}@else Not Applicable @endif</td>
 
                     </tr>
                     <tr>
@@ -280,6 +294,11 @@
                             <th class="w-20">Initial Observation
                             </th>
                             <td class="w-80">@if($data->initial_observation){{ $data->initial_observation }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Assigned To
+                            </th>
+                            <td class="w-80">@if($data->assign_id){{ $data->assign_id }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Interim Containnment

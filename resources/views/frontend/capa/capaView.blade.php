@@ -1267,10 +1267,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                         <div class="col-12 sub-head">
-                                    Effectiveness Check Details
+                                         <!-- <div class="col-12 sub-head">
+                                    Effectiveness Check Details -->
                                 </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Effectiveness Check required">Effectiveness Check
                                                     required</label>
@@ -1289,7 +1289,7 @@
                                                 <label for="Effect.Check Creation Date">Effect.Check Creation
                                                     Date</label>
                                                 <!-- <input type="date" name="effect_check_date"
-                                                    value="{{ $data->effect_check_date }}"> -->
+                                                    value="{{ $data->effect_check_date }}"> 
                                                     <div class="calenderauditee">                                     
                                                         <input type="text"  value="{{ $data->effect_check_date }}" id="effect_check_date"  readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="effect_check_date" value=""
@@ -1333,7 +1333,7 @@
                                         </div>
                                         <div class="col-12 sub-head">
                                             Extension Justification
-                                        </div>
+                                        </div> -->
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
@@ -1537,6 +1537,10 @@
                                             <input type="radio" name="child_type" value="Action_Item">
                                             Action Item
                                         </label>
+                                        <!-- <label for="major">
+                                            <input type="radio" name="child_type" value="extension">
+                                            Extension
+                                        </label> -->
                                     @endif
                                     
                                     @if ($data->stage == 6)

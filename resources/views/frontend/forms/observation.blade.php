@@ -53,7 +53,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
             </div>
 
-            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">\
+            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 
@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to1">Assigned To</label>
                                         <select name="assign_to1">
@@ -114,7 +114,7 @@
                                     <div class="group-input">
                                         <label for="Short Description"><b>Short Description <span
                                             class="text-danger">*</span></b></label>
-                                        <textarea name="short_description"></textarea>
+                                        <textarea name="short_description" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -456,13 +456,31 @@
                                         <label for="actual_start_date">Actual Start Date</label>
                                         <input type="date" name="actual_start_date">
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="actual_end_date">Actual End Date</label>
-                                        <input type="date" name="actual_end_date">
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="actual_start_date">Actual Start Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="actual_start_date" 
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" id="actual_start_date" name="actual_start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
+                                        </div>
                                     </div>
                                 </div>
+                                 <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="actual_end_date">Actual End Date123</lable>
+                                        <div class="calenderauditee">
+                                        <input type="text" id="actual_end_date"                             
+                                                placeholder="DD-MMM-YYYY" />
+                                            <!-- <input type="date" id="actual_end_date" name="actual_end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" /> -->
+                                        </div>
+                                   
+                                        
+                                    </div>
+                                </div> 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
