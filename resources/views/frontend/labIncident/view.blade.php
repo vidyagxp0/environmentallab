@@ -232,13 +232,44 @@
                                         @enderror
                                     </div>
                                 </div>
+<<<<<<< Updated upstream
                                 <div class="col-md-6">
+=======
+                             <!-- <div class="col-md-6">
+>>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
                                         <input readonly type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                         {{-- <div class="static"> {{ $data->due_date }}</div> --}}
 
+<<<<<<< Updated upstream
+=======
+                                    </div>
+                                </div>  -->
+                                <!-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
+                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+
+                                    {{-- </div>
+                                </div> --}}  -->
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
+                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+
+>>>>>>> Stashed changes
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -326,7 +357,11 @@
                                     </div>
                                 </div>
                                 
+<<<<<<< Updated upstream
                                 {{-- <div class="col-lg-6">
+=======
+                                <div class="col-lg-6">
+>>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
                                         <input type="date" name="occurance_date" value="{{ $data->occurance_date }}">
@@ -347,7 +382,11 @@
                                             @endforeach
                                         </select>
                                     </div>
+<<<<<<< Updated upstream
                                 </div> --}}
+=======
+                                </div>
+>>>>>>> Stashed changes
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
@@ -715,8 +754,8 @@
                                         <textarea name="QA_Head" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->QA_Head }}</textarea>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
+                            <div class="col-lg-6">
+                                    <!-- <div class="group-input">
                                         <label for="Effectiveness Check required?">Effectiveness Check
                                             required?</label>
                                         <select name="Effectiveness_Check" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
@@ -726,16 +765,16 @@
                                             <option value="no" @if ($data->Effectiveness_Check == 'no') selected @endif>no
                                             </option>
                                         </select>
-                                    </div>
-                                </div>
-                                {{-- <div class="col-lg-6">
+                                    </div> -->
+                                </div> 
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effect.Chesk Creation Date">Effect.Chesk Creation Date</label>
                                         <input type="date" name="effect_check_date" {{ $data->stage == 0 || $data->stage == 8 ? "readonly" : "" }}
                                             value="{{ $data->effect_check_date }}">
                                     </div>
-                                </div> --}}
-                                <div class="col-lg-6 new-date-data-field">
+                                </div>  -->
+                                 <!-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Effectiveness Check Creation Date</label>
                                         <div class="calenderauditee">
@@ -744,8 +783,8 @@
                                             <input type="date" name="effectivess_check_creation_date"  value="{{ $data->effectivess_check_creation_date }} "class="hide-input"
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
-                                    </div>
-                                </div> -->
+                                    </div> 
+                                </div>  -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Type">Incident Type</label>

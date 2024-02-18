@@ -473,15 +473,26 @@
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
+<<<<<<< Updated upstream
                                     </div>
                                 </div>
                                 {{-- <div class="col-lg-6">
+=======
+                                    </div> 
+                                </div> -->
+                                  <!-- <div class="col-lg-6">
+>>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="Effect.Chesk Creation Date">Effect.Chesk Creation Date</label>
                                         <input type="date" name="effect_check_date">
                                     </div>
+<<<<<<< Updated upstream
                                 </div> --}}
                                 <div class="col-lg-6 new-date-data-field">
+=======
+                                 </div>    -->
+                                  <!-- <div class="col-lg-6 new-date-data-field">
+>>>>>>> Stashed changes
                                     <div class="group-input input-date">
                                         <label for="Date Due">Effectiveness Check Creation Date</label>
                                         <div class="calenderauditee">
@@ -491,7 +502,11 @@
                                                 oninput="handleDateInput(this, 'effectivess_check_creation_date')" />
                                         </div>
                                     </div>
+<<<<<<< Updated upstream
                                 </div> -->
+=======
+                                </div>  -->
+>>>>>>> Stashed changes
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Incident Type">Incident Type</label>

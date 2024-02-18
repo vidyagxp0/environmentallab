@@ -259,7 +259,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <!-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">Please mention expected date of completion</small></div>
@@ -272,7 +272,19 @@
                                                 @endif
 
                                             </div>
-                                        </div>
+                                        </div> -->
+                                        <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
+                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+
+                                    </div>
+                                </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiator Group</label>
@@ -1288,7 +1300,7 @@
                                             <div class="group-input input-date">
                                                 <label for="Effect.Check Creation Date">Effect.Check Creation
                                                     Date</label>
-                                                <!-- <input type="date" name="effect_check_date"
+                                                <input type="date" name="effect_check_date"
                                                     value="{{ $data->effect_check_date }}"> 
                                                     <div class="calenderauditee">                                     
                                                         <input type="text"  value="{{ $data->effect_check_date }}" id="effect_check_date"  readonly placeholder="DD-MMM-YYYY" />

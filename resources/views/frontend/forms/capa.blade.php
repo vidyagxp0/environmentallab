@@ -117,7 +117,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
+                                <!-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Due Date<span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
@@ -126,6 +126,19 @@
                                             <input type="text" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="due_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due"> Due Date</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -453,7 +466,7 @@
                                             Material Details<button type="button" name="ann"
                                                 id="material">+</button>
                                         </label>
-                                        <table class="table table-bordered" id="material_details">
+                                        <table class="table table-bordered" id="material_details" >
                                             <thead>
                                                 <tr>
                                                     <th>Row #</th>
