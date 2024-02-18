@@ -136,7 +136,7 @@
                             <div class="group-input">
                                 <label for="scope">Process</label>
                                 <select id="scope" name="form">
-                                    <option value="all_records">All Records</option>
+                                    <option value="">All Records</option>
                                     <option value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
                                     <option value="Capa">Capa</option>
@@ -157,7 +157,7 @@
                             <div class="group-input">
                                 <label for="query">Criteria</label>
                                 <select id="query" name="stage" >
-                                    <option value="all_records">All Records</option>
+                                    <option value="">All Records</option>
                                     <option value="Closed">Closed Records</option>
                                     <option value="Opened">Opened Records</option>
                                     <option value="Cancelled">Cancelled Records</option>

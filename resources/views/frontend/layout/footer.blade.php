@@ -467,43 +467,47 @@
 
         $("#query").on("change", function() {
             var value = $(this).val().toLowerCase();
-            if(value!=='all_records'){
+            if(value!==''){
                 $("#searchTable tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
                 var selectedText = $("#scope option:selected").val();
                 // alert(selectedText);
-                // if(selectedText!=='all_records'){
-                //     $("#searchTable tr").filter(function() {
-                //         $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
-                //     });
-                // }
+                if(selectedText!==''){
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
+                    });
+                }
             }else{
                 var selectedText = $("#scope option:selected").val();
-                $("#searchTable tr").filter(function() {
-                    $(this).toggle(true)
-                });
-                
-                $("#searchTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
-                });  
+                                
+                if(selectedText!==''){
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
+                    });
+                }
+                else{
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle(true)
+                    });
+                }
                 
             }
         });
 
         $("#scope").on("change", function() {
             var value = $(this).val().toLowerCase();
-            if(value!=='all_records'){
+            if(value!==''){
                 $("#searchTable tr").filter(function() {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
                 });
 
-                // var selectedText = $("#query option:selected").val();
-                // if(selectedText!=='all_records'){
-                //     $("#searchTable tr").filter(function() {
-                //         $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
-                //     });
-                // }
+                var selectedText = $("#query option:selected").val();
+                if(selectedText!==''){
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
+                    });
+                }
             }else{
                 
                 $("#searchTable tr").filter(function() {
@@ -511,9 +515,11 @@
                 });
                 var selectedText = $("#query option:selected").val();
                  
-                $("#searchTable tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
-                });
+                if(selectedText!==''){
+                    $("#searchTable tr").filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(selectedText) > -1)
+                    });
+                }
                     
                 
             }    
