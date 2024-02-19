@@ -374,14 +374,14 @@ function addMultipleFiles(input, block_id) {
                                         
                                         <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Date Due"><b>Date of Initiate
-                                        </b></label>
+                                        <label for="Date Due"><b>Date of Initiation</b></label>
                                         {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="intiation_date"> --}}
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
 
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
@@ -398,7 +398,8 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                                <div><small class="text-primary">Please Mention justification if due date is
+                                                    crossed</small></div>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
@@ -422,15 +423,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                     </div>
                                 </div> --}} 
-                                <div class="col-md-6">
-                                    <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
-                                        <input readonly type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                    </div>
-                                </div>
+
                                         
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1513,7 +1506,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
                                                 <textarea name="due_date_extension" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
                                             </div>
                                         </div>

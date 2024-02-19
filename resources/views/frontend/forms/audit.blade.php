@@ -326,7 +326,7 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
@@ -1049,7 +1049,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                        <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
