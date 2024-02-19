@@ -644,18 +644,34 @@
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"
                                                                     value="{{ $key + 1 }}"></td>
-                                                            <td><input type="text" name="product_name[]"
+                                                            {{-- <td><input type="text" name="product_name[]"
                                                                     value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
-                                                            </td>
+                                                            </td> --}}
+                                                            <td><input type="text" name="product_name[]"
+                                                                value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
+                                                        </td>
                                                             <td><input type="text" name="batch_no[]"
                                                                     value="{{ unserialize($data2->batch_no)[$key] ? unserialize($data2->batch_no)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="mfg_date[]"
+                                                            {{-- <td><input type="text" name="mfg_date[]"
                                                                     value="{{ unserialize($data2->mfg_date)[$key] ? unserialize($data2->mfg_date)[$key] : '' }}">
                                                             </td>
                                                             <td><input type="text" name="expiry_date[]"
                                                                     value="{{ unserialize($data2->expiry_date)[$key] ? unserialize($data2->expiry_date)[$key] : '' }}">
-                                                            </td>
+                                                            </td> --}}
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date "><div
+                                                                 class="calenderauditee">
+                                                                <input type="text" id="mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->mfg_date)[$key]) }}" />
+                                                                <input type="date" name="mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->mfg_date)[$key]) }}" class="hide-input" 
+                                                                oninput="handleDateInput(this, `mfg_date' + serialNumber +'`)" /></div></div></div></td>'
+
+                                                                <td><div class="group-input new-date-data-field mb-0">
+                                                                    <div class="input-date "><div
+                                                                     class="calenderauditee">
+                                                                    <input type="text" id="expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->expiry_date)[$key]) }}" />
+                                                                    <input type="date" name="expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->expiry_date)[$key]) }}" class="hide-input" 
+                                                                    oninput="handleDateInput(this, `expiry_date' + serialNumber +'`)" /></div></div></div></td>'
                                                             <td><input type="text" name="batch_desposition[]"
                                                                     value="{{ unserialize($data2->batch_desposition)[$key] ? unserialize($data2->batch_desposition)[$key] : '' }}">
                                                             </td>

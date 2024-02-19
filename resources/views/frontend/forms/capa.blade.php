@@ -466,7 +466,7 @@
                                             <thead>
                                                 <tr>
                                                     <th>Row #</th>
-                                                    <th>Material Name</th>
+                                                     <th>Material Name</th> 
                                                     <th>Batch No./Lot No./AR No.</th>
                                                     <th>Manufacturing Date</th>
                                                     <th>Date Of Expiry</th>
@@ -478,10 +478,11 @@
                                             <tbody>
 
                                             </tbody>
-                                            {{-- <tbody>
+                                             <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
-                                                <td> <select name="material_name[]" id="material_name">
+                                                <td><input type="text" name="material_name[]"></td>
+                                                {{-- <td> <select name="material_name[]" id="material_name">
                                                         <option value="">-- Select value --</option>
                                                         <option value="PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/">
                                                             PLACEBEFOREBIMATOPROSTOPH.SOLO.01%W/
@@ -498,8 +499,8 @@
                                                         <option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">
                                                             DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO
                                                         </option>
-                                                    </select></td>
-                                                <td>
+                                                    </select></td> --}}
+                                                {{-- <td>
                                                     <select name="material_batch_no[]" id="batch_no">
                                                         <option value="">select value</option>
                                                         <option value="DCAU0030">DCAU0030</option>
@@ -508,9 +509,27 @@
                                                         <option value="BJJH0004A">BJJH0004A</option>
                                                         <option value="DCAU0036">DCAU0036</option>
                                                     </select>
-                                                </td>
-                                                <td><input type="date" name="material_mfg_date[]"></td>
-                                                <td><input type="date" name="material_expiry_date[]"></td>
+                                                </td> --}}
+                                               
+
+                                                   
+                      
+                                                <td><input type="text" name="material_batch_no[]"></td>
+                                                {{-- <td><input type="date" name="material_mfg_date[]"></td> --}}
+                                                <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="material_mfg_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td>'
+
+                                                {{-- <td><input type="date" name="material_expiry_date[]"></td> --}}
+                                                <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="material_expiry_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td>'
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
@@ -521,7 +540,7 @@
                                                         <option value="quarantine">Quarantine</option>
                                                     </select>
                                                 </td>
-                                            </tbody> --}}
+                                            </tbody> 
                                         </table>
                                     </div>
                                 </div>

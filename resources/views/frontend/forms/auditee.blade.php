@@ -286,7 +286,7 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Due Date</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
@@ -347,14 +347,22 @@
                                             value="" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                     class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    </div>
+                                </div>  
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
@@ -583,8 +591,8 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" name="scheduled_start_date[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" />
+                                                                <input type="date"  id="schedule_start_date_checkdate" name="scheduled_start_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -595,8 +603,8 @@
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" name="scheduled_end_date[]" class="hide-input" 
-                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" />
+                                                                <input type="date" id="schedule_end_date_checkdate"name="scheduled_end_date[]" class="hide-input" 
+                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1300,5 +1308,11 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
+    </script>
+     <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection
