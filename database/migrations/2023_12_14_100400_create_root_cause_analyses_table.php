@@ -81,7 +81,7 @@ return new class extends Migration
             $table->string('country')->nullable();
             $table->string('state')->nullable();
             $table->string('city')->nullable();
-            
+            $table->text('initial_rpn')->nullable();
             $table->integer('record')->nullable();
             // $table->string('division_id')->nullable();
             $table->integer('initiator_id')->nullable();
@@ -89,7 +89,7 @@ return new class extends Migration
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('initiator_Group')->nullable();
-            $table->integer('assign_id')->nullable();
+            $table->text('assign_to')->nullable();
             $table->string('Sample_Types')->nullable();
             $table->text('initiated_through')->nullable();
             $table->text('initiated_if_other')->nullable();

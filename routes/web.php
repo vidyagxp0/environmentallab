@@ -63,7 +63,6 @@ Route::view('forgot-password', 'frontend.forgot-password');
 Route::get('data-fields', function () {
     return view('frontend.change-control.data-fields');
 });
-
 Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(function () {
     Route::resource('change-control', OpenStageController::class);
     Route::get('change-control-audit/{id}', [OpenStageController::class, 'auditTrial']);
@@ -80,6 +79,9 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     //Route::post('set/division', [DocumentController::class, 'division'])->name('division_submit');
     Route::post('dcrDivision', [DocumentController::class, 'dcrDivision'])->name('dcrDivision_submit');
     Route::get('documents/generatePdf/{id}', [DocumentController::class, 'createPDF']);
+    
+    Route::get('documents/reviseCreate/{id}', [DocumentController::class, 'revise_create']);
+    
     Route::get('documents/printPDF/{id}', [DocumentController::class, 'printPDF']);
     Route::get('documents/viewpdf/{id}', [DocumentController::class, 'viewPdf']);
     Route::resource('documentsContent', DocumentContentController::class);

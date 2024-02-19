@@ -86,7 +86,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assigend">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -99,8 +99,8 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        <label for="Date Due"> Due Date</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
@@ -142,12 +142,23 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_desc"></textarea>
+                                        <textarea name="short_desc" id="textArea"></textarea>
+                                        <p id="charCount">Character count:0</p>
                                     </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="document_name-desc">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_desc" maxlength="255" required>
+                                    </div>
+                                    <p id="docnameError" style="color:red">**Short Description is required</p>
+
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -759,5 +770,11 @@
         var selectedValue = this.value;
         document.getElementById('initiator_group_code').value = selectedValue;
     });
+</script>
+<script>
+    var maxLength = 255;
+    $('#docname').keyup(function() {
+        var textlen = maxLength - $(this).val().length;
+        $('#rchars').text(textlen);});
 </script>
 @endsection

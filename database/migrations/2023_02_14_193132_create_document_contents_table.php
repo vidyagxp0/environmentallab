@@ -44,6 +44,7 @@ return new class extends Migration
             $table->longtext('reporting')->nullable();
             $table->longtext('references')->nullable();
             $table->longtext('annexuredata')->nullable();
+            $table->longtext('ann')->nullable();
             $table->softDeletes();
             $table->timestamps();
             // $table->foreign('document_id')->references('id')->on('documents')->onDelete('cascade');

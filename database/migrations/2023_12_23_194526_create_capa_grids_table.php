@@ -18,13 +18,13 @@ return new class extends Migration
             $table->bigInteger('capa_id')->nullable();
             $table->string('type')->nullable();
             $table->text('product_name')->nullable();
-            $table->text('batch_no')->nullable();
+            $table->string('batch_no')->nullable();
             $table->text('mfg_date')->nullable();
             $table->text('batch_desposition')->nullable();
             $table->text('batch_status')->nullable();
             $table->text('expiry_date')->nullable();
             $table->text('remark')->nullable();
-            $table->text('material_name')->nullable();
+            $table->string('material_name')->nullable();
             $table->text('number')->nullable();
             $table->text('equipment')->nullable();
             $table->text('equipment_instruments')->nullable();

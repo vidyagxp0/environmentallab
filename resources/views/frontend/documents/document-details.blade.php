@@ -33,18 +33,29 @@
                                     @endif
                                     <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button>
                                     {{-- <button>Obsolete</button> --}}
-                                    <button>Revise</button>
+                                    <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
+
+                                    
                                 </div>
                             </div>
                             <div class="bottom-block">
                                 <div>
                                     <div class="head">Document Number</div>
-                                    <div>SOP-000{{ $document->id }}</div>
+                                    <div>
+                                        @if($document->revised === 'Yes') 
+                                            SOP-000{{ $document->revised_doc }}
+                                            
+
+                                        @else
+                                            SOP-000{{ $document->id }}
+                                        
+                                        @endif
+                                       </div>
                                 </div>
-                                <div>
+                                {{-- <div>
                                     <div class="head">Department</div>
                                     <div>{{ $document->department_name->name }}</div>
-                                </div>
+                                </div> --}}
                                 <div>
                                     <div class="head">Document Type</div>
                                     <div>{{ $document->doc_type->name }}</div>
@@ -133,13 +144,15 @@
                                     @if ($document->stage == 9)
                                         <div class="active">Rejected</div>
                                     @endif
-                                    @if ($document->stage >= 3 && $document->stage < 9)
+                                    @if ($document->stage >= 3)      
                                         <div class="active">Reviewed</div>
+                                        {{-- && $document->stage < 10 --}}
                                     @else
                                         <div class="">Reviewed</div>
                                     @endif
-                                    @if ($document->stage >= 4 && $document->stage < 9)
+                                    @if ($document->stage >= 4)            
                                         <div class="active">For-Approval</div>
+                                        {{-- && $document->stage < 10 --}}
                                     @else
                                         <div class="">For-Approval</div>
                                     @endif
@@ -168,7 +181,7 @@
                                     @else
                                         <div class="">Effective</div>
                                     @endif
-                                    @if ($document->stage >= 9)
+                                    @if ($document->stage == 10)
                                         <div class="active">Obsolete</div>
                                     @else
                                         <div class="">Obsolete</div>
@@ -831,7 +844,8 @@
                     <!-- Modal footer -->
                     <div class="modal-footer">
                         <button type="submit" data-bs-dismiss="modal">Submit</button>
-                        <button>Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        {{-- <button>Close</button> --}}
                     </div>
                 </form>
             </div>
@@ -846,8 +860,11 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ route('AuditStateChange', $document->id) }}" method="POST">
+                <form action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
+                    @method('PUT')
+                    <input type="hidden" name="stage_id" value="10" />
+                    <input type="hidden" name="document_id" value="{{ $document->id }}">
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div class="mb-3 text-justify">
@@ -887,7 +904,15 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Document Revision</h4>
                 </div>
-                <form method="POST" action="{{ url('revision',$document->id) }}">
+                @if($document->revised === 'Yes') 
+                 
+                <form method="POST" action="{{ url('revision',$document->revised_doc) }}">
+            @else
+            <form method="POST" action="{{ url('revision',$document->id) }}">
+               
+            
+            @endif
+              
                     @csrf
                 <!-- Modal body -->
                 <div class="modal-body">
@@ -895,12 +920,37 @@
                         <label for="revision">Choose Revision Version</label>
                         <label for="major">
                             <input type="radio" name="revision" id="major">
-                            Major Version
-                        </label>
+                            Major Version</label>
+                            <select name="major">
+                                <option value="0">-- Select --</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                        
                         <label for="minor">
                             <input type="radio" name="revision" id="minor">
-                            Minor Version
-                        </label>
+                            Minor Version </label>
+                            <select name="minor">
+                                <option value="">-- Select --</option>
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                            </select>
+                       
 
                         <label for="reason">
                             Minor Version

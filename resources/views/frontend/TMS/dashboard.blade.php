@@ -71,7 +71,7 @@
                                     @foreach ($documents as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                             <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -107,7 +107,7 @@
                                 <tbody id="searchTable">
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
@@ -145,7 +145,7 @@
                                     @foreach ($due as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                                 <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -175,7 +175,7 @@
                                 <tbody>
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
@@ -211,7 +211,7 @@
                                     @foreach ($pending as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                                 <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -241,7 +241,7 @@
                                 <tbody>
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
@@ -277,7 +277,7 @@
                                     @foreach ($complete as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                0000{{ $temp->document_id }}</td>
+                                                000{{ $temp->document_id }}</td>
                                                 <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
@@ -308,7 +308,7 @@
                                 <tbody>
                                     @foreach ($documents as $temp)
                                         <tr>
-                                            <td>Sop-0000{{ $temp->id }}</td>
+                                            <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
