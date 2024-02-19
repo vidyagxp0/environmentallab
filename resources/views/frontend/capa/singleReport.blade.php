@@ -200,32 +200,25 @@
                     <tr>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                        <th class="w-20">Date Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                  
-                    </tr>
+                     </tr>
                      <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-80">@if($data->general_initiator_group){{ $data->general_initiator_group }} @else Not Applicable @endif</td>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-80">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                       
                     </tr>
                     <tr>
                         <th class="w-20">Assigned to</th>
                         <td class="w-80">@if($data->assign_id){{ $data->assign_id }} @else Not Applicable @endif</td>
-                        <th class="w-20">Assigned to</th>
-                        <td class="w-80">@if($data->assign_id){{ $data->assign_id}} @else Not Applicable @endif</td>
+                        
                     </tr> 
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-                        <th class="w-20">Severity Level</th>
-                        <td class="w-80">@if($data->severity_level_form){{ $data->initiator_group_code }}@else Not Applicable @endif</td>
+                       
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-80">
-                            @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
+                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
                     </tr>
                     <tr>
@@ -240,8 +233,6 @@
                     <tr>
                         <th class="w-20">Repeat</th>
                         <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-                        <th class="w-20">Initiator Group Code</th>
-                        <td class="w-80">@if($data->initiator_group_code){{ $data->initiator_group_code }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Repeat Nature</th>
@@ -271,8 +262,7 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">CAPA QA Comments
-                        </th>
+                        <th class="w-20">CAPA QA Comments</th>
                         <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
@@ -479,11 +469,11 @@
                             <th class="w-20">CAPA QA Comments</th>
                             <td class="w-80">@if($data->capa_qa_comments2){{ $data->capa_qa_comments2 }}@else Not Applicable @endif</td>
                         </tr>
-                        <tr>
+                        <!-- <tr>
                             <th class="w-20">Project Datails Application</th>
                             <td class="w-80"> {{ $data->project_details_application }}</td>
-                        </tr>
-                        <tr>
+                        </tr> -->
+                        <!--s<tr>
                             <th class="w-20">Initiator Group</th>
                             <td class="w-80"> {{ $data->project_initiator_group }}</td>
                         </tr>
@@ -506,7 +496,7 @@
                         <tr>
                             <th class="w-20">General Deviation</th>
                             <td class="w-80">@if($data->general_deviation){{ $data->general_deviation }}@else Not Applicable @endif</td>
-                        </tr>
+                        </tr> -->
                     </table>
                 </div>
             </div>
@@ -515,6 +505,10 @@
                    CAPA Details
                 </div>
                 <table>
+                <tr>
+                        <th class="w-20">Corrective Action</th>
+                        <td class="w-80">@if($data->corrective_action){{ $data->corrective_action }}@else Not Applicable @endif</td>
+                    </tr>
                     <tr>
                         <th class="w-20">Corrective Action</th>
                         <td class="w-80">@if($data->corrective_action){{ $data->corrective_action }}@else Not Applicable @endif</td>
@@ -532,13 +526,7 @@
                     <tr>
                         <th class="w-20">QA Review & Closure</th>
                         <td class="w-80">@if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif</td>
-
-                    </tr>
-                    <tr>
-                        <th class="w-20">Effectiveness Check required
-                        </th>
-                        <td class="w-80">@if($data->effectiveness){{ $data->effectiveness }}@else Not Applicable @endif</td>
-                    </tr>
+                   </tr>
                     {{-- <tr>
                         <th class="w-20">Closure Attachment</th>
                         <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
