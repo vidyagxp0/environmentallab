@@ -25,7 +25,7 @@
                 <div class="inner-block-content">
                     <header class="header">
                         <div class="left-title">Quiz</div>
-                        <div class="right-title">Total Questions: <span id="tque"></span></div>
+                        <div class="right-title">Total Questions:<span id="tque"></span></div>
                     </header>
                     <div class="content">
                         <div id="result" class="quiz-body">

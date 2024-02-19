@@ -78,6 +78,9 @@ return new class extends Migration
             $table->string('inv_andCAPA_review_comp_on')->nullable();
             $table->string('qA_review_completed_on')->nullable();
             $table->string('qA_head_approval_completed_on')->nullable();
+            $table->string('review_completed_by')->nullable();
+            $table->string('review_completed_on')->nullable();
+            //$table->string('cancelled_by')->nullable();
             $table->string('cancelled_on')->nullable();
             $table->timestamps();
         });
