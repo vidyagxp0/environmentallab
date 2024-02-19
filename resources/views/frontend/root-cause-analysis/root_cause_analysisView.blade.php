@@ -287,7 +287,7 @@
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $key => $value)
                                                     <option value="{{ $value->id }}"
-                                                        @if ($data->assign_id == $value->id) selected @endif>
+                                                        @if ($data->assign_to == $value->id) selected @endif>
                                                         {{ $value->name }}</option>
                                                 @endforeach
                                             </select>

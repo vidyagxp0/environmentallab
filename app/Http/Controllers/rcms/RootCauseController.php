@@ -123,7 +123,7 @@ use Illuminate\Support\Facades\Hash;
         // $root->severity_level = $request->severity_level;
 
         $root->due_date = $request->due_date;
-        $root->assign_id = $request->assign_id;
+        $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
@@ -907,7 +907,7 @@ use Illuminate\Support\Facades\Hash;
         $root->country = ($request->country);
         $root->methods = json_encode($request->methods);
          $root->due_date = $request->due_date;
-        $root->assign_id = $request->assign_id;
+        $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
@@ -1180,7 +1180,7 @@ use Illuminate\Support\Facades\Hash;
             return back();
         }
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+        $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $dataAnalysis1 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"chemical_analysis_1")->first();
         $dataAnalysis2 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"chemical_analysis_2")->first();

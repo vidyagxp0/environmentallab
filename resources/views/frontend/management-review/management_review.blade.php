@@ -170,12 +170,10 @@
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
-                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date"> --}}
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}> 
+                                         </div>
 
-                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -242,15 +240,27 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"  value="{{ $data->initiator_Group}}" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description <span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
-                                </div>
-
+                                </div> -->
+                                <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short_Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                           
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+        
+                                        </div>
+        
+                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -759,7 +769,7 @@
                                                                          class="calenderauditee">
                                                                         <input type="text" id="date_closed' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}"/>
                                                                         <input type="date" name="date_closed[]" value="{{ $data->date_closed }} "class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'
+                                                                        oninput="handleDateInput(this, `date_closed' + serialNumber +'`)" /></div></div></div></td>'
                                                         <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ unserialize($action_item_details->remark)[$key] ? unserialize($action_item_details->remark)[$key] : '' }}">
                                                         </td>
@@ -834,7 +844,7 @@
                                                                          class="calenderauditee">
                                                                         <input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}"/>
                                                                         <input type="date" name="date_closed2[]" value="{{ $data->date_closed2 }} "class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'
+                                                                        oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>'
                                                         <td><input type="text" name="remark2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ unserialize($capa_detail_details->remark2)[$key] ? unserialize($capa_detail_details->remark2)[$key] : '' }}">
                                                         </td>
@@ -1230,4 +1240,10 @@
                 });
             });
         </script>
+         <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
+    </script>
 @endsection
