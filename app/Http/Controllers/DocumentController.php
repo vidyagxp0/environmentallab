@@ -93,6 +93,7 @@ class DocumentController extends Controller
         $new->revision_type = $request->revision_type;
         $new->major = $request->major;
         $new->minor = $request->minor;
+        $new->sop_type = $request->sop_type;
         $new->stage = $request->stage;
         $new->status = $request->status;
         $new->document = $request->document;
@@ -302,6 +303,7 @@ class DocumentController extends Controller
             $document->revision_type = $request->revision_type;
             $document->major = $request->major;
             $document->minor = $request->minor;
+            $document->sop_type = $request->sop_type;
             //$document->purpose = $request->purpose;
 
             if ($request->keywords) {
@@ -612,6 +614,8 @@ class DocumentController extends Controller
             $document->revision_type = $request->revision_type;
             $document->major = $request->major;
             $document->minor = $request->minor;
+            $document->sop_type = $request->sop_type;
+
             if (! empty($request->reviewers)) {
                 $document->reviewers = implode(',', $request->reviewers);
             }
@@ -1622,6 +1626,7 @@ class DocumentController extends Controller
         $newdoc->document_name = $document->document_name;
         $newdoc->major = $request->major;
         $newdoc->minor = $request->minor;
+        $newdoc->sop_type = $request->sop_type;
         $newdoc->short_description = $document->short_description;
         $newdoc->due_dateDoc = $document->due_dateDoc;
         $newdoc->description = $document->description;
