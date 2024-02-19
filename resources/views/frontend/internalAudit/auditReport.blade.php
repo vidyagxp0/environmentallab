@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Trial Report
+                   Internal Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -166,7 +166,7 @@
                     <strong>Internal Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -180,7 +180,7 @@
         <div class="head">Audit Trial Histroy Configuration Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         <div class="first-table">
