@@ -462,13 +462,24 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                            </div>
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+        
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -719,8 +730,8 @@ function addMultipleFiles(input, block_id) {
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
-                                                                <input type="date" name="scheduled_start_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>
+                                                                <input type="date"  id="schedule_start_date_checkdate" name="scheduled_start_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" /></div></div></div></td>
                                                            
                                                                 <td><input type="time" name="scheduled_start_time[]" 
                                                                     value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
@@ -732,8 +743,8 @@ function addMultipleFiles(input, block_id) {
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                <input type="date" name="scheduled_end_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
+                                                                <input type="date" id="schedule_end_date_checkdate" name="scheduled_end_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" /></div></div></div></td>
 
                                                             
                                                             {{-- <td><input type="date" name="scheduled_start_date[]"
@@ -1868,6 +1879,12 @@ function addMultipleFiles(input, block_id) {
                                 });
                             });
                         });
+                    </script>
+                     <script>
+                        var maxLength = 255;
+                        $('#docname').keyup(function() {
+                            var textlen = maxLength - $(this).val().length;
+                            $('#rchars').text(textlen);});
                     </script>
 
         @endsection
