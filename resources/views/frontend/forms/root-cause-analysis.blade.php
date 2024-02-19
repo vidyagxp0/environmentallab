@@ -138,7 +138,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <label for="Initiator Group Code">Initiator Group Code1</label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
                                               value="" readonly> 
                                     </div>

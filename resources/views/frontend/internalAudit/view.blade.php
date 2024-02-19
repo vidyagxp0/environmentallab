@@ -490,13 +490,24 @@ function addMultipleFiles(input, block_id) {
                                                     readonly>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                            </div>
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+        
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
@@ -716,7 +727,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
-                                                    Audit Agenda<button type="button" name="audit-agenda-grid"
+                                                    Audit Agenda<button type="button" name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                         onclick="addAuditAgenda('audit-agenda-grid')"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 </label>
@@ -1231,7 +1242,7 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
                                                     Observation Details
-                                                    <button type="button" name="audit-agenda-grid"
+                                                    <button type="button" name="audit-agenda-grid" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                       id="ObservationAdd">+</button>
                                                     <span class="text-primary" data-bs-toggle="modal"
                                                         data-bs-target="#observation-field-instruction-modal"
@@ -1972,5 +1983,11 @@ function addMultipleFiles(input, block_id) {
                     });
                 });
             });
+        </script>
+          <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);});
         </script>
         @endsection
