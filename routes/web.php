@@ -50,7 +50,9 @@ Route::post('/logincheck', [UserLoginController::class, 'logincheck']);
 Route::get('/logout', [UserLoginController::class, 'logout'])->name('logout');
 Route::post('/rcms_check', [UserLoginController::class, 'rcmscheck']);
 //Route::get('/', [UserLoginController::class, 'userlogin']);
-
+Route::get('/error', function () {
+    return 'This is the error page';
+})->name('error.route');
 
 //!---------------- starting login  ---------------------------//
 
