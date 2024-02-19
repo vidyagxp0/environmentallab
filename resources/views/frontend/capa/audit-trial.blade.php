@@ -68,7 +68,7 @@
             <div class="modal-content">
 
                 <div class="modal-header">
-                    <h4 class="modal-title">SOP-{{ $document->id }}</h4>
+                    <h4 class="modal-title">SOP-000{{ $document->id }}</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 

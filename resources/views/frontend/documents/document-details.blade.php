@@ -28,13 +28,14 @@
                                     <button><a href="{{ url('documents/printPDF', $document->id) }}"
                                             target="__blank">Print</a>
                                     </button>
-                                    @if ($document->stage >= 7)
+                                    {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
-                                    @endif
+                                    @endif --}}
+                                    @if ($document->stage >= 8)
                                     <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button>
                                     {{-- <button>Obsolete</button> --}}
                                     <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
-
+                                    @endif
                                     
                                 </div>
                             </div>
