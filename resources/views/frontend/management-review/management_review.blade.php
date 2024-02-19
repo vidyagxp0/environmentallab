@@ -34,11 +34,11 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('ManagementReviewAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && Auth::user()->role == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && Auth::user()->role == 15)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>

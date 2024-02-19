@@ -192,7 +192,7 @@ function addMultipleFiles(input, block_id) {
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('ShowInternalAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && Auth::user()->role == 13)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Schedule Audit
                             </button>
@@ -202,7 +202,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && Auth::user()->role == 12)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete Audit Preparation
                             </button>
@@ -213,7 +213,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && Auth::user()->role == 12)
                             </button> <button class="button_theme1" data-bs-toggle="modal"
                                 data-bs-target="#rejection-modal">
                                 Reject
@@ -229,7 +229,7 @@ function addMultipleFiles(input, block_id) {
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4)
+                        @elseif($data->stage == 4 && Auth::user()->role == 11)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 CAPA Plan Proposed
                             </button>
@@ -238,7 +238,7 @@ function addMultipleFiles(input, block_id) {
                                 No CAPAs Required
                             </button>
                            
-                        @elseif($data->stage == 5)
+                        @elseif($data->stage == 5 && Auth::user()->role == 11)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>

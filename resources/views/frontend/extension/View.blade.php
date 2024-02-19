@@ -17,14 +17,14 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/extension-audit-trial', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && Auth::user()->role == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && Auth::user()->role == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>

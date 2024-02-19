@@ -36,11 +36,11 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('audittrialLabincident', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && Auth::user()->role == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && Auth::user()->role == 4)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Incident Review Completed
                             </button>
@@ -50,7 +50,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && Auth::user()->role == 10)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>
@@ -60,11 +60,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4)
+                        @elseif($data->stage == 4 && Auth::user()->role == 10)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All Activities Completed
                             </button>
-                        @elseif($data->stage == 5)
+                        @elseif($data->stage == 5 && Auth::user()->role == 10)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review
                             </button>
@@ -74,14 +74,14 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
-                        @elseif($data->stage == 6)
+                        @elseif($data->stage == 6 && Auth::user()->role == 7)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Return To Pending CAPA
                             </button>
-                        @elseif($data->stage == 7)
+                        @elseif($data->stage == 7 && Auth::user()->role == 9)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Head Approval Complete
                             </button>

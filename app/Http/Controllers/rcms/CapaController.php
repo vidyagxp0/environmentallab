@@ -32,9 +32,10 @@ class CapaController extends Controller
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date= $formattedDate->format('Y-m-d');
+        $due_date = $formattedDate->format('Y-m-d');
         $changeControl = OpenStage::find(1);
-         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        if (!empty($changeControl->cft))
+            $cft = explode(',', $changeControl->cft);
         return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record', 'cft'));
     }
 
@@ -58,44 +59,44 @@ class CapaController extends Controller
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
-        $capa->due_date= $request->due_date;
+        $capa->due_date = $request->due_date;
         $capa->assign_id = $request->assign_id;
-       $capa->capa_team = implode(',', $request->capa_team);
+        $capa->capa_team = implode(',', $request->capa_team);
         $capa->capa_type = $request->capa_type;
-        $capa->severity_level_form= $request->severity_level_form;
+        $capa->severity_level_form = $request->severity_level_form;
         $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
-        $capa->initiator_Group= $request->initiator_Group;
-        $capa->initiator_group_code= $request->initiator_group_code;
+        $capa->initiator_Group = $request->initiator_Group;
+        $capa->initiator_group_code = $request->initiator_group_code;
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
-        $capa->cft_comments_form= $request->cft_comments_form;
+        $capa->cft_comments_form = $request->cft_comments_form;
         $capa->qa_comments_new = $request->qa_comments_new;
-        $capa->designee_comments_new= $request->designee_comments_new;
-       $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
+        $capa->designee_comments_new = $request->designee_comments_new;
+        $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
         $capa->Engineering_comments_new = $request->Engineering_comments_new;
-       $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
-       $capa->Validation_comments_new = $request->Validation_comments_new;
-       $capa->Others_comments_new = $request->Others_comments_new;
-       $capa->Group_comments_new = $request->Group_comments_new;
-    //    $capa->cft_attchament_new= json_encode($request->cft_attchament_new);
-    //    $capa->additional_attachments= json_encode($request->additional_attachments);
-    //    $capa->group_attachments_new = json_encode($request->group_attachments_new);
-       $capa->Microbiology_new= $request->Microbiology_new;
-    //    $capa->Microbiology_Person = $request->Microbiology_Person;
-       $capa->goup_review = $request->goup_review;
-       $capa->Production_new = $request->Production_new;
-       $capa->Quality_Approver = $request->Quality_Approver;
-       $capa->Quality_Approver_Person = $request->Quality_Approver_Person;
-       $capa->bd_domestic = $request->bd_domestic;
-       $capa->Bd_Person = $request->Bd_Person;
-       $capa->Production_Person= $request->Production_Person;
-    //    $capa->additional_attachments= json_encode($request->additional_attachments);
-         $capa->capa_related_record= implode(',', $request->capa_related_record);
-       
+        $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
+        $capa->Validation_comments_new = $request->Validation_comments_new;
+        $capa->Others_comments_new = $request->Others_comments_new;
+        $capa->Group_comments_new = $request->Group_comments_new;
+        //    $capa->cft_attchament_new= json_encode($request->cft_attchament_new);
+        //    $capa->additional_attachments= json_encode($request->additional_attachments);
+        //    $capa->group_attachments_new = json_encode($request->group_attachments_new);
+        $capa->Microbiology_new = $request->Microbiology_new;
+        //    $capa->Microbiology_Person = $request->Microbiology_Person;
+        $capa->goup_review = $request->goup_review;
+        $capa->Production_new = $request->Production_new;
+        $capa->Quality_Approver = $request->Quality_Approver;
+        $capa->Quality_Approver_Person = $request->Quality_Approver_Person;
+        $capa->bd_domestic = $request->bd_domestic;
+        $capa->Bd_Person = $request->Bd_Person;
+        $capa->Production_Person = $request->Production_Person;
+        //    $capa->additional_attachments= json_encode($request->additional_attachments);
+        $capa->capa_related_record = implode(',', $request->capa_related_record);
+
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
@@ -119,7 +120,7 @@ class CapaController extends Controller
                     $files[] = $name;
                 }
             }
-            $capa->cft_attchament_new= json_encode($files);
+            $capa->cft_attchament_new = json_encode($files);
         }
         if (!empty($request->additional_attachments)) {
             $files = [];
@@ -130,7 +131,7 @@ class CapaController extends Controller
                     $files[] = $name;
                 }
             }
-            $capa->additional_attachments=json_encode($files);
+            $capa->additional_attachments = json_encode($files);
         }
         if (!empty($request->group_attachments_new)) {
             $files = [];
@@ -143,8 +144,8 @@ class CapaController extends Controller
             }
             $capa->group_attachments_new = json_encode($files);
         }
-        
-        $capa->capa_qa_comments= $request->capa_qa_comments;
+
+        $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         $capa->details_new = $request->details_new;
         $capa->project_details_application = $request->project_details_application;
@@ -153,7 +154,7 @@ class CapaController extends Controller
         $capa->subject_number = $request->subject_number;
         $capa->subject_initials = $request->subject_initials;
         $capa->sponsor = $request->sponsor;
-        $capa->general_deviation= $request->general_deviation;
+        $capa->general_deviation = $request->general_deviation;
         $capa->corrective_action = $request->corrective_action;
         $capa->preventive_action = $request->preventive_action;
         $capa->supervisor_review_comments = $request->supervisor_review_comments;
@@ -697,11 +698,11 @@ class CapaController extends Controller
         $capa->parent_id = $request->parent_id;
         $capa->parent_type = $request->parent_type;
         $capa->division_code = $request->division_code;
-        $capa->intiation_date= $request->intiation_date;
+        $capa->intiation_date = $request->intiation_date;
         $capa->general_initiator_group = $request->initiator_group;
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
-        $capa->due_date= $request->due_date;
+        $capa->due_date = $request->due_date;
         $capa->assign_id = $request->assign_id;
         $capa->capa_team = $request->capa_team;
         $capa->capa_type = $request->capa_type;
@@ -709,35 +710,35 @@ class CapaController extends Controller
         $capa->initiated_through = $request->initiated_through;
         $capa->initiated_through_req = $request->initiated_through_req;
         $capa->repeat = $request->repeat;
-        $capa->initiator_Group= $request->initiator_Group;
-        $capa->initiator_group_code= $request->initiator_group_code;
-        $capa->severity_level_form= $request->severity_level_form;
-        $capa->cft_comments_form= $request->cft_comments_form;
+        $capa->initiator_Group = $request->initiator_Group;
+        $capa->initiator_group_code = $request->initiator_group_code;
+        $capa->severity_level_form = $request->severity_level_form;
+        $capa->cft_comments_form = $request->cft_comments_form;
         $capa->qa_comments_new = $request->qa_comments_new;
-        $capa->designee_comments_new= $request->designee_comments_new;
-       $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
+        $capa->designee_comments_new = $request->designee_comments_new;
+        $capa->Warehouse_comments_new = $request->Warehouse_comments_new;
         $capa->Engineering_comments_new = $request->Engineering_comments_new;
-       $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
-       $capa->Validation_comments_new = $request->Validation_comments_new;
-       $capa->Others_comments_new = $request->Others_comments_new;
-       $capa->Quality_Approver= $request->Quality_Approver;
-       $capa->Quality_Approver_Person= $request->Quality_Approver_Person;
-       $capa->Production_new = $request->Production_new;
-       $capa->Group_comments_new = $request->Group_comments_new;
-    //    $capa->cft_attchament_new = json_encode($request->cft_attchament_new);
-    //    $capa->group_attachments_new = json_encode($request->group_attachments_new);
+        $capa->Instrumentation_comments_new = $request->Instrumentation_comments_new;
+        $capa->Validation_comments_new = $request->Validation_comments_new;
+        $capa->Others_comments_new = $request->Others_comments_new;
+        $capa->Quality_Approver = $request->Quality_Approver;
+        $capa->Quality_Approver_Person = $request->Quality_Approver_Person;
+        $capa->Production_new = $request->Production_new;
+        $capa->Group_comments_new = $request->Group_comments_new;
+        //    $capa->cft_attchament_new = json_encode($request->cft_attchament_new);
+        //    $capa->group_attachments_new = json_encode($request->group_attachments_new);
         $capa->repeat_nature = $request->repeat_nature;
         $capa->Effectiveness_checker = $request->Effectiveness_checker;
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
-         $capa->capa_related_record=  implode(',', $request->capa_related_record);
+        $capa->capa_related_record = implode(',', $request->capa_related_record);
         // $capa->reference_record = $request->reference_record;
-        $capa->Microbiology_new= $request->Microbiology_new;
+        $capa->Microbiology_new = $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
-        $capa->capa_qa_comments= $request->capa_qa_comments;
+        $capa->capa_qa_comments = $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         // $capa->details = $request->details;
         $capa->project_details_application = $request->project_details_application;
@@ -754,9 +755,9 @@ class CapaController extends Controller
         $capa->effectiveness = $request->effectiveness;
         $capa->effect_check = $request->effect_check;
         $capa->effect_check_date = $request->effect_check_date;
-        $capa->bd_domestic= $request->bd_domestic;
-        $capa->Bd_Person= $request->Bd_Person;
-        $capa->Production_Person= $request->Production_Person;
+        $capa->bd_domestic = $request->bd_domestic;
+        $capa->Bd_Person = $request->Bd_Person;
+        $capa->Production_Person = $request->Production_Person;
         // if (!empty($request->capa_attachment)) {
         //     $files = [];
         //     if ($request->hasfile('capa_attachment')) {
@@ -949,7 +950,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->capa_related_record!= $capa->capa_related_record || !empty($request->capa_related_record_comment)) {
+        if ($lastDocument->capa_related_record != $capa->capa_related_record || !empty($request->capa_related_record_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1033,7 +1034,7 @@ class CapaController extends Controller
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
-        if ($lastDocument->capa_qa_comments!= $capa->capa_qa_comments|| !empty($request->capa_qa_comments_comment)) {
+        if ($lastDocument->capa_qa_comments != $capa->capa_qa_comments || !empty($request->capa_qa_comments_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1159,7 +1160,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->general_deviation!= $capa->general_deviation||!empty($request->general_deviation_comment)) {
+        if ($lastDocument->general_deviation != $capa->general_deviation || !empty($request->general_deviation_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1289,14 +1290,15 @@ class CapaController extends Controller
         $data1 = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
         $data2 = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
         $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
-        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        if (!empty($changeControl->cft))
+            $cft = explode(',', $changeControl->cft);
         // $MaterialsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.MaterialsQuery.lims');
         // dd( $MaterialsQueryData->json());
 
         // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
         // dd( $EquipmentsQueryData->json());
-        
-        return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
+
+        return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record', 'revised_date', 'cft'));
     }
 
 
@@ -1462,14 +1464,14 @@ class CapaController extends Controller
 
     public function child_change_control(Request $request, $id)
     {
-        $cft =[];
+        $cft = [];
         $parent_id = $id;
         $parent_type = "Audit_Program";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date= $formattedDate->format('d-M-Y');
+        $due_date = $formattedDate->format('d-M-Y');
         $parent_record = Capa::where('id', $id)->value('record');
         $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_division_id = Capa::where('id', $id)->value('division_id');
@@ -1479,10 +1481,11 @@ class CapaController extends Controller
         $hod = User::where('role', 4)->get();
         $pre = CC::all();
         $changeControl = OpenStage::find(1);
-        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        if (!empty($changeControl->cft))
+            $cft = explode(',', $changeControl->cft);
         // return $capa_data;
         if ($request->child_type == "Change_control") {
-            return view('frontend.change-control.new-change-control', compact('cft','pre','hod','parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.change-control.new-change-control', compact('cft', 'pre', 'hod', 'parent_short_description', 'parent_initiator_id', 'parent_intiation_date', 'parent_division_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
@@ -1511,7 +1514,7 @@ class CapaController extends Controller
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
-        $due_date= $formattedDate->format('Y-m-d');
+        $due_date = $formattedDate->format('Y-m-d');
         return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
     }
 

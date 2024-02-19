@@ -30,7 +30,7 @@ class ManagementReviewController extends Controller
 
     public function meeting()
     {
-       // $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
+        // $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -42,7 +42,7 @@ class ManagementReviewController extends Controller
 
     public function managestore(Request $request)
     {
-         //$request->dd();
+        //$request->dd();
         //  return $request;
 
         // if (!$request->short_description) {
@@ -52,30 +52,30 @@ class ManagementReviewController extends Controller
         $management = new ManagementReview();
         //$management->record_number = ($request->record_number);
         // $management->assign_id = 1;//$request->assign_id;
-         $management->priority_level = $request->priority_level;
-         $management->assign_id= $request->assign_id;
-         $management->Operations= $request->Operations;
-         $management->requirement_products_services = $request->requirement_products_services;
-         $management->design_development_product_services = $request->design_development_product_services; 
-         $management->control_externally_provide_services = $request->control_externally_provide_services;
-         $management->production_service_provision= $request->production_service_provision;
-         $management->release_product_services = $request->release_product_services;
+        $management->priority_level = $request->priority_level;
+        $management->assign_id = $request->assign_id;
+        $management->Operations = $request->Operations;
+        $management->requirement_products_services = $request->requirement_products_services;
+        $management->design_development_product_services = $request->design_development_product_services;
+        $management->control_externally_provide_services = $request->control_externally_provide_services;
+        $management->production_service_provision = $request->production_service_provision;
+        $management->release_product_services = $request->release_product_services;
         $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
         $management->risk_opportunities = $request->risk_opportunities;
-        $management->initiator_group_code= $request->initiator_group_code;
-        $management->initiator_Group= $request->initiator_Group;
-       // $management->type = $request->type;
-       // $management->serial_number = 1;
+        $management->initiator_group_code = $request->initiator_group_code;
+        $management->initiator_Group = $request->initiator_Group;
+        // $management->type = $request->type;
+        // $management->serial_number = 1;
         //json_encode($request->serial_number);
         //  $management->date =1; //json_encode($request->date);
         //$management->topic = json_encode($request->topic);
-       // $management->responsible = json_encode ($request->responsible);
+        // $management->responsible = json_encode ($request->responsible);
 
         //$management->comment = json_encode($request->comment);
         //$management->end_time = json_encode($request->end_time);
-       // $management->topic = json_encode($request->topic);
-        
-      // $management = new ManagementReview();
+        // $management->topic = json_encode($request->topic);
+
+        // $management = new ManagementReview();
         $management->form_type = "management-review";
         $management->division_id = $request->division_id;
         $management->record = ((RecordNumber::first()->value('counter')) + 1);
@@ -91,7 +91,7 @@ class ManagementReviewController extends Controller
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
         $management->agenda = $request->agenda;
-       // $management->management_review_participants = $management_review_participants;
+        // $management->management_review_participants = $management_review_participants;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         //  $management->inv_attachment = json_encode($request->inv_attachment);
@@ -109,7 +109,7 @@ class ManagementReviewController extends Controller
         $management->updated_at = $request->updated_at;
         $management->status = 'Opened';
         $management->stage = 1;
-       
+
         if (!empty($request->inv_attachment)) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
@@ -119,8 +119,8 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
-            $management->inv_attachment= json_encode($files);
+
+            $management->inv_attachment = json_encode($files);
         }
         if (!empty($request->file_attchment_if_any)) {
             $files = [];
@@ -131,8 +131,8 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
-            $management->file_attchment_if_any= json_encode($files);
+
+            $management->file_attchment_if_any = json_encode($files);
         }
         if (!empty($request->closure_attachments)) {
             $files = [];
@@ -143,10 +143,10 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
-            $management->closure_attachments= json_encode($files);
+
+            $management->closure_attachments = json_encode($files);
         }
-        
+
         $management->save();
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -154,30 +154,30 @@ class ManagementReviewController extends Controller
 
 
         //  $request->dd();
-        
+
         // $management = new MeetingSummary();
         $management->risk_opportunities = $request->risk_opportunities;
         $management->external_supplier_performance = $request->external_supplier_performance;
         $management->customer_satisfaction_level = $request->customer_satisfaction_level;
-        $management->budget_estimates = $request->budget_estimates; 
+        $management->budget_estimates = $request->budget_estimates;
         $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
         $management->production_new = $request->production_new;
         $management->plans_new = $request->plans_new;
         $management->forecast_new = $request->forecast_new;
-        $management->due_date_extension= $request->due_date_extension;
+        $management->due_date_extension = $request->due_date_extension;
         $management->conclusion_new = $request->conclusion_new;
         $management->next_managment_review_date = $request->next_managment_review_date;
         $management->summary_recommendation = $request->summary_recommendation;
         $management->additional_suport_required = $request->additional_suport_required;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
-       
+
         $management->save();
 
 
-       
 
 
-            // --------------agenda--------------
+
+        // --------------agenda--------------
         $data1 = new ManagementReviewDocDetails();
         $data1->review_id = $management->id;
         $data1->type = "agenda";
@@ -379,7 +379,7 @@ class ManagementReviewController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $management->status;
         $history->save();
-         
+
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'File Attachment';
@@ -391,7 +391,7 @@ class ManagementReviewController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $management->status;
         $history->save();
-         
+
         $history = new ManagementAuditTrial();
         $history->ManagementReview_id = $management->id;
         $history->activity_type = 'File Attachment';
@@ -571,7 +571,7 @@ class ManagementReviewController extends Controller
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
         $management->agenda = $request->agenda;
-       // $management->management_review_participants = $management->management_review_participants;
+        // $management->management_review_participants = $management->management_review_participants;
         $management->description = $request->description;
         $management->attachment = $request->attachment;
         // $management->inv_attachment = json_encode($request->inv_attachment);
@@ -589,30 +589,30 @@ class ManagementReviewController extends Controller
         $management->priority_level = $request->priority_level;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
         $management->assign_id = $request->assign_id;
-        $management->initiator_group_code= $request->initiator_group_code;
-        $management->Operations= $request->Operations;
-        $management->initiator_Group= $request->initiator_Group;
+        $management->initiator_group_code = $request->initiator_group_code;
+        $management->Operations = $request->Operations;
+        $management->initiator_Group = $request->initiator_Group;
         $management->requirement_products_services = $request->requirement_products_services;
-        $management->design_development_product_services = $request->design_development_product_services; 
+        $management->design_development_product_services = $request->design_development_product_services;
         $management->control_externally_provide_services = $request->control_externally_provide_services;
-        $management->production_service_provision= $request->production_service_provision;
+        $management->production_service_provision = $request->production_service_provision;
         $management->release_product_services = $request->release_product_services;
-       $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
-         $management->external_supplier_performance = $request->external_supplier_performance;
-         $management->customer_satisfaction_level = $request->customer_satisfaction_level;
-         $management->budget_estimates = $request->budget_estimates; 
-         $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
-         $management->production_new = $request->production_new;
-         $management->plans_new = $request->plans_new;
-         $management->forecast_new = $request->forecast_new;
-         $management->additional_suport_required = $request->additional_suport_required;
-         $management->next_managment_review_date = $request->next_managment_review_date;
-         $management->forecast_new = $request->forecast_new;
-         $management->conclusion_new = $request->conclusion_new;
-         $management->summary_recommendation = $request->summary_recommendation;
-         $management->due_date_extension= $request->due_date_extension;
+        $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
+        $management->external_supplier_performance = $request->external_supplier_performance;
+        $management->customer_satisfaction_level = $request->customer_satisfaction_level;
+        $management->budget_estimates = $request->budget_estimates;
+        $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
+        $management->production_new = $request->production_new;
+        $management->plans_new = $request->plans_new;
+        $management->forecast_new = $request->forecast_new;
+        $management->additional_suport_required = $request->additional_suport_required;
+        $management->next_managment_review_date = $request->next_managment_review_date;
+        $management->forecast_new = $request->forecast_new;
+        $management->conclusion_new = $request->conclusion_new;
+        $management->summary_recommendation = $request->summary_recommendation;
+        $management->due_date_extension = $request->due_date_extension;
 
-         if (!empty($request->inv_attachment)) {
+        if (!empty($request->inv_attachment)) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
@@ -645,7 +645,7 @@ class ManagementReviewController extends Controller
             }
             $management->closure_attachments = json_encode($files);
         }
-       
+
 
 
 
@@ -825,7 +825,7 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastDocument->file_attchment_if_any != $management->file_attchment_if_any || !empty($request->file_attchment_if_any_comment)) {
 
             $history = new ManagementAuditTrial();
@@ -1015,7 +1015,7 @@ class ManagementReviewController extends Controller
 
     public function ManagementReviewAuditTrial($id)
     {
-        
+
         $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDESC('id')->get()->unique('activity_type');
         $today = Carbon::now()->format('d-m-y');
         $document = ManagementReview::where('id', $id)->first();
@@ -1041,10 +1041,10 @@ class ManagementReviewController extends Controller
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
-        $agenda = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"agenda")->first();
-        $management_review_participants = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"management_review_participants")->first();
-      // dd($data->stage);
-        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants' ));
+        $agenda = ManagementReviewDocDetails::where('review_id', $data->id)->where('type', "agenda")->first();
+        $management_review_participants = ManagementReviewDocDetails::where('review_id', $data->id)->where('type', "management_review_participants")->first();
+        // dd($data->stage);
+        return view('frontend.management-review.management_review', compact('data', 'agenda', 'management_review_participants'));
     }
 
 
@@ -1077,7 +1077,7 @@ class ManagementReviewController extends Controller
         }
     }
 
- 
+
 
     public function managementReport($id)
     {
@@ -1093,12 +1093,12 @@ class ManagementReviewController extends Controller
         $managementReview->actionItem = ActionItem::all();
         $managementReview->effectiveNess = EffectivenessCheck::all();
         $pdf = PDF::loadview('frontend.management-review.report', compact('managementReview'))
-        ->setOptions([
-            'defaultFont' => 'sans-serif',
-            'isHtml5ParserEnabled' => true,
-            'isRemoteEnabled' => true,
-            'isPhpEnabled' => true,
-        ]);
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
         $pdf->setPaper('A4');
         $pdf->render();
         $canvas = $pdf->getDomPDF()->getCanvas();
@@ -1123,7 +1123,7 @@ class ManagementReviewController extends Controller
         $parent_intiation_date = $currentDate;
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.action-item', compact('parent_intiation_date', 'parent_initiator_id', 'parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type'));
     }
-    
+
 }

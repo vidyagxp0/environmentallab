@@ -11,9 +11,7 @@
     </style>
 
     @php
-        $users = DB::table('users')
-            ->select('id', 'name')
-            ->get();
+        $users = DB::table('users')->select('id', 'name')->get();
 
     @endphp
 
@@ -188,7 +186,7 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('showAuditProgramTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && Auth::user()->role == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -198,18 +196,18 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && Auth::user()->role == 13)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>
-                            
+
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && Auth::user()->role == 13)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -217,7 +215,7 @@
                                 Child
                             </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Audit Completed 
+                                Audit Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
@@ -311,7 +309,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Division Code"><b>Site/Location Code</b></label>
-                                                <input readonly type="text" name="division_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                <input readonly type="text"
+                                                    name="division_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     value="{{ Helpers::getDivisionName($data->division_id) }}">
                                                 {{-- <div class="static">QMS-North America</div> --}}
                                             </div>
@@ -355,67 +354,69 @@
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                                <div><small class="text-primary">Please mention expected date of
+                                                        completion</small></div>
                                                 <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
-                                                <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                     id="initiator_group">
+                                                <select name="Initiator_Group"
+                                                    {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    id="initiator_group">
                                                     <option value="CQA"
-                                                        @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
+                                                        @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
-                                                        @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QAB') selected @endif>Quality
                                                         Assurance Biopharma</option>
                                                     <option value="CQC"
-                                                        @if ($data->Initiator_Group== 'CQC') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CQC') selected @endif>Central
                                                         Quality Control</option>
                                                     <option value="MANU"
-                                                        @if ($data->Initiator_Group== 'MANU') selected @endif>Manufacturing
+                                                        @if ($data->Initiator_Group == 'MANU') selected @endif>Manufacturing
                                                     </option>
                                                     <option value="PSG"
-                                                        @if ($data->Initiator_Group== 'PSG') selected @endif>Plasma
+                                                        @if ($data->Initiator_Group == 'PSG') selected @endif>Plasma
                                                         Sourcing Group</option>
                                                     <option value="CS"
-                                                        @if ($data->Initiator_Group== 'CS') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CS') selected @endif>Central
                                                         Stores</option>
                                                     <option value="ITG"
-                                                        @if ($data->Initiator_Group== 'ITG') selected @endif>Information
+                                                        @if ($data->Initiator_Group == 'ITG') selected @endif>Information
                                                         Technology Group</option>
                                                     <option value="MM"
-                                                        @if ($data->Initiator_Group== 'MM') selected @endif>Molecular
+                                                        @if ($data->Initiator_Group == 'MM') selected @endif>Molecular
                                                         Medicine</option>
                                                     <option value="CL"
-                                                        @if ($data->Initiator_Group== 'CL') selected @endif>Central
+                                                        @if ($data->Initiator_Group == 'CL') selected @endif>Central
                                                         Laboratory</option>
                                                     <option value="TT"
-                                                        @if ($data->Initiator_Group== 'TT') selected @endif>Tech
+                                                        @if ($data->Initiator_Group == 'TT') selected @endif>Tech
                                                         Team</option>
                                                     <option value="QA"
-                                                        @if ($data->Initiator_Group== 'QA') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QA') selected @endif>Quality
                                                         Assurance</option>
                                                     <option value="QM"
-                                                        @if ($data->Initiator_Group== 'QM') selected @endif>Quality
+                                                        @if ($data->Initiator_Group == 'QM') selected @endif>Quality
                                                         Management</option>
                                                     <option value="IA"
-                                                        @if ($data->Initiator_Group== 'IA') selected @endif>IT
+                                                        @if ($data->Initiator_Group == 'IA') selected @endif>IT
                                                         Administration</option>
                                                     <option value="ACC"
-                                                        @if ($data->Initiator_Group== 'ACC') selected @endif>Accounting
+                                                        @if ($data->Initiator_Group == 'ACC') selected @endif>Accounting
                                                     </option>
                                                     <option value="LOG"
-                                                        @if ($data->Initiator_Group== 'LOG') selected @endif>Logistics
+                                                        @if ($data->Initiator_Group == 'LOG') selected @endif>Logistics
                                                     </option>
                                                     <option value="SM"
-                                                        @if ($data->Initiator_Group== 'SM') selected @endif>Senior
+                                                        @if ($data->Initiator_Group == 'SM') selected @endif>Senior
                                                         Management</option>
                                                     <option value="BA"
-                                                        @if ($data->Initiator_Group== 'BA') selected @endif>Business
+                                                        @if ($data->Initiator_Group == 'BA') selected @endif>Business
                                                         Administration</option>
 
                                                 </select>
@@ -424,8 +425,9 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
+                                                <input type="text"
+                                                    name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    value="{{ $data->Initiator_Group }}" id="initiator_group_code"
                                                     readonly>
                                             </div>
                                         </div>
@@ -534,61 +536,81 @@
                                                     </thead>
                                                     <tbody>
                                                         @if ($AuditProgramGrid)
-                                                        @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
-                                                        <tr>
-                                                            <td><input type="text" name="serial_number[]"
-                                                                    value="{{ $key + 1 }}"></td>
-                                                            <td> <select id="select-state" placeholder="Select..."
-                                                                    name="Auditees[]">
-                                                                    <option value="">-Select-</option>
-                                                                    @foreach ($users as $value)
-                                                                        <option
-                                                                            {{ unserialize($AuditProgramGrid->auditor)[$key] ? (unserialize($AuditProgramGrid->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                            value="{{ $value->id }}">
-                                                                            {{ $value->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select></td>
-                                                            {{-- <td><input type="date" name="start_date[]"
+                                                            @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
+                                                                <tr>
+                                                                    <td><input type="text" name="serial_number[]"
+                                                                            value="{{ $key + 1 }}"></td>
+                                                                    <td> <select id="select-state" placeholder="Select..."
+                                                                            name="Auditees[]">
+                                                                            <option value="">-Select-</option>
+                                                                            @foreach ($users as $value)
+                                                                                <option
+                                                                                    {{ unserialize($AuditProgramGrid->auditor)[$key] ? (unserialize($AuditProgramGrid->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                                    value="{{ $value->id }}">
+                                                                                    {{ $value->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select></td>
+                                                                    {{-- <td><input type="date" name="start_date[]"
                                                                     value="{{ unserialize($AuditProgramGrid->start_date)[$key] ? unserialize($AuditProgramGrid->start_date)[$key] : '' }}">
                                                             </td>
                                                             <td><input type="date" name="end_date[]"
                                                             
                                                                     value="{{ unserialize($AuditProgramGrid->end_date)[$key] ? unserialize($AuditProgramGrid->end_date)[$key] : '' }}">
                                                             </td> --}}
-                                                            <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
-                                                                <input type="date" id="start_date_checkdate" name="start_date[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
-                                                            {{-- <td><input type="date" name="end_date[]"></td> --}}
+                                                                    <td>
+                                                                        <div class="group-input new-date-data-field mb-0">
+                                                                            <div class="input-date ">
+                                                                                <div class="calenderauditee">
+                                                                                    <input type="text" id="start_date"
+                                                                                        readonly placeholder="DD-MMM-YYYY"
+                                                                                        value="{{ Helpers::getdateFormat($data->start_date) }}" />
+                                                                                    <input type="date"
+                                                                                        id="start_date_checkdate"
+                                                                                        name="start_date[]"
+                                                                                        class="hide-input"
+                                                                                        oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                    {{-- <td><input type="date" name="end_date[]"></td> --}}
 
-                                                            <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
-                                                                <input type="date" id="end_date_checkdate"  name="end_date[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
+                                                                    <td>
+                                                                        <div class="group-input new-date-data-field mb-0">
+                                                                            <div class="input-date ">
+                                                                                <div class="calenderauditee">
+                                                                                    <input type="text" id="end_date"
+                                                                                        readonly
+                                                                                        placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}" />
+                                                                                    <input type="date"
+                                                                                        id="end_date_checkdate"
+                                                                                        name="end_date[]"
+                                                                                        class="hide-input"
+                                                                                        oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
 
-                                                            <td> <select id="select-state" placeholder="Select..."
-                                                                    name="lead_investigator[]">
-                                                                    <option value="">-Select-</option>
-                                                                    @foreach ($users as $value)
-                                                                        <option
-                                                                            {{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? (unserialize($AuditProgramGrid->lead_investigator)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                            value="{{ $value->id }}">
-                                                                            {{ $value->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select></td>
-                                                            {{-- <td><input type="text" name="lead_investigator[]" value="{{unserialize($AuditProgramGrid->lead_investigator)[$key] ? unserialize($AuditProgramGrid->lead_investigator)[$key] : "" }}"></td> --}}
-                                                            <td><input type="text" name="comment[]"
-                                                                    value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}">
-                                                            </td>
+                                                                    <td> <select id="select-state" placeholder="Select..."
+                                                                            name="lead_investigator[]">
+                                                                            <option value="">-Select-</option>
+                                                                            @foreach ($users as $value)
+                                                                                <option
+                                                                                    {{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? (unserialize($AuditProgramGrid->lead_investigator)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                                    value="{{ $value->id }}">
+                                                                                    {{ $value->name }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select></td>
+                                                                    {{-- <td><input type="text" name="lead_investigator[]" value="{{unserialize($AuditProgramGrid->lead_investigator)[$key] ? unserialize($AuditProgramGrid->lead_investigator)[$key] : "" }}"></td> --}}
+                                                                    <td><input type="text" name="comment[]"
+                                                                            value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}">
+                                                                    </td>
 
-                                                        </tr>
-                                                    @endforeach
+                                                                </tr>
+                                                            @endforeach
                                                         @endif
 
                                                     </tbody>
@@ -599,29 +621,32 @@
                                             <div class="group-input">
                                                 <label for="Short Description"><b>Short Description <span
                                                             class="text-danger">*</span></b></label>
-                                                            <div><small class="text-primary">Please mention brief summary</small></div>
+                                                <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="severity1_level">
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    name="severity1_level">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity1_level == 'minor') selected @endif
-                                                     value="minor">Minor</option>
-                                                    <option  @if ($data->severity1_level == 'major') selected @endif 
-                                                    value="major">Major</option>
+                                                        value="minor">Minor</option>
+                                                    <option @if ($data->severity1_level == 'major') selected @endif
+                                                        value="major">Major</option>
                                                     <option @if ($data->severity1_level == 'critical') selected @endif
-                                                    value="critical">Critical</option>
+                                                        value="critical">Critical</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
-                                                <div><small class="text-primary">Please select related information</small></div>
-                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} name="initiated_through"
+                                                <div><small class="text-primary">Please select related information</small>
+                                                </div>
+                                                <select {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                    name="initiated_through"
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option @if ($data->initiated_through == 'recall') selected @endif
@@ -672,7 +697,7 @@
                                                 <textarea name="repeat_nature">{{ $data->repeat_nature }}</textarea>
                                             </div>
                                         </div> --}}
-                                        
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="comments">Comments</label>
@@ -682,7 +707,8 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="attachments">Attached Files</label>
-                                                <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                                <div><small class="text-primary">Please Attach all relevant or supporting
+                                                        documents</small></div>
                                                 <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="attachments">
                                                         @if ($data->attachments)
@@ -693,7 +719,10 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                    <a type="button" class="remove-file"
+                                                                        data-file-name="{{ $file }}"><i
+                                                                            class="fa-solid fa-circle-xmark"
+                                                                            style="color:red; font-size:20px;"></i></a>
 
                                                                 </h6>
                                                             @endforeach
@@ -742,22 +771,24 @@
                                                     {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div> --}}
-                                       
-                                        
+
+
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
-                                                <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
+                                                <div><small class="text-primary">Please Mention justification if due date
+                                                        is crossed</small></div>
+                                                <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->due_date_extension }}</textarea>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="button-block">
                                         @if ($data->stage != 0)
-                                            <button type="submit" id="ChangesaveButton" class="saveButton" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
+                                            <button type="submit" id="ChangesaveButton" class="saveButton"
+                                                {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
@@ -793,30 +824,30 @@
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
-                                         <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_By">Audit Completed By</label>
-                                        <div class="static">{{ $data->Audit_Completed_By }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Audit_Completed_On">Audit Completed On</label>
-                                        <div class="static">{{ $data->Audit_Completed_On }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled_By">Cancelled By</label>
-                                        <div class="static">{{ $data->Cancelled_By }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled_On">Cancelled On</label>
-                                        <div class="static">{{ $data->Cancelled_On }}</div>
-                                    </div>
-                                </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Audit_Completed_By">Audit Completed By</label>
+                                                <div class="static">{{ $data->Audit_Completed_By }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Audit_Completed_On">Audit Completed On</label>
+                                                <div class="static">{{ $data->Audit_Completed_On }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled_By">Cancelled By</label>
+                                                <div class="static">{{ $data->Cancelled_By }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled_On">Cancelled On</label>
+                                                <div class="static">{{ $data->Cancelled_On }}</div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
@@ -872,11 +903,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                    <button>Close</button>
+                                </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                                <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -919,11 +950,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                    <button>Close</button>
+                                </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                                <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -968,11 +999,11 @@
 
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
-                            </div> -->
+                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                    <button>Close</button>
+                                </div> -->
                             <div class="modal-footer">
-                              <button type="submit">Submit</button>
+                                <button type="submit">Submit</button>
                                 <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
@@ -993,13 +1024,13 @@
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    
+
                                     <label for="major">
 
                                     </label>
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Internal_Audit">
-                                         Internal Audit
+                                        Internal Audit
                                     </label>
                                     <label for="minor">
                                         <input type="radio" name="child_type" value="External_Audit">
@@ -1009,7 +1040,7 @@
                                         <input type="radio" name="child_type" value="extension">
                                         Extension
                                     </label>
-                                    
+
                                 </div>
 
                             </div>
@@ -1083,10 +1114,18 @@
                         '<select name="auditees[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>'
 
                     var cell3 = newRow.insertCell(2);
-                    cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" class="hide-input" oninput="handleDateInput(this, `start_date' + currentRowCount +'`)" /></div></div></div></td>';
+                    cell3.innerHTML =
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="start_date' +
+                        currentRowCount +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" class="hide-input" oninput="handleDateInput(this, `start_date' +
+            currentRowCount + '`)" /></div></div></div></td>';
 
                     var cell4 = newRow.insertCell(3);
-                    cell4.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" class="hide-input"  oninput="handleDateInput(this, `end_date' + currentRowCount +'`)" /></div></div></div></td>';
+                    cell4.innerHTML =
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="end_date' +
+                        currentRowCount +
+                        '" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" class="hide-input"  oninput="handleDateInput(this, `end_date' +
+            currentRowCount + '`)" /></div></div></div></td>';
 
                     var cell5 = newRow.insertCell(4);
                     // cell5.innerHTML = "<input type='text' name='lead_investigator'>";
@@ -1197,15 +1236,15 @@
                     document.getElementById('initiator_group_code').value = selectedValue;
                 });
             </script>
-              <script>
-                document.addEventListener('DOMContentLoaded', function () {
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
                     const removeButtons = document.querySelectorAll('.remove-file');
-    
+
                     removeButtons.forEach(button => {
-                        button.addEventListener('click', function () {
+                        button.addEventListener('click', function() {
                             const fileName = this.getAttribute('data-file-name');
                             const fileContainer = this.closest('.file-container');
-    
+
                             // Hide the file container
                             if (fileContainer) {
                                 fileContainer.style.display = 'none';

@@ -117,18 +117,18 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rootAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && Auth::user()->role == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && Auth::user()->role == 7)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 5)
+                        {{-- @elseif($data->stage == 5)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Group/ CFT Review
                                 Required
@@ -150,8 +150,8 @@
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Group Feedback
-                            </button>
-                        @elseif($data->stage == 3)
+                            </button> --}}
+                        @elseif($data->stage == 3 && Auth::user()->role == 7)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 QA Review Complete
                             </button>

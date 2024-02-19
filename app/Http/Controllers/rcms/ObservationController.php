@@ -201,7 +201,7 @@ class ObservationController extends Controller
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Intiation Date';
-        $history->previous ="Null";
+        $history->previous = "Null";
         $history->current = $data->intiation_date;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
@@ -213,7 +213,7 @@ class ObservationController extends Controller
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Due Date';
-        $history->previous ="Null";
+        $history->previous = "Null";
         $history->current = $data->due_date;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
@@ -1233,9 +1233,9 @@ class ObservationController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
-        $griddata = ObservationGrid::where('observation_id',$data->id)->first();
+        $griddata = ObservationGrid::where('observation_id', $data->id)->first();
 
-        return view('frontend.observation.view', compact('data','griddata','grid_data'));
+        return view('frontend.observation.view', compact('data', 'griddata', 'grid_data'));
     }
     public function observation_send_stage(Request $request, $id)
     {
@@ -1374,7 +1374,8 @@ class ObservationController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
-        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        if (!empty($changeControl->cft))
+            $cft = explode(',', $changeControl->cft);
         return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
     }
 

@@ -47,25 +47,25 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/audit-trial', $data->parent_record) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && Auth::user()->role == 3)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && Auth::user()->role == 14)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && Auth::user()->role == 7)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective Approval Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 5)
+                        @elseif($data->stage == 5 && Auth::user()->role == 7)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective Approval Completed
                             </button>
