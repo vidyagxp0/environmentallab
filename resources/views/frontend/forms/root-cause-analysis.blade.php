@@ -1091,4 +1091,10 @@
                 document.getElementById('initiator_group_code').value = selectedValue;
             });
         </script>
+             <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
+    </script>
 @endsection

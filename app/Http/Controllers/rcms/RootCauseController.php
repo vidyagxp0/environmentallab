@@ -121,6 +121,7 @@ use Illuminate\Support\Facades\Hash;
         $root->initiator_Group = $request->initiator_Group;
         $root->short_description = $request->short_description;
         // $root->severity_level = $request->severity_level;
+       // $data->initial_rpn = $request->initial_rpn;
 
         $root->due_date = $request->due_date;
         $root->assign_to = $request->assign_to;
@@ -886,6 +887,7 @@ use Illuminate\Support\Facades\Hash;
         // $root->initiator_id = Auth::user()->id;
         // $root->division_code = $request->division_code;
         // $root->intiation_date = $request->intiation_date;
+     //   $data->initial_rpn = $request->initial_rpn;
         $root->initiator_Group = $request->initiator_Group;
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = ($request->initiated_if_other);
