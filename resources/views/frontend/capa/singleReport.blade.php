@@ -195,15 +195,24 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-80">{{ $data->originator }}</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-80">{{ $data->division_code }}</td>
+
 
                     </tr>
                     <tr>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <th class="w-20">Initiator Group Code</th>
+                        <td class="w-80">{{ $data->initiator_group_code }}</td>
+
                      </tr>
                      <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-80">@if($data->general_initiator_group){{ $data->general_initiator_group }} @else Not Applicable @endif</td>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-80">{{ $data->severity_level_form }}</td>
+
                        
                     </tr>
                     <tr>
@@ -462,7 +471,7 @@
                     </div>
                     <table>
                         <tr>
-                            <th class="w-20">Other Details</th>
+                            <th class="w-20">Details</th>
                             <td class="w-80">@if($data->details){{ $data->details }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
@@ -506,8 +515,8 @@
                 </div>
                 <table>
                 <tr>
-                        <th class="w-20">Corrective Action</th>
-                        <td class="w-80">@if($data->corrective_action){{ $data->corrective_action }}@else Not Applicable @endif</td>
+                        <th class="w-20">CAPA Type</th>
+                        <td class="w-80">@if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Corrective Action</th>
@@ -526,6 +535,8 @@
                     <tr>
                         <th class="w-20">QA Review & Closure</th>
                         <td class="w-80">@if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif</td>
+                        <th class="w-20">Due Date Extension Justification</th>
+                        <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                    </tr>
                     {{-- <tr>
                         <th class="w-20">Closure Attachment</th>

@@ -199,6 +199,18 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <th class="w-20"> Assigned To</th>
+                        <td class="w-30">@if($data->assign_id){{ $data->assign_id }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-30">@if($data->severity2_level){{ $data->severity2_level}} @else Not Applicable @endif</td>
+                        <th class="w-20">State/District</th>
+                        <td class="w-30">@if($data->state){{ $data->state }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
@@ -220,6 +232,12 @@
                         <td class="w-30">@if($data->departments){{ $data->departments }}@else Not Applicable @endif</td>
                         <th class="w-20">Team Members</th>
                         <td class="w-30">@if($data->team_members){{ $data->team_members }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Risk/Opportunity Description</th>
+                        <td class="w-30">@if($data->description){{ $data->description }} @else Not Applicable @endif</td>
+                        <th class="w-20">Risk/Opportunity Comments</th>
+                        <td class="w-30">@if($data->comments){{ $data->comments }} @else Not Applicable @endif</td>
                     </tr>
                     {{--  <tr>
                         <th class="w-20">Supporting Documents</th>
@@ -335,6 +353,11 @@
                             <td class="w-80">@if($data->risk_management_strategy){{ $data->risk_management_strategy }}@else Not Applicable @endif</td>
 
                         </tr>
+                        <tr>
+                            <th class="w-20">Related Record</th>
+                            <td class="w-80">@if($data->related_record){{ $data->related_record }}@else Not Applicable @endif</td>
+
+                        </tr>
 
                     </table>
                 </div>
@@ -344,6 +367,12 @@
                     Work Group Assignment
                 </div>
                 <table>
+                <tr>
+                        <th class="w-20">Scheduled Start Date</th>
+                        <td class="w-30">@if($data->schedule_start_date1){{ $data->schedule_start_date1 }}@else Not Applicable @endif</td>
+                        <th class="w-20">Scheduled End Date</th>
+                        <td class="w-30">@if($data->schedule_end_date1){{ $data->schedule_end_date1 }}@else Not Applicable @endif</td>
+                    </tr>
                     <tr>
                         <th class="w-50" colspan="2">Estimated Man-Hours</th>
                         <td class="w-50" colspan="2">@if($data->estimated_man_hours){{ $data->estimated_man_hours }}@else Not Applicable @endif</td>
@@ -369,6 +398,14 @@
                         </th>
                         <td class="w-30">@if($data->reference){{ $data->reference }}@else Not Applicable @endif</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Action Plan</th>
+                        <td class="w-30">@if($data->action_plan){{ $data->action_plan }}@else Not Applicable @endif</td>
+                        <th class="w-20">Work Group Attachments
+                        </th>
+                        <td class="w-30">@if($data->work_group_attachments){{ $data->work_group_attachments}}@else Not Applicable @endif</td>
+                    </tr>
+
 
                 </table>
             </div>
@@ -550,9 +587,46 @@
 
 
                 </table>
+
             </div>  --}}
         </div>
+        <div class="block">
+                <div class="block-head">
+                    Activity Log
+                </div>
+                <table>
+                    <tr>
+                        <th class="w-20">Submitted By</th>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
+                        <th class="w-20">Submitted On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Evaluated By</th>
+                        <td class="w-30">{{ $data->evaluated_by }}</td>
+                        <th class="w-20">Evaluated On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Plan Approved By</th>
+                        <td class="w-30">{{ $data->plan_approved_by }}</td>
+                        <th class="w-20">Plan Approved On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->plan_approved_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Risk Analysis Completed By</th>
+                        <td class="w-30">{{ $data->risk_Analysis_completd_by }}</td>
+                        <th class="w-20">Risk Analysis Completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->risk_Analysis_completd_on) }}</td>
+                    </tr>
+                    
+
+                </table>
+            </div>
+        </div>
     </div>
+
+    
 
     <footer>
         <table>

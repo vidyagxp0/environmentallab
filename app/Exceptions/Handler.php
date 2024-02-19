@@ -54,14 +54,14 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return \Illuminate\Http\Response
      */
-    public function render($request, Throwable $exception)
-    {
-        // For example, if you want to redirect when any exception occurs:
-        if ($exception instanceof Exception) {
-            // Redirect to the specified route
-            return redirect()->route('error.route');
-        }
-        // If the exception is not one you want to handle, let Laravel handle it
-        return parent::render($request, $exception);
-    }
+    // public function render($request, Throwable $exception)
+    // {
+    //     // For example, if you want to redirect when any exception occurs:
+    //     if ($exception instanceof Exception) {
+    //         // Redirect to the specified route
+    //         return redirect()->route('error.route');
+    //     }
+    //     // If the exception is not one you want to handle, let Laravel handle it
+    //     return parent::render($request, $exception);
+    // }
 }
