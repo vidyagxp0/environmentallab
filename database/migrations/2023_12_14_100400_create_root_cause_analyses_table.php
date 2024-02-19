@@ -85,7 +85,7 @@ return new class extends Migration
             $table->string('division_code')->nullable();
             $table->string('intiation_date')->nullable();
             $table->string('initiator_Group')->nullable();
-            $table->integer('assign_id')->nullable();
+            $table->text('assign_to')->nullable();
             $table->string('Sample_Types')->nullable();
             $table->string('test_lab')->nullable();
             $table->string('ten_trend')->nullable();

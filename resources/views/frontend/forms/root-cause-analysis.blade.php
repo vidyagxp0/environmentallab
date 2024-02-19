@@ -70,14 +70,73 @@
                                         <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group"><b>Initiator Group</b></label>
+                                        <select name="initiator_Group" id="initiator_group">
+                                            <option value="">-- Select --</option>
+                                            <option value="CQA" @if (old('initiator_Group') == 'CQA') selected @endif>
+                                                Corporate Quality Assurance</option>
+                                            <option value="QAB" @if (old('initiator_Group') == 'QAB') selected @endif>Quality
+                                                Assurance Biopharma</option>
+                                            <option value="CQC" @if (old('initiator_Group') == 'CQA') selected @endif>Central
+                                                Quality Control</option>
+                                            <option value="MANU" @if (old('initiator_Group') == 'MANU') selected @endif>
+                                                Manufacturing</option>
+                                            <option value="PSG" @if (old('initiator_Group') == 'PSG') selected @endif>Plasma
+                                                Sourcing Group</option>
+                                            <option value="CS" @if (old('initiator_Group') == 'CS') selected @endif>Central
+                                                Stores</option>
+                                            <option value="ITG" @if (old('initiator_Group') == 'ITG') selected @endif>
+                                                Information Technology Group</option>
+                                            <option value="MM" @if (old('initiator_Group') == 'MM') selected @endif>
+                                                Molecular Medicine</option>
+                                            <option value="CL" @if (old('initiator_Group') == 'CL') selected @endif>
+                                                Central Laboratory</option>
+
+                                            <option value="TT" @if (old('initiator_Group') == 'TT') selected @endif>Tech
+                                                team</option>
+                                            <option value="QA" @if (old('initiator_Group') == 'QA') selected @endif>
+                                                Quality Assurance</option>
+                                            <option value="QM" @if (old('initiator_Group') == 'QM') selected @endif>
+                                                Quality Management</option>
+                                            <option value="IA" @if (old('initiator_Group') == 'IA') selected @endif>IT
+                                                Administration</option>
+                                            <option value="ACC" @if (old('initiator_Group') == 'ACC') selected @endif>
+                                                Accounting</option>
+                                            <option value="LOG" @if (old('initiator_Group') == 'LOG') selected @endif>
+                                                Logistics</option>
+                                            <option value="SM" @if (old('initiator_Group') == 'SM') selected @endif>
+                                                Senior Management</option>
+                                            <option value="BA" @if (old('initiator_Group') == 'BA') selected @endif>
+                                                Business Administration</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group Code">Initiator Group Code</label>
+                                        <input type="text" name="initiator_group_code" id="initiator_group_code"
+                                              value="" readonly> 
+                                    </div>
+                                </div>
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="short_description">Short Description</label>
                                         <div><small class="text-primary">Investigation short description to be presented on
                                                 desktop</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short_Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <textarea id="docname" type="text" name="short_description" maxlength="255" required></textarea>
+                                        <p id="docnameError" style="color:red">**Short Description is required</p>
+                                    </div>
+                                </div>  
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Sevrity Level</label>
@@ -91,16 +150,17 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="assigned-to">Assigned to</label>
+                                        <label for="search">Assigned to</label>
                                         <div><small class="text-primary">Lead Investigator</small></div>
-                                        <select name="assigned_to">
-                                            <option value="0">-- Select --</option>
-                                            <option value="1">Amit Guru</option>
-                                            <option value="2">Shaleen Mishra</option>
-                                            <option value="3">Madhulika Mishra</option>
-                                            <option value="4">Amit Patel</option>
-                                            <option value="5">Harsh Mishra</option>
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                            <option value="assign_id">Select a value</option>
+                                            @foreach ($users as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                            @endforeach
                                         </select>
+                                        @error('assign_to')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -109,15 +169,10 @@
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                         <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"/>
+                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
                                         </div>
 
-                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -954,4 +1009,10 @@
             row.querySelector('.residual-rpn').value = result;
         }
     </script>
+        <script>
+            document.getElementById('initiator_group').addEventListener('change', function() {
+                var selectedValue = this.value;
+                document.getElementById('initiator_group_code').value = selectedValue;
+            });
+        </script>
 @endsection
