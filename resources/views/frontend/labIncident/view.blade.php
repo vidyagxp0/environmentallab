@@ -233,11 +233,7 @@
                                     </div>
                                 </div>
                                 {{-- <div class="col-md-6">
-<<<<<<< Updated upstream
-                                <div class="col-md-6">
-=======
                              <!-- <div class="col-md-6">
->>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
@@ -245,8 +241,8 @@
                                         {{-- <div class="static"> {{ $data->due_date }}</div> --}}
 
                                     {{-- </div>
-                                </div> --}} 
-                                <div class="col-md-6">
+                                </div> --}}  -->
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
@@ -257,7 +253,7 @@
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
 
                                     {{-- </div>
-                                </div> --}} 
+                                </div>  -->
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -366,12 +362,8 @@
                                     </div>
                                 </div>
                                 
-<<<<<<< Updated upstream
-                                {{-- <div class="col-lg-6">
-=======
                                 <div class="col-lg-6">
->>>>>>> Stashed changes
-                                <!-- <div class="col-lg-6">
+                             <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
                                         <input type="date" name="occurance_date" value="{{ $data->occurance_date }}">
@@ -393,11 +385,7 @@
                                         </select>
                                     </div>
                                 </div> -->
-<<<<<<< Updated upstream
-                                </div> --}}
-=======
                                 </div>
->>>>>>> Stashed changes
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>

@@ -201,82 +201,87 @@
                     <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->general_initiator_group){{ $data->general_initiator_group }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
+                       
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-80" colspan="3">
-                            @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
-                        </td>
+                        <td class="w-80" > @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Due Date Extension Justification</th>
+                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-80" > @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>\
+                    </tr>
+                    <tr>   
+                        <th class="w-20">Assigned To</th>
+                        <td class="w-80" > @if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
+                    </tr>   
+                    <tr>
                         <th class="w-20">Year</th>
                         <td class="w-30">@if($data->year){{ $data->year }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Quarter</th>
                         <td class="w-30">@if($data->Quarter){{ $data->Quarter }}@else Not Applicable @endif</td>
                     </tr>
-                    {{--  <tr>
-                        <th class="w-20">Supporting Documents</th>
-                        <td class="w-80" colspan="3">Document_Name.pdf</td>
-                    </tr>  --}}
+                    <tr>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                       <th class="w-20">URl's description</th>
+                       <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>
+                    </tr>  
+                    <tr>
+                       <th class="w-20">Severity Level</th>
+                       <td class="w-30">@if($data->url_description){{ $data->url_description }}@else Not Applicable @endif</td>
+                    </tr>  
+
                 </table>
+                </div>
             </div>
+        </div>
+              
 
             <div class="block">
                 <div class="head">
-
-                    <table>
+                   <table>
                         <tr>
                             <th class="w-20">Comments</th>
                             <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                         </tr>
-
-                        <tr>
+                         <tr>
+                            <th class="w-20">Others</th>
+                            <td class="w-30">@if($data->initiated_through_req){{ $data->initiated_through_req }} @else Not Applicable @endif</td>
+                        </tr>
+                         <tr>
                             <th class="w-20">Description</th>
                             <td class="w-80">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
                         </tr>
+                        <tr>  
+                            <th class="w-20">Initiated Through</th>
+                            <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
+                        </tr>
                         <tr>
-                            <th class="w-20">Attached Files
-                            </th>
+                            <th class="w-20">Attached Files</th>
                             <td class="w-80">@if($data->attachments)<a href="{{asset('upload/document/',$data->attachments)}}">{{ $data->attachments }}</a>@else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Related URl
-                            </th>
+                            <th class="w-20">Related URl </th>
                             <td class="w-80">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Suggested Audits
-                            </th>
-                            <td class="w-80">@if($data->suggested_audits){{ $data->suggested_audits }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Zone
-                            </th>
-                            <td class="w-80">@if($data->Zone){{ $data->zone }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Country
-                            </th>
-                            <td class="w-80">@if($data->country){{ $data->country }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">City
-                            </th>
-                            <td class="w-80">@if($data->City){{ $data->City }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">State/District
-                            </th>
-                            <td class="w-80">@if($data->state_district){{ $data->state_district }}@else Not Applicable @endif</td>
-                        </tr>
+                            
                     </table>
                 </div>
             </div>
@@ -302,46 +307,41 @@
 
 
 
-            {{--  <div class="block">
+             <div class="block">
                 <div class="block-head">
                     Activity Log
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Plan Proposed By
-                        </th>
+                        <th class="w-20">Plan Proposed By</th>
                         <td class="w-30">{{ $data->plan_proposed_by }}</td>
                         <th class="w-20">
                             Plan Proposed On</th>
                         <td class="w-30">{{ $data->plan_proposed_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Plan Approved By
-                        </th>
+                        <th class="w-20">Plan Approved By</th>
                         <td class="w-30">{{ $data->plan_approved_by }}</td>
                         <th class="w-20">
                             Plan Approved On</th>
                         <td class="w-30">{{ $data->Plan_approved_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">QA More Info Required By
-                        </th>
+                        <th class="w-20">QA More Info Required By</th>
                         <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
                         <th class="w-20">
                             QA More Info Required On</th>
                         <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Cancelled By
-                        </th>
+                        <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>
                         <th class="w-20">
                             Cancelled On</th>
                         <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Completed By
-                        </th>
+                        <th class="w-20">Completed By</th>
                         <td class="w-30">{{ $data->completed_by }}</td>
                         <th class="w-20">
                             Completed On</th>
@@ -362,7 +362,7 @@
                     </tr>
 
                 </table>
-            </div>  --}}
+            </div>  
         </div>
     </div>
 
