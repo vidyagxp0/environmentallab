@@ -205,6 +205,31 @@
                         <td class="w-30" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Assigned To</th>
+                        <td class="w-30">@if($data->assign_to){{ $data-> assign_to}} @else Not Applicable @endif</td>
+                        <th class="w-20">Initiator Group Code</th>
+                        <td class="w-30" colspan="3"> @if($data->initiator_group_code){{ $data-> initiator_group_code}} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-30">@if($data->severity_level1){{ $data-> severity_level1}} @else Not Applicable @endif</td>
+                        <th class="w-20">Initiated Through</th>
+                        <td class="w-30" colspan="3"> @if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->initiated_through_req){{ $data->initiated_through_req }} @else Not Applicable @endif</td>
+                        <th class="w-20">Repeat</th>
+                        <td class="w-30" colspan="3"> @if($data->repeat){{ $data-> repeat}} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Repeat Nature</th>
+                        <td class="w-30">@if($data->repeat_nature){{ $data-> repeat_nature}} @else Not Applicable @endif</td>
+                        <th class="w-20">Division Code</th>
+                        <td class="w-30" colspan="3"> @if($data->div_code){{ $data->div_code }} @else Not Applicable @endif</td>
+                    </tr>
+                    
+                    <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80" colspan="3">
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
@@ -219,7 +244,7 @@
                 </table>
                 <div class="border-table">
                     <div class="block-head">
-                        In. Attachment
+                        Initial Attachment
                     </div>
                     <table>
 
@@ -268,7 +293,7 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Current Change</th>
+                        <th class="w-20">Current Practice</th>
                         <td>
                             <div><strong>On {{ Helpers:: getDateFormat($docdetail->created_at) }} added by {{ $data->originator }}</strong></div>
                             <div>
@@ -337,6 +362,10 @@
                             <th class="w-20">Related Records</th>
                             <td class="w-80">{{ $review->related_records }}</td>
                         </tr>
+                        <tr>
+                            <th class="w-20">QA Attachments</th>
+                            <td class="w-80">{{ $review->qa_attachments}}</td>
+                        </tr>
 
 
                     </table>
@@ -371,7 +400,7 @@
             <div class="block">
                 <div class="head">
                     <div class="block-head">
-                        Evaluation
+                        Evaluation Details
                     </div>
                     <table>
                         <tr>
@@ -384,6 +413,17 @@
                                 </div>
                             </td>
                         </tr>
+                        <tr>
+                            <th class="w-20">QA Evaluation Attachments </th>
+                            <td>
+                                <div><strong>On {{ Helpers:: getDateFormat($evaluation->qa_evaluation_attachments) }} added by {{ $data->qa_evaluation_attachments}}</strong>
+                                </div>
+                                <div>
+                                    {{ $evaluation->qa_evaluation_attachments }}
+                                </div>
+                            </td>
+                        </tr>
+
 
                         <tr>
                             <th class="w-20">Training Required</th>
@@ -403,7 +443,7 @@
                 </div>
             </div>
             <div class="block">
-                {{-- <div class="block-head">
+                 <div class="block-head">
                     Additional Information
                 </div>
                 <table>
@@ -436,12 +476,18 @@
                         <td class="w-30">{{ $info->Bd_Person }}</td>
                     </tr>
 
-                </table> --}}
+                </table> 
                 <div class="border-table">
                     <div class="block-head">
                         Addition Attachments
                     </div>
                     <table>
+                    <tr>
+                        <th class="w-20">CFT Reviewer</th>
+                        <td class="w-30">{{ $info->Microbiology }}</td>
+                        <th class="w-20">CFT Reviewer Person </th>
+                        <td class="w-30">{{ $info->Microbiology_Person }}</td>
+                    </tr>
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
@@ -470,6 +516,12 @@
                         Group Comments
                     </div>
                     <table>
+                    <tr>
+                        <th class="w-20">CFT Comments</th>
+                        <td class="w-30">{{ $info->cft_comments }}</td>
+                        <th class="w-20">CFT Attachment </th>
+                        <td class="w-30">{{ $info->cft_attachment }}</td>
+                    </tr>
                         <tr>
                             <th class="w-20">QA Comments</th>
                             <td class="w-80">
@@ -681,9 +733,61 @@
                     </table>
                 </div>
             </div>
+            <div class="block">
+                <div class="block-head">
+                Change Closure
+                </div>
+                <table>
+                    <!-- <tr>
+                        <th class="w-20">Affected Documents+</th>
+                        <td class="w-80">
+                            <div><strong>On {{ Helpers:: getDateFormat($approcomments->created_at) }} added by {{ $data->originator }}</strong>
+                            </div>
+                            <div>
+                                {{ $approcomments->risk_identification }}
+                            </div>
+                        </td>
+                    </tr> -->
+                    <tr>
+                        <th class="w-20">QA Closure Comments</th>
+                        <td class="w-30"> {{ $assessment->qa_closure_comments }}</td>
+                        <th class="w-20">List Of Attachments</th>
+                        <td class="w-30"> {{ $assessment->list_of_attachment }}</td>
+                    </tr>
+                    
+
+                </table>
+                <!-- <div class="border-table">
+                    <div class="block-head">
+                        Training Attachments
+                    </div> -->
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Attachment</th>
+                        </tr>
+                        @if($approcomments->tran_attach)
+                            @foreach(json_decode($approcomments->tran_attach) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                                @endforeach
+                                @else
+                            <tr>
+                                <td class="w-20">1</td>
+                                <td class="w-20">Not Applicable</td>
+                            </tr>
+                        @endif
+
+                    </table>
+                </div>
+            </div>
+            
 
 
-            {{-- <div class="block">
+             <div class="block">
                 <div class="block-head">
                     Activity Log
                 </div>
@@ -798,12 +902,12 @@
                         <th class="w-20">QA Review Completed On</th>
                         <td class="w-30">12-12-2203</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">More Info Req. By</th>
                         <td class="w-30">Piyush Sahu</td>
                         <th class="w-20">More Info Req. On</th>
                         <td class="w-30">12-12-2203</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="w-20">CFT Reviewed By</th>
                         <td class="w-30">Piyush Sahu</td>
@@ -828,12 +932,12 @@
                         <th class="w-20">Change Implemented On</th>
                         <td class="w-30">12-12-2203</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">QA More Information Required By</th>
                         <td class="w-30">Piyush Sahu</td>
                         <th class="w-20">QA More Information Required On</th>
                         <td class="w-30">12-12-2203</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="w-20">QA Final Review Completed By</th>
                         <td class="w-30">Piyush Sahu</td>
@@ -841,7 +945,7 @@
                         <td class="w-30">12-12-2203</td>
                     </tr>
                 </table>
-            </div> --}}
+            </div> 
         </div>
     </div>
 

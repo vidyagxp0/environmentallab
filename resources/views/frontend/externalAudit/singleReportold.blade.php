@@ -213,6 +213,18 @@
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-80" colspan="3"> @if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-80" colspan="3"> @if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Others</th>
+                        <td class="w-80" colspan="3"> @if($data->others){{ $data->others }} @else Not Applicable @endif</td>
+                        <th class="w-20">Description</th>
+                        <td class="w-80" colspan="3"> @if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
+                        <th class="w-20">External Agencies</th>
+                        <td class="w-80" colspan="3"> @if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit type</th>

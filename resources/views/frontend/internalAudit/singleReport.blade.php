@@ -195,13 +195,13 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Record Number<</th>
+                        <th class="w-20">Record Number</th>
                         <td class="w-30">@if($data->record_number){{ $data->record_number }} @else Not Applicable @endif</td>
-                        <th class="w-20">Site/Location Code<</th>
+                        <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
@@ -211,7 +211,7 @@
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Assign To</th>
+                        <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($data->assigend){{ Helpers::getInitiatorName($data->assigend) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
@@ -221,7 +221,7 @@
                         <td class="w-30">
                             @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
                         </td>
-                        <th class="w-20">Severity Level</th>
+                        <th class="w-20">Severity Level </th>
                         <td class="w-30">
                             @if($data->severity_level_form){{ $data->severity_level_form }}@else Not Applicable @endif
                         </td>
@@ -237,7 +237,7 @@
                     <tr>
                         <th class="w-20">Audit type</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                        <th class="w-20">If Others</th>
+                        <th class="w-20">If Other</th>
                         <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
@@ -256,13 +256,14 @@
                         <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }}@else Not Applicable @endif</td>
                         <th class="w-20">Others</th>
                         <td class="w-30">@if($data->Others){{ $data->Others }}@else Not Applicable @endif</td>
+                        
 
                     </tr>
 
                 </table>
                 <div class="border-table">
                     <div class="block-head">
-                        Inv Attachment
+                        Initial Attachment
                     </div>
                     <table>
 
@@ -308,20 +309,20 @@
                             <td class="w-80"> @if($data->audit_agenda){{ $data->audit_agenda }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Facility Name</th>
+                            <th class="w-20">Comments(If Any)</th>
                             <td class="w-30">
-                                @if($data->Facility)
-                                    @foreach (explode(',', $data->Facility) as $Key => $value)
+                                @if($data->if_comments)
+                                    @foreach (explode(',', $data->if_comments) as $Key => $value)
 
                                     <li>{{ $value }}</li>
                                     @endforeach
                                 @else
                                   Not Applicable
                                 @endif</td>
-                                <th class="w-20">Group</th>
+                                <th class="w-20">Product/Material Name</th>
                                 <td class="w-80">
-                                    @if($data->Group)
-                                        @foreach (explode(',', $data->Group) as $Key => $value)
+                                    @if($data->material_name)
+                                        @foreach (explode(',', $data->material_name) as $Key => $value)
                                         <li>{{ $value }}</li>
                                         @endforeach
                                     @else
@@ -339,13 +340,13 @@
                     Additional Information
                 </div>
                 <table>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">Product/Material Name</th>
                         <td class="w-30">@if($data->material_name){{ $data->material_name }}@else Not Applicable @endif</td>
                         <th class="w-20">Comments (If Any)
                         </th>
                         <td class="w-30">@if($data->if_comments){{ $data->if_comments }}@else Not Applicable @endif</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="w-20">Lead Auditor</th>
                         <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
@@ -435,6 +436,20 @@
                         Audit Response and Closure
                     </div>
                     <table>
+                    <tr>
+                            <th class="w-20">Due Date Extension Justification</th>
+                            <td class="w-30">
+                                <div>
+                                    @if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif
+                                </div>
+                            </td>
+                            <th class="w-20">Audit End Date</th>
+                            <td class="w-30">
+                                <div>
+                                    @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
+                                </div>
+                            </td>
+                        </tr>
 
                         <tr>
                             <th class="w-20">Audit Start Date</th>
@@ -491,7 +506,7 @@
                 </div>
                 <div class="border-table">
                     <div class="block-head">
-                        Report File Attachment
+                        Report  Attachment
                     </div>
                     <table>
 
@@ -552,7 +567,13 @@
                         <th class="w-20">Audit Schedule By</th>
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
                         <th class="w-20">Audit Schedule On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit preparation completed by</th>

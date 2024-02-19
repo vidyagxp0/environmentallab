@@ -313,39 +313,19 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Plan Proposed By</th>
-                        <td class="w-30">{{ $data->plan_proposed_by }}</td>
+                        <th class="w-20">Submitted By</th>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
                         <th class="w-20">
-                            Plan Proposed On</th>
-                        <td class="w-30">{{ $data->plan_proposed_on }}</td>
+                            Submitted On</th>
+                        <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
+                   
                     <tr>
-                        <th class="w-20">Plan Approved By</th>
-                        <td class="w-30">{{ $data->plan_approved_by }}</td>
+                        <th class="w-20">Audit Completed By</th>
+                        <td class="w-30">{{ $data->audit_completed_by }}</td>
                         <th class="w-20">
-                            Plan Approved On</th>
-                        <td class="w-30">{{ $data->Plan_approved_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">QA More Info Required By</th>
-                        <td class="w-30">{{ $data->qa_more_info_required_by }}</td>
-                        <th class="w-20">
-                            QA More Info Required On</th>
-                        <td class="w-30">{{ $data->qa_more_info_required_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Cancelled By</th>
-                        <td class="w-30">{{ $data->cancelled_by }}</td>
-                        <th class="w-20">
-                            Cancelled On</th>
-                        <td class="w-30">{{ $data->cancelled_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Completed By</th>
-                        <td class="w-30">{{ $data->completed_by }}</td>
-                        <th class="w-20">
-                            Completed On</th>
-                        <td class="w-30">{{ $data->completed_on }}</td>
+                        Audit Completed On</th>
+                        <td class="w-30">{{ $data->audit_completed_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
@@ -355,10 +335,10 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Rejected By</th>
-                        <td class="w-30">{{ $data->rejected_by }}</td>
-                        <th class="w-20">Rejected On</th>
-                        <td class="w-30">{{ $data->rejected_on }}</td>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
 
                 </table>
