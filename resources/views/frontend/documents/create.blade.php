@@ -112,7 +112,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="short-desc">Short Description<span class="text-danger">*</span></label>
-                                        <input type="text" id="short_desc" name="   short_desc">
+                                        <input type="text" id="short_desc" name="short_desc">
                                     </div>
                                     <p id="short_descError" style="color:red">**Short description is required</p>
 
@@ -120,7 +120,7 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="sop_type">SOP Type<span class="text-danger">*</span></label>
-                                        <select>
+                                        <select name="sop_type">
                                             <option>Enter Your Selection Here</option>
                                             <option>Chemistry SOP</option>
                                             <option>Instrument SOP</option>
