@@ -53,10 +53,10 @@
                                     <div class="head">Document Number</div>
                                     <div>SOP-000{{ $document->id }}</div>
                                 </div>
-                                <div>
+                                {{-- <div>
                                     <div class="head">Department</div>
                                     <div>{{ $document->department_name->name }}</div>
-                                </div>
+                                </div> --}}
                                 <div>
                                     <div class="head">Document Type</div>
                                     <div>{{ $document->doc_type->name }}</div>
