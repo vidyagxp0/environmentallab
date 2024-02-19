@@ -406,11 +406,22 @@
                                                     id="initiator_group_code">{{ $data->Initiator_Group }}</span></div> --}}
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+                                            {{-- <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="short-desc">Short Description</label>
                                                     <textarea name="short_description">{{ $data->short_description }}</textarea>
                                                 </div>
+                                            </div> --}}
+                                            <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="Short Description">Short Description<span
+                                                            class="text-danger">*</span></label><span id="rchars">255</span>
+                                                    characters remaining
+                                                    
+                                                    <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                </div>
+                                                <p id="docnameError" style="color:red">**Short Description is required</p>
+            
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">

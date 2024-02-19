@@ -978,7 +978,7 @@
                     // '<option value="BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)">BRIMONIDINE TART. OPH SOL 0.1%W/V (CB)</option>' +
                     // '<option value="DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO">DORZOLAMIDEPFREE20MG/MLEDSOLSINGLEDOSECO</option>' +
                     // '</select></td>' +
-                    '<td><input type="text" name="material_name[]"></td>'+
+                    '<td><input type="text" name="material_name[]"></td>' +
                     // '<td><select name="material_batch_no[]" id="batch_no">' +
                     // '<option value="">select value</option>' +
                     // '<option value="DCAU0030">DCAU0030</option>' +
@@ -987,7 +987,7 @@
                     // '<option value="BJJH0004A">BJJH0004A</option>' +
                     // '<option value="DCAU0036">DCAU0036</option>' +
                     // '</select></td>' +
-                    '<td><input type="text" name="material_batch_no[]"></td>'+
+                    '<td><input type="text" name="material_batch_no[]"></td>' +
                     '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td>' +
                     '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td>' +
                     '<td><input type="text" name="material_batch_desposition[]"></td>' +
