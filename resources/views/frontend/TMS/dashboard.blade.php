@@ -113,7 +113,7 @@
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc }}</td>
-                                            <td>12-12-2023</td>
+                                            <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
@@ -181,7 +181,7 @@
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
-                                            <td>12-12-2023</td>
+                                            <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
@@ -247,7 +247,7 @@
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc }}</td>
-                                            <td>12-12-2023</td>
+                                            <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
@@ -314,7 +314,7 @@
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
-                                            <td>12-12-2023</td>
+                                            <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>

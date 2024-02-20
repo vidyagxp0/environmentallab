@@ -52,7 +52,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="due-date">Due Date</label>
-                                <div class="static">28-02-2023</div>
+                                <div class="static">{{ $doc->due_dateDoc }}</div>
                             </div>
                         </div>
                     </div>
