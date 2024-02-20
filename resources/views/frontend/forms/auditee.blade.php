@@ -121,8 +121,7 @@
                     
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
                         '<td><input type="text" name="observation_id[]"></td>' +
                         
                         // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
@@ -542,7 +541,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="start_date_checkdate" name="start_date" class="hide-input"
+                                            <input type="date" id="start_date_checkdate" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
 
@@ -554,7 +553,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="end_date_checkdate" name="end_date" class="hide-input" 
+                                            <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
 
@@ -591,7 +590,7 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"  id="schedule_start_date_checkdate" name="scheduled_start_date[]" class="hide-input" 
+                                                                <input type="date"  id="schedule_start_date_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                             </div>
                                                         </div>
@@ -603,7 +602,7 @@
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="schedule_end_date_checkdate"name="scheduled_end_date[]" class="hide-input" 
+                                                                <input type="date" id="schedule_end_date_checkdate"name="scheduled_end_date[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                                  oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" />
                                                             </div>
                                                         </div>
@@ -838,7 +837,7 @@
                                         <div class="calenderauditee">
                                             <input type="text"  id="audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="audit_start_date_checkdate" name="audit_start_date" class="hide-input"
+                                            <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -850,7 +849,7 @@
                                             <div class="calenderauditee">
                                             <input type="text" id="audit_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="audit_end_date_checkdate" name="audit_end_date" class="hide-input"
+                                            <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                         </div>
@@ -895,29 +894,10 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr> 
-                                                        {{-- <td>AutoNumber</td>
-                                                        <td>String</td>
-                                                        <td>Date</td>
-                                                        <td>Person</td>
-                                                        <td>Person</td>
-                                                        <td>String</td>
-                                                        <td>Single Selection : Major, Minor, Critical, Recommendation</td>
-                                                        <td>String</td>
-                                                        <td>Single Selection : Documentation, Equipment, Cleanroom, Data Integrity</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>String</td>
-                                                        <td>Date</td>
-                                                        <td>Person</td>
-                                                        <td>String</td>
-                                                        <td>Date</td>
-                                                        <td>String</td>
-                                                        <td>String</td> --}}
-                                                    </tr>
+                                                  
+
                                                 </tbody>
+
                                             </table>
                                         </div>
                                     </div> 
