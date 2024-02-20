@@ -366,8 +366,9 @@
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                      id="initiator_group">
-                                                    <option value="CQA"
-                                                        @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
+                                                    <option value="Corporate Quality Assurance"
+                                                        @if ($data->Initiator_Group== 'Corporate
+                                                        Quality Assurance') selected @endif>Corporate
                                                         Quality Assurance</option>
                                                     <option value="QAB"
                                                         @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
@@ -621,7 +622,7 @@
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
@@ -706,8 +707,8 @@
                                             <div class="group-input">
                                                 <label for="attachments">Attached Files</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                                <div class="file-attachment-field">
-                                                    <div disabled class="file-attachment-list" id="attachments">
+                                                <div class="file-attachment-field" >
+                                                    <div disabled class="file-attachment-list"  id="attachments">
                                                         @if ($data->attachments)
                                                             @foreach (json_decode($data->attachments) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
@@ -716,7 +717,7 @@
                                                                     <a href="{{ asset('upload/' . $file) }}"
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;" ></i></a>
 
                                                                 </h6>
                                                             @endforeach
@@ -726,7 +727,7 @@
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
-                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'readonly' : '' }}
+                                                            {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                             type="file" id="myfile" name="attachments[]"
                                                             oninput="addMultipleFiles(this, 'attachments')" multiple>
                                                     </div>
