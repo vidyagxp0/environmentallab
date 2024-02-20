@@ -241,7 +241,7 @@
                     @csrf
                     <div id="step-form">
 
-                         {{-- <div id="CCForm1" class="inner-block cctabcontent">
+                         <div id="CCForm1" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
                                 <div class="col-lg-6">
@@ -832,11 +832,11 @@
                                           
                                         </div>
                                                 </div>
-                                </div>
-                                <div class="button-block">
-                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
-                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                                <div class="button-block">
+                                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                                </div>
                                 </div>
                             </div>
                         </div>
