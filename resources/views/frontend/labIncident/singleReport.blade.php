@@ -199,11 +199,28 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <th class="w-20">Assigned To</th>
+                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-30">@if($data->severity_level2){{ $data->severity_level2 }} @else Not Applicable @endif</td>
+                        <th class="w-20">Incident Details</th>
+                        <td class="w-30">@if($data->Incident_Details){{ $data->Incident_Details }} @else Not Applicable @endif</td>
+                       
+                    </tr>
+                    
+                        
+
+                
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80" colspan="3">
@@ -240,10 +257,7 @@
                             <th class="w-20">Initial Attachment</th>
                             <td class="w-80">@if($data->Initial_Attachment)<a href="{{ asset('upload/document/',$data->Initial_Attachment) }}">{{ $data->Initial_Attachment }}</a>@else Not Applicable @endif</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Incident Details</th>
-                            <td class="w-80">@if($data->Incident_Details){{ $data->Incident_Details }}@else Not Applicable @endif</td>
-                        </tr>
+                       
                     </table>
                 </div>
             </div>
@@ -253,6 +267,11 @@
                         Incident Details
                     </div>
                     <table>
+                    <tr>
+                            <th class="w-20">Incident Details</th>
+                            <td class="w-80">@if($data->Incident_Details){{ $data->Incident_Details }}@else Not Applicable @endif</td>
+
+                        </tr>
                         <tr>
                             <th class="w-20">Document Details</th>
                             <td class="w-80">@if($data->Document_Details){{ $data->Document_Details }}@else Not Applicable @endif</td>
@@ -279,12 +298,7 @@
                             <td class="w-80">@if($data->Supervisor_Review_Comments){{ $data->Supervisor_Review_Comments }}@else Not Applicable @endif</td>
 
                         </tr>
-                        <tr>
-                            <th class="w-20">
-                                Cancelation Remarks</th>
-                            <td class="w-80">@if($data->Cancelation_Remarks){{ $data->Cancelation_Remarks }}@else Not Applicable @endif</td>
-
-                        </tr>
+                        
                     </table>
                 </div>
             </div>
@@ -304,12 +318,28 @@
                         </th>
                         <td class="w-30">@if($data->Root_Cause){{ $data->Root_Cause }}@else Not Applicable @endif</td>
                     </tr>
+                    </table>
+                    </div>
+                    </div>
+
+                    <div class="block">
+                    <div class="block-head">
+                        CAPA
+                    </div>
+                    <table>
                     <tr>
                         <th class="w-20">Currective Action</th>
                         <td class="w-30">@if($data->Currective_Action){{ $data->Currective_Action }}@else Not Applicable @endif</td>
                         <th class="w-20">Preventive Action</th>
                         <td class="w-30">@if($data->Preventive_Action){{ $data->Preventive_Action }}@else Not Applicable @endif</td>
+                        
                     </tr>
+                    <tr>
+                    <th class="w-20">Corrective & Preventive Action</th>
+                        <td class="w-80">@if($data->Corrective_Preventive_Action){{ $data->Corrective_Preventive_Action }}@else Not Applicable @endif</td>
+                    </tr>
+                    </div>
+
                     <tr>
                         <th class="w-20">QA Review Comments</th>
                         <td class="w-30">@if($data->QA_Review_Comments){{ $data->QA_Review_Comments }}@else Not Applicable @endif</td>
@@ -317,8 +347,7 @@
                         <td class="w-30">@if($data->QA_Head){{ $data->QA_Head }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Effectiveness Check required?</th>
-                        <td class="w-30">@if($data->Effectiveness_Check){{ $data->Effectiveness_Check }}@else Not Applicable @endif</td>
+                       
                         <th class="w-20">Incident Types</th>
                         <td class="w-30">@if($data->Incident_Type){{ $data->Incident_Type }}@else Not Applicable @endif</td>
                     </tr>
@@ -327,7 +356,6 @@
                         <td class="w-80" colspan="3">@if($data->Conclusion){{ $data->Conclusion }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
-            </div>
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -357,59 +385,66 @@
                 </div>
             </div>
 
-            {{--  <div class="block">
+             <div class="block">
                 <div class="block-head">
                     Activity Log
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Audit Schedule By</th>
-                        <td class="w-30">{{ $data->audit_schedule_by }}</td>
-                        <th class="w-20">Audit Schedule On</th>
-                        <td class="w-30">{{ $data->created_at }}</td>
+                        <th class="w-20">Submitted By</th>
+                        <td class="w-30">{{ $data->submitted_by }}</td>
+                        <th class="w-20">Submitted On</th>
+                        <td class="w-30">{{ $data->submitted_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit preparation completed by</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
-                        <td class="w-30">{{ $data->audit_preparation_completed_on }}</td>
+                        <th class="w-20">Incident Review Completed By</th>
+                        <td class="w-30">{{ $data->incident_review_completed_by }}</td>
+                        <th class="w-20">Incident Review Completed On</th>
+                        <td class="w-30">{{ $data->incident_review_completed_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">More Information Required By</th>
-                        <td class="w-30"{{ $data->audit_mgr_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Required On</th>
-                        <td class="w-30">{{ $data->audit_mgr_more_info_reqd_on }}</td>
+                        <th class="w-20">Investigation Completed By</th>
+                        <td class="w-30"{{ $data->investigation_completed_by }}</td>
+                        <th class="w-20">Investigation Completed On</th>
+                        <td class="w-30">{{ $data->investigation_completed_on}}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Observation Submitted By</th>
-                        <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                        <th class="w-20">Supervisor Reviewed On(QA)</th>
-                        <td class="w-30">{{ $data->audit_observation_submitted_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Audit Lead More Info Reqd By
-                        </th>
-                        <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Req. On</th>
-                        <td class="w-30">{{ $data->audit_lead_more_info_reqd_on }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Audit Response Completed By</th>
-                        <td class="w-30">{{ $data->audit_response_completed_by }}</td>
+                        <th class="w-20">QA Review Completed By</th>
+                        <td class="w-30">{{ $data->qA_review_completed_by }}</td>
                         <th class="w-20">QA Review Completed On</th>
-                        <td class="w-30">{{ $data->audit_response_completed_on }}</td>
+                        <td class="w-30">{{ $data->qA_review_completed_On }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Response Feedback Verified By</th>
-                        <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
+                        <th class="w-20">QA Head Approval Completed By
+                        </th>
+                        <td class="w-30">{{ $data->qA_head_approval_completed_by }}</td>
+                        <th class="w-20">QA Head Approval Completed On</th>
+                        <td class="w-30">{{ $data->qA_head_approval_completed_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">All Activities Completed By</th>
+                        <td class="w-30">{{ $data->all_activities_completed_by }}</td>
+                        <th class="w-20">All Activities Completed On</th>
+                        <td class="w-30">{{ $data->all_activities_completed_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Review Completed By</th>
+                        <td class="w-30">{{ $data->incident_review_completed_by }}</td>
                         <th class="w-20">
-                            Response Feedback Verified On</th>
-                        <td class="w-30">{{ $data->response_feedback_verified_on }}</td>
+                        Review Completed On</th>
+                        <td class="w-30">{{ $data->incident_review_completed_on }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">
+                        Cancelled On</th>
+                        <td class="w-30">{{ $data->cancelled_on }}</td>
                     </tr>
 
 
                 </table>
-            </div>  --}}
+            </div> 
         </div>
     </div>
 

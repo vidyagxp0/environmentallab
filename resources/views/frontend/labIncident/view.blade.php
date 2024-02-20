@@ -232,7 +232,6 @@
                                         @enderror
                                     </div>
                                 </div>
-                                {{-- <div class="col-md-6">
                              <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
@@ -254,7 +253,7 @@
 
                                     {{-- </div>
                                 </div>  -->
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
@@ -266,6 +265,21 @@
 
                                     </div>
                                 </div>
+                                -->
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due"> Due Date</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
+                                </div>  
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -362,7 +376,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                              <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
@@ -384,8 +398,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div> -->
-                                </div>
+                                </div> 
+                                </div>-->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Incident Category">Incident Category</label>
@@ -820,7 +834,7 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{$data->due_date_extension}}</textarea>
+                                        <textarea name="due_date_extension"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
                             </div>
