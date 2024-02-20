@@ -163,7 +163,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="severity-level">Severity Level</label>
+                                        <label for="severity-level">Sevrity Level</label>
                                         <select name="severity_level">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>
@@ -174,17 +174,16 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="search">Assigned to</label>
+                                        <label for="assigned-to">Assigned to</label>
                                         <div><small class="text-primary">Lead Investigator</small></div>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
-                                            <option value="assign_id">Select a value</option>
-                                            @foreach ($users as $data)
-                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                                            @endforeach
+                                        <select name="assigned_to">
+                                            <option value="0">-- Select --</option>
+                                            <option value="1">Amit Guru</option>
+                                            <option value="2">Shaleen Mishra</option>
+                                            <option value="3">Madhulika Mishra</option>
+                                            <option value="4">Amit Patel</option>
+                                            <option value="5">Harsh Mishra</option>
                                         </select>
-                                        @error('assign_to')
-                                            <p class="text-danger">{{ $message }}</p>
-                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
@@ -193,10 +192,15 @@
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                         <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                        <input type="date" name="due_date" value=""
+                                        class="hide-input"
+                                        oninput="handleDateInput(this, 'due_date')"/>
                                         </div>
 
+                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
+                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
+                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            value="" name="due_date"> --}}
                                     </div>
                                 </div>
                                 
@@ -1084,17 +1088,5 @@
             let result = R * P * N;
             row.querySelector('.residual-rpn').value = result;
         }
-    </script>
-        <script>
-            document.getElementById('initiator_group').addEventListener('change', function() {
-                var selectedValue = this.value;
-                document.getElementById('initiator_group_code').value = selectedValue;
-            });
-        </script>
-             <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
     </script>
 @endsection

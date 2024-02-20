@@ -162,24 +162,15 @@
                                             value="" disabled>
                                     </div>
                                 </div>
-                                <!-- <div class="col-12">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="short_description">Short Description<span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
                                     </div>
-                                </div> -->
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short_Description">Short Description<span
-                                                class="text-danger">*</span></label><span id="rchars">255</span>
-                                        characters remaining
-                                        <textarea id="docname" type="text" name="short_description" maxlength="255" required></textarea>
-                                        <p id="docnameError" style="color:red">**Short Description is required</p>
-                                    </div>
-                                </div>  
-                                    
+                                </div>
+                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -1162,10 +1153,11 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_closed' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_closed[]" class="hide-input" 
                                             oninput="handleDateInput(this, `date_closed' + serialNumber +'`)" /></div></div></div></td>
-                    
+
+
                                         <td><input type="text" name="remark[]"></td>
                                          <!-- <td><input type="text" name="capa_type[]"></td> 
                                         {{-- <td><input type="date" name="date_opened[]"></td> --}}
@@ -1222,7 +1214,7 @@
                                             </select>
                                         </td>
                                         <td><input type="text" name="current_status2[]"></td>
-
+                                         {{-- <td><input type="date" name="date_closed[]"></td>  --}}
                                          <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
@@ -2234,11 +2226,5 @@
                 tableBody.append(newRow);
             });
         });
-    </script>
-     <script>
-        var maxLength = 255;
-        $('#docname').keyup(function() {
-            var textlen = maxLength - $(this).val().length;
-            $('#rchars').text(textlen);});
     </script>
 @endsection

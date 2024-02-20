@@ -59,7 +59,7 @@ class CapaController extends Controller
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
-        $capa->assign_id = $request->assign_id;
+        $capa->assign_to = $request->assign_to;
        $capa->capa_team = implode(',', $request->capa_team);
         $capa->capa_type = $request->capa_type;
         $capa->severity_level_form= $request->severity_level_form;
@@ -332,12 +332,12 @@ class CapaController extends Controller
             $history->save();
         }
 
-        if (!empty($capa->assign_id)) {
+        if (!empty($capa->assign_to)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $capa->assign_id;
+            $history->current = $capa->assign_to;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -702,7 +702,7 @@ class CapaController extends Controller
         $capa->short_description = $request->short_description;
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
-        $capa->assign_id = $request->assign_id;
+        $capa->assign_to = $request->assign_to;
         $capa->capa_team = $request->capa_team;
         $capa->capa_type = $request->capa_type;
         $capa->details_new = $request->details_new;
@@ -921,14 +921,14 @@ class CapaController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->assign_id != $capa->assign_id || !empty($request->assign_id_comment)) {
+        if ($lastDocument->assign_to != $capa->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastDocument->assign_id;
-            $history->current = $capa->assign_id;
-            $history->comment = $request->assign_id_comment;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $capa->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1289,7 +1289,7 @@ class CapaController extends Controller
         $data1 = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
         $data2 = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
         $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
-        if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+          if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
         // $MaterialsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.MaterialsQuery.lims');
         // dd( $MaterialsQueryData->json());
 

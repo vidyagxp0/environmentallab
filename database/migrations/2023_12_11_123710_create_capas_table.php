@@ -35,7 +35,7 @@ return new class extends Migration
             $table->text('effective_check_plan')->nullable();
             $table->text('due_date_extension')->nullable();
             $table->text('capa_type')->nullable();
-            $table->integer('assign_id')->nullable();
+            $table->integer('assign_to')->nullable();
             $table->string('initiator_group_code')->nullable();
             $table->string('severity_level_form')->nullable();
             $table->text('cft_comments_form')->nullable();

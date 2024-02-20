@@ -106,7 +106,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -133,8 +133,7 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
-                                        <div><small class="text-primary">Please mention expected date of completion</small>
-                                        </div>
+                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -386,6 +385,7 @@
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                 {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+
                             </div>
                         </div>
                     </div>
