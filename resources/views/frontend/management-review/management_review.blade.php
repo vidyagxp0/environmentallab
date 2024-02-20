@@ -170,12 +170,10 @@
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
-                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date"> --}}
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}> 
+                                         </div>
 
-                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -242,15 +240,27 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"  value="{{ $data->initiator_Group}}" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description <span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
-                                </div>
-
+                                </div> -->
+                                <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short_Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                           
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+        
+                                        </div>
+        
+                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="type">Type</label>
@@ -284,7 +294,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
                                             <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }} "
-                                            name="start_date" class="hide-input"
+                                            name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -296,7 +306,7 @@
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}> --}}
                                             <div class="calenderauditee">
                                                 <input type="text" id="end_date"    readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
-                                                <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="end_date_checkdate"  name="end_date" value="{{ $data->end_date }} "
+                                                <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="end_date_checkdate"  name="end_date" value="{{ $data->end_date }} " 
                                                 class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
@@ -759,7 +769,7 @@
                                                                          class="calenderauditee">
                                                                         <input type="text" id="date_closed' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}"/>
                                                                         <input type="date" name="date_closed[]" value="{{ $data->date_closed }} "class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'
+                                                                        oninput="handleDateInput(this, `date_closed' + serialNumber +'`)" /></div></div></div></td>'
                                                         <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ unserialize($action_item_details->remark)[$key] ? unserialize($action_item_details->remark)[$key] : '' }}">
                                                         </td>
@@ -790,7 +800,8 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                                @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps)
+                                                 @if(!empty($capa_detail_details->date_closed2))
+                                                 @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps) 
                                                     <tr>
                                                         <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ $key + 1 }}"></td>
@@ -834,12 +845,14 @@
                                                                          class="calenderauditee">
                                                                         <input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}"/>
                                                                         <input type="date" name="date_closed2[]" value="{{ $data->date_closed2 }} "class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>'
+                                                                        oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>'
                                                         <td><input type="text" name="remark2[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ unserialize($capa_detail_details->remark2)[$key] ? unserialize($capa_detail_details->remark2)[$key] : '' }}">
                                                         </td>
                                                     </tr>
                                                 @endforeach
+                                                @endif
+                                                
                                             </tbody>  
                                 </table>
                             </div>
@@ -1230,4 +1243,10 @@
                 });
             });
         </script>
+         <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
+    </script>
 @endsection
