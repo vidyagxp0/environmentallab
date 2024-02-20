@@ -372,7 +372,7 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div> -->
                                         
-                                        <div class="col-lg-6">
+                                  <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('m-d-Y') }}" value="" name="intiation_date"> --}}
@@ -381,7 +381,7 @@ function addMultipleFiles(input, block_id) {
                                     </div>
                                 </div>
 
-                                        </div>
+                                        
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
@@ -508,11 +508,10 @@ function addMultipleFiles(input, block_id) {
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
-                                            <p id="docnameError" style="color:red">**Short Description is required</p>
-        
-                                        </div>
+                                                  {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
+                                     </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
@@ -709,8 +708,8 @@ function addMultipleFiles(input, block_id) {
                                                             
                                                             <div class="calenderauditee">
                                                                 <input type="text" 
-                                                                    id="audit_schedule_start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}" />
-                                                                <input type="date" id="audit_schedule_start_date_checkdate" value="{{ $data->audit_schedule_start_date }}" name="audit_schedule_start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                                    id="audit_schedule_start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_start_date) }}" />
+                                                                <input type="date" id="audit_schedule_start_date_checkdate" value="{{ $data->audit_schedule_start_date }}" name="audit_schedule_start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
                                                                     oninput="handleDateInput(this, 'audit_schedule_start_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                             </div> 
                                                         </div>
@@ -722,8 +721,8 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="calenderauditee">
                                                     <input type="text" 
                                                         id="audit_schedule_end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_schedule_end_date) }}"  />
-                                                    <input type="date" name="audit_schedule_end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="audit_schedule_end_date_checkdate" value="{{ $data->audit_schedule_end_date }}" class="hide-input"
-                                                        oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')"" />
+                                                    <input type="date" name="audit_schedule_end_date" value="{{ $data->audit_schedule_start_date }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="audit_schedule_end_date_checkdate" value="{{ $data->audit_schedule_end_date }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                        oninput="handleDateInput(this, 'audit_schedule_end_date');checkDate('audit_schedule_start_date_checkdate','audit_schedule_end_date_checkdate')" />
                                                 </div>
                                                  {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  --}}
                                             </div>
@@ -753,10 +752,9 @@ function addMultipleFiles(input, block_id) {
                                                         @if ($grid_data)
                                                         @foreach (unserialize($grid_data->start_date) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"
-                                                                    value="{{ $key + 1 }}"></td>
+                                                            <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
 
-                                                            <td><input type="text" name="audit[]"
+                                                            <td><input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
                                                             {{-- <td><input type="date" name="scheduled_start_date[]"
@@ -766,12 +764,12 @@ function addMultipleFiles(input, block_id) {
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
-                                                                <input type="date" name="scheduled_start_date[]"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"class="hide-input" 
+                                                                <input type="date" name="scheduled_start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>'
                                                             {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
                                                             
-                                                            <td><input type="time" name="scheduled_start_time[]"
-                                                                    value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
+                                                            <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
                                                             </td>
                                                             {{-- <td><input type="date" name="scheduled_end_date[]"
                                                                     value="{{ unserialize($grid_data->end_date)[$key] ? unserialize($grid_data->end_date)[$key] : '' }}">
@@ -780,13 +778,13 @@ function addMultipleFiles(input, block_id) {
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                <input type="date" name="scheduled_end_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input" 
+                                                                <input type="date" name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
                                                                <td><input type="time" name="scheduled_end_time[]"
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                              </td>
                                                             <td> <select id="select-state" placeholder="Select..."
-                                                                name="auditor[]">
+                                                                name="auditor[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)
                                                                     <option
@@ -797,7 +795,7 @@ function addMultipleFiles(input, block_id) {
                                                                 @endforeach
                                                             </select></td>
                                                             <td> <select id="select-state" placeholder="Select..."
-                                                                name="auditee[]">
+                                                                name="auditee[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)
                                                                     <option
@@ -807,7 +805,7 @@ function addMultipleFiles(input, block_id) {
                                                                     </option>
                                                                 @endforeach
                                                             </select></td>
-                                                   <td><input type="text" name="remark[]"
+                                                   <td><input type="text" name="remark[]{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}"
                                                                     value="{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}">
                                                             </td>
                                                         </tr>
@@ -1216,10 +1214,9 @@ function addMultipleFiles(input, block_id) {
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                                     <div class="calenderauditee">
                                                         <input type="text" id="audit_start_date" readonly
-                                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
-                                                            />
+                                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_start_date) }}"/>
                                                         <input type="date" id="audit_start_date_checkdate" value="{{ $data->audit_start_date }} "
-                                                        name="audit_start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
+                                                        name="audit_start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
                                                             oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                                     </div>
                                                     
@@ -1235,7 +1232,7 @@ function addMultipleFiles(input, block_id) {
                                                         <input type="text"  id="audit_end_date" readonly
                                                             placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                             />
-                                                        <input type="date" name="audit_end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }} "
+                                                        <input type="date" name="audit_end_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }} "
                                                         id="audit_end_date_checkdate" class="hide-input"
                                                             oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                                     </div>
@@ -1286,7 +1283,7 @@ function addMultipleFiles(input, block_id) {
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
                                                             <tr></tr>
                                                                     <td>{{ $key + 1 }}</td>
-                                                                    <td><input type="text" name="observation_id[]" value="{{ $tempData ? $tempData : "" }}"></td>
+                                                                    <td><input type="text" name="observation_id[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $tempData ? $tempData : "" }}"></td>
                                                                     {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
                                                                     {{-- <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
@@ -1316,11 +1313,11 @@ function addMultipleFiles(input, block_id) {
                                                                         @endforeach
                                                                     </select>
                                                                 </td> --}}
-                                           <td><input type="text" name="observation_description[]" value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>  
+                                           <td><input type="text" name="observation_description[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}"></td>  
                                     {{-- <td><input type="text" name="observation_description[]" value="{{ is_array($observation_description = unserialize($grid_data1->observation_description)) && isset($observation_description[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="severity_level[]" value="{{unserialize($grid_data1->severity_level)[$key] ? unserialize($grid_data1->severity_level)[$key]: "" }}"></td> --}}
-                                                                    <td><input type="text" name="area[]" value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
+                                                                    <td><input type="text" name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}"></td>
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
                                                                     {{-- <td>
                                                                         <select name="capa_required[]">
@@ -1329,7 +1326,7 @@ function addMultipleFiles(input, block_id) {
                                                                             <option value="no">No</option>
                                                                         </select>
                                                                     </td> --}}
-                                                                      <td><input type="text" name="auditee_response[]" value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td> 
+                                                                      <td><input type="text" name="auditee_response[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}"></td> 
                                                                      {{-- <td><input type="text" name="auditee_response[]" value="{{ is_array($auditee_response = unserialize($grid_data1->auditee_response)) && isset($auditee_response[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>

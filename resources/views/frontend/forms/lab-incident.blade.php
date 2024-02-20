@@ -171,12 +171,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Other Ref.Doc.No">Other Ref.Doc.No</label>
-                                        <input type="text" name="Other_Ref">
-                                    </div>
-                                </div>
+                                <div class="col-lg-6">
+                                            <div class="group-input" id="initiated_through_req">
+                                                <label for="If Other">Others<span
+                                                        class="text-danger d-none">*</span></label>
+                                                {{-- <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea> --}}
+                                            </div>
+                                        </div>
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>

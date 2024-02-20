@@ -683,7 +683,7 @@ class ObservationController extends Controller
         }
         if (!empty($lastDocument->short_description)) {
             $history = new AuditTrialObservation();
-            $history->ExternalAudit_id = $lastDocument->id;
+            $history->Observation_id = $lastDocument->id;
             $history->activity_type = 'Short Description';
             $history->previous = "Null";
             $history->current = $lastDocument->short_description;
