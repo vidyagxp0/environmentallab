@@ -240,10 +240,10 @@
                                                 <label for="search">
                                                     Assigned To <span class="text-danger"></span>
                                                 </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_id">
+                                                <select id="select-state" placeholder="Select..." name="assign_to">
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $value)
-                                                        <option {{ $data->assign_id == $value->id ? 'selected' : '' }}
+                                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
                                                             value="{{ $value->id }}">{{ $value->name }}</option>
                                                     @endforeach
                                                 </select>
@@ -263,7 +263,19 @@
                                                 @endif
 
                                             </div>
-                                        </div>
+                                        </div> -->
+                                        <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
+                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+
+                                    </div>
+                                </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiator Group</label>
