@@ -36,7 +36,7 @@ return new class extends Migration
             $table->date('effect_check_date')->nullable();
             $table->date('occurance_date')->nullable();
             $table->string('due_date_extension')->nullable();
-            $table->string('assign_to')->nullable();
+            $table->integer('assign_to')->nullable();
             $table->string('Incident_Category')->nullable();
             $table->string('Invocation_Type')->nullable();
             $table->text('Initial_Attachment')->nullable();
