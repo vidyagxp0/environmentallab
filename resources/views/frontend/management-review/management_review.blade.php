@@ -40,7 +40,7 @@
                             </button>
                         @elseif($data->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Complete
+                            All Actions Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
@@ -165,7 +165,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
@@ -174,6 +174,19 @@
                                             value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}> 
                                          </div>
 
+                                </div> -->
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Date Due</label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -288,7 +301,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                <!-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <div class="calenderauditee">
@@ -298,20 +311,36 @@
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
+                                <!-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="Scheduled Start Date">Scheduled Start Date <span class="text-danger"></span></label>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->start_date) }}" name="start_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}> 
+                                         </div>
+
+                                </div> -->
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled end date">Scheduled end date</label>
-                                        {{-- <input type="date" name="end_date"
+                                        {{-- <input type="text" name="end_date"
                                             {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}> --}}
                                             <div class="calenderauditee">
-                                                <input type="text" id="end_date"    readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
+                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"/>
                                                 <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="end_date_checkdate"  name="end_date" value="{{ $data->end_date }} "
                                                 class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                             </div>
                                     </div>
                                 </div>
+                                <!-- <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="Scheduled end Date">Scheduled end Date <span class="text-danger"></span></label>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->end_date) }}" name="end_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}> 
+                                         </div>
+
+                                </div> -->
                                 <div class="col-12">
                                     <div class="group-input">   
                                         <label for="Attendees">Attendess</label>

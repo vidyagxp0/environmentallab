@@ -536,10 +536,10 @@
                                                         @if ($AuditProgramGrid)
                                                         @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"
-                                                                    value="{{ $key + 1 }}"></td>
+                                                            <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                    value="{{ $key + 1 }}" ></td>
                                                             <td> <select id="select-state" placeholder="Select..."
-                                                                    name="Auditees[]">
+                                                                    name="Auditees[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                     <option value="">-Select-</option>
                                                                     @foreach ($users as $value)
                                                                         <option
@@ -549,30 +549,41 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select></td>
-                                                            {{-- <td><input type="date" name="start_date[]"
-                                                                    value="{{ unserialize($AuditProgramGrid->start_date)[$key] ? unserialize($AuditProgramGrid->start_date)[$key] : '' }}">
+                                                            {{-- <td><input type="date" name="start_date[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                                    value="{{ unserialize($AuditProgramGrid->start_date)[$key] ? unserialize($AuditProgramGrid->start_date)[$key] : '' }}"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                             </td>
-                                                            <td><input type="date" name="end_date[]"
+                                                            <td><input type="date" name="end_date[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                             
-                                                                    value="{{ unserialize($AuditProgramGrid->end_date)[$key] ? unserialize($AuditProgramGrid->end_date)[$key] : '' }}">
+                                                                    value="{{ unserialize($AuditProgramGrid->end_date)[$key] ? unserialize($AuditProgramGrid->end_date)[$key] : '' }}"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                             </td> --}}
-                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                            <!-- <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
-                                                                <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
-                                                                <input type="date" id="start_date_checkdate" name="start_date[]" class="hide-input" 
+                                                                <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                                <input type="date" id="start_date_checkdate" name="start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input" 
                                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
-                                                            {{-- <td><input type="date" name="end_date[]"></td> --}}
-
+                                                            {{-- <td><input type="date" name="end_date[]"></td> --}} -->
                                                             <td><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div
+                                                                         class="calenderauditee">
+                                                                        <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
+                                                                        <input type="date" name="start_date[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->start_date }} " min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                        oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
+
+                                                            <!-- <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
-                                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->end_date) }}"/>
-                                                                <input type="date" id="end_date_checkdate"  name="end_date[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
-
+                                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                                                <input type="date" id="end_date_checkdate"  name="end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input" 
+                                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td> -->
+                                                                <td><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div
+                                                                         class="calenderauditee">
+                                                                        <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
+                                                                        <input type="date" name="end_date[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->end_date }} " min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                        oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
                                                             <td> <select id="select-state" placeholder="Select..."
-                                                                    name="lead_investigator[]">
+                                                                    name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                     <option value="">-Select-</option>
                                                                     @foreach ($users as $value)
                                                                         <option
@@ -583,7 +594,7 @@
                                                                     @endforeach
                                                                 </select></td>
                                                             {{-- <td><input type="text" name="lead_investigator[]" value="{{unserialize($AuditProgramGrid->lead_investigator)[$key] ? unserialize($AuditProgramGrid->lead_investigator)[$key] : "" }}"></td> --}}
-                                                            <td><input type="text" name="comment[]"
+                                                            <td><input type="text" name="comment[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}">
                                                             </td>
 
@@ -595,13 +606,25 @@
                                                 </table>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <!-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description"><b>Short Description <span
                                                             class="text-danger">*</span></b></label>
                                                             <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                             </div>
+                                        </div> -->
+                            
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                            </div>
+                                            <p id="docnameError" style="color:red">**Short Description is required</p>
+        
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
