@@ -1023,7 +1023,6 @@
                                     </div>
                                 </div>  
                             </div> 
-                        </div>
                                <!-- Group Commentes-->
                              <div id="CCForm7" class="inner-block cctabcontent">
                                 <div class="inner-block-content">

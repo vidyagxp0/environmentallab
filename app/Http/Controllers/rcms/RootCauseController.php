@@ -26,8 +26,7 @@ use Illuminate\Support\Facades\Hash;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        //return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
-        return view("frontend.forms.root-cause-analysis");
+        return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
     }
 
 
@@ -50,7 +49,8 @@ use Illuminate\Support\Facades\Hash;
         $root->severity_level = ($request->severity_level);
         $root->short_description =($request->short_description);
         $root->assigned_to = ($request->assigned_to);
-        $root->root_cause_description = ($request->root_cause_description);
+        $root->assign_to = ($request->assign_to);
+        $root->root_cause_description = $request->root_cause_description;
         $root->due_date = ($request->due_date);
         $root->cft_comments_new = $request->cft_comments_new;
          $root->qa_comments_new = $request->qa_comments_new;
@@ -106,6 +106,18 @@ use Illuminate\Support\Facades\Hash;
         $root->city = ($request->city);
         $root->submitted_by = ($request->submitted_by);
 
+        if (!empty($request->Root_Cause_Category  )) {
+            $root->Root_Cause_Category = serialize($request->Root_Cause_Category);
+        }
+        if (!empty($request->Root_Cause_Sub_Category)) {
+            $root->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
+        }
+        if (!empty($request->Probability)) {
+            $root->Probability = serialize($request->Probability);
+        }
+        if (!empty($request->Remarks)) {
+            $root->Remarks = serialize($request->Remarks);
+        }
 
         $root->record = ((RecordNumber::first()->value('counter')) + 1);
         $root->initiator_id = Auth::user()->id;
@@ -114,7 +126,7 @@ use Illuminate\Support\Facades\Hash;
         $root->initiator_Group = $request->initiator_Group;
         $root->short_description = $request->short_description;
         $root->due_date = $request->due_date;
-        $root->assign_id = $request->assign_id;
+        $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
@@ -187,6 +199,185 @@ use Illuminate\Support\Facades\Hash;
         $root->status = 'Opened';
         $root->stage = 1;
         $root->save();
+
+
+         // -----------grid=------
+         $data1 = new RiskAssesmentGrid();
+         $data1->risk_id = $root->id;
+         $data1->type = "effect_analysis";
+         if (!empty($request->risk_factor)) {
+             $data1->risk_factor = serialize($request->risk_factor);
+         }
+         if (!empty($request->risk_element)) {
+             $data1->risk_element = serialize($request->risk_element);
+         }
+         if (!empty($request->problem_cause)) {
+             $data1->problem_cause = serialize($request->problem_cause);
+         }
+         if (!empty($request->existing_risk_control)) {
+             $data1->existing_risk_control = serialize($request->existing_risk_control);
+         }
+         if (!empty($request->initial_severity)) {
+             $data1->initial_severity = serialize($request->initial_severity);
+         }
+         if (!empty($request->initial_detectability)) {
+             $data1->initial_detectability = serialize($request->initial_detectability);
+         }
+         if (!empty($request->initial_probability)) {
+             $data1->initial_probability = serialize($request->initial_probability);
+         }
+         if (!empty($request->initial_rpn)) {
+             $data1->initial_rpn = serialize($request->initial_rpn);
+         }
+         if (!empty($request->risk_acceptance)) {
+             $data1->risk_acceptance = serialize($request->risk_acceptance);
+         }
+         if (!empty($request->risk_control_measure)) {
+             $data1->risk_control_measure = serialize($request->risk_control_measure);
+         }
+         if (!empty($request->residual_severity)) {
+             $data1->residual_severity = serialize($request->residual_severity);
+         }
+         if (!empty($request->residual_probability)) {
+             $data1->residual_probability = serialize($request->residual_probability);
+         }
+         if (!empty($request->residual_detectability)) {
+             $data1->residual_detectability = serialize($request->residual_detectability);
+         }
+         if (!empty($request->residual_rpn)) {
+             $data1->residual_rpn = serialize($request->residual_rpn);
+         }
+         if (!empty($request->risk_acceptance2)) {
+             $data1->risk_acceptance2 = serialize($request->risk_acceptance2);
+         }
+         if (!empty($request->mitigation_proposal)) {
+             $data1->mitigation_proposal = serialize($request->mitigation_proposal);
+         }
+ 
+         $data1->save();
+ 
+         // ---------------------------------------
+         $data2 = new RiskAssesmentGrid();
+         $data2->risk_id = $root->id;
+         $data2->type = "fishbone";
+ 
+         if (!empty($request->measurement)) {
+             $data2->measurement = serialize($request->measurement);
+         }
+         if (!empty($request->materials)) {
+             $data2->materials = serialize($request->materials);
+         }
+         if (!empty($request->methods)) {
+             $data2->methods = serialize($request->methods);
+         }
+         if (!empty($request->environment)) {
+             $data2->environment = serialize($request->environment);
+         }
+         if (!empty($request->manpower)) {
+             $data2->manpower = serialize($request->manpower);
+         }
+         if (!empty($request->machine)) {
+             $data2->machine = serialize($request->machine);
+         }
+         if (!empty($request->problem_statement)) {
+             $data2->problem_statement = $request->problem_statement;
+         }
+         $data2->save();
+         // =-------------------------------
+ 
+         $data3 = new RiskAssesmentGrid();
+         $data3->risk_id = $root->id;
+         $data3->type = "why_chart";
+         if (!empty($request->why_problem_statement)) {
+             $data3->why_problem_statement = $request->why_problem_statement;
+         }
+         if (!empty($request->why_1)) {
+             $data3->why_1 = serialize($request->why_1);
+         }
+         if (!empty($request->why_2)) {
+             $data3->why_2 = serialize($request->why_2);
+         }
+         if (!empty($request->why_3)) {
+             $data3->why_3 = serialize($request->why_3);
+         }
+         if (!empty($request->why_4)) {
+             $data3->why_4 = serialize($request->why_4);
+         }
+         if (!empty($request->why_5)) {
+             $data3->why_5 = serialize($request->why_5);
+         }
+         if (!empty($request->why_root_cause)) {
+             $data3->why_root_cause = $request->why_root_cause;
+         }
+         $data3->save();
+ 
+         // --------------------------------------------
+         $data4 = new RiskAssesmentGrid();
+         $data4->risk_id = $root->id;
+         $data4->type = "what_who_where";
+         if (!empty($request->what_will_be)) {
+             $data4->what_will_be = $request->what_will_be;
+         }
+         if (!empty($request->what_will_not_be)) {
+             $data4->what_will_not_be = $request->what_will_not_be;
+         }
+         if (!empty($request->what_rationable)) {
+             $data4->what_rationable = $request->what_rationable;
+         }
+         if (!empty($request->where_will_be)) {
+             $data4->where_will_be = $request->where_will_be;
+         }
+         if (!empty($request->where_will_not_be)) {
+             $data4->where_will_not_be = $request->where_will_not_be;
+         }
+         if (!empty($request->where_rationable)) {
+             $data4->where_rationable = $request->where_rationable;
+         }
+         if (!empty($request->coverage_will_be)) {
+             $data4->coverage_will_be = $request->coverage_will_be;
+         }
+         if (!empty($request->coverage_will_not_be)) {
+             $data4->coverage_will_not_be = $request->coverage_will_not_be;
+         }
+         if (!empty($request->coverage_rationable)) {
+             $data4->coverage_rationable = $request->coverage_rationable;
+         }
+         if (!empty($request->who_will_be)) {
+             $data4->who_will_be = $request->who_will_be;
+         }
+         if (!empty($request->who_will_not_be)) {
+             $data4->who_will_not_be = $request->who_will_not_be;
+         }
+         if (!empty($request->who_rationable)) {
+             $data4->who_rationable = $request->who_rationable;
+         } if (!empty($request->when_will_be)) {
+             $data4->when_will_be = $request->when_will_be;
+         }
+          if (!empty($request->when_will_not_be)) {
+             $data4->when_will_not_be = $request->when_will_not_be;
+         }
+          if (!empty($request->when_rationable)) {
+             $data4->when_rationable = $request->when_rationable;
+         }
+         $data4->save();
+
+         $data5 = new RiskAssesmentGrid();
+         $data5->risk_id = $root->id;
+         $data5->type = "grid1";
+         if (!empty($request->Root_Cause_Category  )) {
+             $data5->Root_Cause_Category = serialize($request->Root_Cause_Category);
+         }
+         if (!empty($request->Root_Cause_Sub_Category)) {
+             $data5->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
+         }
+         if (!empty($request->Probability)) {
+             $data5->Probability = serialize($request->Probability);
+         }
+         if (!empty($request->Remarks)) {
+             $data5->Remarks = serialize($request->Remarks);
+         }
+         $data5->save();
+
 
         // ----------------------------chemical analysis 1---------------------------------
         $data1 = new RootcauseAnalysisDocDetails();
@@ -390,7 +581,7 @@ use Illuminate\Support\Facades\Hash;
         $history->root_id = $root->id;
         $history->activity_type = 'Assign Id';
         $history->previous = "Null";
-        $history->current = $root->assign_id;
+        $history->current = $root->assign_to;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -539,8 +730,24 @@ use Illuminate\Support\Facades\Hash;
         // $root->intiation_date = $request->intiation_date;
         $root->initiator_Group = $request->initiator_Group;
         $root->short_description = $request->short_description;
+        $root->due_date = $request->due_date;
+        $root->severity_level= $request->severity_level;
+        $root->Type= ($request->Type);
+        $root->priority_level = ($request->priority_level);
+        $root->department = ($request->department);
+        $root->description = ($request->description);
+        $root->investigation_summary = ($request->investigation_summary);
+        $root->root_cause_description = ($request->root_cause_description);
+        $root->cft_comments_new = ($request->cft_comments_new);
+        $root->investigators = ($request->investigators);
+        $root->related_url = ($request->related_url);
+        // $root->root_cause_methodology = json_encode($request->root_cause_methodology);
+        // $root->root_cause_methodology = ($request->root_cause_methodology);
+        $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
+        $root->country = ($request->country);
+        $root->methods = json_encode($request->methods);
         // $root->due_date = $request->due_date;
-        $root->assign_id = $request->assign_id;
+        $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
@@ -590,8 +797,8 @@ use Illuminate\Support\Facades\Hash;
 
             $root->inv_attach = json_encode($files);
         }
-        $root->status = 'Opened';
-        $root->stage = 1;
+        // $root->status = 'Opened';
+        // $root->stage = 1;
         $root->update();
 
 
@@ -637,14 +844,14 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assign_id != $root->assign_id || !empty($request->assign_id_comment)) {
+        if ($lastDocument->assign_to != $root->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Assign Id';
-            $history->previous = $lastDocument->assign_id;
-            $history->current = $root->assign_id;
-            $history->comment = $request->assign_id_comment;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $root->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -807,7 +1014,7 @@ use Illuminate\Support\Facades\Hash;
             return back();
         }
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+        $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $dataAnalysis1 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"chemical_analysis_1")->first();
         $dataAnalysis2 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"chemical_analysis_2")->first();

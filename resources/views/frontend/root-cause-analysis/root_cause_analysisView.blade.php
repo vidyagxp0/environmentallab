@@ -21,9 +21,9 @@
         $users = DB::table('users')->get();
     @endphp
 
-    {{-- ======================================
+    <!-- ======================================
                     DATA FIELDS
-    ======================================= --}}
+    ======================================= -->
     <div id="change-control-view">
         <div class="container-fluid">
 
@@ -148,12 +148,12 @@
 
                 <!-- Tab links -->
                 <div class="cctab">
-                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Chemical Analysis</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Water Analysis</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QC Head/Designee Eval Comments</button>
+                    <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">Investigation</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Investigation & Root Cause</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm4')">QA Review</button>
+                    <!-- {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Environmental Monitoring</button> --}}
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Lab Investigation Remark</button> --}}
+                    {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm6')">QC Head/Designee Eval Comments</button> --}} -->
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
 
@@ -164,69 +164,44 @@
                         <div id="CCForm1" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="RLS Record Number"><b>Record Number</b></label>
-                                            <input disabled type="text" name="record_number"
-                                                value=" {{ Helpers::getDivisionName($data->division_id) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
-
-                                        </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="RLS Record Number"><b>Record Number</b></label>
+                                        <input disabled type="text" name="record_number"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/RCA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                     </div>
-                                    <div class="col-lg-6">
+                                </div>
+                                    <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Division Code"><b>Division Code</b></label>
                                             <input disabled type="text" name="division_code"
                                                 value=" {{ Helpers::getDivisionName($data->division_id) }}">
                                             {{-- <div class="static">QMS-North America</div> --}}
                                         </div>
-                                    </div>
+                                    </div> -->
+                                    <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Division Code"><b>Site/Location Code </b></label>
+                                    <input readonly type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                    {{-- <div class="static">QMS-North America</div> --}}
+                                      </div>
+                                </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Initiator"><b>Initiator</b></label>
-                                            {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                            <input disabled type="text" name="division_code"
-                                                value="{{ $data->initiator_name }}">
+                                            <label for="originator">Initiator</label>
+                                            <input readonly  type="text" name="originator_id" value="Amit Guru"  />
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="group-input">
+                                        <div class="group-input ">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
-                                            <input disabled type="text"
-                                                value="{{ Helpers::getdateFormat($data->intiation_date) }}">
-
-
+                                            <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                            <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="group-input">
-                                            <label for="search">
-                                                Assigned To <span class="text-danger"></span>
-                                            </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_id"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                <option value="">Select a value</option>
-                                                @foreach ($users as $key => $value)
-                                                    <option value="{{ $value->id }}"
-                                                        @if ($data->assign_id == $value->id) selected @endif>
-                                                        {{ $value->name }}</option>
-                                                @endforeach
-                                            </select>
-                                            @error('assign_to')
-                                                <p class="text-danger">{{ $message }}</p>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="group-input">
-                                            <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                            <input disabled type="text"
-                                                value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                            {{-- <div class="static"> {{ $data->due_date }}</div> --}}
-
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
+                                    <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -244,8 +219,205 @@
                                                     @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
                                                 </option>
                                                 <option value="PSG"
-                                                    @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma
+                                                    @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma 
+                                                     Sourcing Group</option>
+                                                <option value="CS"
+                                                    @if ($data->initiatorGroup == 'CS') selected @endif>Central
+                                                    Stores</option>
+                                                <option value="ITG"
+                                                    @if ($data->initiatorGroup == 'ITG') selected @endif>Information
+                                                    Technology Group</option>
+                                                <option value="MM"
+                                                    @if ($data->initiatorGroup == 'MM') selected @endif>Molecular
+                                                    Medicine</option>
+                                                <option value="CL"
+                                                    @if ($data->initiatorGroup == 'CL') selected @endif>Central
+                                                    Laboratory</option>
+                                                <option value="TT"
+                                                    @if ($data->initiatorGroup == 'TT') selected @endif>Tech
+                                                    team</option>
+                                                <option value="QA"
+                                                    @if ($data->initiatorGroup == 'QA') selected @endif>Quality
+                                                    Assurance</option>
+                                                <option value="QM"
+                                                    @if ($data->initiatorGroup == 'QM') selected @endif>Quality
+                                                    Management</option>
+                                                <option value="IA"
+                                                    @if ($data->initiatorGroup == 'IA') selected @endif>IT
+                                                    Administration</option>
+                                                <option value="ACC"
+                                                    @if ($data->initiatorGroup == 'ACC') selected @endif>Accounting
+                                                </option>
+                                                <option value="LOG"
+                                                    @if ($data->initiatorGroup == 'LOG') selected @endif>Logistics
+                                                </option>
+                                                <option value="SM"
+                                                    @if ($data->initiatorGroup == 'SM') selected @endif>Senior
+                                                    Management</option>
+                                                <option value="BA"
+                                                    @if ($data->initiatorGroup == 'BA') selected @endif>Business
+                                                    Administration</option>
+
+                                            </select>
+                                        </div>
+                                    </div> 
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group Code">Initiator Group Code</label>
+                                            <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                value="{{ $data->initiator_Group}}" id="initiator_group_code"
+                                                readonly>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group"><b>Initiator Group</b></label>
+                                            <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                 id="initiator_group">
+                                               
+                                                <option value="CQA"
+                                                    @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
+                                                    Quality Assurance</option>
+                                                <option value="QAB"
+                                                    @if ($data->initiator_Group== 'QAB') selected @endif>Quality
+                                                    Assurance Biopharma</option>
+                                                <option value="CQC"
+                                                    @if ($data->initiator_Group== 'CQC') selected @endif>Central
+                                                    Quality Control</option>
+                                                <option value="MANU"
+                                                    @if ($data->initiator_Group== 'MANU') selected @endif>Manufacturing
+                                                </option>
+                                                <option value="PSG"
+                                                    @if ($data->initiator_Group== 'PSG') selected @endif>Plasma
                                                     Sourcing Group</option>
+                                                <option value="CS"
+                                                    @if ($data->initiator_Group== 'CS') selected @endif>Central
+                                                    Stores</option>
+                                                <option value="ITG"
+                                                    @if ($data->initiator_Group== 'ITG') selected @endif>Information
+                                                    Technology Group</option>
+                                                <option value="MM"
+                                                    @if ($data->initiator_Group== 'MM') selected @endif>Molecular
+                                                    Medicine</option>
+                                                <option value="CL"
+                                                    @if ($data->initiator_Group== 'CL') selected @endif>Central
+                                                    Laboratory</option>
+                                                <option value="TT"
+                                                    @if ($data->initiator_Group== 'TT') selected @endif>Tech
+                                                    team</option>
+                                                <option value="QA"
+                                                    @if ($data->initiator_Group== 'QA') selected @endif>Quality
+                                                    Assurance</option>
+                                                <option value="QM"
+                                                    @if ($data->initiator_Group== 'QM') selected @endif>Quality
+                                                    Management</option>
+                                                <option value="IA"
+                                                    @if ($data->initiator_Group== 'IA') selected @endif>IT
+                                                    Administration</option>
+                                                <option value="ACC"
+                                                    @if ($data->initiator_Group== 'ACC') selected @endif>Accounting
+                                                </option>
+                                                <option value="LOG"
+                                                    @if ($data->initiator_Group== 'LOG') selected @endif>Logistics
+                                                </option>
+                                                <option value="SM"
+                                                    @if ($data->initiator_Group== 'SM') selected @endif>Senior
+                                                    Management</option>
+                                                <option value="BA"
+                                                    @if ($data->initiator_Group== 'BA') selected @endif>Business
+                                                    Administration</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group Code">Initiator Group Code</label>
+                                            <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                value="{{ $data->initiator_Group}}" id="initiator_group_code"
+                                                readonly>
+                                        </div>
+                                    </div>
+                                   
+                                    <div class="col-12">
+                                                <div class="group-input">
+                                                    <label for="Short Description">Short Description<span
+                                                            class="text-danger">*</span></label><span id="rchars">255</span>
+                                                    characters remaining
+                                                    
+                                                    <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                </div>
+                                                <p id="docnameError" style="color:red">**Short Description is required</p>
+            
+                                            </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="severity-level">Severity Level</label>
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level">
+                                                <option value="0">-- Select --</option>
+                                                <option @if ($data->severity_level =='minor') selected @endif
+                                                    value="minor">Minor</option>
+                                                    <option @if ($data->severity_level =='major') selected @endif
+                                                        value="major">Major</option>
+                                                        <option @if ($data->severity_level =='critical') selected @endif
+                                                            value="critical">Critical</option>
+                                            </select>
+                                                {{-- <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select> --}}
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="search">
+                                                Assigned To <span class="text-danger"></span>
+                                            </label>
+                                            <select id="select-state" placeholder="Select..." name="assign_to"
+                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $key => $value)
+                                                    <option value="{{ $value->id }}"
+                                                        @if ($data->assign_to == $value->id) selected @endif>
+                                                        {{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                            @error('assign_to')
+                                                <p class="text-danger">{{ $message }}</p>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due"> Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                            <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>  
+                                 </div>                                  <!-- <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group"><b>Initiator Group</b></label>
+                                            <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                id="initiator-group">
+                                                <option value="CQA"
+                                                    @if ($data->initiatorGroup == 'CQA') selected @endif>Corporate
+                                                    Quality Assurance</option>
+                                                <option value="QAB"
+                                                    @if ($data->initiatorGroup == 'QAB') selected @endif>Quality
+                                                    Assurance Biopharma</option>
+                                                <option value="CQC"
+                                                    @if ($data->initiatorGroup == 'CQC') selected @endif>Central
+                                                    Quality Control</option>
+                                                <option value="CQC"
+                                                    @if ($data->initiatorGroup == 'CQC') selected @endif>Manufacturing
+                                                </option>
+                                                <option value="PSG"
+                                                    @if ($data->initiatorGroup == 'PSG') selected @endif>Plasma 
+                                                     Sourcing Group</option>
                                                 <option value="CS"
                                                     @if ($data->initiatorGroup == 'CS') selected @endif>Central
                                                     Stores</option>
@@ -301,8 +473,41 @@
                                             <div><small class="text-primary">Please mention brief summary</small></div>
                                             <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                         </div>
+                                    </div> -->
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Initiator Group">Initiated Through</label>
+                                            <div><small class="text-primary">Please select related information</small></div>
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_through"
+                                                onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                                <option value="">-- select --</option>
+                                                <option @if ($data->initiated_through == 'recall') selected @endif
+                                                    value="recall">Recall</option>
+                                                <option @if ($data->initiated_through == 'return') selected @endif
+                                                    value="return">Return</option>
+                                                <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                    value="deviation">Deviation</option>
+                                                <option @if ($data->initiated_through == 'complaint') selected @endif
+                                                    value="complaint">Complaint</option>
+                                                <option @if ($data->initiated_through == 'regulatory') selected @endif
+                                                    value="regulatory">Regulatory</option>
+                                                <option @if ($data->initiated_through == 'lab-incident') selected @endif
+                                                    value="lab-incident">Lab Incident</option>
+                                                <option @if ($data->initiated_through == 'improvement') selected @endif
+                                                    value="improvement">Improvement</option>
+                                                <option @if ($data->initiated_through == 'others') selected @endif
+                                                    value="others">Others</option>
+                                            </select>
+                                        </div>
                                     </div>
-
+                                    <div class="col-lg-6">
+                                        <div class="group-input" id="initiated_through_req">
+                                            <label for="If Other">Others<span
+                                                    class="text-danger d-none">*</span></label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
+                                        </div>
+                                    </div>
+<!-- 
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Sample_Type">Sample Type</label>
@@ -384,7 +589,7 @@
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                         @endforeach
-                                                    @endif
+                                                    @endif 
 
                                                 </div>
                                                 <div class="add-btn">
@@ -412,9 +617,152 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
+                        </div> -->
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Type">Type</label>
+                                            <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
+                                                <option value="0">-- Select --</option>
+                                                <option {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="0">-- Select --</option>
+                                                <option @if ($data->Type =='1') selected @endif value="1">Facillties</option>
+                                                <option @if ($data->Type =='2') selected @endif value="2">Other</option>
+                                                <option @if ($data->Type =='3') selected @endif value="3">Stabillity</option>
+                                                <option @if ($data->Type =='4') selected @endif value="4">Raw Material</option>
+                                                <option @if ($data->Type =='5') selected @endif value="5">Clinical Production</option>
+                                                <option @if ($data->Type =='6') selected @endif value="6">Commercial Production</option>
+                                                <option  @if ($data->Type =='7') selected @endif  value="7">Labellling</option>
+                                                <option @if ($data->Type =='8') selected @endif value="8">laboratory</option>
+                                                <option @if ($data->Type =='9') selected @endif value="9">Utillities</option>
+                                                <option  @if ($data->Type =='10') selected @endif value="10">Validation</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="priority_level">Priority Level</label>
+                                            <div><small class="text-primary">Choose high if Immidiate actions are
+                                                    required</small></div>
+                                           
+                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="priority_level">
+                                                <!-- {{-- <option value="0">-- Select --</option>
+                                                <option value="low">Low</option>
+                                                <option value="medium">Medium</option>
+                                                <option value="high">High</option> --}} -->
+                                                <option value="0">-- Select --</option>
+                                                <option @if ($data->priority_level == 'low') selected @endif
+                                                 value="low">Low</option>
+                                                <option  @if ($data->priority_level == 'medium') selected @endif 
+                                                value="medium">Medium</option>
+                                                <option @if ($data->priority_level == 'high') selected @endif
+                                                value="high">High</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="investigators">Additional Investigators</label>
+                                            <select multiple name="investigators" placeholder="Select Investigators"
+                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple name="investigators" placeholder="Select Investigators"
+                                                data-search="false" data-silent-initial-value-set="true" id="investigators">
+                                                <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
+                                                <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
+                                                <option @if ($data->investigators=='3') selected @endif value="3">Madhulika Mishra</option>
+                                                <option @if ($data->investigators=='4') selected @endif value="4">Amit Patel</option>
+                                                <option @if ($data->investigators=='5') selected @endif value="5">Harsh Mishra</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                            
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="department">Department(s)</label>
+                                            <select name="department" placeholder="Select Department(s)"
+                                             name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
+                                                data-search="false" data-silent-initial-value-set="true" id="department">
+                                                <option @if ($data->department== '1') selected @endif  value="1">Work Instruction</option>
+                                                <option @if ($data->department== '2') selected @endif value="2">Quality Assurance</option>
+                                                <option @if ($data->department== '3') selected @endif value="3">Specifications</option>
+                                                <option @if ($data->department== '4') selected @endif value="4">Production</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="sub-head">Investigatiom details</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="description">Description</label>
+                                         
+                                            <textarea name="description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->description }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="comments">Comments</label>
+                                            <textarea  name="comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->comments }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Inv Attachments">Initial Attachment</label>
+                                            <div>
+                                                <small class="text-primary">
+                                                    Please Attach all relevant or supporting documents
+                                                </small>
+                                            </div>
+                                            <div class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="root_cause_initial_attachment">
+                                                    @if ($data->root_cause_initial_attachment)
+                                                    @foreach(json_decode($data->root_cause_initial_attachment) as $file)
+                                                    <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                        <b>{{ $file }}</b>
+                                                        <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                        <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    </h6>
+                                               @endforeach
+                                                    @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    
+                                                    <input type="file" id="myfile" name="root_cause_initial_attachment[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'root_cause_initial_attachment')"
+                                                        multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                      <!-- <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="severity-level">Sevrity Level</label>
+                                            <select name="severity-level">
+                                                <option value="0">-- Select --</option>
+                                                <option value="minor">Minor</option>
+                                                <option value="major">Major</option>
+                                                <option value="critical">Critical</option>
+                                            </select>
+                                        </div>
+                                    </div>  -->
+                                    
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="related_url">Related URL</label>
+                                            <textarea name="related_url"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->related_url }}</textarea>
+                                        
+                                          
+                                        </div>
+                                                </div>
+                                </div>
+                                <div class="button-block">
+                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                    <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
+                                    <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                </div>
+                            </div>
                         </div>
+    
 
-                        <div id="CCForm2" class="inner-block cctabcontent">
+                        <!-- <div id="CCForm2" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
                                     Chemical Analysis I
@@ -594,9 +942,865 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
+                        </div> -->
+                        <div id="CCForm2" class="inner-block cctabcontent">
+                        <div class="inner-block-content">
+                                <div class="row">
+                                    {{-- <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root-cause-methodology">Root Cause Methodology</label>
+                                            <select name="root_cause_methodology[]"  placeholder="-- Select --"
+                                                data-search="false" data-silent-initial-value-set="true"
+                                                id="root-cause-methodology">
+                                                <option @if ($data->root_cause_methodology== '1') selected @endif value="1">Why-Why Chart</option>
+                                                <option @if ($data->root_cause_methodology== '2') selected @endif value="2">Failure Mode and Efect Analysis</option>
+                                                <option @if ($data->root_cause_methodology== '3') selected @endif value="3">Fishbone or Ishikawa Diagram</option>
+                                                <option @if ($data->root_cause_methodology== '4') selected @endif value="4">Is/Is Not Analysis</option>
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root-cause-methodology">Root Cause Methodology</label>
+                                            <select name="root_cause_methodology[]"  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
+                                                placeholder="-- Select --" data-search="false"
+                                                data-silent-initial-value-set="true" id="root-cause-methodology">
+                                                <option value="0">-- Select --</option>
+                                                <option value="1"
+                                                    {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Why-Why Chart</option>
+                                                <option value="2"
+                                                    {{ in_array('2', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Failure Mode and Efect Analysis</option>
+                                                <option value="3"
+                                                    {{ in_array('3', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Fishbone or Ishikawa Diagram</option>
+                                                <option value="4"
+                                                    {{ in_array('4', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                    Is/Is Not Analysis</option>
+
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root_cause">
+                                                Root Cause
+                                                <button type="button"
+                                                onclick="add4Input('root-cause-first-table')">+</button>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="root-cause-first-table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row #</th>
+                                                            <th>Root Cause Category</th>
+                                                            <th>Root Cause Sub-Category</th>
+                                                            <th>Probability</th>
+                                                            <th>Remarks</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($grid1->Root_Cause_Category))
+                                                        @foreach (unserialize($grid1->Root_Cause_Category) as $key => $Root_Cause_Category)
+                                                            <td>{{ $key + 1 }}</td>
+                                                            <td>{{ $Root_Cause_Category }}</td>
+                                                            <td>{{ unserialize($grid1->Root_Cause_Sub_Category)[$key] ? unserialize($grid1->Root_Cause_Sub_Category)[$key] : '' }}
+                                                            </td>
+                                                            <td>{{ unserialize($grid1->Probability)[$key] ? unserialize($grid1->Probability)[$key] : '' }}
+                                                            </td>
+                                                            <td>{{ unserialize($grid1->Remarks)[$key] ? unserialize($grid1->Remarks)[$key] : '' }}
+                                                            </td>
+                                                            @endforeach
+                                                            @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{-- <div class="col-12 sub-head"></div>
+                                    <div class="col-12 mb-4">
+                                        <div class="group-input">
+                                            <label for="agenda">
+                                                Failure Mode and Effect Analysis
+                                                <button type="button" name="agenda"
+                                                    onclick="addRiskAssessment('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" style="width: 200%"
+                                                    id="risk-assessment-risk-management">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row #</th>
+                                                            <th>Risk Factor</th>
+                                                            <th>Risk element </th>
+                                                            <th>Probable cause of risk element</th>
+                                                            <th>Existing Risk Controls</th>
+                                                            <th>Initial Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Initial RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Proposed Additional Risk control measure (Mandatory for Risk
+                                                                elements having RPN>4)</th>
+                                                            <th>Residual Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Residual RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Mitigation proposal (Mention either CAPA reference number, IQ,
+                                                                OQ or
+                                                                PQ)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="fishbone">
+                                                Fishbone or Ishikawa Diagram
+                                                <button type="button" name="agenda"
+                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</button>
+                                                <button type="button" name="agenda" class="fishbone-del-btn"
+                                                    onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#fishbone-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="fishbone-ishikawa-diagram">
+                                                <div class="left-group">
+                                                    <div class="grid-field field-name">
+                                                        <div>Measurement</div>
+                                                        <div>Materials</div>
+                                                        <div>Methods</div>
+                                                    </div>
+                                                    <div class="top-field-group">
+                                                        <div class="grid-field fields top-field">
+                                                            <div><input type="text" name="measurement[]"></div>
+                                                            <div><input type="text" name="materials[]"></div>
+                                                            <div><input type="text" name="methods[]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mid"></div>
+                                                    <div class="bottom-field-group">
+                                                        <div class="grid-field fields bottom-field">
+                                                            <div><input type="text" name="environment[]"></div>
+                                                            <div><input type="text" name="manpower[]"></div>
+                                                            <div><input type="text" name="machine[]"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="grid-field field-name">
+                                                        <div>Environment</div>
+                                                        <div>Manpower</div>
+                                                        <div>Machine</div>
+                                                    </div>
+                                                </div>
+                                                <div class="right-group">
+                                                    <div class="field-name">
+                                                        Problem Statement
+                                                    </div>
+                                                    <div class="field">
+                                                        <textarea name="problem_statement"></textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Why-Why Chart
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#why_chart-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr style="background: #f4bb22">
+                                                            <th style="width:150px;">Problem Statement :</th>
+                                                            <td>
+                                                                <textarea name="why_problem_statement"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 1 <span
+                                                                    onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_1_block">
+                                                                    <textarea name="why_1[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 2 <span
+                                                                    onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_2_block">
+                                                                    <textarea name="why_2[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 3 <span
+                                                                    onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_3_block">
+                                                                    <textarea name="why_3[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 4 <span
+                                                                    onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_4_block">
+                                                                    <textarea name="why_4[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 5 <span
+                                                                    onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_5_block">
+                                                                    <textarea name="why_5[]"></textarea>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background: #0080006b;">
+                                                            <th style="width:150px;">Root Cause :</th>
+                                                            <td>
+                                                                <textarea name="root-cause"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Is/Is Not Analysis
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#is_is_not-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>&nbsp;</th>
+                                                            <th>Will Be</th>
+                                                            <th>Will Not Be</th>
+                                                            <th>Rationale</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">What</th>
+                                                            <td>
+                                                                <textarea name="what_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Where</th>
+                                                            <td>
+                                                                <textarea name="where_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">When</th>
+                                                            <td>
+                                                                <textarea name="when_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Coverage</th>
+                                                            <td>
+                                                                <textarea name="coverage_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Who</th>
+                                                            <td>
+                                                                <textarea name="who_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div> --}}
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12 mb-4">
+                                        <div class="group-input">
+                                            <label for="agenda">
+                                                Failure Mode and Effect Analysis<button type="button" name="agenda"
+                                                    onclick="addRiskAssessment('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                            </label>
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" style="width: 200%"
+                                                    id="risk-assessment-risk-management">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Row #</th>
+                                                            <th>Risk Factor</th>
+                                                            <th>Risk element </th>
+                                                            <th>Probable cause of risk element</th>
+                                                            <th>Existing Risk Controls</th>
+                                                            <th>Initial Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Initial Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Initial RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Proposed Additional Risk control measure (Mandatory for
+                                                                Risk
+                                                                elements having RPN>4)</th>
+                                                            <th>Residual Severity- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Probability- H(3)/M(2)/L(1)</th>
+                                                            <th>Residual Detectability- H(1)/M(2)/L(3)</th>
+                                                            <th>Residual RPN</th>
+                                                            <th>Risk Acceptance (Y/N)</th>
+                                                            <th>Mitigation proposal (Mention either CAPA reference
+                                                                number, IQ,
+                                                                OQ or
+                                                                PQ)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (!empty($riskEffectAnalysis->risk_factor))
+                                                            @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                                                <td>{{ $key + 1 }}</td>
+                                                                <td>{{ $riskFactor }}</td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->risk_element)[$key] ? unserialize($riskEffectAnalysis->risk_element)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ? unserialize($riskEffectAnalysis->problem_cause)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ? unserialize($riskEffectAnalysis->existing_risk_control)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ? unserialize($riskEffectAnalysis->initial_severity)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ? unserialize($riskEffectAnalysis->initial_detectability)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ? unserialize($riskEffectAnalysis->initial_probability)[$key] : '' }}
+                                                                </td>
+                                                                 {{-- <td>{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ? unserialize($riskEffectAnalysis->initial_rpn)[$key] : '' }}   --}}</td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ? unserialize($riskEffectAnalysis->risk_control_measure)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ? unserialize($riskEffectAnalysis->residual_severity)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ? unserialize($riskEffectAnalysis->residual_probability)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ? unserialize($riskEffectAnalysis->residual_detectability)[$key] : '' }}
+                                                                </td>
+                                                                {{-- - <td>{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ? unserialize($riskEffectAnalysis->residual_rpn)[$key] : '' }}  --}}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance2)[$key] : '' }}
+                                                                </td>
+                                                                <td>{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ? unserialize($riskEffectAnalysis->mitigation_proposal)[$key] : '' }}
+                                                                </td>
+                                                            @endforeach
+                                                        @endif
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="fishbone">
+                                                Fishbone or Ishikawa Diagram
+                                                <button type="button" name="agenda"
+                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                <button type="button" name="agenda" class="fishbone-del-btn"
+                                                    onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
+                                                    <i class="fa-solid fa-trash-can"></i>
+                                                </button>
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#fishbone-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="fishbone-ishikawa-diagram">
+                                                <div class="left-group">
+                                                    <div class="grid-field field-name">
+                                                        <div>Measurement</div>
+                                                        <div>Materials</div>
+                                                        <div>Methods</div>
+                                                    </div>
+                                                    <div class="top-field-group">
+                                                        <div class="grid-field fields top-field">
+                                                            @if (!empty($fishbone->measurement))
+                                                                @foreach (unserialize($fishbone->measurement) as $key => $measure)
+                                                                    <div><input type="text"
+                                                                            value="{{ $measure }}"
+                                                                            name="measurement[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                    <div><input type="text"
+                                                                            value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
+                                                                            name="materials[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                    <div><input type="text"
+                                                                            value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}}"
+                                                                            name="methods[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                @endforeach
+                                                            @endif
+                                                        </div>
+                                                    </div>
+                                                    <div class="mid"></div>
+                                                    <div class="bottom-field-group">
+                                                        <div class="grid-field fields bottom-field">
+                                                            @if (!empty($fishbone->environment))
+                                                                @foreach (unserialize($fishbone->environment) as $key => $measure)
+                                                                    <div><input type="text"
+                                                                            value="{{ $measure }}"
+                                                                            name="environment[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                    <div><input type="text"
+                                                                            value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
+                                                                            name="manpower[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                    <div><input type="text"
+                                                                            value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}}"
+                                                                            name="machine[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
+                                                                @endforeach
+                                                            @endif
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="grid-field field-name">
+                                                        <div>Environment</div>
+                                                        <div>Manpower</div>
+                                                        <div>Machine</div>
+                                                    </div>
+                                                </div>
+                                                <div class="right-group">
+                                                    <div class="field-name">
+                                                        Problem Statement
+                                                    </div>
+                                                    <div class="field">
+                                                          <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $fishbone->problem_statement }}</textarea>
+                                                      
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Why-Why Chart
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#why_chart-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <tbody>
+                                                        <tr style="background: #f4bb22">
+                                                            <th style="width:150px;">Problem Statement :</th>
+                                                            <td>
+
+                                                                <textarea name="why_problem_statement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 1 <span
+                                                                    onclick="addWhyField('why_1_block', 'why_1[]')"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_1_block"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
+                                                                    @if (!empty($whyChart->why_1))
+                                                                        @foreach (unserialize($whyChart->why_1) as $key => $measure)
+                                                                            <textarea name="why_1[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                        @endforeach
+                                                                    @endif
+
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 2 <span
+                                                                    onclick="addWhyField('why_2_block', 'why_2[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_2_block">
+                                                                    @if (!empty($whyChart->why_2))
+                                                                        @foreach (unserialize($whyChart->why_2) as $key => $measure)
+                                                                            <textarea name="why_2[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 3 <span
+                                                                    onclick="addWhyField('why_3_block', 'why_3[]')"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_3_block">
+                                                                    @if (!empty($whyChart->why_3))
+                                                                        @foreach (unserialize($whyChart->why_3) as $key => $measure)
+                                                                            <textarea name="why_3[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 4 <span
+                                                                    onclick="addWhyField('why_4_block', 'why_4[]')"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_4_block">
+                                                                    @if (!empty($whyChart->why_4))
+                                                                        @foreach (unserialize($whyChart->why_4) as $key => $measure)
+                                                                            <textarea name="why_4[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="why-row">
+                                                            <th style="width:150px; color: #393cd4;">
+                                                                Why 5 <span
+                                                                    onclick="addWhyField('why_5_block', 'why_5[]')"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>+</span>
+                                                            </th>
+                                                            <td>
+                                                                <div class="why_5_block">
+                                                                    @if (!empty($whyChart->why_5))
+                                                                        @foreach (unserialize($whyChart->why_5) as $key => $measure)
+                                                                            <textarea name="why_5[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                        @endforeach
+                                                                    @endif
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="background: #0080006b;">
+                                                            <th style="width:150px;">Root Cause :</th>
+                                                            <td>
+                                                                <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    {{-- <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Is/Is Not Analysis
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#is_is_not-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>&nbsp;</th>
+                                                            <th>Will Be</th>
+                                                            <th>Will Not Be</th>
+                                                            <th>Rationale</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">What</th>
+                                                            <td>
+                                                                <textarea name="what_will_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_rationable"> </textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Where</th>
+                                                            <td>
+                                                                <textarea name="where_will_be"> </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_will_not_be"> </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">When</th>
+                                                            <td>
+                                                                <textarea name="when_will_be"> </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_rationable"></textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Coverage</th>
+                                                            <td>
+                                                                <textarea name="coverage_will_be"> </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_will_not_be"> </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_rationable"> </textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Who</th>
+                                                            <td>
+                                                                <textarea name="who_will_be"> </textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_will_not_be"></textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_rationable"> </textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="why-why-chart">
+                                                Is/Is Not Analysis
+                                                <span class="text-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#is_is_not-instruction-modal"
+                                                    style="font-size: 0.8rem; font-weight: 400;">
+                                                    (Launch Instruction)
+                                                </span>
+                                            </label>
+                                            <div class="why-why-chart">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>&nbsp;</th>
+                                                            <th>Will Be</th>
+                                                            <th>Will Not Be</th>
+                                                            <th>Rationale</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">What</th>
+                                                            <td>
+                                                                <textarea name="what_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->what_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->what_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->what_rationable }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Where</th>
+                                                            <td>
+                                                                <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">When</th>
+                                                            <td>
+                                                                <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->when_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->when_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->when_rationable }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Coverage</th>
+                                                            <td>
+                                                                <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_rationable }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th style="background: #0039bd85">Who</th>
+                                                            <td>
+                                                                <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_will_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_will_not_be }}</textarea>
+                                                            </td>
+                                                            <td>
+                                                                <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_rationable }}</textarea>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 sub-head"></div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="root_cause_description">Root Cause Description</label>
+                                            <textarea name="root_cause_description"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->root_cause_description }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="investigation_summary">Investigation Summary</label>
+                                            <textarea name="investigation_summary"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->investigation_summary }}</textarea>
+                                        </div>
+                                    </div>
+                                 {{-- <div class="col-12">
+                                        <div class="sub-head">Geographic Information</div>
+                                    </div> --}}
+                                    {{-- <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Zone">Zone</label>
+                                            <select name="zone" id="zone">
+                                                <option value="">Enter Your Selection Here</option>
+                                                <option @if ($data->zone =='Asia') selected @endif value="Asia">Asia</option>
+                                                <option @if ($data->zone =='Europe') selected @endif value="Europe">Europe</option>
+                                                <option @if ($data->zone =='Africa') selected @endif value="Africa">Africa</option>
+                                                <option @if ($data->zone =='Central_America') selected @endif value="Central_America">Central America</option>
+                                                <option @if ($data->zone =='South_America') selected @endif value="South_America">South America</option>
+                                                <option @if ($data->zone =='Oceania') selected @endif value="Oceania">Oceania</option>
+                                                <option @if ($data->zone =='North_America') selected @endif value="North_America">North America</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Country">Country</label>
+                                            <select name="country" class="countries" id="country">
+                                                <option value="">Select Country</option>
+    
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="State/District">State/District</label>
+                                            <select name="state" class="states" id="stateId">
+                                                <option value="">Select State</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="City">City</label>
+                                            <select name="city" class="cities" id="city">
+                                                <option value="">Select City</option>
+    
+                                            </select>
+                                        </div>
+                                    </div> --}}
+                                </div>
+                             
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton"
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+                                </div>
+                            </div>
                         </div>
 
-                        <div id="CCForm3" class="inner-block cctabcontent">
+                        <!-- <div id="CCForm3" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
                                     Water Analysis I
@@ -786,9 +1990,155 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
-                        </div>
-
+                        </div>  -->
                         <div id="CCForm4" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                             <!-- <div class="sub-head">
+                                    CFT Feedback
+                                </div>  -->
+                                <div class="row">
+    
+                                <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">Final Comments</label>
+                                            <textarea name="cft_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->cft_comments_new }}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">Final Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div  class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="cft_attchament_new">
+                                                    {{-- @if(!is_null($data->cft_attchament_new) && is_array(json_decode($data->cft_attchament_new))) --}}
+                                                    @if ($data->cft_attchament_new)
+                                                        @foreach(json_decode($data->cft_attchament_new) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                   {{-- @endif --}}
+                                                   @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="cft_attchament_new[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                    <!-- <div class="col-lg-12">
+                                        <div class="group-input">
+                                            <label for="comments">Final Attachment</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div  class="file-attachment-field">
+                                                <div disabled class="file-attachment-list" id="cft_attchament_new">
+                                                    {{-- @if(!is_null($data->cft_attchament_new) && is_array(json_decode($data->cft_attchament_new))) --}}
+                                                    @if ($data->cft_attchament_new)
+                                                        @foreach(json_decode($data->cft_attchament_new) as $file)
+                                                        <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <b>{{ $file }}</b>
+                                                            <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                            <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                        </h6>
+                                                    @endforeach
+                                                   {{-- @endif --}}
+                                                   @endif
+                                                </div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="cft_attchament_new[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        oninput="addMultipleFiles(this, 'cft_attchament_new')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="row">
+                                    <div class="sub-head">
+                                        Concerned Group Feedback
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">QA Comments</label>
+                                            <textarea name="qa_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">QA Head Designee Comments</label>
+                                            <textarea name="designee_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Warehouse Comments</label>
+                                            <textarea name="Warehouse_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Engineering Comments</label>
+                                            <textarea name="Engineering_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Instrumentation Comments</label>
+                                            <textarea name="Instrumentation_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Validation Comments</label>
+                                            <textarea name="Validation_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Others Comments</label>
+                                            <textarea name="Others_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="comments">Group Comments</label>
+                                            <textarea name="Group_comments_new"></textarea>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="group-attachments">Group Attachments</label>
+                                            <div><small class="text-primary">Please Attach all relevant or supporting
+                                                    documents</small></div>
+                                            <div class="file-attachment-field">
+                                                <div class="file-attachment-list" id="group_attachments_new"></div>
+                                                <div class="add-btn">
+                                                    <div>Add</div>
+                                                    <input type="file" id="myfile" name="group_attachments_new[]"
+                                                        oninput="addMultipleFiles(this, 'group_attachments_new')" multiple>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                    <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+    
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div id="CCForm4" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="sub-head">
                                     Environmental Monitoring I
@@ -1072,9 +2422,9 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div id="CCForm5" class="inner-block cctabcontent">
+                        <!-- <div id="CCForm5" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="col-12">
@@ -1083,13 +2433,13 @@
                                             <textarea name="lab_inv_concl" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
                                         </div>
                                     </div>
-                                    {{-- <div class="col-12">
+                                 <div class="col-12">
                                         <div class="group-input">
                                             <label for="lab_inv_attach">Lab Investigator Attachments</label>
                                             <input type="file" name="lab_inv_attach"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                         </div>
-                                    </div> --}}
+                                    </div> 
 
                                     <div class="col-12">
                                         <div class="group-input">
@@ -1133,9 +2483,9 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>  -->
 
-                        <div id="CCForm6" class="inner-block cctabcontent">
+                        <!-- <div id="CCForm6" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
                                     <div class="col-12">
@@ -1143,16 +2493,16 @@
                                             <label for="qc_head_comments">QC Head Evaluation Comments</label>
                                             <textarea name="qc_head_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
                                         </div>
-                                    </div>
-                                    {{-- <div class="col-12">
+                                    </div> --}}
+                                    <div class="col-12">
                                         <div class="group-input">
                                             <label for="inv_attach">Investigation Attachments</label>
                                             <input type="file" name="inv_attach"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                         </div>
-                                    </div> --}}
+                                    </div> 
 
-                                    <div class="col-12">
+                                 <div class="col-12">
                                         <div class="group-input">
                                             <label for="Inv Attachments">Investigation Attachments</label>
                                             <div class="file-attachment-field">
@@ -1194,8 +2544,60 @@
                                             Exit </a> </button>
                                 </div>
                             </div>
-                        </div>
+                        </div>  -->
 
+                        <!-- <div id="CCForm7" class="inner-block cctabcontent">
+                            <div class="inner-block-content">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_By..">Acknowledge By</label>
+                                            <div class="static">{{ $data->acknowledge_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_On">Acknowledge On</label>
+                                            <div class="static">{{ $data->acknowledge_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Submit_By">Submit By</label>
+                                            <div class="static">{{ $data->submit_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Submit_On">Submit On</label>
+                                            <div class="static">{{ $data->submit_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">QA Review Complete By</label>
+                                            <div class="static">{{ $data->qa_review_complete_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">QA Review Complete On</label>
+                                            <div class="static">{{ $data->qa_review_complete_on }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="button-block">
+                                    <button type="submit" class="saveButton"
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                    <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                    <button type="submit"
+                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                    <button type="button"> <a class="text-white"
+                                            href="{{ url('rcms/qms-dashboard') }}">
+                                            Exit </a> </button>
+                                </div>
+                            </div>
+                        </div> -->
                         <div id="CCForm7" class="inner-block cctabcontent">
                             <div class="inner-block-content">
                                 <div class="row">
@@ -1248,7 +2650,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </form>
 
@@ -1479,10 +2880,41 @@
                 }
             }
         </script>
-
-        <script>
+         <script>
             VirtualSelect.init({
                 ele: '#departments, #team_members, #training-require, #impacted_objects'
             });
         </script>
+          <script>
+                      document.addEventListener('DOMContentLoaded', function () {
+                          const removeButtons = document.querySelectorAll('.remove-file');
+          
+                          removeButtons.forEach(button => {
+                              button.addEventListener('click', function () {
+                                  const fileName = this.getAttribute('data-file-name');
+                                  const fileContainer = this.closest('.file-container');
+          
+                                  // Hide the file container
+                                  if (fileContainer) {
+                                      fileContainer.style.display = 'none';
+                                  }
+                              });
+                          });
+                      });
+                  </script>
+         <script>
+                    document.getElementById('initiator_group').addEventListener('change', function() {
+                        var selectedValue = this.value;
+                        document.getElementById('initiator_group_code').value = selectedValue;
+                    });
+                </script>
+               
+
+       
+        <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
+    </script>
     @endsection

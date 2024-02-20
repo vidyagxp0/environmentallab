@@ -63,6 +63,10 @@ return new class extends Migration
             $table->longText('who_will_be')->nullable();
             $table->longText('who_will_not_be')->nullable();
             $table->longText('who_rationable')->nullable();
+            $table->longText('Root_Cause_Category')->nullable();
+            $table->longText('Root_Cause_Sub_Category')->nullable();
+            $table->longText('Probability')->nullable();
+            $table->longText('Remarks')->nullable();
             $table->string('action')->nullable();
             $table->string('responsible')->nullable();
             $table->string('deadline')->nullable();
