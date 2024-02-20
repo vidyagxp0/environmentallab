@@ -207,14 +207,15 @@ class TMSController extends Controller
         }
     }
     public function viewTraining($id,$sopId){
+        $doc = Document::find($sopId);
         if(Auth::user()->role == 6){
             $trainning = Training::where('trainner_id',Auth::user()->id)->get();
-            return view('frontend.TMS.manage-training',compact('trainning'));
+            return view('frontend.TMS.manage-training',compact('trainning', 'doc'));
         }
         else{
             $trainning = Training::find($id);
             $trainning->trainer = User::find($trainning->trainner_id);
-            return view('frontend.TMS.document-view',compact('trainning','sopId'));
+            return view('frontend.TMS.document-view',compact('trainning','sopId', 'doc'));
         }
     }
     public function training($id){
