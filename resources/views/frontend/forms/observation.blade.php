@@ -365,10 +365,10 @@
                                     <div class="group-input input-date ">
                                         <label for="date_Response_due1">Date Response Due</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="date_Response_due2" id="date_Response_due2" readonly
+                                            <input type="text" name="date_Response_due" id="date_Response_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'date_Response_due2')" />
+                                                oninput="handleDateInput(this, 'date_Response_due')" />
                                         </div>
                                     </div>
                                 </div>

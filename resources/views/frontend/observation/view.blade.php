@@ -459,6 +459,11 @@
                                         <label for="date_Response_due1">Date Response Due</label>
                                         <!-- <input type="date" name="date_Response_due2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}"/> -->
                                         <div class="calenderauditee">                                     
+                                        <input type="text" name="date_Response_due2"  id="date_Response_due"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
+                                        value="{{ Helpers::getdateFormat($data->date_Response_due2) }}" />
+                                        {{-- <input type="date" name="date_Response_due2" value="{{ $data->date_Response_due2 }}"
+                                        class="hide-input" --}}
+                                        {{-- oninput="handleDateInput(this, 'date_Response_due2')" /> --}}
                                         <input type="text"  id="date_Response_due2"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_Response_due2 }}" />
                                         <input type="date" name="date_Response_due2" value=""
                                         class="hide-input"
@@ -685,10 +690,14 @@
                                 <div class="col-12">
                                     <div class="sub-head">Action Summary</div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
                                         <label for="actual_start_date">Actual Start Date</label>
-                                        <input type="date" name="actual_start_date" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->actual_start_date }}">
+                                        <div class="calenderauditee"> 
+                                            <input type="text"  id="actual_start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->actual_start_date) }}"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
