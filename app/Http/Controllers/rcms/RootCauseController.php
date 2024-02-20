@@ -28,7 +28,6 @@ use Illuminate\Support\Facades\Hash;
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
-        return view("frontend.forms.root-cause-analysis");
     }
 
 
@@ -51,7 +50,8 @@ use Illuminate\Support\Facades\Hash;
         $root->severity_level = ($request->severity_level);
         $root->short_description =($request->short_description);
         $root->assigned_to = ($request->assigned_to);
-        $root->root_cause_description = ($request->root_cause_description);
+        $root->assign_to = ($request->assign_to);
+        $root->root_cause_description = $request->root_cause_description;
         $root->due_date = ($request->due_date);
         $root->cft_comments_new = $request->cft_comments_new;
          $root->qa_comments_new = $request->qa_comments_new;
@@ -113,6 +113,18 @@ use Illuminate\Support\Facades\Hash;
         $root->Probability = ($request->Probability);
         $root->Remarks = ($request->Remarks);
 
+        if (!empty($request->Root_Cause_Category  )) {
+            $root->Root_Cause_Category = serialize($request->Root_Cause_Category);
+        }
+        if (!empty($request->Root_Cause_Sub_Category)) {
+            $root->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
+        }
+        if (!empty($request->Probability)) {
+            $root->Probability = serialize($request->Probability);
+        }
+        if (!empty($request->Remarks)) {
+            $root->Remarks = serialize($request->Remarks);
+        }
 
         $root->record = ((RecordNumber::first()->value('counter')) + 1);
         $root->initiator_id = Auth::user()->id;
@@ -121,7 +133,7 @@ use Illuminate\Support\Facades\Hash;
         $root->initiator_Group = $request->initiator_Group;
         $root->short_description = $request->short_description;
         $root->due_date = $request->due_date;
-        $root->assign_id = $request->assign_id;
+        $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
@@ -356,8 +368,8 @@ use Illuminate\Support\Facades\Hash;
          }
          $data4->save();
 
-         $data5 = new RootCauseAnalysis();
-        //  $data5->risk_id = $root->id;
+         $data5 = new RiskAssesmentGrid();
+         $data5->risk_id = $root->id;
          $data5->type = "grid1";
          if (!empty($request->Root_Cause_Category  )) {
              $data5->Root_Cause_Category = serialize($request->Root_Cause_Category);
@@ -737,7 +749,7 @@ use Illuminate\Support\Facades\Hash;
         $history->root_id = $root->id;
         $history->activity_type = 'Assign Id';
         $history->previous = "Null";
-        $history->current = $root->assign_id;
+        $history->current = $root->assign_to;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -888,8 +900,24 @@ use Illuminate\Support\Facades\Hash;
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = ($request->initiated_if_other);
         $root->short_description = $request->short_description;
+        $root->due_date = $request->due_date;
+        $root->severity_level= $request->severity_level;
+        $root->Type= ($request->Type);
+        $root->priority_level = ($request->priority_level);
+        $root->department = ($request->department);
+        $root->description = ($request->description);
+        $root->investigation_summary = ($request->investigation_summary);
+        $root->root_cause_description = ($request->root_cause_description);
+        $root->cft_comments_new = ($request->cft_comments_new);
+        $root->investigators = ($request->investigators);
+        $root->related_url = ($request->related_url);
+        // $root->root_cause_methodology = json_encode($request->root_cause_methodology);
+        // $root->root_cause_methodology = ($request->root_cause_methodology);
+        $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
+        $root->country = ($request->country);
+        $root->methods = json_encode($request->methods);
         // $root->due_date = $request->due_date;
-        $root->assign_id = $request->assign_id;
+        $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
@@ -945,8 +973,8 @@ use Illuminate\Support\Facades\Hash;
 
             $root->inv_attach = json_encode($files);
         }
-        $root->status = 'Opened';
-        $root->stage = 1;
+        // $root->status = 'Opened';
+        // $root->stage = 1;
         $root->update();
 
 
@@ -992,14 +1020,14 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assign_id != $root->assign_id || !empty($request->assign_id_comment)) {
+        if ($lastDocument->assign_to != $root->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new RootAuditTrial();
             $history->root_id = $id;
             $history->activity_type = 'Assign Id';
-            $history->previous = $lastDocument->assign_id;
-            $history->current = $root->assign_id;
-            $history->comment = $request->assign_id_comment;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $root->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1162,7 +1190,7 @@ use Illuminate\Support\Facades\Hash;
             return back();
         }
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
+        $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $dataAnalysis1 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"chemical_analysis_1")->first();
         $dataAnalysis2 = RootcauseAnalysisDocDetails::where('root_id',$data->id)->where('type',"chemical_analysis_2")->first();
