@@ -427,13 +427,12 @@
                         <th class="w-20">All Activities Completed On</th>
                         <td class="w-30">{{ $data->all_activities_completed_on }}</td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">Review Completed By</th>
                         <td class="w-30">{{ $data->incident_review_completed_by }}</td>
-                        <th class="w-20">
-                        Review Completed On</th>
+                        <th class="w-20">Review Completed On</th>
                         <td class="w-30">{{ $data->incident_review_completed_on }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <th class="w-20">Cancelled By</th>
                         <td class="w-30">{{ $data->cancelled_by }}</td>

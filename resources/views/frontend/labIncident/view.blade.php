@@ -285,8 +285,8 @@
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                              id="initiator_group">
-                                            <option value="CQA"
-                                                @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
+                                            <option value="Corporate Quality Assurance"
+                                                @if ($data->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
                                                 Quality Assurance</option>
                                             <option value="QAB"
                                                 @if ($data->Initiator_Group== 'QAB') selected @endif>Quality
@@ -903,15 +903,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="QA Head Approval Completed By">QA Head Approval Completed
-                                            By</label>
+                                        <label for="QA Head Approval Completed By">QA Head Approval Completed By</label>
                                         <div class="static">{{ $data->qA_head_approval_completed_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="QA Head Approval Completed On">QA Head Approval Completed
-                                            On</label>
+                                        <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
                                         <div class="Date">{{ $data->qA_head_approval_completed_on }}</div>
                                     </div>
                                 </div>
@@ -928,7 +926,7 @@
                                         <div class="Date">{{ $data->all_activities_completed_on }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Review Completed By">Review Completed By</label>
                                         <div class="static">{{$data->review_completed_by}}</div>
@@ -939,7 +937,7 @@
                                         <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date">{{$data->review_completed_on}}</div>
                                     </div>
-                                </div>
+                                </div> 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>

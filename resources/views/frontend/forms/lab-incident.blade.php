@@ -621,7 +621,7 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Review Completed By">Review Completed By</label>
                                         <div class="static"></div>
@@ -632,7 +632,7 @@
                                         <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>   
+                                </div>  
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
@@ -765,4 +765,10 @@
         document.getElementById('initiator_group_code').value = selectedValue;
     });
 </script>
+<script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
+    </script>
 @endsection

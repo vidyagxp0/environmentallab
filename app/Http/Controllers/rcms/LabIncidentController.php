@@ -1221,8 +1221,8 @@ class LabIncidentController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "5";
                 $changeControl->status = "Pending CAPA";
-                $changeControl->inv_andCAPA_review_comp_by = Auth::user()->name;
-                $changeControl->inv_andCAPA_review_comp_on = Carbon::now()->format('d-M-Y');
+                $changeControl->all_activities_completed_by = Auth::user()->name;
+                $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1230,6 +1230,8 @@ class LabIncidentController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "6";
                 $changeControl->status = "Pending QA Review";
+                $changeControl->review_completed_by = Auth::user()->name;
+                $changeControl->review_completed_on = Carbon::now()->format('d-M-Y');               
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
