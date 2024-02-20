@@ -323,6 +323,11 @@ class TMSController extends Controller
         return back();
        }
     }
+    
+    // public function trainingSubmitData(Request $request,$id){
+         
+
+    // }
     public function trainingStatus(Request $request,$id){
 
         if(Auth::user()->email == $request->email && Hash::check($request->password,Auth::user()->password)){

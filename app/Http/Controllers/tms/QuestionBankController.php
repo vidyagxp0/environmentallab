@@ -33,7 +33,9 @@ class QuestionBankController extends Controller
     {
         //
     }
-
+public function questiondata(){
+    dd('asdfasdf');
+}
     /**
      * Store a newly created resource in storage.
      *
