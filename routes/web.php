@@ -50,9 +50,9 @@ Route::post('/logincheck', [UserLoginController::class, 'logincheck']);
 Route::get('/logout', [UserLoginController::class, 'logout'])->name('logout');
 Route::post('/rcms_check', [UserLoginController::class, 'rcmscheck']);
 //Route::get('/', [UserLoginController::class, 'userlogin']);
-Route::get('/error', function () {
-    return view('error');
-})->name('error.route');
+// Route::get('/error', function () {
+//     return 'This is the error page';
+// })->name('error.route');
 
 //!---------------- starting login  ---------------------------//
 
@@ -110,7 +110,8 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('training/{id}/', [TMSController::class, 'training']);
     Route::get('trainingQuestion/{id}/', [TMSController::class, 'trainingQuestion']);
     Route::get('training-notification/{id}', [TMSController::class, 'notification']);
-    Route::Post('trainingComplete/{id}', [TMSController::class, 'trainingStatus']);
+    Route::post('trainingComplete/{id}', [TMSController::class, 'trainingStatus']);
+    //Route::post('trainingSubmitData/{id}', [TMSController::class, 'trainingSubmitData']);
     Route::get('tms-audit/{id}', [TMSController::class, 'auditTrial']);
     Route::get('tms-audit-detail/{id}', [TMSController::class, 'auditDetails']);
     // Route::post('import', function () {

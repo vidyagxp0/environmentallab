@@ -1212,11 +1212,11 @@ class DocumentController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 3,
+                $width / 4,
                 $height / 2,
                 $data->status,
                 null,
-                60,
+                25,
                 [0, 0, 0],
                 2,
                 6,
@@ -1366,11 +1366,11 @@ class DocumentController extends Controller
         $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
         $canvas->page_text(
-            $width / 3,
+            $width / 4,
             $height / 2,
             $data->status,
             null,
-            60,
+            25,
             [0, 0, 0],
             2,
             6,
@@ -1448,11 +1448,11 @@ class DocumentController extends Controller
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
 
             $canvas->page_text(
-                $width / 3,
+                $width / 4,
                 $height / 2,
                 $data->status,
                 null,
-                60,
+                25,
                 [0, 0, 0],
                 2,
                 6,
