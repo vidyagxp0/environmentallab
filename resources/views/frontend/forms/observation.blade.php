@@ -109,7 +109,7 @@
                                         <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}" >
                                     </div>
                                 </div> --}}
-                                <div class="col-md-6 new-date-data-field">
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="date_due">Due Date<span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.
@@ -122,8 +122,21 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
+                                </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description"><b>Short Description <span
                                             class="text-danger">*</span></b></label>
@@ -361,7 +374,7 @@
                                 </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="date_due">Date Due</label>
+                                        <label for="date_due"> Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" name="capa_date_due" id="date_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
@@ -590,14 +603,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="actual_end_date">Actual End Date123</lable>
+                                 <div class="col-lg-6  new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="actual_end_date">Actual End Date</lable>
                                         <div class="calenderauditee">
                                         <input type="text" id="actual_end_date"                             
                                                 placeholder="DD-MMM-YYYY" />
-                                            <!-- <input type="date" id="actual_end_date" name="actual_end_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" /> -->
+                                             <input type="date" id="actual_end_date" name="actual_end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                    
                                         
@@ -865,6 +878,12 @@
                         tableBody.append(newRow);
                     });                    
                 });
+            </script>
+             <script>
+                var maxLength = 255;
+                $('#docname').keyup(function() {
+                    var textlen = maxLength - $(this).val().length;
+                    $('#rchars').text(textlen);});
             </script>
     
 @endsection

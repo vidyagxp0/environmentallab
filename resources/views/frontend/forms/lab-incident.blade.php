@@ -165,7 +165,7 @@
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
                                                         class="text-danger d-none">*</span></label>
-                                                <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
+                                                {{-- <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea> --}}
                                             </div>
                                         </div>
                                 {{-- <div class="col-lg-6">

@@ -248,6 +248,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        
+                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                    </div>
+                                          {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
+                             </div>
                                         
                                 <div class="col-12">
                                     <div class="sub-head">Observation Details</div>
@@ -405,18 +415,29 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="capa_date_due">Recomendation Date Due for CAPA</label>
                                          <div class="calenderauditee">                                     
                                         <input type="text"  id="recomendation_capa_date_due"  readonly placeholder="DD-MMM-YYYY"  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
                                         value="{{ ($data->recomendation_capa_date_due) }}"/>
-                                        {{-- <input type="date" name="recomendation_capa_date_due" value="{{ $data->recomendation_capa_date_due }}"
+                                         <input type="date" name="recomendation_capa_date_due" value="{{ $data->recomendation_capa_date_due }}"
                                         class="hide-input" 
-                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')"  /> --}}
+                                        oninput="handleDateInput(this, 'recomendation_capa_date_due')"  /> 
+                                        </div> 
+                                    </div>
+                                </div> --}}
+                                {{-- <div class="col-md-6 new-date-data-field">
+                                    <div class="group-input input-date ">
+                                        <label for="capa_date_due">Recomendation Date Due for CAPA</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="non_compliance">Non Compliance</label>
@@ -488,13 +509,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="date_due">Date Due</label>
+                                        <label for="date_due"> Due Date</label>
                                         <div class="calenderauditee">                                     
                                             <input type="text"  id="date_due"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
                                             value="{{ Helpers::getdateFormat($data->date_due) }}" />
                                         </div>
+                                    </div>
+                                </div> --}}
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                            crossed</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
+                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+
                                     </div>
                                 </div>
                                  <div class="col-lg-6">
@@ -578,8 +612,8 @@
                                                         <option value="">-Select-</option>
                                                         @foreach ($users as $value)
                                                             <option
-                                                                @if($grid_data && unserialize($grid_data->responsible)[$key])
-                                                              {{ unserialize($grid_data->responsible)[$key] == $value->id ? 'selected' : '' }}
+                                                                @if($griddata && unserialize($griddata->responsible)[$key])
+                                                              {{ unserialize($griddata->responsible)[$key] == $value->id ? 'selected' : '' }}
                                                                @endif
 
                                                                 value="{{ $value->id }}">
@@ -1233,6 +1267,12 @@
                 });
             });
         });
+    </script>
+     <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection
 
