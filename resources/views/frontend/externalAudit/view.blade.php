@@ -675,7 +675,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="calenderauditee">                                     
                                                     <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="start_date_checkdate" name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
+                                                    <input type="date" id="start_date_checkdate" name="start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -686,7 +686,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="calenderauditee">                                     
                                                     <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="end_date_checkdate" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
+                                                    <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -730,7 +730,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
-                                                                <input type="date"  id="schedule_start_date_checkdate" name="scheduled_start_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" class="hide-input" 
+                                                                <input type="date"  id="schedule_start_date_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" /></div></div></div></td>
                                                            
                                                                 <td><input type="time" name="scheduled_start_time[]" 
@@ -743,7 +743,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
                                                                 <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                <input type="date" id="schedule_end_date_checkdate" name="scheduled_end_date[]" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" class="hide-input" 
+                                                                <input type="date" id="schedule_end_date_checkdate" name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" /></div></div></div></td>
 
                                                             
@@ -1123,7 +1123,7 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="calenderauditee">                                     
                                                         <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
+                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>    
@@ -1135,7 +1135,7 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="calenderauditee">                                     
                                                     <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
+                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>

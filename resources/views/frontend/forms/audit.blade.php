@@ -82,6 +82,7 @@
     <script>
         $(document).ready(function() {
             $('#internalaudit-table').click(function(e) {
+
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
 
@@ -91,7 +92,7 @@
                         '"></td>' +
                         '<td><input type="text" name="audit[]"></td>' +
                         // '<td><input type="date" name="scheduled_start_date[]"></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date_checkdate'+serialNumber+'"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_start_time[]"></td>' +
                         // '<td><input type="date" name="scheduled_end_date[]"></td>'
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>' +
@@ -587,7 +588,7 @@
                                                 <td><div class="group-input new-date-data-field mb-0">
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
-                                                    <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" class="test" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                     <input type="date" id="scheduled_start_date_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                     oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate('scheduled_start_date_checkdate','scheduled_end_date_checkdate')" /></div></div></div></td>
                                                 <td><input type="time" name="scheduled_start_time[]"></td>
@@ -595,7 +596,7 @@
                                                 <td><div class="group-input new-date-data-field mb-0">
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
-                                                    <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" class="test" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                     <input type="date" id="scheduled_end_date_checkdate"  name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                     oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate('scheduled_start_date_checkdate','scheduled_end_date_checkdate')" /></div></div></div></td>
 

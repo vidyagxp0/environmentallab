@@ -902,9 +902,13 @@ function handleDateInput(element, textInputID) {
   }
   
   function checkDate(textInputID,textInputID2){
+    console.log(textInputID, textInputID2)
     const startDate = $('#'+textInputID).val();  // Replace with your start date
     const endDate = $('#'+textInputID2).val();    // Replace with your end date 
+    $('#'+textInputID).parent().addClass('aaa');
+    console.log( startDate, endDate)
     if ((startDate.trim() !== '') && (endDate.trim() !== '')) {
+        console.log('test11')
         let endDataStr = textInputID2.replace(/_checkdate/g, ""); 
         if (isStartDateLessThanEndDate(startDate, endDate)) {
             console.log("Start date is less than end date.");
@@ -914,11 +918,14 @@ function handleDateInput(element, textInputID) {
             const month = months[date.getMonth()];
             const day = date.getDate();
             const year = date.getFullYear();
-            textInput.setAttribute('value', `${day}-${month}-${year}`)
+            textInput.setAttribute('value1', `${day}-${month}-${year}`)
         } else { 
+            console.log('sdsd')
         alert("Start date is not less than end date.");
         let textInput = document.getElementById(endDataStr)
-        textInput.setAttribute('value', ``)
+        // textInput.setAttribute('value', '')
+        $('#'+textInputID).parent().addClass('aaa');
+        $('#'+textInputID).parent().find('.test').val(''); 
         console.log("Start date is not less than end date.");
       }
     }
