@@ -87,7 +87,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assigend">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -143,13 +143,21 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description123 <span class="text-danger">*</span></label>
+                                        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_desc"></textarea>
                                     </div>
-                                </div>
+                                </div> -->
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_desc" maxlength="255" required>
+                                    </div>
+                                </div>  
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
@@ -161,13 +169,13 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
                                                         class="text-danger d-none">*</span></label>
                                                 {{-- <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea> --}}
                                             </div>
-                                        </div>
+                                        </div> -->
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date of Occurance">Date of Occurance</label>
@@ -394,6 +402,12 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
+                                        <label for="Corrective & Preventive Action">Corrective & Preventive Action</label>
+                                        <textarea name="Corrective_Preventive_Action"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="CAPA_Attachment"> --}}
@@ -593,18 +607,7 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>  
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled By">Cancelled By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Cancelled On">Cancelled On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                    </div>
+                               
                               
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -629,7 +632,19 @@
                                         <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
-                                </div>                      
+                                </div>   
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Cancelled On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                    </div>                   
                                 <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
