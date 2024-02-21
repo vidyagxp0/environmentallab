@@ -1212,6 +1212,20 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Due Date';
+            $history->previous = $lastDocument->due_date;
+            $history->current = $root->due_date;
+            $history->comment = $request->due_date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
 
         // =-------------------------------
        
@@ -1437,18 +1451,27 @@ use Illuminate\Support\Facades\Hash;
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($root->stage == 3) {
-                $root->stage = "4";
-                $root->status = "Pending Group Review";
-                $root->report_result_by = Auth::user()->name;
-                $root->report_result_on = Carbon::now()->format('d-M-Y');
+            // if ($root->stage == 3) {
+            //     $root->stage = "4";
+            //     $root->status = "Pending Group Review";
+            //     $root->report_result_by = Auth::user()->name;
+            //     $root->report_result_on = Carbon::now()->format('d-M-Y');
+            //     $root->update();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
+            if ($root->stage == 4) {
+                $root->stage = "5";
+                $root->status = "Pending QA Review";
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($root->stage == 4) {
-                $root->stage = "5";
-                $root->status = "Pending QA Review";
+            if ($root->stage == 3) {
+                $root->stage = "6";
+                $root->status = "Closed - Done";
+               // $root->evaluation_complete_by = Auth::user()->name;
+               // $root->evaluation_complete_on = Carbon::now()->format('d-M-Y');
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
