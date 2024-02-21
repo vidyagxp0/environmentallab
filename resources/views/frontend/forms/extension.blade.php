@@ -84,8 +84,11 @@
                                 </div>
 
 
-                                 <div class="col-md-6 new-date-data-field">
+                                 {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
+                                        <label for="due-date">Current Parent Due Date<span class="text-danger"></span></label> --}}
+                                <div class="col-md-6">
+                                    <div class="group-input">
                                         <label for="due-date">Current Parent Due Date<span class="text-danger"></span></label>
                                         {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
                                         <input disabled type="text"
@@ -95,7 +98,8 @@
                                             value="{{ Helpers::getdateFormat($parent_due_date) }}" name="due_date">
                                         <input type="hidden" value="{{ $parent_due_date }}" name="due_date">
 
-                               
+                                    </div>
+                                </div>   
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Revised Due Date <span class="text-danger"></span></label>
@@ -107,13 +111,21 @@
                                             value="" name="revised_date">
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Desccription">Short Description <span
                                                 class="text-danger">*</span></label>
                                         <input type="text" name="short_description">
                                     </div>
-                                </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    </div>
+                                </div> 
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Justification of Extention">Justification of Extention</label>
@@ -390,5 +402,11 @@
                 currentStep--;
             }
         }
+    </script>
+      <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection
