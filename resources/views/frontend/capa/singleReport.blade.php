@@ -464,7 +464,7 @@
             </div>
 
 
-            <div class="block">
+            <!-- <div class="block">
                 <div class="head">
                     <div class="block-head">
                         Other type CAPA Details
@@ -474,10 +474,7 @@
                             <th class="w-20">Details</th>
                             <td class="w-80">@if($data->details){{ $data->details }}@else Not Applicable @endif</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">CAPA QA Comments</th>
-                            <td class="w-80">@if($data->capa_qa_comments2){{ $data->capa_qa_comments2 }}@else Not Applicable @endif</td>
-                        </tr>
+                        
                         <!-- <tr>
                             <th class="w-20">Project Datails Application</th>
                             <td class="w-80"> {{ $data->project_details_application }}</td>
@@ -508,7 +505,7 @@
                         </tr> -->
                     </table>
                 </div>
-            </div>
+            </div> -->
             <div class="block">
                 <div class="block-head">
                    CAPA Details
@@ -532,7 +529,14 @@
                         </th>
                         <td class="w-80">@if($data->supervisor_review_comments){{ $data->supervisor_review_comments }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
+
+                    <div class="block">
+                <div class="head">
+                    <div class="block-head">
+                       CAPA Closure
+                    </div>
+                    <table>
+                     <tr>
                         <th class="w-20">QA Review & Closure</th>
                         <td class="w-80">@if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
@@ -543,8 +547,10 @@
                         <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
 
                     </tr> --}}
-
-                </table>
+                    </table>
+                </div>
+            </div>
+           
                 <div class="block-head">
                     Closure Attachment
                  </div>
