@@ -89,6 +89,7 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
+        
         $internalAudit->audit_end_date = $request->audit_end_date;
         // $internalAudit->external_others=$request->external_others;
         

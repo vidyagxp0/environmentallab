@@ -87,7 +87,8 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm2')"> QA Approval</button>
                         <button class="cctablinks" onclick="openCity(event, 'CCForm3')"> Activity Log</button>
                     </div>
-                    <form action="{{ route('extension.update', $data->id) }}" method="POST">
+                    <form action="{{ route('extension.update', $data->id) }}" method="POST"
+                        enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
                         <div id="step-form">
@@ -188,7 +189,7 @@
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
-                                                        <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
+                                                        <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
@@ -199,22 +200,30 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
                                                 <div><small class="text-primary">Please select related information</small></div>
-                                                <select name="initiated_through">
-                                                    <option value="">-- select --</option>
-                                                    <option value="Internal ">Internal Audit</option>
-                                                    <option value="External">External Audit</option>
-                                                    <option value="CAPA<">CAPA</option>
-                                                    <option value="Audit ">Audit Program</option>
-                                                    <option value="Lab ">Lab Incident</option>
-                                                    <option value="Risk">Risk Assessment</option>
-                                                    <option value="Root Cause">Root Cause Analysis</option>
-                                                    <option value="Change ">Change Control</option>
-                                                    <option value="Management">Management Review</option>
-                                                    <option value="New Documen">New Document</option>
-                                                    <option value="Action ">Action Item</option>
-                                                    <option value="Effectivness">Effectivness Check</option>
+                                                <select name="initiated_through" {{$data->initiated_through}}>
+                                                    <option  selected value="">-- select --</option>
+                                                    <option @if ($data->initiated_through == 'Internal') selected @endif value="Internal ">Internal Audit</option>
+                                                    <option @if ($data->initiated_through == 'External') selected @endif value="External">External Audit</option>
+                                                    <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA<">CAPA</option>
+                                                    <option  @if ($data->initiated_through == 'Audit') selected @endif value="Audit ">Audit Program</option>
+                                                    <option @if ($data->initiated_through == 'Lab') selected @endif value="Lab ">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'Risk') selected @endif value="Risk">Risk Assessment</option>
+                                                    <option @if ($data->initiated_through == 'Root Cause') selected @endif value="Root Cause">Root Cause Analysis</option>
+                                                    <option @if ($data->initiated_through == 'Change') selected @endif value="Change">Change Control</option>
+                                                    <option @if ($data->initiated_through == 'Management') selected @endif value="Management">Management Review</option>
+                                                    <option @if ($data->initiated_through == 'New Document') selected @endif value="New Document">New Document</option>
+                                                    <option @if ($data->initiated_through == 'Action') selected @endif value="Action ">Action Item</option>
+                                                    <option @if ($data->initiated_through == 'Effectivness') selected @endif value="Effectivness">Effectivness Check</option>
+                                                    <option @if ($data->initiated_through == 'Others') selected @endif value="Effectivness">Others</option>
                                                 </select>
                                             </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input" id="initiated_through_req">
+                                            <label for="If Other">Others<span
+                                                    class="text-danger d-none">*</span></label>
+                                            <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
+                                        </div>
                                     </div>
                                         <div class="col-lg-12">
                                             <div class="group-input">

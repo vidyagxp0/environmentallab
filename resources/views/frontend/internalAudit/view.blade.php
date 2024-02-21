@@ -1298,7 +1298,7 @@ function addMultipleFiles(input, block_id) {
                                                         <tbody id="observationDetail">
                                                             @if ($grid_data1->observation_id)
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-                                                            <tr>
+                                                            <tr>        dd($observation_id);
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input type="text" name="observation_id[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $tempData ? $tempData : "" }}"></td>
                                                                     {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
