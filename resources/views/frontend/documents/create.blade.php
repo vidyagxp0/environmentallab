@@ -48,7 +48,7 @@
         </div>
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($_GET['id'])  }} / Document 
+            @if(!empty(@$_GET['id'])) {{ Helpers::getDivisionName()  }} @endif / Document 
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
     </div>
@@ -102,8 +102,8 @@
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName($_GET['id']) }}">
-                                        <input type="hidden" name="division_id" value="{{ $_GET['id'] }}">
+                                            value="{{ Helpers::getDivisionName(@$_GET['id']) }}">
+                                        <input type="hidden" name="division_id" value="{{ @$_GET['id'] }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>

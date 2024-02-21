@@ -909,13 +909,13 @@ function handleDateInput(element, textInputID) {
         let endDataStr = textInputID2.replace(/_checkdate/g, ""); 
         if (isStartDateLessThanEndDate(startDate, endDate)) {
             console.log("Start date is less than end date.");
-            let textInput = document.getElementById(endDataStr)
-            const date = new Date(element.value);
-            const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
-            const month = months[date.getMonth()];
-            const day = date.getDate();
-            const year = date.getFullYear();
-            textInput.setAttribute('value', `${day}-${month}-${year}`)
+            //let textInput = document.getElementById(endDataStr)
+            // const date = new Date(element.value);
+            // const months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",];
+            // const month = months[date.getMonth()];
+            // const day = date.getDate();
+            // const year = date.getFullYear();
+            // textInput.setAttribute('value', `${day}-${month}-${year}`)
         } else { 
         alert("Start date is not less than end date.");
         let textInput = document.getElementById(endDataStr)

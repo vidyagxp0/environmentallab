@@ -591,8 +591,8 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text"  class="test" id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="schedule_start_date1_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('schedule_start_date1_checkdate','schedule_end_date1_checkdate')" />
+                                                                <input type="date"   id="scheduled_start_date1_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -603,8 +603,8 @@
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text"  class="test" id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="schedule_end_date1_checkdate"name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                                                 oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('schedule_start_date1_checkdate','schedule_end_date1_checkdate')" />
+                                                                <input type="date" id="scheduled_end_date1_checkdate"name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                 oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
