@@ -1,5 +1,34 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
+<style>
+    header .header_rcms_bottom {
+        display: none;
+    }
+
+    .calenderauditee {
+        position: relative;
+    }
+
+    .new-date-data-field .input-date input.hide-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+
+    .new-date-data-field input {
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 5px 15px;
+        display: block;
+        width: 100%;
+        background: white;
+    }
+
+    .calenderauditee input::-webkit-calendar-picker-indicator {
+        width: 100%;
+    }
+</style>
     <style>
         textarea.note-codable {
             display: none !important;
@@ -101,9 +130,9 @@
                                             value="{{ Helpers::getdateFormat($parent_due_date) }}" name="due_date">
                                         <input type="hidden" value="{{ $parent_due_date }}" name="due_date">
 
-                                    </div>
-                                </div>   
-                                <div class="col-md-6">
+                                    </div> --}}
+                                   
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Revised Due Date <span class="text-danger"></span></label>
                                         {{--  <input type="hidden" value="{{ $due_date }}" name="due_date">
@@ -113,7 +142,7 @@
                                         <input  type="date" min="{{ $parent_due_date }}"
                                             value="" name="revised_date">
                                     </div>
-                                </div>
+                                </div> --}} 
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Desccription">Short Description <span
@@ -121,6 +150,29 @@
                                         <input type="text" name="short_description">
                                     </div>
                                 </div> --}}
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Current Parent Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Revised Due Date</label>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="revised_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="revised_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'revised_date')" />
+                                        </div>
+                                    </div>
+                                </div>
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -158,7 +210,8 @@
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiated Through</label>
                                         <div><small class="text-primary">Please select related information</small></div>
-                                        <select name="initiated_through">
+                                        <select name="initiated_through"
+                                        onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                             <option value="">-- select --</option>
                                             <option value="Internal ">Internal Audit</option>
                                             <option value="External">External Audit</option>
@@ -172,9 +225,16 @@
                                             <option value="New Documen">New Document</option>
                                             <option value="Action ">Action Item</option>
                                             <option value="Effectivness">Effectivness Check</option>
+                                            <option value="Others">Others</option>
                                         </select>
                                     </div>
                             </div>
+                             <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="If Other">Others<span class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_if_other"></textarea>
+                                    </div>
+                                </div>
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Extention Attachments</label>

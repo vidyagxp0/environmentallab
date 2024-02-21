@@ -94,6 +94,8 @@ class ExtensionController extends Controller
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->short_description = $request->short_description;
         $openState->initiated_through = $request->initiated_through;
+        $openState->initiated_if_other = $request->initiated_if_other;
+
         // $openState->short_description = $request->short_description;
         $openState->justification = $request->justification;
         $openState->refrence_record=  implode(',', $request->refrence_record);
@@ -192,6 +194,7 @@ class ExtensionController extends Controller
         $openState->initiated_through = $request->initiated_through;
         $openState->type = $request->type;
         $openState->revised_date = $request->revised_date;
+        $openState->initiated_if_other = $request->initiated_if_other;
         $openState->due_date = $request->due_date;
         if (!empty($request->extention_attachment)) {
             $files = [];

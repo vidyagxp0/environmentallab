@@ -31,6 +31,8 @@ return new class extends Migration
             $table->text('approver')->nullable();
             $table->text('approver_comments')->nullable();
             $table->string('type')->nullable();
+            $table->text('initiated_if_other')->nullable();
+
             $table->text('refrence_record')->nullable();
             $table->string('initiated_through')->nullable();
             $table->string('submitted_on')->nullable();
