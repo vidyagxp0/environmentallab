@@ -51,7 +51,7 @@ class ObservationController extends Controller
         $data->intiation_date = $request->intiation_date;
         $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
-        $data->assign_to1 = $request->assign_to1;
+        $data->assign_to = $request->assign_to;
         $data->grading = $request->grading;
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
@@ -238,7 +238,7 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Assign To1';
         $history->previous = "Null";
-        $history->current = $data->assign_to1;
+        $history->current = $data->assign_to;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -612,7 +612,7 @@ class ObservationController extends Controller
         $data->intiation_date = $request->intiation_date;
         $data->due_date = $request->due_date;
         $data->short_description = $request->short_description;
-        $data->assign_to1 = $request->assign_to1;
+        $data->assign_to = $request->assign_to;
         $data->grading = $request->grading;
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
@@ -814,14 +814,14 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assign_to1 != $data->assign_to1 || !empty($request->assign_to1_comment)) {
+        if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Assign To1';
-            $history->previous = $lastDocument->assign_to1;
-            $history->current = $data->assign_to1;
-            $history->comment = $request->assign_to1_comment;
+            $history->previous = $lastDocument->assign_to;
+            $history->current = $data->assign_to;
+            $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

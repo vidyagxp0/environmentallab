@@ -94,7 +94,7 @@
                                   <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to1">Assigned To</label>
-                                        <select name="assign_to1">
+                                        <select name="assign_to">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -298,9 +298,9 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="capa_date_due">Recomendation Date Due for CAPA</label>
+                                        <label for="capa_date_due">Recomendation  Due Date  for CAPA</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due" readonly
+                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'recomendation_capa_date_due')" />

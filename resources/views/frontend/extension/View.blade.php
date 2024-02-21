@@ -173,6 +173,40 @@
                                         </div> --}}
                                         <div class="col-lg-12">
                                             <div class="group-input">
+                                                <label for="Reference Recores">Reference Record</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  id="reference_record" name="refrence_record[]" id="">
+                                                    <option value="">--Select---</option>
+                                                    @foreach ($old_record as $new)
+                                                        <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
+                                                            {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>Short Description 
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Initiator Group">Initiated Through</label>
+                                                <div><small class="text-primary">Please select related information</small></div>
+                                                <select name="initiated_through">
+                                                    <option value="">-- select --</option>
+                                                    <option value="Internal ">Internal Audit</option>
+                                                    <option value="External">External Audit</option>
+                                                    <option value="CAPA<">CAPA</option>
+                                                    <option value="Audit ">Audit Program</option>
+                                                    <option value="Lab ">Lab Incident</option>
+                                                    <option value="Risk">Risk Assessment</option>
+                                                    <option value="Root Cause">Root Cause Analysis</option>
+                                                    <option value="Change ">Change Control</option>
+                                                    <option value="Management">Management Review</option>
+                                                    <option value="New Documen">New Document</option>
+                                                    <option value="Action ">Action Item</option>
+                                                    <option value="Effectivness">Effectivness Check</option>
+                                                </select>
+                                            </div>
+                                    </div>
+                                        <div class="col-lg-12">
+                                            <div class="group-input">
                                                 <label for="File Attachments">Extention Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="extention_attachment">

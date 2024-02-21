@@ -372,6 +372,9 @@ Route::view('supplier-action-item', 'frontend.forms.supplier-action-item');
 Route::view('registration-template', 'frontend.forms.registration-template');
 
 Route::view('project', 'frontend.forms.project');
+
+Route::get('extension', [ExtensionController::class, 'extension_child']);
+
 //Route::view('observation', 'frontend.forms.observation');
 Route::get('observation', [ObservationController::class, 'observation']);
 
