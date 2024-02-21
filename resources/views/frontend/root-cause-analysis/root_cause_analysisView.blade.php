@@ -469,7 +469,7 @@
                                     </div>
                                     <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due"> Due Date</label>
+                                        <label for="Due Date"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
@@ -587,6 +587,7 @@
                                             <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
                                         </div>
                                     </div>
+                                    
 <!-- 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -598,7 +599,7 @@
                                                     Demo 1</option>
                                                 <option value="Demo2" @if ($data->Sample_Types == 'Demo2') selected @endif>
                                                     Demo 2</option>
-                                                <option value="Demo3" @if ($data->Sample_Types == 'Demo3') selected @endif> --}}
+                                                <option value="Demo3" @if ($data->Sample_Types == 'Demo3') selected @endif> 
                                                     {{-- Demo 3</option>
                                                 <option value="Demo4" @if ($data->Sample_Types == 'Demo4') selected @endif>
                                                     Demo 4</option>
@@ -671,7 +672,7 @@
                                                         @endforeach
                                                     @endif 
 
-                                                {{-- </div>
+                                                 </div>
                                                 <div class="add-btn">
                                                     <div>Add</div>
                                                     <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -696,8 +697,8 @@
                                             href="{{ url('rcms/qms-dashboard') }}">
                                             Exit </a> </button>
                                 </div>
-                            </div>
-                        </div> -->
+                            </div>--}}
+                         -->
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Type">Type</label>
@@ -825,13 +826,12 @@
                                     </div>  -->
                                     
                                     <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="related_url">Related URL</label>
-                                            <textarea name="related_url"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->related_url }}</textarea>
-                                        
-                                          
-                                        </div>
-                                                </div>
+                               <div class="group-input">
+                              <label for="related_url">Related URL</label>
+                           <input name="related_url" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->related_url }}"> 
+                       </div>
+                     </div>
+
                                                 <div class="button-block">
                                                     <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
                                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
@@ -1485,7 +1485,7 @@
                                                                             value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
                                                                             name="materials[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                     <div><input type="text"
-                                                                            value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}}"
+                                                                            value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
                                                                             name="methods[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                 @endforeach
                                                             @endif
@@ -1503,7 +1503,7 @@
                                                                             value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
                                                                             name="manpower[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                     <div><input type="text"
-                                                                            value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}}"
+                                                                            value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
                                                                             name="machine[]"{{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}></div>
                                                                 @endforeach
                                                             @endif
@@ -1762,10 +1762,10 @@
                                                                 <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
+                                                                <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
+                                                                <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -2989,13 +2989,67 @@
                           });
                       });
                   </script>
-         <script>
+       
+            <script>
+        function calculateInitialResult(selectElement) {
+            let row = selectElement.closest('tr');
+            let R = parseFloat(row.querySelector('.fieldR').value) || 0;
+            let P = parseFloat(row.querySelector('.fieldP').value) || 0;
+            let N = parseFloat(row.querySelector('.fieldN').value) || 0;
+            let result = R * P * N;
+            row.querySelector('.initial-rpn').value = result;
+        }
+    </script>
+
+    <script>
+        function calculateResidualResult(selectElement) {
+            let row = selectElement.closest('tr');
+            let R = parseFloat(row.querySelector('.residual-fieldR').value) || 0;
+            let P = parseFloat(row.querySelector('.residual-fieldP').value) || 0;
+            let N = parseFloat(row.querySelector('.residual-fieldN').value) || 0;
+            let result = R * P * N;
+            row.querySelector('.residual-rpn').value = result;
+        }
+    </script>
+    <script>
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
+        });
+        
+        function setCurrentDate(item){
+            if(item == 'yes'){
+                $('#effect_check_date').val('{{ date('d-M-Y')}}');
+            }
+            else{
+                $('#effect_check_date').val('');
+            }
+        }
+    </script>
+    
+     <script>
                     document.getElementById('initiator_group').addEventListener('change', function() {
                         var selectedValue = this.value;
                         document.getElementById('initiator_group_code').value = selectedValue;
                     });
                 </script>
-               
+                 <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const removeButtons = document.querySelectorAll('.remove-file');
+        
+                        removeButtons.forEach(button => {
+                            button.addEventListener('click', function () {
+                                const fileName = this.getAttribute('data-file-name');
+                                const fileContainer = this.closest('.file-container');
+        
+                                // Hide the file container
+                                if (fileContainer) {
+                                    fileContainer.style.display = 'none';
+                                }
+                            });
+                        });
+                    });
+                </script>     
 
        
         <script>

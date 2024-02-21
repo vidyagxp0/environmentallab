@@ -52,7 +52,7 @@ use Illuminate\Support\Facades\Hash;
         $root->assigned_to = ($request->assigned_to);
         $root->assign_to = ($request->assign_to);
         $root->root_cause_description = $request->root_cause_description;
-        $root->due_date = ($request->due_date);
+        $root->due_date = $request->due_date;
         $root->cft_comments_new = $request->cft_comments_new;
          $root->qa_comments_new = $request->qa_comments_new;
          $root->designee_comments_new = $request->designee_comments_new;
@@ -124,6 +124,10 @@ use Illuminate\Support\Facades\Hash;
         }
         if (!empty($request->Remarks)) {
             $root->Remarks = serialize($request->Remarks);
+        }
+
+        if (!empty($request->initial_rpn)) {
+            $root->initial_rpn = serialize($root->initial_rpn);
         }
 
         $root->record = ((RecordNumber::first()->value('counter')) + 1);
@@ -877,7 +881,20 @@ use Illuminate\Support\Facades\Hash;
         $history->origin_state = $root->status;
         $history->save();
 
+        if (!empty($root->due_date)) {
+        $history = new RootAuditTrial();
+        $history->root_id = $root->id;
+        $history->activity_type = 'Due Date';
+        $history->previous = "Null";
+        $history->current = $root->due_date;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $root->status;
+        $history->save();
 
+        }
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -1168,6 +1185,20 @@ use Illuminate\Support\Facades\Hash;
             $history->previous = $lastDocument->inv_attach;
             $history->current = $root->inv_attach;
             $history->comment = $request->inv_attach_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Due Date';
+            $history->previous = $lastDocument->due_date;
+            $history->current = $root->due_date;
+            $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
