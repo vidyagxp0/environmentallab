@@ -141,13 +141,13 @@ function addMultipleFiles(input, block_id) {
             cell2.innerHTML = "<input type='text'>";
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = "<input type='date'>";
+            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell4 = newRow.insertCell(3);
             cell4.innerHTML = "<input type='time'>";
 
             var cell5 = newRow.insertCell(4);
-            cell5.innerHTML = "<input type='date'>";
+            cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell6 = newRow.insertCell(5);
             cell6.innerHTML = "<input type='time'>";
@@ -731,9 +731,9 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
-                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
-                                                                <input type="date"  id="schedule_start_date_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" /></div></div></div></td>
+                                                                <input type="text" class="test" id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
+                                                                <input type="date"  id="schedule_start_date_checkdate1" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('schedule_start_date_checkdate1','schedule_end_date_checkdate1')" /></div></div></div></td>
                                                            
                                                                 <td><input type="time" name="scheduled_start_time[]" 
                                                                     value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
@@ -744,9 +744,9 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
-                                                                <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                <input type="date" id="schedule_end_date_checkdate" name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate('schedule_start_date_checkdate','schedule_end_date_checkdate')" /></div></div></div></td>
+                                                                <input type="text" class="test" id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                <input type="date" id="schedule_end_date_checkdate1" name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('schedule_start_date_checkdate1','schedule_end_date_checkdate1')" /></div></div></div></td>
 
                                                             
                                                             {{-- <td><input type="date" name="scheduled_start_date[]"

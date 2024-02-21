@@ -1453,6 +1453,7 @@ class InternalauditController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
+     //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
         return view('frontend.internalAudit.view', compact('data', 'old_record','grid_data','grid_data1'));
     }

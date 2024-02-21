@@ -22,21 +22,22 @@ class ExtensionController extends Controller
 {
 
 
-    public function extension_child(Request $request, $id)
+    public function extension_child(Request $request)
     {
+        
         $parent_due_date = "";
-        $parent_id = $id;
+        $parent_id = '';
         $parent_name = $request->parent_name;
         if ($request->due_date) {
             $parent_due_date = $request->due_date;
         }
-
+        $old_record = Extension::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         if($request->child_type=='documents'){
             return redirect('documents/create');
         }
-        return view('frontend.forms.extension', compact('parent_id', 'parent_name', 'record_number', 'parent_due_date'));
+        return view('frontend.forms.extension', compact('parent_id', 'parent_name','old_record', 'record_number', 'parent_due_date'));
     }
     public function index()
     {
@@ -62,6 +63,7 @@ class ExtensionController extends Controller
 
         $openState->intiation_date = $request->intiation_date;
         $openState->revised_date = $request->revised_date;
+        $openState->due_date = $request->due_date;
 
         
         $openState->division_id = $request->division_id;
@@ -91,7 +93,11 @@ class ExtensionController extends Controller
         $openState->approver_comments = $request->approver_comments;
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->short_description = $request->short_description;
+        $openState->initiated_through = $request->initiated_through;
+        // $openState->short_description = $request->short_description;
         $openState->justification = $request->justification;
+        $openState->refrence_record=  implode(',', $request->refrence_record);
+        
         $openState->type = $request->type;
         $openState->status = "Opened";
         $openState->stage = 1;
@@ -164,12 +170,12 @@ class ExtensionController extends Controller
 
     public function show($id)
     {
-
+        $old_record = Extension::select('id', 'division_id', 'record')->get();
         $data = Extension::find($id);
         $cc = CC::find($data->cc_id);
         $appro  = QaApproval::where('cc_id', $id)->first();
 
-        return view('frontend.extension.View', compact('data', 'cc', 'appro'));
+        return view('frontend.extension.View', compact('data', 'old_record','cc', 'appro'));
     }
 
     public function edit($id)
@@ -182,7 +188,11 @@ class ExtensionController extends Controller
         $openState = Extension::find($id);
         $openState->short_description = $request->short_description;
         $openState->justification = $request->justification;
+        $openState->refrence_record=  implode(',', $request->refrence_record);
+        $openState->initiated_through = $request->initiated_through;
         $openState->type = $request->type;
+        $openState->revised_date = $request->revised_date;
+        $openState->due_date = $request->due_date;
         if (!empty($request->extention_attachment)) {
             $files = [];
             if ($request->hasfile('extention_attachment')) {

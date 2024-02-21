@@ -23,7 +23,7 @@ return new class extends Migration
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
             $table->text('short_description')->nullable();
-            $table->text('assign_to1')->nullable();
+            $table->text('assign_to')->nullable();
             $table->string('grading')->nullable();
             $table->string('category_observation')->nullable();
             $table->string('reference_guideline')->nullable();

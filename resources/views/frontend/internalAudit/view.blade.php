@@ -77,13 +77,14 @@ function addMultipleFiles(input, block_id) {
             cell2.innerHTML = "<input type='text'>";
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`)" /></div></div></div></td>';
+            cell3.innerHTML =  '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell4 = newRow.insertCell(3);
             cell4.innerHTML = "<input type='time'>";
 
             var cell5 = newRow.insertCell(4);
-            cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" class="hide-input"  oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`)" /></div></div></div></td>';
+            cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+                        
 
             var cell6 = newRow.insertCell(5);
             cell6.innerHTML = "<input type='time'>";
@@ -750,7 +751,8 @@ function addMultipleFiles(input, block_id) {
                                                     </thead>
                                                     <tbody>
                                                         @if ($grid_data)
-                                                        @foreach (unserialize($grid_data->start_date) as $key => $temps)
+                                                        @if(!empty($grid_data->area_of_audit))
+                                                        @foreach (unserialize($grid_data->area_of_audit) as $key => $temps)
                                                         <tr>
                                                             <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $key + 1 }}"></td>
 
@@ -763,9 +765,9 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
-                                                                <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
-                                                                <input type="date" name="scheduled_start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>'
+                                                                <input type="text"   id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
+                                                                <input type="date"  id="scheduled_start_date1_checkdate"  name="scheduled_start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')"  /></div></div></div></td>'
                                                             {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
                                                             
                                                             <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -777,9 +779,9 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
-                                                                <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                <input type="date" name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`)" /></div></div></div></td>
+                                                                <input type="text"   id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                <input type="date" id="scheduled_end_date1_checkdate"   name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')"  /></div></div></div></td>
                                                                <td><input type="time" name="scheduled_end_time[]"
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                              </td>
@@ -788,8 +790,8 @@ function addMultipleFiles(input, block_id) {
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)
                                                                     <option
-                                                                        {{ unserialize($grid_data->auditor)[$key] ? (unserialize($grid_data->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                        value="{{ $value->id }}">
+                                                                    {{ unserialize($grid_data->auditor)[$key] ? (unserialize($grid_data->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                    value="{{ $value->id }}">
                                                                         {{ $value->name }}
                                                                     </option>
                                                                 @endforeach
@@ -810,6 +812,7 @@ function addMultipleFiles(input, block_id) {
                                                             </td>
                                                         </tr>
                                                     @endforeach
+                                                    @endif
                                                         @endif
                                                     </tbody>
                                                 </table>
