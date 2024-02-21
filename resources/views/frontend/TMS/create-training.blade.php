@@ -118,7 +118,7 @@
                                             <tr>
                                                 <th>&nbsp;</th>
                                                 <th>Document Number</th>
-                                                <th>Document Title</th>
+                                                {{-- <th>Document Title</th> --}}
                                                 <th>Originator</th>
                                             </tr>
                                         </thead>
@@ -127,9 +127,9 @@
                                                 <tr>
                                                     <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
                                                             value="{{ $temp->document_id }}"></td>
-                                                    <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                        0000{{ $temp->document_id }}</td>
-                                                    <td>&nbsp;</td>
+                                                    <td>{{ Helpers::getDivisionName(session()->get('division')) }}/@if($temp->document_type_name){{ $temp->document_type_name }} /@endif {{$temp->year}}/
+                                                        000{{ $temp->document_id }}/R{{ $temp->major}}.{{$temp->minor}}</td>
+                                                    {{-- <td>&nbsp;</td> --}}
                                                     <td>{{ $temp->originator }}</td>
                                                 </tr>
                                             @endforeach

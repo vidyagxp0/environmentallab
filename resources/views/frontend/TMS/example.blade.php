@@ -157,7 +157,7 @@ function loadQuestion() {
       var input = document.createElement('input');
       input.type = question.answer instanceof Array ? 'checkbox' : 'radio';
       input.name = 'answer';
-      input.value = i;
+      input.value = i+1;
       label.appendChild(input);
       label.appendChild(document.createTextNode(question.choices[i]));
       li.appendChild(label);
@@ -192,21 +192,22 @@ function previousQuestion() {
 // Function to save the user's answer
 function saveAnswer() {
   var inputs = document.getElementsByName('answer');
+
   var answer = [];
-console.log('inputs',inputs);
+
   for (var i = 0; i < inputs.length; i++) {
     if (inputs[i].type === 'text') {
+      
       answer.push(inputs[i].value);
     } else if (inputs[i].type === 'checkbox' && inputs[i].checked) {
       answer.push(i);
     } else if (inputs[i].type === 'radio' && inputs[i].checked) {
       answer = [i];
+      answer = i+1;
       break;
     }
   }
-
-  console.log('currentQuestion',currentQuestion);
-  console.log('answer',answer);
+  
   userAnswers[currentQuestion] = answer;
 }
 
@@ -240,10 +241,8 @@ function displaySummary(marks) {
     var question = quizData[i].question;
     var userAnswer = userAnswers[i];
     var summaryText = '';
-console.log('quizData',quizData);
-console.log( 'quizData[i].answer',quizData[i].answer);
-console.log(typeof quizData[i].answer);
-    if (typeof quizData[i].answer === 'number') {
+
+    if (typeof quizData[i].answer === 'string') {
       summaryText = question + ' (Exact Answer): ';
 
       if (quizData[i].answer.toLowerCase() === userAnswer[0].toLowerCase()) {
@@ -264,7 +263,7 @@ console.log(typeof quizData[i].answer);
     } else {
       summaryText = question + ' (Single Select): ';
 
-      if (quizData[i].answer == userAnswer[0]) {
+      if (quizData[i].answer == userAnswer) {
         summaryText += 'Correct';
         marks++;
       } else {
@@ -285,7 +284,8 @@ function submitQuiz() {
   for (var i = 0; i < quizData.length; i++) {
     var correctAnswer = quizData[i].answer;
     var userAnswer = userAnswers[i];
-
+    console.log(correctAnswer+' == '+userAnswer);
+    
     if (typeof correctAnswer === 'string') {
       if (correctAnswer.toLowerCase() === userAnswer[0].toLowerCase()) {
         marks++;
@@ -295,7 +295,7 @@ function submitQuiz() {
         marks++;
       }
     } else {
-      if (correctAnswer == userAnswer[0]) {
+      if (correctAnswer == userAnswer) {
         marks++;
       }
     }

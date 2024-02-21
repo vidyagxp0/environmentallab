@@ -117,10 +117,12 @@ class TMSController extends Controller
 
         }
     }
-    public function create(){
-        if(Auth::user()->role == 6){
+    public function create(){ 
+        if(Auth::user()->role == 6 || Auth::user()->role == 3){
+          
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->get();
+           
             foreach($due as $temp){
                 $temp->training = Document::find($temp->document_id);
                 if($temp->training){
@@ -128,6 +130,9 @@ class TMSController extends Controller
                 $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                 $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
                 $temp->division_name = Division::where('id',$temp->training->division_id)->value('name');
+                $temp->major = $temp->training->major;
+                $temp->minor = $temp->training->minor;
+                $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
                 }
             }
             $users = User::where('role', '!=', 6)->get();
@@ -135,7 +140,9 @@ class TMSController extends Controller
                 $data->department = Department::where('id',$data->departmentid)->value('name');
             }
             return view('frontend.TMS.create-training',compact('due','users','quize'));
-        }
+        }else{
+            abort(404);
+        } 
     }
     public function store(Request $request){
         if(Auth::user()->role == 6){
@@ -771,10 +778,12 @@ class TMSController extends Controller
                     }
                 }
                 elseif($question->type == "Single Selection Questions"){
+                    
                     foreach($json_answer as $key => $value){
                         foreach($options as $option){
                             if($option == $value){
-                            $answers = $key;
+                              $answers = intval($value);
+                              
                             }
                         }
 

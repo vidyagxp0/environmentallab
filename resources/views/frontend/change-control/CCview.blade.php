@@ -207,9 +207,9 @@
                             @endif
                             {{-- @if ($info->Quality_Approver == 'yes') --}}
                             @if ($data->stage >= 3)
-                                <div class="active">Pending QA Review</div>
+                                <div class="active">Pending CFT Review</div>
                             @else
-                                <div class="">Pending QA Review</div>
+                                <div class="">Pending CFT Review</div>
                             @endif
                             {{-- @endif
                             @if ($info->Microbiology == 'yes') --}}

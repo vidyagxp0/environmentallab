@@ -182,7 +182,7 @@
                             </p>
                         </div>
 
-                        <div class="group-input multi_question-options" id="multi_options-group">
+                        {{-- <div class="group-input multi_question-options" id="multi_options-group">
                             <label for="options">
                                 Options<button type="button" id="multi_optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
                             </label>
@@ -194,7 +194,7 @@
                             <p id="optioncheck" style="color: red;">
                                 **Options are missing
                             </p>
-                        </div>
+                        </div> --}}
 
                         <div class="group-input question-answer">
                             <label for="answer" id="answer-label">
