@@ -471,12 +471,11 @@
                                     <div class="group-input input-date">
                                         <label for="Due Date"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                            <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
-                                        </div>
+                                       
+                                            <input type="text" id="due_date" name="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
+                                            <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" -->
+ 
                                     </div>  
                                  </div>                                  <!-- <div class="col-lg-6">
                                         <div class="group-input">
@@ -1393,7 +1392,7 @@
                                                             <th>Initial Severity- H(3)/M(2)/L(1)</th>
                                                             <th>Initial Probability- H(3)/M(2)/L(1)</th>
                                                             <th>Initial Detectability- H(1)/M(2)/L(3)</th>
-                                                            <th>Initial RPN</th>
+                                                            <!-- <th>Initial RPN</th> -->
                                                             <th>Risk Acceptance (Y/N)</th>
                                                             <th>Proposed Additional Risk control measure (Mandatory for
                                                                 Risk
@@ -1401,7 +1400,7 @@
                                                             <th>Residual Severity- H(3)/M(2)/L(1)</th>
                                                             <th>Residual Probability- H(3)/M(2)/L(1)</th>
                                                             <th>Residual Detectability- H(1)/M(2)/L(3)</th>
-                                                            <th>Residual RPN</th>
+                                                            <!-- <th>Residual RPN</th> -->
                                                             <th>Risk Acceptance (Y/N)</th>
                                                             <th>Mitigation proposal (Mention either CAPA reference
                                                                 number, IQ,
@@ -2684,39 +2683,51 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Acknowledge_By..">Acknowledge By</label>
-                                            <div class="static">{{ $data->acknowledge_by }}</div>
+                                            <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Acknowledge_On">Acknowledge On</label>
-                                            <div class="static">{{ $data->acknowledge_on }}</div>
+                                            <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Submit_By">Submit By</label>
-                                            <div class="static">{{ $data->submit_by }}</div>
+                                            <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Submit_On">Submit On</label>
-                                            <div class="static">{{ $data->submit_on }}</div>
+                                            <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_By">QA Review Complete By</label>
-                                            <div class="static">{{ $data->qa_review_complete_by }}</div>
+                                            <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_On">QA Review Complete On</label>
-                                            <div class="static">{{ $data->qa_review_complete_on }}</div>
+                                            <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled By">Cancelled By</label>
+                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancelled On">Cancelled On</label>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
+                                            </div>
+                                        </div>
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"

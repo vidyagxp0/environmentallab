@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('type')->nullable();
             $table->text('Question')->nullable();
             $table->text('Response')->nullable();
+            $table->string('cancelled_by')->nullable();
+             $table->string('cancelled_on')->nullable();
             $table->timestamps();
         });
     }

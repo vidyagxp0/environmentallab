@@ -856,13 +856,64 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_by">Completed By</label>
-                                        {{-- <input type="text" name="completed_by" disabled /> --}}
+                                     {{ Helpers::getInitiatorName(session()->get('division'))}}
+
+                                
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_on">Completed On</label>
                                         {{-- <input type="text" name="completed_on" disabled /> --}}
+                                     {{ date('d-m-Y')}}
+                                    </div>
+                            </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_By..">Acknowledge By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Acknowledge_On">Acknowledge On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Submit_By">Submit By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Submit_On">Submit On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">QA Review Complete By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">QA Review Complete On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Cancelled By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled On">Cancelled On</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                             </div>
