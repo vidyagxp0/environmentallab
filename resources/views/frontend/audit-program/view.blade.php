@@ -567,8 +567,8 @@
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
-                                                                        <input type="date" name="start_date[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->start_date }} " min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                        <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}" />
+                                                                        <input type="date" name="start_date[]" value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
                                                                         oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
 
                                                             <!-- <td><div class="group-input new-date-data-field mb-0">
@@ -581,7 +581,7 @@
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
                                                                         <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
-                                                                        <input type="date" name="end_date[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->end_date }} " min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                        <input type="date" name="end_date[]"   {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                                         oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
                                                             <td> <select id="select-state" placeholder="Select..."
                                                                     name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
@@ -1104,13 +1104,15 @@
 
                     var cell2 = newRow.insertCell(1);
                     cell2.innerHTML =
-                        '<select name="auditees[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>'
+                        '<select name="Auditees[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>'
 
                     var cell3 = newRow.insertCell(2);
-                    cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" class="hide-input" oninput="handleDateInput(this, `start_date' + currentRowCount +'`)" /></div></div></div></td>';
+                    cell3.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" id="start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `start_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+;
 
                     var cell4 = newRow.insertCell(3);
-                    cell4.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date"><div class="calenderauditee"><input type="text" id="end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" class="hide-input"  oninput="handleDateInput(this, `end_date' + currentRowCount +'`)" /></div></div></div></td>';
+                    cell4.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" id="end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+
 
                     var cell5 = newRow.insertCell(4);
                     // cell5.innerHTML = "<input type='text' name='lead_investigator'>";
