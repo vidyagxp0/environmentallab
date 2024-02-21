@@ -59,6 +59,9 @@ return new class extends Migration
 
             $table->string('submitted_on')->nullable();
             $table->string('approved_on')->nullable();
+            $table->string('Audit_Completed_By')->nullable();
+
+            $table->string('Audit_Completed_On')->nullable();
             $table->timestamps();
         });
     }

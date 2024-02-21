@@ -720,6 +720,8 @@ class AuditProgramController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
                 $changeControl->status = "Closed - Done";
+                $changeControl->Audit_Completed_By = Auth::user()->name;
+                $changeControl->Audit_Completed_On = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

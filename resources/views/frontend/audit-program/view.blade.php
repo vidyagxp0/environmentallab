@@ -8,6 +8,7 @@
         header {
             display: none;
         }
+        
     </style>
 
     @php
@@ -52,8 +53,17 @@
 
                     html += '</select></td>' +
                         // '<td><input type="date" name="start_date[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0">
+                        <div class="input-date "><div class="calenderauditee"> 
+                        <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                        <input type="date" class="hide-input" name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="start_date' + serialNumber +'_checkdate"  
+                         oninput="handleDateInput(this, `start_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
                         // '<td><input type="date" name="end_date[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0">
+                        <div class="input-date "><div class="calenderauditee">
+                         <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                         <input type="date" name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' 
 
                         '<td><select name="lead_investigator[]">' +
                         '<option value="">Select a value</option>';
@@ -557,33 +567,20 @@
                                                             
                                                                     value="{{ unserialize($AuditProgramGrid->end_date)[$key] ? unserialize($AuditProgramGrid->end_date)[$key] : '' }}"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                             </td> --}}
-                                                            <!-- <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                                <input type="date" id="start_date_checkdate" name="start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input" 
-                                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
-                                                            {{-- <td><input type="date" name="end_date[]"></td> --}} -->
+                                                            
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}" />
-                                                                        <input type="date" name="start_date[]" value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
-                                                                        oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
-
-                                                            <!-- <td><div class="group-input new-date-data-field mb-0">
-                                                                <div class="input-date "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                                <input type="date" id="end_date_checkdate"  name="end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input" 
-                                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td> -->
+                                                                         <input  type="text"   id="start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
+                                                                <input class="hide-input" type="date"  id="start_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->start_date)[$key]}}"  name="start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}
+                                                                oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
-                                                                        <input type="date" name="end_date[]"   {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                                                        oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
-                                                            <td> <select id="select-state" placeholder="Select..."
+                                                                         <input type="text"   id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
+                                                                <input class="hide-input" type="date"  id="end_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->end_date)[$key]}}"  name="end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}
+                                                                  oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
+                                                                  <td> <select id="select-state" placeholder="Select..."
                                                                     name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                     <option value="">-Select-</option>
                                                                     @foreach ($users as $value)

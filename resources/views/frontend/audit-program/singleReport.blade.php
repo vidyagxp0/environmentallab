@@ -202,7 +202,7 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->general_initiator_group){{ $data->general_initiator_group }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
@@ -234,11 +234,11 @@
                     
                     <tr>
                        <th class="w-20">URl's description</th>
-                       <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>
+                       <td class="w-30">@if($data->url_description){{ $data->url_description }}@else Not Applicable @endif</td>
                     </tr>  
                     <tr>
                        <th class="w-20">Severity Level</th>
-                       <td class="w-30">@if($data->url_description){{ $data->url_description }}@else Not Applicable @endif</td>
+                       <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>
                     </tr>  
 
                 </table>

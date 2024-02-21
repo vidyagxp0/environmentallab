@@ -771,10 +771,20 @@ function addMultipleFiles(input, block_id) {
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
+<<<<<<< Updated upstream
                                                                 <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
                                                                 <input type="date" name="scheduled_start_date[]"value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`)" /></div></div></div></td>'
                                                             {{-- <td><input type="time" name="scheduled_start_time[]"></td> --}}
+=======
+                                                                <input type="text"   id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
+                                                                <input type="date"  id="scheduled_start_date{{$key}}_checkdate" value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }} class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>'
+                                                             
+                                                            <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
+                                                            </td>
+>>>>>>> Stashed changes
                                                             
                                                             <td><input type="time" name="scheduled_start_time[]"
                                                                     value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
