@@ -44,11 +44,11 @@
                                     <div class="head">Document Number</div>
                                     <div>
                                         @if($document->revised === 'Yes') 
-                                            SOP-000{{ $document->revised_doc }}
+                                            000{{ $document->revised_doc }}
                                             
 
                                         @else
-                                            SOP-000{{ $document->id }}
+                                            000{{ $document->id }}
                                         
                                         @endif
                                        </div>

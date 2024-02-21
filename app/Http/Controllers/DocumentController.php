@@ -1337,8 +1337,18 @@ class DocumentController extends Controller
 
     public function viewPdf($id)
     {
+        $depaArr = ['ACC' => 'Accounting','ACC3' => 'Accounting',];
         $data = Document::find($id);
-        $data->department = Department::find($data->department_id);
+        $department = Department::find(Auth::user()->departmentid);
+        
+        if($department)
+        {
+            $data['department_name'] = $department->name;
+        }else{
+            $data['department_name'] = '';
+        }
+        $data->department = $department;
+
         $data['originator'] = User::where('id', $data->originator_id)->value('name');
         $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');

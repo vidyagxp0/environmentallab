@@ -161,7 +161,7 @@
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date</label>
-                                    <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                    <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                     </div>
                                     <div class="calenderauditee">                                     
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}"  readonly placeholder="DD-MMM-YYYY" />
@@ -1560,7 +1560,7 @@
                                         Responsibility<button type="button" id="responsibilitybtnadd"
                                             name="button">+</button>
                                     </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->responsibility))
                                         @foreach (unserialize($document->document_content->responsibility) as $data)
                                             <input type="text" name="responsibility[]" class="myclassname"
@@ -1609,7 +1609,7 @@
                                         Abbreviation<button type="button" id="abbreviationbtnadd"
                                             name="button">+</button>
                                     </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->abbreviation))
                                         @foreach (unserialize($document->document_content->abbreviation) as $data)
                                             <input type="text" name="abbreviation[]" class="myclassname"
@@ -1656,7 +1656,7 @@
                                     <label for="abbreviation" id="definition">
                                         Definition<button type="button" id="Definitionbtnadd" name="button">+</button>
                                     </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->defination))
                                         @foreach (unserialize($document->document_content->defination) as $data)
                                             <input type="text" name="defination[]" class="myclassname"
@@ -1704,7 +1704,7 @@
                                         Materials and Equipments<button type="button" id="materialsbtadd"
                                             name="button">+</button>
                                     </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->materials_and_equipments))
                                         @foreach (unserialize($document->document_content->materials_and_equipments) as $data)
                                             <input type="text" name="materials_and_equipments[]" class="myclassname"
@@ -1752,7 +1752,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     <textarea name="procedure" id="summernote">{{ $document->document_content->procedure }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
@@ -1788,7 +1788,7 @@
                                     <label for="reporting" id="newreport">
                                         Reporting<button type="button" id="reportingbtadd" name="button">+</button>
                                     </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->reporting))
                                         @foreach (unserialize($document->document_content->reporting) as $data)
                                             <input type="text" name="reporting[]" class="myclassname"
@@ -1838,7 +1838,7 @@
                                     <label for="references" id="references">
                                         References<button type="button" id="referencesbtadd" name="button">+</button>
                                     </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->references))
                                         @foreach (unserialize($document->document_content->references) as $data)
                                             <input type="text" name="references[]" class="myclassname"
@@ -1928,7 +1928,7 @@
                                     <label for="ann" id="ann">
                                         Annexure<button type="button" id="annbtadd" name="button">+</button>
                                     </label>
-                                    <div><small class="text-primary">Please mention brief summary</small></div>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->ann))
                                         @foreach (unserialize($document->document_content->ann) as $data)
                                             <input type="text" name="ann[]" class="myclassname"
@@ -1975,7 +1975,7 @@
                                     <div class="button">Add Comment</div>
                                 </div>
                             @endif
-                            <div class="col-md-12">
+                            {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="test">
                                         Revision History<button type="button" name="reporting2"
@@ -1988,7 +1988,7 @@
                                                 <th class="sop-num">SOP Revision No.</th>
                                                 <th class="dcrf-num">Change Control No./ DCRF No.</th>
                                                 <th class="changes">Changes</th>
-                                                {{-- <th class="deleteRow">&nbsp;</th> --}}
+                                                //<th class="deleteRow">&nbsp;</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1996,7 +1996,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                            </div>
+                            </div> --}}
                             @if (Auth::user()->role != 3)
 
                                 {{-- Add Comment  --}}

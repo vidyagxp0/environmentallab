@@ -147,7 +147,7 @@
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                         </div>
                                         <div class="calenderauditee"> 
                                             <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />                                    
@@ -664,7 +664,7 @@
                                         <label for="responsibility" id="responsibility">
                                             Responsibility<button type="button" id="responsibilitybtnadd"
                                                 name="button">+</button>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
                                         <input type="text" name="responsibility[]" class="myclassname">
@@ -680,7 +680,7 @@
                                         <label for="abbreviation" id="abbreviation">
                                             Abbreviation<button type="button" id="abbreviationbtnadd"
                                                 name="button">+</button>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
                                         <input type="text" name="abbreviation[]" class="myclassname">
@@ -697,7 +697,7 @@
                                         <label for="abbreviation" id="definition">
                                             Definition<button type="button" id="Definitionbtnadd"
                                                 name="button">+</button>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
                                         <input type="text" name="defination[]" class="myclassname">
@@ -711,7 +711,7 @@
                                         <label for="reporting" id="newreport">
                                             Materials and Equipments<button type="button" id="materialsbtadd"
                                                 name="button">+</button>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
+                                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
                                         <input type="text" name="materials_and_equipments[]" class="myclassname">
@@ -724,7 +724,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="group-input">
                                         <label for="procedure">Procedure</label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <textarea name="procedure" id="summernote">
                                     </textarea>
                                     </div>
@@ -734,7 +734,7 @@
                                         <label for="reporting" id="newreport">
                                             Reporting<button type="button" id="reportingbtadd" name="button">+</button>
                                         </label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <input type="text" name="reporting[]" class="myclassname">
 
 
@@ -748,7 +748,7 @@
                                         <label for="references" id="references">
                                             References<button type="button" id="referencesbtadd" >+</button>
                                         </label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <input type="text" name="references[]" class="myclassname">
                                         <div id="referencesdiv"></div>
                                         {{-- <div class="row reference-data">
@@ -766,7 +766,7 @@
                                         <label for="ann" id="ann">
                                             Annexure<button type="button" id="annbtadd" >+</button>
                                         </label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <input type="text" name="ann[]" class="myclassname">
                                         <div id="anndiv"></div>
                                         {{-- <div class="row reference-data">
@@ -804,7 +804,7 @@
                                         </table>
                                     </div>
                                 </div> --}}
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="test">
                                             Revision History<button type="button" name="reporting2"
@@ -817,7 +817,7 @@
                                                     <th class="sop-num">SOP Revision No.</th>
                                                     <th class="dcrf-num">Change Control No./ DCRF No.</th>
                                                     <th class="changes">Changes</th>
-                                                    {{-- <th class="deleteRow">&nbsp;</th> --}}
+                                                    <th class="deleteRow">&nbsp;</th> 
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -829,7 +829,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="button-block">

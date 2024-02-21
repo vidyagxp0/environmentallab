@@ -342,8 +342,8 @@
         <table class="border border-top-none p-10">
             <tbody>
                 <tr>
-                    <td class="doc-num w-100">{{ Helpers::getDivisionName(session()->get('division')) }} /{{ $data->document_type_code }}
-                        /{{ $data->year }} /SOP-000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
+                    <td class="doc-num w-100">{{ Helpers::getDivisionName(session()->get('division')) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
+                        {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
                 </tr>
             </tbody>
         </table>
@@ -797,8 +797,8 @@
                             <tbody>
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Document Number</th>
-                                    <td class="w-70 text-left">{{ Helpers::getDivisionName(session()->get('division')) }} /{{ $data->document_type_code }}
-                                        /{{ $data->year }} /SOP-000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
+                                    <td class="w-70 text-left">{{ Helpers::getDivisionName(session()->get('division')) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
+                                        {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
                                 </tr>
                                 {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Version</th>
@@ -983,7 +983,7 @@
                             <tbody>
                                 <tr>
                                     <td class="text-left w-25">{{ $data->originator }}</td>
-                                    <td class="text-left w-25">{{ $data->departmenid }}</td>
+                                    <td class="text-left w-25">{{ $data->department_name }}</td>
                                     <td class="text-left w-25">Initiation Completed</td>
                                     <td class="text-left w-25">{{ $data->originator_email }}</td>
                                 </tr>
@@ -1274,8 +1274,8 @@
         <table class="border p-20">
             <tbody>
                 <tr>
-                    <td class="text-left w-36">{{ Helpers::getDivisionName(session()->get('division')) }} /{{ $data->document_type_code }}
-                        /{{ $data->year }} /SOP-000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
+                    <td class="text-left w-36">{{ Helpers::getDivisionName(session()->get('division')) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
+                        {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
 
                     <td class="w-36">Printed On : {{ $time }}</td>
                     <td class="text-right w-20"></td>
