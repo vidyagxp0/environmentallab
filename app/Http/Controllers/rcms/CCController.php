@@ -1101,6 +1101,9 @@ class CCController extends Controller
         $hod = User::where('role', 4)->get();
         $cft = User::where('role', 5)->get();
         $pre = CC::all();
+
+       // dd($closure);
+       // DD(unserialize($closure->affected_document));
         return view('frontend.change-control.CCview', compact(
             'data',
             'docdetail',

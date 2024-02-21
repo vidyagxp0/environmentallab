@@ -342,8 +342,8 @@
         <table class="border border-top-none p-10">
             <tbody>
                 <tr>
-                    <td class="doc-num w-100">{{ $data->document_division }} /{{ $data->document_type_code }}
-                        /{{ $data->year }} /SOP-000{{ $data->id }}</td>
+                    <td class="doc-num w-100">{{ Helpers::getDivisionName(session()->get('division')) }} /{{ $data->document_type_code }}
+                        /{{ $data->year }} /SOP-000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
                 </tr>
             </tbody>
         </table>
@@ -797,14 +797,13 @@
                             <tbody>
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Document Number</th>
-                                    <td class="w-70 text-left">{{ $data->document_division }}
-                                        /{{ $data->document_type_name }} /{{ $data->year }}
-                                        /SOP-0000{{ $data->id }}</td>
+                                    <td class="w-70 text-left">{{ Helpers::getDivisionName(session()->get('division')) }} /{{ $data->document_type_code }}
+                                        /{{ $data->year }} /SOP-000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Version</th>
                                     <td class="w-70 text-left">1.0</td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Title</th>
                                     <td class="w-70 text-left">{{ $data->document_name }}</td>
@@ -850,10 +849,10 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Library</th>
                                     <td class="w-70 text-left">REYYTWE5Y</td>
-                                </tr>
+                                </tr> --}}
                                 {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Category</th>
                                     <td class="w-70 text-left">Lorem, ipsum.</td>
@@ -969,6 +968,31 @@
                 </div> --}}
                 <div class="block mb-40">
                     <div class="block-head">
+                        Originator
+                    </div>
+                    <div class="block-content">
+                        <table class="table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left w-25">Originator</th>
+                                    <th class="text-left w-25">Department</th>
+                                    <th class="text-left w-25">Status</th>
+                                    <th class="text-left w-25">E-Signature</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-left w-25">{{ $data->originator }}</td>
+                                    <td class="text-left w-25">{{ $data->departmenid }}</td>
+                                    <td class="text-left w-25">Initiation Completed</td>
+                                    <td class="text-left w-25">{{ $data->originator_email }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="block mb-40">
+                    <div class="block-head">
                         Reviews
                     </div>
                     <div class="block-content">
@@ -977,7 +1001,7 @@
                                 <tr>
                                     <th class="text-left w-25">Reviewer</th>
                                     <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Date/Time</th>
+                                    <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
                                 </tr>
                             </thead>
@@ -1106,7 +1130,7 @@
                                 <tr>
                                     <th class="text-left w-25">Approver</th>
                                     <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Date/Time</th>
+                                    <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
                                 </tr>
                             </thead>
@@ -1216,7 +1240,7 @@
                         </table>
                     </div>
                 </div>
-                <div class="block mb-40">
+                {{-- <div class="block mb-40">
                     <div class="block-head">
                         Publisher
                     </div>
@@ -1226,21 +1250,21 @@
                                 <tr>
                                     <th class="text-left w-25">Publisher</th>
                                     <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Date/Time</th>
+                                    <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td class="text-left w-25">{{ $data->originator }}</td>
-                                    {{-- <td class="text-left w-25">{{ $data->department->name }}</td> --}}
+                                     <td class="text-left w-25">{{ $data->department_id }}</td> 
                                     <td class="text-left w-25">{{ $data->created_at }}</td>
                                     <td class="text-left w-25">{{ $data->originator_email }}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div> --}}
             </div>
         </section>
 
@@ -1250,12 +1274,11 @@
         <table class="border p-20">
             <tbody>
                 <tr>
-                    <td class="text-left w-33">{{ $data->document_division }}
-                        /{{ $data->document_type_code }}
-                        /{{ $data->year }} /SOP-0000{{ $data->id }}</td>
+                    <td class="text-left w-36">{{ Helpers::getDivisionName(session()->get('division')) }} /{{ $data->document_type_code }}
+                        /{{ $data->year }} /SOP-000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
 
-                    <td class="w-33">Printed On : {{ $time }}</td>
-                    <td class="text-right w-33"></td>
+                    <td class="w-36">Printed On : {{ $time }}</td>
+                    <td class="text-right w-20"></td>
                 </tr>
             </tbody>
         </table>

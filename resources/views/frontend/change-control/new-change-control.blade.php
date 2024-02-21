@@ -954,7 +954,7 @@
                                                  class="calenderauditee">
                                                 <input type="text" id="implementation_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                 <input type="date" name="implementation_date[]" class="hide-input" 
-                                                oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" /></div></div></div></td>'
+                                                oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" /></div></div></div></td>
                                             <td><input type="text" name="new_document_no[]">
                                             </td>
                                             <td><input type="text" name="new_version_no[]">
@@ -981,7 +981,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 sub-head">
+                            {{-- <div class="col-12 sub-head">
                                 Effectiveness Check Details
                             </div>
                             <div class="row">
@@ -1023,7 +1023,7 @@
                                         <label for="effective_check_plan">Effectiveness Check Plan</label>
                                         <textarea name="effective_check_plan"></textarea>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
@@ -1490,4 +1490,10 @@
             text-transform: capitalize !important;
         }
     </style>
+     <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
+    </script>
 @endsection
