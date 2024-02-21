@@ -199,46 +199,39 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->general_initiator_group){{ $data->general_initiator_group }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Assigned To</th>
+                        <td class="w-80" > @if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
                        
                     </tr>
                     <tr>
+                        <th class="w-20">Due Date</th>
+                        <td class="w-80" > @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>\
                         <th class="w-20">Short Description</th>
                         <td class="w-80" > @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        <th class="w-20">Type</th>
+                        <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
                     </tr>
+                      
                     <tr>
-                        <th class="w-20">Due Date</th>
-                        <td class="w-80" > @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>\
-                    </tr>
-                    <tr>   
-                        <th class="w-20">Assigned To</th>
-                        <td class="w-80" > @if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Type</th>
-                        <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
-                    </tr>   
-                    <tr>
+                    <th class="w-20">Quarter</th>
+                        <td class="w-30">@if($data->Quarter){{ $data->Quarter }}@else Not Applicable @endif</td>
                         <th class="w-20">Year</th>
                         <td class="w-30">@if($data->year){{ $data->year }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Quarter</th>
-                        <td class="w-30">@if($data->Quarter){{ $data->Quarter }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
-                    </tr>
+            
+                    
                     <tr>
                        <th class="w-20">URl's description</th>
                        <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>

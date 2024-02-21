@@ -410,6 +410,7 @@ class AuditProgramController extends Controller
         // ------------------------------
         $data1 = AuditProgramGrid::where('audit_program_id', $data->id)->first();
         $data1->delete();
+        $data1 = new AuditProgramGrid();
         $data1->audit_program_id = $data->id;
 
         if (!empty($request->serial_number)) {
@@ -672,7 +673,14 @@ class AuditProgramController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $AuditProgramGrid = AuditProgramGrid::where('audit_program_id', $id)->first();
-
+        $startdate = [];
+        if($AuditProgramGrid->start_date){
+            $startdate = unserialize($AuditProgramGrid->start_date);
+        }
+        $enddate = [];
+        if($AuditProgramGrid->end_date){
+            $enddate = unserialize($AuditProgramGrid->end_date);
+        }
         $client = new Client();
         $stateList = $client->get('https://geodata.phplift.net/api/index.php?type=getStates&countryId='.$data->country);
         $data->stateArr = json_decode($stateList->getBody(), true);
@@ -682,7 +690,7 @@ class AuditProgramController extends Controller
         $data->countryArr = json_decode($countryList->getBody(), true);
  
 
-        return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid'));
+        return view('frontend.audit-program.view', compact('data', 'AuditProgramGrid', 'startdate', 'enddate'));
     }
 
 

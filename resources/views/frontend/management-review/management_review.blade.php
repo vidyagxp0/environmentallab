@@ -181,9 +181,9 @@
                                         <div><small class="text-primary">Please mention expected date of completion</small>
                                         </div>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
+                                            <input type="text" id="due_date" 
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -250,7 +250,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" name="initiator_group_code" id="initiator_group_code"  value="{{ $data->initiator_Group}}" readonly>
+                                        <input type="text" name="initiator_group_code" value="{{ $data->initiator_Group}}" id="initiator_group_code"  value="{{ $data->initiator_Group}}" readonly>
                                     </div>
                                 </div>
                                 <!-- <div class="col-12">
@@ -301,17 +301,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6 new-date-data-field">
+                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Scheduled Start Date">Scheduled Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"/>
-                                            <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }} "
-                                            name="start_date" class="hide-input"
+                                            <input type="date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date}} "
+                                            name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="Scheduled Start Date">Scheduled Start Date <span class="text-danger"></span></label>
@@ -717,7 +717,8 @@
                                 <label for="action_item_details">
                                     Action Item Details<button type="button" name="action_item_details"
                                         id="action_item">+</button>
-                                </label><table class="table table-bordered" id="action_item_details">
+                                </label>
+                                <table class="table table-bordered" id="action_item_details">
                                     <thead>
                                         <tr>
                                             <th>Row #</th>
@@ -889,8 +890,7 @@
                                         <input type="text" id="next_managment_review_date" readonly
                                             placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}"/>
                                         <input type="date" name="next_managment_review_date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{ $data->next_managment_review_date }} "
-                                        class="hide-input"
-                                            oninput="handleDateInput(this, 'next_managment_review_date')" />
+                                        class="hide-input" oninput="handleDateInput(this, 'next_managment_review_date')" />
                                     </div>
                                 </div>
                             </div>
