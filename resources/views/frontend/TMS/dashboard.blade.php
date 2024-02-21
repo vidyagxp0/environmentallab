@@ -25,10 +25,10 @@
                             </div>
                         </div>
                         <div class="doc-links d-flex">
-                            <button>Print</button>
+                            {{-- <button>Print</button> --}}
                             <a href="javascript:window.location.reload(true)">Refresh</a>
-                            <a data-bs-toggle="modal" data-bs-target="#subscribe-modal">Subscribe</a>
-                            <a href="#"><i class="fa-solid fa-caret-down"></i></a>
+                            {{-- <a data-bs-toggle="modal" data-bs-target="#subscribe-modal">Subscribe</a> --}}
+                            {{-- <a href="#"><i class="fa-solid fa-caret-down"></i></a> --}}
                         </div>
                     </div>
                 </div>

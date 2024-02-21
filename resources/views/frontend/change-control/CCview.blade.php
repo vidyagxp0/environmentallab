@@ -1302,6 +1302,40 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @if (!empty($closure->sno))
+                                                    @foreach (unserialize($closure->affected_document) as $key => $datas)
+                                                        <tr>
+                                                            <td><input type="text" name="serial_number[]"
+                                                                    value="{{ $key ? $key + 1 : '1' }}"></td>
+                                                            <td><input type="text"
+                                                                    name="affected_documents[]"
+                                                                    value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : 'Not Applicable' }}">
+                                                            </td>
+                                                            <td><input type="text" name="document_name[]"
+                                                                    value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : 'Not Applicale' }}">
+                                                            </td>
+                                                            <td><input type="number" name="document_no[]"
+                                                                    value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : 'Not Applicable' }}">
+                                                            </td>
+                                                            <td><input type="text" name="new_version[]"
+                                                                    value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
+                                                            </td>
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date "><div
+                                                                 class="calenderauditee">
+                                                                <input type="text" id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY" oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
+                                                                {{-- <input type="date" name="implementation_date[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div> --}}
+                                                            </td>
+                                                            <td><input type="text" name="new_document_no[]"
+                                                                value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : 'Not Applicable' }}">
+                                                             </td>
+                                                             <td><input type="text" name="new_version_no[]"
+                                                                value="{{ unserialize($closure->new_version_no)[$key] ? unserialize($closure->new_version_no)[$key] : 'Not Applicable' }}">
+                                                             </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                                     <div id="docdetaildiv"></div>
                                                 </tbody>
                                             </table>
@@ -1383,7 +1417,7 @@
                                                     <label for="effective_check_plan">Effectiveness Check Plan</label>
                                                     <textarea name="effective_check_plan">{{$data->effective_check_plan}}</textarea>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             <div class="col-12 sub-head">
                                                 Extension Justification
                                             </div>
@@ -2254,5 +2288,11 @@
             // Update the result field within the row
             document.getElementById('analysisRPN').value = result;
         }
+    </script>
+     <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection

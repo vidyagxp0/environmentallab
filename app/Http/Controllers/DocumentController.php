@@ -7,6 +7,7 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
+use Helpers;
 use App\Models\DocumentContent;
 //use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
@@ -54,8 +55,8 @@ class DocumentController extends Controller
         $new->process_id = $request->process_id;
         $new->user_id = Auth::user()->id;
         $new->save();
-
-        return redirect()->route('documents.create');
+        $id = $request->process_id;
+        return redirect()->route('documents.create' ,compact('id'));
     }
     public function division_old(Request $request)
     {
@@ -280,8 +281,8 @@ class DocumentController extends Controller
 
             $document = new Document();
             $division = SetDivision::where('user_id', Auth::id())->latest()->first();
-            $document->division_id = $division->division_id;
-            $document->process_id = $division->process_id;
+            $document->division_id = $request->division_id;
+            $document->process_id = $request->process_id;
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
             $document->document_name = $request->document_name;

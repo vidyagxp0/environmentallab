@@ -114,7 +114,14 @@
                                 </div>
 
                             @endif
-
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Division Code"><b>Site/Location Code</b></label>
+                                    <input disabled type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName($document->division_id) }}">
+                                    {{-- <div class="static">QMS-North America</div> --}}
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="short-desc">Short Description*</label>
@@ -326,12 +333,12 @@
                                            
                                             {{ Helpers::getDivisionName(session()->get('division')) }}
                                         /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
-                                        /SOP-000{{ $document->revised_doc }}/R{{$document->major}}.{{$document->minor}}
+                                        /000{{ $document->revised_doc }}/R{{$document->major}}.{{$document->minor}}
 
                                         @else
                                           {{ Helpers::getDivisionName(session()->get('division')) }}
                                         /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
-                                        /SOP-000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
+                                        /000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
                                         
                                     @endif
                                     </div>
@@ -2446,7 +2453,7 @@
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Review Proposed By
+                                    Originated By 
                                 </div>
                                 @php
                                     $inreview = DB::table('stage_manages')
@@ -2476,7 +2483,7 @@
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Document Reuqest Approved By
+                                    Originated On 
                                 </div>
                                 @php
                                     $inreview = DB::table('stage_manages')

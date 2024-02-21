@@ -7,16 +7,16 @@
         <div class="container-fluid">
             <div class="dashboard-container">
                 <div class="row">
-                    <div class="col-xl-9 col-lg-9">
+                    <div class="col-xl-12 col-lg-12">
                         <div class="document-left-block">
                             <div class="inner-block create-block">
                                 <div class="head text-right mb-0">
                                     <a href="#" id="set-division">
                                         <i class="fa-solid fa-plus"></i> Create Document
                                     </a>
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    {{-- <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                         Import Data
-                                    </button>
+                                    </button> --}}
                                     {{-- <a href="{{route('documentExportEXCEL')}}">
                                         Export EXCEL
                                     </a> --}}
@@ -31,7 +31,7 @@
                                             <i class="fa-solid fa-gauge-high"></i>
                                         </div>
                                         <div class="right">
-                                            <label for="corporate-doc">Corporate Documents</label>
+                                            <label for="corporate-doc">Documents</label>
                                             <select name="corporate-doc">
                                                 <option value="all">All</option>
                                                 <option value="draft">Draft</option>
@@ -43,11 +43,11 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="search-bar">
+                                    {{-- <div class="search-bar">
                                         <input id="searchInput" type="text" name="search"
                                             placeholder="Search from the list...">
                                         <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                                    </div>
+                                    </div> --}}
                                 </div>
 
                                 <div class="main-head">
@@ -60,7 +60,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <th class="pr-id" data-bs-toggle="modal" data-bs-target="#division-modal">
-                                                SOP-ID
+                                                ID
                                             </th>
                                             <th class="division">
                                                 Document Type
@@ -75,7 +75,7 @@
                                                 Create Date Time
                                             </th>
                                             <th class="assign-name">
-                                                Assigned To
+                                                Originator
                                             </th>
                                             <th class="modify-date">
                                                 Modify Date Time
@@ -93,14 +93,14 @@
                                                     <tr>
                                                         <td class="pr-id" style="text-decoration:underline"><a
                                                                 href="{{ route('documents.edit', $doc->id) }}">
-                                                                <center> SOP-0000{{ $doc->id }}</center>
+                                                                <center> 000{{ $doc->id }}</center>
                                                             </a>
                                                         </td>
                                                         <td class="division">
                                                             {{ $doc->document_type_name }}
                                                         </td>
                                                         <td class="division">
-                                                            {{ $doc->division_name }}
+                                                            {{ Helpers::getDivisionName($doc->division_id) }}
                                                         </td>
 
                                                         <td class="short-desc">
@@ -154,7 +154,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    {{-- <div class="col-xl-3 col-lg-3">
                         <div class="document-right-block">
                             <div class="inner-block recent-record">
                                 <div class="head">
@@ -193,7 +193,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

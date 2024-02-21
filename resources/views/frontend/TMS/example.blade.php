@@ -193,7 +193,7 @@ function previousQuestion() {
 function saveAnswer() {
   var inputs = document.getElementsByName('answer');
   var answer = [];
-
+console.log('inputs',inputs);
   for (var i = 0; i < inputs.length; i++) {
     if (inputs[i].type === 'text') {
       answer.push(inputs[i].value);
@@ -205,6 +205,8 @@ function saveAnswer() {
     }
   }
 
+  console.log('currentQuestion',currentQuestion);
+  console.log('answer',answer);
   userAnswers[currentQuestion] = answer;
 }
 
@@ -238,8 +240,10 @@ function displaySummary(marks) {
     var question = quizData[i].question;
     var userAnswer = userAnswers[i];
     var summaryText = '';
-
-    if (typeof quizData[i].answer === 'string') {
+console.log('quizData',quizData);
+console.log( 'quizData[i].answer',quizData[i].answer);
+console.log(typeof quizData[i].answer);
+    if (typeof quizData[i].answer === 'number') {
       summaryText = question + ' (Exact Answer): ';
 
       if (quizData[i].answer.toLowerCase() === userAnswer[0].toLowerCase()) {
