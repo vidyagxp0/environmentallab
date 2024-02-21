@@ -1066,8 +1066,7 @@
                                         <div class="group-input">
                                             <label for="root_cause">
                                                 Root Cause
-                                                <button type="button"
-                                                onclick="add4Input('root-cause-first-table')">+</button>
+                                                <button type="button" onclick="add4Input_case('root-cause-first-table')">+</button>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" id="root-cause-first-table">
@@ -1083,14 +1082,14 @@
                                                     <tbody>
                                                         @if (!empty($grid1->Root_Cause_Category))
                                                         @foreach (unserialize($grid1->Root_Cause_Category) as $key => $Root_Cause_Category)
-                                                            <td>{{ $key + 1 }}</td>
-                                                            <td>{{ $Root_Cause_Category }}</td>
-                                                            <td>{{ unserialize($grid1->Root_Cause_Sub_Category)[$key] ? unserialize($grid1->Root_Cause_Sub_Category)[$key] : '' }}
-                                                            </td>
-                                                            <td>{{ unserialize($grid1->Probability)[$key] ? unserialize($grid1->Probability)[$key] : '' }}
-                                                            </td>
-                                                            <td>{{ unserialize($grid1->Remarks)[$key] ? unserialize($grid1->Remarks)[$key] : '' }}
-                                                            </td>
+                                                                <tr>
+                                                                <td><input disabled type="text" name="serial_number[]" value="{{ $key + 1 }}">
+                                                                </td>
+                                                                <td><input type="text" name="Root_Cause_Category[]" value="{{ unserialize($grid1->Root_Cause_Category)[$key] ? unserialize($grid1->Root_Cause_Category)[$key] : '' }}"></td>
+                                                                <td><input type="text" name="Root_Cause_Sub_Category[]" value="{{ unserialize($grid1->Root_Cause_Sub_Category)[$key] ? unserialize($grid1->Root_Cause_Sub_Category)[$key] : '' }}"></td>
+                                                                <td><input type="text" name="Probability[]" value="{{ unserialize($grid1->Probability)[$key] ? unserialize($grid1->Probability)[$key] : '' }}"></td>
+                                                                <td><input type="text" name="Remarks[]" value="{{ unserialize($grid1->Remarks)[$key] ? unserialize($grid1->Remarks)[$key] : '' }}"></td>
+                                                                </tr>
                                                             @endforeach
                                                             @endif
                                                     </tbody>
@@ -2890,6 +2889,34 @@
             }
         </style>
 
+            <script>
+                // ================================ FOUR INPUTS
+function add4Input_case(tableId) {
+    var table = document.getElementById(tableId);
+    var currentRowCount = table.rows.length;
+    var newRow = table.insertRow(currentRowCount);
+
+    newRow.setAttribute("id", "row" + currentRowCount);
+    var cell1 = newRow.insertCell(0);
+    cell1.innerHTML = currentRowCount;
+
+    var cell2 = newRow.insertCell(1);
+    cell2.innerHTML = "<input type='text' name='Root_Cause_Category[]'>";
+
+    var cell3 = newRow.insertCell(2);
+    cell3.innerHTML = "<input type='text'  name='Root_Cause_Sub_Category[]'>";
+
+    var cell4 = newRow.insertCell(3);
+    cell4.innerHTML = "<input type='text'  name='Probability[]''>";
+
+    var cell5 = newRow.insertCell(4);
+    cell5.innerHTML = "<input type='text'  name='Remarks[]'>";
+    for (var i = 1; i < currentRowCount; i++) {
+        var row = table.rows[i];
+        row.cells[0].innerHTML = i;
+    }
+}
+            </script>
         <script>
             VirtualSelect.init({
                 ele: '#investigators'
