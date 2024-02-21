@@ -105,7 +105,7 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MMM-YYYY"/>
                                             <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
@@ -152,7 +152,7 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description<span>
+                                        <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         <input id="docname" type="text" name="short_desc" maxlength="255" required>
@@ -526,11 +526,13 @@
                                 <div class="col-12 sub-head">
                                     Extension Justification
                                 </div>
+                               
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <textarea name="due_date_extension"></textarea>
+                                        <span id="rchar">255</span> characters remaining
+                                        <textarea id="duedoc" name="due_date_extension" type="text" maxlength="255"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -771,5 +773,11 @@
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#duedoc').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchar').text(textlen);});
     </script>
 @endsection
