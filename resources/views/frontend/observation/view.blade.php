@@ -213,10 +213,10 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to1">Assigned To</label>
-                                        <select name="assign_to1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
+                                        <select name="assign_to" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $value)
-                                            <option {{ $data->assign_to1 == $value->id ? 'selected' : '' }}
+                                            <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach
                                         </select>
@@ -429,11 +429,11 @@
                                 </div> --}}
                                  <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="capa_date_due">Recomendation Date Due for CAPA</label>
+                                        <label for="capa_date_due">Recomendation  Due Date  for CAPA</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input" style="display: none;"
+                                            <input type="text" name="recomendation_capa_date_due" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="recomendation_capa_date_due" readonly
+                                                placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
+                                            <input type="date"  class="hide-input"value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" style="display: none;"
                                                 oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                         </div>
                                     </div>

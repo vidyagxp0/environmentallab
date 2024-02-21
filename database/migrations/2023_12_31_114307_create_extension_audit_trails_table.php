@@ -21,6 +21,8 @@ return new class extends Migration
             $table->longText('current')->nullable();
             $table->longText('comment')->nullable();
             $table->string('user_id');
+            $table->text('refrence_record')->nullable();
+            $table->string('initiated_through')->nullable();
             $table->string('user_name');
             $table->string('origin_state');
             $table->string('user_role');

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('record')->nullable();
             $table->integer('initiator_id')->nullable();
             $table->text('intiation_date')->nullable();
+            $table->text('due_date')->nullable();
             $table->text('revised_date')->nullable();
             $table->string('division_id')->nullable();
             $table->text('short_description')->nullable();
@@ -30,6 +31,8 @@ return new class extends Migration
             $table->text('approver')->nullable();
             $table->text('approver_comments')->nullable();
             $table->string('type')->nullable();
+            $table->text('refrence_record')->nullable();
+            $table->string('initiated_through')->nullable();
             $table->string('submitted_on')->nullable();
             $table->string('cancelled_on')->nullable();
             $table->string('submitted_by')->nullable();

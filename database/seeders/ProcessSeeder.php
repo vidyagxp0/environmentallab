@@ -214,6 +214,11 @@ class ProcessSeeder extends Seeder
 
         $process  = new QMSProcess();
         $process->division_id = 1;
+        $process->process_name = "Extension";
+        $process->save();
+
+        $process  = new QMSProcess();
+        $process->division_id = 1;
         $process->process_name = "Root Cause Analysis";
         $process->save();
 
@@ -262,6 +267,11 @@ class ProcessSeeder extends Seeder
         $process  = new QMSProcess();
         $process->division_id = 2;
         $process->process_name = "Risk Assessment";
+        $process->save();
+
+        $process  = new QMSProcess();
+        $process->division_id = 2;
+        $process->process_name = "Extension";
         $process->save();
 
         $process  = new QMSProcess();
@@ -317,6 +327,10 @@ class ProcessSeeder extends Seeder
         $process->process_name = "Risk Assessment";
         $process->save();
 
+        $process  = new QMSProcess();
+        $process->division_id = 3;
+        $process->process_name = "Extension";
+        $process->save();
         $process  = new QMSProcess();
         $process->division_id = 3;
         $process->process_name = "Root Cause Analysis";
@@ -476,6 +490,10 @@ class ProcessSeeder extends Seeder
         $process  = new QMSProcess();
         $process->division_id = 6;
         $process->process_name = "Risk Assessment";
+        $process->save();
+        $process  = new QMSProcess();
+        $process->division_id = 6;
+        $process->process_name = "Extension";
         $process->save();
 
         $process  = new QMSProcess();
