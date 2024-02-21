@@ -66,6 +66,8 @@ function addMultipleFiles(input, block_id) {
 
     <script>
         function addAuditAgenda(tableId) {
+            var users = @json($users);
+            console.log(users)
             var table = document.getElementById(tableId);
             var currentRowCount = table.rows.length;
             var newRow = table.insertRow(currentRowCount);
@@ -77,7 +79,7 @@ function addMultipleFiles(input, block_id) {
             cell2.innerHTML = "<input type='text'>";
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML =  '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+            cell3.innerHTML =  '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell4 = newRow.insertCell(3);
             cell4.innerHTML = "<input type='time'>";
@@ -90,12 +92,24 @@ function addMultipleFiles(input, block_id) {
             cell6.innerHTML = "<input type='time'>";
 
             var cell7 = newRow.insertCell(6);
-            cell7.innerHTML =
-                '<select name="auditor"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+           
+                var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+                    for (var i = 0; i < users.length; i++) {
+                        userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+                    userHtml +='</select>';
+            
+                    cell7.innerHTML = userHtml;
 
             var cell8 = newRow.insertCell(7);
-            cell8.innerHTML =
-                '<select name="auditee"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+            
+                var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+                    for (var i = 0; i < users.length; i++) {
+                        userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+                    userHtml +='</select>';
+            
+                    cell8.innerHTML = userHtml;
 
             var cell9 = newRow.insertCell(8);
             cell9.innerHTML = "<input type='text'>";
