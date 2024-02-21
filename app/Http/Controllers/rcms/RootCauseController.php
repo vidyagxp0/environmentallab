@@ -752,6 +752,33 @@ use Illuminate\Support\Facades\Hash;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
         $root->investigators =  implode(',', $request->investigators);
+        $root->submitted_by = ($request->submitted_by);
+        $root->Root_Cause_Category = ($request->Root_Cause_Category);
+        $root->Root_Cause_Sub_Category = ($request->Root_Cause_Sub_Category);
+        $root->Probability = ($request->Probability);
+        $root->Remarks = ($request->Remarks);
+
+        $root->why_1 = json_encode($request->why_1);
+        $root->why_2 = json_encode($request->why_2);
+        $root->why_3 = json_encode($request->why_3);
+        $root->why_4 = json_encode($request->why_4);
+        $root->why_5 = json_encode($request->why_5);
+
+
+        if (!empty($request->Root_Cause_Category  )) {
+            $root->Root_Cause_Category = serialize($request->Root_Cause_Category);
+        }
+        if (!empty($request->Root_Cause_Sub_Category)) {
+            $root->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
+        }
+        if (!empty($request->Probability)) {
+            $root->Probability = serialize($request->Probability);
+        }
+        if (!empty($request->Remarks)) {
+            $root->Remarks = serialize($request->Remarks);
+        }
+
+        // $root->investigators =  implode(',', $request->investigators);
 
         if (!empty($request->attachments)) {
             $files = [];
@@ -999,6 +1026,143 @@ use Illuminate\Support\Facades\Hash;
             $history->save();
         }
 
+        // =-------------------------------
+       
+        $data2 = RiskAssesmentGrid::where('type','fishbone')->where('risk_id',$id)->first();
+        if(empty( $data2)){
+            $data2 = new RiskAssesmentGrid();
+        } 
+        $data2->risk_id = $root->id;
+        $data2->type = "fishbone";
+
+        if (!empty($request->measurement)) {
+            $data2->measurement = serialize($request->measurement);
+        }
+        if (!empty($request->materials)) {
+            $data2->materials = serialize($request->materials);
+        }
+        if (!empty($request->methods)) {
+            $data2->methods = serialize($request->methods);
+        }
+        if (!empty($request->environment)) {
+            $data2->environment = serialize($request->environment);
+        }
+        if (!empty($request->manpower)) {
+            $data2->manpower = serialize($request->manpower);
+        }
+        if (!empty($request->machine)) {
+            $data2->machine = serialize($request->machine);
+        }
+        if (!empty($request->problem_statement)) {
+            $data2->problem_statement = $request->problem_statement;
+        }
+        $data2->save();
+
+
+        $data3 = RiskAssesmentGrid::where('type','why_chart')->where('risk_id',$id)->first();
+        if(empty( $data3)){
+            $data3 = new RiskAssesmentGrid();
+        } 
+        $data3->risk_id = $root->id;
+        $data3->type = "why_chart";
+        if (!empty($request->why_problem_statement)) {
+            $data3->why_problem_statement = $request->why_problem_statement;
+        }
+        if (!empty($request->why_1)) {
+            $data3->why_1 = serialize($request->why_1);
+        }
+        if (!empty($request->why_2)) {
+            $data3->why_2 = serialize($request->why_2);
+        }
+        if (!empty($request->why_3)) {
+            $data3->why_3 = serialize($request->why_3);
+        }
+        if (!empty($request->why_4)) {
+            $data3->why_4 = serialize($request->why_4);
+        }
+        if (!empty($request->why_5)) {
+            $data3->why_5 = serialize($request->why_5);
+        }
+        if (!empty($request->why_root_cause)) {
+            $data3->why_root_cause = $request->why_root_cause;
+        }
+        $data3->save();
+
+        $data4 = RiskAssesmentGrid::where('type','what_who_where')->where('risk_id',$id)->first();
+        if(empty( $data4)){
+            $data4 = new RiskAssesmentGrid();
+        } 
+
+       
+         $data4->risk_id = $root->id;
+         $data4->type = "what_who_where";
+         if (!empty($request->what_will_be)) {
+             $data4->what_will_be = $request->what_will_be;
+         }
+         if (!empty($request->what_will_not_be)) {
+             $data4->what_will_not_be = $request->what_will_not_be;
+         }
+         if (!empty($request->what_rationable)) {
+             $data4->what_rationable = $request->what_rationable;
+         }
+         if (!empty($request->where_will_be)) {
+             $data4->where_will_be = $request->where_will_be;
+         }
+         if (!empty($request->where_will_not_be)) {
+             $data4->where_will_not_be = $request->where_will_not_be;
+         }
+         if (!empty($request->where_rationable)) {
+             $data4->where_rationable = $request->where_rationable;
+         }
+         if (!empty($request->coverage_will_be)) {
+             $data4->coverage_will_be = $request->coverage_will_be;
+         }
+         if (!empty($request->coverage_will_not_be)) {
+             $data4->coverage_will_not_be = $request->coverage_will_not_be;
+         }
+         if (!empty($request->coverage_rationable)) {
+             $data4->coverage_rationable = $request->coverage_rationable;
+         }
+         if (!empty($request->who_will_be)) {
+             $data4->who_will_be = $request->who_will_be;
+         }
+         if (!empty($request->who_will_not_be)) {
+             $data4->who_will_not_be = $request->who_will_not_be;
+         }
+         if (!empty($request->who_rationable)) {
+             $data4->who_rationable = $request->who_rationable;
+         } if (!empty($request->when_will_be)) {
+             $data4->when_will_be = $request->when_will_be;
+         }
+          if (!empty($request->when_will_not_be)) {
+             $data4->when_will_not_be = $request->when_will_not_be;
+         }
+          if (!empty($request->when_rationable)) {
+             $data4->when_rationable = $request->when_rationable;
+         }
+         $data4->save();
+
+
+         $data5 = RiskAssesmentGrid::where('type','grid1')->where('risk_id',$id)->first();
+        if(empty( $data5)){
+            $data5 = new RiskAssesmentGrid();
+        } 
+         
+         $data5->risk_id = $root->id;
+         $data5->type = "grid1";
+         if (!empty($request->Root_Cause_Category  )) {
+             $data5->Root_Cause_Category = serialize($request->Root_Cause_Category);
+         }
+         if (!empty($request->Root_Cause_Sub_Category)) {
+             $data5->Root_Cause_Sub_Category= serialize($request->Root_Cause_Sub_Category);
+         }
+         if (!empty($request->Probability)) {
+             $data5->Probability = serialize($request->Probability);
+         }
+         if (!empty($request->Remarks)) {
+             $data5->Remarks = serialize($request->Remarks);
+         }
+         $data5->save();
 
         toastr()->success("Record is update Successfully");
         return back();
