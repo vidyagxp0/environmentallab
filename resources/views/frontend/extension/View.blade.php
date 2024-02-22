@@ -1,5 +1,34 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
+<style>
+    header .header_rcms_bottom {
+        display: none;
+    }
+
+    .calenderauditee {
+        position: relative;
+    }
+
+    .new-date-data-field .input-date input.hide-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+
+    .new-date-data-field input {
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 5px 15px;
+        display: block;
+        width: 100%;
+        background: white;
+    }
+
+    .calenderauditee input::-webkit-calendar-picker-indicator {
+        width: 100%;
+    }
+</style>
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -134,7 +163,7 @@
                                         </div>
 
 
-                                        <div class="col-md-6">
+                                        {{-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Current Parent Due Date <span
                                                         class="text-danger"></span></label>
@@ -142,15 +171,38 @@
                                                 <input  type="text" name="intiation_date"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}">
                                             </div>
-                                        </div>
-                                        <div class="col-md-6">
+                                        </div> --}}
+                                        {{-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Revised Due Date <span
                                                         class="text-danger"></span></label>
                                                 <input disabled type="text" name="intiation_date"
                                                     value="{{ Helpers::getdateFormat($data->revised_date) }}">
                                             </div>
+                                        </div> --}}
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Date Due">Current Parent Due Date</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="due_date" readonly
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="due_date" value="{{ $data->due_date }}" value="{{ Helpers::getdateFormat($data->due_date) }}" class="hide-input"
+                                                        oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Date Due">Revised Due Date</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="revised_date" readonly
+                                                        placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="revised_date" value="{{ $data->revised_date }}" value="{{ Helpers::getdateFormat($data->revised_date) }}" class="hide-input"
+                                                        oninput="handleDateInput(this, 'revised_date')" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Desccription">Short Description <span

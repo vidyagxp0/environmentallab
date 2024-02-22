@@ -53,7 +53,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
             </div>
 
-            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">\
                 @csrf
                 <div id="step-form">
 
@@ -91,7 +91,7 @@
                                     </div>
                                 </div>
 
-                                  <div class="col-lg-6">
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to1">Assigned To</label>
                                         <select name="assign_to">
@@ -367,8 +367,8 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="date_Response_due" id="date_Response_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'date_Response_due')" />
+                                            <input type="date" id="date_Response_due_checkdate" class="hide-input"
+                                                oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -378,8 +378,8 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="capa_date_due" id="date_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'date_due')" />
+                                            <input type="date" id="date_due_checkdate" class="hide-input"
+                                                oninput="handleDateInput(this, 'date_due');checkDate('actual_start_date_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -596,9 +596,9 @@
                                     <div class="group-input input-date">
                                         <label for="actual_start_date">Actual Start Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="actual_start_date" 
+                                            <input type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="actual_start_date" name="actual_start_date" class="hide-input"
+                                            <input type="date" id="actual_start_date_checkdate" name="actual_start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -609,7 +609,7 @@
                                         <div class="calenderauditee">
                                         <input type="text" id="actual_end_date"                             
                                                 placeholder="DD-MMM-YYYY" />
-                                             <input type="date" id="actual_end_date" name="actual_end_date" class="hide-input"
+                                             <input type="date" id="actual_end_date_checkdate" name="actual_end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                    
@@ -863,7 +863,9 @@
                                 }
 
                                 html += '</select></td>' +
-                                '<td><input type="date" name="deadline[]"></td>' +
+                                // '<td><input type="date" name="deadline[]"></td>' +
+                                                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+
                                 '<td><input type="text" name="item_static[]"></td>' +
                                 '</tr>';
 

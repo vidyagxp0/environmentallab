@@ -116,7 +116,7 @@
                                  {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="due-date">Current Parent Due Date<span class="text-danger"></span></label> --}}
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Current Parent Due Date<span class="text-danger"></span></label>
                                 <div class="col-md-6">
@@ -126,11 +126,11 @@
                                         <input  type="text"
                                             value="{{ Helpers::getdateFormat($due_date) }}">  --}}
                                         <!-- {{-- <div class="static"> {{ $due_date }}</div> --}} -->
-                                        <input  type="date"
+                                        {{-- <input  type="date"
                                             value="{{ Helpers::getdateFormat($parent_due_date) }}" name="due_date">
                                         <input type="hidden" value="{{ $parent_due_date }}" name="due_date">
 
-                                    </div> --}}
+                                    </div> --}} 
                                    
                                 {{-- <div class="col-md-6">
                                     <div class="group-input">
@@ -139,10 +139,10 @@
                                         <input  type="text"
                                             value="{{ Helpers::getdateFormat($due_date) }}">  --}}
                                         {{-- <div class="static"> {{ $due_date }}</div> --}}
-                                        <input  type="date" min="{{ $parent_due_date }}"
+                                        {{-- <input  type="date" min="{{ $parent_due_date }}"
                                             value="" name="revised_date">
-                                    </div>
-                                </div> --}} 
+                                    </div> --}}
+                            
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Desccription">Short Description <span
