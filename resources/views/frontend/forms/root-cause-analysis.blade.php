@@ -856,17 +856,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_by">Completed By</label>
-                                     {{ Helpers::getInitiatorName(session()->get('division'))}}
-
                                 
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_on">Completed On</label>
-                                        {{-- <input type="text" name="completed_on" disabled /> --}}
-                                     {{ date('d-m-Y')}}
-                                    </div>
+                                        <div class="Date"></div>
                             </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -877,7 +873,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Acknowledge_On">Acknowledge On</label>
-                                            <div class="static"></div>
+                                            <div class="Date"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

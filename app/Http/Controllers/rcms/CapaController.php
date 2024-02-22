@@ -812,33 +812,33 @@ class CapaController extends Controller
         // }
 
         // // --------------------------
-        // if ($request->material_name) {
-        //     $data2 = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
-        //     $data2->capa_id = $capa->id;
-        //     $data2->type = "Material_Details";
-        //     if (!empty($request->material_name)) {
-        //         $data2->material_name = serialize($request->material_name);
-        //     }
-        //     if (!empty($request->material_batch_no)) {
-        //         $data2->batch_no = serialize($request->material_batch_no);
-        //     }
-        //     if (!empty($request->material_mfg_date)) {
-        //         $data2->mfg_date = serialize($request->material_mfg_date);
-        //     }
-        //     if (!empty($request->material_batch_desposition)) {
-        //         $data2->batch_desposition = serialize($request->material_batch_desposition);
-        //     }
-        //     if (!empty($request->material_batch_status)) {
-        //         $data1->batch_status = serialize($request->material_batch_status);
-        //     }
-        //     if (!empty($request->material_expiry_date)) {
-        //         $data2->expiry_date = serialize($request->material_expiry_date);
-        //     }
-        //     if (!empty($request->material_remark)) {
-        //         $data1->remark = serialize($request->material_remark);
-        //     }
-        //     $data2->update();
-        // }
+        if ($request->material_name) {
+            $data2 = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
+            $data2->capa_id = $capa->id;
+            $data2->type = "Material_Details";
+            if (!empty($request->material_name)) {
+                $data2->material_name = serialize($request->material_name);
+            }
+            if (!empty($request->material_batch_no)) {
+                $data2->batch_no = serialize($request->material_batch_no);
+            }
+            if (!empty($request->material_mfg_date)) {
+                $data2->mfg_date = serialize($request->material_mfg_date);
+            }
+            if (!empty($request->material_batch_desposition)) {
+                $data2->batch_desposition = serialize($request->material_batch_desposition);
+            }
+            if (!empty($request->material_batch_status)) {
+                $data2->batch_status = serialize($request->material_batch_status);
+            }
+            if (!empty($request->material_expiry_date)) {
+                $data2->expiry_date = serialize($request->material_expiry_date);
+            }
+            if (!empty($request->material_remark)) {
+                $data2->remark = serialize($request->material_remark);
+            }
+            $data2->update();
+        }
 
 
         // // ----------------------------------------
@@ -1386,6 +1386,35 @@ class CapaController extends Controller
             return back();
         }
     }
+  
+    public function capa_qa_more_info(Request $request, $id)
+    {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+            $capa = Capa::find($id);
+
+
+            $capa->stage = "2";
+            $capa->status = "Pending CAPA Plan";
+            $capa->cancelled_by = Auth::user()->name;
+            $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+            $capa->update();
+            $history = new CapaHistory();
+            $history->type = "Capa";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $capa->stage;
+            $history->status = $capa->status;
+            $capa->qa_more_info_required_by = Auth::user()->name;
+            $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+            $history->save();
+            toastr()->success('Document Sent');
+            return back();
+        } else {
+            toastr()->error('E-signature Not match');
+            return back();
+        }
+    }
 
     public function capa_reject(Request $request, $id)
     {
@@ -1406,6 +1435,21 @@ class CapaController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $capa->stage;
                 $history->status = "Opened";
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($capa->stage == 3) {
+                $capa->stage = "2";
+                $capa->status = "Pending CAPA Plan<";
+                $capa->update();
+                $history = new CapaHistory();
+                $history->type = "Capa";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $capa->stage;
+                $history->status = "Pending CAPA Plan<";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
