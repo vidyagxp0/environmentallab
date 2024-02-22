@@ -368,10 +368,10 @@
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}" 
-                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                    name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                     <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
@@ -525,6 +525,9 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <!-- ----------------------------------Audit program grid----------------------------------- -->
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="audit-program-grid">
@@ -603,15 +606,8 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                        </div>
-                                        <!-- <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="Short Description"><b>Short Description <span
-                                                            class="text-danger">*</span></b></label>
-                                                            <div><small class="text-primary">Please mention brief summary</small></div>
-                                                <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                            </div>
-                                        </div> -->
+                        </div>
+
                             
                                         <div class="col-12">
                                             <div class="group-input">
