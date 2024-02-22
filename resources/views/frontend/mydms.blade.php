@@ -1658,12 +1658,29 @@
                             @php
                                 $division = DB::table('divisions')->get();
                             @endphp
+                            <style>
+                                #division-modal .tab a.active {
+                                    background-color: #23a723 !important;
+                                    color: white !important;
+                                }
+                            </style>
                             @foreach ($division as $temp)
-                                <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
+                            <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
+                            <a style="display: block;
+                            background-color: inherit;
+                            color: black;
+                            padding: 5px 10px;
+                            width: 100%;
+                            border: none;
+                            outline: none;
+                            text-align: left;
+                            cursor: pointer;
+                            transition: 0.3s;" class="divisionlinks"
+                                onclick="openDivision(event, {{ $temp->id }})">{{ $temp->name }}</a>
+                                {{-- <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
                                 <button class="divisionlinks"
-                                    onclick="openDivision(event, {{ $temp->id }})">{{ $temp->name }}</button>
+                                    onclick="openDivision(event, {{ $temp->id }})">{{ $temp->name }}</button> --}}
                             @endforeach
-
                         </div>
                         @php
                             $process = DB::table('processes')->get();
@@ -1677,7 +1694,7 @@
                                 @endphp
                                 @foreach ($pro as $test)
                                     <label for="process">
-                                        <input type="radio" for="process" value="{{ $test->id }}"
+                                        <input type="radio" class="process_id_reset" for="process" value="{{ $test->id }}"
                                             name="process_id" required> {{ $test->process_name }}
                                     </label>
                                 @endforeach
@@ -1686,8 +1703,14 @@
 
                     </div>
                     <div class="button-container">
-                        <button id="submit-division">Cancel</button>
-                        <button id="submit-division" type="submit">Continue</button>
+                        <a href="/mydms" style="border: 1px solid grey;
+                        letter-spacing: 1px;
+                        font-size: 0.9rem;
+                        padding: 3px 10px;
+                        background: black;
+                        color: white;">Cancel</a>
+                        {{-- <button id="submit-division">Cancel</button> --}}
+                        <button type="submit">Continue</button>
                     </div>
                 </form>
             </div>

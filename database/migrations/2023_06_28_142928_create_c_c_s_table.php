@@ -29,29 +29,29 @@ return new class extends Migration
             $table->longText('Initiator_Group')->nullable();
             $table->longText('initiator_group_code')->nullable();
             $table->string('repeat')->nullable();
-            $table->string('repeat_nature')->nullable();
+            $table->longText('repeat_nature')->nullable();
             $table->integer('assign_to')->nullable();
             $table->string('due_date')->nullable();
             // $table->string('training_required')->default('No');
 
             $table->string('doc_change')->nullable();
-            $table->string('If_Others')->nullable();
+            $table->longText('If_Others')->nullable();
             $table->string('Division_Code')->nullable();
             $table->string('in_attachment')->nullable();
-            $table->string('current_practice')->nullable();
-            $table->string('proposed_change')->nullable();
-            $table->string('reason_change')->nullable();
-            $table->string('other_comment')->nullable();
-            $table->string('supervisor_comment')->nullable();
+            $table->longText('current_practice')->nullable();
+            $table->longText('proposed_change')->nullable();
+            $table->longText('reason_change')->nullable();
+            $table->longText('other_comment')->nullable();
+            $table->longText('supervisor_comment')->nullable();
             $table->string('type_chnage')->nullable();
-            $table->string('qa_comments')->nullable();
+            $table->longText('qa_comments')->nullable();
             $table->string('related_records')->nullable();
             $table->string('qa_head')->nullable();
 
-            $table->string('qa_eval_comments')->nullable();
+            $table->longText('qa_eval_comments')->nullable();
             $table->string('qa_eval_attach')->nullable();
             $table->string('training_required')->nullable();
-            $table->string('train_comments')->nullable();
+            $table->longText('train_comments')->nullable();
 
             $table->string('Microbiology')->nullable(); 
             $table->text('Microbiology_Person')->nullable();
@@ -64,37 +64,37 @@ return new class extends Migration
             $table->string('Bd_Person')->nullable();
             $table->string('additional_attachments')->nullable();
 
-            $table->string('cft_comments')->nullable();
+            $table->longText('cft_comments')->nullable();
             $table->string('cft_attchament')->nullable();
-            $table->string('qa_commentss')->nullable();
-            $table->string('designee_comments')->nullable();
-            $table->string('Warehouse_comments')->nullable();
-            $table->string('Engineering_comments')->nullable();
-            $table->string('Instrumentation_comments')->nullable();
-            $table->string('Validation_comments')->nullable();
-            $table->string('Others_comments')->nullable();
-            $table->string('Group_comments')->nullable();
+            $table->longText('qa_commentss')->nullable();
+            $table->longText('designee_comments')->nullable();
+            $table->longText('Warehouse_comments')->nullable();
+            $table->longText('Engineering_comments')->nullable();
+            $table->longText('Instrumentation_comments')->nullable();
+            $table->longText('Validation_comments')->nullable();
+            $table->longText('Others_comments')->nullable();
+            $table->longText('Group_comments')->nullable();
             $table->string('group_attachments')->nullable();
             
-            $table->string('risk_identification')->nullable();
+            $table->longText('risk_identification')->nullable();
             $table->string('severity')->nullable();
             $table->string('Occurance')->nullable();
             $table->string('Detection')->nullable();
             $table->string('RPN')->nullable();
-            $table->string('risk_evaluation')->nullable();
-            $table->string('migration_action')->nullable();
+            $table->longText('risk_evaluation')->nullable();
+            $table->longText('migration_action')->nullable();
 
-            $table->string('qa_appro_comments')->nullable();
-            $table->string('feedback')->nullable();
+            $table->longText('qa_appro_comments')->nullable();
+            $table->longText('feedback')->nullable();
             $table->string('tran_attach')->nullable();
 
-            $table->string('qa_closure_comments')->nullable();
+            $table->longText('qa_closure_comments')->nullable();
             $table->string('attach_list')->nullable();
             $table->string('effective_check')->nullable();
             $table->string('effective_check_date')->nullable();
             $table->string('Effectiveness_checker')->nullable();
             $table->string('effective_check_plan')->nullable();
-            $table->string('due_date_extension')->nullable();
+            $table->longText('due_date_extension')->nullable();
 
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
