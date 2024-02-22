@@ -1,5 +1,8 @@
 @extends('frontend.layout.main')
 @section('container')
+@php
+        $users = DB::table('users')->get();
+    @endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -24,6 +27,48 @@
             }
         }
     </script>
+      <!-- <script>
+        $(document).ready(function() {
+            $('#material').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    console.log(users);
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '"></td>' +
+                        '<td><input type="text" name="material_name[]"></td>' +
+                        '<td><input type="text" name="material_batch_no[]"></td>' +
+                       
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+
+                        
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                        
+                        '<td><input type="text" name="material_batch_desposition[]"></td>' +
+                        '<td><input type="text" name="material_remark[]"></td>' +
+                        '<td><select name="material_batch_status[]">' +
+                        '<option value="">Select a value</option>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+                      
+                     
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#material tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script> -->
 
     <div class="form-field-head">
 
@@ -39,9 +84,7 @@
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
-    @php
-        $users = DB::table('users')->get();
-    @endphp
+  
     <div id="change-control-fields">
         <div class="container-fluid">
 
@@ -450,8 +493,30 @@
                                                         <option value="DCAU0036">DCAU0036</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="date" name="product_mfg_date[]"></td>
-                                                <td><input type="date" name="product_expiry_date[]"></td>
+                                                <!-- <td><input type="date" name="product_mfg_date[]"></td>
+                                                <td><input type="date" name="product_expiry_date[]"></td> -->
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div  class="calenderauditee">
+                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                 oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
                                                 <td><input type="text" name="product_batch_desposition[]"></td>
                                                 <td><input type="text" name="product_remark[]"></td>
                                                 <td>
@@ -522,8 +587,31 @@
                                                         <option value="DCAU0036">DCAU0036</option>
                                                     </select>
                                                 </td>
-                                                <td><input type="date" name="material_mfg_date[]"></td>
-                                                <td><input type="date" name="material_expiry_date[]"></td>
+                                                <!-- <td><input type="date" name="material_mfg_date[]"></td>
+                                                <td><input type="date" name="material_expiry_date[]"></td> -->
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div class="calenderauditee">
+                                                                <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td> 
+                                                <td>
+                                                    <div class="group-input new-date-data-field mb-0">
+                                                        <div class="input-date ">
+                                                            <div  class="calenderauditee">
+                                                                <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                 oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
@@ -556,16 +644,16 @@
                                                     <th>Equipment/Instruments Comments</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
+                                            
 
-                                            </tbody>
-                                            {{-- <tbody>
+                                            
+                                         <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="equipment[]"></td>
                                                 <td><input type="text" name="equipment_instruments[]"></td>
                                                 <td><input type="text" name="equipment_comments[]"></td>
-                                            </tbody> --}}
+                                            </tbody> 
                                         </table>
                                     </div>
                                 </div>

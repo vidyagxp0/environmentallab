@@ -25,6 +25,13 @@ return new class extends Migration
             $table->text('expiry_date')->nullable();
             $table->text('remark')->nullable();
             $table->string('material_name')->nullable();
+            $table->string('material_batch_no')->nullable();
+            $table->text('material_mfg_date')->nullable();
+            $table->text('material_expiry_date')->nullable();
+            $table->text('material_batch_desposition')->nullable();
+            $table->string('material_remark')->nullable();
+            $table->string('material_batch_status')->nullable();
+
             $table->text('number')->nullable();
             $table->text('equipment')->nullable();
             $table->text('equipment_instruments')->nullable();

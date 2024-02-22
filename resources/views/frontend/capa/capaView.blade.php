@@ -115,7 +115,7 @@
                             <!-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> -->
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 Reject
                             </button>
                         @elseif($data->stage == 5)
@@ -251,7 +251,7 @@
                                                 <label for="search">
                                                     Assigned To <span class="text-danger"></span>
                                                 </label>
-                                                <select id="select-state" placeholder="Select..." name="assign_to">
+                                                <select id="select-state" placeholder="Select..." name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} >
                                                     <option value="">Select a value</option>
                                                     @foreach ($users as $value)
                                                         <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
@@ -370,7 +370,7 @@
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
@@ -606,8 +606,8 @@
                                                             <td><input type="text" name="batch_no[]"
                                                                     value="{{ unserialize($data1->batch_no)[$key] ? unserialize($data1->batch_no)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="mfg_date[]"
-                                                                    value="{{ unserialize($data1->mfg_date)[$key] ? unserialize($data1->mfg_date)[$key] : '' }}">
+                                                            <td><input type="text" name="material_mfg_date[]"
+                                                                    value="{{ unserialize($data1->material_mfg_date)[$key] ? unserialize($data1->material_mfg_date)[$key] : '' }}">
                                                             </td>
                                                             <td><input type="text" name="expiry_date[]"
                                                                     value="{{ unserialize($data1->expiry_date)[$key] ? unserialize($data1->expiry_date)[$key] : '' }}">
@@ -635,15 +635,15 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Material Details">
-                                                    Material Details<button type="button" name="ann"
+                                                    Material Details<button type="button" name="ann" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                     id="material"
-                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                       >+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="material_details">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
-                                                            <th>Product Name</th>
+                                                            <th>Material Name</th>
                                                             <th>Batch No./Lot No./AR No.</th>
                                                             <th>Manufacturing Date</th>
                                                             <th>Date Of Expiry</th>
@@ -656,45 +656,45 @@
                                                         @if ($data2->material_name)
                                                         @foreach (unserialize($data2->material_name) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"
+                                                            <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ $key + 1 }}"></td>
-                                                            {{-- <td><input type="text" name="product_name[]"
+                                                            <!-- {{-- <td><input type="text" name="product_name[]"
                                                                     value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
-                                                            </td> --}}
-                                                            <td><input type="text" name="product_name[]"
+                                                            </td> --}} -->
+                                                            <td><input type="text" name="material_name[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                 value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
                                                         </td>
-                                                            <td><input type="text" name="batch_no[]"
-                                                                    value="{{ unserialize($data2->batch_no)[$key] ? unserialize($data2->batch_no)[$key] : '' }}">
+                                                            <td><input type="text" name="material_batch_no[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                                    value="{{ unserialize($data2->material_batch_no)[$key] ? unserialize($data2->material_batch_no)[$key] : '' }}">
                                                             </td>
-                                                            {{-- <td><input type="text" name="mfg_date[]"
-                                                                    value="{{ unserialize($data2->mfg_date)[$key] ? unserialize($data2->mfg_date)[$key] : '' }}">
+                                                            <!-- {{-- <td><input type="text" name="material_mfg_date[]"
+                                                                    value="{{ unserialize($data2->material_mfg_date)[$key] ? unserialize($data2->material_mfg_date)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="expiry_date[]"
-                                                                    value="{{ unserialize($data2->expiry_date)[$key] ? unserialize($data2->expiry_date)[$key] : '' }}">
-                                                            </td> --}}
+                                                            <td><input type="text" name="material_expiry_date[]"
+                                                                    value="{{ unserialize($data2->material_expiry_date)[$key] ? unserialize($data2->material_expiry_date)[$key] : '' }}">
+                                                            </td> --}} -->
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
-                                                                <input type="text" id="mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->mfg_date)[$key]) }}" />
-                                                                <input type="date" name="mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->mfg_date)[$key]) }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `mfg_date' + serialNumber +'`)" /></div></div></div></td>'
+                                                                <input type="text" id="mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" />
+                                                                <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input" 
+                                                                oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td>'
 
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date "><div
                                                                      class="calenderauditee">
-                                                                    <input type="text" id="expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->expiry_date)[$key]) }}" />
-                                                                    <input type="date" name="expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->expiry_date)[$key]) }}" class="hide-input" 
-                                                                    oninput="handleDateInput(this, `expiry_date' + serialNumber +'`)" /></div></div></div></td>'
-                                                            <td><input type="text" name="batch_desposition[]"
-                                                                    value="{{ unserialize($data2->batch_desposition)[$key] ? unserialize($data2->batch_desposition)[$key] : '' }}">
+                                                                    <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
+                                                                    <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input" 
+                                                                    oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td>'
+                                                            <td><input type="text" name="material_batch_desposition[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                                    value="{{ unserialize($data2->material_batch_desposition)[$key] ? unserialize($data2->material_batch_desposition)[$key] : '' }}">
                                                             </td>
-                                                            {{-- <td><input type="text" name="remark[]"
-                                                                    value="{{ unserialize($data2->remark)[$key] ? unserialize($data2->remark)[$key] : '' }}">
-                                                            </td> --}}
-                                                            {{-- <td><input type="text" name="batch_status[]"
-                                                                    value="{{ unserialize($data2->batch_status)[$key] ? unserialize($data2->batch_status)[$key] : '' }}">
-                                                            </td> --}}
+                                                             <td><input type="text" name="material_remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                                    value="{{ unserialize($data2->material_remark)[$key] ? unserialize($data2->material_remark)[$key] : '' }}">
+                                                            </td>
+                                                             <td><input type="text" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                                    value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}">
+                                                            </td> 
                                                         </tr>
                                                     @endforeach
                                                         @endif
@@ -726,16 +726,16 @@
                                                         @if ($data3->equipment)
                                                         @foreach (unserialize($data3->equipment) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"
+                                                            <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ $key + 1 }}"></td>
 
-                                                            <td><input type="text" name="equipment[]"
+                                                            <td><input type="text" name="equipment[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment)[$key] ? unserialize($data3->equipment)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="equipment_instruments[]"
+                                                            <td><input type="text" name="equipment_instruments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_instruments)[$key] ? unserialize($data3->equipment_instruments)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="equipment_comments[]"
+                                                            <td><input type="text" name="equipment_comments[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data3->equipment_comments)[$key] ? unserialize($data3->equipment_comments)[$key] : '' }}">
                                                             </td>
                                                         </tr>

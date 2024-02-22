@@ -1211,6 +1211,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
     font-weight: bold;
 }
 #cft-modal .group-input label,
+#modal1 .group-input label,
 #signature-modal .group-input label,
 #rejection-modal .group-input label,
 #cancel-modal .group-input label {
@@ -1221,6 +1222,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 }
 #cft-modal .group-input input,
 #cft-modal .group-input select,
+#modal1 .group-input input,
+#modal1 .group-input select,
 #signature-modal .group-input input,
 #signature-modal .group-input select,
 #rejection-modal .group-input input,
@@ -1232,7 +1235,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
     border-radius: 5px;
     margin-bottom: 20px;
 }
-
+#modal1 .modal-footer button,
 #signature-modal .modal-footer button,
 #rejection-modal .modal-footer button,
 #cancel-modal .modal-footer button {
