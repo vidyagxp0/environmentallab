@@ -93,7 +93,7 @@
                                                     <tr>
                                                         <td class="pr-id" style="text-decoration:underline"><a
                                                                 href="{{ route('documents.edit', $doc->id) }}">
-                                                                <center> 000{{ $doc->id }}</center>
+                                                                000{{ $doc->id }}
                                                             </a>
                                                         </td>
                                                         <td class="division">

@@ -7,19 +7,19 @@
         <div class="container-fluid">
             <div class="dashboard-container">
                 <div class="row">
-                    <div class="col-xl-9 col-lg-9">
+                    <div class="col-xl-12 col-lg-12">
                         <div class="document-left-block">
                             <div class="inner-block table-block">
-                                <div class="head">
+                                {{-- <div class="head">
                                     Records
                                     <i class="fa-solid fa-angle-right"></i>&nbsp;<i class="fa-solid fa-angle-right"></i>
                                     {{count($task)}} Results
-                                </div>
+                                </div> --}}
                                 <div class="table-list">
                                     <table class="table table-bordered">
                                         <thead>
                                             <th class="pr-id">
-                                                SOP-ID
+                                                ID
                                             </th>
                                             <th class="division">
                                                 SOP Type
@@ -48,7 +48,7 @@
                                             <tr>
                                                 <td class="pr-id" style="text-decoration:underline">
                                                     <a href="#">
-                                                        SOP-{{$temp->id}}
+                                                        000{{$temp->id}}
                                                     </a>
                                                 </td>
                                                 <td class="division">
@@ -97,7 +97,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-lg-3">
+                    {{-- <div class="col-xl-3 col-lg-3">
                         <div class="document-right-block">
                             <div class="inner-block recent-record">
                                 <div class="head">
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>

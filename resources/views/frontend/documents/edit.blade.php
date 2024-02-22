@@ -45,6 +45,14 @@
                                     <div class="default-name"> {{ $document->date }}</div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for="Division Code"><b>Site/Location Code</b></label>
+                                    <input disabled type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName($document->division_id) }}">
+                                    {{-- <div class="static">QMS-North America</div> --}}
+                                </div>
+                            </div>
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="document_name-desc">Document Name*</label>
@@ -89,14 +97,7 @@
                                 </div>
 
                             @endif
-                            <div class="col-lg-12">
-                                <div class="group-input">
-                                    <label for="Division Code"><b>Site/Location Code</b></label>
-                                    <input disabled type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName($document->division_id) }}">
-                                    {{-- <div class="static">QMS-North America</div> --}}
-                                </div>
-                            </div>
+                           
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="short-desc">Short Description*</label>
@@ -156,7 +157,39 @@
                                                             <option @if ($document->sop_type =='Others') selected @endif
                                                                 value="Others">Others</option>
                                     </select>
+                                    @foreach ($history as $tempHistory)
+                                    @if (
+                                        $tempHistory->activity_type == 'SOP Type' &&
+                                            !empty($tempHistory->comment) &&
+                                            $tempHistory->user_id == Auth::user()->id)
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+                                        <p style="color: blue">Modify by {{ $users_name }} at
+                                            {{ $tempHistory->created_at }}
+                                        </p>
+                                        <input class="input-field"
+                                            style="background: #ffff0061;
+                                        color: black;"
+                                            type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                    @endforeach
                                 </div>
+                                @if (Auth::user()->role != 3)
+
+                                {{-- Add Comment  --}}
+                                <div class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                            at {{ date('d-M-Y h:i:s') }}</p>
+
+                                        <input class="input-field" type="text" name="sop_type_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif   
                             </div>
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
@@ -247,7 +280,7 @@
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
                                                 at {{ date('d-M-Y h:i:s') }}</p>
 
-                                            <input class="input-field" type="text" name="due_date_comment">
+                                            <input class="input-field" type="text" name="notify_to_comment">
                                         </div>
                                         <div class="button">Add Comment</div>
                                     </div>
@@ -365,7 +398,7 @@
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
                                                 at {{ date('d-M-Y h:i:s') }}</p>
 
-                                            <input class="input-field" type="text" name="link-doc_comment">
+                                            <input class="input-field" type="text" name="reference_record_comment">
                                         </div>
                                         <div class="button">Add Comment</div>
                                     </div>

@@ -73,8 +73,9 @@ class DocumentController extends Controller
         $new->document_name = $request->document_name;
         $new->short_description = $request->short_description;
         $new->due_dateDoc = $request->due_dateDoc;
+        $new->sop_type = $request->sop_type;
         $new->description = $request->description;
-        //$new->notify_to = $request->notify_to;
+        $new->notify_to = json_encode($request->notify_to);
         $new->reference_record = $request->reference_record;
         $new->department_id = $request->department_id;
         $new->document_type_id = $request->document_type_id;
@@ -94,7 +95,6 @@ class DocumentController extends Controller
         $new->revision_type = $request->revision_type;
         $new->major = $request->major;
         $new->minor = $request->minor;
-        $new->sop_type = $request->sop_type;
         $new->stage = $request->stage;
         $new->status = $request->status;
         $new->document = $request->document;
@@ -305,14 +305,15 @@ class DocumentController extends Controller
             $document->major = $request->major;
             $document->minor = $request->minor;
             $document->sop_type = $request->sop_type;
+            $document->notify_to = json_encode($request->notify_to);
             //$document->purpose = $request->purpose;
 
             if ($request->keywords) {
                 $document->keywords = implode(',', $request->keywords);
             }
-            if ($request->notify_to) {
-                $document->notify_to = implode(',', $request->notify_to);
-            }
+            // if ($request->notify_to) {
+            //     $document->notify_to = implode(',', $request->notify_to);
+            // }
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
             }
@@ -565,6 +566,7 @@ class DocumentController extends Controller
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
             $document->due_dateDoc = $request->due_dateDoc;
+            $document->sop_type = $request->sop_type;
             $document->department_id = $request->department_id;
             $document->document_type_id = $request->document_type_id;
             $document->document_subtype_id = $request->document_subtype_id;
@@ -574,13 +576,14 @@ class DocumentController extends Controller
             $document->review_period = $request->review_period;
             $document->training_required = $request->training_required;
             $document->attach_draft_doocument = $request->attach_draft_doocument;
+            $document->notify_to = json_encode($request->notify_to);
 
             if ($request->keywords) {
                 $document->keywords = implode(',', $request->keywords);
             }
-            if ($request->notify_to) {
-                $document->notify_to = implode(',', $request->notify_to);
-            }
+            // if ($request->notify_to) {
+            //     $document->notify_to = implode(',', $request->notify_to);
+            // }
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
             }
@@ -615,7 +618,7 @@ class DocumentController extends Controller
             $document->revision_type = $request->revision_type;
             $document->major = $request->major;
             $document->minor = $request->minor;
-            $document->sop_type = $request->sop_type;
+            
 
             if (! empty($request->reviewers)) {
                 $document->reviewers = implode(',', $request->reviewers);
@@ -704,6 +707,45 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
+            if ($lastDocument->sop_type != $document->sop_type || ! empty($request->sop_type_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'SOP Type';
+                $history->previous = $lastDocument->sop_type;
+                $history->current = $document->sop_type;
+                $history->comment = $request->sop_type_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+            if ($lastDocument->reference_record != $document->reference_record || ! empty($request->reference_record_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Reference Record';
+                $history->previous = $lastDocument->reference_record;
+                $history->current = $document->reference_record;
+                $history->comment = $request->reference_record_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+            if ($lastDocument->notify_to != $document->notify_to || ! empty($request->notify_to_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Notify To';
+                $history->previous = $lastDocument->notify_to;
+                $history->current = $document->notify_to;
+                $history->comment = $request->notify_to_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
             if ($lastDocument->description != $document->description || ! empty($request->description_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
@@ -719,19 +761,19 @@ class DocumentController extends Controller
             }
 
            
-            // if ($lastDocument->department_id != $document->department_id || ! empty($request->department_id_comment)) {
-            //     $history = new DocumentHistory;
-            //     $history->document_id = $id;
-            //     $history->activity_type = 'Department';
-            //     $history->previous = Department::where('id', $lastDocument->department_id)->value('name');
-            //     $history->current = Department::where('id', $document->department_id)->value('name');
-            //     $history->comment = $request->department_id_comment;
-            //     $history->user_id = Auth::user()->id;
-            //     $history->user_name = Auth::user()->name;
-            //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            //     $history->origin_state = $lastDocument->status;
-            //     $history->save();
-            // }
+             if ($lastDocument->department_id != $document->department_id || ! empty($request->department_id_comment)) {
+                 $history = new DocumentHistory;
+                 $history->document_id = $id;
+                 $history->activity_type = 'Department';
+                 $history->previous = Department::where('id', $lastDocument->department_id)->value('name');
+                 $history->current = Department::where('id', $document->department_id)->value('name');
+                 $history->comment = $request->department_id_comment;
+                 $history->user_id = Auth::user()->id;
+                 $history->user_name = Auth::user()->name;
+                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                 $history->origin_state = $lastDocument->status;
+                 $history->save();
+             }
             // if ($lastDocument->document_type_id != $document->document_type_id || ! empty($request->document_type_id_comment)) {
             //     $history = new DocumentHistory;
             //     $history->document_id = $id;
@@ -1641,7 +1683,7 @@ class DocumentController extends Controller
         $newdoc->short_description = $document->short_description;
         $newdoc->due_dateDoc = $document->due_dateDoc;
         $newdoc->description = $document->description;
-        //$newdoc->notify_to = $document->notify_to;
+        $newdoc->notify_to = json_encode($document->notify_to);
         $newdoc->reference_record = $document->reference_record;
         $newdoc->department_id = $document->department_id;
         $newdoc->document_type_id = $document->document_type_id;
