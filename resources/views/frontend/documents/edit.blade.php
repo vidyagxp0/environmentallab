@@ -2508,7 +2508,7 @@
                                 @endforeach
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
                                     Document Writing Completed By
@@ -2535,7 +2535,7 @@
                                 <div class="name">{{ $temp->created_at }}</div>
                                 @endforeach
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">

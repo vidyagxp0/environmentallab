@@ -48,7 +48,7 @@
         </div>
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            @if(!empty(@$_GET['id'])) {{ Helpers::getDivisionName()  }} @endif / Document 
+            {{ Helpers::getDivisionName(session()->get('division')) }} / Document 
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
     </div>
@@ -102,8 +102,8 @@
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName(@$_GET['id']) }}">
-                                        <input type="hidden" name="division_id" value="{{ @$_GET['id'] }}">
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
@@ -1221,25 +1221,27 @@
                             <div class="col-md-6">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Review Proposed By
+                                        Originated By 
+                                        {{-- Review Proposed By --}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Review Proposed On
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Document Reuqest Approved By
+                                        Originated On 
+                                        {{-- Document Reuqest Approved By --}}
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="review-names">
                                     <div class="orig-head">
                                         Document Reuqest Approved On
@@ -1259,7 +1261,7 @@
                                         Document Writing Completed On
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-md-6">
                                 <div class="review-names">
                                     <div class="orig-head">
