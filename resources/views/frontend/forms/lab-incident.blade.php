@@ -143,13 +143,7 @@
                                         <input type="text" name="initiator_group_code" id="initiator_group_code" value="" readonly>
                                     </div>
                                 </div>
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description<span class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_desc"></textarea>
-                                    </div>
-                                </div> -->
+                               
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span

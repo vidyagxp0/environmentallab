@@ -165,7 +165,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <!-- <div class="col-md-6">
+                                <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
@@ -174,20 +174,20 @@
                                             value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}> 
                                          </div>
 
-                                </div> -->
-                                <div class="col-lg-6 new-date-data-field">
+                                </div>
+                                <!-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due</label>
+                                        <label for="Date Due">Date Due <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" 
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -253,14 +253,7 @@
                                         <input type="text" name="initiator_group_code" value="{{ $data->initiator_Group}}" id="initiator_group_code"  value="{{ $data->initiator_Group}}" readonly>
                                     </div>
                                 </div>
-                                <!-- <div class="col-12">
-                                    <div class="group-input">
-                                        <label for="Short Description">Short Description <span
-                                                class="text-danger">*</span></label>
-                                        <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
-                                    </div>
-                                </div> -->
+                               
                                 <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short_Description">Short Description<span
@@ -347,10 +340,13 @@
                                         <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->attendees}}</textarea>
                                     </div>
                                 </div>
+                                <!-- -----------------------management review grid 01------------------------------ -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="agenda">
-                                            Agenda<button type="button" name="agenda" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} onclick="add6Input('agenda')">+</button>
+                                            Agenda<button type="button" name="agenda"
+                                            onclick="addManagementReview('agenda')"
+                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} +</button>
                                         </label>
                                         <table class="table table-bordered" id="agenda">
                                             <thead>
