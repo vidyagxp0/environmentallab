@@ -107,10 +107,8 @@
                             </div>
                             <div class="inner-block-content">
                                 <div class="search-bar">
-
                                     <input type="text" name="search" placeholder="Search SOP's">
                                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-
                                 </div>
                                 <div class="selection-table">
                                     <table class="table table-bordered">
@@ -150,10 +148,8 @@
                             </div>
                             <div class="inner-block-content">
                                 <div class="search-bar">
-
                                     <input type="text" name="search" placeholder="Search Trainees">
                                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-
                                 </div>
                                 <div class="selection-table">
                                     <table class="table table-bordered">
