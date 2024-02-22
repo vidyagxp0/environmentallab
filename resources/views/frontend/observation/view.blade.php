@@ -9,6 +9,35 @@
             display: none;
         }
     </style>
+    <style>
+        header .header_rcms_bottom {
+            display: none;
+        }
+    
+        .calenderauditee {
+            position: relative;
+        }
+    
+        .new-date-data-field .input-date input.hide-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+    
+        .new-date-data-field input {
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 5px 15px;
+            display: block;
+            width: 100%;
+            background: white;
+        }
+    
+        .calenderauditee input::-webkit-calendar-picker-indicator {
+            width: 100%;
+        }
+    </style>
 
 <div class="form-field-head">
     <div class="division-bar">
@@ -213,22 +242,43 @@
                                         </select>
                                     </div>
                                 </div>
-                                
-                                <div class="col-md-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="date_due">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field</small></div>
-                                        <!-- <input readonly type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> -->
-                                              {{-- <input type="date" name="due_date"> --}}
+                                  <!-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="date_due">Date Due</label>
                                         <div class="calenderauditee">
+                                            <input type="text" name="due_date" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <!-- <input type="date"  class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        <input disabled type="text"  value="{{ Helpers::getdateFormat($data->due_date) }}"> 
+                                    </div>
+                                </div>  
+                                </div>  -->
+                                {{-- <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="date_due">Due Date<span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please mention expected date of completion</small></div>
+                                        {{-- <input type="date" name="due_date"> --}}
+                                        {{-- <div class="calenderauditee">
                                             <input type="text"  id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY" 
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
-                                            <input type="date" name="due_date" id="due_date"  class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date');checkDate('due_date_checkdate','due_date_checkdate')" />
-                                        </div>
+                                            <!-- <input type="date" name="due_date" id="due_date"  class="hide-input" --}}
+                                                {{-- oninput="handleDateInput(this, 'due_date');checkDate('due_date_checkdate','due_date_checkdate')" /> --> --}}
+                                        {{-- </div>
+                                    </div>
+                                </div> --}} 
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">Please Mention justification if due date is
+                                            crossed</small></div>
+                                        <input readonly type="text"
+                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
+                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -242,7 +292,7 @@
                                           {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                              </div>
                                         
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="sub-head">Observation Details</div>
                                 </div>
                                 <div class="col-lg-6">
@@ -256,8 +306,8 @@
                                             <option value="4" {{ $data->grading == '4' ? 'selected' : '' }}>Critical</option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="category_observation">Category Observation</label>
                                         <select name="category_observation" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
@@ -351,14 +401,14 @@
                                             </option>
                                         </select>
                                     </div>
-                                </div>
-                                <div class="col-12">
+                                </div> --}}
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="reference_guideline">Referenced Guideline</label>
                                         <input type="text" name="reference_guideline" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->reference_guideline }}">
                                     </div>
-                                </div>
-                                <div class="col-12">
+                                </div> --}}
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="desc">Description</label>
                                         <textarea name="description" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} >{{ $data->description }}</textarea>
@@ -366,8 +416,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="sub-head">Further Information</div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files1">Attached Files</label>
                                         <input type="file" name="attach_files1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->attach_files1 }}"/>
@@ -414,9 +464,8 @@
                                     <div class="group-input input-date ">
                                         <label for="capa_date_due">Recomendation  Due Date  for CAPA</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="recomendation_capa_date_due" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="recomendation_capa_date_due" readonly
-                                                placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
-                                            <input type="date"  class="hide-input"value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" style="display: none;"
+                                            <input type="text" name="recomendation_capa_date_due" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="recomendation_capa_date_due" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
+                                            <input type="date"  class="hide-input" value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" 
                                                 oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                         </div>
                                     </div>
@@ -473,38 +522,40 @@
                                 </div> --}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="date_Response_due1">Date Response Due</label>
+                                        <label for="date_Response_due1">Date Response Due </label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="date_Response_due1" id="date_Response_due1" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input" style="display: none;"
-                                                oninput="handleDateInput(this, 'date_Response_due1')" />
+                                            <input type="text" name="date_Response_due22" id="date_Response_due" readonly
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"  />
+                                            <input type="date" value="{{ $data->date_response_due1 }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'date_Response_due')" />
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-lg-6 new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="date_due"> Due Date</label>
                                         <div class="calenderauditee">                                     
-                                            <input type="text"  id="date_due"  readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
-                                            value="{{ Helpers::getdateFormat($data->date_due) }}" />
+                                            <input type="text" name="capa_date_due"  id="date_due"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_date_due) }}" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
+                                            value="{{ Helpers::getdateFormat($data->capa_date_due) }}" />
+                                            <input type="date" value="{{ $data->capa_date_due }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'date_due')" />
                                         </div>
                                     </div>
-                                </div> --}}
-                                <div class="col-md-6">
+                                </div>
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                        <label for="due-date">Due Date1 <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please Mention justification if due date is
                                             crossed</small></div>
-                                        <input readonly type="text"
+                                    
                                             value="{{ Helpers::getdateFormat($data->due_date) }}"
                                             name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
-                                        {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
-                                        {{-- <div class="static"> {{ $due_date }}</div> --}}
+                                        <input type="text" value="{{ $data->due_date }}" name="due_date">
+                                        
 
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="assign_to2">Assigned To</label>
                                         <select name="assign_to" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
@@ -548,7 +599,7 @@
                                                 @foreach (unserialize($griddata->action) as $key => $temps)
                                                 <tr> 
                                                     <!-- <td><input type="text" name="serial_number[]" value="{{ $key+1 }}"></td> -->
-                                                    <td><input disabled type="text" name="serial_number[]"  value="1">
+                                                    <td><input disabled type="text" name="serial_number[]"  value="{{ $key+1 }}">
                                                 </td>
                                                     <td><input type="text" name="action[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
                                                     {{-- <td><input type="text" name="responsible[]" value="{{unserialize($griddata->responsible)[$key] ? unserialize($griddata->responsible)[$key] : "" }}"></td> --}}
@@ -572,8 +623,8 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
-                                                                <!-- <input type="date" name="deadline[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /> -->
+                                                                 <input type="date" name="deadline[]" class="hide-input" 
+                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /> 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -590,7 +641,17 @@
                                                         </div>
                                                     </td>  -->
                                                     {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
-                                                    <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
+                                                    {{-- <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>  --}}
+                                                    <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
+
+                                                    {{-- <td>
+    @php
+    $item_status = unserialize($griddata->item_status);
+    $value = isset($item_status[$key]) ? $item_status[$key] : '';
+    @endphp
+    <input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $value }}">
+</td> --}}
+
                                                 </tr>
                                                 @endforeach
                                             </tbody>
@@ -741,22 +802,66 @@
                                 <div class="col-12">
                                     <div class="sub-head">Response Summary</div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="date_response_due">Date Rsponse Due</label>
-                                        <input type="date" name="date_response_due1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->date_response_due1 }}">
+                               
+                                {{-- <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="date_response_due1">Date Response Due</label>
+                                        <div class="calenderauditee"> 
+                                            <input type="text"  id="date_response_due1"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                            oninput="handleDateInput(this, 'date_response_due1')" />
+                                            
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="response_date">Date of Response</label>
                                         <input type="date" name="response_date" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->response_date }}">
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+
+
+
+                                {{-- <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="response_date">Date of Response</label>
+                                        <div class="calenderauditee"> 
+                                            <input type="text"  id="response_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->response_date) }}"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="attach_files">Attached Files</label>
                                         <input type="file" name="attach_files2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->attach_files2 }}">
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="attach_files2">Attached Files</label>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                        <div class="file-attachment-field">
+                                            <div disabled class="file-attachment-list" id="attach_files2">
+                                                @if ($data->attach_files2)
+                                                @foreach(json_decode($data->attach_files2) as $file)
+                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                    <b>{{ $file }}</b>
+                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                </h6>
+                                           @endforeach
+                                                @endif
+                                            </div>
+                                            <div class="add-btn">
+                                                <div>Add</div>
+                                                <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->attach_files2 }}" type="file" id="myfile" name="attach_files2[]"
+                                                    oninput="addMultipleFiles(this, 'attach_files2')"
+                                                    multiple>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -846,7 +951,8 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Child</h4>
                 </div>
-                <form action="{{ route('extension_child', $data->id) }}" method="POST">
+                <form action="{{ route('extension_child', $data->id) }}" method="POST"
+                    enctype="multipart/form-data">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
