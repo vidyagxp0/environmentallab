@@ -182,7 +182,7 @@
                             </p>
                         </div>
 
-                        {{-- <div class="group-input multi_question-options" id="multi_options-group">
+                        <div class="group-input multi_question-options" id="multi_options-group">
                             <label for="options">
                                 Options<button type="button" id="multi_optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
                             </label>
@@ -194,7 +194,7 @@
                             <p id="optioncheck" style="color: red;">
                                 **Options are missing
                             </p>
-                        </div> --}}
+                        </div> 
 
                         <div class="group-input question-answer">
                             <label for="answer" id="answer-label">
@@ -265,6 +265,17 @@
         // }
 
         // =========================== Toggle Input Fields Using Select Options
+        var answerGroup = document.querySelector('.question-answer');
+            var singleOptionsGroup = document.querySelector('.single_question-options');
+            var multiOptionsGroup = document.querySelector('.multi_question-options');
+            var answerButton = document.querySelector('#answer-label button');
+            var optionsButton = document.querySelector('.question-options button');
+        answerGroup.style.display = 'block';
+                answerButton.style.display = 'none';
+                singleOptionsGroup.style.display = 'block';
+                multiOptionsGroup.style.display = 'none';
+                optionsButton.style.display = 'inline-block';
+
         function handleChange(value) {
             var answerGroup = document.querySelector('.question-answer');
             var singleOptionsGroup = document.querySelector('.single_question-options');

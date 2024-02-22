@@ -864,6 +864,9 @@ function add2Input(tableId) {
 // document.getElementById("defaultOpen").click();
 
 function openDivision(evt, cityName) {
+
+    $(".process_id_reset").prop("checked", false);
+
     var i, divisioncontent, divisionlinks;
 
     divisioncontent = document.getElementsByClassName("divisioncontent");
