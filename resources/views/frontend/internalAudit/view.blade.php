@@ -781,7 +781,11 @@ function addMultipleFiles(input, block_id) {
                                                                 <input type="text"   id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
                                                                 <input type="date"  id="scheduled_start_date{{$key}}_checkdate" value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
                                                                 "class="hide-input" 
+<<<<<<< HEAD
                                                                 oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>'
+=======
+                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
+>>>>>>> prabhjot297
                                                              
                                                             <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
