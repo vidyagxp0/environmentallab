@@ -165,7 +165,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <!-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
@@ -174,20 +174,20 @@
                                             value="{{ Helpers::getdateFormat($data->due_date) }}" name="due_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}> 
                                          </div>
 
-                                </div>
-                                <!-- <div class="col-lg-6 new-date-data-field">
+                                </div> -->
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Date Due <span class="text-danger"></span></label>
+                                        <label for="Date Due">Date Due</label>
                                         <div><small class="text-primary">Please mention expected date of completion</small>
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" 
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}class="hide-input"
+                                            <input disabled type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -253,7 +253,14 @@
                                         <input type="text" name="initiator_group_code" value="{{ $data->initiator_Group}}" id="initiator_group_code"  value="{{ $data->initiator_Group}}" readonly>
                                     </div>
                                 </div>
-                               
+                                <!-- <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description <span
+                                                class="text-danger">*</span></label>
+                                        <div><small class="text-primary">Please mention brief summary</small></div>
+                                        <textarea name="short_description" id="short_desc" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
+                                    </div>
+                                </div> -->
                                 <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short_Description">Short Description<span
@@ -340,13 +347,10 @@
                                         <textarea name="attendees" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>{{ $data->attendees}}</textarea>
                                     </div>
                                 </div>
-                                <!-- -----------------------management review grid 01------------------------------ -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="agenda">
-                                            Agenda<button type="button" name="agenda"
-                                            onclick="addManagementReview('agenda')"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} +</button>
+                                            Agenda<button type="button" name="agenda" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} onclick="addAgendaManRev('agenda')">+</button>
                                         </label>
                                         <table class="table table-bordered" id="agenda">
                                             <thead>
@@ -361,18 +365,17 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach (unserialize($agenda->date) as $key => $temps)
+                                                @foreach (unserialize($agenda->topic) as $key => $temps)
                                                     <tr>
                                                         <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ $key + 1 }}"></td>
-                                                        {{-- <td><input type="date" name="date[]"
-                                                                value="{{ $temps ? $temps : ' ' }}"></td> --}}
+                                                        
                                                                 <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
-                                                                    <input type="text" id="date' + serialNumber +'" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key]) }}" />
-                                                                    <input type="date" name="date[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key]) }}" class="hide-input" 
-                                                                    oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>
+                                                                    <input type="text" id="date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
+                                                                    <input type="date" name="date[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input" 
+                                                                    oninput="handleDateInput(this, `date{{$key }}`)" /></div></div></div></td>
                                                         <td><input type="text" name="topic[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($agenda->topic)[$key] ? unserialize($agenda->topic)[$key] : '' }}">
+                                                                value="{{ unserialize($agenda->topic)[$key] ?? '' }}">
                                                         </td>
                                                         <td><input type="text" name="responsible[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ unserialize($agenda->responsible)[$key] ? unserialize($agenda->responsible)[$key] : '' }}">
@@ -578,7 +581,7 @@
                             <div class="group-input">
                                 <label for="performance_evaluation">
                                     Performance Evaluation
-                                    <button type="button" name="performance_evaluation" onclick="add4Input('performance_evaluation')">+</button>
+                                    <button type="button" name="performance_evaluation" onclick="addPerformanceEvoluation('performance_evaluation')">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-performance_evaluation-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
@@ -711,8 +714,7 @@
                         <div class="inner-block-content">
                             <div class="group-input">
                                 <label for="action_item_details">
-                                    Action Item Details<button type="button" name="action_item_details"
-                                        id="action_item">+</button>
+                                    Action Item Details<button type="button" name="action_item_details" onclick="addActionItemDetails('action_item_details')" id="action_item">+</button>
                                 </label>
                                 <table class="table table-bordered" id="action_item_details">
                                     <thead>
@@ -763,41 +765,37 @@
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="date_due' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}"/>
-                                                                        <input type="date" name="date_due[]" value="{{ $data->date_due }} "class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>
+                                                                        <input type="text" id="date_due{{$key}}" readonly placeholder="DD-MMM-YYYY" value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}"/>
+                                                                        <input type="date" name="date_due[]" id="date_due{{$key}}_checkdate" value="{{ unserialize($action_item_details->date_due)[$key] ?? null }} "class="hide-input" 
+                                                                        oninput="handleDateInput(this, `date_due{{$key}}`);checkDate(`date_due{{$key}}_checkdate`,`date_closed{{$key}}_checkdate`)" /></div></div></div></td>
+                                                        
                                                         <td><input type="text" name="site[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($action_item_details->site)[$key] ? unserialize($action_item_details->site)[$key] : '' }}">
+                                                                value="{{ unserialize($action_item_details->site)[$key] ?? null }}">
                                                         </td>
-                                                        <!-- <td><input type="text" name="responsible_person[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($action_item_details->responsible_person)[$key] ? unserialize($action_item_details->responsible_person)[$key] : '' }}">
-                                                        </td> -->
+                                                         
                                                         <td> <select id="select-state" placeholder="Select..."
                                                                      name="responsible_person[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} > 
                                                                       <option value="">Select a value</option>
-                                                               @foreach ($users as $undata)
-                                                                            <!-- <option value="{{ $undata->id }}">{{ $undata->name }}
-                                                                                        </option> -->
-                                                                    <option {{ unserialize($action_item_details->responsible_person)[$key] ? (unserialize($action_item_details->responsible_person)[$key] == $undata->id ? 'selected' : ' ') : '' }}
-                                                                        value="{{ $undata->id }}">
-                                                                        {{ $undata->name }}
-                                                        </option>
-                                                             @endforeach
-                                                            </select></td>
+                                                                        @foreach ($users as $undata)
+                                                                            
+                                                                        <option {{ (unserialize($action_item_details->responsible_person)[$key] ?? null) ? (unserialize($action_item_details->responsible_person)[$key] == $undata->id ? 'selected' : ' ') : '' }}
+                                                                                        value="{{ $undata->id }}">
+                                                                                        {{ $undata->name }}
+                                                                        </option>
+                                                                @endforeach
+                                                                </select></td>
                                                         <td><input type="text" name="current_status[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($action_item_details->current_status)[$key] ? unserialize($action_item_details->current_status)[$key] : '' }}">
+                                                                value="{{ (unserialize($action_item_details->current_status)[$key] ?? null ) ? unserialize($action_item_details->current_status)[$key] : '' }}">
                                                         </td>
-                                                        <!-- <td><input type="text" name="date_closed[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($action_item_details->date_closed)[$key] ? unserialize($action_item_details->date_closed)[$key] : '' }}">
-                                                        </td> -->
+                                                        
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        <input type="text" id="date_closed' + serialNumber +'" readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) }}"/>
-                                                                        <input type="date" name="date_closed[]" value="{{ $data->date_closed }} "class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date_closed' + serialNumber +'`)" /></div></div></div></td>'
+                                                                        <input type="text" id="date_closed{{$key}}" readonly placeholder="DD-MMM-YYYY" value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key] ?? null ) }}"/>
+                                                                        <input type="date" name="date_closed[]" id="date_closed{{$key}}_checkdate" value="{{ unserialize($action_item_details->date_closed)[$key] ?? null  }} "class="hide-input" 
+                                                                        oninput="handleDateInput(this, `date_closed{{$key}}`);checkDate(`date_due{{$key}}_checkdate`,`date_closed{{$key}}_checkdate`)" /></div></div></div></td>'
                                                         <td><input type="text" name="remark[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
-                                                                value="{{ unserialize($action_item_details->remark)[$key] ? unserialize($action_item_details->remark)[$key] : '' }}">
+                                                                value="{{ unserialize($action_item_details->remark)[$key] ?? '' }}">
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -1160,6 +1158,103 @@
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee'
         });
+        
+        function addActionItemDetails(tableId) {
+            var users = @json($users);
+            var table = document.getElementById(tableId);
+            var currentRowCount = table.rows.length;
+            var newRow = table.insertRow(currentRowCount);
+            newRow.setAttribute("id", "row" + currentRowCount);
+            var cell1 = newRow.insertCell(0);
+            cell1.innerHTML = currentRowCount;
+
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML = "<input type='text' name='short_desc[]'>";
+
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_due' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_due[]" id="date_due' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date_due' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+
+            var cell4 = newRow.insertCell(3);
+            cell4.innerHTML = "<input type='text' name='site[]'>";
+
+            var cell5 = newRow.insertCell(4);
+            var userHtml = '<select name="responsible_person[]"><option value="">-- Select --</option>';
+                    for (var i = 0; i < users.length; i++) {
+                        userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+                    userHtml +='</select>';
+            
+            cell5.innerHTML = userHtml;
+
+            var cell6 = newRow.insertCell(5);
+            cell6.innerHTML = "<input type='text' name='current_status[]'>"; 
+
+            var cell7 = newRow.insertCell(6);
+            cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date_closed' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]" id="date_closed'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `date_closed' + currentRowCount +'`);checkDate(`date_due' + currentRowCount +'_checkdate`,`date_closed' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+              
+            var cell8 = newRow.insertCell(7);
+            cell8.innerHTML = "<input type='text' name='remark[]'>";
+            for (var i = 1; i < currentRowCount; i++) {
+                var row = table.rows[i];
+                row.cells[0].innerHTML = i;
+            }
+        }
+        function addPerformanceEvoluation(tableId) {
+            var table = document.getElementById(tableId);
+            var currentRowCount = table.rows.length;
+            var newRow = table.insertRow(currentRowCount);
+            newRow.setAttribute("id", "row" + currentRowCount);
+            var cell1 = newRow.insertCell(0);
+            cell1.innerHTML = currentRowCount;
+
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML = "<input type='text' name='monitoring[]'>";
+
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = "<input type='text' name='measurement[]'>";
+
+            var cell4 = newRow.insertCell(3);
+            cell4.innerHTML = "<input type='text' name='analysis[]'>";
+
+            var cell5 = newRow.insertCell(4);
+            cell5.innerHTML = "<input type='text' name='evaluation[]'>";
+            for (var i = 1; i < currentRowCount; i++) {
+                var row = table.rows[i];
+                row.cells[0].innerHTML = i;
+            }
+        }
+        
+        // ================================ SIX INPUTS
+        function addAgendaManRev(tableId) {
+            var table = document.getElementById(tableId);
+            var currentRowCount = table.rows.length;
+            var newRow = table.insertRow(currentRowCount);
+            newRow.setAttribute("id", "row" + currentRowCount);
+            var cell1 = newRow.insertCell(0);
+            cell1.innerHTML = currentRowCount;
+
+            var cell2 = newRow.insertCell(1);
+            cell2.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" id="date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date' + currentRowCount +'`);" /></div></div></div></td>';
+
+            var cell3 = newRow.insertCell(2);
+            cell3.innerHTML = "<input type='text' name='topic[]' >";
+
+            var cell4 = newRow.insertCell(3);
+            cell4.innerHTML = "<input type='text' name='responsible[]'>";
+
+            var cell5 = newRow.insertCell(4);
+            cell5.innerHTML = "<input type='time' name='start_time[]'>";
+
+            var cell6 = newRow.insertCell(5);
+            cell6.innerHTML = "<input type='time' name='end_time[]'>";
+
+            var cell7 = newRow.insertCell(6);
+            cell7.innerHTML = "<input type='text' name='comment[]'>";
+            for (var i = 1; i < currentRowCount; i++) {
+                var row = table.rows[i];
+                row.cells[0].innerHTML = i;
+            }
+        }
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;

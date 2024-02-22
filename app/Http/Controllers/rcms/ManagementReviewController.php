@@ -180,7 +180,7 @@ class ManagementReviewController extends Controller
        
 
 
-            // --------------agenda--------------
+        // --------------agenda--------------
         $data1 = new ManagementReviewDocDetails();
         $data1->review_id = $management->id;
         $data1->type = "agenda";
@@ -660,6 +660,7 @@ class ManagementReviewController extends Controller
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
+    
     public function manageUpdate(Request $request, $id)
     {
 
@@ -756,18 +757,9 @@ class ManagementReviewController extends Controller
                 }
             }
             $management->closure_attachments = json_encode($files);
-        }
-       
-
-
-
-
-
-
+        } 
 
         $management->update();
-
-
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
 
             $history = new ManagementAuditTrial();
@@ -1164,6 +1156,125 @@ class ManagementReviewController extends Controller
             $history->save();
         }
 
+        // --------------agenda--------------
+        $data1 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"agenda")->first();
+        $data1->review_id = $management->id;
+        $data1->type = "agenda";
+        if (!empty($request->date)) {
+            $data1->date = serialize($request->date);
+        }
+        if (!empty($request->topic)) {
+            $data1->topic = serialize($request->topic);
+        }
+        if (!empty($request->responsible)) {
+            $data1->responsible = serialize($request->responsible);
+        }
+        if (!empty($request->start_time)) {
+            $data1->start_time = serialize($request->start_time);
+        }
+        if (!empty($request->end_time)) {
+            $data1->end_time = serialize($request->end_time);
+        }
+        if (!empty($request->comment)) {
+            $data1->comment = serialize($request->comment);
+        }
+        $data1->update();
+
+        $data2 =  ManagementReviewDocDetails::where('review_id',$id)->where('type',"performance_evaluation")->first();
+        $data2->review_id = $management->id;
+        $data2->type = "performance_evaluation";
+        if (!empty($request->monitoring)) {
+            $data2->monitoring = serialize($request->monitoring);
+        }
+        if (!empty($request->measurement)) {
+            $data2->measurement = serialize($request->measurement);
+        }
+        if (!empty($request->analysis)) {
+            $data2->analysis = serialize($request->analysis);
+        }
+        if (!empty($request->evaluation)) {
+            $data2->evaluation = serialize($request->evaluation);
+        }
+        $data2->update();
+
+        $data3 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"management_review_participants")->first();
+        $data3->review_id = $management->id;
+        $data3->type = "management_review_participants";
+        if (!empty($request->invited_Person)) {
+            $data3->invited_Person = serialize($request->invited_Person);
+        }
+        if (!empty($request->designee)) {
+            $data3->designee = serialize($request->designee);
+        }
+        if (!empty($request->department)) {
+            $data3->department = serialize($request->department);
+        }
+        if (!empty($request->meeting_Attended)) {
+            $data3->meeting_Attended = serialize($request->meeting_Attended);
+        }
+        if (!empty($request->designee_Name)) {
+            $data3->designee_Name = serialize($request->designee_Name);
+        }
+        if (!empty($request->designee_Department)) {
+            $data3->designee_Department = serialize($request->designee_Department);
+        }
+        if (!empty($request->remarks)) {
+            $data3->remarks = serialize($request->remarks);
+        }
+        $data3->update();
+
+        $data4 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"action_item_details")->first();
+        $data4->review_id = $management->id;
+        $data4->type = "action_item_details";
+        if (!empty($request->short_desc)) {
+            $data4->short_desc = serialize($request->short_desc);
+        }
+        if (!empty($request->date_due)) {
+            $data4->date_due = serialize($request->date_due);
+        }
+        if (!empty($request->site)) {
+            $data4->site = serialize($request->site);
+        }
+        if (!empty($request->responsible_person)) {
+            $data4->responsible_person = serialize($request->responsible_person);
+        }
+        if (!empty($request->current_status)) {
+            $data4->current_status = serialize($request->current_status);
+        }
+        if (!empty($request->date_closed)) {
+            $data4->date_closed = serialize($request->date_closed);
+        }
+        if (!empty($request->remark)) {
+            $data4->remark = serialize($request->remark);
+        }
+        $data4->update();
+
+        $data5 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
+        $data5->review_id = $management->id;
+        $data5->type = "capa_detail_details";
+        if (!empty($request->Details)) {
+            $data5->Details = serialize($request->Details);
+        }
+        if (!empty($request->capa_type)) {
+            $data5->capa_type = serialize($request->capa_type);
+        }
+        if (!empty($request->site2)) {
+            $data5->site2 = serialize($request->site2);
+        }
+        if (!empty($request->responsible_person2)) {
+            $data5->responsible_person2 = serialize($request->responsible_person2);
+        }
+        if (!empty($request->current_status2)) {
+            $data5->current_status2 = serialize($request->current_status2);
+        }
+        if (!empty($request->date_closed2)) {
+            $data5->date_closed2 = serialize($request->date_closed2);
+        }
+        if (!empty($request->remark2)) {
+            $data5->remark2 = serialize($request->remark2);
+        }
+        $data5->update();
+        
         toastr()->success("Record is updated Successfully");
         return back();
     }
