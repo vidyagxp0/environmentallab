@@ -136,6 +136,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    </div>
+                                </div>
                                 {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description"><b>Short Description <span
@@ -300,9 +308,9 @@
                                     <div class="group-input input-date ">
                                         <label for="capa_date_due">Recomendation  Due Date  for CAPA</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" readonly
+                                            <input type="text" name="recomendation_capa_date_due" id="recomendation_capa_date_due"  readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
+                                            <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'recomendation_capa_date_due')" />
                                         </div>
                                     </div>
@@ -365,10 +373,10 @@
                                     <div class="group-input input-date ">
                                         <label for="date_Response_due1">Date Response Due</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="date_Response_due" id="date_Response_due" readonly
+                                            <input type="text" name="date_response_due1" id="date_Response_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="date_Response_due_checkdate" class="hide-input"
-                                                oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','actual_end_date_checkdate')" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_Response_due1_checkdate" class="hide-input"
+                                                oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -378,8 +386,8 @@
                                         <div class="calenderauditee">
                                             <input type="text" name="capa_date_due" id="date_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="date_due_checkdate" class="hide-input"
-                                                oninput="handleDateInput(this, 'date_due');checkDate('actual_start_date_checkdate','date_due_checkdate')" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_due_checkdate" class="hide-input"
+                                                oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -455,7 +463,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input type="text" name="serial_number[]" value="1"></td>
+                                                <td><input disabled type="text" name="serial_number[]" value="1"></td>
                                                 <td><input type="text" name="action[]"></td>
                                                 {{-- <td><input type="text" name="responsible[]"></td> --}}
                                                 <td> <select id="select-state" placeholder="Select..." name="responsible[]">
@@ -471,7 +479,7 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" name="deadline[]" class="hide-input" 
+                                                                <input type="date"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]" class="hide-input" 
                                                                 oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
                                                             </div>
                                                         </div>
@@ -598,7 +606,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="actual_start_date_checkdate" name="actual_start_date" class="hide-input"
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="actual_start_date_checkdate" name="actual_start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -609,7 +617,7 @@
                                         <div class="calenderauditee">
                                         <input type="text" id="actual_end_date"                             
                                                 placeholder="DD-MMM-YYYY" />
-                                             <input type="date" id="actual_end_date_checkdate" name="actual_end_date" class="hide-input"
+                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="actual_end_date_checkdate" name="actual_end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                    
@@ -631,17 +639,17 @@
                                         <input type="date" name="date_response_due1">
                                     </div>
                                 </div> --}}
-                                <div class="col-md-6 new-date-data-field">
+                                {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="date_response_due">Date Response Due</label>
                                         <div class="calenderauditee">
                                             <input type="text" name="date_response_due1" id="date_response_due1" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date"  class="hide-input"
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
                                                 oninput="handleDateInput(this, 'date_response_due1')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="response_date">Date of Response</label>
@@ -853,7 +861,7 @@
                             console.log(users);
                             var html =
                             '<tr>' +
-                                '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="action[]"></td>' +
                                 '<td><select name="responsible[]">' +
                                     '<option value="">Select a value</option>';
@@ -866,7 +874,7 @@
                                 // '<td><input type="date" name="deadline[]"></td>' +
                                                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
 
-                                '<td><input type="text" name="item_static[]"></td>' +
+                                '<td><input type="text" name="item_status[]"></td>' +
                                 '</tr>';
 
 

@@ -93,9 +93,10 @@ class ObservationController extends Controller
         $data->actual_start_date = $request->actual_start_date;
         $data->actual_end_date = $request->actual_end_date;
         $data->action_taken = $request->action_taken;
-        $data->date_response_due1 = $request->date_response_due1;
+        $data->date_response_due1= $request->date_response_due1;
+
         $data->response_date = $request->response_date;
-        $data->attach_files2 = $request->attach_files2;
+        // $data->attach_files2 = $request->attach_files2;
         $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 
@@ -118,13 +119,8 @@ class ObservationController extends Controller
 
             $data->related_observations = json_encode($files);
         }
-        // if ($request->hasfile('attach_files2')) {
-        //     $image = $request->file('attach_files2');
-        //     $ext = $image->getClientOriginalExtension();
-        //     $image_name = date('y-m-d') . '-' . rand() . '.' . $ext;
-        //     $image->move('upload/document/', $image_name);
-        //     $data->attach_files2 = $image_name;
-        // }
+       
+
         if (!empty($request->attach_files2)) {
             $files = [];
             if ($request->hasfile('attach_files2')) {
@@ -510,17 +506,17 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
 
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Date Response Due1 ';
-        $history->previous = "Null";
-        $history->current = $data->date_response_due1;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->save();
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Date Response Due1 ';
+        // $history->previous = "Null";
+        // $history->current = $data->date_response_due1;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->save();
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -602,6 +598,8 @@ class ObservationController extends Controller
 
     public function observationupdate(Request $request, $id)
     {
+       
+
         $data = Observation::find($id);
         $lastDocument = Observation::find($id);
         $data = Observation::find($id);
@@ -641,7 +639,7 @@ class ObservationController extends Controller
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
         $data->date_Response_due2 = $request->date_Response_due2;
-        $data->capa_date_due = $request->capa_date_due;
+        $data->capa_date_due = $request->capa_date_due11;
         $data->assign_to2 = $request->assign_to2;
         $data->cro_vendor = $request->cro_vendor;
         $data->comments = $request->comments;
@@ -654,9 +652,11 @@ class ObservationController extends Controller
         $data->actual_start_date = $request->actual_start_date;
         $data->actual_end_date = $request->actual_end_date;
         $data->action_taken = $request->action_taken;
-        $data->date_response_due1 = $request->date_response_due1;
+
+         $data->date_response_due1 = $request->date_Response_due22;
+        // $data->date_response_due1 = $request->date_response_due1;
         $data->response_date = $request->response_date;
-        $data->attach_files2 = $request->attach_files2;
+        // $data->attach_files2 = $request->attach_files2;
         $data->related_url = $request->related_url;
         $data->response_summary = $request->response_summary;
 

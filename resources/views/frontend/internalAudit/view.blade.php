@@ -781,7 +781,7 @@ function addMultipleFiles(input, block_id) {
                                                                 <input type="text"   id="scheduled_start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}"/>
                                                                 <input type="date"  id="scheduled_start_date{{$key}}_checkdate" value="{{unserialize($grid_data->start_date)[$key]}}"  name="scheduled_start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
                                                                 "class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>'
+                                                                oninput="handleDateInput(this, `scheduled_start_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
                                                              
                                                             <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
@@ -1296,7 +1296,7 @@ function addMultipleFiles(input, block_id) {
                                                         <tbody id="observationDetail">
                                                             @if ($grid_data1->observation_id)
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-                                                            <tr>        dd($observation_id);
+                                                            <tr>        
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input type="text" name="observation_id[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $tempData ? $tempData : "" }}"></td>
                                                                     {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
