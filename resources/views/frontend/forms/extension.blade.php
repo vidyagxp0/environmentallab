@@ -225,7 +225,7 @@
                                             <option value="New Documen">New Document</option>
                                             <option value="Action ">Action Item</option>
                                             <option value="Effectivness">Effectivness Check</option>
-                                            <option value="Others">Others</option>
+                                            <option value="others">Others</option>
                                         </select>
                                     </div>
                             </div>
@@ -472,4 +472,18 @@
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);});
     </script>
+        <script>
+            function otherController(value, checkValue, blockID) {
+                let block = document.getElementById(blockID)
+                let blockTextarea = block.getElementsByTagName('textarea')[0];
+                let blockLabel = block.querySelector('label span.text-danger');
+                if (value === checkValue) {
+                    blockLabel.classList.remove('d-none');
+                    blockTextarea.setAttribute('required', 'required');
+                } else {
+                    blockLabel.classList.add('d-none');
+                    blockTextarea.removeAttribute('required');
+                }
+            }
+        </script>
 @endsection

@@ -76,21 +76,20 @@ function addMultipleFiles(input, block_id) {
             cell1.innerHTML = currentRowCount;
 
             var cell2 = newRow.insertCell(1);
-            
-            cell2.innerHTML = "<input type='text' name='audit[]'>";
-            
+            cell2.innerHTML = "<input type='text'>";
+
             var cell3 = newRow.insertCell(2);
             cell3.innerHTML =  '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell4 = newRow.insertCell(3);
-            cell4.innerHTML = "<input type='time' name='scheduled_start_time[]'>";
+            cell4.innerHTML = "<input type='time'>";
 
             var cell5 = newRow.insertCell(4);
             cell5.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + currentRowCount +'`);checkDate(`scheduled_start_date' + currentRowCount +'_checkdate`,`scheduled_end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
                         
 
             var cell6 = newRow.insertCell(5);
-            cell6.innerHTML = "<input type='time'name='scheduled_end_time[]'>";
+            cell6.innerHTML = "<input type='time'>";
 
             var cell7 = newRow.insertCell(6);
            
@@ -104,7 +103,7 @@ function addMultipleFiles(input, block_id) {
 
             var cell8 = newRow.insertCell(7);
             
-                var userHtml = '<select name="auditee[]"><option value="">-- Select --</option>';
+                var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
                     for (var i = 0; i < users.length; i++) {
                         userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
                     }
@@ -113,7 +112,7 @@ function addMultipleFiles(input, block_id) {
                     cell8.innerHTML = userHtml;
 
             var cell9 = newRow.insertCell(8);
-            cell9.innerHTML = "<input type='text' name='remark[]'>";
+            cell9.innerHTML = "<input type='text'>";
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -378,7 +377,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input disabled type="text" value="{{ $data->initiator_name }} ">
                                             </div>
                                         </div>
-                                        <!-- <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Date Due">Date of Initiation</label>
                                                 <input readonly type="text"
@@ -530,7 +529,7 @@ function addMultipleFiles(input, block_id) {
                                      </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="severity-level">Severity Level</label>
+                                                <label for="severity-level">Sevrity Level</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
                                                     <option  value="0">-- Select --</option>
                                                     <option @if ($data->severity_level_form =='minor') selected @endif
@@ -674,10 +673,10 @@ function addMultipleFiles(input, block_id) {
                                        
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Inv Attachments">Initial Attachment </label>
+                                                <label for="Inv Attachments">Initial Attachment</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                                 <div class="file-attachment-field">
-                                                    <div disabled  class="file-attachment-list" id="inv_attachment1" >
+                                                    <div disabled  class="file-attachment-list" id="inv_attachment1">
                                                         @if ($data->inv_attachment)
                                                         @foreach(json_decode($data->inv_attachment) as $file)
                                                         <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
@@ -774,7 +773,9 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="text" name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
                                                             </td>
-                                                            
+                                                            {{-- <td><input type="date" name="scheduled_start_date[]"
+                                                                    value="{{ unserialize($grid_data->start_date)[$key] ? unserialize($grid_data->start_date)[$key] : '' }}">
+                                                            </td> --}}
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
@@ -786,14 +787,15 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="time" name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                 value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
                                                             </td>
-                                                            
+                                                            {{-- <td><input type="date" name="scheduled_end_date[]"
+                                                                    value="{{ unserialize($grid_data->end_date)[$key] ? unserialize($grid_data->end_date)[$key] : '' }}">
+                                                            </td> --}}
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
-                                                                <input type="text"   id="scheduled_end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                <input type="date" 
-                                                                value="{{unserialize($grid_data->end_date)[$key]}}" id="scheduled_end_date{{$key}}_checkdate"   name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input" 
-                                                                oninput="handleDateInput(this, `scheduled_end_date{{$key}}`);checkDate('scheduled_start_date{{$key}}_checkdate','scheduled_end_date{{$key}}_checkdate')"  /></div></div></div></td>
+                                                                <input type="text"   id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                <input type="date" id="scheduled_end_date1_checkdate"   name="scheduled_end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}"class="hide-input" 
+                                                                oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')"  /></div></div></div></td>
                                                                <td><input type="time" name="scheduled_end_time[]"
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                              </td>
@@ -1296,7 +1298,7 @@ function addMultipleFiles(input, block_id) {
                                                         <tbody id="observationDetail">
                                                             @if ($grid_data1->observation_id)
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-                                                            <tr>        
+                                                            <tr>        dd($observation_id);
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input type="text" name="observation_id[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $tempData ? $tempData : "" }}"></td>
                                                                     {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
@@ -1739,14 +1741,9 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
+                            <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
-                            </div> -->
-                            <div class="modal-footer">
-                                   <button type="submit">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                
                             </div>
                         </form>
                     </div>
@@ -1788,14 +1785,9 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
+                            <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
-                            </div> -->
-                            <div class="modal-footer">
-                                   <button type="submit">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                
                             </div>
                         </form>
                     </div>
@@ -1836,14 +1828,9 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <!-- <div class="modal-footer">
+                            <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
-                            </div> -->
-                            <div class="modal-footer">
-                                   <button type="submit">Submit</button>
-                                <button type="button" data-bs-dismiss="modal">Close</button>
-                                
                             </div>
                         </form>
                     </div>
@@ -1864,7 +1851,6 @@ function addMultipleFiles(input, block_id) {
                             <!-- Modal body -->
                             <div class="modal-body">
                                 <div class="group-input">
-                                    <label></label>
                                     <label for="major">
                                         <input type="radio" name="child_type" value="Observations">
                                         Observations

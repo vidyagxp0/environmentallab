@@ -63,9 +63,8 @@ class ExtensionController extends Controller
 
         $openState->intiation_date = $request->intiation_date;
         $openState->revised_date = $request->revised_date;
-        $openState->due_date = $request->due_date;
-
         
+        $openState->due_date = $request->due_date;
         $openState->division_id = $request->division_id;
         if (!empty($request->extention_attachment)) {
             $files = [];
@@ -195,6 +194,7 @@ class ExtensionController extends Controller
         $openState->type = $request->type;
         $openState->revised_date = $request->revised_date;
         $openState->initiated_if_other = $request->initiated_if_other;
+        
         $openState->due_date = $request->due_date;
         if (!empty($request->extention_attachment)) {
             $files = [];

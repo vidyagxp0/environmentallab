@@ -185,8 +185,8 @@
                                                 <label for="Date Due">Current Parent Due Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="due_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="due_date" value="{{ $data->due_date }}" value="{{ Helpers::getdateFormat($data->due_date) }}" class="hide-input"
+                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                    <input type="date" name="due_date" value="{{ $data->due_date }}"  class="hide-input"
                                                         oninput="handleDateInput(this, 'due_date')" />
                                                 </div>
                                             </div>
@@ -196,8 +196,8 @@
                                                 <label for="Date Due">Revised Due Date</label>
                                                 <div class="calenderauditee">
                                                     <input type="text" id="revised_date" readonly
-                                                        placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="revised_date" value="{{ $data->revised_date }}" value="{{ Helpers::getdateFormat($data->revised_date) }}" class="hide-input"
+                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
+                                                    <input type="date" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
                                                         oninput="handleDateInput(this, 'revised_date')" />
                                                 </div>
                                             </div>
@@ -252,7 +252,8 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
                                                 <div><small class="text-primary">Please select related information</small></div>
-                                                <select name="initiated_through" {{$data->initiated_through}}>
+                                                <select name="initiated_through" {{$data->initiated_through}}
+                                                    onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option  selected value="">-- select --</option>
                                                     <option @if ($data->initiated_through == 'Internal') selected @endif value="Internal ">Internal Audit</option>
                                                     <option @if ($data->initiated_through == 'External') selected @endif value="External">External Audit</option>
@@ -266,7 +267,7 @@
                                                     <option @if ($data->initiated_through == 'New Document') selected @endif value="New Document">New Document</option>
                                                     <option @if ($data->initiated_through == 'Action') selected @endif value="Action ">Action Item</option>
                                                     <option @if ($data->initiated_through == 'Effectivness') selected @endif value="Effectivness">Effectivness Check</option>
-                                                    <option @if ($data->initiated_through == 'Others') selected @endif value="Effectivness">Others</option>
+                                                    <option @if ($data->initiated_through == 'others') selected @endif value="Effectivness">Others</option>
                                                 </select>
                                             </div>
                                     </div>
@@ -377,63 +378,63 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Submitted By">Submitted By</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->submitted_by}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Submitted On">Submitted On</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->submitted_on}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->cancelled_by}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled On">Cancelled On</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->cancelled_on}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Ext Approved By">Ext Approved By</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->ext_approved_by}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Ext Approved On">Ext Approved On</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->ext_approved_on}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="More Information Required By">More Information Required
                                                     By</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->more_information_required_by}}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="More Information Required On">More Information Required
                                                     On</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->more_information_required_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected By">Rejected By</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->rejected_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected On">Rejected On</label>
-                                                <div class="static"></div>
+                                                <div class="static">{{ $data->rejected_on }}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -1097,4 +1098,18 @@
                 });
             });
         </script>
+            <script>
+                function otherController(value, checkValue, blockID) {
+                    let block = document.getElementById(blockID)
+                    let blockTextarea = block.getElementsByTagName('textarea')[0];
+                    let blockLabel = block.querySelector('label span.text-danger');
+                    if (value === checkValue) {
+                        blockLabel.classList.remove('d-none');
+                        blockTextarea.setAttribute('required', 'required');
+                    } else {
+                        blockLabel.classList.add('d-none');
+                        blockTextarea.removeAttribute('required');
+                    }
+                }
+            </script>
 @endsection
