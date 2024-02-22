@@ -82,7 +82,7 @@
                             </button>
                         @elseif($data->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                QA More Info Required
+                                More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve Plan
@@ -94,6 +94,9 @@
                                 Child
                             </button> --}}  
                         @elseif($data->stage == 3)
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                              QA More Info Required
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
@@ -236,14 +239,13 @@
                                                 {{-- <div class="static"> </div> --}}
                                             </div>
                                         </div>
-
                                         <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Date Due">Date of Initiation</label>
-                                                <input disabled type="text" name="intiation_date"
-                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}">
-                                            </div>
+                                        <div class="group-input ">
+                                            <label for="Date Due"><b>Date of Initiation</b></label>
+                                            <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                            <input type="hidden" value="{{ date('d-m-Y') }}" name="intiation_date">
                                         </div>
+                                    </div>
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
@@ -374,7 +376,7 @@
         
                                         </div>
         
-                                        </div>
+                                        
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Sevrity Level</label>
