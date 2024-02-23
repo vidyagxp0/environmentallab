@@ -9,9 +9,15 @@
 
                 <div class="inner-block">
                     <div class="main-head">
-                        <div class="default-name">{{ $document->division }}
+                        <div class="default-name">
+                            {{ Helpers::getDivisionName($document->division_id) }}
+                                        /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $document->year }}
+                                        /000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
+                            
+                            {{-- {{ $document->division }}
                             /{{ $document->doctype }} /{{ date('Y') }}
-                            /SOP-000{{ $document->id }}</div>
+                            /SOP-000{{ $document->id }} --}}
+                        </div>
 
                         <div class="btn-group">
                             <button class="button_theme1" onclick="window.print();return false;" type="button">Print</button>
@@ -21,7 +27,9 @@
                         <div class="list-item">
                             <div class="head">Site/Division/Process</div>
                             <div>:</div>
-                            <div>{{ $document->division }}/{{ $document->process }}</div>
+                            <div> {{ Helpers::getDivisionName($document->division_id) }}
+                                /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $document->year }}
+                                /000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}</div>
                         </div>
                         <div class="list-item">
                             <div class="head">Document Stage</div>

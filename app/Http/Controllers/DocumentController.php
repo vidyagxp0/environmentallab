@@ -282,10 +282,16 @@ class DocumentController extends Controller
 
             $document = new Document();
             $division = SetDivision::where('user_id', Auth::id())->latest()->first();
-            $document->division_id = $division->division_id;
-            $document->process_id = $division->process_id;
-            // $document->division_id = $request->division_id;
-            // $document->process_id = $request->process_id;
+            
+            if(empty($request->division_id) && empty($request->process_id) ){
+              $document->division_id = $division->division_id;
+              $document->process_id = $division->process_id;
+            } else {
+                $document->division_id = $request->division_id;
+                $document->process_id = $request->process_id;
+            }
+
+
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
             $document->document_name = $request->document_name;
@@ -849,6 +855,45 @@ class DocumentController extends Controller
                 $history->previous = $lastDocument->review_period;
                 $history->current = $document->review_period;
                 $history->comment = $request->review_period_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+            if ($lastDocument->revision_type != $document->revision_type || ! empty($request->revision_type_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Revision Type';
+                $history->previous = $lastDocument->revision_type;
+                $history->current = $document->revision_type;
+                $history->comment = $request->revision_type_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+            if ($lastDocument->major != $document->major || ! empty($request->major_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Major';
+                $history->previous = $lastDocument->major;
+                $history->current = $document->major;
+                $history->comment = $request->major_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+            if ($lastDocument->minor != $document->minor || ! empty($request->minor_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Minor';
+                $history->previous = $lastDocument->minor;
+                $history->current = $document->minor;
+                $history->comment = $request->minor_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

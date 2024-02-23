@@ -342,7 +342,7 @@
         <table class="border border-top-none p-10">
             <tbody>
                 <tr>
-                    <td class="doc-num w-100">{{ Helpers::getDivisionName(session()->get('division')) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
+                    <td class="doc-num w-100">{{ Helpers::getDivisionName($data->division_id) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
                         {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
                 </tr>
             </tbody>
@@ -797,7 +797,7 @@
                             <tbody>
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Document Number</th>
-                                    <td class="w-70 text-left">{{ Helpers::getDivisionName(session()->get('division')) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
+                                    <td class="w-70 text-left">{{ Helpers::getDivisionName($data->division_id) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
                                         {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
                                 </tr>
                                 {{-- <tr>
@@ -1274,7 +1274,7 @@
         <table class="border p-20">
             <tbody>
                 <tr>
-                    <td class="text-left w-36">{{ Helpers::getDivisionName(session()->get('division')) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
+                    <td class="text-left w-36">{{ Helpers::getDivisionName($data->division_id) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
                         {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
 
                     <td class="w-36">Printed On : {{ $time }}</td>

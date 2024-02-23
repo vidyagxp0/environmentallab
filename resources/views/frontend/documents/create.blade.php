@@ -41,7 +41,7 @@
     border-radius: 40px;
 }
     </style>
-
+<?php $division_id = isset($_GET['id'])?$_GET['id']:'';?>
     <div id="data-field-head">
         <div class="pr-id">
             New Document
@@ -92,14 +92,15 @@
                                         <div class="default-name"> {{ date('d-M-Y') }}</div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                {{-- <div class="col-md-4">
                                     <div class="group-input">
                                         <label for="record-num">Record Number</label>
                                         <div class="default-name">{{ $recordNumber }}</div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
+                                        
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_id"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}">

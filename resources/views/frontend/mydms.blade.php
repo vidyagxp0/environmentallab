@@ -141,9 +141,9 @@
                                                             data-bs-target="#division-modal">
                                                             SOP-ID
                                                         </th>
-                                                        <th class="division">
+                                                        {{-- <th class="division">
                                                             SOP Type
-                                                        </th>
+                                                        </th> --}}
                                                         <th class="short-desc">
                                                             Short Description
                                                         </th>
@@ -171,9 +171,9 @@
                                                                         SOP-{{ $temp->id }}
                                                                     </a>
                                                                 </td>
-                                                                <td class="division">
+                                                                {{-- <td class="division">
                                                                     {{ $temp->type }}
-                                                                </td>
+                                                                </td> --}}
 
                                                                 <td class="short-desc">
                                                                     {{ $temp->short_description }}
@@ -233,9 +233,9 @@
                                                             data-bs-target="#division-modal">
                                                             SOP-ID
                                                         </th>
-                                                        <th class="division">
+                                                        {{-- <th class="division">
                                                             SOP Type
-                                                        </th>
+                                                        </th> --}}
                                                         <th class="short-desc">
                                                             Short Description
                                                         </th>
@@ -263,9 +263,9 @@
                                                                         SOP-{{ $temp->id }}
                                                                     </a>
                                                                 </td>
-                                                                <td class="division">
+                                                                {{-- <td class="division">
                                                                     {{ $temp->type }}
-                                                                </td>
+                                                                </td> --}}
 
                                                                 <td class="short-desc">
                                                                     {{ $temp->short_description }}
@@ -730,9 +730,9 @@
                                                                     data-bs-target="#division-modal">
                                                                     SOP-ID
                                                                 </th>
-                                                                <th class="division">
+                                                                {{-- <th class="division">
                                                                     SOP Type
-                                                                </th>
+                                                                </th> --}}
                                                                 <th class="short-desc">
                                                                     Short Description
                                                                 </th>
@@ -760,9 +760,9 @@
                                                                             SOP-{{ $temp->id }}
                                                                         </a>
                                                                     </td>
-                                                                    <td class="division">
+                                                                    {{-- <td class="division">
                                                                         {{ $temp->type }}
-                                                                    </td>
+                                                                    </td> --}}
 
                                                                     <td class="short-desc">
                                                                         {{ $temp->short_description }}
@@ -824,9 +824,9 @@
                                                                     data-bs-target="#division-modal">
                                                                     SOP-ID
                                                                 </th>
-                                                                <th class="division">
+                                                                {{-- <th class="division">
                                                                     SOP Type
-                                                                </th>
+                                                                </th> --}}
                                                                 <th class="short-desc">
                                                                     Short Description
                                                                 </th>
@@ -854,10 +854,6 @@
                                                                             SOP-{{ $temp->id }}
                                                                         </a>
                                                                     </td>
-                                                                    <td class="division">
-                                                                        {{ $temp->type }}
-                                                                    </td>
-
                                                                     <td class="short-desc">
                                                                         {{ $temp->short_description }}
                                                                     </td>
@@ -909,7 +905,7 @@
                                                     </div>
                                                     <div class="head">
                                                         <div class="title">Pending Approval</div>
-                                                        <div class="result">{{ count($under_approval) }} Results</div>
+                                                        {{-- <div class="result">{{ count($under_approval) }} Results</div> --}}
                                                     </div>
                                                     <div class="table-list">
                                                         <table class="table table-bordered mb-0">
@@ -918,9 +914,9 @@
                                                                     data-bs-target="#division-modal">
                                                                     SOP-ID
                                                                 </th>
-                                                                <th class="division">
+                                                                {{-- <th class="division">
                                                                     SOP Type
-                                                                </th>
+                                                                </th> --}}
                                                                 <th class="short-desc">
                                                                     Short Description
                                                                 </th>
@@ -948,9 +944,9 @@
                                                                             SOP-{{ $temp->id }}
                                                                         </a>
                                                                     </td>
-                                                                    <td class="division">
+                                                                    {{-- <td class="division">
                                                                         {{ $temp->type }}
-                                                                    </td>
+                                                                    </td> --}}
 
                                                                     <td class="short-desc">
                                                                         {{ $temp->short_description }}
@@ -1125,9 +1121,9 @@
                                                                     data-bs-target="#division-modal">
                                                                     SOP-ID
                                                                 </th>
-                                                                <th class="division">
+                                                                {{-- <th class="division">
                                                                     SOP Type
-                                                                </th>
+                                                                </th> --}}
                                                                 <th class="short-desc">
                                                                     Short Description
                                                                 </th>
@@ -1155,9 +1151,9 @@
                                                                             SOP-{{ $temp->id }}
                                                                         </a>
                                                                     </td>
-                                                                    <td class="division">
+                                                                    {{-- <td class="division">
                                                                         {{ $temp->type }}
-                                                                    </td>
+                                                                    </td> --}}
 
                                                                     <td class="short-desc">
                                                                         {{ $temp->short_description }}

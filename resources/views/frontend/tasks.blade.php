@@ -19,10 +19,10 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <th class="pr-id">
-                                                ID
+                                                ID 
                                             </th>
                                             <th class="division">
-                                                SOP Type
+                                                Document Type
                                             </th>
                                             <th class="short-desc">
                                                 Short Description
@@ -31,7 +31,7 @@
                                                 Create Date Time
                                             </th>
                                             <th class="assign-name">
-                                                Assigned To
+                                                Originator
                                             </th>
                                             <th class="modify-date">
                                                 Modify Date Time

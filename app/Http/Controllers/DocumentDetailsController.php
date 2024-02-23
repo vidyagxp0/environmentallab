@@ -64,6 +64,26 @@ class DocumentDetailsController extends Controller
               $stage->stage =  $request->stage_id;
               $stage->comment = $request->comment;
               $stage->save();
+              if($request->stage_id == 'Reviewed'){
+                $stage = new StageManage;
+                $stage->document_id = $request->document_id;
+                $stage->user_id = Auth::user()->id;
+                $stage->role = RoleGroup::where('id',Auth::user()->role)->value('name');
+                $stage->stage =  'Review-Submit';
+                $stage->comment = $request->comment;
+                $stage->save();
+              }
+
+              if($request->stage_id == 'Cancel-by-Reviewer'){
+                StageManage::where('document_id', $request->document_id)->where('user_id', Auth::user()->id)
+                ->where('stage', 'In-Review')->delete();
+              }
+
+              if($request->stage_id == 'Cancel-by-Approver'){
+                StageManage::where('document_id', $request->document_id)->where('user_id', Auth::user()->id)
+                ->where('stage', 'In-Approval')->delete();
+              }
+              
             }
 
             if(Auth::user()->role == 3){
@@ -334,6 +354,8 @@ class DocumentDetailsController extends Controller
       $document->division = Division::where('id',$document->division_id)->value('name');
       $document->process = Process::where('id',$document->process_id)->value('process_name');
       $document->originator = User::where('id',$document->originator_id)->value('name');
+      $document['year'] = Carbon::parse($document->created_at)->format('Y');
+      $document['document_type_name'] = DocumentType::where('id', $document->document_type_id)->value('name');
       return view('frontend.documents.audit-trial',compact('audit','document','today'));
     }
 
