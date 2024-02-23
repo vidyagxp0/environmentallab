@@ -472,7 +472,7 @@
                                         <label for="Due Date"> Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                        
-                                            <input type="text" id="due_date" name="due_date" readonly
+                                            <input type="text" id="due_date" name="due_date" 
                                                 placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
                                             <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" -->
  
@@ -1399,7 +1399,7 @@
                                                             <th>Residual Severity- H(3)/M(2)/L(1)</th>
                                                             <th>Residual Probability- H(3)/M(2)/L(1)</th>
                                                             <th>Residual Detectability- H(1)/M(2)/L(3)</th>
-                                                            <!-- <th>Residual RPN</th> -->
+                                                            <th>Residual RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
                                                             <th>Mitigation proposal (Mention either CAPA reference
                                                                 number, IQ,
