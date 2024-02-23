@@ -938,7 +938,7 @@ use Illuminate\Support\Facades\Hash;
         $root->Sample_Types = $request->Sample_Types;
         $root->test_lab = $request->test_lab;
         $root->ten_trend = $request->ten_trend;
-        $root->investigators =  implode(',', $request->investigators);
+        $root->investigators = json_encode($request->investigators);
         $root->submitted_by = ($request->submitted_by);
         $root->Root_Cause_Category = ($request->Root_Cause_Category);
         $root->Root_Cause_Sub_Category = ($request->Root_Cause_Sub_Category);
