@@ -55,9 +55,9 @@ class DocumentController extends Controller
         $new->process_id = $request->process_id;
         $new->user_id = Auth::user()->id;
         $new->save();
-        return redirect()->route('documents.create');
-        // $id = $request->process_id;
-        // return redirect()->route('documents.create' ,compact('id'));
+        //return redirect()->route('documents.create');
+        $id = $request->process_id;
+        return redirect()->route('documents.create' ,compact('id'));
     }
     public function division_old(Request $request)
     {
