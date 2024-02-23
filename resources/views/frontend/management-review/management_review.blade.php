@@ -187,6 +187,16 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
+                                </div> -->
+                               
+                                <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                    name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                            </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -371,8 +381,11 @@
                                                                 value="{{ $key + 1 }}"></td>
                                                         
                                                                 <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
+                                                                    <input type="text" id="date' + serialNumber +'" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key]) }}" />
+                                                                    <input type="date" name="date[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key]) }}" class="hide-input" 
+                                                                    oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>
                                                                     <input type="text" id="date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
-                                                                    <input type="date" name="date[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input" 
+                                                                    <input type="date" name="date[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input" 
                                                                     oninput="handleDateInput(this, `date{{$key }}`)" /></div></div></div></td>
                                                         <td><input type="text" name="topic[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ unserialize($agenda->topic)[$key] ?? '' }}">
@@ -824,8 +837,10 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                                 @if(!empty($capa_detail_details->date_closed2))
-                                                 @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps) 
+                                                @foreach (unserialize($capa_detail_details->date_closed2) as $key => $temps)
+                                    <tbody>       
+                                                  @if(!empty($capa_detail_details->Details)) 
+                                                 @foreach (unserialize($capa_detail_details->Details) as $key => $temps) 
                                                     <tr>
                                                         <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ $key + 1 }}"></td>
@@ -875,7 +890,7 @@
                                                         </td>
                                                     </tr>
                                                 @endforeach
-                                                @endif
+                                                 @endif
                                                 
                                             </tbody>  
                                 </table>
@@ -1153,7 +1168,81 @@
             display: block;
         }
     </style>
+ <script>
+        $(document).ready(function() {
+            $('#capa_detail').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    console.log(users);
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
+                        '"></td>' +
+                       
+                        '<td><input type="text" name="Details[]">' +
+                        '<td><select id="select-state" placeholder="Select..." name="capa_type[]">'+
+                        '<option value="">Select a value</option>'+
+                        '<option value="corrective">Corrective Action</option>'+
+                        '<option value="preventive">Preventive Action</option>'+
+                        '<option value="corrective_preventive">Corrective & Preventive Action</option>'+
+                        '</select></td>'+
 
+                        '<td><input type="text" name="site2[]">' +
+                        '<td><select name="responsible_person2[]">' +
+                        '<option value="">Select a value</option>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+                        
+                        '<td><input type="text" name="current_status2[]">' +
+                       
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]" class="hide-input" oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>' +
+
+                        '<td><input type="text" name="remark2[]"></td>' +
+
+                        '</tr>';
+                    return html;
+                }
+
+                var tableBody = $('#capa_detail_details tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+            $('#capa_plan4').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    console.log(users);
+                    var html =
+                        '<tr>' +
+                        '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                        '<td><input type="text" name="mitigation_steps[]"></td>' +
+                        '<td><input type="date" name="deadline2[]"></td>' +
+                        '<td><select name="responsible_person[]">' +
+                        '<option value="">Select a value</option>';
+
+                    for (var i = 0; i < users.length; i++) {
+                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+
+                    html += '</select></td>' +
+                        '<td><input type="text" name="status[]"></td>' +
+                        '<td><input type="text" name="remark[]"></td>' +
+                        '</tr>';
+
+                    return html;
+                }
+
+                var tableBody = $('#capa_plan_details4 tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
     <script>
         VirtualSelect.init({
             ele: '#Facility, #Group, #Audit, #Auditee'

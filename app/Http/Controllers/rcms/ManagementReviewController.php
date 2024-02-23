@@ -220,7 +220,7 @@ class ManagementReviewController extends Controller
             $data2->evaluation = serialize($request->evaluation);
         }
         $data2->save();
-
+          
         $data3 = new ManagementReviewDocDetails();
         $data3->review_id = $management->id;
         $data3->type = "management_review_participants";
@@ -250,6 +250,7 @@ class ManagementReviewController extends Controller
         $data4 = new ManagementReviewDocDetails();
         $data4->review_id = $management->id;
         $data4->type = "action_item_details";
+        
         if (!empty($request->short_desc)) {
             $data4->short_desc = serialize($request->short_desc);
         }
@@ -276,6 +277,7 @@ class ManagementReviewController extends Controller
         $data5 = new ManagementReviewDocDetails();
         $data5->review_id = $management->id;
         $data5->type = "capa_detail_details";
+        
         if (!empty($request->Details)) {
             $data5->Details = serialize($request->Details);
         }
@@ -1252,6 +1254,7 @@ class ManagementReviewController extends Controller
         $data5 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
         $data5->review_id = $management->id;
         $data5->type = "capa_detail_details";
+      
         if (!empty($request->Details)) {
             $data5->Details = serialize($request->Details);
         }
@@ -1312,6 +1315,7 @@ class ManagementReviewController extends Controller
         $performance_evaluation = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"performance_evaluation")->first();
         $action_item_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"action_item_details")->first();
         $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
+        
         return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));
     }
 
