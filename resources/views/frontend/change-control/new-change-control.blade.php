@@ -583,10 +583,9 @@
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
                                             <option value="0">-- Select --</option>
                                             @foreach ($cft as $data)
-                                                <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
+                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
                                         </select>
-
                                     </div>
                                 </div>
 
