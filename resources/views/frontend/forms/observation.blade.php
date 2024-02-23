@@ -888,7 +888,7 @@
                         tableBody.append(newRow);
                     });                    
                 });
-            </script>
+      </script>
              <script>
                 var maxLength = 255;
                 $('#docname').keyup(function() {

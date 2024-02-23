@@ -698,6 +698,7 @@ class ObservationController extends Controller
 
             $data->attach_files2 = json_encode($files);
         }
+        
         $data->status = 'Opened';
         $data->stage = 1;
         $data->update();

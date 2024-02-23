@@ -1,5 +1,11 @@
 @extends('frontend.rcms.layout.main_rcms')
 @section('rcms_container')
+@php
+$users = DB::table('users')
+    ->select('id', 'name')
+    ->get();
+
+@endphp
     <style>
         textarea.note-codable {
             display: none !important;
@@ -178,6 +184,44 @@
             document.getElementById('analysisRPN').value = result;
         }
     </script>
+       <script>
+        $(document).ready(function() {
+            $('#observation_table').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    console.log(users);
+                    var html =
+                    '<tr>' +
+                        '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                        '<td><input type="text" name="action[]"></td>' +
+                        '<td><select name="responsible[]">' +
+                            '<option value="">Select a value</option>';
+
+                        for (var i = 0; i < users.length; i++) {
+                            html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                        }
+
+                        html += '</select></td>' +
+                        // '<td><input type="date" name="deadline[]"></td>' +
+                                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+
+                        '<td><input type="text" name="item_status[]"></td>' +
+                        '</tr>';
+
+
+
+                    return html;
+                }
+
+                var tableBody = $('#observation tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });                    
+        });
+</script>
+    
+
 
 
 
@@ -644,9 +688,9 @@
                                     <div class="group-input">
                                         <label for="action-plan-grid">
                                             Action Plan<button type="button" name="action-plan-grid"
-                                                onclick="add4Input('action-plan-grid')" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>+</button>
+                                                id="observation_table">+</button>
                                         </label>
-                                        <table class="table table-bordered" id="action-plan-grid">
+                                        <table class="table table-bordered" id="observation">
                                             <thead>
                                                 <tr>
                                                     <th>Row #</th>
@@ -683,9 +727,10 @@
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
-                                                                <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
-                                                                 <input type="date" name="deadline[]" class="hide-input" 
-                                                                oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /> 
+                                                              
+                                                                <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
+                                                                 <input type="date" value="{{unserialize($griddata->deadline)[$key]}}" name="deadline[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}" class="hide-input" 
+                                                                oninput="handleDateInput(this, `deadline{{$key}}' + serialNumber +'`)" /> 
                                                             </div>
                                                         </div>
                                                     </div>
