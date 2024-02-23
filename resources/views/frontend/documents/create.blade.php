@@ -46,11 +46,13 @@
         <div class="pr-id">
             New Document
         </div>
+        @if(isset($_GET['id']))
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
             {{ Helpers::getDivisionName($_GET['id'])  }} / Document 
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
+        @endif
     </div>
 
     <div id="data-fields">
@@ -100,12 +102,18 @@
                                 </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        
+                                        @if(isset($_GET['id']))
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_id"
                                             value="{{ Helpers::getDivisionName($_GET['id']) }}">
                                         <input type="hidden" name="division_id" value="{{ $_GET['id'] }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
+                                        @else
+                                        <label for="Division Code"><b>Site/Location Code </b></label>
+                                        <input readonly type="text" name="division_id"
+                                            value="">
+                                        <input type="hidden" name="division_id" value="">
+                                        @endif
                                     </div>
                                 </div>
                                 

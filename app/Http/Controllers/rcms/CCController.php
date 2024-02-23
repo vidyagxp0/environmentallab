@@ -377,6 +377,7 @@ class CCController extends Controller
         if (!empty($request->version_no)) {
             $closure->version_no = serialize($request->version_no);
         }
+        
         if (!empty($request->implementation_date)) {
             $closure->implementation_date = serialize($request->implementation_date);
         }
