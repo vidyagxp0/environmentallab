@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Date Opened">Date of Initiation1</label>
+                                        <label for="Date Opened">Date of Initiation</label>
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         <input disabled type="text"
                                             value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
@@ -132,12 +132,11 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
-                                                class="text-danger">*</span></label>
-                                                <div><small class="text-primary">Please mention brief summary</small></div>
-                                        <textarea name="short_description" required></textarea>
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>
-
+                                </div>  
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="related_records">Action Item Related Records</label>
@@ -145,10 +144,8 @@
                                             placeholder="Select Reference Records">
                                             <option value="">--select record--</option>
                                         </select>
-
                                     </div>
                                 </div>
-
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="hod">HOD Persons</label>
@@ -288,28 +285,25 @@
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="start_date">Actual Start Date</label>
-                                        <!-- <input type="date" name="start_date"> -->
-
-                                        <div class="calenderauditee">                                     
-                                            <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="start_date" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'start_date')"/>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="start_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date_checkdate" name="start_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
-
                                     </div>
                                 </div>
-                                <div class="col-lg-6 new-date-data-field">
+                                 <div class="col-lg-6  new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="end_date">Actual End Date</label>
-                                        <!-- <input type="date" name="end_date"> -->
-
-                                        <div class="calenderauditee">                                     
-                                        <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="end_date" value=""
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'end_date')"/>
+                                        <label for="end_date">Actual End Date</lable>
+                                        <div class="calenderauditee">
+                                        <input type="text" id="end_date"                             
+                                                placeholder="DD-MMM-YYYY" />
+                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date" class="hide-input"
+                                                oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
+                                   
+                                        
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -397,38 +391,38 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Submitted By</label>
-                                        {{--  <div class="static">Piyush Sahu</div>  --}}
+                                        <label for="submitted by">Submitted By</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Submitted On</label>
-                                        {{--  <div class="static">12-12-2032</div>  --}}
+                                        <label for="submitted on">Submitted On</label>
+                                        <div class="Date"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Cancelled By</label>
-                                        {{--  <div class="static">Piyush Sahu</div>  --}}
+                                        <label for="cancelled by">Cancelled By</label>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Cancelled On</label>
-                                        {{--  <div class="static">12-12-2032</div>  --}}
+                                        <label for="cancelled on">Cancelled On</label>
+                                        <div class="Date"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Completed By</label>
-                                        {{--  <div class="static">Piyush Sahu</div>  --}}
+                                        <label for="completed by">Completed By</label>
+                                        <div class="static"></div> 
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Completed On</label>
-                                        {{--  <div class="static">12-12-2032</div>  --}}
+                                        <label for="completed on">Completed On</label>
+                                         <div class="Date"></div>
                                     </div>
                                 </div>
                               
@@ -528,5 +522,11 @@
                 currentStep--;
             }
         }
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection

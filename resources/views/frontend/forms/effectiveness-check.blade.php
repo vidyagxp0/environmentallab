@@ -123,10 +123,12 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Short Description">Short Description</label>
-                                        <textarea name="short_description"></textarea>
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>
+                                </div>  
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Original Date Due"><b>Original Date Due</b></label>
@@ -558,5 +560,11 @@
                 currentStep--;
             }
         }
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection

@@ -79,6 +79,7 @@ class ActionItemController extends Controller
 
     }
 
+
     public function stageChange(Request $request,$id){
       
         if($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password))
@@ -112,13 +113,12 @@ class ActionItemController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
-
-
-
         }
         else{
             toastr()->error('E-signature Not match');
             return back();
         }
     }
+    
 }
+

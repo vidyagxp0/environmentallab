@@ -44,8 +44,12 @@ return new class extends Migration
             $table->text('due_date_extension')->nullable();
             $table->text('Support_doc')->nullable();
             $table->text('qa_comments')->nullable();
-            
-
+            $table->text('submitted_by')->nullable();
+            $table->text('submitted_on')->nullable();
+            $table->text('cancelled_by')->nullable();
+            $table->text('cancelled_on')->nullable();
+            $table->text('completed_by')->nullable();
+            $table->text('completed_on')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
             $table->softDeletes();

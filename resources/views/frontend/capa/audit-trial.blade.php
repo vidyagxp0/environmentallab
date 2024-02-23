@@ -9,8 +9,8 @@
 
                 <div class="inner-block">
                     <div class="main-head">
-                        <div class="default-name">{{ date('Y') }}
-                            /Record-000{{ $document->id }}</div>
+                        <div class="default-name">
+                        {{ Helpers::getDivisionName(session()->get('division')) }}/CAPA/{{ date('Y') }}/Record-000{{ $document->id }}</div>
 
                         <div class="btn-group">
                             <a href="{{ url('rcms/capaAuditReport',$document->id)}}"> <button type="button">Print</button></a>

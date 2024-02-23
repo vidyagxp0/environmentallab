@@ -4,7 +4,32 @@
         header {
             display: none;
         }
+        .calenderauditee {
+        position: relative;
+    }
+
+    .new-date-data-field .input-date input.hide-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+
+    .new-date-data-field input {
+        border: 1px solid grey;
+        border-radius: 5px;
+        padding: 5px 15px;
+        display: block;
+        width: 100%;
+        background: white;
+    }
+
+    .calenderauditee input::-webkit-calendar-picker-indicator {
+        width: 100%;
+    }
+
     </style>
+    
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -41,12 +66,15 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
-                                Child
-                            </button> --}}
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
+                                Cancel
+                            </button>
                         @elseif($data->stage == 2)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Information Required
                             </button>
                         @endif
                         <a class="text-white button_theme1" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
@@ -165,13 +193,16 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="group-input">
-                                            <label for="Short Description">Short Description<span
-                                                    class="text-danger">*</span></label>
-                                                    <div><small class="text-primary">Please mention brief summary</small></div>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  name="short_description">{{ $data->short_description }}</textarea>
-                                        </div>
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        
+                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                     </div>
+                                    <p id="docnameError" style="color:red">**Short Description is required</p>
+                                </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="related_records">Action Item Related Records</label>
@@ -470,39 +501,39 @@
                                             <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="action_taken">{{ $data->action_taken }}</textarea>
                                         </div>
                                     </div>
-                                     <!-- <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="start_date">Actual Start Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="text" name="start_date" value="{{ Helpers::getdateFormat($data->start_date) }}">
-                                        </div>
-                                    </div>  -->
-                                    <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="start_date">Actual Start Date</label>
-                                        <!-- <input type="date" name="start_date"> -->
-
-                                        <div class="calenderauditee">                                     
-                                            <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="start_date" value=""
-                                            class="hide-input"
-                                            oninput="handleDateInput(this, 'start_date')"/>
-                                        </div>
-
-                                    </div>
+                                    
+                                    
+                                <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule Start Date">Actual Start Date</label>
+                                <div class="calenderauditee">
+                                    <input type="text" 
+                                        id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
+                                    <input class="hide-input" type="date"   name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }}"
+                                        oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                 </div>
-                                      <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="end_date">Actual End Date</label>
-                                            <input {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} type="text" name="end_date"value="{{ Helpers::getdateFormat($data->end_date) }}">
-                                        </div>
-                                    </div>  --}}
-                                     <!-- <div class="col-12">
+                            </div>
+                        </div>
+                       <div class="col-lg-6 new-date-data-field">
+                            <div class="group-input input-date">
+                                <label for="Audit Schedule End Date">Actual End Date</label>
+                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
+                                <div class="calenderauditee">
+                                    <input type="text" 
+                                        id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"  />
+                                    <input class="hide-input" type="date"   name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="end_date_checkdate" value="{{ $data->end_date }}"
+                                        oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
+                                </div>
+                            </div>
+                        </div>
+                                </div>
+                                      <div class="col-12">
                                         <div class="group-input">
                                             <label for="Comments">Comments</label>
                                             <textarea {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="comments">{{ $data->comments }}</textarea>
                                         </div>
                                     </div> 
-                                    <div class="col-lg-6 new-date-data-field">
+                                    <!--<div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                                 <label for="Audit Start Date">Actual Start Date</label>
                                                  <div class="calenderauditee">
@@ -533,33 +564,8 @@
                                                 value="{{ $data->Support_doc }}">
                                         </div>
                                     </div> --}}
-                                    <div class="col-lg-6 new-date-data-field">
-                                        <div class="group-input input-date">
-                                            <label for="Audit Schedule Start Date">Actual Start Date</label>
-                                            {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} --}}
-                                            
-                                            <div class="calenderauditee">
-                                                <input type="text" 
-                                                    id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}" />
-                                                <input type="date" id="start_date_checkdate" value="{{ $data->start_date }}" name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
-                                                    oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
-                                            </div> 
-                                        </div>
-                                    </div>
-                        <div class="col-lg-6 new-date-data-field">
-                            <div class="group-input input-date">
-                                <label for="Audit Schedule End Date">Actual End Date</label>
-                                {{-- <input type="date" name="end_date" value="{{ $data->end_date }}" --}}
-                                <div class="calenderauditee">
-                                    <input type="text" 
-                                        id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"  />
-                                    <input type="date" name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="end_date_checkdate" value="{{ $data->end_date }}" class="hide-input"
-                                        oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
-                                </div>
-                                 {{-- {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  --}}
-                            </div>
-                        </div>
-                                </div>
+                                   
+                       
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -611,38 +617,38 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted">Submitted By</label>
-                                            {{--  <div class="static">Piyush Sahu</div>  --}}
+                                            <label for="submitted by">Submitted By</label>
+                                            <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted">Submitted On</label>
-                                            {{--  <div class="static">12-12-2032</div>  --}}
+                                            <label for="submitted on">Submitted On</label>
+                                            <div class="Date">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted">Cancelled By</label>
-                                            {{--  <div class="static">Piyush Sahu</div>  --}}
+                                            <label for="cancelled by">Cancelled By</label>
+                                            <div class="static">{{ $data->cancelled_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted">Cancelled On</label>
-                                            {{--  <div class="static">12-12-2032</div>  --}}
+                                            <label for="cancelled on">Cancelled On</label>
+                                            <div class="Date">{{ $data->cancelled_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted">Completed By</label>
-                                            {{--  <div class="static">Piyush Sahu</div>  --}}
+                                            <label for="completed by">Completed By</label>
+                                            <div class="static">{{ $data->csompleted_by }}</div> 
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="submitted">Completed On</label>
-                                            {{--  <div class="static">12-12-2032</div>  --}}
+                                            <label for="completed on">Completed On</label>
+                                            <div class="Date">{{ $data->completed_on }}</div> 
                                         </div>
                                     </div>
                                    
@@ -823,7 +829,99 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="cancel-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
 
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form action="{{ route('capaCancel', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comment" required>
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="rejection-modal">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">E-Signature</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <form action="{{ route('capaCancel', $data->id) }}" method="POST">
+                            @csrf
+                            <!-- Modal body -->
+                            <div class="modal-body">
+                                <div class="mb-3 text-justify">
+                                    Please select a meaning and a outcome for this task and enter your username
+                                    and password for this task. You are performing an electronic signature,
+                                    which is legally binding equivalent of a hand written signature.
+                                </div>
+                                <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
+                                    <input type="text" name="username" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="password">Password <span class="text-danger">*</span></label>
+                                    <input type="password" name="password" required>
+                                </div>
+                                <div class="group-input">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comment" required>
+                                </div>
+                            </div>
+
+                            <!-- Modal footer -->
+                            <!-- <div class="modal-footer">
+                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                <button>Close</button>
+                            </div> -->
+                            <div class="modal-footer">
+                              <button type="submit">Submit</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
     <div id="division-modal" class="d-none">
         <div class="division-container">
             <div class="content-container">
@@ -964,6 +1062,13 @@
                         }
                     });
                 });
+            });
+        </script>
+        <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);
             });
         </script>
 

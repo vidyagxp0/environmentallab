@@ -20,7 +20,7 @@
     {{-- ======================================
                 CHANGE CONTROL VIEW
     ======================================= --}}
-    <div id="rcms_form-head">
+    <!-- <div id="rcms_form-head">
         <div class="container-fluid">
             <div class="inner-block">
                 <div class="head">PR-0001</div>
@@ -31,7 +31,7 @@
             </div>
 
         </div>
-    </div>
+    </div> -->
 
     <div id="change-control-view">
         <div class="container-fluid">
@@ -200,10 +200,20 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining              
+                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                    </div>
+                                    <p id="docnameError" style="color:red">**Short Description is required</p>
+
+                                </div>
+                                <!-- <div class="col-12">
+                                    <div class="group-input">
                                         <label for="Short Description">Short Description</label>
                                         <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="">Assign To</label>
@@ -236,13 +246,8 @@
                                             @endforeach
                                         </select>
                                     </div>
-<<<<<<< Updated upstream
                                 </div>
                                 <div class="col-lg-6">
-=======
-                                </div> --}}
-                                {{-- <div class="col-lg-6">
->>>>>>> Stashed changes
                                     <div class="group-input">
                                         <label for="Original Date Due"><b>Original Date Due</b></label>
                                         <input disabled type="text"
@@ -723,7 +728,7 @@
                                 </div>
                             </div>
                         </div> --}}
-                        {{-- <div class="button-block">
+                     <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
                                                 {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
@@ -1101,6 +1106,13 @@
                         }
                     });
                 });
+            });
+        </script>
+        <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);
             });
         </script>
 @endsection

@@ -71,7 +71,7 @@ class ActionItemController extends Controller
         // $openState->related_records = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
-        $openState->hod_preson = implode(',', $request->hod_preson);
+        $openState->hod_preson = json_encode($request->hod_preson);
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
@@ -150,7 +150,7 @@ class ActionItemController extends Controller
         $openState->description = $request->description;
         $openState->title = $request->title;
         $openState->hod_preson = json_encode($request->hod_preson);
-        $openState->hod_preson = $request->hod_preson;
+        // $openState->hod_preson = $request->hod_preson;
         $openState->dept = $request->dept;
         $openState->initiatorGroup = $request->initiatorGroup;
         $openState->action_taken = $request->action_taken;

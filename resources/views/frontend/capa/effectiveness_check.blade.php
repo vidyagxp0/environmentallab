@@ -58,11 +58,13 @@
                             </div>
                         </div>
                         <div class="col-12">
-                            <div class="group-input">
-                                <label for="Short Description">Short Description</label>
-                                <textarea name="text"></textarea>
-                            </div>
-                        </div>
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                    </div>
+                                </div>  
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Assigned to"><b>Assigned to</b></label>
@@ -340,5 +342,11 @@
             document.getElementById(cityName).style.display = "block";
             evt.currentTarget.className += " active";
         }
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
 @endsection
