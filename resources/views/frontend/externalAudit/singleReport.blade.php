@@ -194,9 +194,9 @@
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
+                        <td class="w-30">{{ $data->initiator_id }}</td>
                         <th class="w-20">Date Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -205,8 +205,25 @@
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Assign To</th>
-                        <td class="w-30">@if($data->assigend){{ Helpers::getInitiatorName($data->assigend) }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                        <th class="w-20"> Severity Level</th>
+                        <td class="w-30">@if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
+                        <th class="w-20">External Agencies </th>
+                        <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Description</th>
+                        <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
+                        
+                    </tr>
+                    <tr>
+                        <th class="w-20">Assigned To</th>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
                     </tr>
@@ -217,12 +234,6 @@
                         </td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Repeat</th>
-                        <td class="w-30">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-30">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit type</th>

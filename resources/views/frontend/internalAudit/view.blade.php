@@ -1223,35 +1223,27 @@ function addMultipleFiles(input, block_id) {
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
-                                           <div class="col-lg-6 new-date-data-field">
+                                        <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit Start Date">Audit Start Date</label>
-                                                {{-- <input type="date" name="audit_start_date"
-                                                    value="{{ $data->audit_start_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
-                                                    <div class="calenderauditee">
-                                                        <input type="text" id="audit_start_date" readonly
-                                                            placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_start_date) }}"/>
-                                                        <input type="date" id="audit_start_date_checkdate" value="{{ $data->audit_start_date }} "
-                                                        name="audit_start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} class="hide-input"
-                                                            oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
-                                                    </div>
-                                                    
+                                                    <div class="calenderauditee">                                     
+                                                        <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
+                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
+                                                        class="hide-input"
+                                                        oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
+                                                    </div>    
                                             </div>
                                         </div>
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Audit End Date">Audit End Date</label>
-                                                {{-- <input type="date" name="audit_end_date"
-                                                    value="{{ $data->audit_end_date }}"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
-                                                    <div class="calenderauditee">
-                                                        <input type="text"  id="audit_end_date" readonly
-                                                            placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
-                                                            />
-                                                        <input type="date" name="audit_end_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }} "
-                                                        id="audit_end_date_checkdate" class="hide-input"
-                                                            oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
+                                                    <div class="calenderauditee">                                     
+                                                    <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
+                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
+                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
+                                                    class="hide-input"
+                                                    oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>
                                             </div>
                                         </div>
@@ -1298,7 +1290,7 @@ function addMultipleFiles(input, block_id) {
                                                         <tbody id="observationDetail">
                                                             @if ($grid_data1->observation_id)
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
-                                                            <tr>        dd($observation_id);
+                                                            <tr>      
                                                                     <td>{{ $key + 1 }}</td>
                                                                     <td><input type="text" name="observation_id[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $tempData ? $tempData : "" }}"></td>
                                                                     {{-- <td><input type="date" name="date[]" value="{{unserialize($grid_data1->date)[$key] ? unserialize($grid_data1->date)[$key]: "" }}"></td> --}}
@@ -1741,10 +1733,15 @@ function addMultipleFiles(input, block_id) {
                             </div>
 
                             <!-- Modal footer -->
-                            <div class="modal-footer">
+                                 <!-- <div class="modal-footer">
+
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
-                            </div>
+                            </div>-->
+                            <div class="modal-footer">
+                                <button type="submit">Submit</button>
+                                  <button type="button" data-bs-dismiss="modal">Close</button>
+                              </div>
                         </form>
                     </div>
                 </div>
@@ -1788,7 +1785,11 @@ function addMultipleFiles(input, block_id) {
                             <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
-                            </div>
+                            </div>-->
+                            <div class="modal-footer">
+                                <button type="submit">Submit</button>
+                                  <button type="button" data-bs-dismiss="modal">Close</button>
+                              </div>
                         </form>
                     </div>
                 </div>

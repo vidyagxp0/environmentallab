@@ -150,7 +150,30 @@
                                                 <input disabled type="text" name="intiation_date"
                                                     value="{{ Helpers::getdateFormat($data->revised_date) }}">
                                             </div>
+                                        </div> --}}
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Date Due">Current Parent Due Date</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="due_date" readonly
+                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                    <input type="date" name="due_date" value="{{ $data->due_date }}"  class="hide-input"
+                                                        oninput="handleDateInput(this, 'due_date')" />
+                                                </div>
+                                            </div>
                                         </div>
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="Date Due">Revised Due Date</label>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="revised_date" readonly
+                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
+                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
+                                                        oninput="handleDateInput(this, 'revised_date')" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
                                         {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Desccription">Short Description <span
@@ -186,11 +209,11 @@
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  id="reference_record" name="refrence_record[]" id="">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple  id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                            {{ Helpers::getDivisionName($new->division_id) }}/Extension/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -675,7 +698,7 @@
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment<span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
@@ -722,7 +745,7 @@
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment<span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
@@ -1045,4 +1068,23 @@
                 });
             });
         </script>
+            <script>
+                function otherController(value, checkValue, blockID) {
+                    let block = document.getElementById(blockID)
+                    let blockTextarea = block.getElementsByTagName('textarea')[0];
+                    let blockLabel = block.querySelector('label span.text-danger');
+                    if (value === checkValue) {
+                        blockLabel.classList.remove('d-none');
+                        blockTextarea.setAttribute('required', 'required');
+                    } else {
+                        blockLabel.classList.add('d-none');
+                        blockTextarea.removeAttribute('required');
+                    }
+                }
+            </script>
+             <script>
+                VirtualSelect.init({
+                ele: '#reference_record'
+           });
+          </script>
 @endsection

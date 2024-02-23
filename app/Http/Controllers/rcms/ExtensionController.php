@@ -333,8 +333,8 @@ class ExtensionController extends Controller
                 } else {
                     $changeControl->stage = "2";
                     $changeControl->status = "Pending Approval";
-                    $changeControl->submitted_on = Auth::user()->name;
-                    $changeControl->submitted_by = Carbon::now()->format('d-M-Y');
+                    $changeControl->submitted_on =  Carbon::now()->format('d-M-Y');
+                    $changeControl->submitted_by = Auth::user()->name;
 
                     $changeControl->update();
 
