@@ -239,10 +239,7 @@
                         <th class="w-20">Risk/Opportunity Comments</th>
                         <td class="w-30">@if($data->comments){{ $data->comments }} @else Not Applicable @endif</td>
                     </tr>
-                    {{--  <tr>
-                        <th class="w-20">Supporting Documents</th>
-                        <td class="w-80" colspan="3">Document_Name.pdf</td>
-                    </tr>  --}}
+                    
                 </table>
             </div>
 

@@ -70,7 +70,7 @@
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date" >
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                     </div>
                                 </div>
@@ -1234,7 +1234,8 @@
                                     <div class="calenderauditee">
                                         <input type="text" id="next_managment_review_date" readonly
                                             placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="next_managment_review_date" class="hide-input {{ (isset($data->stage) and $data->stage == 0 )|| (isset($data->stage) and $data->stage == 3 )? 'disabled' : '' }} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}
+                                        <input type="date" name="next_managment_review_date" class="hide-input {{ (isset($data->stage) and $data->stage == 0 )|| (isset($data->stage) and $data->stage == 3 )? 'disabled' : '' }}
+                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             oninput="handleDateInput(this, 'next_managment_review_date')" />
                                     </div>
                                 </div>

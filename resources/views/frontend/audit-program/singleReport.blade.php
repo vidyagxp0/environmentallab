@@ -200,15 +200,15 @@
                     </tr>
                     <tr>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
-                        <td class="w-80" > @if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
+                        <td class="w-30">{{ $data->assign_to}}</td>
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                        
                     </tr>
                     <tr>
@@ -315,10 +315,10 @@
                    
                     <tr>
                         <th class="w-20">Audit Completed By</th>
-                        <td class="w-30">{{ $data->audit_completed_by }}</td>
+                        <td class="w-30">{{ $data->Audit_Completed_By }}</td>
                         <th class="w-20">
                         Audit Completed On</th>
-                        <td class="w-30">{{ $data->audit_completed_on }}</td>
+                        <td class="w-30">{{ $data->Audit_Completed_On }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Approved By</th>
