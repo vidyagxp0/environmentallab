@@ -1519,7 +1519,7 @@
                                                         Problem Statement
                                                     </div>
                                                     <div class="field">
-                                                          <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $fishbone->problem_statement }}</textarea>
+                                                          <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_statement }}</textarea>
                                                       
                                                     </div>
                                                 </div>
@@ -1745,61 +1745,61 @@
                                                         <tr>
                                                             <th style="background: #0039bd85">What</th>
                                                             <td>
-                                                                <textarea name="what_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->what_will_be }}</textarea>
+                                                                <textarea name="what_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->what_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->what_will_not_be }}</textarea>
+                                                                <textarea name="what_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->what_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->what_rationable }}</textarea>
+                                                                <textarea name="what_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->what_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Where</th>
                                                             <td>
-                                                                <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_be }}</textarea>
+                                                                <textarea name="where_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->where_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_will_not_be }}</textarea>
+                                                                <textarea name="where_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->where_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->where_rationable }}</textarea>
+                                                                <textarea name="where_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->where_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">When</th>
                                                             <td>
-                                                                <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->when_will_be }}</textarea>
+                                                                <textarea name="when_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->when_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $what_who_where->when_will_not_be }}</textarea>
+                                                                <textarea name="when_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->when_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->when_rationable }}</textarea>
+                                                                <textarea name="when_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->when_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Coverage</th>
                                                             <td>
-                                                                <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_will_be }}</textarea>
+                                                                <textarea name="coverage_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->coverage_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_will_not_be }}</textarea>
+                                                                <textarea name="coverage_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->coverage_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->coverage_rationable }}</textarea>
+                                                                <textarea name="coverage_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->coverage_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <th style="background: #0039bd85">Who</th>
                                                             <td>
-                                                                <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_will_be }}</textarea>
+                                                                <textarea name="who_will_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->who_will_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_will_not_be }}</textarea>
+                                                                <textarea name="who_will_not_be"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->who_will_not_be }}</textarea>
                                                             </td>
                                                             <td>
-                                                                <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $what_who_where->who_rationable }}</textarea>
+                                                                <textarea name="who_rationable"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> {{ $data->who_rationable }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
