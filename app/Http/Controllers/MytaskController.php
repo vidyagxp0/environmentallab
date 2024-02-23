@@ -103,8 +103,10 @@ class MytaskController extends Controller
 
         $stagereview = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Reviewed")->latest()->first();
         $stagereview_submit = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Review-Submit")->latest()->first();
-        $stageapprove = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
-        $stageapprove_submit = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
+        // $stageapprove = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
+        // $stageapprove_submit = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
+        $stageapprove = '';
+        $stageapprove_submit ='';
         $review_reject = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Cancel-by-Reviewer")->latest()->first();
         $approval_reject = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Cancel-by-Approver")->latest()->first();
 

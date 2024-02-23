@@ -51,7 +51,7 @@
                             <div class="bottom-block">
                                 <div>
                                     <div class="head">Document Number</div>
-                                    <div>SOP-000{{ $document->id }}</div>
+                                    <div>000{{ $document->id }}</div>
                                 </div>
                                 {{-- <div>
                                     <div class="head">Department</div>
@@ -109,6 +109,9 @@
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                     Review&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
+                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
+                                                </button>
                                             @elseif($document->stage == 2)
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                     Review&nbsp;<i class="fa-regular fa-circle-xmark"></i>
@@ -133,9 +136,9 @@
                                         @else
                                             <div>Draft</div>
                                         @endif
-                                        @if ($review_reject)
+                                        {{-- @if ($review_reject)
                                             <div class="active">Rejected</div>
-                                        @endif
+                                        @endif --}}
                                         @if ($stagereview)
                                             @if ($stagereview->stage == 'Reviewed')
                                                 <div class="active">Reviewed</div>
@@ -148,12 +151,12 @@
 
                                         @if ($stagereview_submit)
                                             @if ($stagereview_submit->stage == 'Review-Submit')
-                                                <div class="active">Submitted</div>
+                                                {{-- <div class="active">Submitted</div> --}}
                                             @else
-                                                <div>Submitted</div>
+                                                {{-- <div>Submitted</div> --}}
                                             @endif
                                         @else
-                                            <div>Submitted</div>
+                                            {{-- <div>Submitted</div> --}}
                                         @endif
 
 
@@ -183,10 +186,14 @@
                                                 Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                             </button>
                                         @endif
+                                        
                                         @if (empty($stageapprove))
                                             @if (empty($approval_reject))
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                     Approve&nbsp;<i class="fa-regular fa-paper-plane"></i>
+                                                </button>
+                                                <button data-bs-toggle="modal" data-bs-target="#review-cancel">
+                                                    Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                                 </button>
                                             @elseif($document->stage == 4)
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
@@ -211,9 +218,9 @@
                                         @else
                                             <div>Draft</div>
                                         @endif
-                                        @if ($approval_reject)
+                                        {{-- @if ($approval_reject)
                                             <div class="active">Rejected</div>
-                                        @endif
+                                        @endif --}}
                                         @if ($stageapprove)
                                             @if ($stageapprove->stage == 'Approved')
                                                 <div class="active">Approved</div>
@@ -227,12 +234,12 @@
 
                                         @if ($stageapprove_submit)
                                             @if ($stageapprove_submit->stage == 'Approval-Submit')
-                                                <div class="active">Submitted</div>
+                                                {{-- <div class="active">Submitted</div> --}}
                                             @else
-                                                <div>Submitted</div>
+                                                {{-- <div>Submitted</div> --}}
                                             @endif
                                         @else
-                                            <div>Submitted</div>
+                                            {{-- <div>Submitted</div> --}}
                                         @endif
 
 

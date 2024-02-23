@@ -339,12 +339,12 @@
                                     <div class="default-name">
                                         @if($document->revised === 'Yes') 
                                            
-                                            {{ Helpers::getDivisionName(session()->get('division')) }}
+                                        {{ Helpers::getDivisionName($document->division_id) }}
                                         /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
                                         /000{{ $document->revised_doc }}/R{{$document->major}}.{{$document->minor}}
 
                                         @else
-                                          {{ Helpers::getDivisionName(session()->get('division')) }}
+                                        {{ Helpers::getDivisionName($document->division_id) }}
                                         /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
                                         /000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
                                         
@@ -465,11 +465,11 @@
                                             <option value="BA"
                                                 @if ($document->department_id == 'others') selected @endif>Others
                                                 </option>
-                                        {{-- @foreach ($departments as $department)
+                                        @foreach ($departments as $department)
                                             <option data-id="{{ $department->dc }}" value="{{ $department->id }}"
                                                 {{ $department->id == $document->department_id ? 'selected' : '' }}>
                                                 {{ $department->name }}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -549,7 +549,38 @@
                                                                 <option @if ($document->major =='9') selected @endif
                                                                     value="9">9</option>
                                     </select>
-                                </div>  
+                                    @foreach ($history as $tempHistory)
+                                    @if (
+                                        $tempHistory->activity_type == 'Major' &&
+                                            !empty($tempHistory->comment) &&
+                                            $tempHistory->user_id == Auth::user()->id)
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+                                        <p style="color: blue">Modify by {{ $users_name }} at
+                                            {{ $tempHistory->created_at }}
+                                        </p>
+                                        <input class="input-field"
+                                            style="background: #ffff0061;
+                                color: black;"
+                                            type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                @endforeach
+                                </div> 
+                                @if (Auth::user()->role != 3)
+                                {{-- Add Comment  --}}
+                                <div class="comment">
+                                    <div>
+                                        <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                            at {{ date('d-M-Y h:i:s') }}</p>
+
+                                        <input class="input-field" type="text" name="major_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            @endif 
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
@@ -577,7 +608,38 @@
                                                                 <option @if ($document->minor =='9') selected @endif
                                                                     value="9">9</option>
                                     </select>
+                                    @foreach ($history as $tempHistory)
+                                    @if (
+                                        $tempHistory->activity_type == 'Minor' &&
+                                            !empty($tempHistory->comment) &&
+                                            $tempHistory->user_id == Auth::user()->id)
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+                                        <p style="color: blue">Modify by {{ $users_name }} at
+                                            {{ $tempHistory->created_at }}
+                                        </p>
+                                        <input class="input-field"
+                                            style="background: #ffff0061;
+                                color: black;"
+                                            type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                @endforeach
                                 </div>
+                                @if (Auth::user()->role != 3)
+                                    {{-- Add Comment  --}}
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="minor_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
                             </div>
                             <div class="col-md-6">
                                 <div class="group-input">
@@ -863,7 +925,7 @@
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
                                                 at {{ date('d-M-Y h:i:s') }}</p>
 
-                                            <input class="input-field" type="text" name="effectve_date_comment">
+                                            <input class="input-field" type="text" name="effective_date_comment">
                                         </div>
                                         <div class="button">Add Comment</div>
                                     </div>
@@ -1300,10 +1362,39 @@
                                             value="minor">Minor</option>
                                             <option @if ($document->revision_type =='major') selected @endif
                                                 value="major">Major</option>
-                                                <option @if ($document->revision_type =='NA') selected @endif
-                                                    value="NA">NA</option>
+                                        <option @if ($document->revision_type =='NA') selected @endif
+                                            value="NA">NA</option>
                                     </select>
+                                    @foreach ($history as $tempHistory)
+                                    @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment))
+                                        @php
+                                            $users_name = DB::table('users')
+                                                ->where('id', $tempHistory->user_id)
+                                                ->value('name');
+                                        @endphp
+                                        <p style="color: blue">Modify by {{ $users_name }} at
+                                            {{ $tempHistory->created_at }}
+                                        </p>
+                                        <input class="input-field"
+                                            style="background: #ffff0061;
+                                color: black;"
+                                            type="text" value="{{ $tempHistory->comment }}" disabled>
+                                    @endif
+                                @endforeach
                                 </div>
+                                @if (Auth::user()->role != 3)
+                                    {{-- Add Comment  --}}
+                                    <div class="comment">
+                                        <div>
+                                            <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
+                                                at {{ date('d-M-Y h:i:s') }}</p>
+
+                                            <input class="input-field" type="text" name="revision_type_comment">
+                                        </div>
+                                        <div class="button">Add Comment</div>
+                                    </div>
+                                @endif
+
                             </div>
 
                             <div class="col-md-12">
