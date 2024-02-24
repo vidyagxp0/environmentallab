@@ -163,7 +163,23 @@
                                         </div>
 
 
-
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due-date">Current Parent Due Date <span
+                                                        class="text-danger"></span></label>
+                                                        
+                                                <input  type="text" name="intiation_date"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due-date">Revised Due Date <span
+                                                        class="text-danger"></span></label>
+                                                <input disabled type="text" name="intiation_date"
+                                                    value="{{ Helpers::getdateFormat($data->revised_date) }}">
+                                            </div>
+                                        </div> --}}
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Current Parent Due Date</label>
@@ -181,7 +197,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="revised_date" readonly
                                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
-                                                    <input type="date" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
+                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
                                                         oninput="handleDateInput(this, 'revised_date')" />
                                                 </div>
                                             </div>
@@ -222,11 +238,11 @@
                                         {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  id="reference_record" name="refrence_record[]" id="">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple  id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                            {{ Helpers::getDivisionName($new->division_id) }}/Extension/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -1152,4 +1168,9 @@
                     }
                 }
             </script>
+             <script>
+                VirtualSelect.init({
+                ele: '#reference_record'
+           });
+          </script>
 @endsection
