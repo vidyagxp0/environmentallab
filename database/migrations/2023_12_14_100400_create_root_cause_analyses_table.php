@@ -22,6 +22,7 @@ return new class extends Migration
             $table->longText('short_description')->nullable();
             $table->string('assigned_to')->nullable();
             $table->string('due_date')->nullable();
+            $table->text('initiator_group_code')->nullable();
             $table->string('priority_level')->nullable();
             $table->longText('root_cause_description')->nullable();
             $table->longText('cft_comments_new')->nullable();

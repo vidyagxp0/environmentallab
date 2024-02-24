@@ -1391,7 +1391,7 @@
                                                             <th>Initial Severity- H(3)/M(2)/L(1)</th>
                                                             <th>Initial Probability- H(3)/M(2)/L(1)</th>
                                                             <th>Initial Detectability- H(1)/M(2)/L(3)</th>
-                                                            <!-- <th>Initial RPN</th> -->
+                                                            <th>Initial RPN</th>
                                                             <th>Risk Acceptance (Y/N)</th>
                                                             <th>Proposed Additional Risk control measure (Mandatory for
                                                                 Risk
