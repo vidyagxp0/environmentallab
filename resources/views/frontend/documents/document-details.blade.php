@@ -8,7 +8,7 @@
             <div class="tracker-container">
                 <div class="row">
 
-                    <div class="col-12">
+                    <div class="col-12"> 
                         <div class="inner-block doc-info-block">
                             <div class="top-block">
                                 <div class="title">
@@ -299,6 +299,14 @@
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
                                                 ->where('stage', 'Review-submit')
+                                                ->where('deleted_at', null)
+                                                ->latest()
+                                                ->first();
+                                            $user->statusReject = DB::table('stage_manages')
+                                                ->where('user_id', $rev_data[$i])
+                                                ->where('document_id', $document->id)
+                                                ->where('stage', 'Cancel-by-Reviewer')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
 
@@ -308,6 +316,8 @@
                                             <td>{{ $user->department }}</td>
                                             @if ($user->status)
                                                 <td>Reviewed <i class="fa-solid fa-circle-check text-success"></i></td>
+                                            @elseif($user->statusReject)
+                                                <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
                                             @else
                                                 <td>Review Pending</td>
                                             @endif

@@ -91,7 +91,7 @@
                                     <div class="main-title">
                                         Record Workflow
                                     </div>
-                                    <div class="buttons">
+                                    <div class="buttons"> 
                                         @if (empty($review_reject))
                                             @if ($stagereview && empty($stagereview_submit))
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
@@ -137,7 +137,7 @@
                                             <div>Draft</div>
                                         @endif
                                         {{-- @if ($review_reject)
-                                            <div class="active">Rejected</div>
+                                            <div class="active">Rejected </div>
                                         @endif --}}
                                         @if ($stagereview)
                                             @if ($stagereview->stage == 'Reviewed')
@@ -219,7 +219,7 @@
                                             <div>Draft</div>
                                         @endif
                                         {{-- @if ($approval_reject)
-                                            <div class="active">Rejected</div>
+                                            <div class="active">Rejected </div>
                                         @endif --}}
                                         @if ($stageapprove)
                                             @if ($stageapprove->stage == 'Approved')
@@ -319,16 +319,18 @@
                                             $user->department = DB::table('departments')
                                                 ->where('id', $user->departmentid)
                                                 ->value('name');
-                                            $user->status = DB::table('stage_manages')
+                                                $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
                                                 ->where('stage', 'Review-submit')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                             $user->reject = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
                                                 ->where('stage', 'Cancel-by-Reviewer')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
 
@@ -339,7 +341,7 @@
                                             @if ($user->status)
                                                 <td>Reviewed <i class="fa-solid fa-circle-check text-success"></i></td>
                                             @elseif($user->reject)
-                                                <td>Rejected<i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                                <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
                                             @else
                                                 <td>Review Pending</td>
                                             @endif
@@ -449,16 +451,18 @@
                                                                     $userdata->department = DB::table('departments')
                                                                         ->where('id', $userdata->departmentid)
                                                                         ->value('name');
-                                                                    $userdata->approval = DB::table('stage_manages')
+                                                                        $user->status = DB::table('stage_manages')
+                                                                        ->where('user_id', $rev_data[$i])
                                                                         ->where('document_id', $document->id)
-                                                                        ->where('user_id', $users[$j])
-                                                                        ->where('stage', 'Review-Submit')
+                                                                        ->where('stage', 'Review-submit')
+                                                                        ->where('deleted_at', null)
                                                                         ->latest()
                                                                         ->first();
-                                                                    $userdata->reject = DB::table('stage_manages')
+                                                                    $user->reject = DB::table('stage_manages')
+                                                                        ->where('user_id', $rev_data[$i])
                                                                         ->where('document_id', $document->id)
-                                                                        ->where('user_id', $users[$j])
-                                                                        ->where('stage', 'Cancel-by-reviewer')
+                                                                        ->where('stage', 'Cancel-by-Reviewer')
+                                                                        ->where('deleted_at', null)
                                                                         ->latest()
                                                                         ->first();
 
@@ -468,7 +472,7 @@
                                                                                 class="fa-solid fa-circle-check text-success"></i></small>
                                                                     </li>
                                                                 @elseif($userdata->reject)
-                                                                    <li><small>Rejected <i
+                                                                    <li><small>Rejected  <i
                                                                                 class="fa-solid fa-circle-xmark text-danger"></i></small>
                                                                     </li>
                                                                 @else
@@ -540,13 +544,15 @@
                                             $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Approval-submit')
+                                                ->where('stage', 'Review-submit')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                             $user->reject = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Cancel-by-Approver')
+                                                ->where('stage', 'Cancel-by-Reviewer')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
 
@@ -557,7 +563,7 @@
                                             @if ($user->status)
                                                 <td>Approved <i class="fa-solid fa-circle-check text-success"></i></td>
                                             @elseif($user->reject)
-                                                <td>Rejected<i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                                <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
                                             @else
                                                 <td>Approval Pending</td>
                                             @endif
@@ -666,16 +672,18 @@
                                                                     $userdata->department = DB::table('departments')
                                                                         ->where('id', $userdata->departmentid)
                                                                         ->value('name');
-                                                                    $userdata->approval = DB::table('stage_manages')
+                                                                        $user->status = DB::table('stage_manages')
+                                                                        ->where('user_id', $rev_data[$i])
                                                                         ->where('document_id', $document->id)
-                                                                        ->where('user_id', $users[$j])
-                                                                        ->where('stage', 'Approval-Submit')
+                                                                        ->where('stage', 'Review-submit')
+                                                                        ->where('deleted_at', null)
                                                                         ->latest()
                                                                         ->first();
-                                                                    $userdata->reject = DB::table('stage_manages')
+                                                                    $user->reject = DB::table('stage_manages')
+                                                                        ->where('user_id', $rev_data[$i])
                                                                         ->where('document_id', $document->id)
-                                                                        ->where('user_id', $users[$j])
-                                                                        ->where('stage', 'Cancel-by-approver')
+                                                                        ->where('stage', 'Cancel-by-Reviewer')
+                                                                        ->where('deleted_at', null)
                                                                         ->latest()
                                                                         ->first();
 
@@ -685,7 +693,7 @@
                                                                                 class="fa-solid fa-circle-check text-success"></i></small>
                                                                     </li>
                                                                 @elseif($userdata->reject)
-                                                                    <li><small>Rejected <i
+                                                                    <li><small>Rejected  <i
                                                                                 class="fa-solid fa-circle-xmark text-danger"></i></small>
                                                                     </li>
                                                                 @else
