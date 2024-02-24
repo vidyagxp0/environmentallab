@@ -177,9 +177,11 @@
                                     <div class="buttons">
                                         @if (empty($review_approve))
                                             @if ($stageapprove && empty($stageapprove_submit))
+                                             @if ($stageapprove->stage != 'Approved')
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
                                                     Reject&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
+                                                @endif
                                             @endif
                                         @elseif($document->stage == 4)
                                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
@@ -202,7 +204,7 @@
                                             @endif
                                         @endif
                                         @if ($stageapprove && empty($stageapprove_submit))
-                                            @if ($stageapprove->stage == 'Approved')
+                                            @if ($stageapprove->stage != 'Approved')
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                     Submit&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
@@ -323,7 +325,7 @@
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
                                                 ->where('stage', 'Review-submit')
-                                                ->where('deleted_at', null)
+                                                
                                                 ->latest()
                                                 ->first();
                                             $user->reject = DB::table('stage_manages')
@@ -544,7 +546,7 @@
                                             $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Review-submit')
+                                               
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
@@ -560,7 +562,7 @@
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->department }}</td>
-                                            @if ($user->status)
+                                            @if (@$user->status->stage=='Review-submit' || @$user->status->stage=='Approved' ||  @$user->status->stage=='Approval-Submit')
                                                 <td>Approved <i class="fa-solid fa-circle-check text-success"></i></td>
                                             @elseif($user->reject)
                                                 <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
