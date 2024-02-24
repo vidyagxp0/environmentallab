@@ -575,15 +575,23 @@
                                             ->where('stage', 'Approval-submit')
                                             ->latest()
                                             ->first();
+                                        $user->reject = DB::table('stage_manages')
+                                            ->where('user_id', $rev_data[$i])
+                                            ->where('document_id', $document->id)
+                                            ->where('stage', 'Cancel-by-Approver')
+                                            ->latest()
+                                            ->first();
                                     @endphp
                                     <tr>
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->department }}</td>
                                         @if ($user->status)
-                                            <td>Approved <i class="fa-solid fa-circle-check text-success"></i></td>
-                                        @else
-                                            <td>Approval Pending</td>
-                                        @endif
+                                                <td>Approved <i class="fa-solid fa-circle-check text-success"></i></td>
+                                            @elseif($user->reject)
+                                                <td>Rejected <i class="fa-solid fa-circle-xmark text-danger"></i></td>
+                                            @else
+                                                <td>Approval Pending</td>
+                                            @endif
                                         <td><a
                                                 href="{{ url('audit-individual/') }}/{{ $document->id }}/{{ $user->id }}"><button
                                                     type="button">Audit</button></a></td>

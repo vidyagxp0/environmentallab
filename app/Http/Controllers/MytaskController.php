@@ -57,7 +57,8 @@ class MytaskController extends Controller
             }
             $arrayTask = array_unique(array_merge($array1, $array2));
             foreach ($arrayTask as $temp) {
-                $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)->value('name');
+                $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
+                ->value('name');
             }
             $task = $this->paginate($arrayTask);
             return view('frontend.tasks', ['task' => $task]);
@@ -68,7 +69,8 @@ class MytaskController extends Controller
             $array2 = [];
             $document = Document::where('stage', '>=', 4)->orderByDesc('id')->get();
             foreach ($document as $data) {
-                $data->originator_name = User::where('id', $data->originator_id)->value('name');
+                $data->originator_name = User::where('id', $data->originator_id)
+                ->value('name');
                 if ($data->approver_group) {
                     $datauser = explode(',', $data->approver_group);
                     for ($i = 0; $i < count($datauser); $i++) {
@@ -107,12 +109,11 @@ class MytaskController extends Controller
 
         $stagereview = StageManage::where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Reviewed")->latest()->first();
         $stagereview_submit = StageManage::where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Review-Submit")->latest()->first();
-        // $stageapprove = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
-        // $stageapprove_submit = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
-        $stageapprove = '';
-        $stageapprove_submit = '';
+        $stageapprove = StageManage::where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Approved")->latest()->first();
+        $stageapprove_submit = StageManage::where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Approval-Submit")->latest()->first();
         $review_reject = StageManage::where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Cancel-by-Reviewer")->latest()->first();
-        $approval_reject = StageManage::where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Cancel-by-Approver")->latest()->first();
+        $approval_reject = StageManage::where('user_id', Auth::user()->id)
+        ->where('document_id', $id)->where('stage', "Cancel-by-Approver")->latest()->first();
 
         $document->department_name = Department::find($document->department_id);
         $document->doc_type = DocumentType::find($document->document_type_id);
