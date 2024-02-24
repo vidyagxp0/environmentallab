@@ -455,14 +455,24 @@
                                                     readonly>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Short Description">Short Description <span
                                                         class="text-danger">*</span></label>
                                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                                 <textarea name="short_description" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} id="short_desc">{{ $data->short_description }}</textarea>
                                             </div>
-                                        </div>
+                                        </div> --}}
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Short Description">Short Description<span
+                                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                                characters remaining
+                                                
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                            </div>
+                                                  {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
+                                     </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -2514,5 +2524,11 @@
                     // Update the result field within the row
                     document.getElementById('analysisRPN').value = result;
                 }
+            </script>
+            <script>
+                var maxLength = 255;
+                $('#docname').keyup(function() {
+                    var textlen = maxLength - $(this).val().length;
+                    $('#rchars').text(textlen);});
             </script>
         @endsection

@@ -1593,7 +1593,7 @@ function addMultipleFiles(input, block_id) {
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">E-Signatur1e</h4>
+                            <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <form action="{{ route('externalAuditStateChange', $data->id) }}" method="POST">
@@ -1640,7 +1640,7 @@ function addMultipleFiles(input, block_id) {
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">E-Signature2</h4>
+                            <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
@@ -1654,11 +1654,11 @@ function addMultipleFiles(input, block_id) {
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username2 <span class="text-danger">*</span></label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password2 <span class="text-danger">*</span></label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -1687,7 +1687,7 @@ function addMultipleFiles(input, block_id) {
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">E-Signature3</h4>
+                            <h4 class="modal-title">E-Signature</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
@@ -1701,15 +1701,15 @@ function addMultipleFiles(input, block_id) {
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username1 <span class="text-danger">*</span></label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password1 <span class="text-danger">*</span></label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment1 <span class="text-danger">*</span></label>
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" >
                                 </div>
                             </div>

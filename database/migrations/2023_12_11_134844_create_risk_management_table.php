@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('parent_type')->nullable();
             $table->string('short_description')->nullable();
             $table->string('open_date')->nullable();
-            $table->string('assign_id')->nullable();
+            $table->string('assign_to')->nullable();
             $table->string('departments')->nullable();
             $table->string('team_members')->nullable();
             $table->string('source_of_risk')->nullable();
