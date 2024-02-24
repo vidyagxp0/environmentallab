@@ -1776,12 +1776,12 @@ function addMultipleFiles(input, block_id) {
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
-
+{{-- 
                                                          <div class="modal-footer">
 
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>
                                 <button>Close</button>
-                            </div>-->
+                            </div>--> --}}
                             <div class="modal-footer">
                                 <button type="submit">Submit</button>
                                   <button type="button" data-bs-dismiss="modal">Close</button>
@@ -1826,8 +1826,8 @@ function addMultipleFiles(input, block_id) {
 
                             <!-- Modal footer -->
                             <div class="modal-footer">
-                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                <button>Close</button>
+                                <button type="submit" >Submit</button>
+                                <button data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>
