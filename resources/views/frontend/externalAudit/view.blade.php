@@ -1593,7 +1593,7 @@ function addMultipleFiles(input, block_id) {
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
+                            <h4 class="modal-title">E-Signatur1e</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
                         <form action="{{ route('externalAuditStateChange', $data->id) }}" method="POST">
@@ -1640,7 +1640,7 @@ function addMultipleFiles(input, block_id) {
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
+                            <h4 class="modal-title">E-Signature2</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
@@ -1687,7 +1687,7 @@ function addMultipleFiles(input, block_id) {
 
                         <!-- Modal Header -->
                         <div class="modal-header">
-                            <h4 class="modal-title">E-Signature</h4>
+                            <h4 class="modal-title">E-Signature3</h4>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
