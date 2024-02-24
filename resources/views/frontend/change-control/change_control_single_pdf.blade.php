@@ -176,7 +176,7 @@
                     <strong>Change Control No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ Helpers::year($data->created_at)}}/{{ Helpers::record($data->record) }}
+                    {{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -204,6 +204,31 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-30" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">Assigned To</th>
+                        <td class="w-30">@if($data->assign_to){{ $data->id}} @else Not Applicable @endif</td>
+                        <th class="w-20">Initiator Group Code</th>
+                        <td class="w-30" colspan="3"> @if($data->initiator_group_code){{ $data-> initiator_group_code}} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Severity Level</th>
+                        <td class="w-30">@if($data->severity_level1){{ $data-> severity_level1}} @else Not Applicable @endif</td>
+                        <th class="w-20">Initiated Through</th>
+                        <td class="w-30" colspan="3"> @if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->initiated_through_req){{ $data->initiated_through_req }} @else Not Applicable @endif</td>
+                        <th class="w-20">Repeat</th>
+                        <td class="w-30" colspan="3"> @if($data->repeat){{ $data-> repeat}} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Repeat Nature</th>
+                        <td class="w-30">@if($data->repeat_nature){{ $data-> repeat_nature}} @else Not Applicable @endif</td>
+                        <th class="w-20">Division Code</th>
+                        <td class="w-30" colspan="3"> @if($data->div_code){{ $data->div_code }} @else Not Applicable @endif</td>
+                    </tr>
+                    
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80" colspan="3">
