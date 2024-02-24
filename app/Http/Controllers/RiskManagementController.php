@@ -1105,6 +1105,214 @@ class RiskManagementController extends Controller
         }
         // return $data;
         $data->update();
+             // -----------grid=------
+            //  $data1 = new RiskAssesmentGrid();
+            //  $data1->risk_id = $data->id;
+            //  $data1->type = "effect_analysis";
+        
+             $data1 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','effect_analysis')->first();
+            
+             if (!empty($request->risk_factor)) {
+                 $data1->risk_factor = serialize($request->risk_factor);
+             }
+             if (!empty($request->risk_element)) {
+                 $data1->risk_element = serialize($request->risk_element);
+             }
+             if (!empty($request->problem_cause)) {
+                 $data1->problem_cause = serialize($request->problem_cause);
+             }
+             if (!empty($request->existing_risk_control)) {
+                 $data1->existing_risk_control = serialize($request->existing_risk_control);
+             }
+             if (!empty($request->initial_severity)) {
+                 $data1->initial_severity = serialize($request->initial_severity);
+             }
+             if (!empty($request->initial_detectability)) {
+                 $data1->initial_detectability = serialize($request->initial_detectability);
+             }
+             if (!empty($request->initial_probability)) {
+                 $data1->initial_probability = serialize($request->initial_probability);
+             }
+             if (!empty($request->initial_rpn)) {
+                 $data1->initial_rpn = serialize($request->initial_rpn);
+             }
+             if (!empty($request->risk_acceptance)) {
+                 $data1->risk_acceptance = serialize($request->risk_acceptance);
+             }
+             if (!empty($request->risk_control_measure)) {
+                 $data1->risk_control_measure = serialize($request->risk_control_measure);
+             }
+             if (!empty($request->residual_severity)) {
+                 $data1->residual_severity = serialize($request->residual_severity);
+             }
+             if (!empty($request->residual_probability)) {
+                 $data1->residual_probability = serialize($request->residual_probability);
+             }
+             if (!empty($request->residual_detectability)) {
+                 $data1->residual_detectability = serialize($request->residual_detectability);
+             }
+             if (!empty($request->residual_rpn)) {
+                 $data1->residual_rpn = serialize($request->residual_rpn);
+             }
+             if (!empty($request->risk_acceptance2)) {
+                 $data1->risk_acceptance2 = serialize($request->risk_acceptance2);
+             }
+             if (!empty($request->mitigation_proposal)) {
+                 $data1->mitigation_proposal = serialize($request->mitigation_proposal);
+             }
+     
+             $data1->save();
+     
+             // ---------------------------------------
+            //  $data2 = new RiskAssesmentGrid();
+            //  $data2->risk_id = $data->id;
+            //  $data2->type = "fishbone";
+                 $data2 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','fishbone')->first();
+                
+             if (!empty($request->measurement)) {
+                 $data2->measurement = serialize($request->measurement);
+             }
+             if (!empty($request->materials)) {
+                 $data2->materials = serialize($request->materials);
+             }
+             if (!empty($request->methods)) {
+                 $data2->methods = serialize($request->methods);
+             }
+             if (!empty($request->environment)) {
+                 $data2->environment = serialize($request->environment);
+             }
+             if (!empty($request->manpower)) {
+                 $data2->manpower = serialize($request->manpower);
+             }
+             if (!empty($request->machine)) {
+                 $data2->machine = serialize($request->machine);
+             }
+             if (!empty($request->problem_statement)) {
+                 $data2->problem_statement = $request->problem_statement;
+             }
+             $data2->save();
+             // =-------------------------------
+               $data3 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','why_chart')->first();
+            //  $data3 = new RiskAssesmentGrid();
+            //  $data3->risk_id = $data->id;
+            //  $data3->type = "why_chart";
+            
+             if (!empty($request->why_problem_statement)) {
+                 $data3->why_problem_statement = $request->why_problem_statement;
+             }
+             if (!empty($request->why_1)) {
+                 $data3->why_1 = serialize($request->why_1);
+             }
+             if (!empty($request->why_2)) {
+                 $data3->why_2 = serialize($request->why_2);
+             }
+             if (!empty($request->why_3)) {
+                 $data3->why_3 = serialize($request->why_3);
+             }
+             if (!empty($request->why_4)) {
+                 $data3->why_4 = serialize($request->why_4);
+             }
+             if (!empty($request->why_5)) {
+                 $data3->why_5 = serialize($request->why_5);
+             }
+             if (!empty($request->why_root_cause)) {
+                 $data3->why_root_cause = $request->why_root_cause;
+             }
+             $data3->save();
+     
+             // --------------------------------------------
+            //  $data4 = new RiskAssesmentGrid();
+            //  $data4->risk_id = $data->id;
+            //  $data4->type = "what_who_where";
+              $data4 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','what_who_where')->first();
+              
+             if (!empty($request->what_will_be)) {
+                 $data4->what_will_be = $request->what_will_be;
+             }
+             if (!empty($request->what_will_not_be)) {
+                 $data4->what_will_not_be = $request->what_will_not_be;
+             }
+             if (!empty($request->what_rationable)) {
+                 $data4->what_rationable = $request->what_rationable;
+             }
+             if (!empty($request->where_will_be)) {
+                 $data4->where_will_be = $request->where_will_be;
+             }
+             if (!empty($request->where_will_not_be)) {
+                 $data4->where_will_not_be = $request->where_will_not_be;
+             }
+             if (!empty($request->where_rationable)) {
+                 $data4->where_rationable = $request->where_rationable;
+             }
+             if (!empty($request->coverage_will_be)) {
+                 $data4->coverage_will_be = $request->coverage_will_be;
+             }
+             if (!empty($request->coverage_will_not_be)) {
+                 $data4->coverage_will_not_be = $request->coverage_will_not_be;
+             }
+             if (!empty($request->coverage_rationable)) {
+                 $data4->coverage_rationable = $request->coverage_rationable;
+             }
+             if (!empty($request->who_will_be)) {
+                 $data4->who_will_be = $request->who_will_be;
+             }
+             if (!empty($request->who_will_not_be)) {
+                 $data4->who_will_not_be = $request->who_will_not_be;
+             }
+             if (!empty($request->who_rationable)) {
+                 $data4->who_rationable = $request->who_rationable;
+             } if (!empty($request->when_will_be)) {
+                 $data4->when_will_be = $request->when_will_be;
+             }
+              if (!empty($request->when_will_not_be)) {
+                 $data4->when_will_not_be = $request->when_will_not_be;
+             }
+              if (!empty($request->when_rationable)) {
+                 $data4->when_rationable = $request->when_rationable;
+             }
+             $data4->save();
+     
+      $data5 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Action_Plan')->first();
+            //  $data5 = new RiskAssesmentGrid();
+            //  $data5->risk_id = $data->id;
+            //  $data5->type = "Action_Plan";
+                   
+             if (!empty($request->action)) {
+                 $data5->action = serialize($request->action);
+             }
+             if (!empty($request->responsible)) {
+                 $data5->responsible = serialize($request->responsible);
+             }
+             if (!empty($request->deadline)) {
+                 $data5->deadline = serialize($request->deadline);
+             }
+             if (!empty($request->item_static)) {
+                 $data5->item_static = serialize($request->item_static);
+             }
+     
+             $data5->save();
+     
+            //  $data6 = new RiskAssesmentGrid();
+            //  $data6->risk_id = $data->id;
+            //  $data6->type = "Mitigation_Plan_Details";
+              $data6 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Mitigation_Plan_Details')->first();
+             if (!empty($request->mitigation_steps)) {
+                 $data6->mitigation_steps = serialize($request->mitigation_steps);
+             }
+             if (!empty($request->deadline2)) {
+                 $data6->deadline2 = serialize($request->deadline2);
+             }
+             if (!empty($request->responsible_person)) {
+                 $data6->responsible_person = serialize($request->responsible_person);
+             }
+             if (!empty($request->status)) {
+                 $data6->status = serialize($request->status);
+             }
+             if (!empty($request->remark)) {
+                 $data6->remark = serialize($request->remark);
+             }
+     
+             $data6->save();
 
 
         if ($lastDocument->short_description != $data->short_description || !empty($request->short_description_comment)) {
@@ -1785,6 +1993,7 @@ class RiskManagementController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
+                
                 $changeControl->status = "Pending HOD Approval";
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1846,6 +2055,20 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "3";
                 $changeControl->status = "Risk Processing & Action Plan";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = "2";
+                $changeControl->status = "Opened";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 5) {
+                $changeControl->stage = "4";
+                $changeControl->status = "Opened";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
