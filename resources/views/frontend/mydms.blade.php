@@ -1203,7 +1203,7 @@
                                         @endforeach
                                     @endif
 
-                                    <div class="sub-block inner-block" id="cc-open">
+                                    {{-- <div class="sub-block inner-block" id="cc-open">
                                         <div class="pill">
                                             Change Control
                                         </div>
@@ -1256,7 +1256,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="sub-block inner-block" id="cc-hod-review">
                                         <div class="pill">
@@ -1313,7 +1313,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="sub-block inner-block" id="cc-reviewed">
+                                    {{-- <div class="sub-block inner-block" id="cc-reviewed">
                                         <div class="pill">
                                             Change Control
                                         </div>
@@ -1366,9 +1366,9 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="sub-block inner-block" id="cc-cft-review">
+                                    {{-- <div class="sub-block inner-block" id="cc-cft-review">
                                         <div class="pill">
                                             Change Control
                                         </div>
@@ -1421,9 +1421,9 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="sub-block inner-block" id="cc-approved">
+                                    {{-- <div class="sub-block inner-block" id="cc-approved">
                                         <div class="pill">
                                             Change Control
                                         </div>
@@ -1476,9 +1476,9 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
-                                    <div class="sub-block inner-block" id="cc-effective">
+                                    {{-- <div class="sub-block inner-block" id="cc-effective">
                                         <div class="pill">
                                             Change Control
                                         </div>
@@ -1531,7 +1531,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>

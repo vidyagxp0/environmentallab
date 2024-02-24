@@ -10,6 +10,35 @@
             display: block;
         }
     </style>
+    <style>
+        header .header_rcms_bottom {
+            display: none;
+        }
+
+        .calenderauditee {
+            position: relative;
+        }
+
+        .new-date-data-field .input-date input.hide-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .new-date-data-field input {
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 5px 15px;
+            display: block;
+            width: 100%;
+            background: white;
+        }
+
+        .calenderauditee input::-webkit-calendar-picker-indicator {
+            width: 100%;
+        }
+    </style>
 
     <script>
         function otherController(value, checkValue, blockID) {
@@ -1292,7 +1321,7 @@
                                                         <th>Affected Documents</th>
                                                         <th>Document Name</th>
                                                         <th>Document No.</th>
-                                                        {{-- <th>Version No.</th> --}}
+                                                         <th>Version No.</th> 
                                                         <th>Implementation Date</th>
                                                         <th>New Document No.</th>
                                                         <th>New Version No.</th>
@@ -1314,17 +1343,18 @@
                                                             <td><input type="number" name="document_no[]"
                                                                     value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : 'Not Applicable' }}">
                                                             </td>
-                                                            {{-- <td><input type="text" name="new_version[]"
+                                                             <td><input type="text" name="new_version[]"
                                                                     value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
-                                                            </td> --}}
+                                                            </td> 
                                                             <td><div class="group-input new-date-data-field ">
-                                                                <div class=" group-input input-date  "><div
+                                                                <div class="  input-date  "><div
                                                                  class="calenderauditee">
                                                                 <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY" oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
                                                                 
-                                                                 <input   type="date" name="implementation_date[]" class="hide-input"  value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : 'Not Applicable' }}"  
+                                                                 <input type="date" class="hide-input" name="implementation_date[]"   value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : 'Not Applicable' }}"  
                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div> 
                                                             </td>
+                                                            
                                                             <td><input type="text" name="new_document_no[]"
                                                                 value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : 'Not Applicable' }}">
                                                              </td>
