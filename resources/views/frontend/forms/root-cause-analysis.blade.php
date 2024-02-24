@@ -737,7 +737,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Initial Attachment</label>
+                                        <label for="Inv Attachments">Final Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
