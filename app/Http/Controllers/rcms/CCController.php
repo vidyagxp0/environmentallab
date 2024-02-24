@@ -122,6 +122,7 @@ class CCController extends Controller
         $openState->train_comments = $request->train_comments;
 
         $openState->Microbiology = $request->Microbiology;
+       
         $openState->Microbiology_Person = json_encode($request->Microbiology_Person);
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
@@ -1101,7 +1102,12 @@ class CCController extends Controller
         $closure = ChangeClosure::where('cc_id', $id)->first();
         $hod = User::where('role', 4)->get();
         $cft = User::where('role', 5)->get();
+        $cft_aff = [];
+        if(!is_null($data->Microbiology_Person)){
+            $cft_aff = explode(',', $data->Microbiology_Person);
+        }
         $pre = CC::all();
+        $due_date_extension = $data->due_date_extension;
 
        // dd($closure);
        // DD(unserialize($closure->affected_document));
@@ -1117,6 +1123,8 @@ class CCController extends Controller
             'closure',
             "hod",
             "cft",
+            "cft_aff",
+            "due_date_extension",
             "pre"
         ));
     }
@@ -1196,6 +1204,8 @@ class CCController extends Controller
         $openState->effective_check_date = $request->effective_check_date;
         $openState->Effectiveness_checker = $request->Effectiveness_checker;
         $openState->effective_check_plan = $request->effective_check_plan;
+
+        dd($request->due_date_extension);
         $openState->due_date_extension = $request->due_date_extension;
 
 
