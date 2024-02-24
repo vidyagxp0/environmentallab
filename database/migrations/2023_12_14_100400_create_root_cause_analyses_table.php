@@ -93,6 +93,8 @@ return new class extends Migration
             $table->string('Sample_Types')->nullable();
             $table->text('initiated_through')->nullable();
             $table->text('initiated_if_other')->nullable();
+            $table->text('risk_factor')->nullable();
+            $table->text('risk_element')->nullable();
             $table->string('test_lab')->nullable();
             $table->string('ten_trend')->nullable();
             // $table->text('attachments')->nullable();
