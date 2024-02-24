@@ -567,8 +567,8 @@
                                     <div class="group-input">
                                         <label for="Microbiology">CFT Reviewer</label>
                                         <select name="Microbiology">
-                                            <option value="0">-- Select --</option>
-                                            <option value="yes" selected>Yes</option>
+                                            <option value="0" selected>-- Select --</option>
+                                            <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
                                     </div>
