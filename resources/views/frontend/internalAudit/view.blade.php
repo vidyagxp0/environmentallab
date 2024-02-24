@@ -414,8 +414,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">Please Mention justification if due date is
-                                                    crossed</small></div>
+                                                <div><small class="text-primary">Please Mention justification if due date iscrossed</small></div>
                                                 <input readonly type="text"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
