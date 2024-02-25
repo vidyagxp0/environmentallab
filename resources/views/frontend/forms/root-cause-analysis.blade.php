@@ -389,7 +389,7 @@
                                         <label for="agenda">
                                             Failure Mode and Effect Analysis
                                             <button type="button" name="agenda"
-                                                onclick="addRootCauseAnalysisRiskAssessment('risk-assessment-risk-management')">+</button>
+                                                onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
                                             <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;">
                                                 (Launch Instruction)
                                             </span>
@@ -737,7 +737,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Final Attachment</label>
+                                        <label for="Inv Attachments">Initial Attachment</label>
                                         <div>
                                             <small class="text-primary">
                                                 Please Attach all relevant or supporting documents
@@ -856,14 +856,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_by">Completed By</label>
-                                        <div class="static"></div>
+                                
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed_on">Completed On</label>
                                         <div class="Date"></div>
-                                </div>    
                             </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -886,7 +885,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Submit_On">Submit On</label>
-                                            <div class="Date"></div>
+                                            <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -898,7 +897,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_On">QA Review Complete On</label>
-                                            <div class="Date"></div>
+                                            <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -910,7 +909,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled On">Cancelled On</label>
-                                        <div class="Date"></div>
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                             </div>
