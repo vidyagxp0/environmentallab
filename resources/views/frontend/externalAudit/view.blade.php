@@ -174,7 +174,7 @@ function addMultipleFiles(input, block_id) {
                 cell8.innerHTML = userHtml;
 
             var cell9 = newRow.insertCell(8);
-            cell9.innerHTML = "<input type='text'name='remark[]'>";
+            cell9.innerHTML = "<input type='text' name='remark[]'>";
             for (var i = 1; i < currentRowCount; i++) {
                 var row = table.rows[i];
                 row.cells[0].innerHTML = i;
@@ -782,9 +782,9 @@ function addMultipleFiles(input, block_id) {
                                                                 @endforeach
                                                             </select></td>
 
-                                                            <td><input type="text" name="remark[]{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}"
-                                                                value="{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}">
-                                                        </td>
+                                                            <td><input type="text" name="remark[]"
+                                                                    value="@if(!empty($grid_data->auditee) && is_array($remarkArray = unserialize($grid_data->remark)) && isset($remarkArray[$key])) {{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }} @endif">
+                                                            </td>
 
                                                         </tr>
                                                     @endforeach
@@ -1662,8 +1662,8 @@ function addMultipleFiles(input, block_id) {
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comment" required >
+                                    <label for="comment">Comment <span class="text-danger"></span></label>
+                                    <input type="comment" name="comment" >
                                 </div>
                             </div>
 
@@ -1710,7 +1710,7 @@ function addMultipleFiles(input, block_id) {
                                 </div>
                                 <div class="group-input">
                                     <label for="comment">Comment <span class="text-danger">*</span></label>
-                                    <input type="comment" name="comment"required >
+                                    <input type="comment" name="comment" >
                                 </div>
                             </div>
 
@@ -1721,7 +1721,7 @@ function addMultipleFiles(input, block_id) {
                             </div> -->
                             <div class="modal-footer">
                               <button type="submit">Submit</button>
-                                <button data-bs-dismiss="modal">Close</button>
+                                <button type="button" data-bs-dismiss="modal">Close</button>
                             </div>
                         </form>
                     </div>

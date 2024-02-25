@@ -319,7 +319,7 @@
                                                     <label for="rls">Record Number</label>
                                                     <div class="static">
                                                         <input type="text"
-                                                            value=" {{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ Helpers::year($data->created_at) }}/000{{ $data->record }}">
                                                     </div>
                                                 </div>
                                             </div>

@@ -898,30 +898,7 @@ $users = DB::table('users')
                                         </div>
                                     </div>
                                  --}}
-                                 <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="actual_start_date">Actual Start Date</label>
-                                        <div class="calenderauditee">
-                                            <input type="text" id="actual_start_date" readonly
-                                                placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->actual_start_date }}"  id="actual_start_date_checkdate" name="actual_start_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
-                                        </div>
-                                    </div>
-                                </div>
-                                 <div class="col-lg-6  new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="actual_end_date">Actual End Date</lable>
-                                        <div class="calenderauditee">
-                                        <input type="text" id="actual_end_date"                             
-                                                placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_end_date) }}" />
-                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->actual_end_date }}" id="actual_end_date_checkdate" name="actual_end_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
-                                        </div>
-                                   
-                                        
-                                    </div>
-                                </div> 
+                                
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>

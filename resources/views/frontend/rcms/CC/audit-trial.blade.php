@@ -7,7 +7,7 @@
             <div class="inner-block">
                 <div class="main-head">
                     <div class="default-name">{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}
-                        /<a href="{{ route('CC.show', $document->id) }}">{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                        /Record-000{{ $document->id }}</div>
 
                     <div class="btn-group">
                         <button onclick="window.print();return false;" type="button">Print</button>
