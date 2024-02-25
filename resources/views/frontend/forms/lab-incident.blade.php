@@ -107,7 +107,7 @@
                                             <input type="text" id="due_date" readonly
                                                 placeholder="DD-MMM-YYYY"/>
                                             <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')"  />
                                         </div>
                                     </div>
                                 </div>
@@ -525,8 +525,8 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <span id="rchar">255</span> characters remaining
-                                        <textarea id="duedoc" name="due_date_extension" type="text" maxlength="255"></textarea>
+                                        <span id="rchar">240</span> characters remaining
+                                        <textarea id="duedoc" name="due_date_extension" type="text" maxlength="240"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -769,7 +769,7 @@
             $('#rchars').text(textlen);});
     </script>
     <script>
-        var maxLength = 255;
+        var maxLength = 240;
         $('#duedoc').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchar').text(textlen);});
