@@ -436,21 +436,7 @@
                         Audit Response and Closure
                     </div>
                     <table>
-                    <tr>
-                            <th class="w-20">Due Date Extension Justification</th>
-                            <td class="w-30">
-                                <div>
-                                    @if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif
-                                </div>
-                            </td>
-                            <th class="w-20">Audit End Date</th>
-                            <td class="w-30">
-                                <div>
-                                    @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
-                                </div>
-                            </td>
-                        </tr>
-
+                   
                         <tr>
                             <th class="w-20">Audit Start Date</th>
                             <td class="w-30">

@@ -240,8 +240,8 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}/>
-                                            <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : ''}}/>
+                                            <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 8 ? 'disabled' : ''}}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
@@ -795,9 +795,9 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <span id="rchar">255</span>
+                                        <span id="rchar">240</span>
                                         characters remaining
-                                        <textarea name="due_date_extension" id="duedoc" type="text"    maxlength="255"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
+                                        <textarea name="due_date_extension" id="duedoc" type="text"    maxlength="240"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1301,7 +1301,7 @@
             });
         </script>
         <script>
-        var maxLength = 255;
+        var maxLength = 240;
         $('#duedoc').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchar').text(textlen);});

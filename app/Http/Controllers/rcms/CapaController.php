@@ -187,14 +187,14 @@ class CapaController extends Controller
         if (!empty($request->product_batch_no)) {
             $data1->batch_no = serialize($request->product_batch_no);
         }
-        if (!empty($request->product_mfg_date)) {
-            $data1->mfg_date = serialize($request->product_mfg_date);
+        if (!empty($request->mfg_date)) {
+            $data1->mfg_date = serialize($request->mfg_date);
         }
         if (!empty($request->product_batch_desposition)) {
             $data1->batch_desposition = serialize($request->product_batch_desposition);
         }
-        if (!empty($request->product_expiry_date)) {
-            $data1->expiry_date = serialize($request->product_expiry_date);
+        if (!empty($request->expiry_date)) {
+            $data1->expiry_date = serialize($request->expiry_date);
         }
         if (!empty($request->product_remark)) {
             $data1->remark = serialize($request->product_remark);
@@ -796,8 +796,8 @@ class CapaController extends Controller
             if (!empty($request->product_batch_no)) {
                 $data1->batch_no = serialize($request->product_batch_no);
             }
-            if (!empty($request->product_mfg_date)) {
-                $data1->mfg_date = serialize($request->product_mfg_date);
+            if (!empty($request->mfg_date)) {
+                $data1->mfg_date = serialize($request->mfg_date);
             }
             if (!empty($request->product_expiry_date)) {
                 $data1->expiry_date = serialize($request->product_expiry_date);
@@ -831,6 +831,7 @@ class CapaController extends Controller
             if (!empty($request->material_batch_no)) {
                 $data2->material_batch_no = serialize($request->material_batch_no);
             }
+            
             if (!empty($request->material_mfg_date)) {
                 $data2->material_mfg_date = serialize($request->material_mfg_date);
             }
@@ -1338,9 +1339,9 @@ class CapaController extends Controller
             }
             if ($capa->stage == 3) {
                 $capa->stage = "4";
-                $capa->status = "Pending Approval";
-                $capa->qa_more_info_required_by = Auth::user()->name;
-                $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                $capa->status = "QA Review";
+                $capa->completed_by = Auth::user()->name;
+                $capa->completed_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1348,8 +1349,8 @@ class CapaController extends Controller
             if ($capa->stage == 4) {
                 $capa->stage = "5";
                 $capa->status = "Pending Actions Completion";
-                $capa->completed_by = Auth::user()->name;
-                $capa->completed_on = Carbon::now()->format('d-M-Y');
+                $capa->approved_by = Auth::user()->name;
+                $capa->approved_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1358,8 +1359,8 @@ class CapaController extends Controller
             if ($capa->stage == 5) {
                 $capa->stage = "6";
                 $capa->status = "Closed - Done";
-                $capa->approved_by = Auth::user()->name;
-                $capa->approved_on = Carbon::now()->format('d-M-Y');
+                $capa->completed_by = Auth::user()->name;
+                $capa->completed_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1406,8 +1407,8 @@ class CapaController extends Controller
           if($capa->stage == 3){
             $capa->stage = "2";
             $capa->status = "Pending CAPA Plan";
-            $capa->cancelled_by = Auth::user()->name;
-            $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+            $capa->qa_more_info_required_by = Auth::user()->name;
+            $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
             $capa->update();
             $history = new CapaHistory();
             $history->type = "Capa";
@@ -1416,8 +1417,6 @@ class CapaController extends Controller
             $history->user_name = Auth::user()->name;
             $history->stage_id = $capa->stage;
             $history->status = $capa->status;
-            $capa->qa_more_info_required_by = Auth::user()->name;
-            $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
             $history->save();
             toastr()->success('Document Sent');
             return back();
@@ -1426,8 +1425,8 @@ class CapaController extends Controller
         if($capa->stage == 4){
         $capa->stage = "3";
         $capa->status = "CAPA In Progress";
-        $capa->cancelled_by = Auth::user()->name;
-        $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+        $capa->rejected_by = Auth::user()->name;
+        $capa->rejected_on = Carbon::now()->format('d-M-Y');
         $capa->update();
         $history = new CapaHistory();
         $history->type = "Capa";
@@ -1436,8 +1435,6 @@ class CapaController extends Controller
         $history->user_name = Auth::user()->name;
         $history->stage_id = $capa->stage;
         $history->status = $capa->status;
-        $capa->qa_more_info_required_by = Auth::user()->name;
-        $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
         $history->save();
         toastr()->success('Document Sent');
         return back();
@@ -1458,8 +1455,8 @@ class CapaController extends Controller
             if ($capa->stage == 2) {
                 $capa->stage = "1";
                 $capa->status = "Opened";
-                $capa->rejected_by = Auth::user()->name;
-                $capa->rejected_on = Carbon::now()->format('d-M-Y');
+                // $capa->rejected_by = Auth::user()->name;
+                // $capa->rejected_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -1475,6 +1472,8 @@ class CapaController extends Controller
             if ($capa->stage == 3) {
                 $capa->stage = "2";
                 $capa->status = "Pending CAPA Plan";
+                $capa->qa_more_info_required_by = Auth::user()->name;
+                $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";

@@ -176,7 +176,7 @@
                     <strong>Change Control No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ Helpers::year($data->created_at)}}/{{ Helpers::record($data->record) }}
+                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} 
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -205,8 +205,8 @@
                         <td class="w-30" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ $data-> assign_to}} @else Not Applicable @endif</td>
+                        <th class="w-20">Assigned To</th>  
+                        <td class="w-30">@if($data->assign_to) {{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td> 
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30" colspan="3"> @if($data->initiator_group_code){{ $data-> initiator_group_code}} @else Not Applicable @endif</td>
                     </tr>

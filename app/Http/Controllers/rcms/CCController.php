@@ -1090,7 +1090,7 @@ class CCController extends Controller
     {
 
         $data = CC::find($id);
-
+        $cc_lid = $data->id;
         $data->assign_to_name = User::where('id', $data->assign_to)->value('name');
         $docdetail = Docdetail::where('cc_id', $id)->first();
         $review = Qareview::where('cc_id', $id)->first();
@@ -1125,6 +1125,7 @@ class CCController extends Controller
             "cft",
             "cft_aff",
             "due_date_extension",
+            "cc_lid",
             "pre"
         ));
     }

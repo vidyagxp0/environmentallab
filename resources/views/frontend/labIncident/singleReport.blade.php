@@ -202,7 +202,7 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ $data->assign_to }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -217,10 +217,6 @@
                         <td class="w-30">@if($data->Incident_Details){{ $data->Incident_Details }} @else Not Applicable @endif</td>
                        
                     </tr>
-                    
-                        
-
-                
                     <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80" colspan="3">
@@ -236,6 +232,8 @@
                         <td class="w-30">@if($data->Other_Ref){{ $data->Other_Ref }}@else Not Applicable @endif</td>
                         <th class="w-20">Incident Category</th>
                         <td class="w-30">@if($data->Incident_Category){{ $data->Incident_Category }}@else Not Applicable @endif</td>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->Incident_Category_others){{ $data->Incident_Category_others }}@else Not Applicable @endif</td>
                     </tr>
                     {{--  <tr>
                         <th class="w-20">Supporting Documents</th>
@@ -354,6 +352,10 @@
                     <tr>
                         <th class="w-20">Conclusion</th>
                         <td class="w-80" colspan="3">@if($data->Conclusion){{ $data->Conclusion }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Conclusion</th>
+                        <td class="w-80" colspan="3">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                     </tr>
                 </table>
             <div class="block">

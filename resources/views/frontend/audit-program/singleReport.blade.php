@@ -205,8 +205,9 @@
                         <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
+                        
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">{{ $data->assign_to}}</td>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                        
@@ -287,15 +288,34 @@
                         <tr class="table_bg">
                             <th class="w-20">Auditees</th>
                             <th class="w-20">Date Start	</th>
-                            <th class="w-20">Date End	</th>
-                            <th class="w-20">Lead Investigator	</th>
+                            <th class="w-20">Date End</th>
+                            <th class="w-20">Lead Investigator</th>
                             <th class="w-20">Comment</th>
-
+                         </tr>
+                         <tbody>
+                         <tr>
+                            <th class="w-20">Auditees</th>
+                            <td class="w-80">@if($data->Auditees){{ $data->Auditees }}@else Not Applicable @endif</td>
                         </tr>
-
-                    </table>
+                        <tr>
+                            <th class="w-20">Date Start</th>
+                            <td class="w-80">@if($data->start_date){{ $data->start_date }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Date End</th>
+                            <td class="w-80">@if($data->end_date){{ $data->end_date }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Lead Investigator</th>
+                            <td class="w-80">@if($data->lead_investigator){{ $data->lead_investigator }}@else Not Applicable @endif</td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Comment</th>
+                            <td class="w-80">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
+                        </tr>
+                         </tbody>
+                     </table>
                 </div>
-
             </div>
 
 

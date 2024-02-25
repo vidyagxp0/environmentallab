@@ -161,17 +161,14 @@
                                                     value="{{ Helpers::getdateFormat($data->intiation_date) }}">
                                             </div>
                                         </div>
-
-
-
-                                        <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Current Parent Due Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="due_date" readonly
-                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                    <input type="text" id="due_date" readonly 
+                                                        placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" name="due_date" value="{{ $data->due_date }}"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" />
+                                                        oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -181,8 +178,8 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="revised_date" readonly
                                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
-                                                    <input type="date" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'revised_date')" />
+                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
+                                                        oninput="handleDateInput(this, 'revised_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -200,8 +197,7 @@
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
@@ -209,7 +205,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Justification of Extention">Justification of Extention</label>
-                                                <textarea name="justification">{{ $data->justification }}</textarea>
+                                                <textarea name="justification"  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->justification }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -235,8 +231,8 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
-                                                <div><small class="text-primary">Please select related information</small></div>
-                                                <select name="initiated_through" {{$data->initiated_through}}
+                                                <div><small class="text-primary" >Please select related information</small></div>
+                                                <select name="initiated_through" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} {{$data->initiated_through}}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option  selected value="">-- select --</option>
                                                     <option @if ($data->initiated_through == 'Internal') selected @endif value="Internal ">Internal Audit</option>
@@ -258,7 +254,7 @@
                                         <div class="group-input">
                                             <label for="If Other">Reference Record</label>
                                             <div><small class="text-primary">Kindly specify the record from which the extension is being raised.</small></div>
-                                            <textarea name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
+                                            <textarea name="initiated_if_other" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->initiated_if_other }}</textarea>
                                         </div>
                                     </div>
 
@@ -292,10 +288,10 @@
                                             <div class="group-input">
                                                 <label for="File Attachments">Extention Attachments</label>
                                                     <div class="file-attachment-field">
-                                                        <div class="file-attachment-list" id="extention_attachment">
+                                                        <div class="file-attachment-list" id="extention_attachment" >
                                                             @if ($data->extention_attachment)
                                                             @foreach(json_decode($data->extention_attachment) as $file)
-                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                            <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);" >
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
@@ -305,7 +301,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="extention_attachment[]"
+                                                            <input {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} type="file" id="myfile" name="extention_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'extention_attachment')" multiple>
                                                         </div>
                                                     </div>
@@ -315,7 +311,7 @@
                                      <div class="group-input">
                                         <label for="Assigned to">Approver</label>
                                         <select name="approver11"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                        {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $key => $value)
                                                 <option value="{{ $value->id }}"
@@ -339,7 +335,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Approver Comments">Approver Comments</label>
-                                                <textarea name="approver_comments">{{ $data->approver_comments }} {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} </textarea>
+                                                <textarea name="approver_comments" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->approver_comments }}  </textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-12">
@@ -366,7 +362,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="closure_attachments[]"
+                                                            <input {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} type="file" id="myfile" name="closure_attachments[]"
                                                                 oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                                         </div>
                                                     </div>

@@ -319,7 +319,7 @@
                                                     <label for="rls">Record Number</label>
                                                     <div class="static">
                                                         <input type="text"
-                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ Helpers::year($data->created_at) }}/000{{ $data->record }}">
+                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -880,11 +880,11 @@
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="cft_reviewer">
                                                         {{-- <option value="0">-- Select --</option> --}}
-                                                        @foreach ($cft as $data)
-                                                            @if(in_array($data->id, $cft_aff))
-                                                                <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
+                                                        @foreach ($cft as $data1)
+                                                            @if(in_array($data1->id, $cft_aff))
+                                                                <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
                                                             @else
-                                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                                <option value="{{ $data1->id }}">{{ $data1->name }}</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -1526,7 +1526,7 @@
                                                         @php
                                                             $submit = DB::table('c_c_stage_histories')
                                                                 ->where('type', 'Change-Control')
-                                                                ->where('doc_id', $data->id)
+                                                                ->where('doc_id', $cc_lid)
                                                                 ->where('stage_id', 0)
                                                                 ->get();
                                                         @endphp
@@ -1541,7 +1541,7 @@
                                                         @php
                                                             $submit = DB::table('c_c_stage_histories')
                                                                 ->where('type', 'Change-Control')
-                                                                ->where('doc_id', $data->id)
+                                                                ->where('doc_id', $cc_lid)
                                                                 ->where('stage_id', 0)
                                                                 ->get();
                                                         @endphp
@@ -1557,7 +1557,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('status', 'More-info Required')
                                                             ->get();
                                                     @endphp
@@ -1572,7 +1572,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('status', 'More-info Required')
                                                             ->get();
                                                     @endphp
@@ -1588,7 +1588,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 3)
                                                             ->get();
                                                     @endphp
@@ -1603,7 +1603,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 3)
                                                             ->get();
                                                     @endphp
@@ -1619,7 +1619,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 4)
                                                             ->get();
                                                     @endphp
@@ -1634,7 +1634,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 4)
                                                             ->get();
                                                     @endphp
@@ -1650,7 +1650,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 5)
                                                             ->get();
                                                     @endphp
@@ -1665,7 +1665,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 5)
                                                             ->get();
                                                     @endphp
@@ -1682,7 +1682,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 6)
                                                             ->get();
                                                     @endphp
@@ -1697,7 +1697,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 6)
                                                             ->get();
                                                     @endphp
@@ -1714,7 +1714,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 7)
                                                             ->get();
                                                     @endphp
@@ -1729,7 +1729,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 7)
                                                             ->get();
                                                     @endphp
@@ -1746,7 +1746,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 8)
                                                             ->get();
                                                     @endphp
@@ -1761,7 +1761,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 8)
                                                             ->get();
                                                     @endphp
@@ -1776,7 +1776,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 9)
                                                             ->get();
                                                     @endphp
@@ -1791,7 +1791,7 @@
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
+                                                            ->where('doc_id', $cc_lid)
                                                             ->where('stage_id', 9)
                                                             ->get();
                                                     @endphp
@@ -1818,7 +1818,6 @@
 
             </div>
         </div>
-
     </div>
 
 
@@ -1830,7 +1829,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Child</h4>
                 </div>
-                <form action="{{ route('extension_child', $data->id) }}" method="POST">
+                <form action="{{ route('extension_child', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1875,7 +1874,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ url('rcms/send-cc', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/send-cc', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -1963,7 +1962,7 @@
                 <div class="modal-header">
                     <h4 class="modal-title">Child</h4>
                 </div>
-                <form action="{{ url('rcms/child', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/child', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2008,7 +2007,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-rejection-field', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/send-rejection-field', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2052,7 +2051,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-cft-field', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/send-cft-field', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">
@@ -2095,7 +2094,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
 
-                <form action="{{ url('rcms/send-cancel', $data->id) }}" method="POST">
+                <form action="{{ url('rcms/send-cancel', $cc_lid) }}" method="POST">
                     @csrf
                     <!-- Modal body -->
                     <div class="modal-body">

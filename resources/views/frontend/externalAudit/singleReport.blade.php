@@ -250,8 +250,7 @@
                     <tr>
                         <th class="w-20">Initial Comments</th>
                         <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }}@else Not Applicable @endif</td>
-                        <th class="w-20">Audit start date</th>
-                        <td class="w-30">@if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif</td>
+                      
 
                     </tr>
 

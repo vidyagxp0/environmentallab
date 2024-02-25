@@ -192,58 +192,54 @@
                     General Information
                 </div>
                 <table>
+
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-80">{{ $data->originator }}</td>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-80">{{ $data->division_code }}</td>
-
-
+                        <td class="w-30">{{ $data->originator }}</td>
+                        <th class="w-20">Date of Initiation</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Date of Initiation</th>
-                        <td class="w-80">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">@if($data->record){{ $data->record }} @else Not Applicable @endif</td>
+                        <th class="w-20">Site/Location Code</th>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Initiator Group</th>
+                        <td class="w-30">@if($data->initiator_Group){{ $data->initiator_Group }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-80">{{ $data->initiator_group_code }}</td>
 
                      </tr>
                      <tr>
-                        <th class="w-20">Initiator Group</th>
-                        <td class="w-80">@if($data->general_initiator_group){{ $data->general_initiator_group }} @else Not Applicable @endif</td>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
+                        </td>
                         <th class="w-20">Severity Level</th>
                         <td class="w-80">{{ $data->severity_level_form }}</td>
 
                        
                     </tr>
                     <tr>
-                        <th class="w-20">Assigned to</th>
-                        <td class="w-80">@if($data->assign_id){{ $data->assign_id }} @else Not Applicable @endif</td>
-                        
-                    </tr> 
-                    <tr>
+                    <th class="w-20">Assigned To</th>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                        
                     </tr>
-                    <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
-                        </td>
-                    </tr>
+
+                   
                     <tr>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
 
-                    </tr>
-                    <tr>
                         <th class="w-20">Others</th>
                         <td class="w-80">@if($data->initiated_through_req){{ $data->initiated_through_req }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Repeat</th>
                         <td class="w-80">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
                         <th class="w-20">Repeat Nature</th>
                         <td class="w-80">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
                     </tr>
@@ -257,11 +253,12 @@
                         <td class="w-80">@if($data->capa_team){{ $data->capa_team }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Initial Observation</th>
-                        <td class="w-80">@if($data->assign_id){{ $data->assign_id }}@else Not Applicable @endif</td>
-
-                    </tr>
+                            <th class="w-20">Reference Records</th>
+                            <td class="w-80">@if($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td>
+                        </tr>
                     <tr>
+                        <th class="w-20">Initial Observation</th>
+                        <td class="w-80">@if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif</td>
                         <th class="w-20">Interim Containnment</th>
                         <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
                     </tr>
@@ -274,10 +271,35 @@
                         <th class="w-20">CAPA QA Comments</th>
                         <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
                     </tr>
+                       <div class="block-head">
+                       Capa Attachement
+                    </div>
+                      <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">File </th>
+                            </tr>
+                                @if($data->capa_attachment)
+                                @foreach(json_decode($data->capa_attachment) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                                @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                      </div>
                 </table>
             </div>
 
-            <div class="block">
+            <!-- <div class="block">
                 <div class="head">
 
                     <table>
@@ -315,8 +337,7 @@
                             </th>
                             <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
                         </tr>
-                    </table>
-                    <div class="block-head">
+                        <div class="block-head">
                        Capa Attachement
                     </div>
                       <div class="border-table">
@@ -341,9 +362,11 @@
 
                         </table>
                       </div>
+                    </table>
+                   
                 </div>
-            </div>
-            <div class="block">
+            </div> -->
+            <!-- <div class="block">
                 <div class="block-head">
                     Product Information
                 </div>
@@ -385,7 +408,7 @@
                     </table>
                 </div>
 
-            </div>
+            </div> -->
             <div class="block">
                 <div class="block-head">
                     Material Details
@@ -393,26 +416,31 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
+                        <th class="w-20">SR no.</th>
                             <th class="w-20">Material Name</th>
-                            <th class="w-20">Lot Number</th>
+                            <th class="w-20">Batch Number</th>
                             <th class="w-20">Date Of Manufacturing</th>
                             <th class="w-20">Date Of Expiry</th>
-                            <th class="w-20">A.R. Number</th>
+                            <th class="w-20">Batch Disposition</th>
+                            <th class="w-20">Remark</th>
+                            <th class="w-20">Batch Status</th>
                         </tr>
-                        @if($data->Instruments_Details->material_name)
-                        @foreach (unserialize($data->Instruments_Details->material_name) as $key => $dataDemo)
+                        @if($data->Material_Details->material_name)
+                        @foreach (unserialize($data->Material_Details->material_name) as $key => $dataDemo)
                         <tr>
-                            <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
-                            <td class="w-15">{{unserialize($data->Instruments_Details->batch_no)[$key] ?  unserialize($data->Instruments_Details->batch_no)[$key] : "Not Applicable" }}</td>
-                            <td class="w-5">{{unserialize($data->Instruments_Details->mfg_date)[$key] ?  unserialize($data->Instruments_Details->mfg_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Instruments_Details->expiry_date)[$key] ?  unserialize($data->Instruments_Details->expiry_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Instruments_Details->batch_desposition)[$key] ?  unserialize($data->Instruments_Details->batch_desposition)[$key] : "Not Applicable" }}</td>  {{-- <td class="w-15">{{unserialize($data->Product_Details->batch_status)[$key] ?  unserialize($data->Product_Details->batch_status)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Product_Details->expiry_date)[$key] ?  unserialize($data->Product_Details->expiry_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Product_Details->remark)[$key] ?  unserialize($data->Product_Details->remark)[$key] : "Not Applicable" }}</td> --}}
+                            <td class="w-15">{{ $key ? $key +1  : "Not Applicable" }}</td>
+                            <td class="w-15">{{ unserialize($data->Material_Details->material_name)[$key] ?  unserialize($data->Material_Details->material_name)[$key]: "Not Applicable"}}</td>
+                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_no)[$key] ?  unserialize($data->Material_Details->material_batch_no)[$key] : "Not Applicable" }}</td>
+                            <td class="w-5">{{unserialize($data->Material_Details->material_mfg_date)[$key] ?  unserialize($data->Material_Details->material_mfg_date)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Material_Details->material_expiry_date)[$key] ?  unserialize($data->Material_Details->material_expiry_date)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_desposition)[$key] ?  unserialize($data->Material_Details->material_batch_desposition)[$key] : "Not Applicable" }}</td>  
+                            <td class="w-15">{{unserialize($data->Material_Details->material_remark)[$key] ?  unserialize($data->Material_Details->material_remark)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Material_Details->material_batch_status)[$key] ?  unserialize($data->Material_Details->material_batch_status)[$key] : "Not Applicable" }}</td> 
                         </tr>
                         @endforeach
                         @else
                         <tr>
+                            <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -437,14 +465,14 @@
                             <th class="w-25">Equipment/Instruments ID</th>
                             <th class="w-25">Equipment/Instruments Comments</th>
                         </tr>
-                        @if($data->Material_Details->equipment)
-                        @foreach (unserialize($data->Material_Details->equipment) as $key => $dataDemo)
+                        @if($data->Instruments_Details->equipment)
+                        @foreach (unserialize($data->Instruments_Details->equipment) as $key => $dataDemo)
                         <tr>
                             <td class="w-15">{{ $key ? $key +1  : "Not Applicable" }}</td>
 
                             <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
-                            <td class="w-15">{{unserialize($data->Material_Details->equipment_instruments)[$key] ?  unserialize($data->Material_Details->equipment_instruments)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Material_Details->equipment_comments)[$key] ?  unserialize($data->Material_Details->equipment_comments)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Instruments_Details->equipment_instruments)[$key] ?  unserialize($data->Instruments_Details->equipment_instruments)[$key] : "Not Applicable" }}</td>
+                            <td class="w-15">{{unserialize($data->Instruments_Details->equipment_comments)[$key] ?  unserialize($data->Instruments_Details->equipment_comments)[$key] : "Not Applicable" }}</td>
 
                         </tr>
                         @endforeach
@@ -454,10 +482,7 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                        </tr>
+                          
                         @endif
                     </table>
                 </div>
@@ -475,7 +500,7 @@
                             <td class="w-80">@if($data->details){{ $data->details }}@else Not Applicable @endif</td>
                         </tr>
                         
-                        <!-- <tr>
+                         <tr>
                             <th class="w-20">Project Datails Application</th>
                             <td class="w-80"> {{ $data->project_details_application }}</td>
                         </tr> -->
@@ -505,12 +530,21 @@
                         </tr> -->
                     </table>
                 </div>
-            </div> -->
+            
             <div class="block">
                 <div class="block-head">
-                   CAPA Details
+                  Other type CAPA Details
                 </div>
                 <table>
+                       <tr>
+                            <th class="w-20">Details</th>
+                            <td class="w-80">@if($data->details_new){{ $data->details_new }}@else Not Applicable @endif</td>
+                        </tr>
+                       <tr>
+                            <th class="w-20">CAPA QA Comments
+                            </th>
+                            <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
+                        </tr>
                 <tr>
                         <th class="w-20">CAPA Type</th>
                         <td class="w-80">@if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</td>
@@ -530,8 +564,6 @@
                         <td class="w-80">@if($data->supervisor_review_comments){{ $data->supervisor_review_comments }}@else Not Applicable @endif</td>
                     </tr>
 
-                    <div class="block">
-                <div class="head">
                     <div class="block-head">
                        CAPA Closure
                     </div>
@@ -547,10 +579,7 @@
                         <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
 
                     </tr> --}}
-                    </table>
-                </div>
-            </div>
-           
+                  
                 <div class="block-head">
                     Closure Attachment
                  </div>
@@ -577,6 +606,9 @@
                      </table>
                    </div>
             </div>
+                    </table>
+                    </div>
+                    </div>
 
 
             <div class="block">
