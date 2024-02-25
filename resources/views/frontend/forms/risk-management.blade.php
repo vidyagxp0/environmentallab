@@ -388,7 +388,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Country">Country</label>
                                             <select name="country" class="countries" id="country">
@@ -419,7 +419,7 @@
                                             <label for="Description">Risk/Opportunity Description</label>
                                             <textarea name="description" id="description"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     
                                     {{-- <div class="col-6">
                                         <div class="group-input">
@@ -827,7 +827,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <td><input type="text" name="serial_number[]" value="1"></td>
+                                                    <td><input disabled ="text" name="serial_number[]" value="1"></td>
                                                     <td><input type="text" name="action[]"></td>
                                                     {{-- <td><input type="text" name="responsible[]"></td> --}}
                                                     <td> <select id="select-state" placeholder="Select..." name="responsible[]">
@@ -1349,7 +1349,7 @@
                                                         <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="deadline2[]" class="hide-input" 
                                                         oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
-                                                    <td><input type="text" name="item_static[]"></td>
+                                                    {{-- <td><input type="text" name="item_static[]"></td> --}}
                                                     
 
                                                     <td> <select id="select-state" placeholder="Select..." name="responsible_person[]">

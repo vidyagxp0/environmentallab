@@ -87,6 +87,7 @@ class ManagementReviewController extends Controller
         $management->assigned_to = $request->assigned_to;
         $management->due_date = $request->due_date;
         $management->type = $request->type;
+       
         $management->start_date = $request->start_date;
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
@@ -1231,6 +1232,7 @@ class ManagementReviewController extends Controller
         if (!empty($request->short_desc)) {
             $data4->short_desc = serialize($request->short_desc);
         }
+        //dd($request->date_due);
         if (!empty($request->date_due)) {
             $data4->date_due = serialize($request->date_due);
         }
@@ -1243,6 +1245,7 @@ class ManagementReviewController extends Controller
         if (!empty($request->current_status)) {
             $data4->current_status = serialize($request->current_status);
         }
+        
         if (!empty($request->date_closed)) {
             $data4->date_closed = serialize($request->date_closed);
         }
@@ -1250,7 +1253,7 @@ class ManagementReviewController extends Controller
             $data4->remark = serialize($request->remark);
         }
         $data4->update();
-
+        
         $data5 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
         $data5->review_id = $management->id;
         $data5->type = "capa_detail_details";
@@ -1258,6 +1261,7 @@ class ManagementReviewController extends Controller
         if (!empty($request->Details)) {
             $data5->Details = serialize($request->Details);
         }
+        // dd($request->capa_type);
         if (!empty($request->capa_type)) {
             $data5->capa_type = serialize($request->capa_type);
         }
@@ -1314,6 +1318,7 @@ class ManagementReviewController extends Controller
         $management_review_participants = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"management_review_participants")->first();
         $performance_evaluation = ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"performance_evaluation")->first();
         $action_item_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"action_item_details")->first();
+        //dd(unserialize($action_item_details->date_due));
         $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
         
         return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));

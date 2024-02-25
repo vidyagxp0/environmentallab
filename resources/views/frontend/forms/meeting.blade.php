@@ -154,12 +154,20 @@
                                             value="" disabled>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="short_description">Short Description<span
                                                 class="text-danger">*</span></label>
                                         <div><small class="text-primary">Please mention brief summary</small></div>
                                         <textarea name="short_description"></textarea>
+                                    </div>
+                                </div> --}}
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Short Description">Short Description<span
+                                                class="text-danger">*</span></label><span id="rchars">255</span>
+                                        characters remaining
+                                        <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
                                 </div>
                                
@@ -1116,9 +1124,9 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_due0" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_due" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_due[]" id="date_due0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_due0`);checkDate('date_due0_checkdate','end_date_checkdate')" /></div></div></div></td>
+                                            oninput="handleDateInput(this, `date_due`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div></div></div></td>
                                         <td><input type="text" name="site[]"></td>
                                         <td>
                                             <select id="select-state" placeholder="Select..."
@@ -1134,9 +1142,9 @@
                                         <td><div class="group-input new-date-data-field mb-0">
                                             <div class="input-date "><div
                                              class="calenderauditee">
-                                            <input type="text" id="date_closed0" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="date_closed" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="date_closed[]" id="date_closed0_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                            oninput="handleDateInput(this, `date_closed0`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div>
+                                            oninput="handleDateInput(this, `date_closed`);checkDate('date_due0_checkdate','date_closed0_checkdate')" /></div>
                                         </div>
                                     </div>
                                 </td>
@@ -1200,9 +1208,9 @@
                                         <td><input type="text" name="current_status2[]"></td>
                                         <td><div class="group-input new-date-data-field mb-0"><div class="input-date ">
                                             <div class="calenderauditee">
-                                            <input type="text" id="date_closed" readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="date_closed[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                                        oninput="handleDateInput(this, `date_closed`);" /></div></div>
+                                            <input type="text" id="date_closed2" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="date_closed2[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                        oninput="handleDateInput(this, `date_closed2`);" /></div></div>
                                                     </div>
                                                 </td>  
                                          
@@ -1211,10 +1219,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <!-- {{-- <div class="group-input">
-                                <label for="next_managment_review_date">Next Management Review Date</label>
-                                <input type="date" name='next_managment_review_date'>
-                            </div> --}} -->
+                           
                             <div class="new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="next_managment_review_date">Next Management Review Date</label>
@@ -1260,7 +1265,8 @@
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
+                                {{-- <button type="submit">Submit1</button> --}}
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" href="{{ url('dashboard') }}"> Exit </a>
                                 </button>
                             </div>
@@ -1622,7 +1628,7 @@ function addActionItemDetails(tableId) {
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
                        
-                        '<td><input type="text" name="short_desc[]">' +
+                        '<td><input type="text" name="Details[]">' +
                         '<td><select id="select-state" placeholder="Select..." name="capa_type[]">'+
                         '<option value="">Select a value</option>'+
                         '<option value="corrective">Corrective Action</option>'+
@@ -2269,4 +2275,10 @@ function addActionItemDetails(tableId) {
             });
         });
     </script>
+             <script>
+                var maxLength = 255;
+                $('#docname').keyup(function() {
+                    var textlen = maxLength - $(this).val().length;
+                    $('#rchars').text(textlen);});
+            </script>
 @endsection

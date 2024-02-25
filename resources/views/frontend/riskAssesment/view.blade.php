@@ -609,7 +609,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Zone">Zone</label>
                                                 <select name="zone" id="zone"
@@ -657,7 +657,7 @@
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Description">Risk/Opportunity Description</label>
@@ -1249,9 +1249,16 @@
                                                                         </option>
                                                                     @endforeach
                                                                 </select></td>
-                                                                <td><input type="text" name="deadline[]"
+                                                                {{-- <td><input type="text" name="deadline[]"
                                                                         value="{{ unserialize($action_plan->deadline)[$key] ? unserialize($action_plan->deadline)[$key] : '' }}">
-                                                                </td>
+                                                                </td> --}}
+                                                                <td><div class="group-input new-date-data-field mb-0">
+                                                                    <div class="input-date "><div
+                                                                    class="calenderauditee">
+                                                                    <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
+                                                                    <input type="date" name="deadline[]" class="hide-input" value="{{ unserialize($action_plan->deadline)[$key] }}"
+                                                                    oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>
+                                                                
                                                                 <td><input type="text" name="item_static[]"
                                                                         value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : '' }}">
                                                                 </td>
@@ -1381,38 +1388,89 @@
                                                         <tbody>
                                                             @if (!empty($riskEffectAnalysis->risk_factor))
                                                                 @foreach (unserialize($riskEffectAnalysis->risk_factor) as $key => $riskFactor)
+                                                                <tr>
                                                                     <td>{{ $key + 1 }}</td>
-                                                                    <td>{{ $riskFactor }}</td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->risk_element)[$key] ? unserialize($riskEffectAnalysis->risk_element)[$key] : '' }}
+                                                                    <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" ></td>
+                                                                    <td><input name="risk_element[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_element)[$key] ?? null }}" >
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ? unserialize($riskEffectAnalysis->problem_cause)[$key] : '' }}
+                                                                    <td> <input name="problem_cause[]" type="text" value="{{ unserialize($riskEffectAnalysis->problem_cause)[$key] ?? null }}" >
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ? unserialize($riskEffectAnalysis->existing_risk_control)[$key] : '' }}
+                                                                    <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($riskEffectAnalysis->existing_risk_control)[$key] ?? null }}" >
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->initial_severity)[$key] ? unserialize($riskEffectAnalysis->initial_severity)[$key] : '' }}
+                                                                    <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                        </select>
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->initial_detectability)[$key] ? unserialize($riskEffectAnalysis->initial_detectability)[$key] : '' }}
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_detectability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                        </select>
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->initial_probability)[$key] ? unserialize($riskEffectAnalysis->initial_probability)[$key] : '' }}
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_probability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                        </select>
                                                                     </td>
-                                                                    {{-- <td>{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ? unserialize($riskEffectAnalysis->initial_rpn)[$key] : '' }}  --}}
+                                                                    <td>
+                                                                        <input name="initial_rpn[]" type="text" value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" >
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance)[$key] : '' }}
+                                                                    <td>
+                                                                        <input name="risk_acceptance[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}" >
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ? unserialize($riskEffectAnalysis->risk_control_measure)[$key] : '' }}
+                                                                    <td>
+                                                                        <input name="risk_control_measure[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_control_measure)[$key] ?? null }}" >
+                                                                         
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->residual_severity)[$key] ? unserialize($riskEffectAnalysis->residual_severity)[$key] : '' }}
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_severity[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                        </select>
+                                                                        
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->residual_probability)[$key] ? unserialize($riskEffectAnalysis->residual_probability)[$key] : '' }}
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_probability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                        </select>
+                                                                         
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->residual_detectability)[$key] ? unserialize($riskEffectAnalysis->residual_detectability)[$key] : '' }}
+    
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_detectability[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="1" {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                            <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                            <option value="3"  {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                        </select>
                                                                     </td>
-                                                                    {{-- <td>{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ? unserialize($riskEffectAnalysis->residual_rpn)[$key] : '' }} --}}
+                                                                    <td>
+                                                                         <input name="residual_rpn[]" type="text" value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}" >
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ? unserialize($riskEffectAnalysis->risk_acceptance2)[$key] : '' }}
+                                                                    <td>
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
+                                                                            <option value="">-- Select --</option>
+                                                                            <option value="Y" {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
+                                                                            <option value="N"  {{ (unserialize($riskEffectAnalysis->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
+                                                                         </select>
                                                                     </td>
-                                                                    <td>{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ? unserialize($riskEffectAnalysis->mitigation_proposal)[$key] : '' }}
+                                                                    <td>
+                                                                        <input name="mitigation_proposal[]" type="text" value="{{ unserialize($riskEffectAnalysis->mitigation_proposal)[$key] ?? null }}" >
                                                                     </td>
+                                                                </tr>    
                                                                 @endforeach
                                                             @endif
                                                         </tbody>
@@ -1492,7 +1550,7 @@
                                                         </div>
                                                         <div class="field">
 
-                                                            <textarea name="problem_statement1">{{ $fishbone->problem_statement }}</textarea>
+                                                            <textarea name="problem_statement1">{{ $fishbone->problem_statement1 }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1868,11 +1926,15 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="mitigation_plan_details">
+                                                {{-- <label for="mitigation_plan_details">
                                                     Mitigation Plan Details<button type="button" name="ann"  {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                         onclick="add5Input('mitigation_plan_details')">+</button>
+                                                </label> --}}
+                                                <label for="mitigation_plan_details">
+                                                    Mitigation Plan Details<button type="button" name="ann"
+                                                        id="action_plan2">+</button>
                                                 </label>
-                                                <table class="table table-bordered" id="mitigation_plan_details">
+                                                <table class="table table-bordered" id="action_plan_details2">
                                                     <thead>
                                                         <tr>
                                                             <th>Row #</th>
@@ -1896,9 +1958,15 @@
                                                                     value="{{ $key + 1 }}"></td>
                                                             <td><input type="text" name="mitigation_steps[]"
                                                                     value="{{ $temps ? $temps : ' ' }}"></td>
-                                                            <td><input type="text" name="deadline2[]"
+                                                            {{-- <td><input type="date" name="deadline2[]"
                                                                     value="{{ unserialize($mitigation_plan_details->deadline2)[$key] ? unserialize($mitigation_plan_details->deadline2)[$key] : '' }}">
-                                                            </td>
+                                                            </td> --}}
+                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date "><div
+                                                                class="calenderauditee">
+                                                                <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
+                                                                <input type="date" name="deadline2[]" class="hide-input" value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
+                                                                oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
                                                             {{-- <td><input type="text" name="responsible_person[]"
                                                                     value="{{ unserialize($mitigation_plan_details->responsible_person)[$key] ? unserialize($mitigation_plan_details->responsible_person)[$key] : '' }}">
                                                             </td> --}}
@@ -2343,7 +2411,9 @@
                                 }
 
                                 html += '</select></td>' +
-                                '<td><input type="date" name="deadline[]"></td>' +
+                                // '<td><input type="date" name="deadline[]"></td>' +
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>'
+                                 +
                                 '<td><input type="text" name="item_static[]"></td>' +
                                 '</tr>';
 
@@ -2365,7 +2435,9 @@
                             '<tr>' +
                                 '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="mitigation_steps[]"></td>' +
-                                '<td><input type="date" name="deadline2[]"></td>' +
+                                // '<td><input type="date" name="deadline2[]"></td>' +
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
+                                  +
                                 '<td><select name="responsible_person[]">' +
                                     '<option value="">Select a value</option>';
 
