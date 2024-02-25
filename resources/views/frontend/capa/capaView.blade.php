@@ -379,7 +379,7 @@
                                         
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="severity-level">Sevrity Level</label>
+                                                <label for="severity-level">severity Level</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
                                                     <option  value="0">-- Select --</option>
                                                     <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
@@ -395,6 +395,10 @@
                                                 <select name="initiated_through"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option value="">Enter Your Selection Here</option>
+                                                    <option @if ($data->initiated_through == 'internal_audit') selected @endif
+                                                        value="internal_audit">Internal Audit</option>
+                                                        <option @if ($data->initiated_through == 'external_audit') selected @endif
+                                                        value="external_audit">External Audit</option>
                                                     <option @if ($data->initiated_through == 'recall') selected @endif
                                                         value="recall">Recall</option>
                                                     <option @if ($data->initiated_through == 'return') selected @endif
@@ -482,7 +486,7 @@
                                             <div class="group-input">
                                                 <label for="Initial Observation">Initial Observation</label>
 
-                                                <textarea name="text" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_description }}</textarea>
+                                                <textarea name="initial_observation" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_observation }}</textarea>
                                             </div>
                                         </div>
 
@@ -490,15 +494,15 @@
                                             <div class="group-input">
                                                 <label for="Interim Containnment">Interim Containnment</label>
                                                 <select name="interim_containnment"
-                                                    onchange="otherController(this.value, 'Required', 'containment_comments')"
+                                                    onchange="otherController(this.value, 'required', 'containment_comments')"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option
-                                                        {{ $data->interim_containnment == 'Required' ? 'selected' : '' }}
-                                                        value="Required">Required</option>
+                                                        {{ $data->interim_containnment == 'required' ? 'selected' : '' }}
+                                                        value="required">Required</option>
                                                     <option
-                                                        {{ $data->interim_containnment == 'Not Required' ? 'selected' : '' }}
-                                                        value="Not Required">Not Required</option>
+                                                        {{ $data->interim_containnment == 'not-required' ? 'selected' : '' }}
+                                                        value="not-required">Not Required</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -606,8 +610,8 @@
                                                             <td><input type="text" name="batch_no[]"
                                                                     value="{{ unserialize($data1->batch_no)[$key] ? unserialize($data1->batch_no)[$key] : '' }}">
                                                             </td>
-                                                            <td><input type="text" name="material_mfg_date[]"
-                                                                    value="{{ unserialize($data1->material_mfg_date)[$key] ? unserialize($data1->material_mfg_date)[$key] : '' }}">
+                                                            <td><input type="text" name="mfg_date[]"
+                                                                    value="{{ unserialize($data1->mfg_date)[$key] ? unserialize($data1->mfg_date)[$key] : '' }}">
                                                             </td>
                                                             <td><input type="text" name="expiry_date[]"
                                                                     value="{{ unserialize($data1->expiry_date)[$key] ? unserialize($data1->expiry_date)[$key] : '' }}">
@@ -636,8 +640,7 @@
                                             <div class="group-input">
                                                 <label for="Material Details">
                                                     Material Details<button type="button" name="ann" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
-                                                    id="material"
-                                                       >+</button>
+                                                    id="material">+</button>
                                                 </label>
                                                 <table class="table table-bordered" id="material_details">
                                                     <thead>
@@ -673,19 +676,34 @@
                                                             <td><input type="text" name="material_expiry_date[]"
                                                                     value="{{ unserialize($data2->material_expiry_date)[$key] ? unserialize($data2->material_expiry_date)[$key] : '' }}">
                                                             </td> --}} -->
-                                                            <td><div class="group-input new-date-data-field mb-0">
+                                                            <!-- <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
-                                                                <input type="text" id="mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" />
+                                                                <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" />
                                                                 <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input" 
-                                                                oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td>'
-
+                                                                oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td> -->
+ 
                                                                 <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date ">
+                                                              <div class="calenderauditee">
+                                                                <input type="text"   id="material_mfg_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}"/>
+                                                                <input type="date"  id="material_mfg_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_mfg_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}
+                                                                "class="hide-input" 
+                                                                oninput="handleDateInput(this, `material_mfg_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
+                                                                
+                                                                <!-- <td><div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date "><div
                                                                      class="calenderauditee">
                                                                     <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
                                                                     <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input" 
-                                                                    oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td>'
+                                                                    oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td> -->
+                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                <div class="input-date ">
+                                                                    <div class="calenderauditee">
+                                                                <input type="text"   id="material_expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
+                                                                <input type="date" id="material_expiry_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_expiry_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}"class="hide-input" 
+                                                                oninput="handleDateInput(this, `material_expiry_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
+
                                                             <td><input type="text" name="material_batch_desposition[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data2->material_batch_desposition)[$key] ? unserialize($data2->material_batch_desposition)[$key] : '' }}">
                                                             </td>
