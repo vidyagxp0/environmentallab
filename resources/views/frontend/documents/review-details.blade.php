@@ -546,14 +546,13 @@
                                             $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                               
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                             $user->reject = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Cancel-by-Reviewer')
+                                                ->where('stage', 'Cancel-by-Approver')
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();

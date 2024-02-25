@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\DownloadHistory;
 use App\Models\PrintHistory;
 use App\Models\Department;
@@ -50,19 +51,24 @@ class DocumentDetailsController extends Controller
         $document = Document::withTrashed()->find($request->document_id);
         $originator = User::find($document->originator_id);
 
-        
+
         if (Auth::user()->role == 3) {
-          $deletePreviousApproval = StageManage::where('document_id', $request->document_id)
-          ->get();
-          foreach($deletePreviousApproval as $updateRecords){
-            $updateRecords->delete();
-          }
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
           $stage->role = RoleGroup::where('id', Auth::user()->role)->value('name');
           $stage->stage = Stage::where('id', $request->stage_id)->value('name');
           $stage->comment = $request->comment;
+
+          if ($stage->stage == "In-Review") {
+            $deletePreviousApproval = StageManage::where('document_id', $request->document_id)
+              ->get();
+            if ($deletePreviousApproval) {
+              foreach ($deletePreviousApproval as $updateRecords) {
+                $updateRecords->delete();
+              }
+            }
+          }
           $stage->save();
         } else {
           $stage = new StageManage;
