@@ -379,7 +379,7 @@
                                         
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="severity-level">severity Level</label>
+                                                <label for="severity-level">Severity Level</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level_form">
                                                     <option  value="0">-- Select --</option>
                                                     <option @if ($data->severity_level_form=='minor') selected @endif value="minor">Minor</option>
