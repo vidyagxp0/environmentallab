@@ -6,7 +6,7 @@
 
             <div class="inner-block">
                 <div class="main-head">
-                    <div class="default-name">{{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}
+                    <div class="default-name">{{ Helpers::getDivisionName($document->division_id) }}/CC/{{ date('Y') }}
                         /<a href="{{ route('CC.show', $document->id) }}">{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
 
                     <div class="btn-group">

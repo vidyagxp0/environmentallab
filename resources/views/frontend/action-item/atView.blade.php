@@ -202,7 +202,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         
-                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
                                 </div>
@@ -513,7 +513,7 @@
                                 <div class="calenderauditee">
                                     <input type="text" 
                                         id="start_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"  />
-                                    <input class="hide-input" type="date"   name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }}"
+                                    <input class="hide-input" type="date"   name="start_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="start_date_checkdate" value="{{ $data->start_date }}"
                                         oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                 </div>
                             </div>
@@ -525,7 +525,7 @@
                                 <div class="calenderauditee">
                                     <input type="text" 
                                         id="end_date" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"  />
-                                    <input class="hide-input" type="date"   name="end_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="end_date_checkdate" value="{{ $data->end_date }}"
+                                    <input class="hide-input" type="date"   name="end_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} id="end_date_checkdate" value="{{ $data->end_date }}"
                                         oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                 </div>
                             </div>
@@ -598,7 +598,7 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="due_date_extension">Due Date Extension Justification</label>
-                                            <textarea  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}name="due_date_extension">{{ $data->due_date_extension }}</textarea>
+                                            <textarea  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="due_date_extension">{{ $data->due_date_extension }}</textarea>
                                         </div>
                                     </div>
                                 </div>

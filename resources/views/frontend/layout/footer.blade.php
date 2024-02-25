@@ -561,7 +561,7 @@
             function generateTableRow(serialNumber) {
                 var html =
                     '<tr>' +
-                    '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                    '<td><input disabled  type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     '<td><input type="text" name="current_doc_number[]"></td>' +
                     '<td><input type="text" name="current_version[]"></td>' +
                     '<td><input type="text" name="new_doc_number[]"></td>' +
@@ -580,7 +580,7 @@
             function generateTableRow(serialNumber) {
                 var html =
                     '<tr>' +
-                    '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                    '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                     '<td><input type="text" name="affected_documents[]"></td>' +
                     '<td><input type="text" name="document_name[]"></td>' +
                     '<td><input type="number" name="document_no[]"></td>' +

@@ -1102,126 +1102,126 @@
                                         {{--  <div class="static">12-12-2032</div>  --}}
                                     </div>
                                 </div>
-                                {{--  <div class="col-lg-6">
+                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Supervisor Reviewed By (QA)</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Supervisor Reviewed On (QA)</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Information Req. By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Information Req. On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA Review Completed By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA Review Completed On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Info Req. By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">More Info Req. On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">CFT Reviewed By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">CFT Reviewed On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">CFT Review Completed By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">CFT Review Completed On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Training Completed By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Training Completed On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Change Implemented By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">Change Implemented On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA More Information Required By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA More Information Required On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA Final Review Completed By</label>
-                                        <div class="static">Piyush Sahu</div>
+                                        {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="submitted">QA Final Review Completed On</label>
-                                        <div class="static">12-12-2032</div>
+                                        {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
-                                </div>  --}}
+                                </div>  
                             </div>
                             <div class="button-block">
                                 <button type="submit" value="save" name="submit" class="saveButton">Save</button>
