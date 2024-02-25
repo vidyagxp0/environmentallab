@@ -219,7 +219,7 @@
                                             <label for="search">
                                                 Assigned To <span class="text-danger"></span>
                                             </label>
-                                            <select id="select-state" placeholder="Select..." name="assign_id">
+                                            <select id="select-state" placeholder="Select..." name="assign_to">
                                                 <option value="">Select a value</option>
                                                 @foreach ($users as $data)
                                                     <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -276,14 +276,22 @@
                                                 value="" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    {{-- <div class="col-12">
                                         <div class="group-input">
                                             <label for="Short Description">Short Description <span
                                                     class="text-danger">*</span></label>
                                                     <div><small class="text-primary">Please mention brief summary</small></div>
                                             <textarea name="short_description" id="short_desc"></textarea>
                                         </div>
-                                    </div>
+                                    </div> --}}
+                                    <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Short Description">Short Description<span
+                                                    class="text-danger">*</span></label><span id="rchars">255</span>
+                                            characters remaining
+                                            <input id="docname" type="text" name="short_description" maxlength="255" required>
+                                        </div>
+                                    </div>  
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="severity-level">Severity Level</label>
@@ -1779,5 +1787,11 @@
                 tableBody.append(newRow);
             });
         });
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);});
     </script>
     @endsection

@@ -97,7 +97,7 @@ class ExtensionController extends Controller
 
         // $openState->short_description = $request->short_description;
         $openState->justification = $request->justification;
-        $openState->refrence_record=  implode(',', $request->refrence_record);
+        // $openState->refrence_record=  implode(',', $request->refrence_record);
         
         $openState->type = $request->type;
         $openState->status = "Opened";
@@ -189,9 +189,10 @@ class ExtensionController extends Controller
         $openState = Extension::find($id);
         $openState->short_description = $request->short_description;
         $openState->justification = $request->justification;
-        $openState->refrence_record=  implode(',', $request->refrence_record);
+        // $openState->refrence_record=  implode(',', $request->refrence_record);
         $openState->initiated_through = $request->initiated_through;
         $openState->type = $request->type;
+        $openState->Approver = $request->Approver;
         $openState->revised_date = $request->revised_date;
         $openState->initiated_if_other = $request->initiated_if_other;
         
@@ -218,12 +219,13 @@ class ExtensionController extends Controller
             }
             $openState->closure_attachments = json_encode($files);
         }
-        $openState->approver = $request->approver;
+        
+        $openState->approver = $request->approver11;
         $openState->approver_comments = $request->approver_comments;
 
         $openState->save();
 
-
+        
 
         if ($lastDocument->approver != $openState->approver || !empty($request->approver_comment)) {
 
@@ -333,8 +335,10 @@ class ExtensionController extends Controller
                 } else {
                     $changeControl->stage = "2";
                     $changeControl->status = "Pending Approval";
-                    $changeControl->submitted_on = Auth::user()->name;
-                    $changeControl->submitted_by = Carbon::now()->format('d-M-Y');
+                    $changeControl->submitted_on =Carbon::now()->format('d-M-Y');
+                    $changeControl->submitted_by =Auth::user()->name;
+                    $changeControl->submitted_on =  Carbon::now()->format('d-M-Y');
+                    $changeControl->submitted_by = Auth::user()->name;
 
                     $changeControl->update();
 

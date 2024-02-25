@@ -9,6 +9,38 @@
         #step-form>div:nth-child(1) {
             display: block;
         }
+        .hide-input{
+            display: none !important;
+        }
+    </style>
+    <style>
+        header .header_rcms_bottom {
+            display: none;
+        }
+
+        .calenderauditee {
+            position: relative;
+        }
+
+        .new-date-data-field .input-date input.hide-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+        }
+
+        .new-date-data-field input {
+            border: 1px solid grey;
+            border-radius: 5px;
+            padding: 5px 15px;
+            display: block;
+            width: 100%;
+            background: white;
+        }
+
+        .calenderauditee input::-webkit-calendar-picker-indicator {
+            width: 100%;
+        }
     </style>
 
     <script>
@@ -287,7 +319,7 @@
                                                     <label for="rls">Record Number</label>
                                                     <div class="static">
                                                         <input type="text"
-                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                            value=" {{ Helpers::getDivisionName(session()->get('division')) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -337,7 +369,7 @@
                                                     <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                     <input readonly type="text"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                        name="due_date">
+                                                        name="due_date"> {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -847,10 +879,13 @@
                                                     <select multiple name="Microbiology_Person[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="cft_reviewer">
-                                                        <option value="0">-- Select --</option>
-                                                        @foreach ($cft as $datas)
-                                                            <option value="{{ $datas->id }}">
-                                                                {{ $datas->name }}</option>
+                                                        {{-- <option value="0">-- Select --</option> --}}
+                                                        @foreach ($cft as $data)
+                                                            @if(in_array($data->id, $cft_aff))
+                                                                <option value="{{ $data->id }}" selected>{{ $data->name }}</option>
+                                                            @else
+                                                                <option value="{{ $data->id }}">{{ $data->name }}</option>
+                                                            @endif
                                                         @endforeach
                                                     </select>
 
@@ -1295,7 +1330,7 @@
                                                         <th>Affected Documents</th>
                                                         <th>Document Name</th>
                                                         <th>Document No.</th>
-                                                        {{-- <th>Version No.</th> --}}
+                                                         <th>Version No.</th> 
                                                         <th>Implementation Date</th>
                                                         <th>New Document No.</th>
                                                         <th>New Version No.</th>
@@ -1317,17 +1352,19 @@
                                                             <td><input type="number" name="document_no[]"
                                                                     value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : 'Not Applicable' }}">
                                                             </td>
-                                                            {{-- <td><input type="text" name="new_version[]"
+                                                             <td><input type="text" name="new_version[]"
                                                                     value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
-                                                            </td> --}}
+                                                            </td> 
+                                                            
                                                             <td><div class="group-input new-date-data-field ">
-                                                                <div class=" group-input input-date  "><div
+                                                                <div class="  input-date  "><div
                                                                  class="calenderauditee">
-                                                                <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY" oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
+                                                                <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"   value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
                                                                 
-                                                                 <input   type="date" name="implementation_date[]" class="hide-input"  value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : 'Not Applicable' }}"  
+                                                                 <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  
                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div> 
                                                             </td>
+                                                            
                                                             <td><input type="text" name="new_document_no[]"
                                                                 value="{{ unserialize($closure->new_doc_no)[$key] ? unserialize($closure->new_doc_no)[$key] : 'Not Applicable' }}">
                                                              </td>
@@ -1423,13 +1460,13 @@
                                                 Extension Justification
                                             </div>
                                             <div class="col-12">
-                                                <div class="group-input">
+                                                <div class="group-input">{{$data->due_date_extension}}  
                                                     <label for="due_date_extension">Due Date Extension
                                                         Justification</label>
-                                                    <textarea name="due_date_extension">{{$data->due_date_extension}}</textarea>
+                                                    <textarea name="due_date_extension"> {{ $due_date_extension }}</textarea>
                                                 </div>
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
                                             <button type="button" class="backButton"

@@ -299,7 +299,7 @@
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
                                                 ->where('stage', 'Review-submit')
-                                                ->where('deleted_at', null)
+                                                 
                                                 ->latest()
                                                 ->first();
                                             $user->statusReject = DB::table('stage_manages')

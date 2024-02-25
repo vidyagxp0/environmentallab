@@ -163,7 +163,7 @@
                                         </div>
 
 
-                                        {{-- <div class="col-md-6">
+                                        <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Current Parent Due Date <span
                                                         class="text-danger"></span></label>
@@ -171,8 +171,8 @@
                                                 <input  type="text" name="intiation_date"
                                                     value="{{ Helpers::getdateFormat($data->due_date) }}">
                                             </div>
-                                        </div> --}}
-                                        {{-- <div class="col-md-6">
+                                        </div>
+                                        <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Revised Due Date <span
                                                         class="text-danger"></span></label>
@@ -197,7 +197,7 @@
                                                 <div class="calenderauditee">
                                                     <input type="text" id="revised_date" readonly
                                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
-                                                    <input type="date" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
+                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
                                                         oninput="handleDateInput(this, 'revised_date')" />
                                                 </div>
                                             </div>
@@ -235,19 +235,19 @@
                                                     multiple>
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  id="reference_record" name="refrence_record[]" id="">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple  id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                            {{ Helpers::getDivisionName($new->division_id) }}/Extension/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
@@ -267,17 +267,43 @@
                                                     <option @if ($data->initiated_through == 'New Document') selected @endif value="New Document">New Document</option>
                                                     <option @if ($data->initiated_through == 'Action') selected @endif value="Action ">Action Item</option>
                                                     <option @if ($data->initiated_through == 'Effectivness') selected @endif value="Effectivness">Effectivness Check</option>
-                                                    <option @if ($data->initiated_through == 'others') selected @endif value="Effectivness">Others</option>
                                                 </select>
                                             </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="group-input" id="initiated_through_req">
-                                            <label for="If Other">Others<span
-                                                    class="text-danger d-none">*</span></label>
-                                            <textarea {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="initiated_if_other">{{$data->initiated_if_other}}</textarea>
+                                        <div class="group-input">
+                                            <label for="If Other">Reference Record</label>
+                                            <div><small class="text-primary">Kindly specify the record from which the extension is being raised.</small></div>
+                                            <textarea name="initiated_if_other">{{ $data->initiated_if_other }}</textarea>
                                         </div>
                                     </div>
+
+                                    {{-- <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Approver">Approver</label>
+                                            <select id="select-state" placeholder="Select..." name="approver">
+                                                <option value="">Select a value</option>
+                                                @foreach ($users as $value)
+                                                    <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                
+                                {{-- <div class="col-lg-6"> --}}
+                                    {{-- <div class="group-input">
+                                        <label for="Assigned to">Approver</label>
+                                        <select name="approver"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                    @if ($data->approver == $value->id) selected @endif>
+                                                    {{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="File Attachments">Extention Attachments</label>
@@ -301,19 +327,20 @@
                                                     </div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="Approver">Approver</label>
-                                                <select id="select-state" placeholder="Select..." name="approver">
-                                                    <option value="">Select a value</option>
-                                                    @foreach ($users as $value)
-                                                        <option {{ $data->approver == $value->id ? 'selected' : '' }}
-                                                            value="{{ $value->id }}">{{ $value->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
+                                                                        
+                                     <div class="group-input">
+                                        <label for="Assigned to">Approver</label>
+                                        <select name="approver11"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <option value="">-- Select --</option>
+                                            @foreach ($users as $key => $value)
+                                                <option value="{{ $value->id }}"
+                                                    @if ($data->approver == $value->id) selected @endif>
+                                                    {{ $value->name }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
+                                </div> 
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -728,7 +755,7 @@
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment<span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
@@ -775,7 +802,7 @@
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
+                                    <label for="comment">Comment<span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
@@ -804,6 +831,35 @@
 
                 #step-form>div:nth-child(1) {
                     display: block;
+                }
+            </style>
+            <style>
+                header .header_rcms_bottom {
+                    display: none;
+                }
+            
+                .calenderauditee {
+                    position: relative;
+                }
+            
+                .new-date-data-field .input-date input.hide-input {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    opacity: 0;
+                }
+            
+                .new-date-data-field input {
+                    border: 1px solid grey;
+                    border-radius: 5px;
+                    padding: 5px 15px;
+                    display: block;
+                    width: 100%;
+                    background: white;
+                }
+            
+                .calenderauditee input::-webkit-calendar-picker-indicator {
+                    width: 100%;
                 }
             </style>
 
@@ -1112,4 +1168,9 @@
                     }
                 }
             </script>
+             <script>
+                VirtualSelect.init({
+                ele: '#reference_record'
+           });
+          </script>
 @endsection
