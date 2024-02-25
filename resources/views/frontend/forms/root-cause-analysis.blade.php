@@ -389,7 +389,7 @@
                                         <label for="agenda">
                                             Failure Mode and Effect Analysis
                                             <button type="button" name="agenda"
-                                                onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                                onclick="addRootCauseAnalysisRiskAssessment('risk-assessment-risk-management')">+</button>
                                             <span class="text-primary" style="font-size: 0.8rem; font-weight: 400;">
                                                 (Launch Instruction)
                                             </span>

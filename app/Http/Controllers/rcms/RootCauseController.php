@@ -451,6 +451,28 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->why_5  )) {
             $root->why_5 = serialize($request->why_5);
         }
+
+         // Is/Is Not Analysis (Launch Instruction)
+         $root->what_will_be = ($request->what_will_be);
+         $root->what_will_not_be = ($request->what_will_not_be);
+         $root->what_rationable = ($request->what_rationable);
+ 
+         $root->where_will_be = ($request->where_will_be);
+         $root->where_will_not_be = ($request->where_will_not_be);
+         $root->where_rationable = ($request->where_rationable);
+ 
+         $root->when_will_be = ($request->when_will_be);
+         $root->when_will_not_be = ($request->when_will_not_be);
+         $root->when_rationable = ($request->when_rationable);
+ 
+         $root->coverage_will_be = ($request->coverage_will_be);
+         $root->coverage_will_not_be = ($request->coverage_will_not_be);
+         $root->coverage_rationable = ($request->coverage_rationable);
+ 
+         $root->who_will_be = ($request->who_will_be);
+         $root->who_will_not_be = ($request->who_will_not_be);
+         $root->who_rationable = ($request->who_rationable);
+         
         if (!empty($request->root_cause_initial_attachment)) {
             $files = [];
             if ($request->hasfile('root_cause_initial_attachment')) {

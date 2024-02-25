@@ -736,7 +736,7 @@
                                         <div class="group-input">
                                             <label for="agenda">
                                                 Failure Mode and Effect Analysis<button type="button" name="agenda"
-                                                    onclick="addRiskAssessment('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                    onclick="addRootCauseAnalysisRiskAssessment('risk-assessment-risk-management')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                             </label>
                                             <div class="table-responsive">
                                                 <table class="table table-bordered" style="width: 200%"
@@ -770,37 +770,89 @@
                                                     <tbody>
                                                         @if (!empty($data->risk_factor))
                                                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
+                                                            <tr>
                                                                 <td>{{ $key + 1 }}</td>
-                                                                <td>{{ $riskFactor }}</td>
-                                                                <td>{{ unserialize($data->risk_element)[$key] ? unserialize($data->risk_element)[$key] : '' }}
+                                                                <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" ></td>
+                                                                <td><input name="risk_element[]" type="text" value="{{ unserialize($data->risk_element)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td>{{ unserialize($data->problem_cause)[$key] ? unserialize($data->problem_cause)[$key] : '' }}
+                                                                <td> <input name="problem_cause[]" type="text" value="{{ unserialize($data->problem_cause)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td>{{ unserialize($data->existing_risk_control)[$key] ? unserialize($data->existing_risk_control)[$key] : '' }}
+                                                                <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($data->existing_risk_control)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td>{{ unserialize($data->initial_severity)[$key] ? unserialize($data->initial_severity)[$key] : '' }}
+                                                                <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="1" {{ (unserialize($data->initial_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                        <option value="2"  {{ (unserialize($data->initial_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                        <option value="3"  {{ (unserialize($data->initial_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                    </select>
                                                                 </td>
-                                                                <td>{{ unserialize($data->initial_detectability)[$key] ? unserialize($data->initial_detectability)[$key] : '' }}
+                                                                <td>
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_detectability[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="1" {{ (unserialize($data->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                        <option value="2"  {{ (unserialize($data->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                        <option value="3"  {{ (unserialize($data->initial_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                    </select>
                                                                 </td>
-                                                                <td>{{ unserialize($data->initial_probability)[$key] ? unserialize($data->initial_probability)[$key] : '' }}
+                                                                <td>
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_probability[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="1" {{ (unserialize($data->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                        <option value="2"  {{ (unserialize($data->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                        <option value="3"  {{ (unserialize($data->initial_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                    </select>
                                                                 </td>
-                                                                 {{-- <td>{{ unserialize($data->initial_rpn)[$key] ? unserialize($data->initial_rpn)[$key] : '' }}   --}}</td>
-                                                                <td>{{ unserialize($data->risk_acceptance)[$key] ? unserialize($data->risk_acceptance)[$key] : '' }}
+                                                                <td>
+                                                                    <input name="initial_rpn[]" type="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td>{{ unserialize($data->risk_control_measure)[$key] ? unserialize($data->risk_control_measure)[$key] : '' }}
+                                                                <td>
+                                                                    <input name="risk_acceptance[]" type="text" value="{{ unserialize($data->risk_acceptance)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td>{{ unserialize($data->residual_severity)[$key] ? unserialize($data->residual_severity)[$key] : '' }}
+                                                                <td>
+                                                                    <input name="risk_control_measure[]" type="text" value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}" >
+                                                                     
                                                                 </td>
-                                                                <td>{{ unserialize($data->residual_probability)[$key] ? unserialize($data->residual_probability)[$key] : '' }}
+                                                                <td>
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_severity[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="1" {{ (unserialize($data->residual_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                        <option value="2"  {{ (unserialize($data->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                        <option value="3"  {{ (unserialize($data->residual_severity)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                    </select>
+                                                                    
                                                                 </td>
-                                                                <td>{{ unserialize($data->residual_detectability)[$key] ? unserialize($data->residual_detectability)[$key] : '' }}
+                                                                <td>
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_probability[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="1" {{ (unserialize($data->residual_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                        <option value="2"  {{ (unserialize($data->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                        <option value="3"  {{ (unserialize($data->residual_probability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                    </select>
+                                                                     
                                                                 </td>
-                                                               
+
+                                                                <td>
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_detectability[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="1" {{ (unserialize($data->residual_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
+                                                                        <option value="2"  {{ (unserialize($data->residual_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
+                                                                        <option value="3"  {{ (unserialize($data->residual_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
+                                                                    </select>
                                                                 </td>
-                                                                <td>{{ unserialize($data->risk_acceptance2)[$key] ? unserialize($data->risk_acceptance2)[$key] : '' }}
+                                                                <td>
+                                                                     <input name="residual_rpn[]" type="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
                                                                 </td>
-                                                                <td>{{ unserialize($data->mitigation_proposal)[$key] ? unserialize($data->mitigation_proposal)[$key] : '' }}
+                                                                <td>
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="Y" {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
+                                                                        <option value="N"  {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
+                                                                     </select>
                                                                 </td>
+                                                                <td>
+                                                                    <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
+                                                                </td>
+                                                            </tr>    
                                                             @endforeach
                                                         @endif
                                                     </tbody>
