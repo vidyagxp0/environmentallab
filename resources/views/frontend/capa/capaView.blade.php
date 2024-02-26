@@ -710,9 +710,29 @@
                                                              <td><input type="text" name="material_remark[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data2->material_remark)[$key] ? unserialize($data2->material_remark)[$key] : '' }}">
                                                             </td>
-                                                             <td><input type="text" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                             <!-- <td><input type="text" id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}">
-                                                            </td> 
+                                                            </td>  -->
+                                                            <!-- <td> 
+                                                               <select id="batch_status"
+                                                                   name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                   
+                                                               <option value="">-- Select value --</option>
+                                                                  <option value="Hold">Hold</option>
+                                                                  <option value="Release">Release</option>
+                                                                <option value="quarantine">Quarantine</option>
+                                                                value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}" >
+                                                            </select>   
+                                                        </td> -->
+                                                        <td> 
+                                                            <select id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
+                                                                <option value="">-- Select value --</option>
+                                                                <option value="Hold"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'Hold' ? ' selected' : '' }}>Hold</option>
+                                                                <option value="Release"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'Release' ? ' selected' : '' }}>Release</option>
+                                                                <option value="Quarantine"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'Quarantine' ? ' selected' : '' }}>Quarantine</option>
+                                                            </select>
+                                                        </td>
+
                                                         </tr>
                                                     @endforeach
                                                         @endif

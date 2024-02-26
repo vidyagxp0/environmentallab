@@ -615,7 +615,7 @@
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
-                                                    <select name="material_batch_status[]" id="">
+                                                    <select name="material_batch_status[]" id="batch_status">
                                                         <option value="">-- Select value --</option>
                                                         <option value="Hold">Hold</option>
                                                         <option value="Release">Release</option>
