@@ -106,14 +106,16 @@ class MytaskController extends Controller
 
         $document = Document::find($id);
         $document->last_modify = DocumentHistory::where('document_id', $document->id)->latest()->first();
-        $stagereview = StageManage::withTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Reviewed")->latest()->first();
-        $stagereview_submit = StageManage::withTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Review-Submit")->latest()->first();
-        $stageapprove = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
-        // $stageapprove_submit = StageManage::where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
+
+        $stagereview = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Reviewed")->latest()->first();
+        $stagereview_submit = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Review-Submit")->latest()->first();
+         $stageapprove = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approved")->latest()->first();
+        $stageapprove_submit = StageManage::withoutTrashed()->where('user_id',Auth::user()->id)->where('document_id',$id)->where('stage',"Approval-Submit")->latest()->first();
        // $stageapprove = '';
         //$stageapprove_submit = '';
-        $review_reject = StageManage::withTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Cancel-by-Reviewer")->latest()->first();
-        $approval_reject = StageManage::withTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Cancel-by-Approver")->latest()->first();
+        $review_reject = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Cancel-by-Reviewer")->latest()->first();
+        $approval_reject = StageManage::withoutTrashed()->where('user_id', Auth::user()->id)->where('document_id', $id)->where('stage', "Cancel-by-Approver")->latest()->first();
+
         $document->department_name = Department::find($document->department_id);
         $document->doc_type = DocumentType::find($document->document_type_id);
         $document->oreginator = User::find($document->originator_id);

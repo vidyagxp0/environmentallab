@@ -908,8 +908,8 @@ class AuditeeController extends Controller
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
         }
-        if (!empty($request->remark)) {
-            $data3->remark = serialize($request->remark);
+        if (!empty($request->remarks)) {
+            $data3->remark = serialize($request->remarks);
         }
         $data3->update();
 

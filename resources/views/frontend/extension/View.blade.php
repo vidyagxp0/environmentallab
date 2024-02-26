@@ -161,8 +161,7 @@
                                                     value="{{ Helpers::getdateFormat($data->intiation_date) }}">
                                             </div>
                                         </div>
-
-                                        <div class="col-lg-6 new-date-data-field">
+                    <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Current Parent Due Date</label>
                                                 <div class="calenderauditee">
@@ -219,11 +218,11 @@
                                         {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple  id="reference_record" name="refrence_record[]" id="">
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  id="reference_record" name="refrence_record[]" id="">
                                                     <option value="">--Select---</option>
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}"  {{ in_array($new->id, explode(',', $data->refrence_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/Extension/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
+                                                            {{ Helpers::getDivisionName($new->division_id) }}/IA/{{date('Y')}}/{{ Helpers::recordFormat($new->record) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -1149,9 +1148,4 @@
                     }
                 }
             </script>
-             <script>
-                VirtualSelect.init({
-                ele: '#reference_record'
-           });
-          </script>
 @endsection
