@@ -45,8 +45,8 @@
                                                     <thead>
                                                         <th class="pr-id" data-bs-toggle="modal"
                                                             data-bs-target="#division-modal">
-                                                            SOP-ID
-                                                        </th>
+                                                            ID
+                                                        </th>   
                                                         {{-- <th class="division">
                                                             SOP Type
                                                         </th> --}}
@@ -72,11 +72,11 @@
                                                     <tbody id="searchTable">
                                                         @foreach ($draft as $temp)
                                                             <tr>
-                                                                <td class="pr-id" style="text-decoration:underline">
-                                                                    <a href="#">
-                                                                        SOP-{{ $temp->id }}
-                                                                    </a>
-                                                                </td>
+                                                                <td class="pr-id" style="text-decoration:underline"><a
+                                                                    href="{{ route('documents.edit', $temp->id) }}">
+                                                                    000{{ $temp->id }}
+                                                                </a>
+                                                            </td>
                                                                 {{-- <td class="division">
                                                                     {{ $temp->type }}
                                                                 </td> --}}
@@ -139,7 +139,7 @@
                                                     <thead>
                                                         <th class="pr-id" data-bs-toggle="modal"
                                                             data-bs-target="#division-modal">
-                                                            SOP-ID
+                                                            ID
                                                         </th>
                                                         {{-- <th class="division">
                                                             SOP Type
@@ -166,11 +166,11 @@
                                                     <tbody id="searchTable">
                                                         @foreach ($under_review as $temp)
                                                             <tr>
-                                                                <td class="pr-id" style="text-decoration:underline">
-                                                                    <a href="#">
-                                                                        SOP-{{ $temp->id }}
-                                                                    </a>
-                                                                </td>
+                                                                <td class="pr-id" style="text-decoration:underline"><a
+                                                                    href="{{ route('documents.edit', $temp->id) }}">
+                                                                    000{{ $temp->id }}
+                                                                </a>
+                                                            </td>
                                                                 {{-- <td class="division">
                                                                     {{ $temp->type }}
                                                                 </td> --}}
@@ -231,7 +231,7 @@
                                                     <thead>
                                                         <th class="pr-id" data-bs-toggle="modal"
                                                             data-bs-target="#division-modal">
-                                                            SOP-ID
+                                                            ID
                                                         </th>
                                                         {{-- <th class="division">
                                                             SOP Type
@@ -258,11 +258,11 @@
                                                     <tbody id="searchTable">
                                                         @foreach ($reviewed as $temp)
                                                             <tr>
-                                                                <td class="pr-id" style="text-decoration:underline">
-                                                                    <a href="#">
-                                                                        SOP-{{ $temp->id }}
-                                                                    </a>
-                                                                </td>
+                                                                <td class="pr-id" style="text-decoration:underline"><a
+                                                                    href="{{ route('documents.edit', $temp->id) }}">
+                                                                    000{{ $temp->id }}
+                                                                </a>
+                                                            </td>
                                                                 {{-- <td class="division">
                                                                     {{ $temp->type }}
                                                                 </td> --}}
@@ -323,11 +323,11 @@
                                                     <thead>
                                                         <th class="pr-id" data-bs-toggle="modal"
                                                             data-bs-target="#division-modal">
-                                                            SOP-ID
+                                                            ID
                                                         </th>
-                                                        <th class="division">
+                                                        {{-- <th class="division">
                                                             SOP Type
-                                                        </th>
+                                                        </th> --}}
                                                         <th class="short-desc">
                                                             Short Description
                                                         </th>
@@ -350,14 +350,14 @@
                                                     <tbody id="searchTable">
                                                         @foreach ($under_approval as $temp)
                                                             <tr>
-                                                                <td class="pr-id" style="text-decoration:underline">
-                                                                    <a href="#">
-                                                                        SOP-{{ $temp->id }}
-                                                                    </a>
-                                                                </td>
-                                                                <td class="division">
+                                                                <td class="pr-id" style="text-decoration:underline"><a
+                                                                    href="{{ route('documents.edit', $temp->id) }}">
+                                                                    000{{ $temp->id }}
+                                                                </a>
+                                                            </td>
+                                                                {{-- <td class="division">
                                                                     {{ $temp->type }}
-                                                                </td>
+                                                                </td> --}}
 
                                                                 <td class="short-desc">
                                                                     {{ $temp->short_description }}
@@ -530,11 +530,11 @@
                                                     <thead>
                                                         <th class="pr-id" data-bs-toggle="modal"
                                                             data-bs-target="#division-modal">
-                                                            SOP-ID
+                                                            ID
                                                         </th>
-                                                        <th class="division">
+                                                        {{-- <th class="division">
                                                             SOP Type
-                                                        </th>
+                                                        </th> --}}
                                                         <th class="short-desc">
                                                             Short Description
                                                         </th>
@@ -557,14 +557,14 @@
                                                     <tbody id="searchTable">
                                                         @foreach ($effective as $temp)
                                                             <tr>
-                                                                <td class="pr-id" style="text-decoration:underline">
-                                                                    <a href="#">
-                                                                        SOP-{{ $temp->id }}
-                                                                    </a>
-                                                                </td>
-                                                                <td class="division">
+                                                                <td class="pr-id" style="text-decoration:underline"><a
+                                                                    href="{{ route('documents.edit', $temp->id) }}">
+                                                                    000{{ $temp->id }}
+                                                                </a>
+                                                            </td>
+                                                                {{-- <td class="division">
                                                                     {{ $temp->type }}
-                                                                </td>
+                                                                </td> --}}
 
                                                                 <td class="short-desc">
                                                                     {{ $temp->short_description }}
@@ -632,11 +632,11 @@
                                                             <thead>
                                                                 <th class="pr-id" data-bs-toggle="modal"
                                                                     data-bs-target="#division-modal">
-                                                                    SOP-ID
+                                                                    ID
                                                                 </th>
-                                                                <th class="division">
+                                                                {{-- <th class="division">
                                                                     SOP Type
-                                                                </th>
+                                                                </th> --}}
                                                                 <th class="short-desc">
                                                                     Short Description
                                                                 </th>
@@ -659,14 +659,14 @@
                                                             <tbody id="searchTable">
 
                                                                 <tr>
-                                                                    <td class="pr-id" style="text-decoration:underline">
-                                                                        <a href="#">
-                                                                            SOP-{{ $temp->id }}
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="division">
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
+                                                                    {{-- <td class="division">
                                                                         {{ $temp->type }}
-                                                                    </td>
+                                                                    </td> --}}
 
                                                                     <td class="short-desc">
                                                                         {{ $temp->short_description }}
@@ -728,7 +728,7 @@
                                                             <thead>
                                                                 <th class="pr-id" data-bs-toggle="modal"
                                                                     data-bs-target="#division-modal">
-                                                                    SOP-ID
+                                                                    ID
                                                                 </th>
                                                                 {{-- <th class="division">
                                                                     SOP Type
@@ -755,11 +755,11 @@
                                                             <tbody id="searchTable">
 
                                                                 <tr>
-                                                                    <td class="pr-id" style="text-decoration:underline">
-                                                                        <a href="#">
-                                                                            SOP-{{ $temp->id }}
-                                                                        </a>
-                                                                    </td>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
                                                                     {{-- <td class="division">
                                                                         {{ $temp->type }}
                                                                     </td> --}}
@@ -822,7 +822,7 @@
                                                             <thead>
                                                                 <th class="pr-id" data-bs-toggle="modal"
                                                                     data-bs-target="#division-modal">
-                                                                    SOP-ID
+                                                                    ID
                                                                 </th>
                                                                 {{-- <th class="division">
                                                                     SOP Type
@@ -849,11 +849,11 @@
                                                             <tbody id="searchTable">
 
                                                                 <tr>
-                                                                    <td class="pr-id" style="text-decoration:underline">
-                                                                        <a href="#">
-                                                                            SOP-{{ $temp->id }}
-                                                                        </a>
-                                                                    </td>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
                                                                     <td class="short-desc">
                                                                         {{ $temp->short_description }}
                                                                     </td>
@@ -912,7 +912,7 @@
                                                             <thead>
                                                                 <th class="pr-id" data-bs-toggle="modal"
                                                                     data-bs-target="#division-modal">
-                                                                    SOP-ID
+                                                                    ID
                                                                 </th>
                                                                 {{-- <th class="division">
                                                                     SOP Type
@@ -939,11 +939,11 @@
                                                             <tbody id="searchTable">
 
                                                                 <tr>
-                                                                    <td class="pr-id" style="text-decoration:underline">
-                                                                        <a href="#">
-                                                                            SOP-{{ $temp->id }}
-                                                                        </a>
-                                                                    </td>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
                                                                     {{-- <td class="division">
                                                                         {{ $temp->type }}
                                                                     </td> --}}
@@ -1119,7 +1119,7 @@
                                                             <thead>
                                                                 <th class="pr-id" data-bs-toggle="modal"
                                                                     data-bs-target="#division-modal">
-                                                                    SOP-ID
+                                                                    ID
                                                                 </th>
                                                                 {{-- <th class="division">
                                                                     SOP Type
@@ -1146,11 +1146,11 @@
                                                             <tbody id="searchTable">
                                                                 {{-- @foreach ($effective as $temp) --}}
                                                                 <tr>
-                                                                    <td class="pr-id" style="text-decoration:underline">
-                                                                        <a href="#">
-                                                                            SOP-{{ $temp->id }}
-                                                                        </a>
-                                                                    </td>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
                                                                     {{-- <td class="division">
                                                                         {{ $temp->type }}
                                                                     </td> --}}

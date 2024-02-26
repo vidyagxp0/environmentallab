@@ -527,6 +527,23 @@ $(document).ready(function () {
         }
         }
 
+         $("#minorError").hide();
+        let minorError = true;
+        $("#minor").keyup(function () {
+            minor();
+        });
+        function minor() {
+        let minor = $("#minor").val();
+        if (minor == "") {
+            $("#minorError").show();
+            minorError = false;
+            return false;
+        }  else {
+            minorError = true;
+            $("#minorError").hide();
+        }
+        }
+
         $("#doc-typeError").hide();
         let doctypeError = true;
         $("#doc-type").keyup(function () {

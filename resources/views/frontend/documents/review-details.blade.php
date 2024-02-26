@@ -749,7 +749,7 @@
                             and password for this task. You are performing an electronic signature,
                             which is legally binding equivalent of a hand written signature.
                         </div>
-                        <div class="group-input">
+                        {{-- <div class="group-input">
                             <label for="electronic-meaning">Electronic Signature Approved Meaning</label>
                             <select name="electronic-meaning">
                                 <option selected>- Please Select -</option>
@@ -760,7 +760,7 @@
                                     <option value="assure-approved">Document Approved</option>
                                 @endif
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="group-input">
                             <label for="username">Username</label>
                             <input type="text" value="{{ old('username') }}" name="username" required>
@@ -776,8 +776,8 @@
                             @endif
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <textarea name="comment" value="{{ old('comment') }}"></textarea>
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <textarea required name="comment" value="{{ old('comment') }}"></textarea>
                         </div>
                     </div>
                     @if ($document->stage == 2)
@@ -803,7 +803,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         {{-- <button>Close</button> --}}
                     </div>
@@ -833,13 +833,13 @@
                             and password for this task. You are performing an electronic signature,
                             which is legally binding equivalent of a hand written signature.
                         </div>
-                        <div class="group-input">
+                        {{-- <div class="group-input">
                             <label for="electronic-meaning">Electronic Signature Approved Meaning</label>
                             <select name="electronic-meaning">
                                 <option selected>- Please Select -</option>
                                 <option value="cancelled">Document Cancelled</option>
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="group-input">
                             <label for="username">Username</label>
                             <input type="text" value="{{ old('username') }}" name="username" required>
@@ -855,8 +855,8 @@
                             @endif
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <textarea name="comment" value="{{ old('comment') }}"></textarea>
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <textarea required name="comment" value="{{ old('comment') }}"></textarea>
                         </div>
                     </div>
                     @if (Auth::user()->role == 1)
@@ -868,7 +868,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="submit">Submit</button>
                         <button type="button" data-bs-dismiss="modal">Close</button>
                         {{-- <button>Close</button> --}}
                     </div>
