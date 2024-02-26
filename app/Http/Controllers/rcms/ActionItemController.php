@@ -474,4 +474,78 @@ class ActionItemController extends Controller
             return back();
         }
     }
+
+//     public function stagecancel(Request $request, $id)
+// {
+//     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+//         $actionItem = ActionItem::find($id);
+
+//         $actionItem->status = "Closed-Cancelled";
+//         $actionItem->cancelled_by = Auth::user()->name;
+//         $actionItem->cancelled_on = Carbon::now()->format('d-M-Y');
+//         $actionItem->update();
+
+//         $history = new ActionItemHistory();
+//         $history->type = "Action Item";
+//         $history->doc_id = $id;
+//         $history->user_id = Auth::user()->id;
+//         $history->user_name = Auth::user()->name;
+//         $history->status = $actionItem->status;
+//         $history->save();
+
+//         toastr()->success('Action Item Cancelled');
+//         return back();
+//     } else {
+//         toastr()->error('E-signature does not match');
+//         return back();
+//     }
+// }
+
+public function actionStageCancel(Request $request, $id)
+{
+    if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        $changeControl = ActionItem::find($id);
+
+        if ($changeControl->stage == 1) {
+            $changeControl->stage = "0";
+            $changeControl->status = "Closed-Cancelled";
+            $changeControl->cancelled_by = Auth::user()->name;
+            $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');;
+            $changeControl->update();
+            $history = new CCStageHistory();
+            $history->type = "Action Item";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $changeControl->stage;
+            $history->status = $changeControl->status;
+            $history->save();
+            toastr()->success('Document Sent');
+            return redirect('rcms/actionItem/'.$id);
+        }
+
+        if ($changeControl->stage == 2) {
+            $changeControl->stage = "1";
+            $changeControl->status = "Opened";
+            //$changeControl->more_information_required_by = (string)Auth::user()->name;
+            //$changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
+            $changeControl->update();
+            $history = new CCStageHistory();
+            $history->type = "Action Item";
+            $history->doc_id = $id;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->stage_id = $changeControl->stage;
+            $history->status = "More-information Required";
+            $history->save();
+            toastr()->success('Document Sent');
+            return redirect('rcms/actionItem/'.$id);
+        }
+    } else {
+        toastr()->error('E-signature Not match');
+        return back();
+    }
+}
+
+    
 }

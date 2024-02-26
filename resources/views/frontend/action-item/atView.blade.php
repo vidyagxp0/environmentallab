@@ -73,7 +73,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
                         @endif
@@ -82,23 +82,27 @@
                 </div>
                 <div class="status">
                     <div class="head">Current Status</div>
-                    <div class="progress-bars">
-                        @if ($data->stage >= 1)
-                            <div class="active">Opened</div>
+                        @if ($data->stage == 0)
+                        <div class="progress-bars">
+                            <div class="active bg-danger">Closed-Cancelled</div>
                         @else
-                            <div class="">Opened</div>
-                        @endif
+                        <div class="progress-bars">
+                            @if ($data->stage >= 1)
+                                <div class="active">Opened</div>
+                            @else
+                                <div class="">Opened</div>
+                            @endif
+                            @if ($data->stage >= 2)
+                                <div class="active">Work In Progress</div>
+                            @else
+                                <div class="">Work In Progress</div>
+                            @endif
 
-                        @if ($data->stage >= 2)
-                            <div class="active">Work In Progress</div>
-                        @else
-                            <div class="">Work In Progress</div>
-                        @endif
-
-                        @if ($data->stage >= 3)
-                            <div class="bg-danger">Closed-Done</div>
-                        @else
-                            <div class="">Closed-Done</div>
+                            @if ($data->stage >= 3)
+                                <div class="bg-danger">Closed-Done</div>
+                            @else
+                                <div class="">Closed-Done</div>
+                            @endif
                         @endif
                     </div>
                 </div>
@@ -839,7 +843,7 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                         </div>
 
-                        <form action="{{ route('capaCancel', $data->id) }}" method="POST">
+                        <form action="{{ url('rcms/action-stage-cancel', $data->id) }}" method="POST">
                             @csrf
                             <!-- Modal body -->
                             <div class="modal-body">

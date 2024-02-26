@@ -38,7 +38,10 @@
             display: none;
         }
     </style>
-
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+ <link rel="stylesheet" href="/resources/demos/style.css">
+ <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+ <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -171,7 +174,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="revised_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" name="revised_date" class="hide-input"
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'revised_date')" />
                                         </div>
                                     </div>
@@ -200,11 +203,12 @@
                                 {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
-                                        <select  id="reference_record" name="refrence_record[]" id="">
+                                        <select multiple id="reference_record" name="refrence_record[]" >
                                             <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/Extension/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                    
                                                 </option>
                                             @endforeach
                                         </select>
@@ -490,4 +494,9 @@
                 }
             }
         </script>
+        <script>
+             VirtualSelect.init({
+             ele: '#reference_record'
+        });
+       </script>
 @endsection

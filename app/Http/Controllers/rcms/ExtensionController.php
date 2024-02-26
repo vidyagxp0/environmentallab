@@ -337,6 +337,8 @@ class ExtensionController extends Controller
                     $changeControl->status = "Pending Approval";
                     $changeControl->submitted_on =Carbon::now()->format('d-M-Y');
                     $changeControl->submitted_by =Auth::user()->name;
+                    $changeControl->submitted_on =  Carbon::now()->format('d-M-Y');
+                    $changeControl->submitted_by = Auth::user()->name;
 
                     $changeControl->update();
 
