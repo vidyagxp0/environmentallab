@@ -56,7 +56,7 @@
                         '<td><div class="group-input new-date-data-field mb-0">
                         <div class="input-date "><div class="calenderauditee"> 
                         <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                        <input type="date" class="hide-input" name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="start_date' + serialNumber +'_checkdate"  
+                        <input type="date" class="hide-input" name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"   {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} id="start_date' + serialNumber +'_checkdate"  
                          oninput="handleDateInput(this, `start_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
                         // '<td><input type="date" name="end_date[]"></td>' +
@@ -550,7 +550,7 @@
                                                         @if ($AuditProgramGrid)
                                                         @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                                                            <td><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                                     value="{{ $key + 1 }}" ></td>
                                                             <td> <select id="select-state" placeholder="Select..."
                                                                     name="Auditees[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
@@ -572,16 +572,15 @@
                                                             </td> --}}
                                                             
                                                             <td><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div
-                                                                         class="calenderauditee">
+                                                                        <div class="input-date "><div class="calenderauditee">
                                                                          <input  type="text"   id="start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
-                                                                <input class="hide-input" type="date"  id="start_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->start_date)[$key]}}"  name="start_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}
-                                                                oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
+                                                                                <input class="hide-input" type="date"  id="start_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->start_date)[$key]}}"  name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}
+                                                                                   oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
                                                                          <input type="text"   id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
-                                                                <input class="hide-input" type="date"  id="end_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->end_date)[$key]}}"  name="end_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}
+                                                                <input class="hide-input" type="date"  id="end_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->end_date)[$key]}}"  name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}
                                                                   oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
                                                                   <td> <select id="select-state" placeholder="Select..."
                                                                     name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
@@ -728,21 +727,14 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
-                                            <div class="group-input">
-                                                <label for="related_url">Related URl's</label>
-                                                @if ($data->related_url)
-                                                    <a class="text-primary" target="blank"
-                                                        href="{{ $data->related_url }}">{{ $data->related_url }}</a>
-                                                @else
-                                                    <input type="url" name="related_url"
-                                                        value="{{ $data->related_url }}"
-                                                        {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                @endif
+                                       
+                            <div class="col-12">
+                               <div class="group-input">
+                                   <label for="related_url">Related URL</label>
+                                   <input name="related_url" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->related_url }}"> 
+                               </div>
+                            </div>
 
-
-                                            </div>
-                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="related_url">URl's description</label>
@@ -1100,11 +1092,11 @@
                         '<select name="Auditees[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>'
 
                     var cell3 = newRow.insertCell(2);
-                    cell3.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" id="start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `start_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+                    cell3.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"    id="start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `start_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 ;
 
                     var cell4 = newRow.insertCell(3);
-                    cell4.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" id="end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+                    cell4.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"   id="end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
 
                     var cell5 = newRow.insertCell(4);
