@@ -34,11 +34,11 @@
                     html += '</select></td>' +
                         // '<td><input type="date" name="start_date[]"></td>'
                         // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" id="start_date' + serialNumber +'"    name="start_date[]" class="hide-input" oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" id="start_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `start_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="start_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `start_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
                         // '<td><input type="date" name="end_date[]"></td>' 
                         // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="end_date' + serialNumber +'_checkdate" readonly placeholder="DD-MMM-YYYY" /><input type="date" id="end_date' + serialNumber +'"  name="end_date[]" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" id="end_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' 
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="end_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + serialNumber +'`);checkDate(`start_date' + serialNumber +'_checkdate`,`end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' 
 
                         +
                         '<td><select name="lead_investigator[]">' +
@@ -480,14 +480,14 @@
                                                     <td><div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date "><div class="calenderauditee">
                                                         <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" id="start_date_checkdate" name="start_date[]" class="hide-input" 
+                                                        <input type="date" id="start_date_checkdate" name="start_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"   class="hide-input" 
                                                         oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
                                                     {{-- <td><input type="date" name="end_date[]"></td> --}}
                                                     <td><div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date "><div
                                                          class="calenderauditee">
                                                         <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" />
-                                                        <input type="date" id="end_date_checkdate"  name="end_date[]" class="hide-input" 
+                                                        <input type="date" id="end_date_checkdate"  name="end_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                         oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
                                                     <td> <select id="select-state" placeholder="Select..."
                                                             name="lead_investigator[]">
@@ -526,20 +526,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="related_url">Related URl's</label>
-                                        <input type="url" name="related_url" id="related_url" />
-                                    </div>
-                                </div> -->
-                        <div class="group-input">
-                            <label for="related_url">Related URL</label>
-                           <input name="related_url" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->related_url }}"> 
+                                <div class="col-12">
+                               <div class="group-input">
+                                   <label for="related_url">Related URL</label>
+                                   <input name="related_url"> 
+                               </div>
                             </div>
-                        </div>
 
-
-                                <div class="col-lg-6">
+                            <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="related_url">URl's description</label>
                                         <input type="text" name="url_description" id="url_description" />
