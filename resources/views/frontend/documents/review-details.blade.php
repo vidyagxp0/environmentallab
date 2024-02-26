@@ -197,11 +197,11 @@
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
                                                     Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                                 </button>
-                                            {{-- @elseif($document->stage == 4)
+                                            @elseif($document->stage == 4)
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                     Approve&nbsp;<i class="fa-regular fa-circle-xmark"></i>
-                                                </button>--}}
-                                            @endif 
+                                                </button>
+                                            @endif
                                         @endif
                                         @if ($stageapprove && empty($stageapprove_submit))
                                             @if ($stageapprove->stage != 'Approved')
@@ -325,7 +325,7 @@
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
                                                 ->where('stage', 'Review-submit')
-                                                ->where('deleted_at', null)
+                                                
                                                 ->latest()
                                                 ->first();
                                             $user->reject = DB::table('stage_manages')
@@ -546,7 +546,6 @@
                                             $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Approval-Submit')
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();

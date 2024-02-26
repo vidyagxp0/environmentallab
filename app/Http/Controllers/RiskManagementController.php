@@ -1127,8 +1127,9 @@ class RiskManagementController extends Controller
             //  $data1 = new RiskAssesmentGrid();
             //  $data1->risk_id = $data->id;
             //  $data1->type = "effect_analysis";
+        
              $data1 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','effect_analysis')->first();
-
+            
              if (!empty($request->risk_factor)) {
                  $data1->risk_factor = serialize($request->risk_factor);
              }
@@ -1181,10 +1182,11 @@ class RiskManagementController extends Controller
              $data1->save();
      
              // ---------------------------------------
-             $data2 = new RiskAssesmentGrid();
-             $data2->risk_id = $data->id;
-             $data2->type = "fishbone";
-     
+            //  $data2 = new RiskAssesmentGrid();
+            //  $data2->risk_id = $data->id;
+            //  $data2->type = "fishbone";
+                 $data2 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','fishbone')->first();
+                
              if (!empty($request->measurement)) {
                  $data2->measurement = serialize($request->measurement);
              }
@@ -1208,10 +1210,11 @@ class RiskManagementController extends Controller
              }
              $data2->save();
              // =-------------------------------
-     
-             $data3 = new RiskAssesmentGrid();
-             $data3->risk_id = $data->id;
-             $data3->type = "why_chart";
+               $data3 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','why_chart')->first();
+            //  $data3 = new RiskAssesmentGrid();
+            //  $data3->risk_id = $data->id;
+            //  $data3->type = "why_chart";
+            
              if (!empty($request->why_problem_statement)) {
                  $data3->why_problem_statement = $request->why_problem_statement;
              }
@@ -1236,9 +1239,11 @@ class RiskManagementController extends Controller
              $data3->save();
      
              // --------------------------------------------
-             $data4 = new RiskAssesmentGrid();
-             $data4->risk_id = $data->id;
-             $data4->type = "what_who_where";
+            //  $data4 = new RiskAssesmentGrid();
+            //  $data4->risk_id = $data->id;
+            //  $data4->type = "what_who_where";
+              $data4 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','what_who_where')->first();
+              
              if (!empty($request->what_will_be)) {
                  $data4->what_will_be = $request->what_will_be;
              }
@@ -1285,11 +1290,11 @@ class RiskManagementController extends Controller
              }
              $data4->save();
      
-     
-             $data5 = new RiskAssesmentGrid();
-             $data5->risk_id = $data->id;
-             $data5->type = "Action_Plan";
-     
+      $data5 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Action_Plan')->first();
+            //  $data5 = new RiskAssesmentGrid();
+            //  $data5->risk_id = $data->id;
+            //  $data5->type = "Action_Plan";
+                   
              if (!empty($request->action)) {
                  $data5->action = serialize($request->action);
              }
@@ -1305,10 +1310,10 @@ class RiskManagementController extends Controller
      
              $data5->save();
      
-             $data6 = new RiskAssesmentGrid();
-             $data6->risk_id = $data->id;
-             $data6->type = "Mitigation_Plan_Details";
-     
+            //  $data6 = new RiskAssesmentGrid();
+            //  $data6->risk_id = $data->id;
+            //  $data6->type = "Mitigation_Plan_Details";
+              $data6 = RiskAssesmentGrid::where('risk_id',$data->id)->where('type','Mitigation_Plan_Details')->first();
              if (!empty($request->mitigation_steps)) {
                  $data6->mitigation_steps = serialize($request->mitigation_steps);
              }
@@ -2020,6 +2025,7 @@ class RiskManagementController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
+                
                 $changeControl->status = "Pending HOD Approval";
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2081,6 +2087,20 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "3";
                 $changeControl->status = "Risk Processing & Action Plan";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 3) {
+                $changeControl->stage = "2";
+                $changeControl->status = "Opened";
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 5) {
+                $changeControl->stage = "4";
+                $changeControl->status = "Opened";
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

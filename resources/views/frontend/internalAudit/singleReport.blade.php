@@ -200,9 +200,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record_number){{ $data->record_number }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->record){{ $data->record }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_id){{ $data->division_id }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
@@ -212,7 +212,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assigend){{ Helpers::getInitiatorName($data->assigend) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
                     </tr>
@@ -227,12 +227,6 @@
                         </td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Repeat</th>
-                        <td class="w-30">@if($data->repeat){{ $data->repeat }}@else Not Applicable @endif</td>
-                        <th class="w-20">Repeat Nature</th>
-                        <td class="w-30">@if($data->repeat_nature){{ $data->repeat_nature }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit type</th>
@@ -337,7 +331,7 @@
             </div>
             <div class="block">
                 <div class="block-head">
-                    Additional Information
+                    Audit Preparation
                 </div>
                 <table>
                     <!-- <tr>
@@ -352,11 +346,13 @@
                         <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
                         <th class="w-20">External Auditor Details</th>
                         <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
+                    </tr> 
+                     <tr>  
                         <th class="w-20">External Auditing Agencys</th>
                         <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
-                        <th class="w-20">Relevant Guidelines /
-                            Industry Standards</th>
+                        <th class="w-20">Relevant Guidelines /Industry Standards</th>
                         <td class="w-30">@if($data->Relevant_Guideline){{ $data->Relevant_Guideline }}@else Not Applicable @endif</td>
+                    </tr>
                         <th class="w-20">QA Comments</th>
                         <td class="w-30">@if($data->QA_Comments){{ $data->QA_Comments }}@else Not Applicable @endif</td>
                     </tr>
@@ -385,23 +381,15 @@
                     <tr>
                         <th class="w-20">Comments</th>
                         <td class="w-30">@if($data->Comments){{ $data->Comments }}@else Not Applicable @endif</td>
-                        <th class="w-20">Audit Comments</th>
-                        <td class="w-30">@if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif</td>
                         <th class="w-20">Audit Category</th>
                         <td class="w-30">@if($data->Audit_Category){{ $data->Audit_Category }}@else Not Applicable @endif</td>
+                    </tr>   
+                   <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
-                        <td class="w-30">@if($data->due_date_extension){{ $data->Supplier_Site }}@else Not Applicable @endif</td>
-                        <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">@if($data->Supplier_Site){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Supplier_Site){{ $data->Supplier_Site }}@else Not Applicable @endif</td>
+                        <th class="w-20">Supplier/Vendor/Manufacturer Details</th>
+                        <td class="w-30">@if($data->Supplier_Details){{ $data->Supplier_Details}}@else Not Applicable @endif</td>
                     </tr>
-
-                    <tr>
-                        <th class="w-20">Remarks</th>
-                        <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
-                        <th class="w-20">Reference Record</th>
-                        <td class="w-80" colspan="3">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
-                    </tr>
-
                 </table>
             </div>
             <div class="border-table">
@@ -433,7 +421,7 @@
             <div class="block">
                 <div class="head">
                     <div class="block-head">
-                        Audit Response and Closure
+                        Audit Execution
                     </div>
                     <table>
                    
@@ -459,6 +447,12 @@
                                     @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
                                 </div>
                             </td>
+                            <th class="w-20">Due Date Extension Justification</th>
+                            <td class="w-30">
+                                    <div>
+                                        @if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif
+                                    </div>
+                                </td>
                         </tr>
 
 
@@ -466,7 +460,7 @@
                 </div>
                 <div class="border-table">
                     <div class="block-head">
-                        Audit file
+                        Audit Attachments
                     </div>
                     <table>
 
@@ -490,6 +484,50 @@
 
                     </table>
                 </div>
+
+
+
+                <div class="block">
+                    <div class="block-head">
+                        Audit Response & Closure
+                    </div>
+                    <table>
+                        <tr>
+                            <th class="w-20">Remarks
+                            </th>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif
+                                </div>
+                            </td>
+                            <th class="w-20">Reference Record</th>
+                            <td class="w-30">
+                                    <div>
+                                        @if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif
+                                    </div>
+                                </td>
+                        </tr>
+                        <tr>
+                            <th class="w-20">Audit Comments
+                            </th>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
+                                </div>
+                            </td>
+                            <th class="w-20">Due Date Extension Justification</th>
+                            <td class="w-30">
+                                    <div>
+                                        @if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif
+                                    </div>
+                                </td>
+                        </tr>
+                   </table>
+            </div>
+        </div>
+    </div>
+    
+                
                 <div class="border-table">
                     <div class="block-head">
                         Report  Attachment
@@ -539,16 +577,20 @@
                             <td class="w-20">Not Applicable</td>
                         </tr>
                         @endif
-
-                    </table>
+                         </table>
                 </div>
             </div>
 
+
+
+            
             <div class="block">
-                <div class="block-head">
-                    Activity Log
-                </div>
-                <table>
+                <div class="head">
+                    <div class="block-head">
+                     Activity log
+                    </div>
+                    <table>
+
                     <tr>
                         <th class="w-20">Audit Schedule By</th>
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
@@ -611,6 +653,10 @@
             </div>
         </div>
     </div>
+</div>
+
+
+
 
     <footer>
         <table>
