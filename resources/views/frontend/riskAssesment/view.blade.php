@@ -1224,7 +1224,7 @@
                                                     <tbody>
                                                         @foreach (unserialize($action_plan->action) as $key => $temps)
                                                             <tr>
-                                                                <td><input type="text" name="serial_number[]"
+                                                                <td><input disabled type="text" name="serial_number[]"
                                                                         value="{{ $key + 1 }}"></td>
                                                                 <td><input type="text" name="action[]"
                                                                         value="{{ $temps ? $temps : ' ' }}"></td>
@@ -1543,7 +1543,7 @@
                                                         </div>
                                                         <div class="field">
 
-                                                            <textarea name="problem_statement1">{{ $fishbone->problem_statement1 }}</textarea>
+                                                            <textarea name="problem_statement">{{ $fishbone->problem_statement }}</textarea>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1649,7 +1649,7 @@
                                                             <tr style="background: #0080006b;">
                                                                 <th style="width:150px;">Root Cause :</th>
                                                                 <td>
-                                                                    <textarea name="root_cause"></textarea>
+                                                                    <textarea name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -1947,7 +1947,7 @@
                                                     <tbody>
                                                         @foreach (unserialize($mitigation_plan_details->mitigation_steps) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"
+                                                            <td><input disabled type="text" name="serial_number[]"
                                                                     value="{{ $key + 1 }}"></td>
                                                             <td><input type="text" name="mitigation_steps[]"
                                                                     value="{{ $temps ? $temps : ' ' }}"></td>
@@ -2394,7 +2394,7 @@
                             console.log(users);
                             var html =
                             '<tr>' +
-                                '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="action[]"></td>' +
                                 '<td><select name="responsible[]">' +
                                     '<option value="">Select a value</option>';
@@ -2426,7 +2426,7 @@
                             console.log(users);
                             var html =
                             '<tr>' +
-                                '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
+                                '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="mitigation_steps[]"></td>' +
                                 // '<td><input type="date" name="deadline2[]"></td>' +
                                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'

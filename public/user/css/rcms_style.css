@@ -1214,6 +1214,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 #modal1 .group-input label,
 #signature-modal .group-input label,
 #rejection-modal .group-input label,
+#rejection-modal1 .group-input label,
 #cancel-modal .group-input label {
     display: block;
     font-size: 0.9rem;
@@ -1228,6 +1229,8 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 #signature-modal .group-input select,
 #rejection-modal .group-input input,
 #rejection-modal .group-input select,
+#rejection-modal1 .group-input input,
+#rejection-modal1 .group-input select,
 #cancel-modal .group-input input,
 #cancel-modal .group-input select {
     display: block;
@@ -1238,6 +1241,7 @@ header .header_rcms_bottom .drop-block:hover .drop-items {
 #modal1 .modal-footer button,
 #signature-modal .modal-footer button,
 #rejection-modal .modal-footer button,
+#rejection-modal1 .modal-footer button,
 #cancel-modal .modal-footer button {
     color: white;
     background: #4274da;

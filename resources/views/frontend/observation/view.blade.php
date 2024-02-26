@@ -104,7 +104,7 @@ $users = DB::table('users')
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
-                            </a> </button>
+                        </a> </button>
 
 
                     </div>               
@@ -323,9 +323,8 @@ $users = DB::table('users')
                                 </div> --}} 
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <div><small class="text-primary">Please Mention justification if due date is
-                                            crossed</small></div>
+                                        <label for="due-date"> Date Due <span class="text-danger"></span></label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <input readonly type="text"
                                             value="{{ Helpers::getdateFormat($data->due_date) }}"
                                             name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>
@@ -604,8 +603,8 @@ $users = DB::table('users')
                                         <div class="calenderauditee">
                                             <input type="text" name="date_Response_due22" id="date_Response_due" readonly
                                                 placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"  />
-                                            <input type="date" value="{{ $data->date_response_due1 }}"  class="hide-input"
-                                                oninput="handleDateInput(this, 'date_Response_due')" />
+                                            <input type="date" id="date_Response_due_checkdate"  value="{{ $data->date_response_due1 }}"  class="hide-input"
+                                                oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -613,10 +612,9 @@ $users = DB::table('users')
                                     <div class="group-input input-date">
                                         <label for="date_due"> Due Date</label>
                                         <div class="calenderauditee">                                     
-                                            <input type="text" name="capa_date_due"  id="date_due"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_date_due) }}" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} 
-                                            value="{{ Helpers::getdateFormat($data->capa_date_due) }}" />
-                                            <input type="date" value="{{ $data->capa_date_due }}" class="hide-input"
-                                            oninput="handleDateInput(this, 'date_due')" />
+                                            <input type="text" name="capa_date_due11"  id="date_due"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_date_due) }}" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} />
+                                            <input type="date" id="date_due_checkdate" value="{{ $data->capa_date_due }}" class="hide-input"
+                                            oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -801,7 +799,7 @@ $users = DB::table('users')
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="impact_analysis">Impact Analysis</label>
-                                        <textarea name="impact_analysis" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->impact_analysis }}</textarea>
+                                        <textarea type  name="impact_analysis" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->impact_analysis }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">

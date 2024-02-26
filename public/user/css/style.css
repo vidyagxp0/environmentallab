@@ -3576,6 +3576,26 @@ section#pdf-page .watermark {
     background: #4274da;
     border: 1px solid rgb(202, 202, 202);
 }
+#rejection-modal1 .group-input label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+#rejection-modal1 .group-input input,
+#rejection-modal1 .group-input select {
+    display: block;
+    width: 100%;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#rejection-modal1 .modal-footer button {
+    color: white;
+    background: #4274da;
+    border: 1px solid rgb(202, 202, 202);
+}
 
 #cancel-modal .group-input label {
     display: block;

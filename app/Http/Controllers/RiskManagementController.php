@@ -257,9 +257,11 @@ class RiskManagementController extends Controller
         if (!empty($request->manpower)) {
             $data2->manpower = serialize($request->manpower);
         }
+        
         if (!empty($request->machine)) {
             $data2->machine = serialize($request->machine);
         }
+        
         if (!empty($request->problem_statement)) {
             $data2->problem_statement = $request->problem_statement;
         }
@@ -284,9 +286,11 @@ class RiskManagementController extends Controller
         if (!empty($request->why_4)) {
             $data3->why_4 = serialize($request->why_4);
         }
+       
         if (!empty($request->why_5)) {
             $data3->why_5 = serialize($request->why_5);
         }
+    //    dd($request->why_root_cause);
         if (!empty($request->why_root_cause)) {
             $data3->why_root_cause = $request->why_root_cause;
         }
