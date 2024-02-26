@@ -526,12 +526,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="related_url">Related URl's</label>
                                         <input type="url" name="related_url" id="related_url" />
                                     </div>
-                                </div>
+                                </div> -->
+                        <div class="group-input">
+                            <label for="related_url">Related URL</label>
+                           <input name="related_url" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->related_url }}"> 
+                            </div>
+                        </div>
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="related_url">URl's description</label>
@@ -672,10 +679,13 @@
                 '<select name="auditees[]"><option value="">-- Select --</option>@foreach ($users as $data)<option value="{{ $data->id }}">{{ $data->name }}</option>@endforeach</select>'
 
             var cell3 = newRow.insertCell(2);
-            cell3.innerHTML = "<input type='date' name='date_start[]'>";
+            // cell3.innerHTML = "<input type='date' name='date_start[]'>";
+            cell3.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="start_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="start_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="start_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `start_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
 
             var cell4 = newRow.insertCell(3);
-            cell4.innerHTML = "<input type='date' name='date_end[]'>";
+            // cell4.innerHTML = "<input type='date' name='date_end[]'>";
+            cell4.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="end_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date'+ currentRowCount +'_checkdate" class="hide-input" oninput="handleDateInput(this, `end_date' + currentRowCount +'`);checkDate(`start_date' + currentRowCount +'_checkdate`,`end_date' + currentRowCount +'_checkdate`)" /></div></div></div></td>';
+
 
             var cell5 = newRow.insertCell(4);
             // cell5.innerHTML = "<input type='text' name='lead_investigator'>";
