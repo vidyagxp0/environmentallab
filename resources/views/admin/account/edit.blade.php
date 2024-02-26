@@ -51,15 +51,12 @@
                     @endforeach
                     </select>
                 </div>
-                <div class="form-group">
-
-                    <label for="exampleInputName1">Role*</label>
-                    <select id="choices-multiple-remove-button" placeholder="Select the person.." id="role_id" name="role_id[]" multiple>
-
-                        @foreach ($group as $div)
-                            <option value="{{ $div->id }}">{{ $div->name }}</option>
+                <div class="form-group" id="roleGroup">
+                    <label for="exampleInputName1">Roles (Ctrl (windows) or Command (Mac) button to select multiple options)<span style="color: red">*</span></label>
+                    <select class="form-control" id="roles" name="roles[]" multiple required>
+                        @foreach ($group as $role)
+                            <option value="{{ $role->id }}" {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>{{ $role->name }}</option>
                         @endforeach
-
                     </select>
                 </div>
 

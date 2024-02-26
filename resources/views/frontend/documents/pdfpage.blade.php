@@ -709,10 +709,10 @@
                                         /{{ $data->document_type_name }} /{{ $data->year }}
                                         /SOP-0000{{ $data->id }}</td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Version</th>
                                     <td class="w-70 text-left">1.0</td>
-                                </tr>
+                                </tr> --}}
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Title</th>
                                     <td class="w-70 text-left">{{ $data->document_name }}</td>
@@ -758,10 +758,10 @@
                                         @endif
                                     </td>
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Library</th>
                                     <td class="w-70 text-left">REYYTWE5Y</td>
-                                </tr>
+                                </tr> --}}
                                 {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Category</th>
                                     <td class="w-70 text-left">Lorem, ipsum.</td>

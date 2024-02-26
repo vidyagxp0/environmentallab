@@ -25,19 +25,23 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+                        @php
+                            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                        @endphp
                         <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button>
                         <button class="button_theme1"> <a class="text-white" href="{{ route('ShowObservationAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && Auth::user()->role == 12)
+                        @if ($data->stage == 1 && in_array(12, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Auth::user()->role == 11)
+                        @elseif($data->stage == 2 && in_array(11, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
@@ -47,7 +51,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 3 && Auth::user()->role == 7)
+                        @elseif($data->stage == 3 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Approval
                             </button>
@@ -60,11 +64,11 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && Auth::user()->role == 7)               
+                        @elseif($data->stage == 4 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))               
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
-                        @elseif($data->stage == 5 && Auth::user()->role == 7)
+                        @elseif($data->stage == 5 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Final Approval
                             </button>
