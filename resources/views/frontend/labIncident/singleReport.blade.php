@@ -406,7 +406,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Investigation Completed By</th>
-                        <td class="w-30"{{ $data->investigation_completed_by }}</td>
+                        <td class="w-30">{{ $data->investigation_completed_by }}</td>
                         <th class="w-20">Investigation Completed On</th>
                         <td class="w-30">{{ $data->investigation_completed_on}}</td>
                     </tr>
@@ -414,7 +414,7 @@
                         <th class="w-20">QA Review Completed By</th>
                         <td class="w-30">{{ $data->qA_review_completed_by }}</td>
                         <th class="w-20">QA Review Completed On</th>
-                        <td class="w-30">{{ $data->qA_review_completed_On }}</td>
+                        <td class="w-30">{{ $data->qA_review_completed_on }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA Head Approval Completed By
