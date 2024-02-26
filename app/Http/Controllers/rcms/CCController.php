@@ -279,7 +279,7 @@ class CCController extends Controller
             toastr()->warning('CFT reviewers can not be empty');
             return back();
         }
-        //dd($info->Microbiology_Person);
+        
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
         if (!empty($request->additional_attachments)) {

@@ -369,7 +369,7 @@
                                                     <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                     <input readonly type="text"
                                                         value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                        name="due_date"> {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> 
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
@@ -1460,7 +1460,7 @@
                                                 Extension Justification
                                             </div>
                                             <div class="col-12">
-                                                <div class="group-input">{{$data->due_date_extension}}  
+                                                <div class="group-input">                                                    
                                                     <label for="due_date_extension">Due Date Extension
                                                         Justification</label>
                                                     <textarea name="due_date_extension"> {{ $due_date_extension }}</textarea>
