@@ -59,7 +59,8 @@ class EffectivenessCheckController extends Controller
         $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->originator = CC::where('id', $request->cc_id)->value('initiator_id');
-        $openState->assign_id = $request->assign_id;
+        $openState->assign_to = $request->assign_to;
+        $openState->due_date = $request->due_date;
         $openState->short_description = $request->short_description;
         $openState->Effectiveness_check_Plan = $request->Effectiveness_check_Plan;
         $openState->Effectiveness_Summary = $request->Effectiveness_Summary;
@@ -163,7 +164,8 @@ class EffectivenessCheckController extends Controller
     {
 
         $openState =  EffectivenessCheck::find($id);
-        $openState->assign_id = $request->assign_id;
+        $openState->assign_to = $request->assign_to;
+        $openState->due_date = $request->due_date;
         $openState->short_description = $request->short_description;
         $openState->Effectiveness_check_Plan = $request->Effectiveness_check_Plan;
         $openState->Quality_Reviewer = $request->Quality_Reviewer;
@@ -253,20 +255,20 @@ class EffectivenessCheckController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = EffectivenessCheck::find($id);
             if ($changeControl->stage == 1) {
-                $rules = [
-                    'Addendum_Comments' => 'required|max:255',
+                // $rules = [
+                //     'Addendum_Comments' => 'required|max:255',
 
-                ];
-                $customMessages = [
-                    'Addendum_Comments.required' => 'The Addendum Comments field is required.',
+                // ];
+                // $customMessages = [
+                //     'Addendum_Comments.required' => 'The Addendum Comments field is required.',
 
-                ];
-                $validator = Validator::make($changeControl->toArray(), $rules, $customMessages);
-                if ($validator->fails()) {
-                    $errorMessages = implode('<br>', $validator->errors()->all());
-                    session()->put('errorMessages', $errorMessages);
-                    return back();
-                } else {
+                // ];
+                // $validator = Validator::make($changeControl->toArray(), $rules, $customMessages);
+                // if ($validator->fails()) {
+                //     $errorMessages = implode('<br>', $validator->errors()->all());
+                //     session()->put('errorMessages', $errorMessages);
+                //     return back();
+                // } else {
                     $changeControl->stage = '2';
                     $changeControl->status = 'Pending Effectiveness Check';
                     $changeControl->update();
@@ -281,23 +283,23 @@ class EffectivenessCheckController extends Controller
                     toastr()->success('Document Sent');
 
                     return back();
-                }
+                
             }
             if ($changeControl->stage == 2) {
-                $rules = [
-                    'Comments' => 'required|max:255',
+                // $rules = [
+                //     'Comments' => 'required|max:255',
 
-                ];
-                $customMessages = [
-                    'Comments.required' => 'The  Comments field is required.',
+                // ];
+                // $customMessages = [
+                //     'Comments.required' => 'The  Comments field is required.',
 
-                ];
-                $validator = Validator::make($changeControl->toArray(), $rules, $customMessages);
-                if ($validator->fails()) {
-                    $errorMessages = implode('<br>', $validator->errors()->all());
-                    session()->put('errorMessages', $errorMessages);
-                    return back();
-                } else {
+                // ];
+                // $validator = Validator::make($changeControl->toArray(), $rules, $customMessages);
+                // if ($validator->fails()) {
+                //     $errorMessages = implode('<br>', $validator->errors()->all());
+                //     session()->put('errorMessages', $errorMessages);
+                //     return back();
+                // } else {
                     $changeControl->stage = '3';
                     $changeControl->status = 'QA Approval-Effective';
                     $changeControl->update();
@@ -312,7 +314,7 @@ class EffectivenessCheckController extends Controller
                     toastr()->success('Document Sent');
 
                     return back();
-                }
+                
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '4';

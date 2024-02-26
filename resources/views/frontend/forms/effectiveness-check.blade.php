@@ -85,7 +85,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -96,20 +96,20 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
+                                <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                          <!-- <input type="hidden" value="{{ $due_date }}" name="due_date"> -->
-                                        <!-- <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($due_date) }}">   -->
+                                        <label for="Date Due">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
                                         <div class="calenderauditee">
-                                           <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                            <input type="date" class="hide-input"
-                                           oninput="handleDateInput(this, 'due_date')"/> 
-                                         </div>
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" />
+                                        </div>
                                     </div>
                                 </div>
-                                
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
@@ -177,7 +177,7 @@
                                 <div class="col-12 sub-head">
                                     Effectiveness Summary
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
                                         <textarea type="text" name="effect_summary"></textarea>

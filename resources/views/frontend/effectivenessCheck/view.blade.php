@@ -184,26 +184,69 @@
                                 General Information
                             </div>
                             <div class="row">
+                            <div class="col-lg-6">
+                               <div class="group-input">
+                                         <label for="RLS Record Number">Record Number</label>
+                                         <input disabled type="text"
+                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/EA/{{ Helpers::year($data->created_at) }}/{{  Helpers::recordFormat($data->record) }}">
+                               </div>
+                            </div>
+                            <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Division Code"><b>Division Code</b></label>
+                                        <input disabled type="text" name="division_code"
+                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                      
+                                    </div>
+                                </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Originator</label>
+                                        <label for="originator">Initiator</label>
                                         <input disabled type="text" value="Amit Guru">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="originator">Date Opened</label>
+                                        <label for="originator">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="created_at">
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="created_at">
                                         {{--  <div class="static">{{ $data->created_at }}</div>  --}}
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="search">
+                                                    Assigned To
+                                                </label>
+                                                <select id="select-state" placeholder="Select..." name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ||  $data->stage == 4 ? 'disabled' : ''}} >
+                                                    <option value="">Select a value</option>
+                                                    @foreach ($users as $value)
+                                                        <option {{ $data->assign_to == $value->id ? 'selected' : '' }}
+                                                            value="{{ $value->id }}">{{ $value->name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due-date">Due Date</label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : ''}}>
+                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
+
+                                            </div>
+                                        </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining              
-                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -214,31 +257,12 @@
                                         <textarea  name="short_description" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->short_description }}</textarea>
                                     </div>
                                 </div> -->
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="">Assign To</label>
-                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="assign_id">
-                                            <option value="">Select a value</option>
-                                            @foreach ($users as $value)
-                                                <option {{ $data->assign_id == $value->id ? 'selected' : '' }}
-                                                    value= "{{ $value->id }}">{{ $value->name }}</option>
-                                            @endforeach
-                                        </select>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Date Due"><b>Date Due</b></label>
-                                        <input disabled type="text"
-                                            value="{{ Helpers::getdateFormat($data->due_date) }}">
-
-                                    </div>
-                                </div>
+                               
+                               
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer"><b>Quality Reviewer</b></label>
-                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
+                                        <select {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="Quality_Reviewer">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option {{ $data->Quality_Reviewer == $value->id ? 'selected' : '' }}
@@ -262,7 +286,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
-                                        <input type="text" name="Effectiveness_check_Plan" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                        <input type="text" name="Effectiveness_check_Plan" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
                                             value="{{ $data->Effectiveness_check_Plan }}">
                                     </div>
                                 </div>
@@ -285,7 +309,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Attachments[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} type="file" id="myfile" name="Attachments[]"
                                                             oninput="addMultipleFiles(this, 'Attachments')"
                                                             multiple>
                                                     </div>
@@ -297,7 +321,7 @@
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
@@ -316,7 +340,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Summary">Effectiveness Summary</label>
-                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
+                                        <textarea type="text" name="effect_summary" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} > {{ $data->effect_summary }}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-12">
@@ -331,7 +355,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
-                                        <textarea type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                        <textarea type="text" name="Effectiveness_Results"{{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
                                             >{{ $data->Effectiveness_Results }}</textarea>
                                     </div>
                                 </div>
@@ -361,7 +385,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->Effectiveness_check_Attachment }}" type="file" id="myfile" name="Effectiveness_check_Attachment[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->Effectiveness_check_Attachment }}" type="file" id="myfile" name="Effectiveness_check_Attachment[]"
                                                             oninput="addMultipleFiles(this, 'Effectiveness_check_Attachment')"
                                                             multiple>
                                                     </div>
@@ -373,9 +397,9 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Addendum Comments"><b>Addendum Comments</b><span
-                                                        class="text-danger">*</span></label>
-                                        <textarea type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                        <label for="Addendum Comments"><b>Addendum Comments</b>
+                                                        </label>
+                                        <textarea type="text" name="Addendum_Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}
                                             >{{ $data->Addendum_Comments }}</textarea>
                                     </div>
                                 </div>
@@ -404,7 +428,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="Addendum_Attachment[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} type="file" id="myfile" name="Addendum_Attachment[]"
                                                             oninput="addMultipleFiles(this, 'Addendum_Attachment')"
                                                             multiple>
                                                     </div>
@@ -415,7 +439,7 @@
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
@@ -434,9 +458,8 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Comments"><b>Comments</b> <span
-                                                        class="text-danger">*</span></label>
-                                        <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
+                                        <label for="Comments"><b>Comments</b></label>
+                                        <textarea name="Comments" {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} >{{ $data->Comments }}</textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
@@ -463,7 +486,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->Attachment }}" type="file" id="myfile" name="Attachment[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->Attachment }}" type="file" id="myfile" name="Attachment[]"
                                                             oninput="addMultipleFiles(this, 'Attachment')"
                                                             multiple>
                                                     </div>
@@ -496,7 +519,7 @@
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
-                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->refer_record }}" type="file" id="myfile" name="refer_record[]"
+                                                        <input {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }} value="{{ $data->refer_record }}" type="file" id="myfile" name="refer_record[]"
                                                             oninput="addMultipleFiles(this, 'refer_record')"
                                                             multiple>
                                                     </div>
@@ -507,7 +530,7 @@
                             <div class="button-block">
                                         @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
 
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -515,7 +538,7 @@
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                         <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                            {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Submit</button>
                                     </div>
                         </div>
                     </div>
@@ -930,8 +953,8 @@
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment <span class="text-danger">*</span></label>
-                            <input type="comment" name="comment" required>
+                            <label for="comment">Comment </label>
+                            <input type="comment" name="comment">
                         </div>
                     </div>
 
