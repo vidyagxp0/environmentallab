@@ -44,7 +44,7 @@
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &Retrieval</button>
+                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
 
@@ -431,7 +431,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="depart-name">Department Name</label>
                                     <select name="department_id" id="depart-name">
@@ -534,7 +534,7 @@
 
                             </div>
 
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="depart-code">Department Code</label>
                                     <div class="default-name"> <span id="department-code">
@@ -548,32 +548,18 @@
 
                                         </span></div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="major">Major</label>
-                                    <select  name="major">
-                                        <option  value="0">-- Select --</option>
-                                        <option @if ($document->major =='1') selected @endif
-                                            value="1">1</option>
-                                            <option @if ($document->major =='2') selected @endif
-                                                value="2">2</option>
-                                            <option @if ($document->major =='3') selected @endif
-                                                value="3">3</option>
-                                            <option @if ($document->major =='4') selected @endif
-                                                value="4">4</option>
-                                                <option @if ($document->major =='5') selected @endif
-                                                    value="5">5</option>
-                                                    <option @if ($document->major =='6') selected @endif
-                                                        value="6">6</option>
-                                                        <option @if ($document->major =='7') selected @endif
-                                                            value="7">7</option>
-                                                            <option @if ($document->major =='8') selected @endif
-                                                                value="8">8</option>
-                                                                <option @if ($document->major =='9') selected @endif
-                                                                    value="9">9</option>
-                                    </select>
+                                    <label for="major">Major<span class="text-danger">*</span>
+                                        <span  class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#document-management-system-modal"
+                                        style="font-size: 0.8rem; font-weight: 400;">
+                                        (Launch Instruction) </span>
+                                    </label>
+                                    <input type="number" name="major" id="major" min="0"  value="{{ $document->major }}" required>
+                                    
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'Major' &&
@@ -609,8 +595,15 @@
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="minor">Minor</label>
-                                    <select  name="minor">
+                                    <label for="minor">Minor<span class="text-danger">*</span> 
+                                        <span  class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#document-management-system-modal-minor"
+                                        style="font-size: 0.8rem; font-weight: 400;">
+                                        (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <input type="number" name="minor" id="minor" min="0" max="9"  value="{{ $document->minor }}" required>
+                                    {{-- <select  name="minor">
                                         <option  value="00">-- Select --</option>
                                         <option @if ($document->minor =='0') selected @endif
                                             value="0">0</option>
@@ -632,7 +625,7 @@
                                                                 value="8">8</option>
                                                                 <option @if ($document->minor =='9') selected @endif
                                                                     value="9">9</option>
-                                    </select>
+                                    </select> --}}
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'Minor' &&

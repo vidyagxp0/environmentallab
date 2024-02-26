@@ -70,7 +70,7 @@
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
-                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution &Retrieval</button>
+                <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button>
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
             </div>
@@ -219,7 +219,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
                                         <select name="department_id" id="depart-name" required>
@@ -268,46 +268,37 @@
                                     </div>
                                     <p id="depart-nameError" style="color:red">** Department is required</p>
                                 </div>
-                                <div class="col-md-6">
+                                {{-- <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="depart-code">Department Code</label>
                                         <div class="default-name"> <span id="department-code">Not selected</span></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="major">Major<span class="text-danger">*</span></label>
-                                        <select name="major" id="major" required>
-                                            <option value="0">-- Select --</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                        </select>
+                                        <label for="major">Major<span class="text-danger">*</span>
+                                        <span  class="text-primary" data-bs-toggle="modal"
+                                        data-bs-target="#document-management-system-modal"
+                                        style="font-size: 0.8rem; font-weight: 400;">
+                                        (Launch Instruction)
+                                        </span>
+                                    </label>
+                                    <input type="number" name="major" id="major" min="0" required>
                                     </div>
                                     {{-- <p id="majorError" style="color:red">** Department is required</p> --}}
                                 </div>
+
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="minor">Minor<span class="text-danger">*</span></label>
-                                        <select name="minor" id="minor" required>
-                                            <option value="00">-- Select --</option>
-                                            <option value="0">0</option>
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                        </select>
+                                        <label for="minor">Minor<span class="text-danger">*</span> 
+                                            <span  class="text-primary" data-bs-toggle="modal"
+                                            data-bs-target="#document-management-system-modal-minor"
+                                            style="font-size: 0.8rem; font-weight: 400;">
+                                            (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <input type="number" name="minor" id="minor" min="0" max="9" required>
+                                       
                                     </div>
                                     {{-- <p id="minorError" style="color:red">** Department is required</p> --}}
                                 </div>
@@ -507,7 +498,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="revision-type">Revision Type</label>
+                                        <label  for="revision-type">Revision Type</label>
                                         <select name="revision_type">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>

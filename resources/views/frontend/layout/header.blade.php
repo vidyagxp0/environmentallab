@@ -1262,3 +1262,68 @@
         </div>
     </div>
 
+        {{-- ============================================
+                Document Management System (DMS) - 1
+    ============================================= --}}
+    <div class="modal fade" id="document-management-system-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Major Versioning Instructions for Document Management System (DMS)</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <ol class="list-group">
+                            <p>For the initial version of a document, set the Major Count to "1".
+                               
+
+                            <p> For subsequent versions (2nd, 3rd, and so on), increment the Major Count accordingly:
+                                2 for the 2nd version
+                                3 for the 3rd version
+                                And so forth, up to N.</p>
+
+                            <p>This protocol ensures clear and organized version management within the DMS.
+                                Please adhere to these instructions when creating or updating documents.</p>
+                        </p>
+
+                            <strong>Thank you for your cooperation!</strong>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+            {{-- ============================================
+                Document Management System (DMS) - 2
+    ============================================= --}}
+    <div class="modal fade" id="document-management-system-modal-minor">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Minor Versioning Instructions for Document Management System (DMS)</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <ol class="list-group">
+                            <p>For the initial version of a document, set the Major Count to "X.O". </p>
+                            <p>  For subsequent versions (2nd, 3rd, and so on), increment the Major Count accordingly:
+                                X.1 for the 2nd version
+                                X.2 for the 3rd version
+                                And so forth, up to X.9.</p>
+
+                            <p>This protocol ensures clear and organized version management within the DMS. 
+                                Please adhere to these instructions when creating or updating documents.</p>
+                                
+                            <strong>Thank you for your cooperation in!</strong>
+                    </ol>
+                </div>
+
+            </div>
+        </div>
+    </div>
+

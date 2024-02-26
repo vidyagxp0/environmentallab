@@ -804,7 +804,7 @@
                             and password for this task. You are performing an electronic signature,
                             which is legally binding equivalent of a hand written signature.
                         </div>
-                        <div class="group-input">
+                        {{-- <div class="group-input">
                             <label for="electronic-meaning">Electronic Signature Approved Meaning</label>
                             <select name="electronic-meaning">
                                 <option selected>- Please Select -</option>
@@ -821,7 +821,7 @@
                                     <option value="assure-approved">Document Effective</option>
                                 @endif
                             </select>
-                        </div>
+                        </div> --}}
                         <div class="group-input">
                             <label for="username">Username</label>
                             <input type="text" value="{{ old('username') }}" name="username" required>
@@ -837,8 +837,8 @@
                             @endif
                         </div>
                         <div class="group-input">
-                            <label for="comment">Comment</label>
-                            <textarea name="comment" value="{{ old('comment') }}"></textarea>
+                            <label for="comment">Comment<span class="text-danger">*</span></label>
+                            <input required name="comment" value="{{ old('comment') }}"/>
                         </div>
                     </div>
                     @if ($document->stage == 1)
@@ -862,7 +862,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                        <button type="submit">Submit</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         {{-- <button>Close</button> --}}
                     </div>
@@ -921,7 +921,7 @@
 
                 <!-- Modal Header -->
                 <div class="modal-header">
-                    <h4 class="modal-title">Document Revision</h4>
+                    <h4 class="modal-title" style="font-weight: 900">Document Revision</h4>
                 </div>
                 @if($document->revised === 'Yes') 
                  
@@ -938,10 +938,14 @@
                     <div class="group-input">
                         <label for="revision">Choose Revision Version</label>
                         <label for="major">
-                            <input type="radio" name="revision" id="major">
-                            Major Version</label>
-                            <select name="major">
-                                <option value="0">-- Select --</option>
+                            Major Version<span  class="text-primary" data-bs-toggle="modal"
+                            data-bs-target="#document-management-system-modal"
+                            style="font-size: 0.8rem; font-weight: 400;">
+                            (Launch Instruction)
+                            </span>
+                        </label>
+                        <input type="number" name="major" id="major" min="0">
+                                {{-- <option value="0">-- Select --</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -951,13 +955,18 @@
                                 <option value="7">7</option>
                                 <option value="8">8</option>
                                 <option value="9">9</option>
-                            </select>
+                            </select> --}}
                         
                         <label for="minor">
-                            <input type="radio" name="revision" id="minor">
-                            Minor Version </label>
-                            <select name="minor">
-                                <option value="">-- Select --</option>
+                            {{-- <input type="radio" name="revision" id="minor"> --}}
+                            Minor Version<span  class="text-primary" data-bs-toggle="modal"
+                            data-bs-target="#document-management-system-modal-minor"
+                            style="font-size: 0.8rem; font-weight: 400;">
+                            (Launch Instruction)
+                            </span>
+                        </label>
+                        <input type="number" name="minor" id="minor" min="0" max="9">
+                                {{-- <option value="">-- Select --</option>
                                 <option value="0">0</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -968,18 +977,15 @@
                                 <option value="7">7</option>
                                 <option value="8">8</option>
                                 <option value="9">9</option>
-                            </select>
+                            </select> --}}
                        
 
                         <label for="reason">
-                            Minor Version
+                            Comment
                         </label>
                         <input type="text" name="reason" required>
                     </div>
-                    <div class="example">
-                        <div>Major Version (v1.0, 2.0, 3.0 etc.)</div>
-                        <div>Minor Version (v1.1, v1.2, v1.3 etc.)</div>
-                    </div>
+                  
                 </div>
 
                 <!-- Modal footer -->

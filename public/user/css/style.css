@@ -5488,6 +5488,10 @@ section#pdf-page .watermark {
     align-items: center;
     gap: 15px;
 }
+#child-modal .group-input input {
+   width: 100%;
+   margin-top: 10px;
+}
 
 #child-modal .group-input label:nth-child(1) {
     font-weight: bold;
