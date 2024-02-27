@@ -2529,11 +2529,11 @@ class CCController extends Controller
         $parent_initiator_id = CC::where('id', $id)->value('initiator_id');
         $parent_intiation_date = CC::where('id', $id)->value('intiation_date');
         $parent_short_description = CC::where('id', $id)->value('short_description');
-
+        $old_record = CC::select('id', 'division_id', 'record')->get();
 
         if($request->revision == "Action-Item"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date'));
+            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date','old_record'));
         }
         if($request->revision == "Extension"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');

@@ -271,6 +271,8 @@ class EffectivenessCheckController extends Controller
                 // } else {
                     $changeControl->stage = '2';
                     $changeControl->status = 'Pending Effectiveness Check';
+                    $changeControl->submit_by =  Auth::user()->name;
+                    $changeControl->submit_on = Carbon::now()->format('d-M-Y');
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -302,6 +304,8 @@ class EffectivenessCheckController extends Controller
                 // } else {
                     $changeControl->stage = '3';
                     $changeControl->status = 'QA Approval-Effective';
+                    $changeControl->effective_by =  Auth::user()->name;
+                    $changeControl->effective_on = Carbon::now()->format('d-M-Y');
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -319,6 +323,8 @@ class EffectivenessCheckController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = '4';
                 $changeControl->status = 'Closed – Effective';
+                $changeControl->effective_approval_complete_by =  Auth::user()->name;
+                $changeControl->effective_approval_complete_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -346,6 +352,8 @@ class EffectivenessCheckController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '5';
                 $changeControl->status = 'QA Approval-Not Effective';
+                $changeControl->not_effective_by =  Auth::user()->name;
+                $changeControl->not_effective_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -363,6 +371,8 @@ class EffectivenessCheckController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = '6';
                 $changeControl->status = 'Closed – Not Effective';
+                $changeControl->not_effective_approval_complete_by =  Auth::user()->name;
+                $changeControl->not_effective_approval_complete_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";

@@ -42,6 +42,16 @@ return new class extends Migration
             $table->longText('Attachment')->nullable();
             $table->longText('Attachments')->nullable();
             $table->longText('refer_record')->nullable();
+            $table->string('submit_by')->nullable();
+            $table->string('submit_on')->nullable();
+            $table->string('not_effective_by')->nullable();
+            $table->string('not_effective_on')->nullable();
+            $table->string('effective_by')->nullable();
+            $table->string('effective_on')->nullable();
+            $table->string('not_effective_approval_complete_by')->nullable();
+            $table->string('not_effective_approval_complete_on')->nullable();
+            $table->string('effective_approval_complete_by')->nullable();
+            $table->string('effective_approval_complete_on')->nullable();
             $table->string('status')->default('Opened');
             $table->string('stage')->default(1);
 

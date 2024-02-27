@@ -35,7 +35,7 @@
                 <button class="cctablinks active" onclick="openCity(event, 'CCForm1')">General Information</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Effectiveness check Results</button>
                 <button class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference Info/Comments</button>
-                {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity History</button> --}}
+                 <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
             </div>
 
             <form action="{{ route('effectiveness.store') }}" method="post" , enctype="multipart/form-data">
@@ -322,11 +322,11 @@
                         </div>
                     </div>
 
-                    {{-- <div id="CCForm4" class="inner-block cctabcontent">
+                    <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
-                            <div class="row"> --}}
+                            <div class="row"> 
                                 <!-- Activity History -->
-                                {{-- <div class="col-12 sub-head">
+                                 <!-- <div class="col-12 sub-head">
                                     Data History
                                 </div>
                                 <div class="col-lg-6">
@@ -340,7 +340,7 @@
                                         <label for="Original Date Due"><b>Original Date Due</b></label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div>  -->
                                 <div class="col-12 sub-head">
                                     Record Signature
                                 </div>
@@ -358,53 +358,53 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Complete By"><b>Complete By</b></label>
+                                        <label for="Not Effective By"><b>Not Effective By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Complete On"><b>Complete On</b></label>
+                                        <label for="Not Effective On"><b>Not Effective On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
+                                        <label for="Effective by"><b>Effective by</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Quality Approal On"><b>Quality Approal On</b></label>
+                                        <label for="Effective On"><b>Effective On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Addendum Complete By"><b>Addendum Complete By</b></label>
+                                        <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Addendum Complete On"><b>Addendum Complete On</b></label>
+                                        <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Cancel By"><b>Cancel By</b></label>
+                                        <label for="Effective Approval Complete By"><b>Effective Approval Complete By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Cancel On"><b>Cancel On</b></label>
+                                        <label for="Effective Approval Complete On"><b>Effective Approval Complete On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
                                         <div class="static"></div>
@@ -427,8 +427,8 @@
                                         <label for="Cancellation Approve On"><b>Cancellation Approve On</b></label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
-                                <div class="col-12 sub-head">
+                                </div> -->
+                                <!-- <div class="col-12 sub-head">
                                     Cancellation Details
                                 </div>
                                 <div class="col-lg-6">
@@ -458,13 +458,13 @@
                                         <textarea name="cancel_justification"></textarea>
                                     </div>
                                 </div>
-                            </div> --}}
-                            {{-- <div class="button-block">
+                            </div>  -->
+                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a class="text-white" href="#"> Exit </a> </button>
-                            </div> --}}
+                            </div> 
                         </div>
                     </div>
                 </div>
