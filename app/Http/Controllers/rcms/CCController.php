@@ -113,7 +113,8 @@ class CCController extends Controller
 
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
-        $openState->related_records = json_encode($request->related_records);
+        //$openState->related_records = json_encode($request->related_records);
+        $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = json_encode($request->qa_head);
 
         $openState->qa_eval_comments = json_encode($request->qa_eval_comments);
@@ -1159,7 +1160,8 @@ class CCController extends Controller
         $openState->supervisor_comment = $request->supervisor_comment;
         $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
-        $openState->related_records = $request->related_records;
+       // $openState->related_records = $request->related_records;
+        $openState->related_records = implode(',', $request->related_records);
         $openState->qa_head = $request->qa_head;
 
         $openState->qa_eval_comments = $request->qa_eval_comments;
