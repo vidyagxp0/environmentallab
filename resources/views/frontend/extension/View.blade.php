@@ -29,6 +29,13 @@
         width: 100%;
     }
 </style>
+<div class="form-field-head">
+
+    <div class="division-bar">
+        <strong>Site Division/Project</strong> :
+        {{ Helpers::getDivisionName(session()->get('division')) }} /Extension
+    </div>
+</div>
     @php
         $users = DB::table('users')->get();
     @endphp
