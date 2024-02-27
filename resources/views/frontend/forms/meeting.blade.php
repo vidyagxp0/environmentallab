@@ -1648,11 +1648,7 @@ function addActionItemDetails(tableId) {
                         
                         '<td><input type="text" name="current_status2[]">' +
                        
-<<<<<<< Updated upstream
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed_capa' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed_capa' + serialNumber +'`)" /></div></div></div></td>' +
-=======
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed_capa' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed_capa' + serialNumber +'`)" /></div></div></div></td>' +
->>>>>>> Stashed changes
 
                         '<td><input type="text" name="remark2[]"></td>' +
 
