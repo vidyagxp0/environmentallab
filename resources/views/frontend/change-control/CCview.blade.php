@@ -297,8 +297,8 @@
                             <button class="cctablinks" onclick="openCity(event, 'CCForm2')">Change Details</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm3')">QA Review</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Evaluation</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button>
-                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Group Comments</button>
+                            {{-- <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Additional Information</button> --}}
+                            <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Comments</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Risk Assessment</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm8')">QA Approval Comments</button>
                             <button class="cctablinks" onclick="openCity(event, 'CCForm9')">Change Closure</button>
@@ -856,7 +856,7 @@
                                     </div>
                                 </div>
 
-                                <div id="CCForm5" class="inner-block cctabcontent">
+                                {{-- <div id="CCForm5" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
                                             CFT Information
@@ -879,7 +879,7 @@
                                                     <select multiple name="Microbiology_Person[]"
                                                         placeholder="Select CFT Reviewers" data-search="false"
                                                         data-silent-initial-value-set="true" id="cft_reviewer">
-                                                        {{-- <option value="0">-- Select --</option> --}}
+                                                         <option value="0">-- Select --</option>
                                                         @foreach ($cft as $data1)
                                                             @if(in_array($data1->id, $cft_aff))
                                                                 <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
@@ -1027,7 +1027,7 @@
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
 
                                 <div id="CCForm6" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
@@ -1078,7 +1078,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="sub-head">
-                                                Concerned Group Feedback
+                                                Concerned Feedback
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1124,13 +1124,13 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="comments">Group Comments</label>
+                                                    <label for="comments">Comments</label>
                                                     <textarea name="Group_comments">{{ $comments->Group_comments }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-12">
                                                 <div class="group-input">
-                                                    <label for="group-attachments">Group Attachments</label>
+                                                    <label for="group-attachments">Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="group_attachments">
                                                             @if ($comments->group_attachments)

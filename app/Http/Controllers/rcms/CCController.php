@@ -120,13 +120,13 @@ class CCController extends Controller
         $openState->training_required = $request->training_required;
         $openState->train_comments = $request->train_comments;
 
-        $openState->Microbiology = $request->Microbiology;
-        if ($request->Microbiology_Person) {
-            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        } else {
-            toastr()->warning('CFT reviewers can not be empty');
-            return back();
-        }
+        // $openState->Microbiology = $request->Microbiology;
+        // if ($request->Microbiology_Person) {
+        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        // } else {
+        //     toastr()->warning('CFT reviewers can not be empty');
+        //     return back();
+        // }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -269,16 +269,16 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-        if ($request->Microbiology == "yes") {
-            $info->Microbiology = $request->Microbiology;
+        // if ($request->Microbiology == "yes") {
+        //     $info->Microbiology = $request->Microbiology;
             
-        }
-        if ($request->Microbiology_Person) {
-            $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        } else {
-            toastr()->warning('CFT reviewers can not be empty');
-            return back();
-        }
+        // }
+        // if ($request->Microbiology_Person) {
+        //     $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        // } else {
+        //     toastr()->warning('CFT reviewers can not be empty');
+        //     return back();
+        // }
         
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
@@ -1168,12 +1168,12 @@ class CCController extends Controller
 
         $openState->Microbiology = $request->Microbiology;
         
-        if ($request->Microbiology_Person) {
-            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        } else {
-            toastr()->warning('CFT reviewers can not be empty');
-            return back();
-        }
+        // if ($request->Microbiology_Person) {
+        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        // } else {
+        //     toastr()->warning('CFT reviewers can not be empty');
+        //     return back();
+        // }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -1306,16 +1306,16 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-        if ($request->Microbiology == "yes") {
-            $info->Microbiology = $request->Microbiology;
+        // if ($request->Microbiology == "yes") {
+        //     $info->Microbiology = $request->Microbiology;
            
-        }
-        if ($request->Microbiology_Person) {
-            $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        } else {
-            toastr()->warning('CFT reviewers can not be empty');
-            return back();
-        }
+        // }
+        // if ($request->Microbiology_Person) {
+        //     $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        // } else {
+        //     toastr()->warning('CFT reviewers can not be empty');
+        //     return back();
+        // }
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
 

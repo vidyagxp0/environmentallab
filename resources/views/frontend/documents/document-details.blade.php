@@ -784,7 +784,6 @@
         <button type="button" data-bs-dismiss="modal">Close</button>
     </div>
     </form>
-
     </div>
     </div>
     </div>
