@@ -1,4 +1,4 @@
-
+v
 @extends('frontend.layout.main')
 @section('container')
     <style>
@@ -1636,8 +1636,8 @@ function addActionItemDetails(tableId) {
                         '<option value="corrective_preventive">Corrective & Preventive Action</option>'+
                         '</select></td>'+
 
-                        '<td><input type="text" name="site[]">' +
-                        '<td><select name="responsible_person[]">' +
+                        '<td><input type="text" name="site2[]">' +
+                        '<td><select name="responsible_person2[]">' +
                         '<option value="">Select a value</option>';
 
                     for (var i = 0; i < users.length; i++) {
@@ -1646,11 +1646,15 @@ function addActionItemDetails(tableId) {
 
                     html += '</select></td>' +
                         
-                        '<td><input type="text" name="current_status[]">' +
+                        '<td><input type="text" name="current_status2[]">' +
                        
+<<<<<<< Updated upstream
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed_capa' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed_capa' + serialNumber +'`)" /></div></div></div></td>' +
+=======
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date_closed_capa' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date_closed2[]"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `date_closed_capa' + serialNumber +'`)" /></div></div></div></td>' +
+>>>>>>> Stashed changes
 
-                        '<td><input type="text" name="record[]"></td>' +
+                        '<td><input type="text" name="remark2[]"></td>' +
 
                         '</tr>';
                     return html;

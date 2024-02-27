@@ -116,7 +116,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number"
+                                        <input  type="text" name="record_number"
                                             value=" {{ Helpers::getDivisionName($data->division_id) }}/MR/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
@@ -788,7 +788,11 @@
                             </div>
                             <div class="group-input">
                                 <label for="capa-details">
+<<<<<<< Updated upstream
                                     CAPA Details<button disabled type="button" name="capa-details" id="capa_detail">+</button>
+=======
+                                    CAPA Details<button  type="button" name="capa-details" id="capa_detail">+</button>
+>>>>>>> Stashed changes
                                 </label>
                                 <table class="table table-bordered" id="capa_detail_details">
                                     <thead>
