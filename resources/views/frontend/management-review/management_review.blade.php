@@ -405,7 +405,7 @@
                                     <label for="management_review_participants">
                                         Management Review Participants
                                         <button type="button"
-                                           disabled  onclick="addManagementReviewParticipants('management_review_participants')">+</button>
+                                             onclick="addManagementReviewParticipants('management_review_participants')">+</button>
                                     </label>
                                     <div class="instruction">
                                         <small class="text-primary">
@@ -713,7 +713,7 @@
                         <div class="inner-block-content">
                             <div class="group-input">
                                 <label for="action_item_details">
-                                    Action Item Details<button type="button" name="action_item_details" disabled onclick="addActionItemDetails('action_item_details')" id="action_item">+</button>
+                                    Action Item Details<button type="button" name="action_item_details"  onclick="addActionItemDetails('action_item_details')" id="action_item">+</button>
                                 </label>
                                 <table class="table table-bordered" id="action_item_details">
                                     <thead>
@@ -788,11 +788,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="capa-details">
-<<<<<<< Updated upstream
-                                    CAPA Details<button disabled type="button" name="capa-details" id="capa_detail">+</button>
-=======
                                     CAPA Details<button  type="button" name="capa-details" id="capa_detail">+</button>
->>>>>>> Stashed changes
                                 </label>
                                 <table class="table table-bordered" id="capa_detail_details">
                                     <thead>
