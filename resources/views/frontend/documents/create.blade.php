@@ -40,6 +40,7 @@
     border: 2px solid #000000;
     border-radius: 40px;
 }
+
     </style>
 <?php $division_id = isset($_GET['id'])?$_GET['id']:'';?>
     <div id="data-field-head">
@@ -71,7 +72,7 @@
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
-                <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button>
+                {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
             </div>
 
@@ -936,7 +937,17 @@
                         <div class="orig-head">
                             Distribution & Retrieval
                         </div>
-                        <div class="input-fields">
+                        <div class="col-md-12 input-fields">
+                            <div class="group-input">
+                                <label for="distribution" id="distribution">
+                                    Distribution & Retrieval<button type="button" id="distributionbtnadd" >+</button>
+                                </label>
+                                <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                <input type="text" name="distribution[]" class="myclassname">
+                                <div id="distributiondiv"></div>
+                            </div>
+                        </div>
+                        {{-- <div class="input-fields">
                             <div class="group-input">
                                 <label for="distriution_retrieval">
                                     Distribution & Retrieval
@@ -947,32 +958,114 @@
                                     <table class="table table-bordered" id="distribution-retrieval-grid">
                                         <thead>
                                             <tr>
-                                                <th class="copy-name">Row #</th>
-                                                <th class="copy-name">Document Title</th>
-                                                <th class="copy-name">Document Number</th>
-                                                <th class="copy-name">Document Printed By</th>
-                                                <th class="copy-name">Document Printed on</th>
-                                                <th class="copy-num">Number of Print Copies</th>
-                                                <th class="copy-name">Issuance Date</th>
-                                                <th class="copy-name">Issued To </th>
-                                                <th class="copy-long">Department/Location</th>
-                                                <th class="copy-num">Number of Issued Copies</th>
-                                                <th class="copy-long">Reason for Issuance</th>
-                                                <th class="copy-name">Retrieval Date</th>
-                                                <th class="copy-name">Retrieved By</th>
-                                                <th class="copy-name">Retrieved Person Department</th>
-                                                <th class="copy-num">Number of Retrieved Copies</th>
-                                                <th class="copy-long">Reason for Retrieval</th>
-                                                <th class="copy-long">Remarks</th>
+                                                <th>Row </th>
+                                                <th>Document Title</th>
+                                                <th>Document Number</th>
+                                                <th>Document Printed By</th>
+                                                <th>Document Printed on</th>
+                                                <th>Number of Print Copies</th>
+                                                <th>Issuance Date</th>
+                                                <th>Issued To </th>
+                                                <th>Department/Location</th>
+                                                <th>Number of Issued Copies</th>
+                                                <th>Reason for Issuance</th>
+                                                <th>Retrieval Date</th>
+                                                <th>Retrieved By</th>
+                                                <th>Retrieved Person Department</th>
+                                                <th>Number of Retrieved Copies</th>
+                                                <th>Reason for Retrieval</th>
+                                                <th>Remarks</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-
+                                            <tr>
+                                                 <td><input type="text" Value="1" name="serial_number[]" readonly>
+                                                 </td>
+                                                 <td><input type="text" name="document_title[]">
+                                                 </td>
+                                                 <td><input type="number" name="document_number[]">
+                                                 </td>
+                                                 <td><input type="text" name="document_printed_by[]">
+                                                 </td>
+                                                 <td><input type="text" name="document_printed_on[]">
+                                                 </td>
+                                                 <td><input type="number" name="document_printed_copies[]">
+                                                 </td>
+                                                 <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="issuance_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" /></div></div></div>
+                                                </td>
+                                                
+                                                    <td>
+                                                        <select id="select-state" placeholder="Select..."
+                                                            name="issuance_to[]">
+                                                            <option value='0'>-- Select --</option>
+                                                            <option value='1'>Amit Guru</option>
+                                                            <option value='2'>Shaleen Mishra</option>
+                                                            <option value='3'>Madhulika Mishra</option>
+                                                            <option value='4'>Amit Patel</option>
+                                                            <option value='5'>Harsh Mishra</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="select-state" placeholder="Select..."
+                                                            name="location[]">
+                                                            <option value='0'>-- Select --</option>
+                                                            <option value='1'>Tech Team</option>
+                                                            <option value='2'>Quality Assurance</option>
+                                                            <option value='3'>Quality Management</option>
+                                                            <option value='4'>IT Administration</option>
+                                                            <option value='5'>Business Administration</option>
+                                                        </select>
+                                                    </td>    
+                                                <td><input type="number" name="issued_copies[]">
+                                                </td>
+                                                <td><input type="text" name="issued_reason[]">
+                                                </td>
+                                                <td><div class="group-input new-date-data-field mb-0">
+                                                    <div class="input-date "><div
+                                                     class="calenderauditee">
+                                                    <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="date" name="retrieval_date[]" class="hide-input" 
+                                                    oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" /></div></div></div>
+                                                </td>
+                                                <td>
+                                                    <select id="select-state" placeholder="Select..."
+                                                        name="retrieval_by[]">
+                                                        <option value="">Select a value</option>
+                                                        <option value='1'>Amit Guru</option>
+                                                        <option value='2'>Shaleen Mishra</option>
+                                                        <option value='3'>Madhulika Mishra</option>
+                                                        <option value='4'>Amit Patel</option>
+                                                        <option value='5'>Harsh Mishra</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select id="select-state" placeholder="Select..."
+                                                        name="retrieved_department[]">
+                                                        <option value='0'>-- Select --</option>
+                                                        <option value='1'>Tech Team</option>
+                                                        <option value='2'>Quality Assurance</option>
+                                                        <option value='3'>Quality Management</option>
+                                                        <option value='4'>IT Administration</option>
+                                                        <option value='5'>Business Administration</option>
+                                                    </select>
+                                                </td>    
+                                                <td><input type="number" name="retrieved_copies[]">
+                                                </td>
+                                                <td><input type="text" name="retrieved_reason[]">
+                                                </td>
+                                                <td><input type="text" name="remark[]">
+                                                </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -982,7 +1075,7 @@
                         </div>
                     </div>
 
-                    <div id="print-download" class="tabcontent">
+                    {{-- <div id="print-download" class="tabcontent">
                         <div class="orig-head">
                             Print Permissions
                         </div>
@@ -1214,7 +1307,7 @@
                             <button type="button"> <a  href="{{ url('rcms/qms-dashboard') }}" class="text-white" > Exit </a>
                             </button>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <div id="sign" class="tabcontent">
                         <div class="row">

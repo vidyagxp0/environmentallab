@@ -236,6 +236,15 @@
 
             $('#anndiv').append(html);
 
+        });
+
+        $('#distributionbtnadd').click(function(e) {
+
+            var html =
+              '<div class="resrow"><input type="text" name="distribution[]" class="myclassname"></div>';
+
+            $('#distributiondiv').append(html);
+
 });
 
         $('#materialsbtadd').click(function(e) {

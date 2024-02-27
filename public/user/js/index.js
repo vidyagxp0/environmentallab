@@ -507,7 +507,7 @@ function addDistributionRetrieval(tableId) {
     cell6.innerHTML = "<input type='number'>";
 
     let cell7 = newRow.insertCell(6);
-    cell7.innerHTML = "<input type='date'>";
+    cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="issuance_date[]" id="issuance_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, issuance_date' + currentRowCount +');checkDate(issuance_date' + currentRowCount +'_checkdate,date_closed' + currentRowCount +'_checkdate)" /></div></div></div></td>';
 
     let cell8 = newRow.insertCell(7)
     cell8.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
@@ -522,7 +522,7 @@ function addDistributionRetrieval(tableId) {
     cell11.innerHTML = "<input type='string'>";
 
     let cell12 = newRow.insertCell(11);
-    cell12.innerHTML = "<input type='date'>";
+    cell12.innerHTML ='<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="retrieval_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="retrieval_date[]" id="retrieval_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, retrieval_date' + currentRowCount +');checkDate(retrieval_date' + currentRowCount +'_checkdate,date_closed' + currentRowCount +'_checkdate)" /></div></div></div></td>';
 
     let cell13 = newRow.insertCell(12)
     cell13.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"

@@ -456,6 +456,9 @@ class DocumentController extends Controller
             if (! empty($request->annexuredata)) {
                 $content->annexuredata = serialize($request->annexuredata);
             }
+            if (! empty($request->distribution)) {
+                $content->distribution = serialize($request->distribution);
+            }
 
             $content->save();
 
@@ -1096,10 +1099,14 @@ class DocumentController extends Controller
             if (! empty($request->ann)) {
                 $documentcontet->ann = serialize($request->ann);
             }
-
+            
             if (! empty($request->annexuredata)) {
                 $documentcontet->annexuredata = serialize($request->annexuredata);
             }
+            if (! empty($request->distribution)) {
+                $documentcontet->distribution = serialize($request->distribution);
+            }
+
 
             $documentcontet->update();
 
@@ -1225,10 +1232,23 @@ class DocumentController extends Controller
             if ($lastContent->ann != $documentcontet->ann || ! empty($request->ann_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
-                $history->activity_type = 'ann';
+                $history->activity_type = 'Annexure';
                 $history->previous = $lastContent->ann;
                 $history->current = $documentcontet->ann;
                 $history->comment = $request->ann_comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
+            }
+            if ($lastContent->distribution != $documentcontet->distribution || ! empty($request->distribution_comment)) {
+                $history = new DocumentHistory;
+                $history->document_id = $id;
+                $history->activity_type = 'Distribution';
+                $history->previous = $lastContent->distribution;
+                $history->current = $documentcontet->distribution;
+                $history->comment = $request->distribution_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1769,6 +1789,7 @@ class DocumentController extends Controller
         $doc_content->reporting = $doc_content->reporting;
         $doc_content->references = $doc_content->references;
         $doc_content->ann = $doc_content->ann;
+        $doc_content->distribution = $doc_content->distribution;
         $doc_content->save();
 
         if ($document->training_required == 'yes') {

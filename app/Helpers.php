@@ -33,6 +33,16 @@ class Helpers
         return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
     }
 
+    public static function isRevised($data)
+    {   
+        if($data  >= 8 ){
+            return 'disabled';
+        }else{
+            return  '';
+        }
+         
+    }
+
 
     public static function divisionNameForQMS($id)
     {

@@ -1359,10 +1359,11 @@
                                                             <td><div class="group-input new-date-data-field ">
                                                                 <div class="  input-date  "><div
                                                                  class="calenderauditee">
-                                                                <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"   value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
+                                                                <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"
+                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
                                                                 
                                                                  <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  
-                                                                oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div> 
+                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div> 
                                                             </td>
                                                             
                                                             <td><input type="text" name="new_document_no[]"
