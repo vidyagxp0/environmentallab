@@ -26,6 +26,7 @@ return new class extends Migration
             $table->longText('severity_level1')->nullable();    
             $table->longText('initiated_through')->nullable();
             $table->longText('initiated_through_req')->nullable();
+            $table->string('intiation_date')->nullable();
             $table->longText('Initiator_Group')->nullable();
             $table->longText('initiator_group_code')->nullable();
             $table->string('repeat')->nullable();
