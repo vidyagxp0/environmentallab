@@ -54,7 +54,7 @@ return new class extends Migration
             $table->string('Probability')->nullable();
             $table->string('Remarks')->nullable();
             $table->string('why_5')->nullable();
-            $table->string('root-cause')->nullable();
+            $table->string('why_root_cause')->nullable();
             $table->string('what_will_be')->nullable();
             $table->string('what_will_not_be')->nullable();
             $table->string('what_rationable')->nullable();
