@@ -302,6 +302,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
+                                                            dd(efsefres);
                                                             <input {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} type="file" id="myfile" name="extention_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'extention_attachment')" multiple>
                                                         </div>
@@ -311,12 +312,12 @@
                                                                         
                                      <div class="group-input">
                                         <label for="Assigned to">Approver</label>
-                                        <select name="approver"
+                                        <select name="approver1"
                                         {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $key => $value)
                                                 <option value="{{ $value->id }}"
-                                                    @if ($data->approver == $value->id) selected @endif>
+                                                    @if ($data->approver1 == $value->id) selected @endif>
                                                     {{ $value->name }}</option>
                                             @endforeach
                                         </select>
