@@ -255,7 +255,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="investigators">Additional Investigators</label>
-                                        <select multiple name="investigators" placeholder="Select Investigators"
+                                        <select  name="investigators" placeholder="Select Investigators"
                                             data-search="false" data-silent-initial-value-set="true" id="investigators">
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
@@ -561,7 +561,7 @@
                                                     <tr style="background: #0080006b;">
                                                         <th style="width:150px;">Root Cause :</th>
                                                         <td>
-                                                            <textarea name="root-cause"></textarea>
+                                                            <textarea name="why_root_cause"></textarea>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -917,6 +917,7 @@
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit">Submit</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>

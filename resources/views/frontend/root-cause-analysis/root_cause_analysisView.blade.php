@@ -555,8 +555,8 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="investigators">Additional Investigators</label>
-                                            <select multiple name="investigators" placeholder="Select Investigators"
-                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple name="investigators" placeholder="Select Investigators"
+                                            <select  name="investigators" placeholder="Select Investigators"
+                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  name="investigators" placeholder="Select Investigators"
                                                 data-search="false" data-silent-initial-value-set="true" id="investigators">
                                                 <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
                                                 <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
@@ -927,7 +927,7 @@
                                                 </div>
                                                 <div class="right-group">
                                                     <div class="field-name">
-                                                        Problem Statement 1
+                                                        Problem Statement 
                                                     </div>
                                                     <div class="field">
                                                           <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_statement }}</textarea>
@@ -952,9 +952,9 @@
                                                 <table class="table table-bordered">
                                                     <tbody>
                                                         <tr style="background: #f4bb22">
-                                                            <th style="width:150px;">Problem Statement 2:</th>
+                                                            <th style="width:150px;">Problem Statement</th>
                                                               <td>
-                                                            <textarea name="why_problem_statement">{{ $data->problem_statement }}</textarea>
+                                                            <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
                                                         </td>
                                                             
                                                         </tr>
@@ -1037,7 +1037,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
+                                                                <textarea name="why_root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>

@@ -82,6 +82,9 @@ use Illuminate\Support\Facades\Hash;
         }
         $root->problem_statement = ($request->problem_statement);
         // Why-Why Chart (Launch Instruction) Problem Statement 
+        if (!empty($request->why_problem_statement)) {
+            $root->why_problem_statement = $request->why_problem_statement;
+        }
         if (!empty($request->why_1  )) {
             $root->why_1 = serialize($request->why_1);
         }
@@ -96,6 +99,9 @@ use Illuminate\Support\Facades\Hash;
         }
         if (!empty($request->why_5  )) {
             $root->why_5 = serialize($request->why_5);
+        }
+        if (!empty($request->why_root_cause)) {
+            $root->why_root_cause = $request->why_root_cause;
         }
 
         // Is/Is Not Analysis (Launch Instruction)
@@ -440,7 +446,9 @@ use Illuminate\Support\Facades\Hash;
         if (!empty($request->Remarks)) {
             $root->Remarks = serialize($request->Remarks);
         }
-          
+        if (!empty($request->why_problem_statement)) {
+            $root->why_problem_statement = $request->why_problem_statement;
+        } 
         if (!empty($request->why_1  )) {
             $root->why_1 = serialize($request->why_1);
         }
@@ -455,6 +463,9 @@ use Illuminate\Support\Facades\Hash;
         }
         if (!empty($request->why_5  )) {
             $root->why_5 = serialize($request->why_5);
+        }
+        if (!empty($request->why_root_cause)) {
+            $root->why_root_cause = $request->why_root_cause;
         }
 
          // Is/Is Not Analysis (Launch Instruction)
