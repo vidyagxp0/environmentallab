@@ -311,7 +311,7 @@
                                                                         
                                      <div class="group-input">
                                         <label for="Assigned to">Approver</label>
-                                        <select name="approver11"
+                                        <select name="approver"
                                         {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $key => $value)
@@ -1154,4 +1154,10 @@
                 ele: '#reference_record'
            });
           </script>
+           <script>
+            var maxLength = 255;
+            $('#docname').keyup(function() {
+                var textlen = maxLength - $(this).val().length;
+                $('#rchars').text(textlen);});
+        </script>
 @endsection

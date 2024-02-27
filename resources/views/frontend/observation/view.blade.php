@@ -603,7 +603,7 @@ $users = DB::table('users')
                                         <div class="calenderauditee">
                                             <input type="text" name="date_Response_due22" id="date_Response_due" readonly
                                                 placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"  />
-                                            <input type="date" id="date_Response_due_checkdate"  value="{{ $data->date_response_due1 }}"  class="hide-input"
+                                            <input type="date" id="date_Response_due_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  value="{{ $data->date_response_due1 }}"  class="hide-input"
                                                 oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
@@ -613,7 +613,7 @@ $users = DB::table('users')
                                         <label for="date_due"> Due Date</label>
                                         <div class="calenderauditee">                                     
                                             <input type="text" name="capa_date_due11"  id="date_due"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_date_due) }}" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} />
-                                            <input type="date" id="date_due_checkdate" value="{{ $data->capa_date_due }}" class="hide-input"
+                                            <input type="date" id="date_due_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->capa_date_due }}" class="hide-input"
                                             oninput="handleDateInput(this, 'date_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
@@ -686,7 +686,7 @@ $users = DB::table('users')
                                     <div class="group-input">
                                         <label for="action-plan-grid">
                                             Action Plan<button type="button" name="action-plan-grid"
-                                                id="observation_table">+</button>
+                                                id="observation_table"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                         </label>
                                         <table class="table table-bordered" id="observation">
                                             <thead>
@@ -727,7 +727,7 @@ $users = DB::table('users')
                                                             <div class="calenderauditee">
                                                               
                                                                 <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
-                                                                 <input type="date" value="{{unserialize($griddata->deadline)[$key]}}" name="deadline[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}" class="hide-input" 
+                                                                 <input type="date"  value="{{unserialize($griddata->deadline)[$key]}}" name="deadline[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ Helpers::getdateFormat(unserialize($griddata->deadline)[$key]) }}" class="hide-input" 
                                                                 oninput="handleDateInput(this, `deadline{{$key}}' + serialNumber +'`)" /> 
                                                             </div>
                                                         </div>
@@ -902,7 +902,7 @@ $users = DB::table('users')
                                         <div class="calenderauditee">
                                             <input type="text" id="actual_start_date" readonly
                                                 placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_start_date) }}" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->actual_start_date }}"  id="actual_start_date_checkdate" name="actual_start_date" class="hide-input"
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->actual_start_date }}"  id="actual_start_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="actual_start_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_start_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -913,7 +913,7 @@ $users = DB::table('users')
                                         <div class="calenderauditee">
                                         <input type="text" id="actual_end_date"                             
                                                 placeholder="DD-MMM-YYYY"value="{{ Helpers::getdateFormat($data->actual_end_date) }}" />
-                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->actual_end_date }}" id="actual_end_date_checkdate" name="actual_end_date" class="hide-input"
+                                             <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->actual_end_date }}" id="actual_end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="actual_end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
                                    

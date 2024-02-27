@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('justification')->nullable();
             $table->text('extention_attachment')->nullable();
             $table->text('closure_attachments')->nullable();
-            $table->text('approver')->nullable();
+            $table->text('approver1')->nullable();
             $table->text('approver_comments')->nullable();
             $table->string('type')->nullable();
             $table->text('initiated_if_other')->nullable();

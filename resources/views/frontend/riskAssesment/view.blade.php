@@ -2610,4 +2610,21 @@
                     var textlen = maxLength - $(this).val().length;
                     $('#rchars').text(textlen);});
             </script>
+               <script>
+                document.addEventListener('DOMContentLoaded', function () {
+                    const removeButtons = document.querySelectorAll('.remove-file');
+    
+                    removeButtons.forEach(button => {
+                        button.addEventListener('click', function () {
+                            const fileName = this.getAttribute('data-file-name');
+                            const fileContainer = this.closest('.file-container');
+    
+                            // Hide the file container
+                            if (fileContainer) {
+                                fileContainer.style.display = 'none';
+                            }
+                        });
+                    });
+                });
+            </script>
         @endsection

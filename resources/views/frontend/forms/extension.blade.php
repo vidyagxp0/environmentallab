@@ -261,7 +261,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Approver">Approver</label>
-                                        <select id="select-state" placeholder="Select..." name="approver">
+                                        <select id="select-state" placeholder="Select..." name="approver1">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
