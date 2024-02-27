@@ -858,16 +858,16 @@ function add4Input(tableId) {
     cell1.innerHTML = currentRowCount;
 
     var cell2 = newRow.insertCell(1);
-    cell2.innerHTML = "<input type='text'>";
+    cell2.innerHTML = "<input type='text' name='Root_Cause_Category[]'>";
 
     var cell3 = newRow.insertCell(2);
-    cell3.innerHTML = "<input type='text'>";
+    cell3.innerHTML = "<input type='text' name='Root_Cause_Sub_Category[]'>";
 
     var cell4 = newRow.insertCell(3);
-    cell4.innerHTML = "<input type='text'>";
+    cell4.innerHTML = "<input type='text' name='Probability[]'>";
 
     var cell5 = newRow.insertCell(4);
-    cell5.innerHTML = "<input type='text'>";
+    cell5.innerHTML = "<input type='text' name='Remarks[]'>";
     for (var i = 1; i < currentRowCount; i++) {
         var row = table.rows[i];
         row.cells[0].innerHTML = i;
