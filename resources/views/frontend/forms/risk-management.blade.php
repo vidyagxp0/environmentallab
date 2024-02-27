@@ -535,7 +535,7 @@
                                         </div>
                                     </div> --}}
 
-                                    <div class="col-lg-12">
+                                    {{-- <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Reference Recores">Related Record</label>
                                             <select multiple id="related_record" name="related_record[]" id="">
@@ -547,7 +547,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -665,8 +665,7 @@
                                             <select name="Number_of_employees" id="Number_of_employees">
                                                 <option value="">Enter Your Selection Here</option>
                                                 <option value="1">0-50</option>
-
-                                                <option value="2">5-100</option>
+                                                <option value="2">50-100</option>
                                                 <option value="3">100-200</option>
                                                 <option value="4">200-300</option>
                                                 <option value="5">300-500</option>
@@ -1074,7 +1073,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="why_root_cause"></textarea>
+                                                                <textarea name="view"></textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
