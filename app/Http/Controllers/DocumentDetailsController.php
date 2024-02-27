@@ -87,7 +87,15 @@ class DocumentDetailsController extends Controller
             $stage->comment = $request->comment;
             $stage->save();
           }
-
+          if ($request->stage_id == 'Approved') {
+            $stage = new StageManage;
+            $stage->document_id = $request->document_id;
+            $stage->user_id = Auth::user()->id;
+            $stage->role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $stage->stage = 'Approval-Submit';
+            $stage->comment = $request->comment;
+            $stage->save();
+          }
           if ($request->stage_id == 'Cancel-by-Reviewer') {
             StageManage::where('document_id', $request->document_id)
               // ->where('user_id', Auth::user()->id)
@@ -98,9 +106,9 @@ class DocumentDetailsController extends Controller
           if ($request->stage_id == 'Cancel-by-Approver') {
             StageManage::where('document_id', $request->document_id)
               // ->where('user_id', Auth::user()->id)
-              ->where('stage', 'In-Approval')
+              ->where('role', '!=', 'Approver')
               ->delete();
-          }
+          }   
 
         }
 
