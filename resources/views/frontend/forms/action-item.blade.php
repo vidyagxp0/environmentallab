@@ -139,23 +139,23 @@
                                 </div>  
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="related_records">Action Item Related Records</label>
+                                        <label for="Related Records">Action Item Related Records</label>
                                         <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
                                             <option value="">--select record--</option>
-                                            @if (!empty($old_record))
+                                            <!-- @if (!empty($old_record)) -->
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
-                                            @endif
+                                            <!-- @endif -->
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="hod">HOD Persons</label>
+                                        <label for="HOD Persons">HOD Persons</label>
                                         <select multiple  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
                                             data-silent-initial-value-set="true" id="hod" >
                                             @foreach ($users as $value)

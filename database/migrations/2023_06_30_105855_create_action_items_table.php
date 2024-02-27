@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('due_date')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
-            // $table->text('related_records')->nullable();
+             $table->text('Reference_Recores1')->nullable();
             $table->longText('description')->nullable();
             $table->string('title')->nullable();
             $table->string('dept')->nullable();
@@ -37,7 +37,7 @@ return new class extends Migration
             $table->date('end_date')->nullable();
             $table->longText('comments')->nullable();
             $table->integer('record_number')->nullable();
-            $table->string('related_records')->nullable();
+          //  $table->string('related_records')->nullable();
             $table->text('assign_to')->nullable();
             $table->longText('short_description')->nullable();
             $table->text('departments')->nullable();
