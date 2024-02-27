@@ -801,7 +801,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Related Record</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="related_record" name="related_record[]" id="">
@@ -813,7 +813,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1020,13 +1020,12 @@
                                                     <option {{ $data->Number_of_employees == '1' ? 'selected' : '' }}
                                                         value="1">0-50</option>
                                                     <option {{ $data->Number_of_employees == '2' ? 'selected' : '' }}
-                                                        value="2">5-100</option>
-
-                                                        <option {{ $data->Number_of_employees == '3' ? 'selected' : '' }} value="4">100-200</option>
-                                                        <option {{ $data->Number_of_employees == '4' ? 'selected' : '' }} value="5">200-300</option>
-                                                        <option {{ $data->Number_of_employees == '5' ? 'selected' : '' }} value="6">300-500</option>
-                                                        <option {{ $data->Number_of_employees == '6' ? 'selected' : '' }} value="7">500-1000</option>
-                                                        <option {{ $data->Number_of_employees == '7' ? 'selected' : '' }} value="8">1000+</option>
+                                                        value="2">50-100</option>
+                                                        <option {{ $data->Number_of_employees == '3' ? 'selected' : '' }} value="3">100-200</option>
+                                                        <option {{ $data->Number_of_employees == '4' ? 'selected' : '' }} value="4">200-300</option>
+                                                        <option {{ $data->Number_of_employees == '5' ? 'selected' : '' }} value="5">300-500</option>
+                                                        <option {{ $data->Number_of_employees == '6' ? 'selected' : '' }} value="6">500-1000</option>
+                                                        <option {{ $data->Number_of_employees == '7' ? 'selected' : '' }} value="7">1000+</option>
                                                 </select>
                                             </div>
                                         </div>
