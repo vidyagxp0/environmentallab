@@ -223,8 +223,8 @@
                                     <div><small class="text-primary" >Kindly Fill Target Date of Completion</small>
                                     </div>
                                     <div class="calenderauditee">                                     
-                                        <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" {{Helpers::isRevised($document->stage)}}   readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_dateDoc" value=""
+                                        <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="due_dateDoc" value="" {{Helpers::isRevised($document->stage)}}
                                         class="hide-input"
                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
@@ -1559,7 +1559,7 @@
                                 <div class="group-input">
                                     <label for="test">
                                         Test(0)<button type="button" name="test"
-                                            onclick="addTrainRow('test')">+</button>
+                                            onclick="addTrainRow('test')" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <table class="table-bordered table" id="test">
                                         <thead>
@@ -1581,7 +1581,7 @@
                                 <div class="group-input">
                                     <label for="test">
                                         Survey(0)<button type="button" name="reporting1"
-                                            onclick="addTrainRow('survey')">+</button>
+                                            onclick="addTrainRow('survey')"{{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <table class="table-bordered table" id="survey">
                                         <thead>
@@ -1896,7 +1896,7 @@
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea name="procedure" id="summernote" {{Helpers::isRevised($document->stage)}} >{{ $document->document_content->procedure }}</textarea>
+                                    <textarea name="procedure" id="summernote">{{ $document->document_content->procedure }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                             @php
@@ -2645,7 +2645,7 @@
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Review Proposed On
+                                    Originated On 
                                 </div>
                                 <div class="name">{{ $temp->created_at }}</div>
                                 @endforeach
@@ -2653,7 +2653,7 @@
 
                         </div>
 
-                        <div class="col-md-6">
+                        {{-- <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
                                     Originated On 
@@ -2664,6 +2664,7 @@
                                         ->select('stage_manages.*', 'users.name as user_name')
                                         ->where('document_id', $document->id)
                                         ->where('stage', 'In-Approval')
+                                        ->where('deleted_at', null)
                                         ->get();
 
                                 @endphp
@@ -2680,7 +2681,7 @@
                                 <div class="name">{{ $temp->created_at }}</div>
                                 @endforeach
                             </div>
-                        </div>
+                        </div> --}}
                         {{-- <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
@@ -2720,6 +2721,7 @@
                                         ->select('stage_manages.*', 'users.name as user_name')
                                         ->where('document_id', $document->id)
                                         ->where('stage', 'Review-Submit')
+                                        ->where('deleted_at', null)
                                         ->get();
 
                                 @endphp
@@ -2750,6 +2752,7 @@
                                         ->select('stage_manages.*', 'users.name as user_name')
                                         ->where('document_id', $document->id)
                                         ->where('stage', 'Approval-Submit')
+                                        ->where('deleted_at', null)
                                         ->get();
 
                                 @endphp

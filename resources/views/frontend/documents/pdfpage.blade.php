@@ -1059,10 +1059,9 @@
                                             <td class="text-left w-25">{{ $user->name }}</td>
                                             <td class="text-left w-25">{{ $dept }}</td>
                                             @if ($date)
-                                                <td class="text-left w-25">{{ $date->created_at }}</td>
+                                                <td class="text-left w-25">Review Completed</td>
                                             @elseif(!empty($reject))
-                                                <td class="text-left w-25">Rejected At {{ $reject->created_at }}
-                                                </td>
+                                                <td class="text-left w-25">Review Rejected </td>
                                             @else
                                                 <td class="text-left w-25">Review Pending</td>
                                             @endif
@@ -1113,10 +1112,9 @@
                                                     <td class="text-left w-25">{{ $user->name }}</td>
                                                     <td class="text-left w-25">{{ $dept }}</td>
                                                     @if ($date)
-                                                        <td class="text-left w-25">{{ $date->created_at }}</td>
+                                                        <td class="text-left w-25">Review Completed</td>
                                                     @elseif(!empty($reject))
-                                                        <td class="text-left w-25">Rejected At
-                                                            {{ $reject->created_at }}</td>
+                                                        <td class="text-left w-25">Review Rejected </td>
                                                     @else
                                                         <td class="text-left w-25">Review Pending</td>
                                                     @endif
@@ -1188,9 +1186,9 @@
                                             <td class="text-left w-25">{{ $user->name }}</td>
                                             <td class="text-left w-25">{{ $dept }}</td>
                                             @if ($date)
-                                                <td class="text-left w-25">{{ $date->created_at }}</td>
+                                                <td class="text-left w-25">Approval Completed</td>
                                             @elseif(!empty($reject))
-                                                <td>Rejected At {{ $reject->created_at }}</td>
+                                                <td>Approval Rejected</td>
                                             @else
                                                 <td class="text-left w-25">Approval Pending</td>
                                             @endif
@@ -1241,10 +1239,9 @@
                                                     <td class="text-left w-25">{{ $user->name }}</td>
                                                     <td class="text-left w-25">{{ $dept }}</td>
                                                     @if ($date)
-                                                        <td class="text-left w-25">{{ $date->created_at }}</td>
+                                                        <td class="text-left w-25">Approval Completed</td>
                                                     @elseif(!empty($reject))
-                                                        <td class="text-left w-25">Rejected At
-                                                            {{ $reject->created_at }}</td>
+                                                        <td class="text-left w-25">Approval Rejected </td>
                                                     @else
                                                         <td class="text-left w-25">Approval Pending</td>
                                                     @endif
