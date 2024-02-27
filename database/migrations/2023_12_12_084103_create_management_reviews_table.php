@@ -92,7 +92,7 @@ return new class extends Migration
             $table->text('priority_level')->nullable();
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('attendees')->nullable();
+            $table->longtext('attendees')->nullable();
             $table->text('agenda')->nullable();
             $table->text('performance_evaluation')->nullable();
             $table->text('management_review_participants')->nullable();
