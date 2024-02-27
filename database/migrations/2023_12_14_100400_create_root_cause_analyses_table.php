@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('originator_id')->nullable();
             $table->string('form_type')->nullable();
+            $table->string('division_id')->nullable();
             $table->string('date_opened')->nullable();
             $table->string('severity_level')->nullable();
             $table->longText('short_description')->nullable();

@@ -90,13 +90,12 @@
         }
     </script>
 
-    <div class="form-field-head">
-
-        <div class="division-bar">
-            <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($data->division_id) }}/ Root Cause Analysis
-        </div>
+<div class="form-field-head">
+    <div class="division-bar">
+        <strong>Site Division/Project</strong> :
+        {{ Helpers::getDivisionName($data->division_id) }} / Root Cause Analysis
     </div>
+</div>
     @php
         $users = DB::table('users')->get();
     @endphp
@@ -954,6 +953,9 @@
                                                     <tbody>
                                                         <tr style="background: #f4bb22">
                                                             <th style="width:150px;">Problem Statement 2:</th>
+                                                              <td>
+                                                            <textarea name="why_problem_statement">{{ $data->problem_statement }}</textarea>
+                                                        </td>
                                                             
                                                         </tr>
                                                         <tr class="why-row">
@@ -1035,7 +1037,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></textarea>
+                                                                <textarea name="root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->root_cause }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>

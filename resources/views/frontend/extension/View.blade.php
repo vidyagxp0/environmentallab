@@ -302,7 +302,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            dd(efsefres);
+                                                            
                                                             <input {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} type="file" id="myfile" name="extention_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'extention_attachment')" multiple>
                                                         </div>

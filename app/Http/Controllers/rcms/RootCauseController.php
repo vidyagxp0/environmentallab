@@ -41,6 +41,7 @@ use Illuminate\Support\Facades\Hash;
         $root->form_type = "root-cause-analysis"; 
         $root->originator_id = $request->originator_id;
         $root->date_opened = $request->date_opened;
+        $root->division_id = $request->division_id;
         $root->priority_level = $request->priority_level;
         $root->severity_level = $request->severity_level;
         $root->short_description =($request->short_description);
@@ -50,7 +51,9 @@ use Illuminate\Support\Facades\Hash;
         $root->due_date = $request->due_date;
         $root->cft_comments_new = $request->cft_comments_new;
          $root->Type= $request->Type;
-        $root->investigators = $request->investigators;
+        
+         $root->investigators = $request->investigators;
+        // $root->investigators = implode(',', $request->investigators);
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = $request->initiated_if_other;
         $root->department = $request->department;
@@ -415,8 +418,10 @@ use Illuminate\Support\Facades\Hash;
         $root->investigation_summary = ($request->investigation_summary);
         $root->root_cause_description = ($request->root_cause_description);
         $root->cft_comments_new = ($request->cft_comments_new);
-        $root->investigators = ($request->investigators);
+       
+         $root->investigators = ($request->investigators);
         $root->related_url = ($request->related_url);
+        // $root->investigators = implode(',', $request->investigators);
         $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
         $root->country = ($request->country);
         $root->assign_to = $request->assign_to;
@@ -498,7 +503,7 @@ use Illuminate\Support\Facades\Hash;
         }
 
         
-        $root->investigators = json_encode($request->investigators);
+        // $root->investigators = json_encode($request->investigators);
         $root->submitted_by = $request->submitted_by;
         
         $root->comments = $request->comments;
