@@ -91,6 +91,7 @@ class CCController extends Controller
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
         $openState->parent_id = $request->parent_id;
         $openState->parent_type = $request->parent_type;
+        $openState->intiation_date = $request->intiation_date;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
         $openState->short_description = $request->short_description;
@@ -2514,19 +2515,23 @@ class CCController extends Controller
         $parent_name = "CC";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $currentDate = Carbon::now();
+        $formattedDate = $currentDate->addDays(30);
+        $due_date = $formattedDate->format('d-M-Y');
 
         $parent_data = CC::where('id', $id)->select('record','division_id','initiator_id','short_description')->first();
         $parent_data1 = CC::select('record','division_id','initiator_id','id')->get();
         $parent_record = CC::where('id', $id)->value('record');
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
         $parent_division_id = CC::where('id', $id)->value('division_id');
         $parent_initiator_id = CC::where('id', $id)->value('initiator_id');
-        $parent_intiation_date = '';//CC::where('id', $id)->value('intiation_date');
+        $parent_intiation_date = CC::where('id', $id)->value('intiation_date');
         $parent_short_description = CC::where('id', $id)->value('short_description');
 
 
         if($request->revision == "Action-Item"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
-            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id'));
+            return view('frontend.forms.action-item',compact('parent_record','parent_name','record_number','cc','parent_data','parent_data1','parent_short_description','parent_initiator_id','parent_intiation_date','parent_division_id','due_date'));
         }
         if($request->revision == "Extension"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
