@@ -27,21 +27,22 @@ class ActionItemController extends Controller
     {
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        return view('frontend.forms.action-item', compact('due_date', 'record_number'));
+        return view('frontend.forms.action-item', compact('due_date', 'record_number','old_record'));
     }
     public function index()
     {
        
         $document = ActionItem::all();
-
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         foreach ($document as $data) {
             $cc = CC::find($data->cc_id);
             $data->originator = User::where('id', $cc->initiator_id)->value('name');
         }
-        return view('frontend.action-item.at', compact('document', 'record_number'));
+        return view('frontend.action-item.at', compact('document', 'record_number','old_record'));
     }
 
     public function create()
@@ -66,7 +67,7 @@ class ActionItemController extends Controller
         $openState->parent_id = $request->parent_id;
         $openState->parent_type = $request->parent_type;
         $openState->intiation_date = $request->intiation_date;
-        $openState->assign_id = $request->assign_id;
+        $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
         // $openState->related_records = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
@@ -126,11 +127,12 @@ class ActionItemController extends Controller
         $data = ActionItem::find($id);
         $cc = CC::find($data->cc_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         // $taskdetails = Taskdetails::where('cc_id', $id)->first();
         // $checkeffec = CheckEffecVerifi::where('cc_id', $id)->first();
         // $comments = RefInfoComments::where('cc_id', $id)->first();
         // return $taskdetails;
-        return view('frontend.action-item.atView', compact('data', 'cc'));
+        return view('frontend.action-item.atView', compact('data', 'cc','old_record'));
     }
 
     public function edit($id)
@@ -159,7 +161,7 @@ class ActionItemController extends Controller
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
         $openState->due_date_extension= $request->due_date_extension;
-        $openState->assign_id = $request->assign_id;
+        $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
 
         $openState->short_description = $request->short_description;
@@ -405,39 +407,41 @@ class ActionItemController extends Controller
             $changeControl = ActionItem::find($id);
             $task = Taskdetails::where('cc_id', $id)->first();
             if ($changeControl->stage == 1) {
-                $rules = [
-                    'action_taken' => 'required|max:255',
+                // $rules = [
+                //     'action_taken' => 'required|max:255',
 
-                ];
-                $customMessages = [
-                    'action_taken.required' => 'The action taken field is required.',
+                // ];
+                // $customMessages = [
+                //     'action_taken.required' => 'The action taken field is required.',
 
-                ];
-                if ($task != null) {
-                    $validator = Validator::make($task->toArray(), $rules, $customMessages);
-                    if ($validator->fails()) {
-                        $errorMessages = implode('<br>', $validator->errors()->all());
-                        session()->put('errorMessages', $errorMessages);
-                        return back();
-                    } else {
-                        $changeControl->stage = '2';
-                        $changeControl->status = 'Work In Progress';
-                        $changeControl->update();
-                        $history = new CCStageHistory();
-                        $history->type = "Action-Item";
-                        $history->doc_id = $id;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->stage_id = $changeControl->stage;
-                        $history->status = $changeControl->status;
-                        $history->save();
-                        toastr()->success('Document Sent');
+                // ];
+                // if ($task != null) {
+                //     $validator = Validator::make($task->toArray(), $rules, $customMessages);
+                    // if ($validator->fails()) {
+                    //     $errorMessages = implode('<br>', $validator->errors()->all());
+                    //     session()->put('errorMessages', $errorMessages);
+                    //     return back();
+                    // } else {
+                //         $changeControl->stage = '2';
+                //         $changeControl->status = 'Work In Progress';
+                //         $changeControl->update();
+                //         $history = new CCStageHistory();
+                //         $history->type = "Action-Item";
+                //         $history->doc_id = $id;
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->stage_id = $changeControl->stage;
+                //         $history->status = $changeControl->status;
+                //         $history->save();
+                //         toastr()->success('Document Sent');
 
-                        return back();
-                    }
-                } else {
+                //         return back();
+                    
+                // } else {
                     $changeControl->stage = '2';
                     $changeControl->status = 'Work In Progress';
+                    $changeControl->submitted_by = Auth::user()->name;
+                    $changeControl->submitted_on = Carbon::now()->format('d-M-Y');;
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Action-Item";
@@ -451,10 +455,12 @@ class ActionItemController extends Controller
 
                     return back();
                 }
-            }
+            
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '3';
                 $changeControl->status = 'Closed-Done';
+                $changeControl->completed_by = Auth::user()->name;
+                $changeControl->completed_on = Carbon::now()->format('d-M-Y');;
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Action-Item";
@@ -527,8 +533,8 @@ public function actionStageCancel(Request $request, $id)
         if ($changeControl->stage == 2) {
             $changeControl->stage = "1";
             $changeControl->status = "Opened";
-            //$changeControl->more_information_required_by = (string)Auth::user()->name;
-            //$changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
+            $changeControl->more_information_required_by = (string)Auth::user()->name;
+            $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Action Item";

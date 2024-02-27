@@ -105,7 +105,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_id">
+                                        <select id="select-state" placeholder="Select..." name="assign_to">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
@@ -143,14 +143,21 @@
                                         <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
                                             <option value="">--select record--</option>
+                                            @if (!empty($old_record))
+                                            @foreach ($old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                            @endif
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="hod">HOD Persons</label>
-                                        <select multiple placeholder="Select HOD Persons" data-search="false"
-                                            data-silent-initial-value-set="true" id="hod" name="hod_preson[]">
+                                        <select multiple  name="hod_preson[]" placeholder="Select HOD Persons" data-search="false"
+                                            data-silent-initial-value-set="true" id="hod" >
                                             @foreach ($users as $value)
                                                 <option value="{{ $value->id }}">{{ $value->name }}</option>
                                             @endforeach
@@ -415,6 +422,18 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="More information required By">More information required By</label>
+                                        <div class="static"></div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="More information required On">More information required On</label>
+                                         <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="completed by">Completed By</label>
                                         <div class="static"></div> 
                                     </div>
@@ -429,6 +448,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit" class="saveButton">Save</button>
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit
                                     </a> </button>
