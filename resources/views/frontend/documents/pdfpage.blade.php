@@ -342,8 +342,18 @@
         <table class="border border-top-none p-10">
             <tbody>
                 <tr>
-                    <td class="doc-num w-100">{{ Helpers::getDivisionName($data->division_id) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
-                        {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
+                    <td class="doc-num w-100"> 
+                        @if($data->revised === 'Yes') 
+                               
+                        {{ Helpers::getDivisionName($data->division_id) }}
+                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                        /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
+
+                        @else
+                        {{ Helpers::getDivisionName($data->division_id) }}
+                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                        /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                    @endif
                 </tr>
             </tbody>
         </table>
@@ -797,8 +807,20 @@
                             <tbody>
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Document Number</th>
-                                    <td class="w-70 text-left">{{ Helpers::getDivisionName($data->division_id) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
-                                        {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
+                                    <td class="w-70 text-left">
+                                        @if($data->revised === 'Yes') 
+                                           
+                                        {{ Helpers::getDivisionName($data->division_id) }}
+                                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                                        /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
+
+                                        @else
+                                        {{ Helpers::getDivisionName($data->division_id) }}
+                                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                                        /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                                        
+                                    @endif
+                                </td>
                                 </tr>
                                 {{-- <tr>
                                     <th class="w-30 text-left vertical-baseline">Version</th>
@@ -1274,9 +1296,19 @@
         <table class="border p-20">
             <tbody>
                 <tr>
-                    <td class="text-left w-36">{{ Helpers::getDivisionName($data->division_id) }}/@if($data->document_type_name){{ $data->document_type_name }}/@endif
-                        {{ $data->year }}/000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}</td>
+                    <td class="text-left w-36">
+                            @if($data->revised === 'Yes') 
+                               
+                            {{ Helpers::getDivisionName($data->division_id) }}
+                            /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                            /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
 
+                            @else
+                            {{ Helpers::getDivisionName($data->division_id) }}
+                            /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                            /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}                           
+                        @endif
+                        
                     <td class="w-36">Printed On : {{ $time }}</td>
                     <td class="text-right w-20"></td>
                 </tr>

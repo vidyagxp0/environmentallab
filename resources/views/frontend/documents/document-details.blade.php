@@ -45,11 +45,8 @@
                                     <div>
                                         @if($document->revised === 'Yes') 
                                             000{{ $document->revised_doc }}
-                                            
-
                                         @else
                                             000{{ $document->id }}
-                                        
                                         @endif
                                        </div>
                                 </div>
@@ -1002,7 +999,11 @@
             </div>
         </div>
     </div>
-
+<style>
+.group-input input {
+width: 60%;
+}
+</style>
     <script>
         window.addEventListener('DOMContentLoaded', function() {
             var pdfObject = document.querySelector('iframe#theFrame"]');
