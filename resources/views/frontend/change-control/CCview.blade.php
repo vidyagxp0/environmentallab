@@ -57,6 +57,18 @@
             }
         }
     </script>
+    <div id="rcms_form-head">
+        <div class="container-fluid">
+            <div class="inner-block">
+
+
+                <div class="slogan">
+                    <strong>Site Division / Project </strong>:
+                    {{ Helpers::getDivisionName(session()->get('division')) }} / Change Control
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- ======================================
                 CHANGE CONTROL VIEW
@@ -1208,8 +1220,8 @@
                                                         onchange='calculateRiskAnalysis(this)'>
                                                         <option value="0">-- Select --</option>
                                                         <option
-                                                            {{ $assessment->Occurance == '5' ? 'selected' : '' }}value="5">
-                                                            Extremely Unlikely</option>
+                                                            {{ $assessment->Occurance == '5' ? 'selected' : '' }}
+                                                            value="5">Extremely Unlikely</option>
                                                         <option {{ $assessment->Occurance == '4' ? 'selected' : '' }}
                                                             value="4">Rare</option>
                                                         <option {{ $assessment->Occurance == '3' ? 'selected' : '' }}
