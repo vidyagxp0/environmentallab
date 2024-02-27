@@ -2208,6 +2208,8 @@ class RiskManagementController extends Controller
         $parent_initiator_id = RiskManagement::where('id', $id)->value('initiator_id');
         $parent_intiation_date = RiskManagement::where('id', $id)->value('intiation_date');
         $parent_short_description = RiskManagement::where('id', $id)->value('short_description');
-        return view('frontend.forms.action-item', compact('parent_id', 'parent_type', 'record_number', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description'));
+        $old_record = RiskManagement::select('id', 'division_id', 'record')->get();
+
+        return view('frontend.forms.action-item', compact('parent_id', 'parent_type', 'record_number', 'currentDate', 'formattedDate', 'due_date', 'parent_record', 'parent_record', 'parent_division_id', 'parent_initiator_id', 'parent_intiation_date', 'parent_short_description','old_record'));
     }
 }

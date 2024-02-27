@@ -175,8 +175,7 @@
                             Results</button>
                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm3')">Reference
                             Info/Comments</button>
-                        {{-- <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity
-                            History</button> --}}
+                         <button type="button" class="cctablinks" onclick="openCity(event, 'CCForm4')">Activity Log</button> 
                     </div>
 
                     <!-- General Information -->
@@ -539,18 +538,80 @@
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
-                                        <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Submit</button>
+                                       
                                     </div>
                         </div>
-                    </div>
+                    
 
-                    <!-- <div id="CCForm4" class="inner-block cctabcontent">
+                    <div id="CCForm4" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 {{-- Activity History --}}
-                                <div class="col-12 sub-head">
-                                    Data History
+                               <div class="col-12 sub-head">
+                                    Record Signature
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submit by"><b>Submit by</b></label>
+                                        <div class="static">{{ $data->submit_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Submit On"><b>Submit On</b></label>
+                                        <div class="static">{{ $data->submit_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Not Effective By"><b>Not Effective By</b></label>
+                                        <div class="static">{{ $data->not_effective_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Not Effective On"><b>Not Effective On</b></label>
+                                        <div class="static">{{ $data->not_effective_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <div class="static">{{ $data->effective_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Effective On"><b>Effective On</b></label>
+                                        <div class="static">{{ $data->effective_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete By</b></label>
+                                        <div class="static">{{ $data->not_effective_approval_complete_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete On</b></label>
+                                        <div class="static">{{ $data->not_effective_approval_complete_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Effective Approval Complete By"><b>Effective Approval Complete By</b></label>
+                                        <div class="static">{{ $data->effective_approval_complete_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Effective Approval Complete On"><b>Effective Approval Complete On</b></label>
+                                        <div class="static">{{ $data->effective_approval_complete_on }}</div>
+                                    </div>
+                                </div>
+                                </div>
+                                 <!--   Data History
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
@@ -752,25 +813,26 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div> --}} -->
                      <div class="button-block">
-                                        @if ($data->stage != 0)
+                                      @if ($data->stage != 0)
                                             <button type="submit" id="ChangesaveButton" class="saveButton"
-                                                {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                                {{ $data->stage == 0 || $data->stage == 6  ||  $data->stage == 4 ? 'disabled' : '' }}>Save</button>
                                         @endif
+                                    
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit"
-                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
+                                        <button type="submit">Submit</button>
                                         <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}"
                                                 class="text-white"> Exit </a> </button>
                                     </div>
-                    </div> -->
+                    </div> 
 
 
-                </div>
+                
             </div>
         </form>
     </div>
+                                </div>
 
     <div class="modal fade" id="cancel-modal">
         <div class="modal-dialog modal-dialog-centered">
