@@ -25,9 +25,9 @@ class ActionItemController extends Controller
 
     public function showAction()
     {
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
@@ -69,10 +69,11 @@ class ActionItemController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-        // $openState->related_records = implode(',', $request->related_records);
+         $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
-        $openState->hod_preson = json_encode($request->hod_preson);
+       // $openState->hod_preson = json_encode($request->hod_preson);
+        $openState->hod_preson =  implode(',', $request->hod_preson);
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
@@ -124,10 +125,10 @@ class ActionItemController extends Controller
     public function show($id)
     {
 
+        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $data = ActionItem::find($id);
         $cc = CC::find($data->cc_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
-        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         // $taskdetails = Taskdetails::where('cc_id', $id)->first();
         // $checkeffec = CheckEffecVerifi::where('cc_id', $id)->first();
         // $comments = RefInfoComments::where('cc_id', $id)->first();
@@ -149,9 +150,11 @@ class ActionItemController extends Controller
         $lastopenState = ActionItem::find($id);
         $openState = ActionItem::find($id);
         // $openState->related_records = $request->related_records;
+        $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->description = $request->description;
         $openState->title = $request->title;
-        $openState->hod_preson = json_encode($request->hod_preson);
+        //$openState->hod_preson = json_encode($request->hod_preson);
+        $openState->hod_preson =  implode(',', $request->hod_preson);
         // $openState->hod_preson = $request->hod_preson;
         $openState->dept = $request->dept;
         $openState->initiatorGroup = $request->initiatorGroup;
@@ -233,19 +236,19 @@ class ActionItemController extends Controller
             $history->save();
         }   
           
-        // if ($lastopenState->related_records != $openState->related_records || !empty($request->related_records_comment)) {
-        //     $history = new ActionItemHistory;
-        //     $history->cc_id = $id;
-        //     $history->activity_type = 'Action Item Related Records';
-        //     $history->previous = $lastopenState->related_records;
-        //     $history->current = $openState->related_records;
-        //     $history->comment = $request->related_records_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastopenState->status;
-        //     $history->save();
-        // }
+        if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Action Item Related Records';
+            $history->previous = $lastopenState->Reference_Recores1;
+            $history->current = $openState->Reference_Recores1;
+            $history->comment = $request->Reference_Recores1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->save();
+        }
 
         if ($lastopenState->description != $openState->description || !empty($request->description_comment)) {
             $history = new ActionItemHistory;
