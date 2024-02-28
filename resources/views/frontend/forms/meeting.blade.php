@@ -178,7 +178,7 @@
                                             <option value="0">Select Type</option>
                                             <option value="Other">Other</option>
                                             <option value="Training">Training</option>
-                                            <option value="FinanceFinance">FinanceFinance</option>
+                                            <option value="Finance">Finance</option>
                                             <option value="follow Up">Follow Up</option>
                                             <option value="Marketing">Marketing</option>
                                             <option value="Sales">Sales</option>

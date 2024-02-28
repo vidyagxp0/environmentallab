@@ -9,10 +9,10 @@
 
                 <div class="inner-block">
                     <div class="main-head">
-                        <div class="default-name">{{ date('Y') }}
-                            <!-- /Record-000{{ $document->id }}</div> -->
-                            /<a href="{{ route('CC.show', $document->id) }}">{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
-
+                         <div class="default-name">
+                            {{-- <!-- /Record-000{{ $document->id }}</div> --> --}}
+                            {{ Helpers::getDivisionName(session()->get('division')) }}/AP/{{ date('Y') }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                         </div>
                         <div class="btn-group">
                             <a href="{{ url('rcms/auditProgramAuditReport',$document->id)}}"> <button type="button">Print</button></a>
                         </div>
@@ -28,7 +28,8 @@
                             <div>:</div>
                             <div>{{ $document->initiator }}</div>
                         </div>
-                    </div>
+                   </div>
+               
 
                     <div class="activity-table">
                         <table class="table table-bordered" id='auditTable'>
