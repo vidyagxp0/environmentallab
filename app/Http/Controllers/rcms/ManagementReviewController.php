@@ -1391,7 +1391,7 @@ class ManagementReviewController extends Controller
     public function child_management_Review(Request $request, $id)
     {
         $parent_id = $id;
-        $parent_initiator_id = $id;
+        $parent_initiator_id = ManagementReview::where('id', $id)->value('initiator_id');
         $parent_type = "Action-Item";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
