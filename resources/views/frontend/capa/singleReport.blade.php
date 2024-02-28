@@ -201,7 +201,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record){{ $data->record }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->record){{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
@@ -250,11 +250,12 @@
                     </tr>
                      <tr>
                         <th class="w-20">CAPA Team</th>
-                        <td class="w-80">@if($data->capa_team){{ $data->capa_team }}@else Not Applicable @endif</td>
+                        <td class="w-80">@if($data->capa_team){{  Helpers::getInitiatorName($data->capa_team) }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                             <th class="w-20">Reference Records</th>
-                            <td class="w-80">@if($data->capa_related_record){{ $data->capa_related_record }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
+                          
                         </tr>
                     <tr>
                         <th class="w-20">Initial Observation</th>
@@ -428,7 +429,7 @@
                         @if($data->Material_Details->material_name)
                         @foreach (unserialize($data->Material_Details->material_name) as $key => $dataDemo)
                         <tr>
-                            <td class="w-15">{{ $key ? $key +1  : "Not Applicable" }}</td>
+                            <td class="w-15">{{ $dataDemo ? $key + 1  : "Not Applicable" }}</td>
                             <td class="w-15">{{ unserialize($data->Material_Details->material_name)[$key] ?  unserialize($data->Material_Details->material_name)[$key]: "Not Applicable"}}</td>
                             <td class="w-15">{{unserialize($data->Material_Details->material_batch_no)[$key] ?  unserialize($data->Material_Details->material_batch_no)[$key] : "Not Applicable" }}</td>
                             <td class="w-5">{{unserialize($data->Material_Details->material_mfg_date)[$key] ?  unserialize($data->Material_Details->material_mfg_date)[$key] : "Not Applicable" }}</td>
@@ -468,7 +469,7 @@
                         @if($data->Instruments_Details->equipment)
                         @foreach (unserialize($data->Instruments_Details->equipment) as $key => $dataDemo)
                         <tr>
-                            <td class="w-15">{{ $key ? $key +1  : "Not Applicable" }}</td>
+                            <td class="w-15">{{ $dataDemo ? $key +1  : "Not Applicable" }}</td>
 
                             <td class="w-15">{{ $dataDemo ? $dataDemo : "Not Applicable"}}</td>
                             <td class="w-15">{{unserialize($data->Instruments_Details->equipment_instruments)[$key] ?  unserialize($data->Instruments_Details->equipment_instruments)[$key] : "Not Applicable" }}</td>
