@@ -27,6 +27,14 @@ class UserLoginSeeder extends Seeder
         $user->save();
 
         $user  = new User();
+        $user->name = "Esra'a Hyasat";
+        $user->email = "accounting@enviro-lab.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = "1,2,4,5,6";
+        $user->save();
+
+        $user  = new User();
         $user->name = "Sondos";
         $user->email = "Sondos@mydemosoftware.com";
         $user->password = Hash::make('Dms@123');

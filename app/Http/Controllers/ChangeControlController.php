@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ChangeControlStage;
 use App\Models\RoleGroup;
 use Illuminate\Http\Request;
+use Helpers;
 use Illuminate\Support\Facades\Mail;
 
 class ChangeControlController extends Controller
@@ -72,7 +73,7 @@ class ChangeControlController extends Controller
                 return back();
             }
             if ($changeControl->stage == 4) {
-                if (Auth::user()->role == 5) {
+                if (Helpers::checkRoles(5)) {
                     $change = new ChangeControlStage();
                     $change->change_control_id = $id;
                     $change->user_id = Auth::user()->id;

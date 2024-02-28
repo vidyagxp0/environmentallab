@@ -30,5 +30,10 @@ class DepartmentSeeder extends Seeder
         $department->name = "Production";
         $department->dc = "Prod";
         $department->save();
+
+        $department  = new Department();
+        $department->name = "Accounting Manager";
+        $department->dc = "AM";
+        $department->save();
     }
 }

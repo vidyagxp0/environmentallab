@@ -28,6 +28,7 @@
             border: 2px solid #000000;
             border-radius: 40px;
         }
+ 
     </style>
 
     <div id="data-fields">
@@ -47,6 +48,7 @@
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
+                <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;" >Print</button>
 
             </div>
             <form method="POST" action="{{ route('documents.update', $document->id) }}" enctype="multipart/form-data">
@@ -224,7 +226,7 @@
                                     </div>
                                     <div class="calenderauditee">                                     
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_dateDoc" value="" {{Helpers::isRevised($document->stage)}}
+                                        <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc }}" {{Helpers::isRevised($document->stage)}}
                                         class="hide-input"
                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
@@ -992,9 +994,7 @@
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="review-date">Next Review Date</label>
-                                    <!-- <input type="date" name="next_review_date" id="next_review_date"
-                                        value="{{ $document->next_review_date }}"> -->
-
+                                    
                                         <div class="calenderauditee">                                     
                                         <input type="text"  id="next_review_date" value="{{ $document->next_review_date }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" value=""

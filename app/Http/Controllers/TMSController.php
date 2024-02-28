@@ -21,11 +21,12 @@ use App\Models\TrainingHistory;
 use App\Models\TrainingStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Helpers;
 
 class TMSController extends Controller
 {
     public function index(){
-        if(Auth::user()->role == 6){
+        if(Helpers::checkRoles(6)){
             $documents = DocumentTraining::where('trainer',Auth::user()->id)->orderByDesc('id')->get();
            if($documents){
                foreach($documents as $temp){
@@ -118,7 +119,7 @@ class TMSController extends Controller
         }
     }
     public function create(){ 
-        if(Auth::user()->role == 6 || Auth::user()->role == 3){
+        if(Helpers::checkRoles(6) || Helpers::checkRoles(3)){
           
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->get();
@@ -145,7 +146,7 @@ class TMSController extends Controller
         } 
     }
     public function store(Request $request){
-        if(Auth::user()->role == 6){
+        if(Helpers::checkRoles(6)){
             $this->validate($request,[
                 'traning_plan_name' =>'required|unique:trainings,traning_plan_name',
                 'training_plan_type'=>'required',
@@ -208,14 +209,14 @@ class TMSController extends Controller
         }
     }
     public function show(){
-        if(Auth::user()->role == 6){
+        if(Helpers::checkRoles(6)){
             $trainning = Training::where('trainner_id',Auth::user()->id)->get();
             return view('frontend.TMS.manage-training',compact('trainning'));
         }
     }
     public function viewTraining($id,$sopId){
         $doc = Document::find($sopId);
-        if(Auth::user()->role == 6){
+        if(Helpers::checkRoles(6)){
             $trainning = Training::where('trainner_id',Auth::user()->id)->get();
             return view('frontend.TMS.manage-training',compact('trainning', 'doc'));
         }
@@ -490,7 +491,7 @@ class TMSController extends Controller
 
     public function edit($id){
         $train = Training::find($id);
-        if(Auth::user()->role == 6){
+        if(Helpers::checkRoles(6)){
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->get();
@@ -513,7 +514,7 @@ class TMSController extends Controller
 
     public function update(Request $request, $id){
         $last = Training::find($id);
-        if(Auth::user()->role == 6){
+        if(Helpers::checkRoles(6)){
             $this->validate($request,[
                 'traning_plan_name' =>'required|unique:trainings,traning_plan_name',
                 'training_plan_type'=>'required',

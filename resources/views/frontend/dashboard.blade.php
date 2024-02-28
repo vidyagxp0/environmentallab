@@ -1976,7 +1976,7 @@
                 borderWidth: 2,
                 hoverBackgroundColor: "#4274da87",
                 hoverBorderColor: "#4274da",
-                @if (Auth::user()->role == 3)
+                @if (Helpers::checkRoles(3))
                     data: [{{ $count }}],
                 @else
                     data: [10, 20, 30, 40, 50, 60, 70],

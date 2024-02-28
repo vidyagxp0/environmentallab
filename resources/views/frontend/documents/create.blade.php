@@ -67,13 +67,14 @@
                 <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> 
                 <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
                 <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button> 
-                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>                --}}
+                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>--}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
+                <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;" >Print</button>
             </div>
 
             <form id="document-form" action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">

@@ -43,6 +43,45 @@ class Helpers
          
     }
 
+    public static function checkRoles($role)
+    {
+        if (strpos(Auth::user()->role, $role) !== false) {
+           return true;
+        }else{
+            return false;
+        } 
+    }
+
+
+    public static function checkRoles_check_reviewers($document)
+    {
+       
+        if ($document->reviewers) {
+            $datauser = explode(',', $document->reviewers);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == Auth::user()->id) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }         
+    }
+
+    public static function checkRoles_check_approvers($document)
+    {
+        if ($document->approvers) {
+            $datauser = explode(',', $document->approvers);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == Auth::user()->id) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
 
     public static function divisionNameForQMS($id)
     {

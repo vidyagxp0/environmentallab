@@ -20,6 +20,7 @@ use App\Models\DocumentType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Helpers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -52,7 +53,7 @@ class DocumentDetailsController extends Controller
         $originator = User::find($document->originator_id);
 
 
-        if (Auth::user()->role == 3) {
+        if (Helpers::checkRoles(3)) {
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
@@ -112,7 +113,7 @@ class DocumentDetailsController extends Controller
 
         }
 
-        if (Auth::user()->role == 3) {
+        if (Helpers::checkRoles(3)) {
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
             $document->status = Stage::where('id', $request->stage_id)->value('name');
@@ -166,7 +167,7 @@ class DocumentDetailsController extends Controller
 
           }
         }
-        if (Auth::user()->role == 2) {
+        if (Helpers::checkRoles(2)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
             $document->status = "Draft";
             $document->stage = Stage::where('name', $document->status)->value('id');
@@ -270,7 +271,7 @@ class DocumentDetailsController extends Controller
           }
 
         }
-        if (Auth::user()->role == 1) {
+        if (Helpers::checkRoles(1)) {
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
             $document->stage = Stage::where('name', $document->status)->value('id');

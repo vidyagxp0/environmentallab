@@ -10,6 +10,7 @@ use App\Models\Recipent;
 use App\Models\Subscribe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Helpers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
@@ -29,7 +30,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        if (Auth::user()->role == 3) {
+        if (Helpers::checkRoles(3)) {
             $count = [];
             $draft = Document::where('originator_id', Auth::user()->id)->where('stage', 1)->count();
             $in_review = Document::where('originator_id', Auth::user()->id)->where('stage', 2)->count();
@@ -46,7 +47,7 @@ class DashboardController extends Controller
             }
             return view('frontend.dashboard', compact('data', 'count'));
         }
-        if (Auth::user()->role == 2) {
+        if (Helpers::checkRoles(2)) {
 
             $array1 = [];
             $array2 = [];
@@ -94,7 +95,7 @@ class DashboardController extends Controller
             }
             return view('frontend.dashboard', ['data' => $arrayTask]);
         }
-        if (Auth::user()->role == 1) {
+        if (Helpers::checkRoles(1)) {
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 4)->get();

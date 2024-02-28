@@ -18,7 +18,7 @@
                                     <button>
                                         <a href="{{ url('audit-trial', $document->id) }}">Audit Trail</a>
                                     </button>
-                                    @if (Auth::user()->role == 2)
+                                    @if (Helpers::checkRoles(2))
                                         @if (empty($review_reject))
                                             @if (empty($stagereview_submit))
                                                 <button><a
@@ -29,7 +29,7 @@
                                         @endif
 
                                     @endif
-                                    @if (Auth::user()->role == 1)
+                                    @if (Helpers::checkRoles(1))
                                         @if (empty($approval_reject))
                                             @if (empty($stageapprove_submit))
                                                 <button><a
@@ -84,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    @if (Auth::user()->role == 2)
+                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document) )
                         <div class="col-8">
                             <div class="inner-block tracker">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -167,7 +167,7 @@
                             </div>
                         </div>
                     @endif
-                    @if (Auth::user()->role == 1)
+                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
                         <div class="col-8">
                             <div class="inner-block tracker">
                                 <div class="d-flex justify-content-between align-items-center">
@@ -218,7 +218,17 @@
                                         @if ($document->stage >= 4)
                                             <div class="active">Draft</div>
                                         @else
+                                            @if ($stageapprove)
+                                                @if ($stageapprove->stage == 'Approved')
+                                                <div class="active">Draft</div>
+                                                @else
+                                                <div>Draft</div>
+                                                @endif
+                                            @else
                                             <div>Draft</div>
+                                            @endif
+
+                                            
                                         @endif
                                         {{-- @if ($approval_reject)
                                             <div class="active">Rejected </div>
@@ -243,9 +253,6 @@
                                         @else
                                             {{-- <div>Submitted</div> --}}
                                         @endif
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -858,10 +865,10 @@
                             <textarea required name="comment" value="{{ old('comment') }}"></textarea>
                         </div>
                     </div>
-                    @if (Auth::user()->role == 1)
+                    @if (Helpers::checkRoles(1))
                         <input type="hidden" name="stage_id" value="Cancel-by-Approver" />
                     @endif
-                    @if (Auth::user()->role == 2)
+                    @if (Helpers::checkRoles(2))
                         <input type="hidden" name="stage_id" value="Cancel-by-Reviewer" />
                     @endif
 

@@ -17,12 +17,13 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Helpers;
 
 class MytaskController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role == 2) {
+        if (Helpers::checkRoles(2)) {
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
@@ -61,10 +62,10 @@ class MytaskController extends Controller
                 ->value('name');
             }
             $task = $this->paginate($arrayTask);
-            return view('frontend.tasks', ['task' => $task]);
+           
         }
 
-        if (Auth::user()->role == 1) {
+        if (Helpers::checkRoles(1)) {
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 4)->orderByDesc('id')->get();
@@ -98,8 +99,8 @@ class MytaskController extends Controller
                 $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)->value('name');
             }
             $task = $this->paginate($arrayTask);
-            return view('frontend.tasks', ['task' => $task]);
         }
+        return view('frontend.tasks', ['task' => $task]);
     }
     public function reviewdetails($id)
     {

@@ -699,19 +699,19 @@
                     <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
-                                CFT Feedback
+                                Feedback
                             </div>
                             <div class="row">
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments">CFT Comments</label>
+                                        <label for="comments">Comments</label>
                                         <textarea name="cft_comments"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="comments">CFT Attachment</label>
+                                        <label for="comments">Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1068,13 +1068,13 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Submitted By</label>
+                                        <label for="submitted">Submit By</label>
                                         {{--  <div class="static">Piyush Sahu</div>  --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Submitted On</label>
+                                        <label for="submitted">Submit On</label>
                                         {{--  <div class="static">12-12-2032</div>  --}}
                                     </div>
                                 </div>
@@ -1104,13 +1104,13 @@
                                 </div>
                                  <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Supervisor Reviewed By (QA)</label>
+                                        <label for="submitted">HOD Review Complete By</label>
                                         {{-- <div class="static">Piyush Sahu</div> --}}
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="submitted">Supervisor Reviewed On (QA)</label>
+                                        <label for="submitted">HOD Review Complete On</label>
                                         {{-- <div class="static">12-12-2032</div> --}}
                                     </div>
                                 </div>

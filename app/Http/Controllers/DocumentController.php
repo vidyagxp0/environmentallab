@@ -577,6 +577,7 @@ class DocumentController extends Controller
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
+
             $document->due_dateDoc = $request->due_dateDoc;
             $document->sop_type = $request->sop_type;
             $document->department_id = $request->department_id;
@@ -1257,7 +1258,7 @@ class DocumentController extends Controller
             }
 
             toastr()->success('Document Updated');
-            if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            if (Helpers::checkRoles(1) || Helpers::checkRoles(2)) {
                 return redirect('rev-details/'.$id);
             } else {
                 return redirect('doc-details/'.$id);
