@@ -467,7 +467,7 @@ class UserLoginSeeder extends Seeder
 
 
         $user  = new User();
-        $user->name = "environmentallab approver";
+        $user->name = "environmentallab approver1";
         $user->email = "environmentallab.approver1@mydemosoftware.com";
         $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
@@ -475,7 +475,7 @@ class UserLoginSeeder extends Seeder
         $user->save();
 
         $user  = new User();
-        $user->name = "environmentallab approver";
+        $user->name = "environmentallab approver2";
         $user->email = "environmentallab.approver2@mydemosoftware.com";
         $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
@@ -483,7 +483,7 @@ class UserLoginSeeder extends Seeder
         $user->save();
 
         $user  = new User();
-        $user->name = "environmentallab approver";
+        $user->name = "environmentallab approver3";
         $user->email = "environmentallab.approver3@mydemosoftware.com";
         $user->password = Hash::make('Dms@123');
         $user->departmentid = 1;
