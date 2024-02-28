@@ -9,7 +9,7 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                                Record - 00000{{ $detail->ExternalAudit_id }}
+                                Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div class="info-list">
 
