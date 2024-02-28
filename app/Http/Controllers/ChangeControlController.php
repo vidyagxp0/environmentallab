@@ -11,6 +11,7 @@ use App\Models\ChangeControlStage;
 use App\Models\RoleGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Helpers;
 
 class ChangeControlController extends Controller
 {
@@ -72,11 +73,11 @@ class ChangeControlController extends Controller
                 return back();
             }
             if ($changeControl->stage == 4) {
-                if (Auth::user()->role == 5) {
+                if ( Helpers::checkRoles(5)) {
                     $change = new ChangeControlStage();
                     $change->change_control_id = $id;
                     $change->user_id = Auth::user()->id;
-                    $change->role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $change->role = RoleGroup::where('id', 5)->value('name');
                     $change->stage = $request->stage;
                     if ($request->stage == 5) {
                         $change->stageName = "Approved";

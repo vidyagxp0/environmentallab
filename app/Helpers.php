@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class Helpers
 {
@@ -53,6 +54,16 @@ class Helpers
     {
         return Carbon::parse($createdAt)->format('Y');
     }
+    public static function checkRoles($role)
+    {
+        if (strpos(Auth::user()->role, $role) !== false) {
+           return true;
+        }else{
+            return false;
+        } 
+    }
+
+   
 
     public static function getDivisionName($id)
     {
