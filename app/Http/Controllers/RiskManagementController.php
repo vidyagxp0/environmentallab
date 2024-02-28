@@ -2025,7 +2025,6 @@ class RiskManagementController extends Controller
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
-                
                 $changeControl->status = "Pending HOD Approval";
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2073,6 +2072,9 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
