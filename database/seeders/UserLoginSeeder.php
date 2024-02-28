@@ -246,6 +246,35 @@ class UserLoginSeeder extends Seeder
         $user->role = 3;
         $user->save();
 
+
+        $user  = new User();
+        $user->name = "environmentallab hod1";
+        $user->email = "environmentallab.hod1@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 4;
+        $user->save();
+
+
+        $user  = new User();
+        $user->name = "environmentallab hod2";
+        $user->email = "environmentallab.hod2@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 4;
+        $user->save();
+
+
+        $user  = new User();
+        $user->name = "environmentallab hod3";
+        $user->email = "environmentallab.hod3@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 4;
+        $user->save();
+
+
+
         $user  = new User();
         $user->name = "Shaleen Mishra";
         $user->email = "shaleen.mishra@mydemosoftware.com";
@@ -349,6 +378,36 @@ class UserLoginSeeder extends Seeder
 
 
         $user  = new User();
+        $user->name = "environmentallab cft";
+        $user->email = "environmentallab.cft1@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 5;
+        $user->save();
+
+
+        $user  = new User();
+        $user->name = "environmentallab cft";
+        $user->email = "environmentallab.cft2@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 5;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "environmentallab cft";
+        $user->email = "environmentallab.cft3@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 5;
+        $user->save();
+
+
+
+
+
+
+        $user  = new User();
         $user->name = "Anshul Patel";
         $user->email = "anshul.patel@mydemosoftware.com";
         $user->password = Hash::make('Dms@123');
@@ -395,6 +454,61 @@ class UserLoginSeeder extends Seeder
         $user->departmentid = 1;
         $user->role = 5;
         $user->save();
+
+
+
+        $user  = new User();
+        $user->name = "environmentallab approver";
+        $user->email = "environmentallab.approver1@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 1;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "environmentallab approver";
+        $user->email = "environmentallab.approver2@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 1;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "environmentallab approver";
+        $user->email = "environmentallab.approver3@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 1;
+        $user->save();
+
+
+
+
+        $user  = new User();
+        $user->name = "environmentallab Reviewer1";
+        $user->email = "environmentallab.Reviewer1@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 2;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "environmentallab Reviewer2";
+        $user->email = "environmentallab.Reviewer2@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 2;
+        $user->save();
+
+
+        $user  = new User();
+        $user->name = "environmentallab Reviewer3";
+        $user->email = "environmentallab.Reviewer3@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 2;
+        $user->save();
+
 
         $user  = new User();
         $user->name = "Amit Patel";
@@ -443,6 +557,35 @@ class UserLoginSeeder extends Seeder
         $user->departmentid = 1;
         $user->role = 2;
         $user->save();
+
+
+        $user  = new User();
+        $user->name = "environmentallab training coordinator1";
+        $user->email = "environmentallab.trainingcoordinator1@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+
+
+        $user  = new User();
+        $user->name = "environmentallab training coordinator2";
+        $user->email = "environmentallab.trainingcoordinator2@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "environmentallab training coordinator3";
+        $user->email = "environmentallab.trainingcoordinator3@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 6;
+        $user->save();
+
+
 
         $user  = new User();
         $user->name = "Madhulika Mishra";
