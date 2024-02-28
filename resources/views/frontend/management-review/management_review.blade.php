@@ -349,7 +349,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="agenda">
-                                            Agenda<button type="button" name="agenda"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} onclick="addAgendaManRev('agenda')">+</button>
+                                            Agenda<button type="button" name="agenda"   onclick="addAgendaManRev('agenda')">+</button>
                                         </label>
                                         <table class="table table-bordered" id="agenda">
                                             <thead>
@@ -580,7 +580,7 @@
                             <div class="group-input">
                                 <label for="performance_evaluation">
                                     Performance Evaluation
-                                    <button type="button" name="performance_evaluation" disabled onclick="addPerformanceEvoluation('performance_evaluation')">+</button>
+                                    <button type="button" name="performance_evaluation"  onclick="addPerformanceEvoluation('performance_evaluation')">+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-performance_evaluation-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
