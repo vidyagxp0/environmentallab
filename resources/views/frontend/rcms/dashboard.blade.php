@@ -151,7 +151,7 @@
                                     <option value="Change Control">Change Control</option>
                                     <option value="Action Item">Action Item</option>
                                     <option value="Effectiveness Check">Effectiveness Check</option>
-                                     <option value="tms">TMS</option> 
+                                     {{-- <option value="tms">TMS</option>  --}}
                                 </select>
                             </div>
                             <div class="group-input">
@@ -178,7 +178,7 @@
                                         <th>Process</th>
                                         <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
-                                        <th>Assigned To</th>
+                                        <th>Originator</th>
                                         <th>Due Date</th>
                                         <th>Status</th>
                                     </tr>
