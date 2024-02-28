@@ -19,6 +19,178 @@ class UserLoginSeeder extends Seeder
     {
 
         $user  = new User();
+        $user->name = "Esra'a Hyasat";
+        $user->email = "esraa.hyasat@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Rawan Abu Al- Naja";
+        $user->email = "Results.abu@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        
+        $user  = new User();
+        $user->name = "Sami Samara";
+        $user->email = "Sami.samara@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Maisa Safi";
+        $user->email = "maisa.safi@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Mohammad Eid";
+        $user->email = "mohammad.edi@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Sanaa Taha";
+        $user->email = "sanaa.taha@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Rahaf Shawabkih";
+        $user->email = "rahaf.shawabhih@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+        
+        $user  = new User();
+        $user->name = "Rawand Mubark";
+        $user->email = "rawand.mubark@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+               
+
+      
+
+        $user  = new User();
+        $user->name = "Hanyia Shawhanieh ";
+        $user->email = "hanyia.shwhanieh@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+
+    
+        $user  = new User();
+        $user->name = "Sukina Bustanji";
+        $user->email = "Sukina.bustanji@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+
+        
+
+        
+         $user  = new User();
+        $user->name = "Ahmad Jabali";
+        $user->email = "ahmad.jabali@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+
+        
+        $user  = new User();
+        $user->name = "Ahmad Hamdallah";
+        $user->email = "ahmad.hamdallah@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Fadi Al-Fuqaha";
+        $user->email = "fadi.aifuqaha@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Sondos Samara";
+        $user->email = "sondos.samara@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Yasmeen Abu Zahra";
+        $user->email = "yasmeen.abhuzahra@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+        $user  = new User();
+        $user->name = "Dana Abu Shanab";
+        $user->email = "dana.abushanab@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+
+
+
+        $user  = new User();
+        $user->name = "Hussam Jariri";
+        $user->email = "hussam.jariri@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        
+
+        $user  = new User();
+        $user->name = "Haneen Samara";
+        $user->email = "haneen.samara@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+
+        $user  = new User();
+        $user->name = "Khawla Masoud ";
+        $user->email = "khawla.masoud@mydemosoftware.com";
+        $user->password = Hash::make('Dms@123');
+        $user->departmentid = 1;
+        $user->role = 3;
+        $user->save();
+
+
+
+       
+        $user  = new User();
         $user->name = "Amit Guru";
         $user->email = "amit.guru@mydemosoftware.com";
         $user->password = Hash::make('Dms@123');
