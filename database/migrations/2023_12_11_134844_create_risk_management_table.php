@@ -130,8 +130,12 @@ return new class extends Migration
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
             $table->string('submitted_by')->nullable();
-            $table->string('evaluated_by')->nullable();
+            $table->string('evaluated_by')->nullable();           
             $table->string('plan_approved_by')->nullable();
+            $table->string('cancelled_by')->nullable();
+            $table->string('cancelled_on')->nullable();
+            $table->string('all_actions_completed_by')->nullable();
+            $table->string('all_actions_completed_on')->nullable();
             $table->string('risk_analysis_completed_by')->nullable();
             $table->string('submitted_on')->nullable();
             $table->string('evaluated_on')->nullable();

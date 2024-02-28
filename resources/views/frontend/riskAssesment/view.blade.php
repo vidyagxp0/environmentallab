@@ -2190,7 +2190,7 @@
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Submitted By..">Submitted By..</label>
+                                                <label for="Submitted By..">Submitted By</label>
                                                 <div class="static">{{ $data->submitted_by }}</div>
                                             </div>
                                         </div>
@@ -2224,6 +2224,18 @@
                                                 <div class="static">{{ $data->plan_approved_on }}</div>
                                             </div>
                                         </div>
+                                        <!-- <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Action Plan Complete">Action Plan Completed By</label>
+                                                <div class="static">{{ $data->action_plan_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Action Plan Complete">Action Plan Completed On</label>
+                                                <div class="static">{{ $data->action_plan_completed_on }}</div>
+                                            </div>
+                                        </div> -->
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
@@ -2234,6 +2246,30 @@
                                             <div class="group-input">
                                                 <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
                                                 <div class="static">{{ $data->risk_analysis_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="All Actions Completed">All Actions Completed By</label>
+                                                <div class="static">{{ $data->all_actions_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="All Actions Completed">All Actions Completed On</label>
+                                                <div class="static">{{ $data->all_actions_completed_on }}</div>
+                                            </div>
+                                        </div> -->
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancel">Cancelled By</label>
+                                                <div class="static">{{ $data->cancelled_by }}</div>
+                                            </div>
+                                        </div> 
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Cancel">Cancelled On</label>
+                                                <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
                                     </div>

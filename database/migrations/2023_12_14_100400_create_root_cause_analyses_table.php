@@ -95,13 +95,13 @@ return new class extends Migration
             $table->text('residual_rpn')->nullable();
             $table->text('risk_acceptance2')->nullable();
             $table->text('mitigation_proposal')->nullable();
-            
             $table->text('initial_severity')->nullable();
             $table->text('initial_detectability')->nullable();
             $table->text('initial_probability')->nullable();
             $table->text('initial_rpn')->nullable();
             $table->text('risk_acceptance')->nullable();
-             
+            $table->string('acknowledge_by')->nullable();
+            $table->string('acknowledge_on')->nullable();
             $table->text('lab_inv_concl')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();

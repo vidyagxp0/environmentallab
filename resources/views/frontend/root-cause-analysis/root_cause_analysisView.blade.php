@@ -1348,14 +1348,14 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Acknowledge_By..">Acknowledge By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <label for="Acknowledge_By">Acknowledge By</label>
+                                            <div class="static">{{ $data->acknowledge_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Acknowledge_On">Acknowledge On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <div class="static">{{ $data->acknowledge_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -1373,13 +1373,13 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_By">QA Review Complete By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <div class="static">{{ $data->qA_review_complete_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_On">QA Review Complete On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <div class="static">{{ $data->qA_review_complete_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">

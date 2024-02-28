@@ -805,6 +805,8 @@ use Illuminate\Support\Facades\Hash;
             if ($root->stage == 1) {
                 $root->stage = "2";
                 $root->status = "Investigation in Progress";
+                $root->acknowledge_by= Auth::user()->name;
+                $root->acknowledge_on= Carbon::now()->format('d-M-Y');
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();

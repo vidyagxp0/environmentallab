@@ -678,6 +678,11 @@ class DashboardController extends Controller
             $data = Extension::find($id);
             $single = "#";
             $audit = "extension-audit-trial/" .$data->id;
+
+        } elseif ($type == "Observation") {
+            $data = Observation::find($id);
+            $single = "#";
+            $audit = "ObservationAuditTrialShow/" .$data->id;
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "#";
