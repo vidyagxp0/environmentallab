@@ -116,16 +116,17 @@ return new class extends Migration
             $table->string('room')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
-            $table->date('updated_at')->nullable();
-            $table->date('created_at')->nullable();
+            // $table->date('updated_at')->nullable();
+            // $table->date('created_at')->nullable();
             // $table->date('origin_state')->nullable();
 
 
 
             $table->string('completed_by')->nullable();
+            
 
             $table->string('completed_on')->nullable();
-            // $table->timestamps();
+             $table->timestamps();
         });
     }
 
