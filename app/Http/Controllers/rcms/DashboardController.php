@@ -689,7 +689,7 @@ class DashboardController extends Controller
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
-            $audit = "#";
+            $audit = "managementReviewReport/" . $data->id;
         } elseif ($type == "Root-Cause-Analysis") {
             $data = RootCauseAnalysis::find($id);
             $single = "rootSingleReport/" . $data->id;

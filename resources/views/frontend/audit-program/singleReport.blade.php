@@ -194,7 +194,7 @@
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
+                        <td class="w-30">{{ $data->initiator_id }}</td>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
