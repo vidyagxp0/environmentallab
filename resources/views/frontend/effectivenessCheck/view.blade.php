@@ -46,7 +46,7 @@
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/audit-trial', $data->parent_record) }}"> Audit Trail </a> </button>
+                                href="{{ url('rcms/effective-audit-trial-show', $data->id) }}"> Audit Trail </a> </button>
                         @if ($data->stage == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
