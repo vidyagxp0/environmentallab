@@ -126,10 +126,10 @@ use Illuminate\Support\Facades\Hash;
         $root->who_rationable = ($request->who_rationable);
         
         $root->investigation_summary = ($request->investigation_summary);
-        $root->zone = ($request->zone);
-        $root->country = ($request->country);
-        $root->state = ($request->state);
-        $root->city = ($request->city);
+        // $root->zone = ($request->zone);
+        // $root->country = ($request->country);
+        // $root->state = ($request->state);
+        // $root->city = ($request->city);
         $root->submitted_by = ($request->submitted_by);
 
         if (!empty($request->Root_Cause_Category  )) {
@@ -429,7 +429,7 @@ use Illuminate\Support\Facades\Hash;
         $root->related_url = ($request->related_url);
         // $root->investigators = implode(',', $request->investigators);
         $root->root_cause_methodology = implode(',', $request->root_cause_methodology);
-        $root->country = ($request->country);
+        // $root->country = ($request->country);
         $root->assign_to = $request->assign_to;
         $root->Sample_Types = $request->Sample_Types;
          
@@ -839,8 +839,8 @@ use Illuminate\Support\Facades\Hash;
             if ($root->stage == 3) {
                 $root->stage = "6";
                 $root->status = "Closed - Done";
-               // $root->evaluation_complete_by = Auth::user()->name;
-               // $root->evaluation_complete_on = Carbon::now()->format('d-M-Y');
+                $root->qA_review_complete_by = Auth::user()->name;
+                $root->qA_review_complete_on = Carbon::now()->format('d-M-Y');
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -868,6 +868,8 @@ use Illuminate\Support\Facades\Hash;
 
             $root->stage = "0";
             $root->status = "Closed-Cancelled";
+            $root->cancelled_by = Auth::user()->name;
+            $root->cancelled_on = Carbon::now()->format('d-M-Y');
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";
