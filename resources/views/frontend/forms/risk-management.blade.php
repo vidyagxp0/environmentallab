@@ -1073,7 +1073,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="view"></textarea>
+                                                                <textarea name="why_root_cause"></textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
