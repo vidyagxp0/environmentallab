@@ -179,7 +179,7 @@
                                         <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
-                                        <th>Due Date</th>
+                                        <th> Initiation Date</th>
                                         <th>Status</th>
                                     </tr>
                                 </thead>
@@ -412,12 +412,13 @@
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 {{-- {{ $datas->assign_to }} --}}
-                                                {{ Helpers::getInitiatorName($datas->assign_to) }}
+                                            {{ Helpers::getInitiatorName($datas->initiator_id) }}
+                                                {{-- {{ $datas->initiator_id }} --}}
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
-                                                {{ Helpers::getdateFormat($datas->due_date) }}
+                                                {{ Helpers::getdateFormat($datas->intiation_date) }}
 
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
