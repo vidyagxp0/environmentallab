@@ -35,6 +35,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::resource('CC', CCController::class);
             Route::resource('actionItem', ActionItemController::class);
             Route::post('action-stage-cancel/{id}', [ActionItemController::class, 'actionStageCancel']);
+            Route::get('actionItemAuditTrialShow/{id}', [ActionItemController::class, 'actionItemAuditTrialShow'])->name('ShowActionItemAuditTrial');
+            Route::get('actionItemAuditTrialDetails/{id}', [ActionItemController::class, 'actionItemAuditTrialDetails'])->name('showaudittrialactionItem');
 
             // ------------------extension _child---------------------------
             Route::post('extension_child/{id}', [ExtensionController::class, 'extension_child'])->name('extension_child');
