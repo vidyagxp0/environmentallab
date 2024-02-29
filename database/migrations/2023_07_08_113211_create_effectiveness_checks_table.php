@@ -52,6 +52,14 @@ return new class extends Migration
             $table->string('not_effective_approval_complete_on')->nullable();
             $table->string('effective_approval_complete_by')->nullable();
             $table->string('effective_approval_complete_on')->nullable();
+            $table->string('activity_type')->nullable();
+            $table->longText('previous')->nullable();
+            $table->longText('current')->nullable();
+            $table->longText('comment')->nullable();
+            $table->string('user_id')->nullable();
+            $table->string('user_name')->nullable();
+            $table->string('origin_state')->nullable();
+            $table->string('user_role')->nullable();
             $table->string('status')->default('Opened');
             $table->string('stage')->default(1);
 
