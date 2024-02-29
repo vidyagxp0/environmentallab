@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -195,7 +195,7 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
@@ -216,15 +216,10 @@
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-
+                        <th class="w-20">Team Members</th>
+                        <td class="w-30">@if($data->team_members){{ Helpers::getInitiatorName($data->team_members) }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-80"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Date of Initiation</th>
-                        <td class="w-80">@if($data->intiation_date){{ $data->intiation_date }}@else Not Applicable @endif</td>
-                        <th class="w-20">Team Members</th>
-                        <td class="w-30">@if($data->team_members){{ $data->team_members }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Risk/Opportunity Description</th>
@@ -234,7 +229,7 @@
                     </tr>
                     <tr>
                          <th class="w-20">Department(s)</th>
-                         <td class="w-80">@if($data->departments){{ $data->departments }}@else Not Applicable @endif</td>
+                         <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments )}}@else Not Applicable @endif</td>
                         <th class="w-20"> Short Description</th>
                         <td class="w-30">@if($data->short_description){{ $data->short_description }} @else Not Applicable @endif</td>
                     </tr>
@@ -263,13 +258,15 @@
                 <table>
                         <tr>
                             <th class="w-20">Department(s)</th>
-                            <td class="w-80">@if($data->departments){{ $data->departments }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments) }}@else Not Applicable @endif</td>
                             <th class="w-20">Source of Risk</th>
                             <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Site Name</th>
                             <td class="w-80">@if($data->site_name){{ $data->site_name }}@else Not Applicable @endif</td>
+                            <th class="w-20">Building</th>
+                            <td class="w-80">@if($data->building){{ $data->building }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Floor</th>
@@ -281,7 +278,7 @@
                             <th class="w-20">Hazard</th>
                             <td class="w-80">@if($data->hazard){{ $data->hazard }}@else Not Applicable @endif</td>
                             <th class="w-20">Room</th>
-                            <td class="w-80">@if($data->room2){{ $data->room2 }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->room){{ $data->room }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
                             <th class="w-20">Regulatory Climate</th>
@@ -291,26 +288,16 @@
                         </tr>
                         
                         <tr>
+                             <th class="w-20">Room</th>
+                            <td class="w-80">@if($data->room2){{ $data->room2 }}@else Not Applicable @endif</td>
                             <th class="w-20">Risk Management Strategy</th>
                             <td class="w-80">@if($data->risk_management_strategy){{ $data->risk_management_strategy }}@else Not Applicable @endif</td>
-                            <th class="w-20">Related Record</th>
-                            <td class="w-80">@if($data->related_record){{ $data->related_record }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Building</th>
-                            <td class="w-80">@if($data->building){{ $data->building }}@else Not Applicable @endif</td>
-                            <!-- <th class="w-20">Related Record</th>
-                            <td class="w-80">@if($data->related_record){{ $data->related_record }}@else Not Applicable @endif</td> -->
                         </tr>
                    </table>
                 </div>
             </div>
 
-
-
-            
-
-            <div class="block">
+           <div class="block">
                 <div class="block-head">
                     Work Group Assignment
                 </div>
@@ -336,12 +323,12 @@
                         <td class="w-30">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
                         
                     </tr>
-                    <tr>
+                    <!-- <tr>
                         <th class="w-20">Action Plan</th>
                         <td class="w-30">@if($data->action_plan){{ $data->action_plan }}@else Not Applicable @endif</td>
                         <th class="w-20"></th>
                         <td class="w-30">@if($data->work_group_attachments){{ $data->work_group_attachments}}@else Not Applicable @endif</td>
-                    </tr>
+                    </tr> -->
                 </table>
                 <div class="border-table">
                     <div class="block-head">
@@ -387,40 +374,20 @@
                            <td class="w-30">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Severity Rate
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->severity_rate){{ $data->severity_rate }}@else Not Applicable @endif
-                                </div>
-                            </td>
+                            <th class="w-20">Severity Rate</th>
+                            <td class="w-80">@if($data->severity_rate){{ $data->severity_rate }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Occurrence
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->occurrence){{ $data->occurrence }}@else Not Applicable @endif
-                                </div>
-                            </td>
+                            <th class="w-20">Occurrence</th>
+                            <td class="w-80">@if($data->occurrence){{ $data->occurrence }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Detection
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->detection){{ $data->detection }}@else Not Applicable @endif
-                                </div>
-                            </td>
+                            <th class="w-20">Detection</th>
+                            <td class="w-80">@if($data->detection){{ $data->detection }}@else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">RPN
-                            </th>
-                            <td class="w-80">
-                                <div>
-                                    @if($data->rpn){{ $data->rpn }}@else Not Applicable @endif
-                                </div>
-                            </td>
+                            <th class="w-20">RPN</th>
+                            <td class="w-80">@if($data->rpn){{ $data->rpn }}@else Not Applicable @endif</td>
                         </tr>
                     </table>
                 </div>
@@ -549,7 +516,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Reference Record</th>
-                        <td class="w-30">@if($data->refrence_record){{ Helpers::getInitiatorName($data->refrence_record) }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->refrence_record){{ Helpers::getDivisionName($data->refrence_record) }}/RA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
                     </tr>
@@ -586,7 +553,12 @@
                         <th class="w-20">Risk Analysis Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->risk_analysis_completed_on) }}</td>
                     </tr>
-                    
+                    <tr>
+                        <th class="w-20">Cancelled By</th>
+                        <td class="w-30">{{ $data->cancelled_by }}</td>
+                        <th class="w-20">Cancelled On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
+                    </tr>
 
                 </table>
             </div>
