@@ -324,6 +324,16 @@ btnsElement.innerHTML += button.outerHTML;
 }
 
 
+$.ajax({
+    url: "{{ url('save-training', $document->id) }}",
+    type: 'GET',
+    success: function(res) {
+        console.log(res);
+        alert(res.message);
+    }
+});
+
+
 }
 
 // Event listeners for navigation buttons

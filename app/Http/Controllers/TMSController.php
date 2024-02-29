@@ -113,7 +113,7 @@ class TMSController extends Controller
                 }
             }
            }
-           return view('frontend.TMS.dashboard',compact('documents'));
+            return view('frontend.TMS.dashboard',compact('documents'));
 
         }
     }
@@ -288,6 +288,23 @@ class TMSController extends Controller
 
     //    }
 
+    }
+
+    public function saveTraining($id){
+       $document_training = DocumentTraining::where('document_id',$id)->first();
+       if ($document_training) {
+     
+        $document_training->status = "complete";
+                           
+        $document_training->created_at = date('Y-m-d H:i:s');                    
+        $document_training->save();
+     
+        return response()->json(['message' => 'Document training status updated successfully'], 200);
+    } else {
+       
+        return response()->json(['error' => 'Document training not found'], 404);
+    }
+      
     }
     public function trainingQuestion($id){
         $document = Document::find($id);

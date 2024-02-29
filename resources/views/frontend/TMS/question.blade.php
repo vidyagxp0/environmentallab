@@ -183,11 +183,19 @@
                         </div>
 
                         <div class="group-input multi_question-options" id="multi_options-group">
-                            <label for="options">
+                            <div class="row">
+                                <div class="col-10"> <label for="options">
                                 Options<button type="button" id="multi_optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
-                            </label>
+                            </label></div>
+                                <div class="col-2"><label for="answer">
+                                answers
+                            </label></div>
+                            </div>
+                           
+                            
                             <div class="option-group">
                                 <input type="text" id="option" name="options[]">
+                               
                                 <input type="checkbox" class="answer" name="answer" value="0">
                             </div>
                             <div id="multi_optionsdiv"></div>
@@ -315,7 +323,7 @@
             // Add an option field to the form
             function addOption() {
                 const newOption = $(`<div class="option">
-        <input type="text" name="options[]" placeholder="Option ${++optionCount}" />
+        <input type="text" name="options[]" placeholder="Option ${++optionCount}" id="${optionCount}" />
         <input type="radio" name="answer" value="${optionCount-1}">
         <button type="button" class="remove-option">Remove</button>
       </div>`);
@@ -329,8 +337,9 @@
 
             // Update the selected answer field based on the user's selection
             function updateSelectedAnswer() {
-                const selectedOption = $('input[name="answer"]:checked').prev().val();
+                const selectedOption = $('input[name="answer"]:checked').val();
                 selectedAnswerInput.val(selectedOption);
+                $('#answersdiv').append(`<input type="text" name="answers[]" value="${selectedOption}" >`)
             }
 
             // Add event listeners to the form elements

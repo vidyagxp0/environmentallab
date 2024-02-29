@@ -106,11 +106,24 @@
                                 </thead>
                                 <tbody id="searchTable">
                                     @foreach ($documents as $temp)
+
+                                       @if($temp->traningstatus->status=='complete')
+                                       <tr>
+                                            <td>Sop-000{{ $temp->id }}</td>
+                                            <td>{{ $temp->document_name }}</td>
+                                            <th>1</th>
+                                            <td>{{$temp->traningstatus->status}}</td>
+                                            <td>Document</td>
+                                            <td>{{ $temp->due_dateDoc }}</td>
+                                            <td>{{ $temp->created_at  }}</td>
+                                            <td>completed</td>
+                                        </tr>
+                                       @else
                                         <tr>
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
-                                            <td>{{ $temp->traningstatus->status }}</td>
+                                            <td>{{$temp->traningstatus->status}}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
@@ -118,6 +131,11 @@
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
                                         </tr>
+                                       
+
+                                        @endif
+
+
                                     @endforeach
 
 
@@ -145,7 +163,7 @@
                                     @foreach ($due as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                000{{ $temp->document_id }}</td>
+                                                {{ $temp->document_id }}</td>
                                                 <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
