@@ -257,6 +257,7 @@
                                         <label for="investigators">Additional Investigators</label>
                                         <select  name="investigators" placeholder="Select Investigators"
                                             data-search="false" data-silent-initial-value-set="true" id="investigators">
+                                            <option value="">Select Investigators</option>
                                             <option value="1">Amit Guru</option>
                                             <option value="2">Shaleen Mishra</option>
                                             <option value="3">Madhulika Mishra</option>

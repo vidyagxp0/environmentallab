@@ -558,6 +558,7 @@
                                             <select  name="investigators" placeholder="Select Investigators"
                                              {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  name="investigators" placeholder="Select Investigators"
                                                 data-search="false" data-silent-initial-value-set="true" id="investigators">
+                                                <option value="">Select Investigators</option>
                                                 <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
                                                 <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
                                                 <option @if ($data->investigators=='3') selected @endif value="3">Madhulika Mishra</option>
@@ -1360,25 +1361,25 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_By">Submit By</label>
+                                            <label for="Submit_By">Submited By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submit On</label>
+                                            <label for="Submit_On">Submited On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="QA_Review_Complete_By">QA Review Complete By</label>
+                                            <label for="QA_Review_Complete_By">QA Review Completed By</label>
                                             <div class="static">{{ $data->qA_review_complete_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="QA_Review_Complete_On">QA Review Complete On</label>
+                                            <label for="QA_Review_Complete_On">QA Review Completed On</label>
                                             <div class="static">{{ $data->qA_review_complete_on }}</div>
                                         </div>
                                     </div>
@@ -1419,7 +1420,7 @@
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">E-Signature11</h4>
+                        <h4 class="modal-title">E-Signature</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
