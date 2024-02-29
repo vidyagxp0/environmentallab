@@ -72,6 +72,40 @@ class Helpers
     {
         return   str_pad($id, 5, '0', STR_PAD_LEFT);
     }
+    public static function getDepartmentWithString($id)
+    {
+        $response = [];
+        if(!empty($id)){
+            $response = explode(',',$id);
+        }
+        return $response;
+    }
+   
+    public static function getDepartmentNameWithString($id)
+    {
+        $response = [];
+        $resp = [];
+        if(!empty($id)){
+            $result = explode(',',$id);
+            if(in_array(1,$result)){
+                array_push($response, 'QA');
+            }
+            if(in_array(2,$result)){
+                array_push($response, 'QC');
+            }
+            if(in_array(3,$result)){
+                array_push($response, 'R&D');
+            }
+            if(in_array(4,$result)){
+                array_push($response, 'Manufacturing');
+            }
+            if(in_array(5,$result)){
+                array_push($response, 'Warehouse');
+            }
+            $resp = implode(',',$response);
+        }
+        return $resp;
+    }
 
     public static function hodMail($data)
     {

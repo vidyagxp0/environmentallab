@@ -214,8 +214,7 @@
                      </tr>
                      <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
-                        </td>
+                        <td class="w-80">@if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                         <th class="w-20">Severity Level</th>
                         <td class="w-80">{{ $data->severity_level_form }}</td>
 
