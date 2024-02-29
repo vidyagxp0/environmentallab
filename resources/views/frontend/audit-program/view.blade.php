@@ -802,8 +802,20 @@
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
-                                         <div class="col-lg-6">
-                                    <div class="group-input">
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                               <label for="Rejected_By">Rejected By</label>
+                                               <div class="static">{{ $data->rejected_by}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                           <div class="group-input">
+                                             <label for="Rejected_On">Rejected On</label>
+                                             <div class="static">{{ $data->rejected_on }}</div>
+                                          </div>
+                                       </div>
+                                      <div class="col-lg-6">
+                                         <div class="group-input">
                                         <label for="Audit_Completed_By">Audit Completed By</label>
                                         <div class="static">{{ $data->Audit_Completed_By }}</div>
                                     </div>
@@ -817,13 +829,13 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled_By">Cancelled By</label>
-                                        <div class="static">{{ $data->Cancelled_By }}</div>
+                                        <div class="static">{{ $data->cancelled_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled_On">Cancelled On</label>
-                                        <div class="static">{{ $data->Cancelled_On }}</div>
+                                        <div class="static">{{ $data->cancelled_on }}</div>
                                     </div>
                                 </div>
                                     </div>
@@ -925,7 +937,6 @@
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
-
                             <!-- Modal footer -->
                             <!-- <div class="modal-footer">
                                 <button type="submit" data-bs-dismiss="modal">Submit</button>

@@ -53,14 +53,15 @@ return new class extends Migration
             $table->string('severity1_level')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
-
             $table->string('submitted_by')->nullable();
             $table->string('approved_by')->nullable();
-
             $table->string('submitted_on')->nullable();
             $table->string('approved_on')->nullable();
             $table->string('Audit_Completed_By')->nullable();
-
+            $table->string('cancelled_by')->nullable();
+            $table->string('cancelled_on')->nullable();
+            $table->string('rejected_by')->nullable();
+            $table->string('rejected_on')->nullable();
             $table->string('Audit_Completed_On')->nullable();
             $table->timestamps();
         });

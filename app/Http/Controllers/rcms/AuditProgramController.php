@@ -740,6 +740,8 @@ class AuditProgramController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                 $changeControl->rejected_by  = Auth::user()->name;
+                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -758,6 +760,8 @@ class AuditProgramController extends Controller
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by  = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -765,6 +769,8 @@ class AuditProgramController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by  = Auth::user()->name;
+                $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
