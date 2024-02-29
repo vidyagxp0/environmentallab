@@ -956,13 +956,26 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed By">Completed By</label>
-                                        {{-- <div class="static">{{ $data->completed_by }}</div> --}}
+                                         <div class="static">{{ $data->completed_by }}</div> 
                                     </div>
-                                </div> 
+                                </div>
+                           
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed On">Completed On</label>
-                                        {{-- <div class="static">{{ $data->completed_on}}</div> --}}
+                                         <div class="static">{{ $data->completed_on}}</div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed By">Submited By</label>
+                                         <div class="static">{{ $data->Submited_by }}</div> 
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed By">Submited On</label>
+                                         <div class="static">{{ $data->Submited_on }}</div> 
                                     </div>
                                 </div>
                             </div>

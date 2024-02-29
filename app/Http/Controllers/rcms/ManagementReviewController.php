@@ -1335,6 +1335,8 @@ class ManagementReviewController extends Controller
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
                 $changeControl->status = "In Progress";
+                $changeControl->Submited_by = Auth::user()->name;
+                $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

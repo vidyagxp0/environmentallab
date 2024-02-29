@@ -119,12 +119,12 @@ return new class extends Migration
             // $table->date('updated_at')->nullable();
             // $table->date('created_at')->nullable();
             // $table->date('origin_state')->nullable();
-
+            $table->string('Submited_by')->nullable();
+            $table->string('Submited_on')->nullable();
+            
 
 
             $table->string('completed_by')->nullable();
-            
-
             $table->string('completed_on')->nullable();
              $table->timestamps();
         });

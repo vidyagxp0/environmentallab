@@ -12,7 +12,7 @@
                          <div class="default-name">
                             {{-- <!-- /Record-000{{ $document->id }}</div> --> --}}
                             {{ Helpers::getDivisionName(session()->get('division')) }}/AP/{{ date('Y') }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
-                         </div>
+                        </div>
                         <div class="btn-group">
                             <a href="{{ url('rcms/auditProgramAuditReport',$document->id)}}"> <button type="button">Print</button></a>
                         </div>
