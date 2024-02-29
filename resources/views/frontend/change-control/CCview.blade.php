@@ -366,13 +366,45 @@
                                                     <select placeholder="Select..." name="assign_to" required>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $datas)
+                                                        @if(Helpers::checkUserRolesassign_to($datas))
                                                             <option value="{{ $datas->id }}"
                                                                 {{ $data->assign_to == $datas->id ? 'selected' : '' }}
                                                                 {{-- @if ($data->assign_to == $datas->id) selected @endif --}}>
                                                                 {{ $datas->name }}
                                                             </option>
+                                                        @endif    
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Microbiology">CFT Reviewer</label>
+                                                    <select name="Microbiology">
+                                                        <option value="0">-- Select --</option>
+                                                        <option value="yes" selected>Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
+                                                    <select multiple name="Microbiology_Person[]"
+                                                        placeholder="Select CFT Reviewers" data-search="false"
+                                                        data-silent-initial-value-set="true" id="cft_reviewer">
+                                                         <option value="0">-- Select --</option>
+                                                        @foreach ($cft as $data1)
+                                                        @if(Helpers::checkUserRolesMicrobiology_Person($data1))
+                                                            @if(in_array($data1->id, $cft_aff))
+                                                                <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
+                                                            @else
+                                                                <option value="{{ $data1->id }}">{{ $data1->name }}</option>
+                                                            @endif    
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -1564,7 +1596,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            <div class="col-lg-6">
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">More Information Required By</label>
                                                     @php
@@ -1593,7 +1625,7 @@
                                                         <div class="static">{{ $temp->created_at }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
@@ -1628,7 +1660,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Review Completed By</label>
+                                                    <label for="submitted">Send to CFT/SME/QA Review By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1643,7 +1675,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Review Completed On</label>
+                                                    <label for="submitted">Send to CFT/SME/QA Review By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1657,7 +1689,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6">
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">CFT Reviewed By</label>
                                                     @php
@@ -1686,12 +1718,12 @@
                                                         <div class="static">{{ $temp->created_at }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">CFT Review Completed By</label>
+                                                    <label for="submitted">CFT/SME/QA Review Not required By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1706,7 +1738,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">CFT Review Completed On</label>
+                                                    <label for="submitted">CFT/SME/QA Review Not required On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1723,7 +1755,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Training Completed By</label>
+                                                    <label for="submitted">Review Completed By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1738,7 +1770,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Training Completed On</label>
+                                                    <label for="submitted">Review Completed By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1753,7 +1785,7 @@
                                             </div>
 
 
-                                            <div class="col-lg-6">
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">Change Implemented By</label>
                                                     @php
@@ -1782,10 +1814,10 @@
                                                         <div class="static">{{ $temp->created_at }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Final Review Completed By</label>
+                                                    <label for="submitted">Implemented By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1800,7 +1832,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Final Review Completed On</label>
+                                                    <label for="submitted">Implemented On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')

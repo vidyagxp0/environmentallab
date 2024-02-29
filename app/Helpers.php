@@ -74,6 +74,24 @@ class Helpers
             $datauser = explode(',', $document->approvers);
             for ($i = 0; $i < count($datauser); $i++) {
                 if ($datauser[$i] == Auth::user()->id) {
+                    if($document->stage >= 4){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolesApprovers($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 1) {
                     return true;
                 }
             }
@@ -82,6 +100,61 @@ class Helpers
         }
     }
 
+    public static function checkUserRolesreviewer($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 2) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolestrainer($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 6) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolesassign_to($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 4) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolesMicrobiology_Person($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 5) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
 
     public static function divisionNameForQMS($id)
     {

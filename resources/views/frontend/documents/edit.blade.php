@@ -1139,6 +1139,7 @@
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
+                                            @if(Helpers::checkUserRolesreviewer($lan))
                                                 <option value="{{ $lan->id }}"
                                                     @if ($document->reviewers) @php
                                                    $data = explode(",",$document->reviewers);
@@ -1152,6 +1153,7 @@
                                             @endif>
                                             {{ $lan->name }}
                                             </option>
+                                            @endif
                                         @endforeach
                                         @endif
                                     </select>
@@ -1199,6 +1201,7 @@
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
+                                            @if(Helpers::checkUserRolesApprovers($lan))
                                                 <option value="{{ $lan->id }}"
                                                     @if ($document->approvers) @php
                                                    $data = explode(",",$document->approvers);
@@ -1212,6 +1215,7 @@
                                             @endif>
                                             {{ $lan->name }}
                                             </option>
+                                            @endif
                                         @endforeach
                                         @endif
                                     </select>
@@ -1508,9 +1512,11 @@
                                     <select name="trainer" {{Helpers::isRevised($document->stage)}} >
                                         <option value="" selected>Enter your Selection</option>
                                         @foreach ($trainer as $temp)
+                                        @if(Helpers::checkUserRolestrainer($temp))
                                             <option value="{{ $temp->id }}"
                                                 @if (!empty($trainingDoc)) @if ($trainingDoc->trainer == $temp->id) selected @endif
                                                 @endif>{{ $temp->name }}</option>
+                                        @endif        
                                         @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)

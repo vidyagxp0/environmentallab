@@ -140,7 +140,7 @@
                                             <div class="active">Rejected </div>
                                         @endif --}}
                                         @if ($stagereview)
-                                            @if ($stagereview->stage == 'Reviewed')
+                                            @if ($stagereview->stage == 'Reviewed' AND $document->stage >= 2)
                                                 <div class="active">Reviewed</div>
                                             @else
                                                 <div>Reviewed</div>

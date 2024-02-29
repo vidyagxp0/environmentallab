@@ -17,19 +17,39 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
-use Helpers;
 
 class MytaskController extends Controller
 {
     public function index()
     {
-        if (Helpers::checkRoles(2)) {
+
+       
             $array1 = [];
             $array2 = [];
-            $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
+            $document = Document::where('stage', '>=', 2)->orWhere('stage','>=','4')->orderByDesc('id')->get();
 
             foreach ($document as $data) {
                 $data->originator_name = User::where('id', $data->originator_id)->value('name');
+                if ($data->approver_group) {
+                    $datauser = explode(',', $data->approver_group);
+                    for ($i = 0; $i < count($datauser); $i++) {
+                        $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
+                        $ids = explode(',', $group);
+                        for ($j = 0; $j < count($ids); $j++) {
+                            if ($ids[$j] == Auth::user()->id) {
+                                array_push($array1, $data);
+                            }
+                        }
+                    }
+                }
+                if ($data->approvers) {
+                    $datauser = explode(',', $data->approvers);
+                    for ($i = 0; $i < count($datauser); $i++) {
+                        if ($datauser[$i] == Auth::user()->id) {
+                            array_push($array2, $data);
+                        }
+                    }
+                }
                 if ($data->reviewers_group) {
                     $datauser = explode(',', $data->reviewers_group);
                     for ($i = 0; $i < count($datauser); $i++) {
@@ -62,10 +82,53 @@ class MytaskController extends Controller
                 ->value('name');
             }
             $task = $this->paginate($arrayTask);
-           
+            return view('frontend.tasks', ['task' => $task]);
+        
+
+        if (Auth::user()->role == 2) {
+            $array1 = [];
+            $array2 = [];
+            $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
+
+            foreach ($document as $data) {
+                $data->originator_name = User::where('id', $data->originator_id)->value('name');
+                
+                if ($data->reviewers_group) {
+                    $datauser = explode(',', $data->reviewers_group);
+                    for ($i = 0; $i < count($datauser); $i++) {
+                        $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
+                        $ids = explode(',', $group);
+                        for ($j = 0; $j < count($ids); $j++) {
+                            if ($ids[$j] == Auth::user()->id) {
+                                array_push($array1, $data);
+                            }
+                        }
+                    }
+                }
+                if ($data->reviewers) {
+                    $datauser = explode(',', $data->reviewers);
+                    for ($i = 0; $i < count($datauser); $i++) {
+                        if ($datauser[$i] == Auth::user()->id) {
+                            array_push($array2, $data);
+                            // echo "<pre>";
+                            // print_r($array2);
+                            // die;
+
+                        }
+                    }
+                }
+
+            }
+            $arrayTask = array_unique(array_merge($array1, $array2));
+            foreach ($arrayTask as $temp) {
+                $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)
+                ->value('name');
+            }
+            $task = $this->paginate($arrayTask);
+            return view('frontend.tasks', ['task' => $task]);
         }
 
-        if (Helpers::checkRoles(1)) {
+        if (Auth::user()->role == 1) {
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 4)->orderByDesc('id')->get();
@@ -99,8 +162,8 @@ class MytaskController extends Controller
                 $temp->document_type_name = DocumentType::where('id', $temp->document_type_id)->value('name');
             }
             $task = $this->paginate($arrayTask);
+            return view('frontend.tasks', ['task' => $task]);
         }
-        return view('frontend.tasks', ['task' => $task]);
     }
     public function reviewdetails($id)
     {

@@ -69,6 +69,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($documents as $temp)
+                                    @if(!empty($temp->training) AND $temp->training->stage >=6)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
                                                 000{{ $temp->document_id }}</td>
@@ -83,6 +84,7 @@
                                                 <button onClick="window.location='{{ url('tms-audit',$temp->id) }}';">Audit Trail</button>           
                                             </td>
                                         </tr>
+                                        @endif
                                     @endforeach
 
 

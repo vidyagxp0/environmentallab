@@ -434,10 +434,13 @@
                                         <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
                                             name="reviewers[]" placeholder="Select Reviewers" multiple required>
                                             @if (!empty($reviewer))
+                                            
                                                 @foreach ($reviewer as $lan)
+                                                    @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </select>
@@ -453,9 +456,11 @@
                                             name="approvers[]" placeholder="Select Approvers" multiple required>
                                             @if (!empty($approvers))
                                                 @foreach ($approvers as $lan)
+                                                    @if(Helpers::checkUserRolesApprovers($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </select>
@@ -552,7 +557,9 @@
                                         <select name="trainer">
                                             <option value="" selected>Enter your Selection</option>
                                             @foreach ($trainer as $temp)
+                                            @if(Helpers::checkUserRolestrainer($temp))
                                                 <option value="{{ $temp->id }}">{{ $temp->name }}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>
