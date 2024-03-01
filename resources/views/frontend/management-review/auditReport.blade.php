@@ -166,10 +166,10 @@
                     <strong>Audit Program Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
+                 {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -180,7 +180,7 @@
         <div class="head">Management Review Audit Trial Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
+          {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         {{-- <div class="first-table">
@@ -190,7 +190,7 @@
                         <strong>Config Area :</strong> All - No Filter
                     </td>
                     <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ $doc->created_at }}
+                        <strong>Start Date (GMT) :</strong> {{ $managementReview->created_at }}
                     </td>
                 </tr>
                 <tr>
@@ -199,15 +199,15 @@
                     </td>
                     <td class="w-50">
                         <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ $doc->updated_at }}
+                        @if ($managementReview->stage >= 9)
+                            {{ $managementReview->updated_at }}
                         @endif
                     </td>
                 </tr>
                 <tr>
                     <td class="w-50">&nbsp;</td>
                     <td class="w-50">
-                        <strong>Person Responsible : {{ $doc->originator }}</strong>
+                        <strong>Person Responsible : {{ $managementReview->originator }}</strong>
                     </td>
                 </tr>
             </table>
@@ -241,10 +241,12 @@
                         <td>{{ $datas->created_at }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if ($datas->previous == "NULL")
-                                Modify
-                            @else
+                            @if(($datas->previous == 'Null') && ($datas->current !='Null'))
                                 New
+                            @elseif(($datas->previous != $datas->current))
+                                Modify
+                            @else 
+                               New
                             @endif
                         </td>
                     </tr>

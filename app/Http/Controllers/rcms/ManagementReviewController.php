@@ -22,8 +22,10 @@ use App\Models\User;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ManagementReviewController extends Controller
@@ -1409,14 +1411,14 @@ class ManagementReviewController extends Controller
 
     public static function managementReviewReport($id)
     {
-        $doc = ManagementReview::find($id);
+        $managementReview = ManagementReview::find($id);
         
-        if (!empty($doc)) {
-            $doc->originator = User::where('id', $doc->initiator_id)->value('name');
-            $data = ManagementReview::where('id', $id)->get();
+        if (!empty($managementReview)) {
+            $managementReview->originator = User::where('id', $managementReview->initiator_id)->value('name');
+            $data = ManagementAuditTrial::where('ManagementReview_id', $id)->get();
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.management-review.auditReport', compact('data', 'doc'))
+            $pdf = PDF::loadview('frontend.management-review.auditReport', compact('data', 'managementReview'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -1429,8 +1431,8 @@ class ManagementReviewController extends Controller
             $height = $canvas->get_height();
             $width = $canvas->get_width();
             $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
-            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
-            return $pdf->stream('Internal-Audit' . $id . '.pdf');
+            $canvas->page_text($width / 4, $height / 2, $managementReview->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Management-Review' . $id . '.pdf');
         }
     }
     

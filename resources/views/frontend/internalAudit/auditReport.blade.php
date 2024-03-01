@@ -241,7 +241,7 @@
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if (!empty($datas->previous))
+                            @if (!empty($datas->previous== "NULL"))
                                 Modify
                             @else
                                 New
