@@ -306,7 +306,8 @@ function submitQuiz() {
   var passing =  {{ $quize->passing }};
   var totalque = quizData.length;
   var percentage = (passing/100)*totalque;
-  if (marks >= percentage) {
+
+  // if (marks >= percentage) {
 
 // Find the element with the "btns" class
 var btnsElement = document.querySelector(".btns");
@@ -321,7 +322,7 @@ button.textContent = "Complete Training";
 // Append the button to the btnsElement
 btnsElement.innerHTML += button.outerHTML;
 
-}
+// }
 
 
 }

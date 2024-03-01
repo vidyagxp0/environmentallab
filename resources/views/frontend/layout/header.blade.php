@@ -175,7 +175,7 @@
                         @endif
                         @if (Helpers::checkRoles(4) ||Helpers::checkRoles(5) || Helpers::checkRoles(3))
                             <div>
-                                <a href="{{ route('change-control.index') }}">My Tasks</a>
+                                <a href="{{ route('change-control.index') }}">Change Control</a>
                             </div>
                         @endif
                     @endif

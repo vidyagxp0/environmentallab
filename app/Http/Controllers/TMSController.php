@@ -80,7 +80,43 @@ class TMSController extends Controller
             }
             }
 
-            return view('frontend.TMS.dashboard', compact('documents','due','pending','complete'));
+            $documents2 =[];
+            if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
+            {
+                $train = [];
+
+           $training = Training::all();
+           foreach($training as $temp){
+           $data = explode(',',$temp->trainees);
+           if(count($data) > 0){
+            foreach($data as $datas){
+                if($datas == Auth::user()->id){
+                    array_push($train,$temp);
+                }
+            }
+           }
+           }
+          
+           if(count($train)>0){
+            foreach($train as $temp){
+                $explode = explode(',',$temp->sops);
+                foreach($explode as $data_temp){
+                    $doc = Document::find($data_temp);
+                    array_push($documents2,$doc);
+                }
+            }
+           }
+           if(!empty($documents2)){
+            foreach($documents2 as $temp){
+                if($temp){
+                    $temp->traningstatus = DocumentTraining::where('document_id',$temp->id)->first();
+
+                }
+            }
+           }
+            }
+
+            return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete'));
         }
         else{
             $train = [];
@@ -114,7 +150,8 @@ class TMSController extends Controller
                 }
             }
            }
-           return view('frontend.TMS.dashboard',compact('documents'));
+           $documents2 =$documents;
+           return view('frontend.TMS.dashboard',compact('documents','documents2'));
 
         }
     }
@@ -217,6 +254,15 @@ class TMSController extends Controller
     public function viewTraining($id,$sopId){
         $doc = Document::find($sopId);
         if(Helpers::checkRoles(6)){
+            if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
+            {
+                $trainning = Training::find($id);
+                $trainning->trainer = User::find($trainning->trainner_id);
+                if(!empty($trainning->trainer)){
+                    return view('frontend.TMS.document-view',compact('trainning','sopId', 'doc'));  
+                }
+                
+            }
             $trainning = Training::where('trainner_id',Auth::user()->id)->get();
             return view('frontend.TMS.manage-training',compact('trainning', 'doc'));
         }

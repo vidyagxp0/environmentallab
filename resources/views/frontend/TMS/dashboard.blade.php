@@ -91,8 +91,10 @@
                                 </tbody>
                             </table>
                         </div>
-                    @else
-                        <div class="block-table">
+                        @endif
+
+                       @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
+                        <div class="block-table" style="    padding-top: 100px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -107,7 +109,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="searchTable">
-                                    @foreach ($documents as $temp)
+                                    @foreach ($documents2 as $temp)
                                         <tr>
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
@@ -116,8 +118,12 @@
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
+                                            @if($temp->traningstatus->status == 'Complete')
+                                            <th>{{$temp->traningstatus->status}}</th>
+                                            @else
                                             <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
-                                                        class="fa-solid fa-eye"></i></a></td>
+                                                class="fa-solid fa-eye"></i></a></td>
+                                            @endif
                                         </tr>
                                     @endforeach
 

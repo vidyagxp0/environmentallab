@@ -52,8 +52,9 @@ class DocumentDetailsController extends Controller
         $document = Document::withTrashed()->find($request->document_id);
         $originator = User::find($document->originator_id);
 
-
         if (Helpers::checkRoles(3)) {
+          
+          $request['stage_id'] = Stage::where('id', $request->stage_id)->orWhere('name', $request->stage_id)->value('id');
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
@@ -61,9 +62,9 @@ class DocumentDetailsController extends Controller
           $stage->stage = Stage::where('id', $request->stage_id)->value('name');
           $stage->comment = $request->comment;
 
+          
           if ($stage->stage == "In-Review") {
-            $deletePreviousApproval = StageManage::where('document_id', $request->document_id)
-              ->get();
+            $deletePreviousApproval = StageManage::where('document_id', $request->document_id)->get();
             if ($deletePreviousApproval) {
               foreach ($deletePreviousApproval as $updateRecords) {
                 $updateRecords->delete();
