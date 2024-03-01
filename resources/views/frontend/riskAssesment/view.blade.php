@@ -1254,9 +1254,9 @@
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date "><div
                                                                     class="calenderauditee">
-                                                                    <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
+                                                                    <input type="text" id="deadline{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_plan->deadline)[$key]) }}" />
                                                                     <input type="date" name="deadline[]" class="hide-input" value="{{ unserialize($action_plan->deadline)[$key] }}"
-                                                                    oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>
+                                                                    oninput="handleDateInput(this, `deadline{{$key}}' + serialNumber +'`)" /></div></div></div></td>
                                                                 
                                                                 <td><input type="text" name="item_static[]"
                                                                         value="{{ unserialize($action_plan->item_static)[$key] ? unserialize($action_plan->item_static)[$key] : '' }}">
