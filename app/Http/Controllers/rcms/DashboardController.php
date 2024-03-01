@@ -671,8 +671,8 @@ class DashboardController extends Controller
             $audit = "auditProgramAuditReport/" . $data->id;
         } elseif ($type == "Action-Item") {
             $data = ActionItem::find($id);
-            $single = "#";
-            $audit = "#";
+            $single = "actionitemSingleReport/"  . $data->id;
+            $audit = "actionitemAuditReport/" . $data->id;
         } elseif ($type == "Extension") {
             $data = Extension::find($id);
             $single = "#";

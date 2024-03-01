@@ -15,7 +15,11 @@ use App\Models\RefInfoComments;
 use App\Models\Taskdetails;
 use App\Models\User;
 use Carbon\Carbon;
+use PDF;
+use Illuminate\Support\Facades\App;
+use App\Models\OpenStage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -458,7 +462,20 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->save();
-        }   
+        }  
+        if ($lastopenState->assign_to != $openState->assign_to || !empty($request->assign_to_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Assigned To';
+            $history->previous = $lastopenState->assign_to;
+            $history->current = $openState->assign_to;
+            $history->comment = $request->dept_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->save();
+        }  
           
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
             $history = new ActionItemHistory;
@@ -813,5 +830,54 @@ public function actionItemAuditTrialDetails($id)
     $doc->origiator_name = User::find($doc->initiator_id);
     return view('frontend.action-item.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
 }
-    
+
+public static function singleReport($id)
+{
+    $data = ActionItem::find($id);
+    if (!empty($data)) {
+        $data->originator = User::where('id', $data->initiator_id)->value('name');
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadview('frontend.action-item.singleReport', compact('data'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+        return $pdf->stream('ActionItem' . $id . '.pdf');
+    }
+}
+public static function auditReport($id)
+{
+    $doc = ActionItem::find($id);
+    if (!empty($doc)) {
+        $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+        $data = ActionItemHistory::where('cc_id', $id)->get();
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadview('frontend.action-item.auditReport', compact('data', 'doc'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
+        return $pdf->stream('ActionItem-Audit' . $id . '.pdf');
+    }
+}
 }

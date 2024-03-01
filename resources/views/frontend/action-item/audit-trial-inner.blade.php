@@ -91,7 +91,13 @@
                             <div class="list-item">
                                 <div class="head">Changed From</div>
                                 <div>:</div>
-                                <div>{{ $temp->previous }}</div>
+                                @if($temp->activity_type == "Assigned To" || $temp->activity_type == "HOD Persons" )
+                                @foreach(explode(',',$temp->previous) as $prev)
+                                {{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }},
+                                @endforeach
+                                @else
+                                {{ $temp->previous }}
+                                @endif
                             </div>
                             @else
                             <div class="list-item">
@@ -104,7 +110,13 @@
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>
-                                <div>{{ $temp->current }}</div>
+                                @if($temp->activity_type == "Assigned To" || $temp->activity_type == "HOD Persons" )
+                                @foreach(explode(',',$temp->current) as $curr)
+                                {{ Helpers::getInitiatorName($curr) }} ,
+                                @endforeach
+                                @else
+                                {{ $temp->current }}
+                                @endif
                             </div>
                             @endif
                             @endif
