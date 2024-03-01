@@ -46,7 +46,7 @@
                                 @foreach ($audit as $audits)
                                     <tr>
                                         <td class="viewdetails"><a
-                                                href="{{ route('showaudittrialactionItem', $audits->id) }}">{{ $audits->activity_type }}</a>
+                                                href="{{ url('rcms/action-item-audittrialdetails', $audits->id) }}">{{ $audits->activity_type }}</a>
                                         </td>
                                         <td>{{ Helpers::getdateFormat1($audits->created_at) }}</td>
                                         <td>{{ $audits->user_name }}</td>

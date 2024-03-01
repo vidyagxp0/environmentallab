@@ -61,7 +61,7 @@
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ route('showActionItemAuditTrial', $data->id) }}"> Audit Trail </a> </button>
+                                href="{{  url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
                         @if ($data->stage == 1)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
@@ -147,7 +147,7 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                             {{-- <div class="static"></div> --}}
                                         </div>
                                     </div>
