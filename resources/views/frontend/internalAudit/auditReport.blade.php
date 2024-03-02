@@ -177,13 +177,13 @@
 
     <div class="inner-block">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head">Internal Audit Trail Report</div>
 
         <div class="division">
             {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
-        <div class="first-table">
+        {{-- <div class="first-table">
             <table>
                 <tr>
                     <td class="w-50">
@@ -211,7 +211,7 @@
                     </td>
                 </tr>
             </table>
-        </div>
+        </div> --}}
 
         <div class="second-table">
             <table>
@@ -237,6 +237,12 @@
                                 <div><strong>Changed To :</strong></div>
                                 <div>{{ $datas->current }}</div>
                             </div>
+                            <div><strong>Changed To :</strong></div>
+                            @if($datas->activity_type == "Assigned To")
+                            @foreach(explode(',',$datas->current) as $curr)
+                            <div>{{ Helpers::getInitiatorName($curr) }}</div>
+                            @endforeach
+                           @endif
                         </td>
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
