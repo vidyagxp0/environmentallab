@@ -209,6 +209,9 @@
                                     <div>
                                         <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
                                     </div>
+                                    <div>
+                                    <a href="/analytics">Analytics</a> 
+                                    </div>
                                     @if (Auth::user())
                                         @if (Auth::user()->role == 3 || Auth::user()->role == 1 || Auth::user()->role == 2)
                                             <div>

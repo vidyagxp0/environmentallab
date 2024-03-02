@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('userLogin', [UserLoginController::class, 'loginapi']);
+Route::get('/analyticsData', [DashboardController::class, 'analyticsData']);
 
 Route::get('dashboardStatus', [ApiController::class, 'dashboardStatus']);
 Route::get('getProfile', [ApiController::class, 'getProfile']);
