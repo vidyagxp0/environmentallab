@@ -1,6 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
-    @if (Auth::user()->role == 6)
+    @if (Helpers::checkRoles(6))
         @include('frontend.TMS.head')
     @endif
 

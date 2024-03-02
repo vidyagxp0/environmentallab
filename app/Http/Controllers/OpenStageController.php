@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Helpers;
 class OpenStageController extends Controller
 {
     /**
@@ -36,14 +36,14 @@ class OpenStageController extends Controller
     public function index()
     {
 
-        if (Auth::user()->role == 4) {
+        if (Helpers::checkRoles(4)) {
             $data = OpenStage::where('assign_to', Auth::user()->id)->where('stage', '>=', 2)->OrderByDesc('id')->get();
             foreach ($data as $temp) {
                 $temp->assign_to_name = User::where('id', $temp->assign_to)->value('name');
                 $temp->cft_name = User::where('id', $temp->cft)->value('name');
                 $temp->recordNumber = str_pad($temp->record, 5, '0', STR_PAD_LEFT);
             }
-        } elseif (Auth::user()->role == 5) {
+        } elseif (Helpers::checkRoles(5)) {
             $array1 = [];
             $array2 = [];
             $data = OpenStage::where('stage', '>=', 4)->OrderByDesc('id')->get();

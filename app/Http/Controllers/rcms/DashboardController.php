@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     // public function index(){
-    //     if(Auth::user()->role == 3){
+    //     if(Helpers::checkRoles(3)){
     //         $data = CC::where('initiator_id',Auth::user()->id)->orderbyDESC('id')->get();
     //         $child = [];
     //         $childs = [];

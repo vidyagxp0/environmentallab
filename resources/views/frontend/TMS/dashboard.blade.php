@@ -1,6 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
-    @if (Auth::user()->role == 6)
+    @if (Helpers::checkRoles(6))
         @include('frontend.TMS.head')
     @endif
 
@@ -53,7 +53,7 @@
                 </div>
 
                 <div class="inner-block tms-block" id="tms-all-block">
-                    @if (Auth::user()->role == 6)
+                    @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -69,6 +69,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($documents as $temp)
+                                    @if(!empty($temp->training) AND $temp->training->stage >=6)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
                                                 000{{ $temp->document_id }}</td>
@@ -83,14 +84,17 @@
                                                 <button onClick="window.location='{{ url('tms-audit',$temp->id) }}';">Audit Trail</button>           
                                             </td>
                                         </tr>
+                                        @endif
                                     @endforeach
 
 
                                 </tbody>
                             </table>
                         </div>
-                    @else
-                        <div class="block-table">
+                        @endif
+
+                       @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
+                        <div class="block-table" style="    padding-top: 100px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -105,7 +109,7 @@
                                     </tr>
                                 </thead>
                                 <tbody id="searchTable">
-                                    @foreach ($documents as $temp)
+                                    @foreach ($documents2 as $temp)
                                         <tr>
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
@@ -114,9 +118,12 @@
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
-                                            <td><a
-                                                    href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
-                                                        class="fa-solid fa-eye"></i></a></td>
+                                            @if($temp->traningstatus->status == 'Complete')
+                                            <th>{{$temp->traningstatus->status}}</th>
+                                            @else
+                                            <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
+                                                class="fa-solid fa-eye"></i></a></td>
+                                            @endif
                                         </tr>
                                     @endforeach
 
@@ -128,7 +135,7 @@
                 </div>
 
                 <div class="inner-block tms-block" id="tms-due-block">
-                    @if (Auth::user()->role == 6)
+                    @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -194,7 +201,7 @@
                 </div>
 
                 <div class="inner-block tms-block" id="tms-pending-block">
-                    @if (Auth::user()->role == 6)
+                    @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -260,7 +267,7 @@
                 </div>
 
                 <div class="inner-block tms-block" id="tms-completed-block">
-                    @if (Auth::user()->role == 6)
+                    @if (Helpers::checkRoles(6))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
