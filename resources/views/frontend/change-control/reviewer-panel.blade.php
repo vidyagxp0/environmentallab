@@ -13,7 +13,7 @@
                         <button> <a class="text-white" href="{{ url('change-control-audit', $data->id) }}"> Audit Trial </a>
                         </button>
 
-                        @if (Auth::user()->role == 4)
+                        @if (Helpers::checkRoles(4))
                             @if ($data->stage < 3)
                                 <button data-bs-toggle="modal" data-bs-target="#signature-modal" class="button_theme1">
                                     Review
@@ -23,7 +23,7 @@
                                 </button>
                             @endif
                         @endif
-                        @if (Auth::user()->role == 5)
+                        @if (Helpers::checkRoles(5))
                             @if (!$changeStage->approve)
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Submit
@@ -38,7 +38,7 @@
                         </button>
                     </div>
                 </div>
-                @if (Auth::user()->role == 4)
+                @if (Helpers::checkRoles(4))
                     <div class="status">
                         <div class="head">Current Status</div>
                         <div class="progress-bars">

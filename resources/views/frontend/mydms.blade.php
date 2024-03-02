@@ -31,7 +31,7 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="doc-block">
-                                    @if (Auth::user()->role == 3)
+                                    @if (Helpers::checkRoles(3))
                                         <div class="sub-block inner-block" id="draft">
                                             <div class="pill">
                                                 Document Management System

@@ -68,8 +68,8 @@ class CCController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $hod = User::where('role', 4)->get();
-        $cft = User::where('role', 5)->get();
+        $hod = User::get();
+        $cft = User::get();
         $pre = CC::all();
 
         return view('frontend.change-control.new-change-control', compact("riskData", "record_number", "due_date","hod","cft","pre"));
@@ -122,13 +122,13 @@ class CCController extends Controller
         $openState->training_required = $request->training_required;
         $openState->train_comments = $request->train_comments;
 
-        // $openState->Microbiology = $request->Microbiology;
-        // if ($request->Microbiology_Person) {
-        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+       $openState->Microbiology = $request->Microbiology;
+       if ($request->Microbiology_Person) {
+           $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+       } else {
+           toastr()->warning('CFT reviewers can not be empty');
+           return back();
+       }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -271,16 +271,16 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-        // if ($request->Microbiology == "yes") {
-        //     $info->Microbiology = $request->Microbiology;
+         if ($request->Microbiology == "yes") {
+             $info->Microbiology = $request->Microbiology;
             
-        // }
-        // if ($request->Microbiology_Person) {
-        //     $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+         }
+         if ($request->Microbiology_Person) {
+             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+         } else {
+             toastr()->warning('CFT reviewers can not be empty');
+             return back();
+         }
         
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
@@ -1106,8 +1106,8 @@ class CCController extends Controller
         $assessment = RiskAssessment::where('cc_id', $id)->first();
         $approcomments = QaApprovalComments::where('cc_id', $id)->first();
         $closure = ChangeClosure::where('cc_id', $id)->first();
-        $hod = User::where('role', 4)->get();
-        $cft = User::where('role', 5)->get();
+        $hod = User::get();
+        $cft = User::get();
         $cft_aff = [];
         if(!is_null($data->Microbiology_Person)){
             $cft_aff = explode(',', $data->Microbiology_Person);
@@ -1171,12 +1171,12 @@ class CCController extends Controller
 
         $openState->Microbiology = $request->Microbiology;
         
-        // if ($request->Microbiology_Person) {
-        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+         if ($request->Microbiology_Person) {
+             $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+         } else {
+             toastr()->warning('CFT reviewers can not be empty');
+             return back();
+         }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -1309,16 +1309,16 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-        // if ($request->Microbiology == "yes") {
-        //     $info->Microbiology = $request->Microbiology;
+         if ($request->Microbiology == "yes") {
+             $info->Microbiology = $request->Microbiology;
            
-        // }
-        // if ($request->Microbiology_Person) {
-        //     $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+         }
+         if ($request->Microbiology_Person) {
+             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+         } else {
+             toastr()->warning('CFT reviewers can not be empty');
+             return back();
+         }
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
 

@@ -43,6 +43,118 @@ class Helpers
          
     }
 
+    public static function checkRoles($role)
+    {
+        if (strpos(Auth::user()->role, $role) !== false) {
+           return true;
+        }else{
+            return false;
+        } 
+    }
+
+
+    public static function checkRoles_check_reviewers($document)
+    {
+       
+        if ($document->reviewers) {
+            $datauser = explode(',', $document->reviewers);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == Auth::user()->id) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }         
+    }
+
+    public static function checkRoles_check_approvers($document)
+    {
+        if ($document->approvers) {
+            $datauser = explode(',', $document->approvers);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == Auth::user()->id) {
+                    if($document->stage >= 4){
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolesApprovers($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 1) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolesreviewer($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 2) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolestrainer($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 6) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolesassign_to($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 4) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
+
+    public static function checkUserRolesMicrobiology_Person($data)
+    {
+        if ($data->role) {
+            $datauser = explode(',', $data->role);
+            for ($i = 0; $i < count($datauser); $i++) {
+                if ($datauser[$i] == 5) {
+                    return true;
+                }
+            }
+        } else {
+            return false;
+        }
+    }
 
     public static function divisionNameForQMS($id)
     {
