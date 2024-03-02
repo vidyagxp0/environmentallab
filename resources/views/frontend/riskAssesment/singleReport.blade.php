@@ -390,6 +390,111 @@
                             <td class="w-80">@if($data->rpn){{ $data->rpn }}@else Not Applicable @endif</td>
                         </tr>
                     </table>
+
+                    <div class="block-head">
+                        Fishbone or Ishikawa Diagram 
+                    </div>
+                    <table>
+                    - <tr>
+                        <th class="w-20">Measurement1111</th>
+                        <td class="w-80">@if($data->measurement){{ $data->measurement }}@else Not Applicable @endif</td>
+                        <th class="w-20">Materials</th>
+                        <td class="w-80">@if($data->materials){{ $data->materials }}@else Not Applicable @endif</td>
+                    </tr>
+                       <tr>
+                        <th class="w-20">Methods</th>
+                        <td class="w-80">@if($data->methods){{ $data->methods }}@else Not Applicable @endif</td>
+                        <th class="w-20">Environment</th>
+                        <td class="w-80">@if($data->environment){{ $data->environment }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Manpower</th>
+                        <td class="w-80">@if($data->manpower){{ $data->manpower }}@else Not Applicable @endif</td>
+                        <th class="w-20">Machine</th>
+                        <td class="w-80">@if($data->machine){{ $data->machine }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Problem Statement1</th>
+                        <td class="w-80">@if($data->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
+                      
+                    </tr> 
+             </table>
+                        
+             <div class="block-head">
+                Why-Why Chart 
+            </div>
+            <table>
+            - <tr>
+                <th class="w-20">Problem Statement</th>
+                <td class="w-80">@if($data->why_problem_statement){{ $data->why_problem_statement }}@else Not Applicable @endif</td>
+                <th class="w-20">Why 1 </th>
+                <td class="w-80">@if($data->why_1){{ $data->why_1 }}@else Not Applicable @endif</td>
+            </tr>
+               <tr>
+                <th class="w-20">Why 2</th>
+                <td class="w-80">@if($data->why_2){{ $data->why_2 }}@else Not Applicable @endif</td>
+                <th class="w-20">Why 3</th>
+                <td class="w-80">@if($data->why_3){{ $data->why_3 }}@else Not Applicable @endif</td>
+            </tr>
+            <tr>
+                <th class="w-20">Why 4</th>
+                <td class="w-80">@if($data->why_4){{ $data->why_4 }}@else Not Applicable @endif</td>
+                <th class="w-20">Why5</th>
+                <td class="w-80">@if($data->why_4){{ $data->why_4 }}@else Not Applicable @endif</td>
+            </tr>
+            <tr>
+                <th class="w-20">Root Cause :	</th>
+                <td class="w-80">@if($data->why_root_cause){{ $data->why_root_cause }}@else Not Applicable @endif</td>
+              
+            </tr> 
+     </table>
+     <div class="block-head">
+        Is/Is Not Analysis
+    </div>
+    <table>
+    - <tr>
+        <th class="w-20">What Will Be</th>
+        <td class="w-80">@if($data->what_will_be){{ $data->what_will_be }}@else Not Applicable @endif</td>
+        <th class="w-20">What Will Not Be </th>
+        <td class="w-80">@if($data->what_will_not_be){{ $data->what_will_not_be }}@else Not Applicable @endif</td>
+        <th class="w-20">What Will Rationale </th>
+        <td class="w-80">@if($data->what_rationable){{ $data->what_rationable }}@else Not Applicable @endif</td>
+    </tr>
+       <tr>
+        <th class="w-20">Where Will Be</th>
+        <td class="w-80">@if($data->where_will_be){{ $data->where_will_be }}@else Not Applicable @endif</td>
+        <th class="w-20">Where Will Not Be </th>
+        <td class="w-80">@if($data->where_will_not_be){{ $data->where_will_not_be }}@else Not Applicable @endif</td>
+        <th class="w-20">Where Will Rationale </th>
+        <td class="w-80">@if($data->where_rationable){{ $data->where_rationable }}@else Not Applicable @endif</td>
+    </tr>
+    <tr>
+        <th class="w-20">When Will Be</th>
+        <td class="w-80">@if($data->when_will_be){{ $data->when_will_be }}@else Not Applicable @endif</td>
+        <th class="w-20">When Will Not Be </th>
+        <td class="w-80">@if($data->when_will_not_be){{ $data->when_will_not_be }}@else Not Applicable @endif</td>
+        <th class="w-20">When Will Rationale </th>
+        <td class="w-80">@if($data->when_rationable){{ $data->when_rationable }}@else Not Applicable @endif</td>
+    </tr>
+    <tr>
+        <th class="w-20">Coverage Will Be</th>
+        <td class="w-80">@if($data->coverage_will_be){{ $data->coverage_will_be }}@else Not Applicable @endif</td>
+        <th class="w-20">Coverage Will Not Be </th>
+        <td class="w-80">@if($data->coverage_will_not_be){{ $data->coverage_will_not_be }}@else Not Applicable @endif</td>
+        <th class="w-20">Coverage Will Rationale </th>
+        <td class="w-80">@if($data->coverage_rationable){{ $data->coverage_rationable }}@else Not Applicable @endif</td>
+      
+    </tr> 
+    <tr>
+        <th class="w-20">Who Will Be</th>
+        <td class="w-80">@if($data->wh0_will_be){{ $data->wh0_will_be }}@else Not Applicable @endif</td>
+        <th class="w-20">Who Will Not Be </th>
+        <td class="w-80">@if($data->who_will_not_be){{ $data->who_will_not_be }}@else Not Applicable @endif</td>
+        <th class="w-20">Who Will Rationale </th>
+        <td class="w-80">@if($data->who_rationable){{ $data->who_rationable }}@else Not Applicable @endif</td>
+      
+    </tr> 
+</table>        
                 </div>
             </div>
 

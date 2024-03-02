@@ -947,7 +947,7 @@ use Illuminate\Support\Facades\Hash;
     }
 
     public static function singleReport($id)
-    {
+    {    
         $data = RootCauseAnalysis::find($id);
         if (!empty($data)) {
             $data->originator_id = User::where('id', $data->initiator_id)->value('name');
