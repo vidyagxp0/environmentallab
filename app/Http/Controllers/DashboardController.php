@@ -14,6 +14,19 @@ use Helpers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
+use App\Models\CC;
+use App\Models\ActionItem;
+use App\Models\Extension;
+use App\Models\EffectivenessCheck;
+use App\Models\InternalAudit;
+use App\Models\Capa;
+use App\Models\RiskManagement;
+use App\Models\ManagementReview;
+use App\Models\LabIncident;
+use App\Models\Auditee;
+use App\Models\AuditProgram;
+use App\Models\RootCauseAnalysis;
+use App\Models\Observation;
 
 class DashboardController extends Controller
 {
@@ -169,5 +182,27 @@ class DashboardController extends Controller
         toastr()->success('Subscribed !!');
         return back();
 
+    }
+    public function analytics(){
+        return view('frontend.analytics');
+    }
+    public function analyticsData(){
+        $data = [
+            'InternalAudit' => InternalAudit::count(),
+            'Extension' => Extension::count(),
+            'Capa' => Capa::count(), 
+            'AuditProgram' => AuditProgram::count(),
+            'LabIncident' => LabIncident::count(),
+            'RiskManagement' => RiskManagement::count(),
+            'RootCauseAnalysis' => RootCauseAnalysis::count(),
+            'ManagementReview' => ManagementReview::count(),
+            'CC' => CC::count(),
+            'ActionItem' => ActionItem::count(),
+            'EffectivenessCheck' => EffectivenessCheck::count(),
+            'Auditee' => Auditee::count(),
+            'Observation' => Observation::count(),
+        ];
+        $dataCounts = array_values($data);
+        return response()->json(array_values($data));
     }
 }

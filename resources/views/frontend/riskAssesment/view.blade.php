@@ -794,9 +794,9 @@
                                                 <select name="room" id="room"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->room == '1' ? 'selected' : '' }} value="1">
+                                                    <option {{ $data->room == 'C-101' ? 'selected' : '' }} value="C-101">
                                                         C-101</option>
-                                                    <option {{ $data->room == '2' ? 'selected' : '' }} value="2">
+                                                    <option {{ $data->room == 'C-202' ? 'selected' : '' }} value="C-202">
                                                         C-202</option>
                                                 </select>
                                             </div>
@@ -1404,7 +1404,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_detectability[]">
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                             <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -1412,7 +1412,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_probability[]">
+                                                                        <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                             <option value="2"  {{ (unserialize($riskEffectAnalysis->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -1420,7 +1420,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                        <input name="initial_rpn[]" type="text" value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" >
+                                                                        <input name="initial_rpn[]" type="text"  class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" >
                                                                     </td>
                                                                     <td>
                                                                         <input name="risk_acceptance[]" type="text" value="{{ unserialize($riskEffectAnalysis->risk_acceptance)[$key] ?? null }}" >
@@ -1430,7 +1430,7 @@
                                                                          
                                                                     </td>
                                                                     <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_severity[]">
+                                                                        <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                             <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -1439,7 +1439,7 @@
                                                                         
                                                                     </td>
                                                                     <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_probability[]">
+                                                                        <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                             <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -1449,7 +1449,7 @@
                                                                     </td>
     
                                                                     <td>
-                                                                        <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_detectability[]">
+                                                                        <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]">
                                                                             <option value="">-- Select --</option>
                                                                             <option value="1" {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                             <option value="2"  {{ (unserialize($riskEffectAnalysis->residual_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -1457,7 +1457,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                         <input name="residual_rpn[]" type="text" value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}" >
+                                                                         <input name="residual_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}" >
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
@@ -1774,14 +1774,14 @@
                                                 <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->severity_rate == '1' ? 'selected' : '' }}
-                                                        value="1">Negligible</option>
-                                                    <option {{ $data->severity_rate == '2' ? 'selected' : '' }}
-                                                        value="2">Moderate</option>
-                                                    <option {{ $data->severity_rate == '3' ? 'selected' : '' }}
-                                                        value="3">Major</option>
-                                                    <option {{ $data->severity_rate == '4' ? 'selected' : '' }}
-                                                        value="4">Fatal</option>
+                                                    <option {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}
+                                                        value="Negligible">Negligible</option>
+                                                    <option {{ $data->severity_rate == 'Moderate' ? 'selected' : '' }}
+                                                        value="Moderate">Moderate</option>
+                                                    <option {{ $data->severity_rate == 'Major' ? 'selected' : '' }}
+                                                        value="Major">Major</option>
+                                                    <option {{ $data->severity_rate == 'Fatal' ? 'selected' : '' }}
+                                                        value="Fatal">Fatal</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1963,9 +1963,9 @@
                                                             <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date "><div
                                                                 class="calenderauditee">
-                                                                <input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
+                                                                <input type="text" id="deadline2{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($mitigation_plan_details->deadline2)[$key]) }}" />
                                                                 <input type="date" name="deadline2[]" class="hide-input" value="{{ unserialize($mitigation_plan_details->deadline2)[$key] }}"
-                                                                oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>
+                                                                oninput="handleDateInput(this, `deadline2{{$key}}' + serialNumber +'`)" /></div></div></div></td>
                                                             {{-- <td><input type="text" name="responsible_person[]"
                                                                     value="{{ unserialize($mitigation_plan_details->responsible_person)[$key] ? unserialize($mitigation_plan_details->responsible_person)[$key] : '' }}">
                                                             </td> --}}

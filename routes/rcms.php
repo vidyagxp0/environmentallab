@@ -41,6 +41,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('actionitemAuditReport/{id}', [ActionItemController::class, 'auditReport'])->name('actionitemAuditReport');
             Route::get('effective-audit-trial-show/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialShow'])->name('show_effective_AuditTrial');
             Route::get('effective-audit-trial-details/{id}', [EffectivenessCheckController::class, 'effectiveAuditTrialDetails'])->name('show_audittrial_effective');
+            Route::get('effectiveSingleReport/{id}', [EffectivenessCheckController::class, 'singleReport'])->name('effectiveSingleReport');
+            Route::get('effectiveAuditReport/{id}', [EffectivenessCheckController::class, 'auditReport'])->name('effectiveAuditReport');
 
             // ------------------extension _child---------------------------
             Route::post('extension_child/{id}', [ExtensionController::class, 'extension_child'])->name('extension_child');
@@ -50,6 +52,8 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::post('send-cancel-extention/{id}', [ExtensionController::class, 'stagecancel']);
             Route::get('extension-audit-trial/{id}', [ExtensionController::class, 'extensionAuditTrial']);
             Route::get('extension-audit-trial-details/{id}', [ExtensionController::class, 'extensionAuditTrialDetails']);
+            Route::get('extensionSingleReport/{id}', [ExtensionController::class, 'singleReport'])->name('extensionSingleReport');
+            Route::get('extensionAuditReport/{id}', [ExtensionController::class, 'auditReport'])->name('extensionAuditReport');
 
 
             Route::post('send-At/{id}', [ActionItemController::class, 'stageChange']);

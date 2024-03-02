@@ -10,7 +10,10 @@ use App\Models\RecordNumber;
 use App\Models\User;
 use App\Models\RoleGroup;
 use Carbon\Carbon;
+use PDF;
+use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -59,6 +62,8 @@ class EffectivenessCheckController extends Controller
         $openState = new EffectivenessCheck();
         $openState->is_parent = "No";
         $openState->parent_id = $request->cc_id;
+        $openState->division_id = $request->division_id;
+        $openState->intiation_date = $request->intiation_date;
         $openState->initiator_id = Auth::user()->id;
         $openState->parent_record = CC::where('id', $request->cc_id)->value('id');
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
@@ -812,4 +817,55 @@ class EffectivenessCheckController extends Controller
      $doc->origiator_name = User::find($doc->initiator_id);
       return view('frontend.effectivenessCheck.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
    } 
+   
+public static function singleReport($id)
+{
+    $data = EffectivenessCheck::find($id);
+    if (!empty($data)) {
+        $data->originator = User::where('id', $data->initiator_id)->value('name');
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadview('frontend.effectivenessCheck.singleReport', compact('data'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+        return $pdf->stream('effectivenessCheck' . $id . '.pdf');
+    }
+}
+public static function auditReport($id)
+{
+    $doc = EffectivenessCheck::find($id);
+    if (!empty($doc)) {
+        $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+        $data = EffectivenessCheck::where('parent_id', $id)->get();
+        $pdf = App::make('dompdf.wrapper');
+        $time = Carbon::now();
+        $pdf = PDF::loadview('frontend.effectivenessCheck.auditReport', compact('data', 'doc'))
+            ->setOptions([
+                'defaultFont' => 'sans-serif',
+                'isHtml5ParserEnabled' => true,
+                'isRemoteEnabled' => true,
+                'isPhpEnabled' => true,
+            ]);
+        $pdf->setPaper('A4');
+        $pdf->render();
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+        $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
+        return $pdf->stream('effectivenessCheck-Audit' . $id . '.pdf');
+    }
+}
+
 }

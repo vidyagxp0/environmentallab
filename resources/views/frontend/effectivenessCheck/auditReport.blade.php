@@ -151,11 +151,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Trail Report
+                Effectiveness Check Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -163,7 +163,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Internal Audit No.</strong>
+                    <strong> Effectiveness Check Audit No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -177,42 +177,13 @@
 
     <div class="inner-block">
 
-        <div class="head">Internal Audit Trail Report</div>
+        <div class="head"> Effectiveness Check Audit Trial Report</div>
 
         <div class="division">
             {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
-        {{-- <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ Helpers::getdateFormat($doc->created_at) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ $doc->updated_at }}
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">&nbsp;</td>
-                    <td class="w-50">
-                        <strong>Person Responsible : {{ $doc->originator }}</strong>
-                    </td>
-                </tr>
-            </table>
-        </div> --}}
-
+        
         <div class="second-table">
             <table>
                 <tr class="table_bg">
@@ -228,29 +199,33 @@
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
+                                @if($datas->activity_type == "Assigned To" )
+                                <div>{{ $datas->previous != 'Null' ?  Helpers::getInitiatorName($datas->previous ) : $datas->previous  }}</div>
+                                @else
                                 <div>{{ $datas->previous }}</div>
+                                @endif
                                 @else
                                 <div>Null</div>
                                 @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
+                                @if($datas->activity_type == "Assigned To" )
+                                <div>{{ Helpers::getInitiatorName($datas->current) }}</div>
+                                @else
                                 <div>{{ $datas->current }}</div>
+                                @endif
                             </div>
-                            <div><strong>Changed To :</strong></div>
-                            @if($datas->activity_type == "Assigned To")
-                            @foreach(explode(',',$datas->current) as $curr)
-                            <div>{{ Helpers::getInitiatorName($curr) }}</div>
-                            @endforeach
-                           @endif
                         </td>
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if (!empty($datas->previous== "NULL"))
-                                Modify
-                            @else
+                            @if(($datas->previous == 'Null') && ($datas->current !='Null'))
                                 New
+                            @elseif(($datas->previous != $datas->current))
+                                Modify
+                            @else 
+                               New
                             @endif
                         </td>
                     </tr>
