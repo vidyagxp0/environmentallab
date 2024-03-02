@@ -675,8 +675,8 @@ class DashboardController extends Controller
             $audit = "actionitemAuditReport/" . $data->id;
         } elseif ($type == "Extension") {
             $data = Extension::find($id);
-            $single = "#";
-            $audit = "extension-audit-trial/" .$data->id;
+            $single = "extensionSingleReport/" .$data->id;
+            $audit = "extensionAuditReport/" .$data->id;
 
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
@@ -684,8 +684,8 @@ class DashboardController extends Controller
             $audit = "ObservationAuditTrialShow/" .$data->id;
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
-            $single = "#";
-            $audit = "#";
+            $single = "effectiveSingleReport/" .$data->id;
+            $audit = "effectiveAuditReport/" .$data->id;
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;

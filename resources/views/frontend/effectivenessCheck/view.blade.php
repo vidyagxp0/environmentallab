@@ -188,29 +188,30 @@
                             <div class="col-lg-6">
                                <div class="group-input">
                                          <label for="RLS Record Number">Record Number</label>
-                                         <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/EA/{{ Helpers::year($data->created_at) }}/{{  Helpers::recordFormat($data->record) }}">
+                                         <input disabled type="text" name="division_code"
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{  Helpers::recordFormat($data->record) }}">
                                </div>
                             </div>
                             <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
                                         <input disabled type="text" name="division_code"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            value="{{ Helpers::getDivisionName($data->division_id) }}">
                                       
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input disabled type="text" value="Amit Guru">
+                                        <input disabled type="text" name="initiator_id" 
+                                        value="{{ Helpers::getInitiatorName($data->initiator_id) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Date of Initiation</label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="created_at">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="created_at">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                         {{--  <div class="static">{{ $data->created_at }}</div>  --}}
                                     </div>
                                 </div>
