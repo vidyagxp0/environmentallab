@@ -170,7 +170,7 @@
                         </div>
                         <div class="main-scope-table">
                             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-                            <canvas id="myChart" width="400" height="400"></canvas>
+                            <canvas id="myChart" width="400" height="115"></canvas>
                                                     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
                         <script>
                             axios.get('/api/analyticsData')
@@ -185,9 +185,10 @@
                                 data: {
                                     labels: ['InternalAudit','Extension','Capa','AuditProgram','LabIncident','RiskManagement','RootCauseAnalysis','ManagementReview','CC','ActionItem','EffectivenessCheck','Auditee','Observation'],
                                     datasets: [{
-                                        label: '# of Votes',
+                                        label: '',
                                         data: dataCounts,
                                         backgroundColor: [
+                                            'rgba(255, 255, 255, 1)',
                                             'rgba(255, 99, 132, 0.2)',
                                             'rgba(54, 162, 235, 0.2)',
                                             'rgba(255, 206, 86, 0.2)',
@@ -202,6 +203,7 @@
                                             'rgba(255, 159, 64, 0.2)'
                                         ],
                                         borderColor: [
+                                            'rgba(255, 255, 255, 1)',
                                             'rgba(255, 99, 132, 1)',
                                             'rgba(54, 162, 235, 1)',
                                             'rgba(255, 206, 86, 1)',
