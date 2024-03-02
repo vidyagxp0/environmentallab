@@ -17,6 +17,7 @@ use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\Paginator as PaginationPaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
+use Helpers;
 
 class MytaskController extends Controller
 {
@@ -85,7 +86,7 @@ class MytaskController extends Controller
             return view('frontend.tasks', ['task' => $task]);
         
 
-        if (Auth::user()->role == 2) {
+        if (Helpers::checkRoles(2)) {
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 2)->orderByDesc('id')->get();
@@ -128,7 +129,7 @@ class MytaskController extends Controller
             return view('frontend.tasks', ['task' => $task]);
         }
 
-        if (Auth::user()->role == 1) {
+        if (Helpers::checkRoles(1)) {
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 4)->orderByDesc('id')->get();
