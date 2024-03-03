@@ -103,8 +103,6 @@ class UserManagementController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($request->password);
-
-        // $user->role = $request->role_id;
         $user->departmentid = $request->departmentid;
         $usertableRole = ''; // Initialize the variable to store concatenated role IDs
 
@@ -158,7 +156,7 @@ class UserManagementController extends Controller
 
 
             toastr()->success('User added successfully');
-           return redirect()->route('user_management.index');
+            return redirect()->route('user_management.index');
         } else {
             toastr()->error('Something went wrong');
             return redirect()->back();
@@ -193,7 +191,7 @@ class UserManagementController extends Controller
 
         // dd($data->id, $userRoles);
         return view('admin.account.edit', compact('group', 'data','department', 'userRoles'));
-   }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -241,23 +239,7 @@ class UserManagementController extends Controller
             $userRole->q_m_s_processes_id = $q_m_s_processes_id;
             $userRole->q_m_s_roles_id = $q_m_s_roles_id;
             $userRole->save();
-       }
-        // $user->role = $request->role_id;
-        $user->departmentid = $request->departmentid;
-        if ($user->update()) {
-            if($request->role_id){
-                $data = UserRole::where('user_id',$id)->get();
-                foreach($data as $datas){
-                    $datas->delete();
-                }
-                foreach($request->role_id as $temp){
-                    $role = new UserRole();
-                    $role->user_id = $user->id;
-                    $role->role_id = $temp;
-                    $role->save();
-                }
-            }
-
+        }
             toastr()->success('Update successfully');
             return redirect()->route('user_management.index');
         } else {
