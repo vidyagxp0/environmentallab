@@ -51,29 +51,18 @@
                     @endforeach
                     </select>
                 </div>
-                <div class="form-group" id="roleGroup">
-                    <label for="exampleInputName1">Roles (Ctrl (windows) or Command (Mac) button to select multiple options)<span style="color: red">*</span></label>
-                    <select class="form-control" id="roles" name="roles[]" multiple required onchange="updateSelectedOptions()">
-                        @foreach ($group as $role)
-                            <option value="{{ $role->id }}" {{ in_array($role->id, $userRoles) ? 'selected' : '' }}>{{ $role->name }}</option>
+                <div class="form-group">
+
+                    <label for="exampleInputName1">Role*</label>
+                    <select id="choices-multiple-remove-button" placeholder="Select the person.." id="role_id" name="role_id[]" multiple>
+
+                        @foreach ($group as $div)
+                            <option value="{{ $div->id }}">{{ $div->name }}</option>
                         @endforeach
 
                     </select>
                 </div>
-                <div id="selectedOptions"></div>
 
-                <script>
-                    function updateSelectedOptions() {
-                        var selectElement = document.getElementById("roles");
-                        var selectedOptions = [];
-                        for (var i = 0; i < selectElement.options.length; i++) {
-                            if (selectElement.options[i].selected) {
-                                selectedOptions.push(selectElement.options[i].text);
-                            }
-                        }
-                        document.getElementById("selectedOptions").innerHTML = "Selected roles: <br>" + selectedOptions.join("<br>");
-                    }
-                </script>
 
             </div>
 
