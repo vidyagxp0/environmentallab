@@ -151,7 +151,7 @@ class UserManagementController extends Controller
             $uniqueUsertableRole = implode(',', $uniqueRolesArray);
 
             // Update the user table with the unique concatenated role IDs
-            $user->role = $uniqueUsertableRole;
+           // $user->role = $uniqueUsertableRole;
             $user->save();
 
 

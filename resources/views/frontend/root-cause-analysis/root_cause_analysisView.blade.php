@@ -111,19 +111,23 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+                        @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                         <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button>
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rootAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -150,7 +154,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Group Feedback
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
                             </button>
@@ -839,18 +843,16 @@
                                                                         <option value="3"  {{ (unserialize($data->residual_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
                                                                     </select>
                                                                 </td>
-                                                               
-
                                                                 <td>
-                                                                    <input name="residual_rpn[]" class='residual-rpn' type="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
-                                                               </td>
-                                                               <td>
-                                                                <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
-                                                                    <option value="">-- Select --</option>
-                                                                    <option value="Y" {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
-                                                                    <option value="N"  {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
-                                                                 </select>
-                                                            </td>
+                                                                     <input name="residual_rpn[]" type="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
+                                                                </td>
+                                                                <td>
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="Y" {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
+                                                                        <option value="N"  {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
+                                                                     </select>
+                                                                </td>
                                                                 <td>
                                                                     <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
                                                                 </td>

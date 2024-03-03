@@ -174,20 +174,24 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+                        @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                         {{-- <a href="{{route('riskSingleReport', $data->id)}}"><button class="button_theme1"
                             class="new-doc-btn">Print</button></a> --}}
 
                         <button class="button_theme1"> <a class="text-white" href="{{ url('riskAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && in_array(4, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information Required
                             </button>
@@ -197,7 +201,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && in_array(16, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Action Plan Complete
                             </button>
@@ -208,14 +212,14 @@
                                 Child
                             </button>
 
-                        @elseif($data->stage == 4)
+                        @elseif($data->stage == 4 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Action Plan Approved
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Reject Action Plan
                             </button>
-                        @elseif($data->stage == 5)
+                        @elseif($data->stage == 5 && in_array(4, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All Actions Completed
                             </button>
@@ -225,7 +229,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 6)
+                        @elseif($data->stage == 6 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Residual Risk Evaluation Completed
                             </button>
