@@ -2,18 +2,6 @@
 @section('rcms_container')
 
     <style>
-        #step-form>div {
-            display: none
-        }
-
-        #step-form>div:nth-child(1) {
-            display: block;
-        }
-        .hide-input{
-            display: none !important;
-        }
-    </style>
-    <style>
         header .header_rcms_bottom {
             display: none;
         }
@@ -1393,21 +1381,29 @@
                                                             <td><input type="text" name="document_name[]"
                                                                     value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : 'Not Applicale' }}">
                                                             </td>
-                                                            <td><input type="number" name="document_no[]"
+                                                            <td>                                                                
+                                                                <input type="number" name="document_no[]"
                                                                     value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : 'Not Applicable' }}">
                                                             </td>
-                                                             <td><input type="text" name="new_version[]"
-                                                                    value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
+                                                             <td>
+                                                                @if (!empty($closure->version_no))
+                                                                <input type="text" name="version_no[]" value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
+                                                                @else
+                                                                <input type="text" name="version_no[]" value="Not Applicable">
+                                                                @endif
                                                             </td> 
                                                             
                                                             <td><div class="group-input new-date-data-field ">
-                                                                <div class="  input-date  "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"
-                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
-                                                                
-                                                                 <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  
-                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div> 
+                                                                    <div class="  input-date  ">
+                                                                        <div class="calenderauditee">
+                                                                            {{-- <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"/> --}}
+                                                                            {{-- <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  oninput="handleDateInput(this, `implementation_date{{$key}}`)" /> --}}
+                                                                            <input type="text"   id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
+                                                                            <input type="date" id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($closure->implementation_date)[$key]}}"  name="implementation_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}"class="hide-input" 
+                                                                              oninput="handleDateInput(this, `implementation_date{{$key}}`)"  /></div></div></div></td>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> 
                                                             </td>
                                                             
                                                             <td><input type="text" name="new_document_no[]"
@@ -1675,7 +1671,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Send to CFT/SME/QA Review By</label>
+                                                    <label for="submitted">Send to CFT/SME/QA Review On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1770,7 +1766,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Review Completed By</label>
+                                                    <label for="submitted">Review Completed On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
