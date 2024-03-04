@@ -458,10 +458,13 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Team">CAPA Team</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} id="select-state" placeholder="Select..." name="capa_team">
-                                                    <option  value="">Select a value</option>
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} 
+                                                    multiple id="Audit" placeholder="Select..." name="capa_team[]">
                                                     @foreach ($users as $value)
-                                                        <option {{ $data->capa_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option>
+                                                        <!-- <option {{ $data->capa_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option> -->
+                                                        <option value="{{ $value->id }}"{{ in_array($value->id, explode(',', $data->capa_team)) ? 'selected' : '' }}>
+                                                                   {{ $value->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
 
