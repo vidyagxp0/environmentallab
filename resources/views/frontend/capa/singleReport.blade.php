@@ -271,7 +271,7 @@
                         <th class="w-20">CAPA QA Comments</th>
                         <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
                     </tr>
-                       <div class="block-head">
+                <div class="block-head">
                        Capa Attachement
                     </div>
                       <div class="border-table">

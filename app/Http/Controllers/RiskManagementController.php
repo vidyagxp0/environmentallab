@@ -2082,6 +2082,8 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $changeControl->status = "Closed - Cancelled";
+                $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
