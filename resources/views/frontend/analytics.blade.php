@@ -134,7 +134,7 @@
                         
                        <div class="grid-block">
                             <div class="group-input">
-                                <label for="scope">Process--</label>
+                                <label for="scope">Process</label>
                                 <select id="test" onchange="showChart()">                                    <option value="">All Records</option>
                                     <option  value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
@@ -239,7 +239,8 @@
                         </div>
 
                         <script>
-                            fetch('/chart-data')
+                        function fetchData(selectedValue) {
+                         fetch(`/chart-data?value=${selectedValue}`)
                             .then(response => response.json())
                             .then(data => {
                                 var options = {
@@ -291,6 +292,7 @@
                                 var chart = new ApexCharts(document.querySelector("#chart"), options);
                                 chart.render();
                             });
+                        }
                             </script>
                         </div>
 
@@ -375,6 +377,8 @@
             } else {
                 chartDiv.style.display = "none";
             }
+            var selectedValue = document.getElementById("test").value;
+            fetchData(selectedValue);
         }
     </script>
        <style>
