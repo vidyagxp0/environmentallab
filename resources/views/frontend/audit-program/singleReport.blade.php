@@ -194,7 +194,7 @@
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->initiator_id }}</td>
+                        <td class="w-30">{{ $data->originator }}</td>
                         <th class="w-20">Date Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
@@ -248,54 +248,41 @@
                             <th class="w-20">Initiated Through</th>
                             <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
                         </tr>
-                        <tr>
-                            <th class="w-20">Attached Files</th>
-                            <td class="w-80">@if($data->attachments)<a href="{{asset('upload/document/',$data->attachments)}}">{{ $data->attachments }}</a>@else Not Applicable @endif</td>
-                        </tr>                           
+                                            
                      </table>
+                     <div class="border-table">
+                    <div class="block-head">
+                    Attached Files
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                            @if($data->attachments)
+                            @foreach(json_decode($data->attachments) as $key => $file)
+                        <tr>
+                            <td class="w-20">{{ $key + 1 }}</td>
+                            <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                        </tr>
+                            @endforeach
+                            @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                        @endif
+
+                    </table>
+                </div>
+            </div>
                 </div>
             </div>
         </div>
               
-             <!-- <div class="block">
-                <div class="block-head">
-                    Audit Program
-                </div>
-                <div class="border-table">
-                    <table>
-                        <tr class="table_bg">
-                            <th class="w-20">Auditees</th>
-                            <th class="w-20">Date Start	</th>
-                            <th class="w-20">Date End</th>
-                            <th class="w-20">Lead Investigator</th>
-                            <th class="w-20">Comment</th>
-                         </tr>
-                         <tbody>
-                         <tr>
-                            <th class="w-20">Auditees</th>
-                            <td class="w-80">@if($data->Auditees){{ $data->Auditees }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Date Start</th>
-                            <td class="w-80">@if($data->start_date){{ $data->start_date }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Date End</th>
-                            <td class="w-80">@if($data->end_date){{ $data->end_date }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Lead Investigator</th>
-                            <td class="w-80">@if($data->lead_investigator){{ $data->lead_investigator }}@else Not Applicable @endif</td>
-                        </tr>
-                        <tr>
-                            <th class="w-20">Comment</th>
-                            <td class="w-80">@if($data->comment){{ $data->comment }}@else Not Applicable @endif</td>
-                        </tr>
-                         </tbody>
-                     </table>
-                </div>
-            </div> -->
-            <!-- ------------------------------- audit program grid--------------------------------------- -->
+             
+     <!-- ------------------------------- audit program grid--------------------------------------- -->
             <!-- <div class="block">
                 <div class="block-head">
                 Audit Program
@@ -335,13 +322,10 @@
                     </table>
                 </div>
             </div> -->
+     <!--  ------------------------------- audit program grid--------------------------------------- -->
 
 
-
-             <!--  ------------------------------- audit program grid--------------------------------------- -->
-
-
-             <div class="inner-block">
+        <div class="inner-block">
         <div class="content-table">
             <div class="block">
                 <div class="block-head">

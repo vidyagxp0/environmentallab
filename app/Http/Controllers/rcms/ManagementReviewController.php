@@ -1324,7 +1324,7 @@ class ManagementReviewController extends Controller
         //dd(unserialize($action_item_details->date_due));
         $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
         
-        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));
+        return view('frontend.manageshow.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));
     }
 
 

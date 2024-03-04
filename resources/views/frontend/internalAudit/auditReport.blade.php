@@ -146,7 +146,6 @@
 </style>
 
 <body>
-
     <header>
         <table>
             <tr>
@@ -155,7 +154,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -177,41 +176,10 @@
 
     <div class="inner-block">
 
-        <div class="head">Internal Audit Trail Report</div>
-
+        <div class="head">Audit Trial Histroy Configuration Report</div>
         <div class="division">
             {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
-
-        {{-- <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ Helpers::getdateFormat($doc->created_at) }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ $doc->updated_at }}
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">&nbsp;</td>
-                    <td class="w-50">
-                        <strong>Person Responsible : {{ $doc->originator }}</strong>
-                    </td>
-                </tr>
-            </table>
-        </div> --}}
 
         <div class="second-table">
             <table>
@@ -275,7 +243,6 @@
             </tr>
         </table>
     </footer>
-
 </body>
 
 </html>
