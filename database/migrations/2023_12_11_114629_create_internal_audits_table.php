@@ -90,6 +90,8 @@ return new class extends Migration
             $table->string('cancelled_by')->nullable();
             $table->string('audit_preparation_completed_by')->nullable();
             $table->string('audit_mgr_more_info_reqd_by')->nullable();
+            $table->string('rejected_on')->nullable();
+            $table->string('rejected_by')->nullable();
             $table->string('audit_observation_submitted_by')->nullable();
             $table->string('audit_lead_more_info_reqd_by')->nullable();
             $table->string('audit_response_completed_by')->nullable();

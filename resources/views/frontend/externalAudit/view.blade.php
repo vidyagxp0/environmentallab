@@ -1530,6 +1530,20 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="static">{{ $data->response_feedback_verified_on }}</div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Response Feedback Verified By"> Rejected By
+                                                    </label> 
+                                                <div class="static">{{ $data->rejected_by}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Response Feedback Verified On"> Rejected On
+                                                    </label>
+                                                <div class="static">{{ $data->rejected_on }}</div>
+                                            </div>
+                                        </div>
 
                                     </div>
                                     <div class="button-block">

@@ -177,13 +177,13 @@
 
     <div class="inner-block">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head"> Risk Assesment Trial Report</div>
 
         <div class="division">
         {{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
-        <div class="first-table">
+        {{-- <div class="first-table">
             <table>
                 <tr>
                     <td class="w-50">
@@ -211,7 +211,7 @@
                     </td>
                 </tr>
             </table>
-        </div>
+        </div> --}}
 
         <div class="second-table">
             <table>

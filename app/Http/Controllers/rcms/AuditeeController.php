@@ -1512,6 +1512,8 @@ class AuditeeController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
