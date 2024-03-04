@@ -1474,6 +1474,15 @@ class InternalauditController extends Controller
                 return back();
             }
             if ($changeControl->stage == 2) {
+                $changeControl->stage = "1";
+                $changeControl->status = "Audit Preparation";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+            if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
                 $changeControl->status = "Pending Audit";
                 $changeControl->audit_preparation_completed_by = Auth::user()->name;
@@ -1547,6 +1556,8 @@ class InternalauditController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $changeControl->rejected_by = Auth::user()->name;
+                $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
