@@ -135,9 +135,8 @@
                        <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process--</label>
-                                <select id="scope" name="form">
-                                    <option value="">All Records</option>
-                                    <option value="Internal-Audit">Internal Audit</option>
+                                <select id="test" onchange="showChart()">                                    <option value="">All Records</option>
+                                    <option  value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
                                     <option value="Capa">Capa</option>
                                     <option value="Audit-Program">Audit Program</option>
@@ -231,7 +230,13 @@
                            }) 
 
                         </script>
-                        <div id="chart"></div>
+                        <div id="test">
+                        <h4>
+                            Internal Audit (Division)
+                            </h4>
+                        <div id="chart">
+                         
+                        </div>
 
                         <script>
                             fetch('/chart-data')
@@ -287,6 +292,8 @@
                                 chart.render();
                             });
                             </script>
+                        </div>
+
                         </div>
                      {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
@@ -359,4 +366,24 @@
             });
         });
     </script>
+        <script>
+        function showChart() {
+            var selectElement = document.getElementById("test");
+            var chartDiv = document.getElementById("chart");
+            if (selectElement.value === "Internal-Audit") {
+                chartDiv.style.display = "block";
+            } else {
+                chartDiv.style.display = "none";
+            }
+        }
+    </script>
+       <style>
+        #chart {
+            display: none; 
+            width: 100%; 
+            height: 200px; 
+            border: 1px solid #ccc; 
+            margin-top: 10px;
+        }
+    </style>
 @endsection
