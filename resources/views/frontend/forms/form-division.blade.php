@@ -20,9 +20,19 @@
                             </div>
                             <div class="tab">
                                 @php
-                                    $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
+                                    // Get the user's roles
+                                    $userRoles = DB::table('user_roles')->where('user_id', Auth::user()->id)->get();
+                                    // Initialize an empty array to store division IDs
+                                    $divisionIds = [];
+                                    // Loop through user's roles
+                                    foreach($userRoles as $role) {
+                                        // Store division IDs from user's roles
+                                        $divisionIds[] = $role->q_m_s_divisions_id;
+                                    }
+                                    // Retrieve divisions where status = 1 and the division ID is in the array of division IDs
+                                    $divisions = DB::table('q_m_s_divisions')->where('status', 1)->whereIn('id', $divisionIds)->get();
                                 @endphp
-                                @foreach ($division as $temp)
+                                @foreach ($divisions as $temp)
                                     <div class="divisionlinks">
                                         <input type="radio" value="{{ $temp->id }}" name="division_id"
                                             onclick="openDivision(event, {{ $temp->id }})" required>
@@ -37,14 +47,30 @@
                                 Process
                             </div>
                             @php
+                            
                                 $process = DB::table('q_m_s_processes')->get();
                             @endphp
                             @foreach ($process as $temp)
                                 <div id="{{ $temp->division_id }}" class="divisioncontent bg-light">
                                     @php
+                            
+                                        // Get the user's roles
+                                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $temp->division_id])->get();
+
+                                        // Initialize an empty array to store division IDs
+                                        $processIds = [];
+
+                                        // Loop through user's roles
+                                        foreach($userRoles as $role) {
+                                            // Store division IDs from user's roles
+                                            $processIds[] = $role->q_m_s_processes_id;
+                                        }
+
+                                        // dd($processIds);
+
                                         $pro = DB::table('q_m_s_processes')
-                                            ->where('division_id', $temp->division_id)
-                                            ->get();
+                                                ->whereIn('id', $processIds)
+                                                ->get();
                                     @endphp
                                     @foreach ($pro as $test)
                                         <label for="process">
