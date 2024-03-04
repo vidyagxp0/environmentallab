@@ -32,6 +32,7 @@ class DatabaseSeeder extends Seeder
             DivisionSeeder::class,
             ProcessSeeder::class,
             UserLoginSeeder::class,
+            QMSRolesSeeder::class,
 
         ]);
     }
