@@ -208,36 +208,30 @@
                                     </div>
                                     <div>
                                         <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
+                                    </div> 
+                                    <div>
+                                    <a href="/analytics">Analytics</a> 
                                     </div>
-                                    @if (Auth::user())
-                                    @php
-                                        $userRoles = DB::table('users')->where('id', Auth::user()->id)->first();
-                                        $userRoleIds = explode(',', $userRoles->role); // Convert string to array
 
-                                        // Convert string IDs to integers (optional, depending on your needs)
-                                        $userRoleIds = array_map('intval', $userRoleIds);
-                                        // dd($userRoleIds);
-                                        // Convert string IDs to integers (optional, depending on your needs)
-                                        // $userRoleIds = array_map('intval', $userRoleIds);
-                                    @endphp
-                                        @if (in_array(3, $userRoleIds) || in_array(1, $userRoleIds) || in_array(2, $userRoleIds))
+                                    @if (Auth::user())
+                                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
                                             <div>
                                                 <a href="/mydms">My DMS</a>
                                             </div>
                                         @endif
-                                        @if (in_array(3, $userRoleIds))
+                                        @if (Helpers::checkRoles(3))
                                             <div>
                                                 <a href="{{ route('documents.index') }}">Documents</a>
                                             </div>
                                         @endif
-                                        @if (in_array(1, $userRoleIds) || in_array(2, $userRoleIds))
+                                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2))
                                             <div>
                                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                                             </div>
                                         @endif
-                                        @if (in_array(4, $userRoleIds) || in_array(5, $userRoleIds) || in_array(3, $userRoleIds))
+                                        @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
                                             <div>
-                                                <a href="{{ route('change-control.index') }}">My Tasks</a>
+                                                <a href="{{ route('change-control.index') }}">Change Control</a>
                                             </div>
                                         @endif
                                     @endif

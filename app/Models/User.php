@@ -21,8 +21,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'departmentid',
-        'role'
     ];
 
     /**
@@ -44,8 +42,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function userRoles()
+    public function roles()
     {
-        return $this->hasMany(UserRole::class);
+        return $this->belongsToMany(RoleGroup::class, 'user_roles');
     }
 }
