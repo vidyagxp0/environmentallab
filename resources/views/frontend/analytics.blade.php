@@ -231,6 +231,62 @@
                            }) 
 
                         </script>
+                        <div id="chart"></div>
+
+                        <script>
+                            fetch('/chart-data')
+                            .then(response => response.json())
+                            .then(data => {
+                                var options = {
+                                    series: [{
+                                        name: 'Total',
+                                        data: data.map(item => item.value),
+                                        // Define color for each category
+                                        colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560']
+                                    }],
+                                    chart: {
+                                        type: 'bar',
+                                        height: 350,
+                                        stacked: true,
+                                        toolbar: {
+                                            show: true
+                                        },
+                                        zoom: {
+                                            enabled: true
+                                        }
+                                    },
+                                    plotOptions: {
+                                        bar: {
+                                            horizontal: false,
+                                            borderRadius: 10,
+                                            dataLabels: {
+                                                total: {
+                                                    enabled: true,
+                                                    style: {
+                                                        fontSize: '13px',
+                                                        fontWeight: 900
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    },
+                                    xaxis: {
+                                        type: 'category',
+                                        categories: data.map(item => item.division)
+                                    },
+                                    legend: {
+                                        position: 'right',
+                                        offsetY: 40
+                                    },
+                                    fill: {
+                                        opacity: 1
+                                    }
+                                };
+
+                                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                                chart.render();
+                            });
+                            </script>
                         </div>
                      {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
