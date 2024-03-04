@@ -1192,10 +1192,10 @@
                                             <select name="severity_rate" id="analysisR"
                                                 onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="Negligible">Negligible</option>
-                                                <option value="Moderate">Moderate</option>
-                                                <option value="Major">Major</option>
-                                                <option value="Fatal">Fatal</option>
+                                                <option value="1">Negligible</option>
+                                                <option value="2">Moderate</option>
+                                                <option value="3">Major</option>
+                                                <option value="4">Fatal</option>
                                             </select>
                                         </div>
                                     </div>

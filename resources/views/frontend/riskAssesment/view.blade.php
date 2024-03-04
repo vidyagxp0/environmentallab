@@ -1775,13 +1775,13 @@
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}
-                                                        value="Negligible">Negligible</option>
+                                                        value="1">Negligible</option>
                                                     <option {{ $data->severity_rate == 'Moderate' ? 'selected' : '' }}
-                                                        value="Moderate">Moderate</option>
+                                                        value="2">Moderate</option>
                                                     <option {{ $data->severity_rate == 'Major' ? 'selected' : '' }}
-                                                        value="Major">Major</option>
+                                                        value="3">Major</option>
                                                     <option {{ $data->severity_rate == 'Fatal' ? 'selected' : '' }}
-                                                        value="Fatal">Fatal</option>
+                                                        value="4">Fatal</option>
                                                 </select>
                                             </div>
                                         </div>

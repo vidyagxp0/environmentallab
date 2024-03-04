@@ -1135,6 +1135,18 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for=" Rejected By">Rejected By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Rejected On">Rejected On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="button-block">

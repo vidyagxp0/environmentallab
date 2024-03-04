@@ -376,7 +376,7 @@ function addRiskAssessment(tableId) {
         "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
 
     var cell9 = newRow.insertCell(8);
-    cell9.innerHTML = "<input name='initial_rpn[]' type='text' class='initial-rpn'>";
+    cell9.innerHTML = "<input name='initial_rpn[]' disabled='text' class='initial-rpn'>";
 
     var cell10 = newRow.insertCell(9);
     cell10.innerHTML =
@@ -398,7 +398,7 @@ function addRiskAssessment(tableId) {
         "<select onchange='calculateResidualResult(this)' class='residual-fieldN' name='residual_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
 
     var cell15 = newRow.insertCell(14);
-    cell15.innerHTML = "<input name='residual_rpn[]' type='text' class='residual-rpn' >";
+    cell15.innerHTML = "<input name='residual_rpn[]'  type='text' class='residual-rpn' >";
 
     var cell16 = newRow.insertCell(15);
     cell16.innerHTML =

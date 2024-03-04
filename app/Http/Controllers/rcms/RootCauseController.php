@@ -777,6 +777,20 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
+
+            $history = new RootAuditTrial();
+            $history->root_id = $id;
+            $history->activity_type = 'Due Date';
+            $history->previous = $lastDocument->due_date;
+            $history->current = $root->due_date;
+            $history->comment = $request->due_date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         toastr()->success("Record is update Successfully");
         return back();
     }

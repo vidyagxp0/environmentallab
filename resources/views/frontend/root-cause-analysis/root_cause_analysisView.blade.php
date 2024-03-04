@@ -803,10 +803,15 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input name="initial_rpn[]" class='initial-rpn' type="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" >
+                                                                    <input name="initial_rpn[]" class='initial-rpn'  disabled="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" >
                                                                 </td>
                                                                 <td>
-                                                                    <input name="risk_acceptance[]" type="text" value="{{ unserialize($data->risk_acceptance)[$key] ?? null }}" >
+                                                                    {{-- <input name="risk_acceptance[]" class="fieldR"  value="{{ unserialize($data->risk_acceptance)[$key] ?? null }}" > --}}
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="Y" {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
+                                                                        <option value="N"  {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
+                                                                     </select>
                                                                 </td>
                                                                 <td>
                                                                     <input name="risk_control_measure[]" type="text" value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}" >
@@ -842,7 +847,7 @@
                                                                
 
                                                                 <td>
-                                                                    <input name="residual_rpn[]" class='residual-rpn' type="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
+                                                                    <input name="residual_rpn[]" class='residual-rpn'  disabled ="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
                                                                </td>
                                                                <td>
                                                                 <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
