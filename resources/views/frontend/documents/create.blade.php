@@ -50,7 +50,7 @@
         @if(isset($_GET['id']))
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Document 
+            {{ Helpers::getDivisionName($_GET['id'])}} / Document 
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
         @endif
@@ -107,7 +107,7 @@
                                         @if(isset($_GET['id']))
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            value="{{ Helpers::getDivisionName($_GET['id'])}}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                         @else
