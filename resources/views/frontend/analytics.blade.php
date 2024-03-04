@@ -223,13 +223,21 @@
                                         });
                                     })
                             </script>
-                            <div id="Internal-Audit">
-                                <div id="chart">
-                                    <h4>
-                                        Internal Audit (Division)
-                                    </h4>
+                            <div class="container">
+                                <div id="Internal-Audit">
+                                    <div id="chart">
+                                        <h4>
+                                            Internal Audit (Division)
+                                        </h4>
+                                    </div>
+                                </div>
+                                <div class="text">
+                                    <h1>
+                                        Internal Audit (state)
+                                    </h1>
                                 </div>
                             </div>
+
 
                         </div>
                         {{-- <div class="scope-pagination">
@@ -369,12 +377,23 @@
         }
     </script>
     <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
         #chart {
             display: none;
-            width: 50%;
-            height: 100px;
+            width: 200%;
+            height: auto;
             border: 1px solid #ccc;
             margin-top: 10px;
+        }
+
+        .text {
+            width: 50%;
+            margin-left: 10px;
+            /* Adjust margin as needed */
         }
     </style>
 @endsection
