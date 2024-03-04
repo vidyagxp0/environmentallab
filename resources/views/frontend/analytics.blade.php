@@ -135,8 +135,8 @@
                        <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process--</label>
-                                <select id="test" onchange="showChart()">                                    <option value="">All Records</option>
-                                    <option  value="Internal-Audit">Internal Audit</option>
+                                <select  onchange="showChart()">                                    <option value="">All Records</option>
+                                    <option id="Internal-Audit" value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
                                     <option value="Capa">Capa</option>
                                     <option value="Audit-Program">Audit Program</option>
@@ -230,14 +230,12 @@
                            }) 
 
                         </script>
-                        <div id="test">
-                        <h4>
+                        <div id="Internal-Audit">
+                      
+                        <div id="chart">  <h4>
                             Internal Audit (Division)
                             </h4>
-                        <div id="chart">
-                         
                         </div>
-
                         <script>
                             fetch('/chart-data')
                             .then(response => response.json())
@@ -292,8 +290,9 @@
                                 chart.render();
                             });
                             </script>
+                            
                         </div>
-
+                        
                         </div>
                      {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
@@ -368,7 +367,7 @@
     </script>
         <script>
         function showChart() {
-            var selectElement = document.getElementById("test");
+            var selectElement = document.getElementById("Internal-Audit");
             var chartDiv = document.getElementById("chart");
             if (selectElement.value === "Internal-Audit") {
                 chartDiv.style.display = "block";
@@ -380,9 +379,9 @@
        <style>
         #chart {
             display: none; 
-            width: 100%; 
-            height: 200px; 
-            border: 1px solid #ccc; 
+            width: 50%;
+            height: 100px;
+            border: 1px solid #ccc;
             margin-top: 10px;
         }
     </style>
