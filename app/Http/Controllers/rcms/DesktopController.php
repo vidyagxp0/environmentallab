@@ -196,4 +196,23 @@ class DesktopController extends Controller
 
         }
     }
+    public function fetchChartData() {
+        $internalAuditData = InternalAudit::all(); 
+        $chartData = [];
+        
+        // Count occurrences of each division_code
+        $divisionCounts = $internalAuditData->groupBy('division_code')->map->count();
+        
+        // Iterate through each division_code and push into $chartData
+        foreach ($divisionCounts as $divisionCode => $count) {
+            $chartData[] = [
+                'division' => $divisionCode,
+                'value' => $count
+            ];
+        }
+    
+        return response()->json($chartData);
+    }
+    
+
 }
