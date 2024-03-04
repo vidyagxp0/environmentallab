@@ -372,7 +372,7 @@
         function showChart() {
             var selectElement = document.getElementById("test");
             var chartDiv = document.getElementById("chart");
-            if (selectElement.value === "Internal-Audit") {
+            if (selectElement.value) {
                 chartDiv.style.display = "block";
             } else {
                 chartDiv.style.display = "none";

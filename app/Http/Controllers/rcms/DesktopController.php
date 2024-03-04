@@ -223,8 +223,9 @@ class DesktopController extends Controller
         $internalAuditData = Auditee::all();
         }else if($request->value=='Observation'){
         $internalAuditData = Observation::all();
-        }
-        // $internalAuditData = InternalAudit::all(); 
+        }else{
+        $internalAuditData = [];
+        } 
         $chartData = [];
         
         // Count occurrences of each division_code
