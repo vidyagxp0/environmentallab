@@ -17,9 +17,6 @@ return new class extends Migration
             $table->id();
             $table->integer('user_id');
             $table->integer('role_id');
-            $table->integer('q_m_s_divisions_id');
-            $table->integer('q_m_s_processes_id');
-            $table->integer('q_m_s_roles_id'); 
             $table->timestamps();
         });
     }

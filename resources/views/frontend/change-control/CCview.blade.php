@@ -81,10 +81,6 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        @php
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> --}}
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
@@ -94,14 +90,14 @@
                             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
                                     Close Done </a> </button>
                         @endif --}}
-                        @if ($data->stage == 1  && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
+                        @if ($data->stage == 1 && Helpers::checkRoles(3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2  && in_array(4, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 2 && Helpers::checkRoles(4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -111,12 +107,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info-required
                             </button>
-                        @elseif($data->stage == 3  && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 3 && Helpers::checkRoles(3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send to CFT Reviewers
+                                Send to CFT/SME/QA Reviewers
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-modal">
-                                CFT Review Not Required
+                                CFT/SME/QA Review Not Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information required
@@ -124,20 +120,20 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
-                        @elseif($data->stage == 4  && in_array(5, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 4 && Helpers::checkRoles(5))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 6  && in_array(6, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 6 && Helpers::checkRoles(6))
                             @if ($evaluation->training_required == 'yes')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Training Completed
                                 </button>
                             @endif
-                        @elseif($data->stage == 7  && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 7 && Helpers::checkRoles(3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Implemented
                             </button>
