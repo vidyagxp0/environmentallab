@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Auth;
 
 class Helpers
 {
@@ -45,11 +46,19 @@ class Helpers
 
     public static function checkRoles($role)
     {
-        if (strpos(Auth::user()->role, $role) !== false) {
-           return true;
+
+        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id])->get();
+        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+        if(in_array($role, $userRoleIds)){
+            return true;
         }else{
             return false;
-        } 
+        }
+        // if (strpos(Auth::user()->role, $role) !== false) {
+        //    return true;
+        // }else{
+        //     return false;
+        // } 
     }
 
 
