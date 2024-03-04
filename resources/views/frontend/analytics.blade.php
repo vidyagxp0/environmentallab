@@ -36,15 +36,13 @@
             querySelect.options.add(new Option('Pending Actions Completion', '5'));
             querySelect.options.add(new Option('Closed - Done', '6'));
 
-        }
-        else if (scopeValue === 'audit_program') {
+        } else if (scopeValue === 'audit_program') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Approval', '2'));
             querySelect.options.add(new Option('Pending Audit', '3'));
             querySelect.options.add(new Option('Closed - Done', '4'));
 
-        }
-         else if (scopeValue === 'lab_incident') {
+        } else if (scopeValue === 'lab_incident') {
             querySelect.options.add(new Option('Opened', '1'));
             querySelect.options.add(new Option('Pending Incident Review ', '2'));
             querySelect.options.add(new Option('Pending Investigation', '3'));
@@ -76,50 +74,42 @@
             querySelect.options.add(new Option('In Progress', '2'));
             querySelect.options.add(new Option('Close - Done', '3'));
 
+        } else if (scopeValue === 'extension') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending Approval', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'documents') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Close - Cancel', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'observation') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Pending CAPA Plan', '2'));
+            querySelect.options.add(new Option('Pending Approval', '3'));
+            querySelect.options.add(new Option('Pending Final Approval', '4'));
+            querySelect.options.add(new Option('Close - Done', '5'));
+        } else if (scopeValue === 'action_item') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Work in Progress', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'effectiveness_check') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Check Effectiveness', '2'));
+            querySelect.options.add(new Option('Close - Done', '3'));
+
+        } else if (scopeValue === 'CC') {
+            querySelect.options.add(new Option('Opened', '1'));
+            querySelect.options.add(new Option('Under HOD Review', '2'));
+            querySelect.options.add(new Option('Pending QA Review', '3'));
+            querySelect.options.add(new Option('CFT Review', '4'));
+            querySelect.options.add(new Option('Pending Change Implementation', '5'));
+            querySelect.options.add(new Option('Close - Done', '6'));
         }
-        else if (scopeValue === 'extension') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending Approval', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
 
-            }
-        else if (scopeValue === 'documents') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
 
-            }
-            else if (scopeValue === 'observation') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending CAPA Plan', '2'));
-                querySelect.options.add(new Option('Pending Approval', '3'));
-                querySelect.options.add(new Option('Pending Final Approval', '4'));
-                querySelect.options.add(new Option('Close - Done', '5'));
-            }
-
-            else if (scopeValue === 'action_item') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Work in Progress', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-
-            else if (scopeValue === 'effectiveness_check') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Check Effectiveness', '2'));
-                querySelect.options.add(new Option('Close - Done', '3'));
-
-            }
-            else if (scopeValue === 'CC') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Under HOD Review', '2'));
-                querySelect.options.add(new Option('Pending QA Review', '3'));
-                querySelect.options.add(new Option('CFT Review', '4'));
-                querySelect.options.add(new Option('Pending Change Implementation', '5'));
-                querySelect.options.add(new Option('Close - Done', '6'));
-            }
-
-            
         // Add more conditions based on other scope values
 
     }
@@ -128,14 +118,15 @@
     <div id="rcms-dashboard">
         <div class="container-fluid">
             <div class="dash-grid">
-                
+
                 <div>
                     <div class="inner-block scope-table" style="height: calc(100vh - 170px); padding: 0;">
-                        
-                       <div class="grid-block">
+
+                        <div class="grid-block">
                             <div class="group-input">
                                 <label for="scope">Process--</label>
-                                <select  onchange="showChart()">                                    <option value="">All Records</option>
+                                <select onchange="showChart()">
+                                    <option value="">All Records</option>
                                     <option id="Internal-Audit" value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
                                     <option value="Capa">Capa</option>
@@ -150,12 +141,12 @@
                                     <option value="Change Control">Change Control</option>
                                     <option value="Action Item">Action Item</option>
                                     <option value="Effectiveness Check">Effectiveness Check</option>
-                                     {{-- <option value="tms">TMS</option>  --}}
+                                    {{-- <option value="tms">TMS</option>  --}}
                                 </select>
                             </div>
                             <div class="group-input">
                                 <label for="query">Criteria</label>
-                                <select id="query" name="stage" >
+                                <select id="query" name="stage">
                                     <option value="">All Records</option>
                                     <option value="Closed">Closed Records</option>
                                     <option value="Opened">Opened Records</option>
@@ -170,131 +161,78 @@
                         <div class="main-scope-table">
                             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
                             <canvas id="myChart" width="400" height="115"></canvas>
-                                                    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-                        <script>
-                            axios.get('/api/analyticsData')
-                                .then(function (response) {
-                                    var dataCounts = response.data;
-                                    console.log(response.data, "dataCounts");
-                           console.log(dataCounts, "dataCounts11");
-                                
-                            var ctx = document.getElementById('myChart').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: 'bar',
-                                data: {
-                                    labels: ['InternalAudit','Extension','Capa','AuditProgram','LabIncident','RiskManagement','RootCauseAnalysis','ManagementReview','CC','ActionItem','EffectivenessCheck','Auditee','Observation'],
-                                    datasets: [{
-                                        label: '',
-                                        data: dataCounts,
-                                        backgroundColor: [
-                                            'rgba(255, 255, 255, 1)',
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)',
-                                            'rgba(255, 99, 132, 0.2)',
-                                            'rgba(54, 162, 235, 0.2)',
-                                            'rgba(255, 206, 86, 0.2)',
-                                            'rgba(75, 192, 192, 0.2)',
-                                            'rgba(153, 102, 255, 0.2)',
-                                            'rgba(255, 159, 64, 0.2)'
-                                        ],
-                                        borderColor: [
-                                            'rgba(255, 255, 255, 1)',
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)',
-                                            'rgba(255, 99, 132, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(255, 206, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(255, 159, 64, 1)' 
-                                        ],
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
-                           }) 
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+                            <script>
+                                axios.get('/api/analyticsData')
+                                    .then(function(response) {
+                                        var dataCounts = response.data;
+                                        console.log(response.data, "dataCounts");
+                                        console.log(dataCounts, "dataCounts11");
 
-                        </script>
-                        <div id="Internal-Audit">
-                      
-                        <div id="chart">  <h4>
-                            Internal Audit (Division)
-                            </h4>
-                        </div>
-                        <script>
-                            fetch('/chart-data')
-                            .then(response => response.json())
-                            .then(data => {
-                                var options = {
-                                    series: [{
-                                        name: 'Total',
-                                        data: data.map(item => item.value),
-                                        // Define color for each category
-                                        colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560']
-                                    }],
-                                    chart: {
-                                        type: 'bar',
-                                        height: 350,
-                                        stacked: true,
-                                        toolbar: {
-                                            show: true
-                                        },
-                                        zoom: {
-                                            enabled: true
-                                        }
-                                    },
-                                    plotOptions: {
-                                        bar: {
-                                            horizontal: false,
-                                            borderRadius: 10,
-                                            dataLabels: {
-                                                total: {
-                                                    enabled: true,
-                                                    style: {
-                                                        fontSize: '13px',
-                                                        fontWeight: 900
+                                        var ctx = document.getElementById('myChart').getContext('2d');
+                                        var myChart = new Chart(ctx, {
+                                            type: 'bar',
+                                            data: {
+                                                labels: ['InternalAudit', 'Extension', 'Capa', 'AuditProgram', 'LabIncident',
+                                                    'RiskManagement', 'RootCauseAnalysis', 'ManagementReview', 'CC', 'ActionItem',
+                                                    'EffectivenessCheck', 'Auditee', 'Observation'
+                                                ],
+                                                datasets: [{
+                                                    label: '',
+                                                    data: dataCounts,
+                                                    backgroundColor: [
+                                                        'rgba(255, 255, 255, 1)',
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                        'rgba(75, 192, 192, 0.2)',
+                                                        'rgba(153, 102, 255, 0.2)',
+                                                        'rgba(255, 159, 64, 0.2)',
+                                                        'rgba(255, 99, 132, 0.2)',
+                                                        'rgba(54, 162, 235, 0.2)',
+                                                        'rgba(255, 206, 86, 0.2)',
+                                                        'rgba(75, 192, 192, 0.2)',
+                                                        'rgba(153, 102, 255, 0.2)',
+                                                        'rgba(255, 159, 64, 0.2)'
+                                                    ],
+                                                    borderColor: [
+                                                        'rgba(255, 255, 255, 1)',
+                                                        'rgba(255, 99, 132, 1)',
+                                                        'rgba(54, 162, 235, 1)',
+                                                        'rgba(255, 206, 86, 1)',
+                                                        'rgba(75, 192, 192, 1)',
+                                                        'rgba(153, 102, 255, 1)',
+                                                        'rgba(255, 159, 64, 1)',
+                                                        'rgba(255, 99, 132, 1)',
+                                                        'rgba(54, 162, 235, 1)',
+                                                        'rgba(255, 206, 86, 1)',
+                                                        'rgba(75, 192, 192, 1)',
+                                                        'rgba(153, 102, 255, 1)',
+                                                        'rgba(255, 159, 64, 1)'
+                                                    ],
+                                                    borderWidth: 1
+                                                }]
+                                            },
+                                            options: {
+                                                scales: {
+                                                    y: {
+                                                        beginAtZero: true
                                                     }
                                                 }
                                             }
-                                        },
-                                    },
-                                    xaxis: {
-                                        type: 'category',
-                                        categories: data.map(item => item.division)
-                                    },
-                                    legend: {
-                                        position: 'right',
-                                        offsetY: 40
-                                    },
-                                    fill: {
-                                        opacity: 1
-                                    }
-                                };
-
-                                var chart = new ApexCharts(document.querySelector("#chart"), options);
-                                chart.render();
-                            });
+                                        });
+                                    })
                             </script>
-                            
+                            <div id="Internal-Audit">
+                                <div id="chart">
+                                    <h4>
+                                        Internal Audit (Division)
+                                    </h4>
+                                </div>
+                            </div>
+
                         </div>
-                        
-                        </div>
-                     {{-- <div class="scope-pagination">
+                        {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
                         </div>  --}}
                     </div>
@@ -365,7 +303,61 @@
             });
         });
     </script>
-        <script>
+    <script>
+        fetch('/chart-data')
+            .then(response => response.json())
+            .then(data => {
+                var options = {
+                    series: [{
+                        name: 'Total',
+                        data: data.map(item => item.value),
+                        // Define color for each category
+                        colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560']
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        stacked: true,
+                        toolbar: {
+                            show: true
+                        },
+                        zoom: {
+                            enabled: true
+                        }
+                    },
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '13px',
+                                        fontWeight: 900
+                                    }
+                                }
+                            }
+                        },
+                    },
+                    xaxis: {
+                        type: 'category',
+                        categories: data.map(item => item.division)
+                    },
+                    legend: {
+                        position: 'right',
+                        offsetY: 40
+                    },
+                    fill: {
+                        opacity: 1
+                    }
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+            });
+    </script>
+    <script>
         function showChart() {
             var selectElement = document.getElementById("Internal-Audit");
             var chartDiv = document.getElementById("chart");
@@ -376,9 +368,9 @@
             }
         }
     </script>
-       <style>
+    <style>
         #chart {
-            display: none; 
+            display: none;
             width: 50%;
             height: 100px;
             border: 1px solid #ccc;
