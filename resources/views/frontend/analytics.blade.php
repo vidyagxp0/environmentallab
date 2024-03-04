@@ -229,13 +229,16 @@
                                         <h4>
                                             Internal Audit (Division)
                                         </h4>
+                                        <button id="toggleChartBtn">Toggle Pie Chart</button>
                                     </div>
                                 </div>
-                                <div class="text">
-                                    <h1>
-                                        Internal Audit (state)
-                                    </h1>
-                                </div>
+              
+                            </div>
+                            <div class="chart-container">
+                                <h1>
+                                    Internal Audit (state)
+                                </h1>
+
                             </div>
 
 
@@ -376,22 +379,72 @@
             }
         }
     </script>
+
+    {{-- chart donot --}}
+   <script>
+    document.getElementById('toggleChartBtn').addEventListener('click', function() {
+        var chartContainer = document.querySelector('.chart-container');
+        if (chartContainer.style.display === 'none') {
+            chartContainer.style.display = 'block';
+        } else {
+            chartContainer.style.display = 'none';
+        }
+    });
+
+    fetch('/chart-data')
+        .then(response => response.json())
+        .then(data => {
+            var options = {
+                series: data.map(item => item.value),
+                labels: data.map(item => item.division),
+                chart: {
+                    type: 'pie',
+                    height: 350,
+                },
+                legend: {
+                    position: 'right',
+                    offsetY: 40
+                },
+                colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560'],
+                plotOptions: {
+                    pie: {
+                        dataLabels: {
+                            offset: -5
+                        }
+                    }
+                },
+                dataLabels: {
+                    formatter(val, opts) {
+                        const name = opts.w.globals.labels[opts.seriesIndex];
+                        return [name, val.toFixed(1) + '%'];
+                    }
+                },
+                title: {
+                    text: "Pie Chart"
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector(".chart-container"), options);
+            chart.render();
+        });
+</script>
+    
     <style>
         .container {
-            display: flex;
-            justify-content: space-between;
+            /* display: flex;
+            justify-content: space-between; */
         }
 
         #chart {
             display: none;
-            width: 200%;
+            /* width: 200%;
             height: auto;
             border: 1px solid #ccc;
-            margin-top: 10px;
+            margin-top: 10px; */
         }
 
         .text {
-            width: 50%;
+            width: 30%;
             margin-left: 10px;
             /* Adjust margin as needed */
         }
