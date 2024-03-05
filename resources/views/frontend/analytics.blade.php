@@ -231,9 +231,7 @@
 
                         </script>
                         <div id="test">
-                        <h4>
-                            Internal Audit (Division)
-                            </h4>
+                        <h4 id="selectedValueText"></h4>
                         <div id="chart">
                          
                         </div>
@@ -369,17 +367,27 @@
         });
     </script>
         <script>
-        function showChart() {
-            var selectElement = document.getElementById("test");
-            var chartDiv = document.getElementById("chart");
-            if (selectElement.value) {
-                chartDiv.style.display = "block";
-            } else {
-                chartDiv.style.display = "none";
-            }
-            var selectedValue = document.getElementById("test").value;
-            fetchData(selectedValue);
-        }
+function showChart() {
+    var selectElement = document.getElementById("test");
+    var chartDiv = document.getElementById("chart");
+    
+    // Hide the chart if no option is selected
+    if (!selectElement.value) {
+        chartDiv.style.display = "none";
+        return;
+    } else {
+        chartDiv.style.display = "block";
+    }
+    
+    // Clear the existing chart data
+    var chartElement = document.querySelector("#chart");
+    if (chartElement) {
+        chartElement.innerHTML = ""; // Clear the chart container
+    }
+    var selectedValue = selectElement.value;
+    document.getElementById("selectedValueText").textContent = selectedValue+ " (Division)";
+    fetchData(selectedValue);
+}
     </script>
        <style>
         #chart {
