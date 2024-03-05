@@ -26,8 +26,8 @@ class RoleGroupSeeder extends Seeder
 
         $group  = new RoleGroup();
         $group->id = 2;
-        $group->name = "KSA-Change Control- HOD/Desginee";
-        $group->description = "KSA-Change Control- HOD/Desginee";
+        $group->name = "KSA-Change Control- HOD/Designee";
+        $group->description = "KSA-Change Control- HOD/Designee";
         $group->permission = json_encode(['read' => true, 'create' => false, 'edit' => true, 'delete' => false]);
         $group->save();
 
@@ -68,8 +68,8 @@ class RoleGroupSeeder extends Seeder
 
         $group  = new RoleGroup();
         $group->id = 8;
-        $group->name = "Estonia-Change Control- HOD/Desginee";
-        $group->description = "Estonia-Change Control- HOD/Desginee";
+        $group->name = "Estonia-Change Control- HOD/Designee";
+        $group->description = "Estonia-Change Control- HOD/Designee";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
@@ -111,8 +111,8 @@ class RoleGroupSeeder extends Seeder
 
         $group  = new RoleGroup();
         $group->id = 14;
-        $group->name = "Egypt-Change Control- HOD/Desginee";
-        $group->description = "Egypt-Change Control- HOD/Desginee";
+        $group->name = "Egypt-Change Control- HOD/Designee";
+        $group->description = "Egypt-Change Control- HOD/Designee";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
@@ -153,8 +153,8 @@ class RoleGroupSeeder extends Seeder
 
         $group  = new RoleGroup();
         $group->id = 20;
-        $group->name = "Jordan-Change Control- HOD/Desginee";
-        $group->description = "Jordan-Change Control- HOD/Desginee";
+        $group->name = "Jordan-Change Control- HOD/Designee";
+        $group->description = "Jordan-Change Control- HOD/Designee";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
@@ -1377,8 +1377,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 190;
-$group->name = "KSA-CAPA- HOD/Desginee";
-$group->description = "KSA-CAPA- HOD/Desginee";
+$group->name = "KSA-CAPA- HOD/Designee";
+$group->description = "KSA-CAPA- HOD/Designee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -1413,8 +1413,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 195;
-$group->name = "Estonia-CAPA- HOD/Desginee";
-$group->description = "Estonia-CAPA- HOD/Desginee";
+$group->name = "Estonia-CAPA- HOD/Designee";
+$group->description = "Estonia-CAPA- HOD/Designee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -1449,8 +1449,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 200;
-$group->name = "Egypt-CAPA- HOD/Desginee";
-$group->description = "Egypt-CAPA- HOD/Desginee";
+$group->name = "Egypt-CAPA- HOD/Designee";
+$group->description = "Egypt-CAPA- HOD/Designee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -1485,8 +1485,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 205;
-$group->name = "Jordan-CAPA- HOD/Desginee";
-$group->description = "Jordan-CAPA- HOD/Desginee";
+$group->name = "Jordan-CAPA- HOD/Designee";
+$group->description = "Jordan-CAPA- HOD/Designee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 

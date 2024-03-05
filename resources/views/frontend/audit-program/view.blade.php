@@ -191,14 +191,17 @@
             <div class="inner-block state-block">
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="main-head">Record Workflow </div>
-
+                    @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                     <div class="d-flex" style="gap:20px;">
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('showAuditProgramTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -208,7 +211,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
                             </button>
@@ -219,7 +222,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>

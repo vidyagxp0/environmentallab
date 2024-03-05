@@ -40,8 +40,8 @@ class QMSRolesSeeder extends Seeder
 
         $group  = new QMSRoles();
         $group->id = 4;
-        $group->name = "HOD/Desginee";
-        $group->description = "HOD/Desginee";
+        $group->name = "HOD/Designee";
+        $group->description = "HOD/Designee";
         $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
         $group->save();
 
