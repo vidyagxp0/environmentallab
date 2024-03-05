@@ -196,4 +196,51 @@ class DesktopController extends Controller
 
         }
     }
+    public function fetchChartData(Request $request) {
+        if($request->value=='Internal-Audit'){
+        $internalAuditData = InternalAudit::all();
+        }else if($request->value=='External-Audit'){
+        $internalAuditData = Extension::all();
+        }else if($request->value=='Capa'){
+        $internalAuditData = Capa::all();
+        }else if($request->value=='Audit-Program'){
+        $internalAuditData = AuditProgram::all();
+        }else if($request->value=='Lab Incident'){
+        $internalAuditData = LabIncident::all();
+        }else if($request->value=='Risk Assesment'){
+        $internalAuditData = RiskManagement::all();
+        }else if($request->value=='Root-Cause-Analysis'){
+        $internalAuditData = RootCauseAnalysis::all();
+        }else if($request->value=='Management Review'){
+        $internalAuditData = ManagementReview::all();
+        }else if($request->value=='Change Control'){
+        $internalAuditData = CC::all();
+        }else if($request->value=='Action Item'){
+        $internalAuditData = ActionItem::all();
+        }else if($request->value=='Effectiveness Check'){
+        $internalAuditData = EffectivenessCheck::all();
+        }else if($request->value==''){
+        $internalAuditData = Auditee::all();
+        }else if($request->value=='Observation'){
+        $internalAuditData = Observation::all();
+        }else{
+        $internalAuditData = [];
+        } 
+        $chartData = [];
+        
+        // Count occurrences of each division_code
+        $divisionCounts = $internalAuditData->groupBy('division_code')->map->count();
+        
+        // Iterate through each division_code and push into $chartData
+        foreach ($divisionCounts as $divisionCode => $count) {
+            $chartData[] = [
+                'division' => $divisionCode,
+                'value' => $count
+            ];
+        }
+    
+        return response()->json($chartData);
+    }
+    
+
 }

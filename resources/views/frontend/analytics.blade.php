@@ -134,10 +134,9 @@
                         
                        <div class="grid-block">
                             <div class="group-input">
-                                <label for="scope">Process--</label>
-                                <select id="scope" name="form">
-                                    <option value="">All Records</option>
-                                    <option value="Internal-Audit">Internal Audit</option>
+                                <label for="scope">Process</label>
+                                <select id="test" onchange="showChart()">                                    <option value="">All Records</option>
+                                    <option  value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
                                     <option value="Capa">Capa</option>
                                     <option value="Audit-Program">Audit Program</option>
@@ -231,6 +230,70 @@
                            }) 
 
                         </script>
+                        <div id="test">
+                        <h4 id="selectedValueText"></h4>
+                        <div id="chart">
+                         
+                        </div>
+
+                        <script>
+                        function fetchData(selectedValue) {
+                         fetch(`/chart-data?value=${selectedValue}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                var options = {
+                                    series: [{
+                                        name: 'Total',
+                                        data: data.map(item => item.value),
+                                        // Define color for each category
+                                        colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560']
+                                    }],
+                                    chart: {
+                                        type: 'bar',
+                                        height: 350,
+                                        stacked: true,
+                                        toolbar: {
+                                            show: true
+                                        },
+                                        zoom: {
+                                            enabled: true
+                                        }
+                                    },
+                                    plotOptions: {
+                                        bar: {
+                                            horizontal: false,
+                                            borderRadius: 10,
+                                            dataLabels: {
+                                                total: {
+                                                    enabled: true,
+                                                    style: {
+                                                        fontSize: '13px',
+                                                        fontWeight: 900
+                                                    }
+                                                }
+                                            }
+                                        },
+                                    },
+                                    xaxis: {
+                                        type: 'category',
+                                        categories: data.map(item => item.division)
+                                    },
+                                    legend: {
+                                        position: 'right',
+                                        offsetY: 40
+                                    },
+                                    fill: {
+                                        opacity: 1
+                                    }
+                                };
+
+                                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                                chart.render();
+                            });
+                        }
+                            </script>
+                        </div>
+
                         </div>
                      {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
@@ -303,4 +366,36 @@
             });
         });
     </script>
+        <script>
+function showChart() {
+    var selectElement = document.getElementById("test");
+    var chartDiv = document.getElementById("chart");
+    
+    // Hide the chart if no option is selected
+    if (!selectElement.value) {
+        chartDiv.style.display = "none";
+        return;
+    } else {
+        chartDiv.style.display = "block";
+    }
+    
+    // Clear the existing chart data
+    var chartElement = document.querySelector("#chart");
+    if (chartElement) {
+        chartElement.innerHTML = ""; // Clear the chart container
+    }
+    var selectedValue = selectElement.value;
+    document.getElementById("selectedValueText").textContent = selectedValue+ " (Division)";
+    fetchData(selectedValue);
+}
+    </script>
+       <style>
+        #chart {
+            display: none; 
+            width: 100%; 
+            height: 200px; 
+            border: 1px solid #ccc; 
+            margin-top: 10px;
+        }
+    </style>
 @endsection
