@@ -1324,7 +1324,7 @@ class ManagementReviewController extends Controller
         //dd(unserialize($action_item_details->date_due));
         $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
         
-        return view('frontend.manageshow.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));
+        return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));
     }
 
 
@@ -1334,21 +1334,45 @@ class ManagementReviewController extends Controller
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
+            $lastDocument =  ManagementReview::find($id);
+            $data =  ManagementReview::find($id);
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
-                $changeControl->status = "In Progress";
+                $changeControl->status = 'In Progress';
                 $changeControl->Submited_by = Auth::user()->name;
                 $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->Submited_by;
+                $history->current = $changeControl->Submited_by;    
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Closed - Done";
+                $changeControl->status = 'Closed - Done';
                 $changeControl->completed_by = Auth::user()->name;
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->completed_by;
+                $history->current = $changeControl->completed_by;    
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

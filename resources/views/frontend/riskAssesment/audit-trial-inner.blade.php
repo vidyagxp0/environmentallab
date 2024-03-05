@@ -107,12 +107,70 @@
                             </div>
                             @endif
                             @endif
+                            @if($temp->current != $temp->previous)
+                            @if($temp->activity_type == "Activity Log" )
+
+                          
+                                     @if($temp->origin_state =="Opened")
+                                     <div class="list-item">
+                                      <div class="head">Submitted By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Submitted On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                     @elseif($temp->origin_state =="Risk Analysis & Work Group Assignment") 
+                                     
+                                      <div class="list-item">
+                                      <div class="head">Evaluated By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Evaluated By</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                     @elseif($temp->origin_state =="Pending HOD Approval") 
+                                      <div class="list-item">
+                                      <div class="head">Plan Approved By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Plan Approved On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                     @elseif($temp->origin_state =="Residual Risk Evaluation") 
+                                      <div class="list-item">
+                                      <div class="head">Risk Analysis Completed By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Risk Analysis Completed By</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                    
+
+                                     @endif
+
+
+                            @else
+
 
                             <div class="list-item">
                                 <div class="head">Origin state</div>
                                 <div>:</div>
                                 <div>{{ $temp->origin_state }}</div>
                             </div>
+                           @endif
+                           @endif 
                         </div>
                         {{-- <a href="{{ url('documents/viewpdf/' . $temp->id) }}#toolbar=0" class="view-pdf">
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
