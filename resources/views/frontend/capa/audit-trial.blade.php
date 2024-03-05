@@ -25,7 +25,7 @@
                         <div class="list-item">
                             <div class="head">Originator</div>
                             <div>:</div>
-                            <div>{{ $document->originator }}</div>
+                            <div>{{ $document->initiator }}</div>
                         </div>
                     </div>
 
