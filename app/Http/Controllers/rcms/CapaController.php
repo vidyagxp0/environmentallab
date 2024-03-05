@@ -705,7 +705,8 @@ class CapaController extends Controller
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
         $capa->assign_to = $request->assign_to;
-        $capa->capa_team = $request->capa_team;
+      //  $capa->capa_team = $request->capa_team;
+        $capa->capa_team = implode(',', $request->capa_team);
         $capa->capa_type = $request->capa_type;
         $capa->details_new = $request->details_new;
         $capa->initiated_through = $request->initiated_through;

@@ -91,9 +91,11 @@
                                 <div class="head">Changed From</div>
                                 <div>:</div>
                                 @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
-                                <div>{{ $temp->previous != 'Null' ?  Helpers::getInitiatorName($temp->previous ) : $temp->previous  }}</div>
+                                @foreach(explode(',',$temp->previous) as $prev)
+                                {{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }},
+                                @endforeach
                                 @else
-                                <div>{{ $temp->previous }}</div>
+                                {{ $temp->previous }}
                                 @endif
                             </div>
                             @else
@@ -108,9 +110,11 @@
                                 <div class="head">Changed To</div>
                                 <div>:</div>
                                 @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
-                                <div>{{ Helpers::getInitiatorName($temp->current) }}</div>
+                                @foreach(explode(',',$temp->current) as $curr)
+                                {{ Helpers::getInitiatorName($curr) }} ,
+                                @endforeach
                                 @else
-                                <div>{{ $temp->current }}</div>
+                                {{ $temp->current }}
                                 @endif
                             </div>
                             @endif
