@@ -65,8 +65,8 @@
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/audit-trial', $data->cc_id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
+                        @if ($data->stage == 1 && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>

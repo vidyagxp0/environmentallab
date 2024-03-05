@@ -1257,11 +1257,23 @@ class ObservationController extends Controller
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
+            $lastDocument = Observation::find($id);
             if ($changestage->stage == 1) {
                 $changestage->stage = "2";
                 $changestage->status = "Pending CAPA Plan";
                 $changestage->Completed_By = Auth::user()->name;
                 $changestage->completed_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->Completed_By;
+                $history->current = $changestage->Completed_By;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1279,6 +1291,17 @@ class ObservationController extends Controller
                 $changestage->status = "CAPA Execution in Progress";
                 $changestage->QA_Approved_By = Auth::user()->name;
                 $changestage->QA_Approved_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->QA_Approved_By;
+                $history->current = $changestage->QA_Approved_By;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1296,6 +1319,17 @@ class ObservationController extends Controller
                 $changestage->status = "Closed - Done";
                 $changestage->Final_Approval_By = Auth::user()->name;
                 $changestage->Final_Approval_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->Final_Approval_By;
+                $history->current = $changestage->Final_Approval_By;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->save();
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();

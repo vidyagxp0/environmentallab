@@ -662,6 +662,8 @@ class ActionItemController extends Controller
         // return "hii";
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ActionItem::find($id);
+            $lastopenState = ActionItem::find($id);
+            $openState = ActionItem::find($id);
             $task = Taskdetails::where('cc_id', $id)->first();
             if ($changeControl->stage == 1) {
                 // $rules = [
@@ -699,6 +701,17 @@ class ActionItemController extends Controller
                     $changeControl->status = 'Work In Progress';
                     $changeControl->submitted_by = Auth::user()->name;
                     $changeControl->submitted_on = Carbon::now()->format('d-M-Y');;
+                        $history = new ActionItemHistory;
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastopenState->submitted_by;
+                        $history->current = $changeControl->submitted_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Action-Item";
@@ -717,7 +730,18 @@ class ActionItemController extends Controller
                 $changeControl->stage = '3';
                 $changeControl->status = 'Closed-Done';
                 $changeControl->completed_by = Auth::user()->name;
-                $changeControl->completed_on = Carbon::now()->format('d-M-Y');;
+                $changeControl->completed_on = Carbon::now()->format('d-M-Y');
+                      $history = new ActionItemHistory;
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastopenState->completed_by;
+                        $history->current = $changeControl->completed_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Action-Item";
@@ -768,12 +792,25 @@ public function actionStageCancel(Request $request, $id)
 {
     if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
         $changeControl = ActionItem::find($id);
+        $lastopenState = ActionItem::find($id);
+        $openState = ActionItem::find($id);
 
         if ($changeControl->stage == 1) {
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
             $changeControl->cancelled_by = Auth::user()->name;
-            $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');;
+            $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $history = new ActionItemHistory;
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastopenState->cancelled_by;
+                        $history->current = $changeControl->cancelled_by;
+                        $history->comment = $request->cancelled_by_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->save();
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Action Item";
@@ -792,6 +829,17 @@ public function actionStageCancel(Request $request, $id)
             $changeControl->status = "Opened";
             $changeControl->more_information_required_by = (string)Auth::user()->name;
             $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
+                        $history = new ActionItemHistory;
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastopenState->more_information_required_by;
+                        $history->current = $changeControl->more_information_required_by;
+                        $history->comment = $request->more_information_required_by_comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->save();
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Action Item";
