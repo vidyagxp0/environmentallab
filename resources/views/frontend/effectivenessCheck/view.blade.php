@@ -51,25 +51,25 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/audit-trial', $data->parent_record) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1  && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
+                        @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && in_array(14, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective
                             </button>
-                        @elseif($data->stage == 3 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective Approval Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 5 && in_array(7, $userRoleIds) || in_array(18, $userRoleIds))
+                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective Approval Completed
                             </button>
