@@ -87,7 +87,7 @@
                             @endif
                             @else
                             @if(!empty($temp->previous))
-                            <div class="list-item">
+                                <div class="list-item">
                                 <div class="head">Changed From</div>
                                 <div>:</div>
                                 @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
@@ -97,7 +97,10 @@
                                 @else
                                 {{ $temp->previous }}
                                 @endif
-                            </div>
+                               </div>
+                            
+                            @else
+                            @if($temp->activity_type == "Activity Log" )
                             @else
                             <div class="list-item">
                                 <div class="head">Changed From</div>
@@ -105,7 +108,100 @@
                                 <div>NULL</div>
                             </div>
                             @endif
+                            @endif
                             @if($temp->current != $temp->previous)
+                            @if($temp->activity_type == "Activity Log" )
+
+                          
+                                     @if($temp->origin_state =="Opened")
+                                     <div class="list-item">
+                                      <div class="head">Plan Proposed By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Plan Proposed On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                     @elseif($temp->origin_state =="Pending CAPA Plan") 
+                                       
+                                      <div class="list-item">
+                                      <div class="head">Plan Approved By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Plan Approved On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                     @elseif($temp->origin_state =="CAPA In Progress") 
+                                       @if($temp->previous_stage == "Pending CAPA Plan")
+                                      
+                                      <div class="list-item">
+                                      <div class="head">Completed By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Completed On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                       @else
+                                       <div class="list-item">
+                                      <div class="head">Qa More Info Required By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Qa More Info Required On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                       @endif
+                                     @elseif($temp->origin_state =="QA Review") 
+                                       @if($temp->previous_stage == "CAPA In Progress")
+                                      
+                                      <div class="list-item">
+                                      <div class="head">Approved By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Approved On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                      @else
+                                      <div class="list-item">
+                                      <div class="head">Rejected By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Rejected On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                       @endif
+                                      @elseif($temp->origin_state =="Closed-Cancelled")
+                                      <div class="list-item">
+                                      <div class="head">Cancelled By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Cancelled On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+
+                                     @endif
+
+
+                            @else
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>
@@ -117,6 +213,7 @@
                                 {{ $temp->current }}
                                 @endif
                             </div>
+                            @endif
                             @endif
                             @endif
 
