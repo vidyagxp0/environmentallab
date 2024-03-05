@@ -5,7 +5,6 @@
         echo $submenu;
     @endphp</title>
 
-    @toastr_css
     <style>
         .mt-100{margin-top: 100px}body{background: #00B4DB;background: -webkit-linear-gradient(to right, #0083B0, #00B4DB);background: linear-gradient(to right, #0083B0, #00B4DB);color: #514B64;min-height: 100vh}
     </style>

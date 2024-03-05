@@ -92,11 +92,16 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-danger elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ URL::to('admin/dashboard') }}" class="brand-link">
+    <div class="logo-container">
+                        <div class="logo" >
+                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-50 h-50">
+                        </div>
+</div>
+    <!-- <a href="{{ URL::to('admin/dashboard') }}" class="brand-link">
         <img src="{{ asset('admin/images/logo/logo.png') }}" alt="{{ config('app.name') }} Logo"
-            class="brand-image  elevation-3" style="opacity: .8">
+            class="brand-image  elevation-3" style="opacity: .8  height:60px">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
-    </a>
+    </a> -->
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -394,5 +399,21 @@ if($mainmenu=="risk-level"){
         </nav>
         <!-- /.sidebar-menu -->
     </div>
+    <style>
+        .brand-link {
+            height: 60px;
+            }
+
+            .logo-container {
+            align-items: center;
+        }
+        .logo {
+            background:white;
+            padding-left: 60px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+         }
+    </style>
     <!-- /.sidebar -->
 </aside>

@@ -60,7 +60,7 @@
 
                 <div class="form-group" id="roleGroup">
                     <label for="roles">Roles (Ctrl (windows) or Command (Mac) button to select multiple options)<span style="color: red">*</span></label>
-                    <select class="form-control @error('roles') is-invalid @enderror" id="roles" name="roles[]" multiple required onchange="updateSelectedOptions()">
+                    <select class="form-control2 @error('roles') is-invalid @enderror" id="roles" name="roles[]" multiple required onchange="updateSelectedOptions()">
                         @foreach ($group as $role)
                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                         @endforeach
@@ -89,6 +89,23 @@
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>
+        <style>
+            .form-control2 {
+                width: 100%;
+                height: 200px;
+                font-size: 14px;
+                line-height: 0.5;
+                border-radius: 5px;
+                padding: 15px 25px;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+             }
+             body:not(.layout-fixed) .main-sidebar {
+                height: inherit;
+                min-height: 100%;
+                position: fixed;
+                top: 0;
+            }
+        </style>
     </div>
     <!-- /.card -->
 @endsection
