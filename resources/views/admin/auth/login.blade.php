@@ -8,11 +8,11 @@
 @include('admin.header')
 
 <body class="hold-transition login-page"
-    style="background-image: url('{{ asset('admin/assets/images/loginimg.jpg') }}')  ; background-repeat: no-repeat;background-size: cover; ">
+    style="background-image: url('{{ asset('admin/assets/images/loginimg2.jpeg') }}')  ; background-repeat: no-repeat;background-size: cover; ">
     <div class="login-box">
       
         <!-- /.login-logo -->
-        <div class="card card-outline card-danger ">
+        <div>
             <div class="card-body login-card-body">
             <div class="login-logo">
               <div class="logo-container">
@@ -82,7 +82,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -113,7 +113,6 @@
 
         .login-box{
         width: 450px;
-    
         }
 
         .logo-container {
@@ -122,6 +121,15 @@
             gap: 10px;
             padding-bottom:10px;
         }
+        .login-card-body
+            {
+            background-color: #fff;
+            border-top: 0;
+            color: #666;
+            padding: 40px;
+            border-radius:10px;
+            box-shadow: 5px 10px 8px #888888;
+            }
     </style>
 </body>
 

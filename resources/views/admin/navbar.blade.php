@@ -152,7 +152,7 @@ if($mainmenu=="Dashboard"){
 if($mainmenu=="System Configuration"){
                 echo "active";
             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+            <i class="nav-icon fa fa-cog"></i>
                         <p>
                             System Configuration
                             <i class="fas fa-angle-left right"></i>
@@ -167,7 +167,7 @@ if($mainmenu=="System Configuration"){
 if($submenu=="Department"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="far fa-building nav-icon"></i>
                                 <p>Department</p>
                             </a>
                         </li>
@@ -177,7 +177,7 @@ if($submenu=="Department"){
 if($submenu=="Document"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-book nav-icon"></i>
                                 <p>Document Type</p>
                             </a>
                         </li>
@@ -188,7 +188,7 @@ if($submenu=="Document"){
 if($submenu=="Document Subtype"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="far fa-edit nav-icon"></i>
                                 <p>Document SubType</p>
                             </a>
                         </li>
@@ -198,7 +198,7 @@ if($submenu=="Document Subtype"){
 if($submenu=="Document Language"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fas fa-pen nav-icon"></i>
                                 <p>Document Language</p>
                             </a>
                         </li>
@@ -211,7 +211,7 @@ if($submenu=="Document Language"){
 if($mainmenu=="Division & Process"){
                                                 echo "active";
                                             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fa fa-spinner"></i>
                         <p>
                             Division & Process
                             <i class="fas fa-angle-left right"></i>
@@ -226,7 +226,7 @@ if($mainmenu=="Division & Process"){
 if($submenu=="Division"){
                                                             echo "active";
                                                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fas fa-chart-pie nav-icon"></i>
                                 <p>Division</p>
                             </a>
                         </li>
@@ -237,7 +237,7 @@ if($submenu=="Division"){
 if($submenu=="Process"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fas fa-tasks nav-icon"></i>
                                 <p>Process</p>
                             </a>
                         </li>
@@ -251,7 +251,7 @@ if($submenu=="Process"){
 if($mainmenu=="User Management"){
                                                 echo "active";
                                             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fa fa-users"></i>
                         <p>
                             User Management
                             <i class="fas fa-angle-left right"></i>
@@ -277,7 +277,7 @@ if($submenu=="Login Account"){
 if($submenu=="Role Permission"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-user-circle nav-icon"></i>
                                 <p>Role Permission</p>
                             </a>
                         </li>
@@ -287,7 +287,7 @@ if($submenu=="Role Permission"){
 if($submenu=="Group Permission"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-users nav-icon"></i>
                                 <p>Group Permission</p>
                             </a>
                         </li>
@@ -301,7 +301,7 @@ if($submenu=="Group Permission"){
 if($mainmenu=="Control Management"){
                                                 echo "active";
                                             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fa fa-briefcase"></i>
                         <p>
                             Control Management
                             <i class="fas fa-angle-left right"></i>
@@ -318,7 +318,7 @@ if($mainmenu=="Control Management"){
 if($submenu=="Print Control"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-print nav-icon"></i>
                                 <p>Print Control</p>
                             </a>
                         </li>
@@ -328,7 +328,7 @@ if($submenu=="Print Control"){
 if($submenu=="Download Control"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-download nav-icon"></i>
                                 <p>Download Control</p>
                             </a>
                         </li>
@@ -342,7 +342,7 @@ if($submenu=="Download Control"){
 if($mainmenu=="Product & Material"){
                                                 echo "active";
                                             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fa fa-window-restore"></i>
                         <p>
                             Product & Material
                             <i class="fas fa-angle-left right"></i>
@@ -359,7 +359,7 @@ if($mainmenu=="Product & Material"){
 if($submenu=="Product"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-database nav-icon"></i>
                                 <p>Product</p>
                             </a>
                         </li>
@@ -369,7 +369,7 @@ if($submenu=="Product"){
 if($submenu=="Material"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-retweet nav-icon"></i>
                                 <p>Material Control</p>
                             </a>
                         </li>
@@ -383,7 +383,7 @@ if($submenu=="Material"){
 if($mainmenu=="risk-level"){
                 echo "active";
             } @endphp">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fa fa-exclamation-triangle"></i>
                         <p>
                             Risk Level
 
