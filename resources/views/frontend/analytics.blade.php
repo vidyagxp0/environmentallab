@@ -232,8 +232,10 @@
                         </script>
                         <div id="test">
                         <h4 id="selectedValueText"></h4>
-                        <div id="chart">
-                         
+                        <div class="chart-container">
+    <div id="chart" class="chart"></div>
+    <div id="chart1" class="chart1"></div>
+</div>         
                         </div>
 
                         <script>
@@ -289,6 +291,8 @@
 
                                 var chart = new ApexCharts(document.querySelector("#chart"), options);
                                 chart.render();
+                                var chart1 = new ApexCharts(document.querySelector("#chart"), options);
+                                chart1.render();
                             });
                         }
                             </script>
@@ -390,12 +394,12 @@ function showChart() {
 }
     </script>
        <style>
-        #chart {
-            display: none; 
-            width: 100%; 
-            height: 200px; 
-            border: 1px solid #ccc; 
-            margin-top: 10px;
-        }
+ .chart-container {
+    display: flex;
+}
+
+.chart {
+    width: 50%; /* Each chart takes up half of the container */
+}
     </style>
 @endsection
