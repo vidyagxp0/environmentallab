@@ -698,12 +698,25 @@ class AuditProgramController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = AuditProgram::find($id);
+            $lastDocument = AuditProgram::find($id);
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
+                $changeControl->status = "Pending Approval";
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
-                $changeControl->status = "Pending Approval";
+                    $history = new AuditProgramAuditTrial();
+                    $history->AuditProgram_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $changeControl->submitted_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = "Submitted";
+                    $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -713,6 +726,18 @@ class AuditProgramController extends Controller
                 $changeControl->status = "Audit Period";
                 $changeControl->approved_by = Auth::user()->name;
                 $changeControl->approved_on = Carbon::now()->format('d-M-Y');
+                    $history = new AuditProgramAuditTrial();
+                    $history->AuditProgram_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = $changeControl->approved_by;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Approved';
+                    $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -722,6 +747,18 @@ class AuditProgramController extends Controller
                 $changeControl->status = "Closed - Done";
                 $changeControl->Audit_Completed_By = Auth::user()->name;
                 $changeControl->Audit_Completed_On = Carbon::now()->format('d-M-Y');
+                        $history = new AuditProgramAuditTrial();
+                        $history->AuditProgram_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = $changeControl->Audit_Completed_By;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Audit Completed';
+                        $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -736,12 +773,25 @@ class AuditProgramController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = AuditProgram::find($id);
+            $lastDocument = AuditProgram::find($id);
 
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
                 $changeControl->rejected_by = Auth::user()->name;
                 $changeControl->rejected_on  = Carbon::now()->format('d-M-Y');
+                        $history = new AuditProgramAuditTrial();
+                        $history->AuditProgram_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = $changeControl->rejected_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Rejected';
+                        $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -756,12 +806,25 @@ class AuditProgramController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = AuditProgram::find($id);
+            $lastDocument = AuditProgram::find($id);
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by   = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                            $history = new AuditProgramAuditTrial();
+                            $history->AuditProgram_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->cancelled_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Cancelled';
+                            $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -771,6 +834,18 @@ class AuditProgramController extends Controller
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by  = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $history = new AuditProgramAuditTrial();
+                        $history->AuditProgram_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = $changeControl->cancelled_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Cancelled';
+                        $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -780,6 +855,18 @@ class AuditProgramController extends Controller
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by  = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                        $history = new AuditProgramAuditTrial();
+                        $history->AuditProgram_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = $changeControl->cancelled_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Cancelled';
+                        $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

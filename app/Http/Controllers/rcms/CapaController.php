@@ -1336,7 +1336,7 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->previous_stage = Null;
+                    $history->stage = 'Plan Proposed';
                     $history->save();
                     
                 
@@ -1360,7 +1360,7 @@ class CapaController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->previous_stage = 'Opened';
+                $history->stage = 'Plan Approved';
                 $history->save();
                 
                 $capa->update();
@@ -1382,7 +1382,7 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->previous_stage = 'Pending CAPA Plan';
+                    $history->stage = 'Completed';
                     $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -1403,7 +1403,7 @@ class CapaController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->previous_stage = 'CAPA In Progress';
+                        $history->stage = 'Approved';
                         $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -1415,6 +1415,18 @@ class CapaController extends Controller
                 $capa->status = "Closed - Done";
                 $capa->completed_by = Auth::user()->name;
                 $capa->completed_on = Carbon::now()->format('d-M-Y');  
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = $capa->completed_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Completed';
+                        $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1447,6 +1459,7 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state =  $capa->status;
+                    $history->stage = 'Cancelled';
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -1487,7 +1500,7 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->previous_stage = 'Null';
+                    $history->stage = 'Qa More Info Required';
                     $history->save();
             $capa->update();
             $history = new CapaHistory();
@@ -1517,7 +1530,7 @@ class CapaController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
-                    $history->previous_stage = 'Null';
+                    $history->stage = 'Rejected';
                     $history->save();   
         $capa->update();
         $history = new CapaHistory();
@@ -1566,6 +1579,18 @@ class CapaController extends Controller
                 $capa->status = "Pending CAPA Plan";
                 $capa->qa_more_info_required_by = Auth::user()->name;
                 $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
+                        $history = new CapaAuditTrial();
+                        $history->capa_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = $capa->qa_more_info_required_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Qa More Info Required';
+                        $history->save();   
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";

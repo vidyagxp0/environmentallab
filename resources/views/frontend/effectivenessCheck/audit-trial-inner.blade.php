@@ -101,6 +101,19 @@
                             </div>
                             @endif
                             @if($temp->current != $temp->previous)
+
+                            @if($temp->activity_type == "Activity Log" )
+                            <div class="list-item">
+                                      <div class="head">{{$temp->step}} By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">{{$temp->step}} On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                            @else
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>

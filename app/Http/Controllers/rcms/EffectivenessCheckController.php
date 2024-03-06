@@ -616,6 +616,7 @@ class EffectivenessCheckController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = EffectivenessCheck::find($id);
+            $lastopenState = EffectivenessCheck::find($id);
             if ($changeControl->stage == 1) {
                 // $rules = [
                 //     'Addendum_Comments' => 'required|max:255',
@@ -635,6 +636,18 @@ class EffectivenessCheckController extends Controller
                     $changeControl->status = 'Pending Effectiveness Check';
                     $changeControl->submit_by =  Auth::user()->name;
                     $changeControl->submit_on = Carbon::now()->format('d-M-Y');
+                            $history = new EffectivenessCheck();
+                            $history->parent_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->submit_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastopenState->status;
+                            $history->step = 'Submit';
+                            $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -668,6 +681,18 @@ class EffectivenessCheckController extends Controller
                     $changeControl->status = 'QA Approval-Effective';
                     $changeControl->effective_by =  Auth::user()->name;
                     $changeControl->effective_on = Carbon::now()->format('d-M-Y');
+                            $history = new EffectivenessCheck();
+                            $history->parent_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->effective_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastopenState->status;
+                            $history->step = 'Effective';
+                            $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -687,6 +712,18 @@ class EffectivenessCheckController extends Controller
                 $changeControl->status = 'Closed – Effective';
                 $changeControl->effective_approval_complete_by =  Auth::user()->name;
                 $changeControl->effective_approval_complete_on = Carbon::now()->format('d-M-Y');
+                            $history = new EffectivenessCheck();
+                            $history->parent_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->effective_approval_complete_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastopenState->status;
+                            $history->step = 'Effective Approval Complete';
+                            $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -711,11 +748,24 @@ class EffectivenessCheckController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = EffectivenessCheck::find($id);
+            $lastopenState = EffectivenessCheck::find($id);
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '5';
                 $changeControl->status = 'QA Approval-Not Effective';
                 $changeControl->not_effective_by =  Auth::user()->name;
                 $changeControl->not_effective_on = Carbon::now()->format('d-M-Y');
+                            $history = new EffectivenessCheck();
+                            $history->parent_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = $changeControl->not_effective_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastopenState->status;
+                            $history->step = 'Not Effective';
+                            $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
@@ -735,6 +785,18 @@ class EffectivenessCheckController extends Controller
                 $changeControl->status = 'Closed – Not Effective';
                 $changeControl->not_effective_approval_complete_by =  Auth::user()->name;
                 $changeControl->not_effective_approval_complete_on = Carbon::now()->format('d-M-Y');
+                        $history = new EffectivenessCheck();
+                        $history->parent_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = $changeControl->not_effective_approval_complete_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastopenState->status;
+                        $history->step = 'Not Effective Approval Complete';
+                        $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";

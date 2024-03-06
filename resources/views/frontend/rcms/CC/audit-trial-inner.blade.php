@@ -93,21 +93,37 @@
                             <div>{{ $temp->previous }}</div>
                         </div>
                         @else
+                        @if($temp->activity_type == "Activity Log" )
+                        @else
                         <div class="list-item">
                             <div class="head">Changed From</div>
                             <div>:</div>
                             <div>NULL</div>
                         </div>
                         @endif
+                        @endif
                         @if($temp->current != $temp->previous)
-                        <div class="list-item">
+                        @if($temp->activity_type == "Activity Log" )
+
+                            <div class="list-item">
+                                <div class="head">{{$temp->stage}} By</div>
+                                <div>:</div>
+                                <div> {{$temp->current}}</div>
+                                </div>  
+                                <div class="list-item">
+                                <div class="head">{{$temp->stage}} On</div>
+                                <div>:</div>
+                                <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                            </div>          
+                            @else
+                            <div class="list-item">
                             <div class="head">Changed To</div>
                             <div>:</div>
                             <div>{{ $temp->current }}</div>
                         </div>
                         @endif
                         @endif
-
+                        @endif
                         <div class="list-item">
                             <div class="head">Origin state</div>
                             <div>:</div>

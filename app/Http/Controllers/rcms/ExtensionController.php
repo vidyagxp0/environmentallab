@@ -467,7 +467,7 @@ class ExtensionController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->previous_stage = Null;
+                            $history->stage = "Submitted";
                             $history->save();
                    
                     $changeControl->update();
@@ -493,7 +493,7 @@ class ExtensionController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->previous_stage = 'Opened';
+                        $history->stage = "Ext Approved";
                         $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -535,7 +535,7 @@ class ExtensionController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->previous_stage = 'Closed-Cancelled';
+                            $history->stage = 'Cancelled';
                             $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -565,7 +565,7 @@ class ExtensionController extends Controller
                                 $history->user_name = Auth::user()->name;
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $lastDocument->status;
-                                $history->previous_stage = 'Null';
+                                $history->stage = 'More Info Required';
                                 $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -607,7 +607,7 @@ class ExtensionController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->previous_stage = 'closed-reject';
+                        $history->stage = 'Rejected';
                         $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');

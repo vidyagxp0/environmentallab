@@ -2196,10 +2196,23 @@ class CCController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
+            $lastDocument = CC::find($id);
             $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
                     $changeControl->status = "Under Supervisor Review";
+                            $history = new RcmDocHistory;
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = Auth::user()->name;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Submit';
+                            $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2226,6 +2239,18 @@ class CCController extends Controller
             if ($changeControl->stage == 2) {
                     $changeControl->stage = "3";
                     $changeControl->status = "QA Review";
+                                $history = new RcmDocHistory;
+                                $history->cc_id = $id;
+                                $history->activity_type = 'Activity Log';
+                                $history->previous = "";
+                                $history->current = Auth::user()->name;
+                                $history->comment = $request->comment;
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastDocument->status;
+                                $history->stage = 'HOD Review Complete';
+                                $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2242,6 +2267,18 @@ class CCController extends Controller
 
                     $changeControl->stage = "4";
                     $changeControl->status = "Pending CFT Review";
+                        $history = new RcmDocHistory;
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = Auth::user()->name;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Send to CFT/SME/QA Review';
+                        $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2275,6 +2312,18 @@ class CCController extends Controller
                     $changeControl->stage = "7";
                     $changeControl->status = "Pending Change Implementation";
                     $changeControl->update();
+                            $history = new RcmDocHistory;
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = Auth::user()->name;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Review Complete';
+                            $history->save();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
                     $history->doc_id = $id;
@@ -2364,6 +2413,18 @@ class CCController extends Controller
 
                     $changeControl->stage = "9";
                     $changeControl->status = "Closed-Done";
+                            $history = new RcmDocHistory;
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = Auth::user()->name;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Implemented';
+                            $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2473,10 +2534,23 @@ class CCController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
+            $lastDocument = CC::find($id);
 
 
             $changeControl->stage = "7";
             $changeControl->status = "Pending Change Implementation";
+                    $history = new RcmDocHistory;
+                    $history->cc_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = Auth::user()->name;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'CFT/SME/QA Review Not required';
+                    $history->save();
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Change-Control";

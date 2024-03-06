@@ -110,69 +110,16 @@
                             @if($temp->current != $temp->previous)
                             @if($temp->activity_type == "Activity Log" )
 
-                          
-                                        @if($temp->origin_state =="Opened")
-                                        @if($temp->previous_stage =="Closed-Cancelled")
-                                            <div class="list-item">
-                                            <div class="head">Cancelled By</div>
-                                            <div>:</div>
-                                            <div> {{$temp->current}}</div>
-                                            </div>  
-                                            <div class="list-item">
-                                            <div class="head">Cancelled On</div>
-                                            <div>:</div>
-                                            <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                            </div>
-                                         @else
-                                            <div class="list-item">
-                                            <div class="head">Submitted By</div>
-                                            <div>:</div>
-                                            <div> {{$temp->current}}</div>
-                                            </div>  
-                                            <div class="list-item">
-                                            <div class="head">Submitted On</div>
-                                            <div>:</div>
-                                            <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                            </div> 
-                                         @endif
-                                        @elseif($temp->origin_state =="Pending Approval") 
-                                        @if($temp->previous_stage == "Opened")
-                                       
-                                       <div class="list-item">
-                                       <div class="head">Ext Approved By</div>
-                                       <div>:</div>
-                                       <div> {{$temp->current}}</div>
-                                       </div>  
-                                       <div class="list-item">
-                                       <div class="head">Ext Approved On</div>
-                                       <div>:</div>
-                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                      </div> 
-                                      @elseif($temp->previous_stage =="closed-reject")
-                                     <div class="list-item">
-                                      <div class="head">Rejected By</div>
+                                <div class="list-item">
+                                      <div class="head">{{$temp->stage}} By</div>
                                       <div>:</div>
                                       <div> {{$temp->current}}</div>
                                       </div>  
                                       <div class="list-item">
-                                      <div class="head">Rejected On</div>
+                                      <div class="head">{{$temp->stage}} On</div>
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                                      @else
-                                      <div class="list-item">
-                                      <div class="head">More Info Required By</div>
-                                      <div>:</div>
-                                      <div> {{$temp->current}}</div>
-                                      </div>  
-                                      <div class="list-item">
-                                      <div class="head">More Info Required On</div>
-                                      <div>:</div>
-                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                                       @endif
-                                      
-                                      @endif
+                                 </div>          
                           @else
                             <div class="list-item">
                                 <div class="head">Changed To</div>

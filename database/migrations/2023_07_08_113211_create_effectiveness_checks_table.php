@@ -60,6 +60,7 @@ return new class extends Migration
             $table->string('user_name')->nullable();
             $table->string('origin_state')->nullable();
             $table->string('user_role')->nullable();
+            $table->string('step')->nullable();
             $table->string('status')->default('Opened');
             $table->string('stage')->default(1);
 
