@@ -110,7 +110,7 @@
             <div onclick="openTab('capa', this)">CAPA</div>
             <div onclick="openTab('audit-program', this)">Audit Program</div>
             <div onclick="openTab('lab-incident', this)">Lab Incident</div>
-            <div onclick="openTab('CC', this)">Change Control</div>
+            <div onclick="openTab('change-control', this)">Change Control</div>
             <div onclick="openTab('risk-assessment', this)">Risk Assessment</div>
             <div onclick="openTab('root-cause-analysis', this)">Root Cause Analysis</div>
             <div onclick="openTab('management-review', this)">Management Review</div>
@@ -176,7 +176,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div id="chart"></div>
+                        {{-- <div id="chart"></div> --}}
                         <script>
                             fetch('/chart-data')
                             .then(response => response.json())
