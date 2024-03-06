@@ -232,10 +232,9 @@
                         </script>
                         <div id="test">
                         <h4 id="selectedValueText"></h4>
-                        <div class="chart-container">
-    <div id="chart" class="chart"></div>
-    <div id="chart1" class="chart1"></div>
-</div>         
+                        <div id="chart">
+                        <div id="chart1">
+                         
                         </div>
 
                         <script>
@@ -394,12 +393,14 @@ function showChart() {
 }
     </script>
        <style>
- .chart-container {
-    display: flex;
-}
-
-.chart {
-    width: 50%; /* Each chart takes up half of the container */
-}
+        #chart1,#chart {
+            display: inline-block; /* Or use float: left; */
+        width: 50%; 
+            /* display: none; 
+            width: 50%; 
+            height: 100px; 
+            border: 1px solid #ccc;  */
+            /* margin-top: 10px; */
+        }
     </style>
 @endsection
