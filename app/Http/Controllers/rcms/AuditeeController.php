@@ -734,6 +734,7 @@ class AuditeeController extends Controller
 
     public function show($id)
     {
+       
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
         $data = Auditee::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
