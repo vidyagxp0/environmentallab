@@ -1,6 +1,6 @@
 @php
-    $mainmenu = 'Admin Login';
-    $submenu = 'Admin Login';
+    $mainmenu = 'Admin Console';
+    $submenu = 'Admin Console';
 @endphp
 
 <!DOCTYPE html>
@@ -26,7 +26,7 @@
             <!-- <img style="border-radius: 8% " src="{{ asset('images/logo/logo.png') }}" height="80" alt=""><br> -->
            
         </div>
-        <h2 class="text text-dark" style="text-align:center; ">Welcome To Web-Admin</h2>
+        <h2 class="text text-dark" style="text-align:center; ">Welcome To Admin-Console</h2>
 
                 <form action="{{ url('admin/login') }}" method="POST">
                     @csrf

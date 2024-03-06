@@ -220,13 +220,14 @@
                     <tr>
                         <th class="w-20">Justification of Extention</th>
                         <td class="w-80">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
+                        <th class="w-20">Initiated Through</th>
+                        <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
-                       <th class="w-20">Initiated Through</th>
-                        <td class="w-30">@if($data->initiated_through){{$data->initiated_through }} @else Not Applicable @endif</td>
+                    <tr>                    
                         <th class="w-20">Reference Record</th>
-                        <td class="w-80"> @if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
-                       
+                        <td class="w-80"> @if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>    
+                        <th class="w-20">Approver</th>
+                        <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>                  
                     </tr>
                     <div class="block-head">
                         Extention Attachments
@@ -252,18 +253,16 @@
                             @endif
 
                         </table>
-                      </div>
-                      <tr>
-                       <th class="w-20">Approver</th>
-                        <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>
-                    </tr>
-               
+                    </div>
                 </table>
             </div>
-
-
-             
-                 <table>
+            <div class="inner-block">
+        <div class="content-table">
+            <div class="block">
+                <div class="block-head">
+                   QA Approver
+                </div>
+                <table>
                      <tr>
                         <th class="w-20">Approver Comments</th>
                         <td class="w-80">@if($data->approver_comments){{ $data->approver_comments }}@else Not Applicable @endif</td>
@@ -295,6 +294,7 @@
 
                         </table>
                       </div>
+</div>
                
             <div class="block">
                 <div class="block-head">

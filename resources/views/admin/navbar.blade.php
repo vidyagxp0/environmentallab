@@ -15,7 +15,7 @@
     <ul class="navbar-nav ml-auto">
 
 
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
                 <span class="badge badge-warning navbar-badge">15</span>
@@ -40,12 +40,12 @@
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
-        </li>
+        </li> -->
 
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <div class="image">
-                    <img width="30" src="{{ asset('admin/dist/img/user1-128x128.jpg') }}"
+                    <img width="30" src="{{ asset('admin/dist/img/user8-128x128.jpg') }}"
                         class="img-circle elevation-2" alt="User Image">
                 </div>
             </a>
@@ -53,9 +53,9 @@
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right card card-widget widget-user">
                     <div class="widget-user-header bg-danger">
                         <h3 class="widget-user-username">
-                            @if (Auth::guard('admin')->check())
+                            <!-- @if (Auth::guard('admin')->check())
                                 {{ Auth::guard('admin')->user()->name }}
-                            @endif
+                            @endif -->
                         </h3>
                         <h5 class="widget-user-desc">
                             @if (Auth::guard('admin')->check())
@@ -64,10 +64,11 @@
                         </h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="../admin/dist/img/user1-128x128.jpg" alt="User Avatar">
+                        <img class="img-circle elevation-2" src="../admin/dist/img/user8-128x128.jpg" alt="User Avatar">
                     </div>
                     <div class="card-footer m-2">
-                        <center> <a href="{{ url('admin/logout') }}"> <i class="fas fa-lg fa-power-off text-danger"></i>
+                        <center> <a href="{{ url('admin/logout') }}">LogOut
+                             <!-- <i class="fas fa-lg fa-power-off text-danger"></i> -->
                             </a> </center>
                     </div>
                 </div>
@@ -144,7 +145,55 @@ if($mainmenu=="Dashboard"){
                     </a>
                 </li>
 
+                <li class="nav-item {{ $mainmenu == 'User Management' ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link  @php
+if($mainmenu=="User Management"){
+                                                echo "active";
+                                            } @endphp">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            User Management
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
 
+
+                        <li class="nav-item">
+                            <a href="{{ route('user_management.index') }}"
+                                class="nav-link @php
+if($submenu=="Login Account"){
+                                                            echo "active";
+                                                        } @endphp">
+                                <i class="far fa-plus-square nav-icon"></i>
+                                <p>Login</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('role_groups.index') }}"
+                                class="nav-link @php
+if($submenu=="Role Permission"){
+                            echo "active";
+                        } @endphp">
+                                <i class="fa fa-user-circle nav-icon"></i>
+                                <p>Role Permission</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('GroupPermission.index') }}"
+                                class="nav-link @php
+if($submenu=="Group Permission"){
+                            echo "active";
+                        } @endphp">
+                                <i class="fa fa-users nav-icon"></i>
+                                <p>Group Permission</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
 
                 <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
                     <a href="#"
@@ -245,55 +294,7 @@ if($submenu=="Process"){
                     </ul>
                 </li>
 
-                <li class="nav-item {{ $mainmenu == 'User Management' ? 'menu-open' : '' }} ">
-                    <a href="#"
-                        class="nav-link  @php
-if($mainmenu=="User Management"){
-                                                echo "active";
-                                            } @endphp">
-                        <i class="nav-icon fa fa-users"></i>
-                        <p>
-                            User Management
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-
-
-                        <li class="nav-item">
-                            <a href="{{ route('user_management.index') }}"
-                                class="nav-link @php
-if($submenu=="Login Account"){
-                                                            echo "active";
-                                                        } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
-                                <p>Login</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('role_groups.index') }}"
-                                class="nav-link @php
-if($submenu=="Role Permission"){
-                            echo "active";
-                        } @endphp">
-                                <i class="fa fa-user-circle nav-icon"></i>
-                                <p>Role Permission</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('GroupPermission.index') }}"
-                                class="nav-link @php
-if($submenu=="Group Permission"){
-                            echo "active";
-                        } @endphp">
-                                <i class="fa fa-users nav-icon"></i>
-                                <p>Group Permission</p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
+                
 
                 <li class="nav-item {{ $mainmenu == 'Control Management' ? 'menu-open' : '' }} ">
                     <a href="#"

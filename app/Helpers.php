@@ -226,132 +226,67 @@ class Helpers
         }
         return $resp;
     }
-    // public static function getInitiatorGroup($id)
-    // {
-    //     $response = [];
-    //     $resp = [];
-    //     if(!empty($id)){
-    //         $result = explode(',',$id);
-    //         if(in_array(1,$result)){
-    //             array_push($response, 'QAB');
-    //         }
-    //         if(in_array(2,$result)){
-    //             array_push($response, 'CQC');
-    //         }
-    //         if(in_array(3,$result)){
-    //             array_push($response, 'MANU');
-    //         }
-    //         if(in_array(4,$result)){
-    //             array_push($response, 'PSG');
-    //         }
-    //         if(in_array(5,$result)){
-    //             array_push($response, 'CS');
-    //         }
-    //         if(in_array(6,$result)){
-    //             array_push($response, 'ITG');
-    //         }
-    //         if(in_array(7,$result)){
-    //             array_push($response, 'MM');
-    //         }
-    //         if(in_array(8,$result)){
-    //             array_push($response, 'CL');
-    //         }
-    //         if(in_array(9,$result)){
-    //             array_push($response, 'TT');
-    //         }
-    //         if(in_array(10,$result)){
-    //             array_push($response, 'QA');
-    //         }
-    //         if(in_array(11,$result)){
-    //             array_push($response, 'QM');
-    //         }
-    //         if(in_array(12,$result)){
-    //             array_push($response, 'IA');
-    //         }
-    //         if(in_array(13,$result)){
-    //             array_push($response, 'ACC');
-    //         }
-    //         if(in_array(14,$result)){
-    //             array_push($response, 'LOG');
-    //         }
-    //         if(in_array(15,$result)){
-    //             array_push($response, 'SM');
-    //         }
-    //         if(in_array(16,$result)){
-    //             array_push($response, 'BA');
-    //         }
-    //         $resp = implode(',',$response);
-    //     }
-    //     return $resp;
-    // }
-    // app/Helpers.php
+   
+public static function getInitiatorGroupFullName($shortName)
+    { 
 
-// if (!function_exists('getInitiatorGroupFullName')) {
-//     /**
-//      * Get the full name of the initiator group based on its short name.
-//      *
-//      * @param string $shortName
-//      * @return string
-//      */
-//     function getInitiatorGroupFullName($shortName)
-//     {
-//         switch ($shortName) {
-//             case 'Corporate Quality Assurance':
-//                 return 'Corporate Quality Assurance';
-//                 break;
-//             case 'QAB':
-//                 return 'Quality Assurance Biopharma';
-//                 break;
-//             case 'CQC':
-//                 return 'Central Quality Control';
-//                 break;
-//             case 'MANU':
-//                 return 'Manufacturing';
-//                 break;
-//             case 'PSG':
-//                 return 'Plasma Sourcing Group';
-//                 break;
-//             case 'CS':
-//                 return 'Central Stores';
-//                 break;
-//             case 'ITG':
-//                 return 'Information Technology Group';
-//                 break;
-//             case 'MM':
-//                 return 'Molecular Medicine';
-//                 break;
-//             case 'CL':
-//                 return 'Central Laboratory';
-//                 break;
-//             case 'TT':
-//                 return 'Tech Team';
-//                 break;
-//             case 'QA':
-//                 return 'Quality Assurance';
-//                 break;
-//             case 'QM':
-//                 return 'Quality Management';
-//                 break;
-//             case 'IA':
-//                 return 'IT Administration';
-//                 break;
-//             case 'ACC':
-//                 return 'Accounting';
-//                 break;
-//             case 'LOG':
-//                 return 'Logistics';
-//                 break;
-//             case 'SM':
-//                 return 'Senior Management';
-//                 break;
-//             case 'BA':
-//                 return 'Business Administration';
-//                 break;
-//             default:
-//                 return '';
-//                 break;
-//         }
-//     }
+        switch ($shortName) {
+            case 'Corporate Quality Assurance':
+                return 'Corporate Quality Assurance';
+                break;
+            case 'QAB':
+                return 'Quality Assurance Biopharma';
+                break;
+            case 'CQC':
+                return 'Central Quality Control';
+                break;
+            case 'MANU':
+                return 'Manufacturing';
+                break;
+            case 'PSG':
+                return 'Plasma Sourcing Group';
+                break;
+            case 'CS':
+                return 'Central Stores';
+                break;
+            case 'ITG':
+                return 'Information Technology Group';
+                break;
+            case 'MM':
+                return 'Molecular Medicine';
+                break;
+            case 'CL':
+                return 'Central Laboratory';
+                break;
+            case 'TT':
+                return 'Tech Team';
+                break;
+            case 'QA':
+                return 'Quality Assurance';
+                break;
+            case 'QM':
+                return 'Quality Management';
+                break;
+            case 'IA':
+                return 'IT Administration';
+                break;
+            case 'ACC':
+                return 'Accounting';
+                break;
+            case 'LOG':
+                return 'Logistics';
+                break;
+            case 'SM':
+                return 'Senior Management';
+                break;
+            case 'BA':
+                return 'Business Administration';
+                break;
+            default:
+                return '';
+                break;
+        }
+    }
 // }
 
 
