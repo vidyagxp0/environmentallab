@@ -60,7 +60,7 @@ $users = DB::table('users')
                     <div class="main-head">Record Workflow </div>
                     <div class="d-flex" style="gap:20px;">
                         @php
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
                     @endphp
                         <button class="button_theme1" onclick="window.print();return false;"
