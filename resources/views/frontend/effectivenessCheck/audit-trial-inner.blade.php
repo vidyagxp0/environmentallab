@@ -94,11 +94,14 @@
                                 <div>{{  $temp->activity_type == "Assigned To" &&  $temp->previous != 'Null' ?  Helpers::getInitiatorName($temp->previous ) : $temp->previous   }}</div>
                             </div>
                             @else
+                            @if($temp->activity_type == "Activity Log" )
+                            @else
                             <div class="list-item">
                                 <div class="head">Changed From</div>
                                 <div>:</div>
                                 <div>NULL</div>
                             </div>
+                            @endif
                             @endif
                             @if($temp->current != $temp->previous)
 
@@ -119,6 +122,7 @@
                                 <div>:</div>
                                 <div>{{ $temp->activity_type == "Assigned To" ?  Helpers::getInitiatorName($temp->current  ) : $temp->current   }}</div>
                             </div>
+                            @endif
                             @endif
                             @endif
 
