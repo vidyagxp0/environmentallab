@@ -72,7 +72,9 @@ class ProcessSeeder extends Seeder
             "Audit Program",
             "CAPA",
             "Change Control",
-            "New Document"
+            "New Document",
+            "Lab Incident",
+            "Effective Check"
         ];
 
         // Loop through each process name

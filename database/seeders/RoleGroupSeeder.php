@@ -1889,29 +1889,29 @@ $group->save();
 //New Document Trainer
 $group = new RoleGroup();
 $group->id = 261;
-$group->name = "KSA-New Document- Trainer";
-$group->description = "KSA-New Document- Trainer";
+$group->name = "KSA-New Document-Trainer";
+$group->description = "KSA-New Document-Trainer";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
 $group = new RoleGroup();
 $group->id = 262;
-$group->name = "Estonia-New Document- Trainer";
-$group->description = "Estonia-New Document- Trainer";
+$group->name = "Estonia-New Document-Trainer";
+$group->description = "Estonia-New Document-Trainer";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
 $group = new RoleGroup();
 $group->id = 263;
-$group->name = "Egypt-New Document- Trainer";
-$group->description = "Egypt-New Document- Trainer";
+$group->name = "Egypt-New Document-Trainer";
+$group->description = "Egypt-New Document-Trainer";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
 $group = new RoleGroup();
 $group->id = 264;
-$group->name = "Jordan-New Document- Trainer";
-$group->description = "Jordan-New Document- Trainer";
+$group->name = "Jordan-New Document-Trainer";
+$group->description = "Jordan-New Document-Trainer";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
