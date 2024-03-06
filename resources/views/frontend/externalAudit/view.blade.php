@@ -1,6 +1,7 @@
 @extends('frontend.layout.main')
 @section('container')
 @php
+ 
 $users = DB::table('users')
     ->select('id', 'name')
     ->get();
@@ -182,6 +183,7 @@ function addMultipleFiles(input, block_id) {
         }
     </script>
 
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -196,13 +198,14 @@ function addMultipleFiles(input, block_id) {
 
             <div class="inner-block state-block">
                 <div class="d-flex justify-content-between align-items-center">
-                    <div class="main-head">Record Workflow </div>
+                    <div class="main-head">Record Workflow  </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        @php
+                      
+                    <?php
                         $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
                         $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
+                    ?>
                         {{-- <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
@@ -254,7 +257,7 @@ function addMultipleFiles(input, block_id) {
                                 No CAPAs Required
                             </button>
                            
-                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds) || in_array(11, $userRoleIds) ))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
