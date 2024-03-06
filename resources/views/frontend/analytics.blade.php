@@ -231,8 +231,12 @@
 
                         </script>
                         <div id="test">
-                        <h4 id="selectedValueText"></h4>
+                        </br>
+                        <hr>
+                        </br>
+                        <h4 align="center" id="selectedValueText"></h4>
                         <div id="chart">
+                        <hr>
                          
                         </div>
 
@@ -390,12 +394,14 @@ function showChart() {
 }
     </script>
        <style>
-        #chart {
-            display: none; 
-            width: 100%; 
-            height: 200px; 
-            border: 1px solid #ccc; 
-            margin-top: 10px;
-        }
+#chart {
+    display: none; 
+    width: 50%; 
+    height: 100px; 
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
     </style>
 @endsection
