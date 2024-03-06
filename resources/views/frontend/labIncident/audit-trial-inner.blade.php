@@ -112,12 +112,12 @@
 
                           
                                      <div class="list-item">
-                                      <div class="head">{{$temp->stage}} By</div>
+                                      <div class="head">{{$temp->stage}}By</div>
                                       <div>:</div>
                                       <div> {{$temp->current}}</div>
                                       </div>  
                                       <div class="list-item">
-                                      <div class="head">{{$temp->stage}} On</div>
+                                      <div class="head">{{$temp->stage}}On</div>
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
                                      </div> 
@@ -136,6 +136,7 @@
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
                         </a> --}}
                     </div>
+            </div>  
                 @endforeach
 
             </div>
