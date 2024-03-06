@@ -1352,6 +1352,7 @@ class ManagementReviewController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                $history->stage='Submited';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1365,13 +1366,14 @@ class ManagementReviewController extends Controller
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->completed_by;
+                // $history->previous = $lastDocument->completed_by;
                 $history->current = $changeControl->completed_by;    
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                $history->stage='Completed';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');

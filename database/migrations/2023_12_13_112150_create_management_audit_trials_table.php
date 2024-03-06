@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('ManagementReview_id');
             $table->string('activity_type');
+            $table->string('stage')->nullable();
             $table->longText('previous')->nullable();
             $table->longText('current')->nullable();
             $table->longText('comment')->nullable();

@@ -111,21 +111,20 @@
                             @if($temp->activity_type == "Activity Log" )
 
                           
-                                     @if($temp->origin_state =="Opened")
                                      <div class="list-item">
-                                      <div class="head">Completed By</div>
+                                      <div class="head">{{$temp->stage}} By</div>
                                       <div>:</div>
                                       <div> {{$temp->current}}</div>
                                       </div>  
                                       <div class="list-item">
-                                      <div class="head">Completed By</div>
+                                      <div class="head">{{$temp->stage}} On</div>
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
                                      </div> 
-                                     @elseif($temp->origin_state =="In Progress") 
+                                     {{-- @elseif($temp->origin_state =="In Progress") 
                                      
                                       <div class="list-item">
-                                      <div class="head">Submited By</div>
+                                      <div class="head">{{$temp->stage}} By</div>
                                       <div>:</div>
                                       <div> {{$temp->current}}</div>
                                       </div>  
@@ -158,7 +157,7 @@
                                      </div> 
                                     
 
-                                     @endif
+                                     @endif --}}
 
 
                             @else

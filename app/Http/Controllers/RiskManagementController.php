@@ -2016,13 +2016,15 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->submitted_by;
+                // $history->previous = $lastDocument->submitted_by;
                 $history->current = $changeControl->submitted_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                // $history->status = $lastDocument->status;
+                $history->stage='Submitted';
                 $history->save();
                 
                 $changeControl->update();
@@ -2037,13 +2039,14 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->evaluated_by;
+                // $history->previous = $lastDocument->evaluated_by;
                 $history->current = $changeControl->evaluated_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
+                $history->stage='Evaluated';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2064,15 +2067,16 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->plan_approved_by;
+                // $history->previous = $lastDocument->plan_approved_by;
                 $history->current = $changeControl->plan_approved_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                $history->origin_state = $lastDocument->status;
-                $changeControl->update();
+                $history->origin_state = $lastDocument->status;       
+               $history->stage='Plan Approved';
                 $history->save();
+                $changeControl->update();
 
                 toastr()->success('Document Sent');
                 return back();
@@ -2093,15 +2097,16 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->risk_analysis_completed_by;
                 $history->current = $changeControl->risk_analysis_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $changeControl->update();
+                $history->stage='Risk Analysis Completed';
                 $history->save();
+                $changeControl->update();
+
                 
                 toastr()->success('Document Sent');
                 return back();
@@ -2117,6 +2122,9 @@ class RiskManagementController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = RiskManagement::find($id);
+            $lastDocument =  RiskManagement::find($id);
+            $data =  RiskManagement::find($id);
+
 
 
             if ($changeControl->stage == 1) {
@@ -2124,6 +2132,17 @@ class RiskManagementController extends Controller
                 $changeControl->status = "Closed - Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                $history = new RiskAuditTrail();
+                $history->risk_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->cancelled_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Cancelled';
+                $history->save();
                 
                 $changeControl->update();
                 toastr()->success('Document Sent');

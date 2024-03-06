@@ -110,8 +110,17 @@
                             @if($temp->current != $temp->previous)
                             @if($temp->activity_type == "Activity Log" )
 
-                          
-                                     @if($temp->origin_state =="Opened")
+                            <div class="list-item">
+                                <div class="head">{{$temp->stage}} By</div>
+                                <div>:</div>
+                                <div> {{$temp->current}}</div>
+                                </div>  
+                                <div class="list-item">
+                                <div class="head">{{$temp->stage}} On</div>
+                                <div>:</div>
+                                <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                               </div> 
+                                     {{-- @if($temp->origin_state =="Opened")
                                      <div class="list-item">
                                       <div class="head">Submitted By</div>
                                       <div>:</div>
@@ -158,10 +167,10 @@
                                      </div> 
                                     
 
-                                     @endif
+                                     @endif--}}
 
 
-                            @else
+                            @else 
 
 
                             <div class="list-item">

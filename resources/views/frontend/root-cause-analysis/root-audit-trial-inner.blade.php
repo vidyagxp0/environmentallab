@@ -118,18 +118,17 @@
                             @if($temp->activity_type == "Activity Log" )
 
                           
-                                     @if($temp->origin_state =="Opened")
                                      <div class="list-item">
-                                      <div class="head">Acknowledge By</div>
+                                      <div class="head">{{$temp->stage}} By</div>
                                       <div>:</div>
                                       <div> {{$temp->current}}</div>
                                       </div>  
                                       <div class="list-item">
-                                      <div class="head">Acknowledge On</div>
+                                      <div class="head">{{$temp->stage}} On</div>
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
                                      </div> 
-                                     @elseif($temp->origin_state =="Investigation in Progress") 
+                                     {{-- @elseif($temp->origin_state =="Investigation in Progress") 
                                      
                                       <div class="list-item">
                                       <div class="head">Submitted By</div>
@@ -165,7 +164,7 @@
                                      </div> 
                                     
 
-                                     @endif
+                                     @endif --}}
 
 
                             @else
