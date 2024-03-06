@@ -1473,13 +1473,13 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = $lastDocument->audit_schedule_by;
                             $history->current = $changeControl->audit_schedule_by;
                             $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
+                            $history->user_id = Auth::user()->id;                   
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
+                            $history->stage = "Audit Schedule";
                             $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1502,13 +1502,13 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = $lastDocument->audit_preparation_completed_by;
                             $history->current = $changeControl->audit_preparation_completed_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
+                            $history->stage = "Audit Preparation Completed";
                             $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1522,13 +1522,13 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = $lastDocument->audit_mgr_more_info_reqd_by;
                             $history->current = $changeControl->audit_mgr_more_info_reqd_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
+                            $history->stage = "Audit Mgr More Info Reqd";
                             $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1542,13 +1542,13 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = $lastDocument->audit_observation_submitted_by;
                             $history->current = $changeControl->audit_observation_submitted_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
+                            $history->stage = "Audit Observation Submitted";
                             $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1567,13 +1567,13 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = $lastDocument->audit_lead_more_info_reqd_by;
                             $history->current = $changeControl->audit_lead_more_info_reqd_by;
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
+                            $history->stage = "Audit Lead More Info Reqd";
                             $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1592,7 +1592,7 @@ class InternalauditController extends Controller
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
-
+            $lastDocument = InternalAudit::find($id);
 
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "6";
@@ -1614,6 +1614,17 @@ class InternalauditController extends Controller
                 $changeControl->status = "Opened";
                 $changeControl->rejected_by = Auth::user()->name;
                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                            $history = new InternalAuditTrial();
+                            $history->InternalAudit_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->current = $changeControl->rejected_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "Rejected";
+                            $history->save();
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -1650,11 +1661,24 @@ class InternalauditController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = InternalAudit::find($id);
+            $lastDocument = InternalAudit::find($id);
+
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                                $history = new InternalAuditTrial();
+                                $history->InternalAudit_id = $id;
+                                $history->activity_type = 'Activity Log';
+                                $history->current = $changeControl->cancelled_by;
+                                $history->comment = $request->comment;
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastDocument->status;
+                                $history->stage = "Cancelled";
+                                $history->save();
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -1672,6 +1696,17 @@ class InternalauditController extends Controller
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                            $history = new InternalAuditTrial();
+                            $history->InternalAudit_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->current = $changeControl->cancelled_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "Cancelled";
+                            $history->save();
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -1689,6 +1724,17 @@ class InternalauditController extends Controller
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
+                            $history = new InternalAuditTrial();
+                            $history->InternalAudit_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->current = $changeControl->cancelled_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "Cancelled";
+                            $history->save();
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";

@@ -113,77 +113,16 @@
                         @if($temp->current != $temp->previous)
                         @if($temp->activity_type == "Activity Log" )
 
-                      
-                                 @if($temp->origin_state =="Opened")
-                                 <div class="list-item">
-                                  <div class="head">Completed By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Completed On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                 @elseif($temp->origin_state =="Pending CAPA Plan") 
-                                   
-                                  <div class="list-item">
-                                  <div class="head">Audit Preparation Completed By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Audit Preparation Completed On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                 @elseif($temp->origin_state =="Pending Approval") 
-                                  <div class="list-item">
-                                  <div class="head">QA Approved By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">QA Approved On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                   {{-- @else
-                                   <div class="list-item">
-                                  <div class="head">Qa More Info Required By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Qa More Info Required On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                   @endif --}}
-                                 @elseif($temp->origin_state =="CAPA Execution in Progress") 
-                                  <div class="list-item">
-                                  <div class="head">QA Approved By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">QA Approved On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                  @elseif($temp->origin_state =="Pending Final Approval")
-                                  <div class="list-item">
-                                  <div class="head">Final Approval By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Final Approval On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                 @endif
-
+                            <div class="list-item">
+                            <div class="head">{{$temp->stage}} By</div>
+                            <div>:</div>
+                            <div> {{$temp->current}}</div>
+                            </div>  
+                            <div class="list-item">
+                            <div class="head">{{$temp->stage}} On</div>
+                            <div>:</div>
+                            <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                           </div> 
 
                         @else
                         <div class="list-item">

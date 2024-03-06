@@ -111,79 +111,17 @@
                         @endif
                         @if($temp->current != $temp->previous)
                         @if($temp->activity_type == "Activity Log" )
-
                       
-                                 @if($temp->origin_state =="Opened")
                                  <div class="list-item">
-                                  <div class="head">Audit Schedule By</div>
+                                  <div class="head">{{$temp->stage}} By</div>
                                   <div>:</div>
                                   <div> {{$temp->current}}</div>
                                   </div>  
                                   <div class="list-item">
-                                  <div class="head">Audit Schedule On</div>
+                                  <div class="head">{{$temp->stage}} On</div>
                                   <div>:</div>
                                   <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
                                  </div> 
-                                 @elseif($temp->origin_state =="Audit Preparation") 
-                                   
-                                  <div class="list-item">
-                                  <div class="head">Audit Preparation Completed By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Audit Preparation Completed On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                 @elseif($temp->origin_state =="Pending Audit") 
-                                  <div class="list-item">
-                                  <div class="head">Audit Mgr.more Info Reqd By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Audit Mgr.more Info Reqd On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                   {{-- @else
-                                   <div class="list-item">
-                                  <div class="head">Qa More Info Required By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Qa More Info Required On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                   @endif --}}
-                                 @elseif($temp->origin_state =="Pending Response") 
-                                  <div class="list-item">
-                                  <div class="head">Audit Observation Submitted By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Audit Observation Submitted On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                  @elseif($temp->origin_state =="CAPA Execution in Progress")
-                                  <div class="list-item">
-                                  <div class="head">Audit Response Completed By</div>
-                                  <div>:</div>
-                                  <div> {{$temp->current}}</div>
-                                  </div>  
-                                  <div class="list-item">
-                                  <div class="head">Audit Response Completed On</div>
-                                  <div>:</div>
-                                  <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                 </div> 
-                                 @endif
-
-
                         @else
                         <div class="list-item">
                             <div class="head">Changed To</div>
