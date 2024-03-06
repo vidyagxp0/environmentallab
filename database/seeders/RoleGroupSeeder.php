@@ -1752,8 +1752,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 242;
-$group->name = "KSA-Effective Check- HOD/Designee";
-$group->description = "KSA-Effective Check- HOD/Designee";
+$group->name = "KSA-Effective Check- Supervisor";
+$group->description = "KSA-Effective Check- Supervisor";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -1788,8 +1788,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 247;
-$group->name = "Estonia-Effective Check- HOD/Designee";
-$group->description = "Estonia-Effective Check- HOD/Designee";
+$group->name = "Estonia-Effective Check- Supervisor";
+$group->description = "Estonia-Effective Check- Supervisor";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -1824,8 +1824,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 252;
-$group->name = "Egypt-Effective Check- HOD/Designee";
-$group->description = "Egypt-Effective Check- HOD/Designee";
+$group->name = "Egypt-Effective Check- Supervisor";
+$group->description = "Egypt-Effective Check- Supervisor";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -1860,8 +1860,8 @@ $group->save();
 
 $group = new RoleGroup();
 $group->id = 257;
-$group->name = "Jordan-Effective Check- HOD/Designee";
-$group->description = "Jordan-Effective Check- HOD/Designee";
+$group->name = "Jordan-Effective Check- Supervisor";
+$group->description = "Jordan-Effective Check- Supervisor";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -1915,5 +1915,32 @@ $group->description = "Jordan-New Document-Trainer";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
+$group = new RoleGroup();
+$group->id = 265;
+$group->name = "KSA-Lab Incident- QC Head/ Designee";
+$group->description = "KSA-Lab Incident- QC Head/ Designee";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
+
+$group = new RoleGroup();
+$group->id = 266;
+$group->name = "Estonia-Lab Incident- QC Head/ Designee";
+$group->description = "Estonia-Lab Incident- QC Head/ Designee";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
+
+$group = new RoleGroup();
+$group->id = 267;
+$group->name = "Egypt-Lab Incident- QC Head/ Designee";
+$group->description = "Egypt-Lab Incident- QC Head/ Designee";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
+
+$group = new RoleGroup();
+$group->id = 268;
+$group->name = "Jordan-Lab Incident- QC Head/ Designee";
+$group->description = "Jordan-Lab Incident- QC Head/ Designee";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
     }
 }
