@@ -242,7 +242,7 @@
 
                     
                         </div>
-                        <div id="new-chart-id">
+                        <div  align="center" id="new-chart-id">
                             <h4>Status</h4>
                         </div>
                         </div>
@@ -402,17 +402,17 @@ function showChart() {
 <script>
     var options = {
       series: [{
-        name: 'PRODUCT A',
-        data: [44, 55, 41, 67, 22, 43]
+        name: 'Opend',
+        data: [44, 55,  22, 43]
       }, {
-        name: 'PRODUCT B',
-        data: [13, 23, 20, 8, 13, 27]
+        name: 'Cancelled',
+        data: [13,  8, 13, 27]
       }, {
-        name: 'PRODUCT C',
-        data: [11, 17, 15, 15, 21, 14]
+        name: 'Testing C',
+        data: [11,  15, 21, 14]
       }, {
-        name: 'PRODUCT D',
-        data: [21, 7, 25, 13, 22, 8]
+        name: 'Complete D',
+        data: [21, 13, 22, 8]
       }],
       chart: {
         type: 'bar',
@@ -451,9 +451,8 @@ function showChart() {
         },
       },
       xaxis: {
-        type: 'datetime',
-        categories: ['01/01/2011 GMT', '01/02/2011 GMT', '01/03/2011 GMT', '01/04/2011 GMT',
-          '01/05/2011 GMT', '01/06/2011 GMT'
+        type: 'text',
+        categories: ['KSA', 'Egypt', 'Estonia', 'Jordan',
         ],
       },
       legend: {
@@ -477,6 +476,13 @@ function showChart() {
     margin-left: auto;
     margin-right: auto;
 }
-
+#new-chart-id {
+    
+    width: 50%; 
+    height: 100px; 
+    margin-top: 10px;
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+}
     </style>
 @endsection
