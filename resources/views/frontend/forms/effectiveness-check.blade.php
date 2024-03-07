@@ -299,8 +299,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
-                                        <div><small class="text-primary">Please Attach all relevant or supporting
-                                                documents</small></div>
+                                        <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="refer_record"></div>
                                             <div class="add-btn">
