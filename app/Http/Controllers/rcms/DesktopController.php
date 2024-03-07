@@ -16,6 +16,7 @@ use App\Models\Auditee;
 use App\Models\AuditProgram;
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
+use App\Models\QMSDivision;
 use App\Models\User;
 use Carbon\Carbon;
 use Helpers;
@@ -186,14 +187,90 @@ class DesktopController extends Controller
     }
 
 
-    public function dashboard_search(Request $request){
+    public function dashboard_search(Request $request)
+    {
         // return $request;
 
-        if($request->form =="internal_audit"){
-            $data = InternalAudit::where('status',$request->stage)->get();
+        if ($request->form == "internal_audit") {
+            $data = InternalAudit::where('status', $request->stage)->get();
             return $data;
-            return view('frontend.rcms.desktop',compact('data'));
-
+            return view('frontend.rcms.desktop', compact('data'));
         }
+    }
+    public function fetchChartData(Request $request)
+    {
+        $allDivisionCodes = QMSDivision::Where('q_m_s_divisions.status',1)
+        ->pluck('name')->toArray();
+        $internalAuditData = collect();
+        if ($request->value == 'Internal-Audit') {
+            $internalAuditData = QMSDivision::Join('internal_audits', 'internal_audits.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'External-Audit') {
+            $internalAuditData = QMSDivision::Join('auditees', 'auditees.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Extension') {
+            $internalAuditData = QMSDivision::Join('extensions', 'extensions.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Capa') {
+            $internalAuditData = QMSDivision::Join('capas', 'capas.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Audit-Program') {
+            $internalAuditData = QMSDivision::Join('audit_programs', 'audit_programs.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Lab Incident') {
+            $internalAuditData = QMSDivision::Join('lab_incidents', 'lab_incidents.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Risk Assesment') {
+            $internalAuditData = QMSDivision::Join('risk_management', 'risk_management.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Root-Cause-Analysis') {
+            $internalAuditData = QMSDivision::Join('root_cause_analyses', 'root_cause_analyses.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Management Review') {
+            $internalAuditData = QMSDivision::Join('management_reviews', 'management_reviews.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Change Control') {
+            $internalAuditData = QMSDivision::Join('c_c_s', 'c_c_s.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Action Item') {
+            $internalAuditData = QMSDivision::Join('action_items', 'action_items.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Effectiveness Check') {
+            $internalAuditData = QMSDivision::Join('effectiveness_checks', 'effectiveness_checks.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Document') {
+            $internalAuditData = QMSDivision::Join('documents', 'documents.division_id', '=', 'q_m_s_divisions.id')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else if ($request->value == 'Observation') {
+            $internalAuditData = QMSDivision::Join('observations', 'observations.division_code', '=', 'q_m_s_divisions.name')
+                ->select('q_m_s_divisions.name as division_code')
+                ->get();
+        } else {
+            $internalAuditData = [];
+        }
+        // $chartData = [];
+        $divisionCounts = $internalAuditData->groupBy('division_code')->map->count();
+
+        $chartData = collect($allDivisionCodes)->map(function ($divisionCode) use ($divisionCounts) {
+            return [
+                'division' => $divisionCode,
+                'value' => $divisionCounts->get($divisionCode, 0) // Get count or default to 0 if not present
+            ];
+        });
+
+        return response()->json($chartData);
     }
 }

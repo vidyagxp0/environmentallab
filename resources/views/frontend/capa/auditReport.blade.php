@@ -183,7 +183,7 @@
             {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
-        <div class="first-table">
+        <!-- <div class="first-table">
             <table>
                 <tr>
                     <td class="w-50">
@@ -211,7 +211,7 @@
                     </td>
                 </tr>
             </table>
-        </div>
+        </div> -->
 
         <div class="second-table">
             <table>
@@ -228,23 +228,42 @@
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
+                                @if($datas->activity_type == "Assigned To" || $datas->activity_type == "CAPA Team" )
+                                @foreach(explode(',',$datas->previous) as $prev)
+                                <div>{{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }}</div>
+                                @endforeach
+                                @else
                                 <div>{{ $datas->previous }}</div>
+                                @endif
+                                @elseif($datas->activity_type == "CAPA Related Records")
+                                
+                                <div>{{ Helpers::getDivisionName($doc->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
                                 @else
                                 <div>Null</div>
                                 @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
+                                @if($datas->activity_type == "Assigned To" || $datas->activity_type == "CAPA Team" )
+                                @foreach(explode(',',$datas->current) as $curr)
+                                <div>{{ Helpers::getInitiatorName($curr) }}</div>
+                                @endforeach
+                                @elseif($datas->activity_type == "CAPA Related Records")
+                                <div>{{ Helpers::getDivisionName($doc->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
+                                @else
                                 <div>{{ $datas->current }}</div>
+                                @endif
                             </div>
                         </td>
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if ($datas->previous == "NULL")
-                                Modify
-                            @else
+                        @if(($datas->previous == 'Null') && ($datas->current !='Null'))
                                 New
+                            @elseif(($datas->previous != $datas->current))
+                                Modify
+                            @else 
+                               New
                             @endif
                         </td>
                     </tr>

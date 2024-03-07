@@ -9,8 +9,9 @@
 
                 <div class="inner-block">
                     <div class="main-head">
-                        <div class="default-name">{{ date('Y') }}
-                            /Record-000{{ $document->id }}</div>
+                         <div class="default-name">
+             {{ Helpers::getDivisionName(session()->get('division')) }}/MR/{{ date('Y') }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                         </div>
 
                         <div class="btn-group">
                             <button onclick="window.print();return false;" type="button">Print</button>

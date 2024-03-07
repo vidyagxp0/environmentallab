@@ -48,19 +48,23 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+                        @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                         <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button>
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/extension-audit-trial', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && (in_array(1, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
@@ -140,7 +144,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number">Record Number</label>
                                                 <input disabled type="text" name="record_number"
-                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extention/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extension/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
                                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                             </div>
                                         </div>

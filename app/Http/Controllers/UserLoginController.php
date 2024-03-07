@@ -132,6 +132,7 @@ class UserLoginController extends Controller
                     // Save the user ID to the total_logins table for check login user limit
                     TotalLogin::addUser();
                     toastr()->success('Login Successfully.');
+                    session()->put('last_activity', time());
                     return redirect('rcms/qms-dashboard');
                 }
             } else {

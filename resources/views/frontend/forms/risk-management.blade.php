@@ -523,8 +523,8 @@
                                             <label for="Room">Room</label>
                                             <select name="room" id="room">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">C-101</option>
-                                                <option value="2">C-202</option>
+                                                <option value="C-101">C-101</option>
+                                                <option value="C-202">C-202</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1073,7 +1073,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="view"></textarea>
+                                                                <textarea name="why_root_cause"></textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>

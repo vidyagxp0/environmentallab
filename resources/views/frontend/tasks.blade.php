@@ -75,12 +75,12 @@
                                                         <div class="action-down-btn">Action <i class="fa-solid fa-angle-down"></i></div>
                                                         <div class="action-block">
                                                             <a href="{{ url('rev-details', $temp->id) }}">View</a>
-                                                            @if(Auth::user()->role == 2)
+                                                            @if(Helpers::checkRoles(2))
                                                             @if($temp->stage <=2 )
                                                             <a href="{{ route('documents.edit', $temp->id) }}">Edit</a>
                                                             @endif
                                                             @endif
-                                                            @if(Auth::user()->role == 1)
+                                                            @if(Helpers::checkRoles(1))
                                                             @if($temp->stage <=4 )
                                                             <a href="{{ route('documents.edit', $temp->id) }}">Edit</a>
                                                             @endif

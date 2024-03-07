@@ -619,7 +619,7 @@
                                                         <option value="">-- Select value --</option>
                                                         <option value="Hold">Hold</option>
                                                         <option value="Release">Release</option>
-                                                        <option value="Quarantine">Quarantine</option>
+                                                        <option value="quarantine">Quarantine</option>
                                                     </select>
                                                 </td>
                                             </tbody> --}}

@@ -50,7 +50,7 @@
         @if(isset($_GET['id']))
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName(session()->get('division')) }} / Document 
+            {{ Helpers::getDivisionName($_GET['id'])}} / Document 
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
         @endif
@@ -67,13 +67,14 @@
                 <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> 
                 <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
                 <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button> 
-                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>                --}}
+                <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>--}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
                 <button class="tablinks" onclick="openData(event, 'annexures')">Annexures</button>
                 <button class="tablinks" onclick="openData(event, 'distribution-retrieval')">Distribution & Retrieval</button>
                 {{-- <button class="tablinks" onclick="openData(event, 'print-download')">Print and Download Control </button> --}}
                 <button class="tablinks" onclick="openData(event, 'sign')">Signature</button>
+                <button class="tablinks printdoc" style="float: right;" onclick="window.print();return false;" >Print</button>
             </div>
 
             <form id="document-form" action="{{ route('documents.store') }}" method="post" enctype="multipart/form-data">
@@ -106,7 +107,7 @@
                                         @if(isset($_GET['id']))
                                         <label for="Division Code"><b>Site/Location Code </b></label>
                                         <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                            value="{{ Helpers::getDivisionName($_GET['id'])}}">
                                         <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                         @else
@@ -433,10 +434,13 @@
                                         <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
                                             name="reviewers[]" placeholder="Select Reviewers" multiple required>
                                             @if (!empty($reviewer))
+                                            
                                                 @foreach ($reviewer as $lan)
+                                                    @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </select>
@@ -452,9 +456,11 @@
                                             name="approvers[]" placeholder="Select Approvers" multiple required>
                                             @if (!empty($approvers))
                                                 @foreach ($approvers as $lan)
+                                                    @if(Helpers::checkUserRolesApprovers($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
+                                                    @endif
                                                 @endforeach
                                             @endif
                                         </select>
@@ -551,7 +557,9 @@
                                         <select name="trainer">
                                             <option value="" selected>Enter your Selection</option>
                                             @foreach ($trainer as $temp)
+                                            @if(Helpers::checkUserRolestrainer($temp))
                                                 <option value="{{ $temp->id }}">{{ $temp->name }}</option>
+                                            @endif
                                             @endforeach
                                         </select>
                                     </div>

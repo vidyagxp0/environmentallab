@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('user_name');
             $table->string('origin_state');
             $table->string('user_role');
+            $table->string('stage')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

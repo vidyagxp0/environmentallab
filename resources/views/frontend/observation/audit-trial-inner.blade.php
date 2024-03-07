@@ -9,7 +9,8 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                                Record - 00000{{ $detail->Observation_id }}
+                                <!-- Record - 00000{{ $detail->Observation_id }} -->
+                                Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div class="info-list">
 
@@ -88,25 +89,57 @@
                             @else
                             @if(!empty($temp->previous))
                             <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>{{ $temp->previous }}</div>
-                            </div>
+                            <div class="head">Changed From</div>
+                            <div>:</div>
+                            @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
+                            @foreach(explode(',',$temp->previous) as $prev)
+                            {{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }},
+                            @endforeach
                             @else
+                            {{ $temp->previous }}
+                            @endif
+                           </div>
+                        
+                        @else
+                        @if($temp->activity_type == "Activity Log" )
+                        @else
+                        <div class="list-item">
+                            <div class="head">Changed From</div>
+                            <div>:</div>
+                            <div>NULL</div>
+                        </div>
+                        @endif
+                        @endif
+                        @if($temp->current != $temp->previous)
+                        @if($temp->activity_type == "Activity Log" )
+
                             <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>NULL</div>
-                            </div>
-                            @endif
-                            @if($temp->current != $temp->previous)
+                            <div class="head">{{$temp->stage}} By</div>
+                            <div>:</div>
+                            <div> {{$temp->current}}</div>
+                            </div>  
                             <div class="list-item">
-                                <div class="head">Changed To</div>
-                                <div>:</div>
-                                <div>{{ $temp->current }}</div>
-                            </div>
+                            <div class="head">{{$temp->stage}} On</div>
+                            <div>:</div>
+                            <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                           </div> 
+
+                        @else
+                        <div class="list-item">
+                            <div class="head">Changed To</div>
+                            <div>:</div>
+                            @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
+                            @foreach(explode(',',$temp->current) as $curr)
+                            {{ Helpers::getInitiatorName($curr) }} ,
+                            @endforeach
+                            @else
+                            {{ $temp->current }}
                             @endif
-                            @endif
+                        </div>
+                        @endif
+                        @endif
+                        @endif
+
 
                             <div class="list-item">
                                 <div class="head">Origin state</div>

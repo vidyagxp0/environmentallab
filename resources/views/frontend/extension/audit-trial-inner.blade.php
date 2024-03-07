@@ -9,7 +9,8 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                                Record - 00000{{ $detail->capa_id }}
+                                Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+        
                             </div>
                             <div class="info-list">
 
@@ -90,8 +91,14 @@
                             <div class="list-item">
                                 <div class="head">Changed From</div>
                                 <div>:</div>
-                                <div>{{ $temp->previous }}</div>
+                                @if($temp->activity_type == "Approver" )
+                                {{ $temp->previous != 'Null' ?  Helpers::getInitiatorName($temp->previous ) : $temp->previous  }}
+                                @else 
+                                 <div>{{ $temp->previous }}</div>
+                                 @endif
                             </div>
+                            @else
+                            @if($temp->activity_type == "Activity Log" )
                             @else
                             <div class="list-item">
                                 <div class="head">Changed From</div>
@@ -99,15 +106,33 @@
                                 <div>NULL</div>
                             </div>
                             @endif
+                            @endif
                             @if($temp->current != $temp->previous)
+                            @if($temp->activity_type == "Activity Log" )
+
+                                <div class="list-item">
+                                      <div class="head">{{$temp->stage}} By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">{{$temp->stage}} On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                 </div>          
+                          @else
                             <div class="list-item">
                                 <div class="head">Changed To</div>
                                 <div>:</div>
+                                @if($temp->activity_type == "Approver" )
+                                {{ Helpers::getInitiatorName($temp->current ) }}
+                                @else
                                 <div>{{ $temp->current }}</div>
+                                @endif
                             </div>
                             @endif
                             @endif
-
+                            @endif
                             <div class="list-item">
                                 <div class="head">Origin state</div>
                                 <div>:</div>

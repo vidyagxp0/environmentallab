@@ -81,6 +81,10 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+                        @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                         {{-- <button class="button_theme1" onclick="window.print();return false;" class="new-doc-btn">Print</button> --}}
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
@@ -90,14 +94,14 @@
                             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
                                     Close Done </a> </button>
                         @endif --}}
-                        @if ($data->stage == 1 && Auth::user()->role == 3)
+                        @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && Auth::user()->role == 4)
+                        @elseif($data->stage == 2  && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -107,12 +111,12 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info-required
                             </button>
-                        @elseif($data->stage == 3 && Auth::user()->role == 3)
+                        @elseif($data->stage == 3  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Send to CFT Reviewers
+                                Send to CFT/SME/QA Reviewers
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cft-modal">
-                                CFT Review Not Required
+                                CFT/SME/QA Review Not Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information required
@@ -120,20 +124,20 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && Auth::user()->role == 5)
+                        @elseif($data->stage == 4  && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 6 && Auth::user()->role == 6)
+                        @elseif($data->stage == 6  && (in_array(6, $userRoleIds) || in_array(18, $userRoleIds)))
                             @if ($evaluation->training_required == 'yes')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Training Completed
                                 </button>
                             @endif
-                        @elseif($data->stage == 7 && Auth::user()->role == 3)
+                        @elseif($data->stage == 7  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Implemented
                             </button>
@@ -251,16 +255,16 @@
                             @endif
                             {{-- @if ($info->Quality_Approver == 'yes') --}}
                             @if ($data->stage >= 3)
-                                <div class="active">Pending CFT Review</div>
+                                <div class="active">Pending CFT/SME/QA Review</div>
                             @else
-                                <div class="">Pending CFT Review</div>
+                                <div class="">Pending CFT/SME/QA Review</div>
                             @endif
                             {{-- @endif
                             @if ($info->Microbiology == 'yes') --}}
                             @if ($data->stage >= 4)
-                                <div class="active"> CFT Review</div>
+                                <div class="active"> CFT/SME/QA Review</div>
                             @else
-                                <div class=""> CFT Review</div>
+                                <div class=""> CFT/SME/QA Review</div>
                             @endif
 
 
@@ -330,7 +334,7 @@
                                                 <div class="group-input">
                                                     <label for="rls">Record Number</label>
                                                     <div class="static">
-                                                        <input type="text"
+                                                        <input disabled type="text"
                                                             value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                                     </div>
                                                 </div>
@@ -347,14 +351,14 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Initiator">Initiator</label>
-                                                    <div class="static"><input type="text"
+                                                    <div class="static"><input disabled type="text"
                                                             value="{{ Auth::user()->name }}"></div>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="date_initiation">Date of Initiation</label>
-                                                    <div class="static"><input type="text"
+                                                    <div class="static"><input disabled type="text"
                                                             value="{{ date('d-M-Y') }}"></div>
                                                 </div>
                                             </div>
@@ -366,13 +370,45 @@
                                                     <select placeholder="Select..." name="assign_to" required>
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $datas)
+                                                        @if(Helpers::checkUserRolesassign_to($datas))
                                                             <option value="{{ $datas->id }}"
                                                                 {{ $data->assign_to == $datas->id ? 'selected' : '' }}
                                                                 {{-- @if ($data->assign_to == $datas->id) selected @endif --}}>
                                                                 {{ $datas->name }}
                                                             </option>
+                                                        @endif    
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Microbiology">CFT Reviewer</label>
+                                                    <select name="Microbiology">
+                                                        <option value="0">-- Select --</option>
+                                                        <option value="yes" selected>Yes</option>
+                                                        <option value="no">No</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Microbiology-Person">CFT Reviewer Person</label>
+                                                    <select multiple name="Microbiology_Person[]"
+                                                        placeholder="Select CFT Reviewers" data-search="false"
+                                                        data-silent-initial-value-set="true" id="cft_reviewer">
+                                                         <option value="0">-- Select --</option>
+                                                        @foreach ($cft as $data1)
+                                                        @if(Helpers::checkUserRolesMicrobiology_Person($data1))
+                                                            @if(in_array($data1->id, $cft_aff))
+                                                                <option value="{{ $data1->id }}" selected>{{ $data1->name }}</option>
+                                                            @else
+                                                                <option value="{{ $data1->id }}">{{ $data1->name }}</option>
+                                                            @endif    
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -1045,19 +1081,19 @@
                                     <div class="inner-block-content">
 
                                         <div class="sub-head">
-                                            CFT Feedback
+                                            Feedback
                                         </div>
                                         <div class="row">
 
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="comments">CFT Comments</label>
+                                                    <label for="comments">Comments</label>
                                                     <textarea name="cft_comments">{{ $comments->cft_comments }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-lg-12">
                                                 <div class="group-input">
-                                                    <label for="comments">CFT Attachment</label>
+                                                    <label for="comments">Attachment</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="cft_attchament">
                                                             @if ($comments->cft_attchament)
@@ -1361,21 +1397,29 @@
                                                             <td><input type="text" name="document_name[]"
                                                                     value="{{ unserialize($closure->doc_name)[$key] ? unserialize($closure->doc_name)[$key] : 'Not Applicale' }}">
                                                             </td>
-                                                            <td><input type="number" name="document_no[]"
+                                                            <td>                                                                
+                                                                <input type="number" name="document_no[]"
                                                                     value="{{ unserialize($closure->doc_no)[$key] ? unserialize($closure->doc_no)[$key] : 'Not Applicable' }}">
                                                             </td>
-                                                             <td><input type="text" name="new_version[]"
-                                                                    value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
+                                                             <td>
+                                                                @if (!empty($closure->version_no))
+                                                                <input type="text" name="version_no[]" value="{{ unserialize($closure->version_no)[$key] ? unserialize($closure->version_no)[$key] : 'Not Applicable' }}">
+                                                                @else
+                                                                <input type="text" name="version_no[]" value="Not Applicable">
+                                                                @endif
                                                             </td> 
                                                             
                                                             <td><div class="group-input new-date-data-field ">
-                                                                <div class="  input-date  "><div
-                                                                 class="calenderauditee">
-                                                                <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"
-                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div>
-                                                                
-                                                                 <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  
-                                                                 oninput="handleDateInput(this, `implementation_date{{$key}}`)" /></div></div></div> 
+                                                                    <div class="  input-date  ">
+                                                                        <div class="calenderauditee">
+                                                                            {{-- <input type="text"  id="implementation_date{{$key}}" readonly placeholder="DD-MMM-YYYY"  value="{{  Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"/> --}}
+                                                                            {{-- <input type="date" class="hide-input" name="implementation_date[]"  value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) ? Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) : 'Not Applicable' }}"  oninput="handleDateInput(this, `implementation_date{{$key}}`)" /> --}}
+                                                                            <input type="text"   id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
+                                                                            <input type="date" id="implementation_date{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($closure->implementation_date)[$key]}}"  name="implementation_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}"class="hide-input" 
+                                                                              oninput="handleDateInput(this, `implementation_date{{$key}}`)"  /></div></div></div></td>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> 
                                                             </td>
                                                             
                                                             <td><input type="text" name="new_document_no[]"
@@ -1564,7 +1608,7 @@
                                                     </div>
                                                 </div>
                                             @endif
-                                            <div class="col-lg-6">
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">More Information Required By</label>
                                                     @php
@@ -1593,11 +1637,11 @@
                                                         <div class="static">{{ $temp->created_at }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Supervisor Reviewed By (QA)</label>
+                                                    <label for="submitted">HOD Review Complete By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1612,7 +1656,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Supervisor Reviewed On (QA)</label>
+                                                    <label for="submitted">HOD Review Complete On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1628,7 +1672,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Review Completed By</label>
+                                                    <label for="submitted">Send to CFT/SME/QA Review By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1643,7 +1687,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Review Completed On</label>
+                                                    <label for="submitted">Send to CFT/SME/QA Review On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1657,7 +1701,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-6">
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">CFT Reviewed By</label>
                                                     @php
@@ -1686,12 +1730,12 @@
                                                         <div class="static">{{ $temp->created_at }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">CFT Review Completed By</label>
+                                                    <label for="submitted">CFT/SME/QA Review Not required By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1706,7 +1750,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">CFT Review Completed On</label>
+                                                    <label for="submitted">CFT/SME/QA Review Not required On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1723,7 +1767,7 @@
 
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Training Completed By</label>
+                                                    <label for="submitted">Review Completed By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1738,7 +1782,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">Training Completed On</label>
+                                                    <label for="submitted">Review Completed On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1753,7 +1797,7 @@
                                             </div>
 
 
-                                            <div class="col-lg-6">
+                                            {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">Change Implemented By</label>
                                                     @php
@@ -1782,10 +1826,10 @@
                                                         <div class="static">{{ $temp->created_at }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Final Review Completed By</label>
+                                                    <label for="submitted">Implemented By</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -1800,7 +1844,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="submitted">QA Final Review Completed On</label>
+                                                    <label for="submitted">Implemented On</label>
                                                     @php
                                                         $submit = DB::table('c_c_stage_histories')
                                                             ->where('type', 'Change-Control')
@@ -2278,7 +2322,7 @@
                 $('#CCFormInput :input:not(select)').prop('disabled', true);
                 $('#CCFormInput select').prop('disabled', true);
             } else {
-                $('#CCFormInput :input').prop('disabled', false);
+               // $('#CCFormInput :input').prop('disabled', false);
             }
         });
     </script>

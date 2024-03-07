@@ -233,19 +233,29 @@
         <div class="division-container">
             <div class="content-container">
                 <form action="{{ route('division_submit') }}" method="post">
-                    @csrf
+                    @csrf 
                     <div class="division-tabs">
                         <div class="tab">
                             @php
-                                $division = DB::table('q_m_s_divisions')->where('status', 1)->get();
-                            @endphp
+                            // Get the user's roles
+                            $userRoles = DB::table('user_roles')->where('user_id', Auth::user()->id)->get();
+                            // Initialize an empty array to store division IDs
+                            $divisionIds = [];
+                            // Loop through user's roles
+                            foreach($userRoles as $role) {
+                                // Store division IDs from user's roles
+                                $divisionIds[] = $role->q_m_s_divisions_id;
+                            }
+                            // Retrieve divisions where status = 1 and the division ID is in the array of division IDs
+                            $divisions = DB::table('q_m_s_divisions')->where('status', 1)->whereIn('id', $divisionIds)->get();
+                        @endphp
                             <style>
                                 #division-modal .tab a.active {
                                     background-color: #23a723 !important;
                                     color: white !important;
                                 }
                             </style>
-                            @foreach ($division as $temp)
+                            @foreach ($divisions as $temp)
                                 <input type="hidden" value="{{ $temp->id }}" name="division_id" required>
                                 <a style="display: block;
                                 background-color: inherit;

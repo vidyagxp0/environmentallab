@@ -15,7 +15,7 @@
     <ul class="navbar-nav ml-auto">
 
 
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-bell"></i>
                 <span class="badge badge-warning navbar-badge">15</span>
@@ -40,12 +40,12 @@
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
             </div>
-        </li>
+        </li> -->
 
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <div class="image">
-                    <img width="30" src="{{ asset('admin/dist/img/user1-128x128.jpg') }}"
+                    <img width="30" src="{{ asset('admin/dist/img/user8-128x128.jpg') }}"
                         class="img-circle elevation-2" alt="User Image">
                 </div>
             </a>
@@ -53,9 +53,9 @@
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right card card-widget widget-user">
                     <div class="widget-user-header bg-danger">
                         <h3 class="widget-user-username">
-                            @if (Auth::guard('admin')->check())
+                            <!-- @if (Auth::guard('admin')->check())
                                 {{ Auth::guard('admin')->user()->name }}
-                            @endif
+                            @endif -->
                         </h3>
                         <h5 class="widget-user-desc">
                             @if (Auth::guard('admin')->check())
@@ -64,10 +64,11 @@
                         </h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="../admin/dist/img/user1-128x128.jpg" alt="User Avatar">
+                        <img class="img-circle elevation-2" src="../admin/dist/img/user8-128x128.jpg" alt="User Avatar">
                     </div>
                     <div class="card-footer m-2">
-                        <center> <a href="{{ url('admin/logout') }}"> <i class="fas fa-lg fa-power-off text-danger"></i>
+                        <center> <a href="{{ url('admin/logout') }}">LogOut
+                             <!-- <i class="fas fa-lg fa-power-off text-danger"></i> -->
                             </a> </center>
                     </div>
                 </div>
@@ -92,11 +93,16 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-danger elevation-4">
     <!-- Brand Logo -->
-    <a href="{{ URL::to('admin/dashboard') }}" class="brand-link">
+    <div class="logo-container">
+                        <div class="logo" >
+                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-50 h-50">
+                        </div>
+</div>
+    <!-- <a href="{{ URL::to('admin/dashboard') }}" class="brand-link">
         <img src="{{ asset('admin/images/logo/logo.png') }}" alt="{{ config('app.name') }} Logo"
-            class="brand-image  elevation-3" style="opacity: .8">
+            class="brand-image  elevation-3" style="opacity: .8  height:60px">
         <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
-    </a>
+    </a> -->
 
     <!-- Sidebar -->
     <div class="sidebar">
@@ -139,114 +145,13 @@ if($mainmenu=="Dashboard"){
                     </a>
                 </li>
 
-
-
-                <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
-                    <a href="#"
-                        class="nav-link  @php
-if($mainmenu=="System Configuration"){
-                echo "active";
-            } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
-                        <p>
-                            System Configuration
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-
-
-                        <li class="nav-item">
-                            <a href="{{ URL::to('admin/department') }}"
-                                class="nav-link @php
-if($submenu=="Department"){
-                            echo "active";
-                        } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
-                                <p>Department</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('document_types.index') }}"
-                                class="nav-link @php
-if($submenu=="Document"){
-                            echo "active";
-                        } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
-                                <p>Document Type</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('document_subtypes.index') }}"
-                                class="nav-link @php
-if($submenu=="Document Subtype"){
-                            echo "active";
-                        } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
-                                <p>Document SubType</p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route('documentlanguage.index') }}"
-                                class="nav-link @php
-if($submenu=="Document Language"){
-                            echo "active";
-                        } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
-                                <p>Document Language</p>
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li class="nav-item {{ $mainmenu == 'Division & Process' ? 'menu-open' : '' }} ">
-                    <a href="#"
-                        class="nav-link  @php
-if($mainmenu=="Division & Process"){
-                                                echo "active";
-                                            } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
-                        <p>
-                            Division & Process
-                            <i class="fas fa-angle-left right"></i>
-                        </p>
-                    </a>
-                    <ul class="nav nav-treeview">
-
-
-                        <li class="nav-item">
-                            <a href="{{ route('division.index') }}"
-                                class="nav-link @php
-if($submenu=="Division"){
-                                                            echo "active";
-                                                        } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
-                                <p>Division</p>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a href="{{ route('process.index') }}"
-                                class="nav-link @php
-if($submenu=="Process"){
-                            echo "active";
-                        } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
-                                <p>Process</p>
-                            </a>
-                        </li>
-
-                    </ul>
-                </li>
-
                 <li class="nav-item {{ $mainmenu == 'User Management' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="User Management"){
                                                 echo "active";
                                             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fa fa-users"></i>
                         <p>
                             User Management
                             <i class="fas fa-angle-left right"></i>
@@ -272,7 +177,7 @@ if($submenu=="Login Account"){
 if($submenu=="Role Permission"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-user-circle nav-icon"></i>
                                 <p>Role Permission</p>
                             </a>
                         </li>
@@ -282,7 +187,7 @@ if($submenu=="Role Permission"){
 if($submenu=="Group Permission"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-users nav-icon"></i>
                                 <p>Group Permission</p>
                             </a>
                         </li>
@@ -290,13 +195,114 @@ if($submenu=="Group Permission"){
                     </ul>
                 </li>
 
+                <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link  @php
+if($mainmenu=="System Configuration"){
+                echo "active";
+            } @endphp">
+            <i class="nav-icon fa fa-cog"></i>
+                        <p>
+                            System Configuration
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+
+                        <li class="nav-item">
+                            <a href="{{ URL::to('admin/department') }}"
+                                class="nav-link @php
+if($submenu=="Department"){
+                            echo "active";
+                        } @endphp">
+                                <i class="far fa-building nav-icon"></i>
+                                <p>Department</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('document_types.index') }}"
+                                class="nav-link @php
+if($submenu=="Document"){
+                            echo "active";
+                        } @endphp">
+                                <i class="fa fa-book nav-icon"></i>
+                                <p>Document Type</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('document_subtypes.index') }}"
+                                class="nav-link @php
+if($submenu=="Document Subtype"){
+                            echo "active";
+                        } @endphp">
+                                <i class="far fa-edit nav-icon"></i>
+                                <p>Document SubType</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('documentlanguage.index') }}"
+                                class="nav-link @php
+if($submenu=="Document Language"){
+                            echo "active";
+                        } @endphp">
+                                <i class="fas fa-pen nav-icon"></i>
+                                <p>Document Language</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item {{ $mainmenu == 'Division & Process' ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link  @php
+if($mainmenu=="Division & Process"){
+                                                echo "active";
+                                            } @endphp">
+                        <i class="nav-icon fa fa-spinner"></i>
+                        <p>
+                            Division & Process
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+
+                        <li class="nav-item">
+                            <a href="{{ route('division.index') }}"
+                                class="nav-link @php
+if($submenu=="Division"){
+                                                            echo "active";
+                                                        } @endphp">
+                                <i class="fas fa-chart-pie nav-icon"></i>
+                                <p>Division</p>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a href="{{ route('process.index') }}"
+                                class="nav-link @php
+if($submenu=="Process"){
+                            echo "active";
+                        } @endphp">
+                                <i class="fas fa-tasks nav-icon"></i>
+                                <p>Process</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                
+
                 <li class="nav-item {{ $mainmenu == 'Control Management' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Control Management"){
                                                 echo "active";
                                             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fa fa-briefcase"></i>
                         <p>
                             Control Management
                             <i class="fas fa-angle-left right"></i>
@@ -313,7 +319,7 @@ if($mainmenu=="Control Management"){
 if($submenu=="Print Control"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-print nav-icon"></i>
                                 <p>Print Control</p>
                             </a>
                         </li>
@@ -323,7 +329,7 @@ if($submenu=="Print Control"){
 if($submenu=="Download Control"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-download nav-icon"></i>
                                 <p>Download Control</p>
                             </a>
                         </li>
@@ -337,7 +343,7 @@ if($submenu=="Download Control"){
 if($mainmenu=="Product & Material"){
                                                 echo "active";
                                             } @endphp">
-                        <i class="nav-icon fas fa-cube"></i>
+                        <i class="nav-icon fa fa-window-restore"></i>
                         <p>
                             Product & Material
                             <i class="fas fa-angle-left right"></i>
@@ -354,7 +360,7 @@ if($mainmenu=="Product & Material"){
 if($submenu=="Product"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-database nav-icon"></i>
                                 <p>Product</p>
                             </a>
                         </li>
@@ -364,7 +370,7 @@ if($submenu=="Product"){
 if($submenu=="Material"){
                             echo "active";
                         } @endphp">
-                                <i class="far fa-plus-square nav-icon"></i>
+                                <i class="fa fa-retweet nav-icon"></i>
                                 <p>Material Control</p>
                             </a>
                         </li>
@@ -378,7 +384,7 @@ if($submenu=="Material"){
 if($mainmenu=="risk-level"){
                 echo "active";
             } @endphp">
-                        <i class="nav-icon fas fa-tachometer-alt"></i>
+                        <i class="nav-icon fa fa-exclamation-triangle"></i>
                         <p>
                             Risk Level
 
@@ -394,5 +400,21 @@ if($mainmenu=="risk-level"){
         </nav>
         <!-- /.sidebar-menu -->
     </div>
+    <style>
+        .brand-link {
+            height: 60px;
+            }
+
+            .logo-container {
+            align-items: center;
+        }
+        .logo {
+            background:white;
+            padding-left: 60px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+
+         }
+    </style>
     <!-- /.sidebar -->
 </aside>

@@ -68,8 +68,8 @@ class CCController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        $hod = User::where('role', 4)->get();
-        $cft = User::where('role', 5)->get();
+        $hod = User::get();
+        $cft = User::get();
         $pre = CC::all();
 
         return view('frontend.change-control.new-change-control', compact("riskData", "record_number", "due_date","hod","cft","pre"));
@@ -122,13 +122,13 @@ class CCController extends Controller
         $openState->training_required = $request->training_required;
         $openState->train_comments = $request->train_comments;
 
-        // $openState->Microbiology = $request->Microbiology;
-        // if ($request->Microbiology_Person) {
-        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+       $openState->Microbiology = $request->Microbiology;
+       if ($request->Microbiology_Person) {
+           $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+       } else {
+           toastr()->warning('CFT reviewers can not be empty');
+           return back();
+       }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -271,16 +271,16 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-        // if ($request->Microbiology == "yes") {
-        //     $info->Microbiology = $request->Microbiology;
+         if ($request->Microbiology == "yes") {
+             $info->Microbiology = $request->Microbiology;
             
-        // }
-        // if ($request->Microbiology_Person) {
-        //     $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+         }
+         if ($request->Microbiology_Person) {
+             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+         } else {
+             toastr()->warning('CFT reviewers can not be empty');
+             return back();
+         }
         
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
@@ -384,7 +384,6 @@ class CCController extends Controller
         if (!empty($request->version_no)) {
             $closure->version_no = serialize($request->version_no);
         }
-        
         if (!empty($request->implementation_date)) {
             $closure->implementation_date = serialize($request->implementation_date);
         }
@@ -668,65 +667,65 @@ class CCController extends Controller
 
         //---------------------------------------//
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Is Group Review Required?';
-        $history->previous = "Null";
-        $history->current = $info->goup_review;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Is Group Review Required?';
+        // $history->previous = "Null";
+        // $history->current = $info->goup_review;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Production';
-        $history->previous = "Null";
-        $history->current = $info->Production;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Production';
+        // $history->previous = "Null";
+        // $history->current = $info->Production;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Production Person';
-        $history->previous = "Null";
-        $history->current = $info->Production_Person;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Production Person';
+        // $history->previous = "Null";
+        // $history->current = $info->Production_Person;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Quality Approver';
-        $history->previous = "Null";
-        $history->current = $info->Quality_Approver;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Quality Approver';
+        // $history->previous = "Null";
+        // $history->current = $info->Quality_Approver;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Quality Approver Person';
-        $history->previous = "Null";
-        $history->current = $info->Quality_Approver_Person;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Quality Approver Person';
+        // $history->previous = "Null";
+        // $history->current = $info->Quality_Approver_Person;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
         $history = new RcmDocHistory;
         $history->cc_id = $info->id;
@@ -752,41 +751,41 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Others';
-        $history->previous = "Null";
-        $history->current = $info->bd_domestic;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Others';
+        // $history->previous = "Null";
+        // $history->current = $info->bd_domestic;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Others Person';
-        $history->previous = "Null";
-        $history->current = $info->bd_domesticBd_Person;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Others Person';
+        // $history->previous = "Null";
+        // $history->current = $info->bd_domesticBd_Person;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
-        $history = new RcmDocHistory;
-        $history->cc_id = $info->id;
-        $history->activity_type = 'Additional Attachments';
-        $history->previous = "Null";
-        $history->current = $info->additional_attachments;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+        // $history = new RcmDocHistory;
+        // $history->cc_id = $info->id;
+        // $history->activity_type = 'Additional Attachments';
+        // $history->previous = "Null";
+        // $history->current = $info->additional_attachments;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $openState->status;
+        // $history->save();
 
 
         // ----------------------Group Comments History------------------------
@@ -877,7 +876,7 @@ class CCController extends Controller
 
         $history = new RcmDocHistory;
         $history->cc_id = $comments->id;
-        $history->activity_type = 'Group Comments';
+        $history->activity_type = 'Comments';
         $history->previous = "Null";
         $history->current = $comments->Group_comments;
         $history->comment = "NA";
@@ -889,7 +888,7 @@ class CCController extends Controller
 
         $history = new RcmDocHistory;
         $history->cc_id = $comments->id;
-        $history->activity_type = 'Group Attachments';
+        $history->activity_type = 'Attachments';
         $history->previous = "Null";
         $history->current = $comments->group_attachments;
         $history->comment = "NA";
@@ -1106,8 +1105,8 @@ class CCController extends Controller
         $assessment = RiskAssessment::where('cc_id', $id)->first();
         $approcomments = QaApprovalComments::where('cc_id', $id)->first();
         $closure = ChangeClosure::where('cc_id', $id)->first();
-        $hod = User::where('role', 4)->get();
-        $cft = User::where('role', 5)->get();
+        $hod = User::get();
+        $cft = User::get();
         $cft_aff = [];
         if(!is_null($data->Microbiology_Person)){
             $cft_aff = explode(',', $data->Microbiology_Person);
@@ -1171,12 +1170,12 @@ class CCController extends Controller
 
         $openState->Microbiology = $request->Microbiology;
         
-        // if ($request->Microbiology_Person) {
-        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+         if ($request->Microbiology_Person) {
+             $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+         } else {
+             toastr()->warning('CFT reviewers can not be empty');
+             return back();
+         }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -1309,16 +1308,16 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-        // if ($request->Microbiology == "yes") {
-        //     $info->Microbiology = $request->Microbiology;
+         if ($request->Microbiology == "yes") {
+             $info->Microbiology = $request->Microbiology;
            
-        // }
-        // if ($request->Microbiology_Person) {
-        //     $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-        // } else {
-        //     toastr()->warning('CFT reviewers can not be empty');
-        //     return back();
-        // }
+         }
+         if ($request->Microbiology_Person) {
+             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+         } else {
+             toastr()->warning('CFT reviewers can not be empty');
+             return back();
+         }
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
 
@@ -1728,72 +1727,72 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastinfo->goup_review != $info->goup_review || !empty($request->goup_review_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Is Group Review Required?';
-            $history->previous = $lastinfo->goup_review;
-            $history->current = $info->goup_review;
-            $history->comment = $request->goup_review_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastinfo->Production != $info->Production || !empty($request->Production_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Production';
-            $history->previous = $lastinfo->Production;
-            $history->current = $info->Production;
-            $history->comment = $request->Production_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastinfo->Production_Person != $info->Production_Person || !empty($request->Production_Person_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Production Person';
-            $history->previous = $lastinfo->Production_Person;
-            $history->current = $info->Production_Person;
-            $history->comment = $request->Production_Person_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastinfo->Quality_Approver != $info->Quality_Approver || !empty($request->Quality_Approver_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Quality Approver';
-            $history->previous = $lastinfo->Quality_Approver;
-            $history->current = $info->Quality_Approver;
-            $history->comment = $request->Quality_Approver_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastinfo->goup_review != $info->goup_review || !empty($request->goup_review_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Is Group Review Required?';
+        //     $history->previous = $lastinfo->goup_review;
+        //     $history->current = $info->goup_review;
+        //     $history->comment = $request->goup_review_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        // if ($lastinfo->Production != $info->Production || !empty($request->Production_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Production';
+        //     $history->previous = $lastinfo->Production;
+        //     $history->current = $info->Production;
+        //     $history->comment = $request->Production_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        // if ($lastinfo->Production_Person != $info->Production_Person || !empty($request->Production_Person_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Production Person';
+        //     $history->previous = $lastinfo->Production_Person;
+        //     $history->current = $info->Production_Person;
+        //     $history->comment = $request->Production_Person_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        // if ($lastinfo->Quality_Approver != $info->Quality_Approver || !empty($request->Quality_Approver_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Quality Approver';
+        //     $history->previous = $lastinfo->Quality_Approver;
+        //     $history->current = $info->Quality_Approver;
+        //     $history->comment = $request->Quality_Approver_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
-        if ($lastinfo->Quality_Approver_Person != $info->Quality_Approver_Person || !empty($request->Quality_Approver_Person_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Quality Approver Person';
-            $history->previous = $lastinfo->Quality_Approver_Person;
-            $history->current = $info->Quality_Approver_Person;
-            $history->comment = $request->Quality_Approver_Person_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastinfo->Quality_Approver_Person != $info->Quality_Approver_Person || !empty($request->Quality_Approver_Person_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Quality Approver Person';
+        //     $history->previous = $lastinfo->Quality_Approver_Person;
+        //     $history->current = $info->Quality_Approver_Person;
+        //     $history->comment = $request->Quality_Approver_Person_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastinfo->Microbiology != $info->Microbiology || !empty($request->Microbiology_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -1820,46 +1819,46 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastinfo->bd_domestic != $info->bd_domestic || !empty($request->bd_domestic_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Others';
-            $history->previous = $lastinfo->bd_domestic;
-            $history->current = $info->bd_domestic;
-            $history->comment = $request->bd_domestic_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastinfo->Bd_Person != $info->Bd_Person || !empty($request->Bd_Person_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Others Person';
-            $history->previous = $lastinfo->Bd_Person;
-            $history->current = $info->bd_domesticBd_Person;
-            $history->comment = $request->Bd_Person_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastinfo->bd_domestic != $info->bd_domestic || !empty($request->bd_domestic_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Others';
+        //     $history->previous = $lastinfo->bd_domestic;
+        //     $history->current = $info->bd_domestic;
+        //     $history->comment = $request->bd_domestic_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        // if ($lastinfo->Bd_Person != $info->Bd_Person || !empty($request->Bd_Person_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Others Person';
+        //     $history->previous = $lastinfo->Bd_Person;
+        //     $history->current = $info->bd_domesticBd_Person;
+        //     $history->comment = $request->Bd_Person_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
-        if ($lastinfo->additional_attachments != $info->additional_attachments || !empty($request->additional_attachments_comment)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Additional Attachments';
-            $history->previous = $lastinfo->additional_attachments;
-            $history->current = $info->additional_attachments;
-            $history->comment = $request->additional_attachments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastinfo->additional_attachments != $info->additional_attachments || !empty($request->additional_attachments_comment)) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Additional Attachments';
+        //     $history->previous = $lastinfo->additional_attachments;
+        //     $history->current = $info->additional_attachments;
+        //     $history->comment = $request->additional_attachments_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         // ----------------------Group Comments History------------------------
         if ($lastcomments->qa_comments != $comments->qa_comments || !empty($request->qa_comments_comment)) {
@@ -1956,7 +1955,7 @@ class CCController extends Controller
         if ($lastcomments->Group_comments != $comments->Group_comments || !empty($request->Group_comments_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Group Comments';
+            $history->activity_type = 'Comments';
             $history->previous = $lastcomments->Group_comments;
             $history->current = $comments->Group_comments;
             $history->comment = $request->Group_comments_comment;
@@ -1969,7 +1968,7 @@ class CCController extends Controller
         if ($lastcomments->group_attachments != $comments->group_attachments || !empty($request->group_attachments_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Group Attachments';
+            $history->activity_type = 'Attachments';
             $history->previous = $lastcomments->group_attachments;
             $history->current = $comments->group_attachments;
             $history->comment = $request->group_attachments_comment;
@@ -2197,13 +2196,35 @@ class CCController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
+            $lastDocument = CC::find($id);
             $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
                     $changeControl->status = "Under Supervisor Review";
+                            $history = new RcmDocHistory;
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = Auth::user()->name;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Submit';
+                            $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
+                    $history->doc_id = $id;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->stage_id = $changeControl->stage;
+                    $history->status = $changeControl->status;
+                    $history->save();
+                    
+                    $history = new CCStageHistory();
+                    $history->type = "Activity-log";
                     $history->doc_id = $id;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2218,6 +2239,18 @@ class CCController extends Controller
             if ($changeControl->stage == 2) {
                     $changeControl->stage = "3";
                     $changeControl->status = "QA Review";
+                                $history = new RcmDocHistory;
+                                $history->cc_id = $id;
+                                $history->activity_type = 'Activity Log';
+                                $history->previous = "";
+                                $history->current = Auth::user()->name;
+                                $history->comment = $request->comment;
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastDocument->status;
+                                $history->stage = 'HOD Review Complete';
+                                $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2234,6 +2267,18 @@ class CCController extends Controller
 
                     $changeControl->stage = "4";
                     $changeControl->status = "Pending CFT Review";
+                        $history = new RcmDocHistory;
+                        $history->cc_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current = Auth::user()->name;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Send to CFT/SME/QA Review';
+                        $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2250,8 +2295,7 @@ class CCController extends Controller
             if ($changeControl->stage == 4) {
                 if ($evaluation->training_required == "yes") {
                     $changeControl->stage = "6";
-                    $changeControl->status = "Pending Training
-                Completion";
+                    $changeControl->status = "Pending Training Completion";
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2268,6 +2312,18 @@ class CCController extends Controller
                     $changeControl->stage = "7";
                     $changeControl->status = "Pending Change Implementation";
                     $changeControl->update();
+                            $history = new RcmDocHistory;
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = Auth::user()->name;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Review Complete';
+                            $history->save();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
                     $history->doc_id = $id;
@@ -2357,6 +2413,18 @@ class CCController extends Controller
 
                     $changeControl->stage = "9";
                     $changeControl->status = "Closed-Done";
+                            $history = new RcmDocHistory;
+                            $history->cc_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current = Auth::user()->name;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Implemented';
+                            $history->save();
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2466,10 +2534,23 @@ class CCController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
+            $lastDocument = CC::find($id);
 
 
             $changeControl->stage = "7";
             $changeControl->status = "Pending Change Implementation";
+                    $history = new RcmDocHistory;
+                    $history->cc_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = Auth::user()->name;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'CFT/SME/QA Review Not required';
+                    $history->save();
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Change-Control";

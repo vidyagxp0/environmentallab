@@ -208,26 +208,30 @@
                                     </div>
                                     <div>
                                         <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
+                                    </div> 
+                                    <div>
+                                    <a href="/analytics">Analytics</a> 
                                     </div>
+
                                     @if (Auth::user())
-                                        @if (Auth::user()->role == 3 || Auth::user()->role == 1 || Auth::user()->role == 2)
+                                        @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
                                             <div>
                                                 <a href="/mydms">My DMS</a>
                                             </div>
                                         @endif
-                                        @if (Auth::user()->role == 3)
+                                        @if (Helpers::checkRoles(3))
                                             <div>
                                                 <a href="{{ route('documents.index') }}">Documents</a>
                                             </div>
                                         @endif
-                                        @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+                                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2))
                                             <div>
                                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                                             </div>
                                         @endif
-                                        @if (Auth::user()->role == 4 || Auth::user()->role == 5 || Auth::user()->role == 3)
+                                        @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
                                             <div>
-                                                <a href="{{ route('change-control.index') }}">My Tasks</a>
+                                                <a href="{{ route('change-control.index') }}">Change Control</a>
                                             </div>
                                         @endif
                                     @endif

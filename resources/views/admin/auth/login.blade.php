@@ -1,6 +1,6 @@
 @php
-    $mainmenu = 'Admin Login';
-    $submenu = 'Admin Login';
+    $mainmenu = 'Admin Console';
+    $submenu = 'Admin Console';
 @endphp
 
 <!DOCTYPE html>
@@ -8,17 +8,25 @@
 @include('admin.header')
 
 <body class="hold-transition login-page"
-    style="background-image: url('{{ asset('images/logo/') }}') ; background-repeat: no-repeat;background-size: cover;">
+    style="background-image: url('{{ asset('admin/assets/images/loginimg2.jpeg') }}')  ; background-repeat: no-repeat;background-size: cover; ">
     <div class="login-box">
-        <div class="login-logo">
-
-            <img style="border-radius: 8% " src="{{ asset('images/logo/logo.png') }}" height="80" alt=""><br>
-            <h1 class="text text-dark">{{ config('app.name') }} Admin</h1>
-        </div>
+      
         <!-- /.login-logo -->
-        <div class="card card-outline card-danger ">
+        <div>
             <div class="card-body login-card-body">
-
+            <div class="login-logo">
+              <div class="logo-container">
+                        <div class="logo" style="display:flex;">
+                    <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100" >
+                        </div>
+                        <div class="logo">
+                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-150 h-150">
+                        </div>
+                    </div>
+            <!-- <img style="border-radius: 8% " src="{{ asset('images/logo/logo.png') }}" height="80" alt=""><br> -->
+           
+        </div>
+        <h2 class="text text-dark" style="text-align:center; ">Welcome To Admin-Console</h2>
 
                 <form action="{{ url('admin/login') }}" method="POST">
                     @csrf
@@ -74,7 +82,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                            <button type="submit" class="btn btn-primary btn-block">Login</button>
                         </div>
                         <!-- /.col -->
                     </div>
@@ -101,6 +109,28 @@
     <script src="{{ asset('plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+    <style>
+
+        .login-box{
+        width: 450px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom:10px;
+        }
+        .login-card-body
+            {
+            background-color: #fff;
+            border-top: 0;
+            color: #666;
+            padding: 40px;
+            border-radius:10px;
+            box-shadow: 5px 10px 8px #888888;
+            }
+    </style>
 </body>
 
 </html>

@@ -11,6 +11,9 @@ use App\Models\RecordNumber;
 use App\Models\ExtensionAuditTrail;
 use App\Models\User;
 use App\Models\RoleGroup;
+use PDF;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -118,17 +121,17 @@ class ExtensionController extends Controller
 
 
 
-        // $history = new ExtensionAuditTrail();
-        // $history->extension_id = $openState->id;
-        // $history->activity_type = 'Approver1';
-        // $history->previous = "Null";
-        // $history->current = $openState->approver1;
-        // $history->comment = "NA";
-        // $history->user_id = Auth::user()->id;
-        // $history->user_name = Auth::user()->name;
-        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        // $history->origin_state = $openState->status;
-        // $history->save();
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Approver';
+        $history->previous = "Null";
+        $history->current = $openState->approver1;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
@@ -156,7 +159,7 @@ class ExtensionController extends Controller
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
-        $history->activity_type = 'Justification';
+        $history->activity_type = 'Justification of Extention';
         $history->previous = "Null";
         $history->current = $openState->justification;
         $history->comment = "NA";
@@ -165,6 +168,55 @@ class ExtensionController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
+
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Initiated Through';
+        $history->previous = "Null";
+        $history->current = $openState->initiated_through;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Reference Record';
+        $history->previous = "Null";
+        $history->current = $openState->initiated_if_other;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Extention Attachments';
+        $history->previous = "Null";
+        $history->current = $openState->extention_attachment;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+        
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Closure Attachments';
+        $history->previous = "Null";
+        $history->current = $openState->closure_attachments;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+
 
         toastr()->success('Document created');
         return redirect('rcms/qms-dashboard');
@@ -232,20 +284,20 @@ class ExtensionController extends Controller
 
         
 
-        // if ($lastDocument->approver1 != $openState->approver1 || !empty($request->approver1_comment)) {
+        if ($lastDocument->approver1 != $openState->approver1 || !empty($request->approver1_comment)) {
 
-        //     $history = new ExtensionAuditTrail();
-        //     $history->extension_id = $id;
-        //     $history->activity_type = 'Approver1';
-        //     $history->previous = $lastDocument->approver1;
-        //     $history->current = $openState->approver1;
-        //     $history->comment = $request->approver1_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->save();
-        // }
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Approver';
+            $history->previous = $lastDocument->approver1;
+            $history->current = $openState->approver1;
+            $history->comment = $request->approver1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if ($lastDocument->approver_comments != $openState->approver_comments || !empty($request->approver_comment)) {
 
             $history = new ExtensionAuditTrail();
@@ -278,10 +330,70 @@ class ExtensionController extends Controller
 
             $history = new ExtensionAuditTrail();
             $history->extension_id = $id;
-            $history->activity_type = 'Justification';
+            $history->activity_type = 'Justification of Extention';
             $history->previous = $lastDocument->justification;
             $history->current = $openState->justification;
             $history->comment = $request->justification_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->initiated_through != $openState->initiated_through || !empty($request->initiated_through_comment)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = $lastDocument->initiated_through;
+            $history->current = $openState->initiated_through;
+            $history->comment = $request->initiated_through_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->initiated_if_other != $openState->initiated_if_other || !empty($request->initiated_if_other_comment)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Reference Record';
+            $history->previous = $lastDocument->initiated_if_other;
+            $history->current = $openState->initiated_if_other;
+            $history->comment = $request->initiated_if_other_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->extention_attachment != $openState->extention_attachment || !empty($request->extention_attachment_comment)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Extention Attachments';
+            $history->previous = $lastDocument->extention_attachment;
+            $history->current = $openState->extention_attachment;
+            $history->comment = $request->extention_attachment_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->closure_attachments != $openState->closure_attachments || !empty($request->closure_attachments_comment)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Closure Attachments';
+            $history->previous = $lastDocument->closure_attachments;
+            $history->current = $openState->closure_attachments;
+            $history->comment = $request->closure_attachments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -305,6 +417,7 @@ class ExtensionController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
+            $lastDocument = Extension::find($id);
             $task = QaApproval::where('cc_id', $id)->first();
             if ($changeControl->stage == 1) {
                 $rules = [
@@ -342,9 +455,21 @@ class ExtensionController extends Controller
                     $changeControl->status = "Pending Approval";
                     $changeControl->submitted_on =Carbon::now()->format('d-M-Y');
                     $changeControl->submitted_by =Auth::user()->name;
-                    $changeControl->submitted_on =  Carbon::now()->format('d-M-Y');
-                    $changeControl->submitted_by = Auth::user()->name;
-
+                    // $changeControl->submitted_on =  Carbon::now()->format('d-M-Y');
+                    // $changeControl->submitted_by = Auth::user()->name;
+                            $history = new ExtensionAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current =  $changeControl->submitted_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "Submitted";
+                            $history->save();
+                   
                     $changeControl->update();
 
                     toastr()->success('Document Sent');
@@ -358,6 +483,18 @@ class ExtensionController extends Controller
                 $changeControl->status = "Closed-Done";
                 $changeControl->ext_approved_by = Auth::user()->name;
                 $changeControl->ext_approved_on = Carbon::now()->format('d-M-Y');
+                        $history = new ExtensionAuditTrail();
+                        $history->extension_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current =  $changeControl->ext_approved_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = "Ext Approved";
+                        $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Extension";
@@ -381,12 +518,25 @@ class ExtensionController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
+            $lastDocument = Extension::find($id);
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed-Cancelled";
                 $changeControl->cancelled_by = Auth::user()->name;
                 $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');;
+                            $history = new ExtensionAuditTrail();
+                            $history->extension_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->previous = "";
+                            $history->current =  $changeControl->cancelled_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = 'Cancelled';
+                            $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Extension";
@@ -405,6 +555,18 @@ class ExtensionController extends Controller
                 $changeControl->status = "Opened";
                 $changeControl->more_information_required_by = Auth::user()->name;
                 $changeControl->more_information_required_on = Carbon::now()->format('d-M-Y');
+                                $history = new ExtensionAuditTrail();
+                                $history->extension_id = $id;
+                                $history->activity_type = 'Activity Log';
+                                $history->previous = "";
+                                $history->current =  $changeControl->more_information_required_by;
+                                $history->comment = $request->comment;
+                                $history->user_id = Auth::user()->id;
+                                $history->user_name = Auth::user()->name;
+                                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $history->origin_state = $lastDocument->status;
+                                $history->stage = 'More Info Required';
+                                $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Extension";
@@ -428,12 +590,25 @@ class ExtensionController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
+            $lastDocument = Extension::find($id);
             if ($changeControl->stage == 2) {
 
                 $changeControl->stage = "4";
                 $changeControl->status = "closed-reject";
                 $changeControl->rejected_by = Auth::user()->name;
                 $changeControl->rejected_on = Carbon::now()->format('d-M-Y');
+                        $history = new ExtensionAuditTrail();
+                        $history->extension_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = "";
+                        $history->current =  $changeControl->rejected_by;
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = 'Rejected';
+                        $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -476,5 +651,56 @@ class ExtensionController extends Controller
         $doc = Extension::where('id', $detail->extension_id)->first();
         $doc->origiator_name = User::find($doc->initiator_id);
         return view('frontend.extension.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
+    }
+    
+    public static function singleReport($id)
+    {
+        $data = Extension::find($id);
+        if (!empty($data)) {
+            $data->originator = User::where('id', $data->initiator_id)->value('name');
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.extension.singleReport', compact('data'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $data->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Extension' . $id . '.pdf');
+        }
+    }
+
+    public static function auditReport($id)
+    {
+        $doc = Extension::find($id);
+        if (!empty($doc)) {
+            $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+            $data = ExtensionAuditTrail::where('extension_id', $id)->get();
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.extension.auditReport', compact('data', 'doc'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Extension-Audit' . $id . '.pdf');
+        }
     }
 }

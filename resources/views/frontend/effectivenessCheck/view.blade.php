@@ -41,31 +41,35 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+                        @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                         <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button>
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
-                                href="{{ url('rcms/audit-trial', $data->parent_record) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1)
+                                href="{{ url('rcms/effective-audit-trial-show', $data->id) }}"> Audit Trail </a> </button>
+                        @if ($data->stage == 1  && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && (in_array(14, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Effective
+                                Effectiver
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Effective Approval Completed
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 5)
+                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Not Effective Approval Completed
                             </button>
@@ -188,8 +192,8 @@
                             <div class="col-lg-6">
                                <div class="group-input">
                                          <label for="RLS Record Number">Record Number</label>
-                                         <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/EA/{{ Helpers::year($data->created_at) }}/{{  Helpers::recordFormat($data->record) }}">
+                                         <input disabled type="text" name="division_code"
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{  Helpers::recordFormat($data->record) }}">
                                </div>
                             </div>
                             <div class="col-lg-6">
@@ -203,14 +207,15 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input disabled type="text" value="Amit Guru">
+                                        <input disabled type="text" name="initiator_id" 
+                                        value="{{ Helpers::getInitiatorName($data->initiator_id) }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Date of Initiation</label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="created_at">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="created_at">
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                         {{--  <div class="static">{{ $data->created_at }}</div>  --}}
                                     </div>
                                 </div>

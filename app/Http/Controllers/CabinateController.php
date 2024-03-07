@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Document;
 use App\Models\Grouppermission;
-
+use Helpers;
 use App\Models\DocumentType;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -15,7 +15,7 @@ class CabinateController extends Controller
 {
 
     public function index(){
-        if(Auth::user()->role == 3){
+        if(Helpers::checkRoles(3)){
             $draft = Document::where('originator_id',Auth::user()->id)->where('stage',1)->get();
             $draft_count = count($draft);
             foreach($draft as $temp){
@@ -49,7 +49,7 @@ class CabinateController extends Controller
             }
             return view('frontend.mydms',compact('draft','under_review','reviewed','under_approval','approved','effective','draft_count'));
         }
-        if(Auth::user()->role == 2){
+        if(Helpers::checkRoles(2)){
             $array1=[];
             $array2=[];
             $document = Document::where('stage', '>=', 2)->get();
@@ -105,7 +105,7 @@ class CabinateController extends Controller
 
            return view('frontend.mydms',['task' =>$arrayTask, $draft, $under_review, $reviewed, $for_approval, $effective]);
         }
-        if(Auth::user()->role == 1){
+        if(Helpers::checkRoles(1)){
             $array1=[];
             $array2=[];
             $document = Document::where('stage', '>=', 4)->get();

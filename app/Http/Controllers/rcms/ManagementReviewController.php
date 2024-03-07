@@ -21,8 +21,11 @@ use App\Models\RootCauseAnalysis;
 use App\Models\User;
 use Carbon\Carbon;
 use PDF;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class ManagementReviewController extends Controller
@@ -1331,19 +1334,47 @@ class ManagementReviewController extends Controller
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = ManagementReview::find($id);
+            $lastDocument =  ManagementReview::find($id);
+            $data =  ManagementReview::find($id);
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "2";
-                $changeControl->status = "In Progress";
+                $changeControl->status = 'In Progress';
+                $changeControl->Submited_by = Auth::user()->name;
+                $changeControl->Submited_on = Carbon::now()->format('d-M-Y');
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->Submited_by;
+                $history->current = $changeControl->Submited_by;    
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Submited';
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Closed - Done";
+                $changeControl->status = 'Closed - Done';
                 $changeControl->completed_by = Auth::user()->name;
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
+                $history = new ManagementAuditTrial();
+                $history->ManagementReview_id = $id;
+                $history->activity_type = 'Activity Log';
+                // $history->previous = $lastDocument->completed_by;
+                $history->current = $changeControl->completed_by;    
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage='Completed';
+                $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1391,7 +1422,7 @@ class ManagementReviewController extends Controller
     public function child_management_Review(Request $request, $id)
     {
         $parent_id = $id;
-        $parent_initiator_id = $id;
+        $parent_initiator_id = ManagementReview::where('id', $id)->value('initiator_id');
         $parent_type = "Action-Item";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
@@ -1402,6 +1433,33 @@ class ManagementReviewController extends Controller
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
         return view('frontend.forms.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','old_record'));
+    }
+
+    public static function managementReviewReport($id)
+    {
+        $managementReview = ManagementReview::find($id);
+        
+        if (!empty($managementReview)) {
+            $managementReview->originator = User::where('id', $managementReview->initiator_id)->value('name');
+            $data = ManagementAuditTrial::where('ManagementReview_id', $id)->get();
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.management-review.auditReport', compact('data', 'managementReview'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $managementReview->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Management-Review' . $id . '.pdf');
+        }
     }
     
 }

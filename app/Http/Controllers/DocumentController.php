@@ -159,9 +159,9 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
-        $reviewer = User::where('role', 2)->get();
-        $trainer = User::where('role', 6)->get();
-        $approvers = User::where('role', 1)->get();
+        $reviewer = User::get();
+        $trainer = User::get();
+        $approvers = User::get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         // Retrieve the current counter value
@@ -223,9 +223,11 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
-        $reviewer = User::where('role', 2)->get();
-        $trainer = User::where('role', 6)->get();
-        $approvers = User::where('role', 1)->get();
+        $reviewer = User::get();
+        $approvers = User::get();
+
+        $trainer = User::get();
+        
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         // Retrieve the current counter value
@@ -515,7 +517,7 @@ class DocumentController extends Controller
         $document['document_content'] = DocumentContent::where('document_id', $id)->first();
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
-        $trainer = User::where('role', 6)->get();
+        $trainer = User::get();
         $trainingDoc = DocumentTraining::where('document_id', $id)->first();
         $history = DocumentHistory::where('document_id', $id)->get();
         $documentsubTypes = DocumentSubtype::all();
@@ -528,8 +530,8 @@ class DocumentController extends Controller
         $annexure = Annexure::where('document_id', $id)->first();
 
         $signature = StageManage::where('document_id', $id)->get();
-        $reviewer = User::where('role', 2)->get();
-        $approvers = User::where('role', 1)->get();
+        $reviewer = User::get();
+        $approvers = User::get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         $user = User::all();
@@ -577,6 +579,7 @@ class DocumentController extends Controller
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
+
             $document->due_dateDoc = $request->due_dateDoc;
             $document->sop_type = $request->sop_type;
             $document->department_id = $request->department_id;
@@ -1257,7 +1260,7 @@ class DocumentController extends Controller
             }
 
             toastr()->success('Document Updated');
-            if (Auth::user()->role == 1 || Auth::user()->role == 2) {
+            if (Helpers::checkRoles(1) || Helpers::checkRoles(2)) {
                 return redirect('rev-details/'.$id);
             } else {
                 return redirect('doc-details/'.$id);

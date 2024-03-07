@@ -104,6 +104,7 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::post('update-doc/{id}', [DocumentDetailsController::class, 'updatereviewers'])->name('update-doc');
     Route::get('audit-details/{id}', [DocumentDetailsController::class, 'getAuditDetail'])->name('audit-details');
     Route::get('dashboard', [DashboardController::class, 'index']);
+    Route::get('analytics', [DashboardController::class, 'analytics']);
     Route::post('subscribe', [DashboardController::class, 'subscribe']);
     Route::resource('TMS', TMSController::class);
     Route::get('TMS-details/{id}/{sopId}', [TMSController::class, 'viewTraining']);
@@ -286,6 +287,8 @@ Route::view('audit-pdf', 'frontend.documents.audit-pdf');
 //! ============================================
 //!                    RCMS
 //! ============================================
+Route::get('chart-data',[DesktopController::class, 'fetchChartData']);
+
 Route::view('rcms_login', 'frontend.rcms.login');
 
 Route::view('rcms_dashboard', 'frontend.rcms.dashboard');

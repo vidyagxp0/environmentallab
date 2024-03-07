@@ -111,19 +111,23 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
+                        @php
+                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+                    @endphp
                         <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button>
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rootAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1)
+                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2)
+                        @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
@@ -150,7 +154,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Group Feedback
                             </button>
-                        @elseif($data->stage == 3)
+                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
                             </button>
@@ -558,6 +562,7 @@
                                             <select  name="investigators" placeholder="Select Investigators"
                                              {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  name="investigators" placeholder="Select Investigators"
                                                 data-search="false" data-silent-initial-value-set="true" id="investigators">
+                                                <option value="">Select Investigators</option>
                                                 <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
                                                 <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
                                                 <option @if ($data->investigators=='3') selected @endif value="3">Madhulika Mishra</option>
@@ -786,7 +791,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_detectability[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]">
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -794,7 +799,7 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="initial_probability[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]">
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -802,17 +807,22 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input name="initial_rpn[]" type="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" >
+                                                                    <input name="initial_rpn[]" class='initial-rpn'  disabled="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" >
                                                                 </td>
                                                                 <td>
-                                                                    <input name="risk_acceptance[]" type="text" value="{{ unserialize($data->risk_acceptance)[$key] ?? null }}" >
+                                                                    {{-- <input name="risk_acceptance[]" class="fieldR"  value="{{ unserialize($data->risk_acceptance)[$key] ?? null }}" > --}}
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance[]">
+                                                                        <option value="">-- Select --</option>
+                                                                        <option value="Y" {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
+                                                                        <option value="N"  {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
+                                                                     </select>
                                                                 </td>
                                                                 <td>
                                                                     <input name="risk_control_measure[]" type="text" value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}" >
                                                                      
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_severity[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]">
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -821,7 +831,7 @@
                                                                     
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_probability[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]">
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -831,23 +841,25 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="residual_detectability[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]">
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
                                                                         <option value="3"  {{ (unserialize($data->residual_detectability)[$key] ?? null)== 3 ? 'selected' :''}}>3</option>
                                                                     </select>
                                                                 </td>
+                                                               
+
                                                                 <td>
-                                                                     <input name="residual_rpn[]" type="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
-                                                                </td>
-                                                                <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
-                                                                        <option value="">-- Select --</option>
-                                                                        <option value="Y" {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
-                                                                        <option value="N"  {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
-                                                                     </select>
-                                                                </td>
+                                                                    <input name="residual_rpn[]" class='residual-rpn'  disabled ="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
+                                                               </td>
+                                                               <td>
+                                                                <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
+                                                                    <option value="">-- Select --</option>
+                                                                    <option value="Y" {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
+                                                                    <option value="N"  {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
+                                                                 </select>
+                                                            </td>
                                                                 <td>
                                                                     <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
                                                                 </td>
@@ -1348,38 +1360,38 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Acknowledge_By..">Acknowledge By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <label for="Acknowledge_By">Acknowledge By</label>
+                                            <div class="static">{{ $data->acknowledge_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Acknowledge_On">Acknowledge On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <div class="static">{{ $data->acknowledge_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_By">Submit By</label>
+                                            <label for="Submit_By">Submited By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submit On</label>
+                                            <label for="Submit_On">Submited On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="QA_Review_Complete_By">QA Review Complete By</label>
-                                            <div class="static">{{ $data->submitted_by }}</div>
+                                            <label for="QA_Review_Complete_By">QA Review Completed By</label>
+                                            <div class="static">{{ $data->qA_review_complete_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="QA_Review_Complete_On">QA Review Complete On</label>
-                                            <div class="static">{{ $data->submitted_on }}</div>
+                                            <label for="QA_Review_Complete_On">QA Review Completed On</label>
+                                            <div class="static">{{ $data->qA_review_complete_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -1419,7 +1431,7 @@
 
                     <!-- Modal Header -->
                     <div class="modal-header">
-                        <h4 class="modal-title">E-Signature11</h4>
+                        <h4 class="modal-title">E-Signature</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
 
@@ -1754,8 +1766,7 @@ function add4Input_case(tableId) {
                             });
                         });
                     });
-                </script>     
-
+                </script>    
        
         <script>
         var maxLength = 255;

@@ -71,10 +71,6 @@ return new class extends Migration
             $table->string('who_will_not_be')->nullable();
             $table->string('who_rationable')->nullable();
             $table->longText('investigation_summary')->nullable();
-            $table->string('zone')->nullable();
-            $table->string('country')->nullable();
-            $table->string('state')->nullable();
-            $table->string('city')->nullable(); 
             $table->integer('record')->nullable(); 
             $table->integer('initiator_id')->nullable(); 
             $table->string('division_code')->nullable();
@@ -95,17 +91,21 @@ return new class extends Migration
             $table->text('residual_rpn')->nullable();
             $table->text('risk_acceptance2')->nullable();
             $table->text('mitigation_proposal')->nullable();
-            
             $table->text('initial_severity')->nullable();
             $table->text('initial_detectability')->nullable();
             $table->text('initial_probability')->nullable();
             $table->text('initial_rpn')->nullable();
             $table->text('risk_acceptance')->nullable();
-             
+            $table->string('acknowledge_by')->nullable();
+            $table->string('acknowledge_on')->nullable();
             $table->text('lab_inv_concl')->nullable();
             $table->string('status')->nullable();
             $table->integer('stage')->nullable();
             $table->string('submitted_by')->nullable();
+            $table->string('qA_review_complete_by')->nullable();
+            $table->string('qA_review_complete_on')->nullable();
+            $table->string('cancelled_by')->nullable();
+            $table->string('cancelled_on')->nullable();
             $table->string('report_result_by')->nullable();
             $table->string('submitted_on')->nullable();
             $table->timestamps();

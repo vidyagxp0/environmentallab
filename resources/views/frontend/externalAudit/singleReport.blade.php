@@ -193,14 +193,14 @@
                 </div>
                 <table>
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->initiator_id }}</td>
-                        <th class="w-20">Date Initiation</th>
+                    <th class="w-20">Initiator</th>
+                        <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Initiator_Group){{ $data->Initiator_Group }} @else Not Applicable @endif</td>
+                        <td class="w-30">  @if($data->Initiator_Group){{ \Helpers::getInitiatorGroupFullName($data->Initiator_Group) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($data->initiator_group_code){{ $data->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
@@ -219,7 +219,8 @@
                     <tr>
                         <th class="w-20">Description</th>
                         <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
-                        
+                        <th class="w-20">If Others</th>
+                        <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>                       
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
@@ -229,24 +230,15 @@
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
-                        <td class="w-30">
-                            @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif
-                        </td>
+                        <td class="w-30"> @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Audit type</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                        <th class="w-20">If Others</th>
-                        <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Initial Comments</th>
-                        <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }}@else Not Applicable @endif</td>
-                      
-
-                    </tr>
+        
 
                 </table>
                 <div class="border-table">
@@ -291,11 +283,6 @@
                             <td class="w-20">@if($data->end_date){{ $data->end_date }}@else Not Applicable @endif</td>
 
                         </tr>
-
-                        <tr>
-                            <th class="w-20">Audit Agenda</th>
-                            <td class="w-80"> @if($data->audit_agenda){{ $data->audit_agenda }}@else Not Applicable @endif</td>
-                        </tr>
                         <tr>
                             <th class="w-20">Comments (If Any)</th>
                             <td class="w-30">
@@ -325,7 +312,7 @@
             </div>
             <div class="block">
                 <div class="block-head">
-                    Additional Information
+                  Audit Preparation
                 </div>
                 <table>
                    
@@ -337,13 +324,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">External Auditing Agency</th>
-                        <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
                         <th class="w-20">Relevant Guidelines / Industry Standards</th>
-                        <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Relevant_Guidelines){{ $data->Relevant_Guidelines }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">QA Comments</th>
-                        <td class="w-30">@if($data->QA_Comments){{ Helpers::getInitiatorName($data->QA_Comments) }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->QA_Comments){{$data->QA_Comments}}@else Not Applicable @endif</td>
                         <th class="w-20">Guideline Attachment</th>
                         <td class="w-30">@if($data->file_attachment_guideline){{ $data->file_attachment_guideline }}@else Not Applicable @endif</td>
                     </tr>
@@ -354,7 +341,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
-                        <td class="w-30">@if($data->Supplier_Site){{ Helpers::getInitiatorName($data->Supplier_Site) }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Supplier_Site){{$data->Supplier_Site }}@else Not Applicable @endif</td>
                         <th class="w-20">Supplier/Vendor/Manufacturer Details</th>
                         <td class="w-30">@if($data->Supplier_Details){{ $data->Supplier_Details }}@else Not Applicable @endif</td>
                     </tr>
@@ -386,15 +373,11 @@
                         <th class="w-20">Audit Comments</th>
                         <td class="w-30">@if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
-                        <th class="w-20">Remarks</th>
-                        <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
-                    </tr>
                 </table>
             </div>
             <div class="border-table">
                 <div class="block-head">
-                    File Attachment
+                   File Attachment
                 </div>
                 <table>
 
@@ -418,14 +401,41 @@
 
                 </table>
             </div>
+            <div class="border-table">
+                <div class="block-head">
+                   Guideline Attachment
+                </div>
+                <table>
+
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-60">Batch No</th>
+                    </tr>
+                        @if($data->file_attachment)
+                        @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                        @else
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-20">Not Applicable</td>
+                    </tr>
+                    @endif
+
+                </table>
+            </div>
             <div class="block">
                 <div class="head">
                     <div class="block-head">
-                        Audit Response and Closure
+                       Audit Execution
                     </div>
                     <table>
 
                         <tr>
+                       
                             <th class="w-20">Audit Start Date</th>
                             <td class="w-30">
                                 <div>
@@ -444,73 +454,11 @@
                             </th>
                             <td class="w-80">
                                 <div>
-                                    @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
+                                    @if($data->Audit_Comments1){{ $data->Audit_Comments1 }}@else Not Applicable @endif
                                 </div>
                             </td>
                         </tr>
-                        <tr>
-                        <th class="w-20">Reference Record</th>
-                        <td class="w-30">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
-                        <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
-                    </tr>
-
-
-                    </table>
-                </div>
-                <div class="border-table">
-                    <div class="block-head">
-                        Audit file
-                    </div>
-                    <table>
-
-                        <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-60">File </th>
-                        </tr>
-                            @if($data->Audit_file)
-                            @foreach(json_decode($data->Audit_file) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                            @else
-                        <tr>
-                            <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
-                        </tr>
-                        @endif
-
-                    </table>
-                </div>
-                <div class="border-table">
-                    <div class="block-head">
-                        Report File Attachment
-                    </div>
-                    <table>
-
-                        <tr class="table_bg">
-                            <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
-                        </tr>
-                            @if($data->report_file)
-                            @foreach(json_decode($data->report_file) as $key => $file)
-                                <tr>
-                                    <td class="w-20">{{ $key + 1 }}</td>
-                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                </tr>
-                            @endforeach
-                            @else
-                        <tr>
-                            <td class="w-20">1</td>
-                            <td class="w-20">Not Applicable</td>
-                        </tr>
-                        @endif
-
-                    </table>
-                </div>
-                <div class="border-table">
+                        <div class="border-table">
                     <div class="block-head">
                         Audit Attachments
                     </div>
@@ -537,6 +485,91 @@
                     </table>
                 </div>
             </div>
+        </table>
+    </div>  
+                
+            <div class="block">
+                <div class="block-head">
+                Audit Response & Closure
+                </div>
+                <table>
+
+                        <tr>
+                        <th class="w-20">Reference Record</th>
+                        <td class="w-30">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
+                        <th class="w-20">Due Date Extension Justification</th>
+                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
+                    <th class="w-20">Remarks</th>
+                        <td class="w-80" colspan="3">@if($data->Remarks){{ $data->Remarks }}@else Not Applicable @endif</td>
+                      </tr>
+                      <tr>
+                            <th class="w-20">Audit Comments
+                            </th>
+                            <td class="w-80">
+                                <div>
+                                    @if($data->Audit_Comments2){{ $data->Audit_Comments2 }}@else Not Applicable @endif
+                                </div>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+                <div class="border-table">
+                    <div class="block-head">
+                        Audit Attachments
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">File </th>
+                        </tr>
+                            @if($data->Audit_file)
+                            @foreach(json_decode($data->Audit_file) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                        @endif
+
+                    </table>
+                </div>
+                <div class="border-table">
+                    <div class="block-head">
+                        Report Attachment
+                    </div>
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">Batch No</th>
+                        </tr>
+                            @if($data->report_file)
+                            @foreach(json_decode($data->report_file) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                        @endif
+
+                    </table>
+                </div>
+                
 
             <div class="block">
                 <div class="block-head">
@@ -589,9 +622,14 @@
                     <tr>
                         <th class="w-20">Response Feedback Verified By</th>
                         <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
-                        <th class="w-20">
-                            Response Feedback Verified On</th>
+                        <th class="w-20">Response Feedback Verified On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">Rejected By</th>
+                        <td class="w-30">{{ $data->rejected_by }}</td>
+                        <th class="w-20">Rejected On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->rejected_on) }}</td>
                     </tr>
 
 

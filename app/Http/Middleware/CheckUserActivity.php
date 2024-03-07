@@ -19,13 +19,25 @@ class CheckUserActivity
      */
     public function handle(Request $request, Closure $next)
     {
-        if (TotalLogin::ifUserExist(Auth::id())) {
-            $currentTime = Carbon::now();
-            TotalLogin::setLastActivity($currentTime);
-        } else {
-            toastr()->warning('Your session has expired due to inactivity.');
-            return redirect('login');
+        // if (TotalLogin::ifUserExist(Auth::id())) {
+        //     $currentTime = Carbon::now();
+        //     TotalLogin::setLastActivity($currentTime);
+        // } else {
+        //     toastr()->warning('Your session has expired due to inactivity.');
+        //     return redirect('login');
+        // }
+        if (Auth::check()) {
+            $lastActivity = session('last_activity');
+            if ($lastActivity && (time() - $lastActivity > config('session.lifetime'))) {
+                Auth::logout();
+                toastr()->warning('You have been logged out due to inactivity.');
+                return redirect('/login')->with('status', 'You have been logged out due to inactivity.');
+            }
         }
+
+        session(['last_activity' => time()]);
+
+        return $next($request);
         return $next($request);
     }
 }

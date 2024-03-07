@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('LabIncident_id');
             $table->string('activity_type');
             $table->longText('previous')->nullable();
+            $table->string('stage')->nullable();
             $table->longText('current')->nullable();
             $table->longText('comment')->nullable();
             $table->string('user_id');
