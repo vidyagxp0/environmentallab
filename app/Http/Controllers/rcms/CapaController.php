@@ -16,6 +16,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use PDF;
+use Helpers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -1338,8 +1340,25 @@ class CapaController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Plan Proposed';
                     $history->save();
-                    
-                
+
+                    $list = Helpers::getHodUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $capa->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $capa],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Submitted By".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
+           
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1362,6 +1381,23 @@ class CapaController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Plan Approved';
                 $history->save();
+                
+                $list = Helpers::getQAUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $capa->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if ($email !== null) {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $capa],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Plan Approved By".Auth::user()->name);
+                            }
+                        );
+                    }
+                  } 
+                }
                 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -1470,6 +1506,25 @@ class CapaController extends Controller
             $history->stage_id = $capa->stage;
             $history->status = $capa->status;
             $history->save();
+
+            $list = Helpers::getInitiatorUserList();
+            foreach ($list as $u) {
+                if($u->q_m_s_divisions_id == $capa->division_id){
+                  $email = Helpers::getInitiatorEmail($u->user_id);
+                  if ($email !== null) {
+                    
+                    Mail::send(
+                        'mail.view-mail',
+                        ['data' => $capa],
+                        function ($message) use ($email) {
+                            $message->to($email)
+                                ->subject("Cancelled By".Auth::user()->name);
+                        }
+                     );
+                  }
+                } 
+            }
+
             toastr()->success('Document Sent');
             return back();
         } else {
@@ -1511,6 +1566,22 @@ class CapaController extends Controller
             $history->stage_id = $capa->stage;
             $history->status = $capa->status;
             $history->save();
+            $list = Helpers::getHodUserList();
+            foreach ($list as $u) {
+                if($u->q_m_s_divisions_id == $capa->division_id){
+                 $email = Helpers::getInitiatorEmail($u->user_id);
+                 if ($email !== null) {
+                     Mail::send(
+                        'mail.view-mail',
+                        ['data' => $capa],
+                        function ($message) use ($email) {
+                            $message->to($email)
+                                ->subject("Qa More Info Required By".Auth::user()->name);
+                        }
+                    );
+                  }
+                } 
+            }
             toastr()->success('Document Sent');
             return back();
           }
@@ -1570,7 +1641,25 @@ class CapaController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $capa->stage;
                 $history->status = "Opened";
+                $list = Helpers::getInitiatorUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $capa->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                    if ($email !== null) {
+                       
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $capa],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("More Info Required".Auth::user()->name);
+                            }
+                        );
+                      }
+                    } 
+                }
                 $history->save();
+
                 toastr()->success('Document Sent');
                 return back();
             }

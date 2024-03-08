@@ -43,6 +43,18 @@ class Helpers
         }
          
     }
+    public static function getHodUserList(){
+        
+        return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
+    }
+    public static function getQAUserList(){
+        
+        return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
+    }
+    public static function getInitiatorUserList(){
+        
+        return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
+    }
 
     public static function checkRoles($role)
     {
@@ -200,7 +212,11 @@ class Helpers
         }
         return $response;
     }
+    public static function getInitiatorEmail($id)
+    {
    
+        return   DB::table('users')->where('id',$id)->value('email');
+    }
     public static function getDepartmentNameWithString($id)
     {
         $response = [];
