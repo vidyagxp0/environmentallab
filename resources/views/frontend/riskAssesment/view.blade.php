@@ -527,7 +527,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        {{-- <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Team Members">Team Members</label>
                                                 <select multiple name="team_members[]" placeholder="Select Team Members"
@@ -556,7 +556,7 @@
 
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Sourcd of Risk">Source of Risk/Opportunity</label>

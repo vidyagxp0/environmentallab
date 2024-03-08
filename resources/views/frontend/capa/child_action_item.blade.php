@@ -51,7 +51,7 @@
                                     <input type="hidden" name="ccId" value="">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <div class="static">Amit Guru</div>
+                                        <input disabled type="text" value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -94,13 +94,13 @@
                                         <textarea name="description"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Assigned to">Assigned to</label>
                                         <div class="static">Amit Guru</div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
+                                </div> --}}
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="hod">HOD Persons</label>
                                         <select multiple  placeholder="Select HOD Persons" data-search="false"
@@ -115,7 +115,7 @@
                                             <option value="8">Piyush Sahu</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Responsible Department">Responsible Department</label>

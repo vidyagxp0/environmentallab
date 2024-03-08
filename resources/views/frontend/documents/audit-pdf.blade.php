@@ -78,7 +78,7 @@
                     <tr>
                         <td>Originator</td>
                         <td class="text-center">:</td>
-                        <td>Amit Guru</td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>

@@ -264,12 +264,14 @@
                                     {{-- <div class="static">QMS-North America</div> --}}
                                       </div>
                                 </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="originator">Initiator</label>
-                                            <input readonly  type="text" name="originator_id" value="Amit Guru"  />
-                                        </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator"><b>Initiator</b></label>
+                                        <input type="hidden" name="initiator_id">
+                                        {{-- <div class="static">{{ $data->initiator_name }} </div> --}}
+                                        <input disabled type="text" value="{{ $data->initiator_name }} ">
                                     </div>
+                                </div>
                                     <div class="col-lg-6">
                                         <div class="group-input ">
                                             <label for="Date Due"><b>Date of Initiation</b></label>
@@ -557,7 +559,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="investigators">Additional Investigators</label>
                                             <select  name="investigators" placeholder="Select Investigators"
@@ -567,11 +569,11 @@
                                                 <option @if ($data->investigators=='1') selected @endif value="1">Amit Guru</option>
                                                 <option @if ($data->investigators=='2') selected @endif value="2">Shaleen Mishra</option>
                                                 <option @if ($data->investigators=='3') selected @endif value="3">Madhulika Mishra</option>
-                                                <option @if ($data->investigators=='4') selected @endif value="4">Amit Patel</option>
+                                                <option @if ($data->investigators=='4') selected @endif value="4"> Patel</option>
                                                 <option @if ($data->investigators=='5') selected @endif value="5">Harsh Mishra</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> --}}
                             
                                     <div class="col-lg-6">
                                         <div class="group-input">

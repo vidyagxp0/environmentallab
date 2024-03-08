@@ -81,12 +81,12 @@
                                         <div class="static">{{ $data->due_date }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Quality Reviewer">Quality Reviewer</label>
                                         <div class="static">Amit Guru</div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Original Date Due">Original Date Due</label>
