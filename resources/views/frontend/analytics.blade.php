@@ -170,7 +170,7 @@
                                 <button id="toggleChartButton">Change Chart</button>
                                 <!-- Add a button for toggling charts -->
                                 <canvas id="myChart" width="400" height="115"></canvas>
-                                <div id="paichart" width="500" height="195"></div>
+                                <div id="paichart" style="width: 400px; height: 115px; margin: 0 auto;"></div>
                             </div>
 
                             <!-- Include Axios and Chart.js scripts -->
