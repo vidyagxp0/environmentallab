@@ -42,7 +42,7 @@ class ObservationController extends Controller
             //return redirect()->back();
         }
         $data = new Observation();
-
+        
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->parent_id = $request->parent_id;
@@ -1274,6 +1274,23 @@ class ObservationController extends Controller
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = "Completed";
                                 $history->save();
+                                $list = Helpers::getLeadAuditeeUserList();
+                                foreach ($list as $u) {
+                                    if($u->q_m_s_divisions_id == $changestage->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                         if ($email !== null) {
+                                      
+                                          Mail::send(
+                                              'mail.view-mail',
+                                               ['data' => $changestage],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document sent ".Auth::user()->name);
+                                            }
+                                          );
+                                        }
+                                 } 
+                              }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1281,7 +1298,23 @@ class ObservationController extends Controller
             if ($changestage->stage == 2) {
                 $changestage->stage = "3";
                 $changestage->status = "Pending Approval";
-
+                $list = Helpers::getQAUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changestage->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changestage],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1302,6 +1335,23 @@ class ObservationController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "QA Approved";
                             $history->save();
+                            $list = Helpers::getLeadAuditeeUserList();
+                            foreach ($list as $u) {
+                                if($u->q_m_s_divisions_id == $changestage->division_id){
+                                    $email = Helpers::getInitiatorEmail($u->user_id);
+                                     if ($email !== null) {
+                                  
+                                      Mail::send(
+                                          'mail.view-mail',
+                                           ['data' => $changestage],
+                                        function ($message) use ($email) {
+                                            $message->to($email)
+                                                ->subject("Document sent ".Auth::user()->name);
+                                        }
+                                      );
+                                    }
+                             } 
+                          }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1309,6 +1359,23 @@ class ObservationController extends Controller
             if ($changestage->stage == 4) {
                 $changestage->stage = "5";
                 $changestage->status = "Pending Final Approval";
+                $list = Helpers::getLeadAuditeeUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changestage->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changestage],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1330,6 +1397,23 @@ class ObservationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = "Final Approval";
                 $history->save();
+                $list = Helpers::getLeadAuditeeUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changestage->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changestage],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1368,12 +1452,46 @@ class ObservationController extends Controller
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
                 $changeControl->update();
+                $list = Helpers::getLeadAuditeeUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed - Cancelled";
+                $list = Helpers::getQAUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1381,6 +1499,23 @@ class ObservationController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
+                $list = Helpers::getLeadAuditeeUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1400,6 +1535,23 @@ class ObservationController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "6";
                 $changeControl->status = "Closed - Done";
+                $list = Helpers::getLeadAuditeeUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
