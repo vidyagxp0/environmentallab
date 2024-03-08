@@ -509,6 +509,7 @@
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="severity-level">Severity Level</label>
+                                                    <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                                     <select name="severity_level1">
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->severity_level1 == 'minor') selected @endif
@@ -615,6 +616,10 @@
                                                             value="Wet Chemistry"> Wet Chemistry</option>
                                                         <option {{ $data->Division_Code == 'IPQA Lab' ? 'selected' : '' }}
                                                             value="IPQA Lab"> IPQA Lab</option>
+                                                        <option {{ $data->Division_Code == 'Quality Department' ? 'selected' : '' }}
+                                                            value="Quality Department">Quality Department</option>
+                                                        <option {{ $data->Division_Code == 'Administration Department' ? 'selected' : '' }}
+                                                            value="Administration Department">Administration Department</option>   
                                                     </select>
                                                 </div>
                                             </div>

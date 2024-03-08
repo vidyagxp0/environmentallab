@@ -209,9 +209,9 @@
                                     <div>
                                         <a href="/rcms/qms-dashboard">QMS-Dashboard</a>
                                     </div> 
-                                    <div>
+                                    {{-- <div>
                                     <a href="/analytics">Analytics</a> 
-                                    </div>
+                                    </div> --}}
 
                                     @if (Auth::user())
                                         @if (Helpers::checkRoles(3) || Helpers::checkRoles(1) || Helpers::checkRoles(2))
@@ -229,11 +229,11 @@
                                                 <a href="{{ url('mytaskdata') }}">My Tasks</a>
                                             </div>
                                         @endif
-                                        @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
+                                        {{-- @if (Helpers::checkRoles(4) || Helpers::checkRoles(5) || Helpers::checkRoles(3))
                                             <div>
                                                 <a href="{{ route('change-control.index') }}">Change Control</a>
                                             </div>
-                                        @endif
+                                        @endif --}}
                                     @endif
 
 
