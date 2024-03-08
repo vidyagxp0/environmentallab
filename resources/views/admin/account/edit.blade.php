@@ -92,6 +92,13 @@
                 padding: 15px 25px;
                 border: 1px solid rgba(0, 0, 0, 0.1);
              }
+             /* body:not(.layout-fixed) .main-sidebar {
+                height: inherit;
+                min-height: 100%;
+                position: fixed;
+                top: 0; 
+            }*/
+        </style>
     </div>
     <!-- /.card -->
 @endsection
