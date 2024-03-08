@@ -347,7 +347,7 @@
                                             <option value="Physical Lab">Physical Lab</option>
                                             <option value="Stability Lab">Stability Lab</option>
                                             <option value="Wet Chemistry">Wet Chemistry</option>
-                                            <option value="IPQA Lab">IPQA Lab</option>
+                                            {{-- <option value="IPQA Lab">IPQA Lab</option> --}}
                                             <option value="Quality Department">Quality Department</option>
                                             <option value="Administration Department">Administration Department</option>
                                         </select>
