@@ -408,7 +408,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor">
@@ -445,7 +445,7 @@
                                         @endforeach --}}
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action-plan-grid">

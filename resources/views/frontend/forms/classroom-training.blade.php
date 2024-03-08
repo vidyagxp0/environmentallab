@@ -71,19 +71,19 @@
                                 <textarea name="text"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Assigned to">Assigned to</label>
                                 <select name="assigend">
                                     <option value="piyush">-- Select --</option>
-                                    <option value="piyush">Amit Guru</option>
+                                    <option value="piyush"> Guru</option>
                                     <option value="piyush">Amit Patel</option>
                                     <option value="piyush">Anshul Patel</option>
                                     <option value="piyush">Shaleen Mishra</option>
                                     <option value="piyush">Vikas Prajapati</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Date Due">Date Due</label>

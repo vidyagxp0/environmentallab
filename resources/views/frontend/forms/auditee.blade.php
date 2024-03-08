@@ -56,11 +56,11 @@
 
             var cell7 = newRow.insertCell(6);
             cell7.innerHTML =
-                '<select name="auditor"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+                // '<select name="auditor"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
 
             var cell8 = newRow.insertCell(7);
             cell8.innerHTML =
-                '<select name="auditee"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
+                // '<select name="auditee"><option value="">-- Select --</option><option value="1">Amit Guru</option></select>'
 
             var cell9 = newRow.insertCell(8);
             cell9.innerHTML = "<input type='text'>";

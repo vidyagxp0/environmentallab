@@ -52,7 +52,7 @@
                         <div class="col-lg-4">
                             <div class="group-input">
                                 <label for="originator">Originator</label>
-                                <div class="static">Amit Patel</div>
+                                {{-- <div class="static">Amit Patel</div> --}}
                             </div>
                         </div>
                         <div class="col-lg-4">

@@ -647,7 +647,7 @@ $users = DB::table('users')
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="cro_vendor">CRO/Vendor</label>
                                         <select name="cro_vendor" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
@@ -683,9 +683,9 @@ $users = DB::table('users')
                                             <option {{ $data->cro_vendor == $value->id ? 'selected' : '' }}
                                                 value="{{ $value->id }}">{{ $value->name }}</option>
                                         @endforeach --}}
-                                        </select>
+                                        {{--</select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action-plan-grid">

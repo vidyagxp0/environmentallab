@@ -51,7 +51,7 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="originator">Originator</label>
-                                <div class="static"></div>
+                                <input disabled type="text" value="{{ Auth::user()->name }}">
                             </div>
                         </div>
                         <div class="col-lg-6">
@@ -66,7 +66,7 @@
                                 <textarea name="text"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Assigned to">Assigned to</label>
                                 <select name="assigend">
@@ -78,14 +78,14 @@
                                     <option value="piyush">Vikas Prajapati</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Date Due">Date Due</label>
                                 <input type="date" name="date">
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Trainer">Trainer</label>
                                 <select name="assigend">
@@ -97,7 +97,7 @@
                                     <option value="piyush">Vikas Prajapati</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Expiration Date">Expiration Date</label>

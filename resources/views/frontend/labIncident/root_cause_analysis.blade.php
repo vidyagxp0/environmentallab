@@ -145,7 +145,7 @@
                                         <textarea name="ten_trend"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                {{-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="investigators">Investigators</label>
                                         <select multiple name="investigators[]" placeholder="Select Investigators"
@@ -157,7 +157,7 @@
                                             <option value="5">Vikas Prajapati</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="attachments">Attachments</label>

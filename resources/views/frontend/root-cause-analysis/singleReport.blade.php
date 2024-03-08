@@ -232,8 +232,8 @@
                         <td class="w-30">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Additional Investigators</th>
-                        <td class="w-30">@if($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td>
+                        {{-- <th class="w-20">Additional Investigators</th>
+                        <td class="w-30">@if($data->investigators){{ $data->investigators }}@else Not Applicable @endif</td> --}}
                         <th class="w-20">Department(s)</th>
                         <td class="w-30">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
                     </tr>

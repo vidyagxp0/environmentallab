@@ -183,7 +183,7 @@
                                 <textarea name="text"></textarea>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Nature of Deviation"> Nature of Deviation </label>
                                 <select multiple name="deviation_nature" placeholder="Select Nature of Deviation"
@@ -197,7 +197,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6"> --}}
                             <div class="group-input">
                                 <label for="Deviation Attachments"> Deviation Attachment </label>
                                 <input type="file" id="myfile" name="myfile">
@@ -464,7 +464,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Production-Person">Production Person</label>
                                 <select name="Production-Person">
@@ -476,7 +476,7 @@
                                     <option value="piyush">Vikas Prajapati</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Quality-Control">Quality Control</label>
@@ -486,7 +486,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Quality-Control-Person">Quality Control Person</label>
                                 <select name="Quality-Control-Person">
@@ -498,7 +498,7 @@
                                     <option value="piyush">Vikas Prajapati</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Microbiology">Microbiology</label>
@@ -508,7 +508,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Microbiology-Person">Microbiology Person</label>
                                 <select name="Microbiology-Person">
@@ -521,7 +521,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-6"> --}}
                             <div class="group-input">
                                 <label for="Warehouse">Warehouse</label>
                                 <select name="Warehouse">
@@ -530,7 +530,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Warehouse-Person">Warehouse Person</label>
                                 <select name="Warehouse-Person">
@@ -542,7 +542,7 @@
                                     <option value="piyush">Vikas Prajapati</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Engineering">Engineering</label>
@@ -552,7 +552,7 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Engineering-Person">Engineering Person</label>
                                 <select name="Engineering-Person">
@@ -564,7 +564,7 @@
                                     <option value="piyush">Vikas Prajapati</option>
                                 </select>
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="Instrumentation">Instrumentation</label>

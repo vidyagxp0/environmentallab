@@ -511,10 +511,10 @@ function addDistributionRetrieval(tableId) {
     cell7.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="issuance_date[]" id="issuance_date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, issuance_date' + currentRowCount +');checkDate(issuance_date' + currentRowCount +'_checkdate,date_closed' + currentRowCount +'_checkdate)" /></div></div></div></td>';
 
     let cell8 = newRow.insertCell(7)
-    cell8.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
+    // cell8.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Amit Guru</option><option value='2'>Shaleen Mishra</option><option value='3'>Madhulika Mishra</option><option value='4'>Amit Patel</option><option value='5'>Harsh Mishra</option></select>"
 
     let cell9 = newRow.insertCell(8)
-    cell9.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Tech Team</option><option value='2'>Quality Assurance</option><option value='3'>Quality Management</option><option value='4'>IT Administration</option><option value='5'>Business Administration</option><option value='6'>Accounting</option><option value='7'>Logistics</option><option value='8'>Senior Management</option></select>"
+    // cell9.innerHTML = "<select><option value='0'>-- Select --</option><option value='1'>Tech Team</option><option value='2'>Quality Assurance</option><option value='3'>Quality Management</option><option value='4'>IT Administration</option><option value='5'>Business Administration</option><option value='6'>Accounting</option><option value='7'>Logistics</option><option value='8'>Senior Management</option></select>"
 
     let cell10 = newRow.insertCell(9);
     cell10.innerHTML = "<input type='number'>";

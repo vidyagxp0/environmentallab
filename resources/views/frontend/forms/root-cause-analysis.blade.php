@@ -72,7 +72,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Initiator</label>
-                                        <input readonly  type="text" name="originator_id" value="Amit Guru"  />
+                                        <input readonly  type="text" name="originator_id" value="{{ Auth::user()->name }}"  />
                                     </div>
                                 </div>
                               
@@ -253,8 +253,8 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
+                                 {{-- <div class="col-lg-6"> --}}
+                                    {{-- <div class="group-input">
                                         <label for="investigators">Additional Investigators</label>
                                         <select  name="investigators" placeholder="Select Investigators"
                                             data-search="false" data-silent-initial-value-set="true" id="investigators">
@@ -265,8 +265,8 @@
                                             <option value="4">Amit Patel</option>
                                             <option value="5">Harsh Mishra</option>
                                         </select>
-                                    </div>
-                                </div>
+                                    </div> --}}
+                                {{-- </div> --}} 
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="department">Department(s)</label>

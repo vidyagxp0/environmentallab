@@ -52,7 +52,7 @@
                                 <tr>
                                     <td>03.</td>
                                     <td>Yes</td>
-                                    <td>Amit Patel</td>
+                                    {{-- <td>Amit Patel</td> --}}
                                     <td>Tech Support</td>
                                     <td>7354654474</td>
                                     <td>amit.patel@connexo.io</td>
