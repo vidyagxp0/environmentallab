@@ -256,6 +256,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
+                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                         <select name="severity_level_form">
                                             <option value="0">-- Select --</option>
                                             <option value="minor">Minor</option>

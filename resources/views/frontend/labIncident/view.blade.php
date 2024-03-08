@@ -332,6 +332,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="severity-level">Severity Level</label>
+                                        <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                         <select name="severity_level2"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >
                                             <option value="0">-- Select --</option>
                                             <option @if ($data->severity_level2=='minor') selected @endif  value="minor">Minor</option>

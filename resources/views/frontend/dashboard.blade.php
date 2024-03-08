@@ -28,10 +28,10 @@
                                     </div>
                                     <div class="doc-links d-flex">
                                         {{-- <a href="{{ route('change-control.create') }}" id="set-OpenDcrDivision">Open DCR</a> --}}
-                                        <a href="#" id="set-division">Open DCR</a>
+                                        {{-- <a href="#" id="set-division">Open DCR</a> --}}
                                         {{-- <a href="javascript:window.location.reload(true)">Refresh</a>
                                         <a data-bs-toggle="modal" data-bs-target="#subscribe-modal">Subscribe</a> --}}
-                                        <a href="#" class="open-ccdivision"><i class="fa-solid fa-caret-down"></i></a>
+                                        {{-- <a href="#" class="open-ccdivision"><i class="fa-solid fa-caret-down"></i></a> --}}
                                     </div>
                                 </div>
                             </div>
