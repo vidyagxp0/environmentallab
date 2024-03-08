@@ -11,7 +11,8 @@ use App\Models\RootCauseAnalysis;
 use App\Models\RootCauseAnalysesGrid;
 use App\Models\RootCauseAnalysisHistory;
 use App\Models\User;
-
+use Helpers;
+use Illuminate\Support\Facades\Mail;
 use App\Models\RootcauseAnalysisDocDetails;
 use Carbon\Carbon;
 use PDF;
@@ -38,7 +39,7 @@ use Illuminate\Support\Facades\Hash;
              return redirect()->back();
         }
         $root = new RootCauseAnalysis();
-        $root->form_type = "root-cause-analysis"; 
+        $root->form_type = "Root-cause-analysis"; 
         $root->originator_id = $request->originator_id;
         $root->date_opened = $request->date_opened;
         $root->division_id = $request->division_id;
@@ -835,7 +836,24 @@ use Illuminate\Support\Facades\Hash;
                 $history->stage='Acknowledge';
 
                 $history->save();
-                  
+                $list = Helpers::getQAUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $root->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                        
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $root],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document sent ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -951,6 +969,23 @@ use Illuminate\Support\Facades\Hash;
              $history->origin_state = $lastDocument->status;
             $history->stage='Cancelled ';
             $history->save();
+            $list = Helpers::getQAUserList();
+            foreach ($list as $u) {
+                if($u->q_m_s_divisions_id == $root->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                     if ($email !== null) {
+                  
+                      Mail::send(
+                          'mail.view-mail',
+                           ['data' => $root],
+                        function ($message) use ($email) {
+                            $message->to($email)
+                                ->subject("Document sent ".Auth::user()->name);
+                        }
+                      );
+                    }
+             } 
+          }
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";
