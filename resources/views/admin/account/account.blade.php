@@ -38,7 +38,32 @@
                         <tbody>
 
                             @foreach ($users as $user)
-                                <tr>
+                            <tr>
+                                @php
+                                // Fetch role_ids associated with the user
+                                $hodUserList = DB::table('user_roles')->where('user_id', $user->id)->pluck('role_id')->toArray();
+                                
+                                @endphp
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->dname }}</td>
+                                <td> {{ implode(',',$hodUserList) }}
+                                   
+                                </td>
+                                <th>
+                                <a class="mdi mdi-table-edit"
+                                href="{{ route('user_management.edit', $user->id) }}"><button
+                                    class="btn btn-dark">Edit</button></a>
+
+                            <form action="{{ route('user_management.destroy', $user->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+
+                                <button type="submit" class="confirmation btn btn-danger">Delete</button>
+                            </form>
+                               </th>
+                            </tr>
+                                {{-- <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->dname }}</td>
@@ -55,7 +80,7 @@
                                             <button type="submit" class="confirmation btn btn-danger">Delete</button>
                                         </form>
                                     </td>
-                                </tr>
+                                </tr> --}}
                             @endforeach
 
                             </tfoot>
