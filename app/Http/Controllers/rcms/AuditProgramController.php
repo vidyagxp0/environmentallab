@@ -12,6 +12,8 @@ use App\Models\User;
 use App\Models\AuditProgramGrid;
 use Carbon\Carbon;
 use PDF;
+use Helpers;
+use Illuminate\Support\Facades\Mail;
 use App\Models\AuditProgramAuditTrial;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
@@ -52,6 +54,7 @@ class AuditProgramController extends Controller
         //     return redirect()->back()->withInput();
         // }
         $data = new AuditProgram();
+        $data->form_type = "audit-program";
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;
@@ -717,6 +720,25 @@ class AuditProgramController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->stage = "Submitted";
                     $history->save();
+                    $list = Helpers::getInitiatorUserList();
+                    
+                    foreach ($list as $u) {
+                       
+                        if($u->q_m_s_divisions_id ==$changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $changeControl],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Submitted By ".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -792,6 +814,24 @@ class AuditProgramController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Rejected';
                         $history->save();
+                        $list = Helpers::getAuditManagerUserList();
+                        foreach ($list as $u) {
+                            if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                $email = Helpers::getInitiatorEmail($u->user_id);
+                                 if ($email !== null) {
+                              
+                                  Mail::send(
+                                      'mail.view-mail',
+                                       ['data' => $changeControl],
+                                    function ($message) use ($email) {
+                                        $message->to($email)
+                                            ->subject("Document is Rejected By ".Auth::user()->name);
+                                    }
+                                  );
+                                }
+                         } 
+                      }
+               
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

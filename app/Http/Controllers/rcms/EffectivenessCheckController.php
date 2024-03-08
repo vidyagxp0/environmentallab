@@ -11,6 +11,8 @@ use App\Models\User;
 use App\Models\RoleGroup;
 use Carbon\Carbon;
 use PDF;
+use Helpers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -60,6 +62,7 @@ class EffectivenessCheckController extends Controller
     {
 
         $openState = new EffectivenessCheck();
+        $openState->form_type = "effectiveness-check";
         $openState->is_parent = "No";
         $openState->parent_id = $request->cc_id;
         $openState->division_id = $request->division_id;
@@ -648,6 +651,26 @@ class EffectivenessCheckController extends Controller
                             $history->origin_state = $lastopenState->status;
                             $history->step = 'Submit';
                             $history->save();
+                            
+                    $list = Helpers:: getSupervisorUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $changeControl],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Submitted By ".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
+           
+
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -693,6 +716,25 @@ class EffectivenessCheckController extends Controller
                             $history->origin_state = $lastopenState->status;
                             $history->step = 'Effective';
                             $history->save();
+                            
+                    $list = Helpers:: getQAUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $changeControl],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Send By ".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
+           
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
@@ -766,6 +808,25 @@ class EffectivenessCheckController extends Controller
                             $history->origin_state = $lastopenState->status;
                             $history->step = 'Not Effective';
                             $history->save();
+                            
+                    $list = Helpers:: getQAUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' =>  $changeControl],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Send By ".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
+           
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
