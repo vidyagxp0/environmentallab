@@ -614,8 +614,8 @@
                                                             value="Stability Lab"> Stability Lab</option>
                                                         <option {{ $data->Division_Code == 'Wet Chemistry' ? 'selected' : '' }}
                                                             value="Wet Chemistry"> Wet Chemistry</option>
-                                                        <option {{ $data->Division_Code == 'IPQA Lab' ? 'selected' : '' }}
-                                                            value="IPQA Lab"> IPQA Lab</option>
+                                                        {{-- <option {{ $data->Division_Code == 'IPQA Lab' ? 'selected' : '' }}
+                                                            value="IPQA Lab"> IPQA Lab</option> --}}
                                                         <option {{ $data->Division_Code == 'Quality Department' ? 'selected' : '' }}
                                                             value="Quality Department">Quality Department</option>
                                                         <option {{ $data->Division_Code == 'Administration Department' ? 'selected' : '' }}
