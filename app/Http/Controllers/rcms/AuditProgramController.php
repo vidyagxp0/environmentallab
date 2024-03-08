@@ -52,6 +52,7 @@ class AuditProgramController extends Controller
         //     return redirect()->back()->withInput();
         // }
         $data = new AuditProgram();
+        // $data->form_type = "audit-program";
         $data->record = ((RecordNumber::first()->value('counter')) + 1);
         $data->initiator_id = Auth::user()->id;
         $data->division_id = $request->division_id;

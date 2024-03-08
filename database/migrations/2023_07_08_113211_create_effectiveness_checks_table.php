@@ -61,6 +61,7 @@ return new class extends Migration
             $table->string('origin_state')->nullable();
             $table->string('user_role')->nullable();
             $table->string('step')->nullable();
+            // $table->string('form_type')->nullable();
             $table->string('status')->default('Opened');
             $table->string('stage')->default(1);
 
