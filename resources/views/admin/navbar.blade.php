@@ -45,7 +45,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <div class="image">
-                    <img width="30" src="{{ asset('admin/dist/img/avatar5.png') }}"
+                    <img width="30" src="{{ asset('admin/dist/img/user8-128x128.jpg') }}"
                         class="img-circle elevation-2" alt="User Image">
                 </div>
             </a>
@@ -64,7 +64,7 @@
                         </h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="../admin/dist/img/avatar5.png" alt="User Avatar">
+                        <img class="img-circle elevation-2" src="{{ asset('admin/dist/img/user8-128x128.jpg') }}" alt="User Avatar">
                     </div>
                     <div class="card-footer m-2">
                         <center> <a href="{{ url('admin/logout') }}">LogOut

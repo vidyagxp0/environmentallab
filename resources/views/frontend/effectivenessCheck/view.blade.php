@@ -193,7 +193,7 @@
                                <div class="group-input">
                                          <label for="RLS Record Number">Record Number</label>
                                          <input disabled type="text" name="division_code"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{  Helpers::recordFormat($data->record) }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/EC/{{ Helpers::year($data->created_at) }}/{{  Helpers::recordFormat($data->record) }}">
                                </div>
                             </div>
                             <div class="col-lg-6">
