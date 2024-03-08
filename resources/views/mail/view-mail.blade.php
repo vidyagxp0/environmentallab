@@ -200,7 +200,7 @@ h2{
 
                     <h4>Hey !</h4>
                     <br>
-                    <p style="font-size: 15px;">{{strtoupper($data->form_type) }} Records is Assigned to You.</p>
+                    <p style="font-size: 15px;">Records is Assigned to You.</p>
                     <br>
                     <h3>Record Information:</h3>
                     <br>
