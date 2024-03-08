@@ -63,7 +63,6 @@ class ActionItemController extends Controller
             return redirect()->back();
         }
         $openState = new ActionItem();
-        $openState->form_type = "Action Item";
         $openState->cc_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
