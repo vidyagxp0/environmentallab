@@ -60,6 +60,7 @@ class EffectivenessCheckController extends Controller
     {
 
         $openState = new EffectivenessCheck();
+        // $openState->form_type = "effectiveness-check";
         $openState->is_parent = "No";
         $openState->parent_id = $request->cc_id;
         $openState->division_id = $request->division_id;

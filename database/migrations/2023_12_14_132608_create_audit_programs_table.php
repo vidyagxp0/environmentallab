@@ -62,6 +62,7 @@ return new class extends Migration
             $table->string('cancelled_on')->nullable();
             $table->string('rejected_by')->nullable();
             $table->string('rejected_on')->nullable();
+            // $table->string('form_type')->nullable();
             $table->string('Audit_Completed_On')->nullable();
             $table->timestamps();
         });
