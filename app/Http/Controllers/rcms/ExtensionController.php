@@ -12,6 +12,8 @@ use App\Models\ExtensionAuditTrail;
 use App\Models\User;
 use App\Models\RoleGroup;
 use PDF;
+use Helpers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
@@ -415,6 +417,7 @@ class ExtensionController extends Controller
 
     public function stageChange(Request $request, $id)
     {
+        $openState = Extension::find($id);
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
             $lastDocument = Extension::find($id);
@@ -471,6 +474,22 @@ class ExtensionController extends Controller
                             $history->save();
                    
                     $changeControl->update();
+                    $list = Helpers::getApproverUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $openState->division_id){
+                         $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                             Mail::send(
+                                'mail.view-mail',
+                                ['data' => $openState],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Send By ".Auth::user()->name);
+                                }
+                            );
+                          }
+                        } 
+                    }
 
                     toastr()->success('Document Sent');
 
@@ -504,6 +523,22 @@ class ExtensionController extends Controller
                 $history->stage_id = $changeControl->stage;
                 $history->status = $changeControl->status;
                 $history->save();
+                $list = Helpers::getInitiatorUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $openState->division_id){
+                     $email = Helpers::getInitiatorEmail($u->user_id);
+                     if ($email !== null) {
+                         Mail::send(
+                            'mail.view-mail',
+                            ['data' => $openState],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By ".Auth::user()->name);
+                            }
+                        );
+                      }
+                    } 
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -519,6 +554,7 @@ class ExtensionController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
             $lastDocument = Extension::find($id);
+            $openState = Extension::find($id);
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
@@ -576,6 +612,22 @@ class ExtensionController extends Controller
                 $history->stage_id = $changeControl->stage;
                 $history->status = "More-information Required";
                 $history->save();
+                $list = Helpers::getInitiatorUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $openState->division_id){
+                     $email = Helpers::getInitiatorEmail($u->user_id);
+                     if ($email !== null) {
+                         Mail::send(
+                            'mail.view-mail',
+                            ['data' => $openState],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By ".Auth::user()->name);
+                            }
+                        );
+                      }
+                    } 
+                }
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -591,6 +643,7 @@ class ExtensionController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = Extension::find($id);
             $lastDocument = Extension::find($id);
+            $openState = Extension::find($id);
             if ($changeControl->stage == 2) {
 
                 $changeControl->stage = "4";
@@ -610,6 +663,22 @@ class ExtensionController extends Controller
                         $history->stage = 'Rejected';
                         $history->save();
                 $changeControl->update();
+                $list = Helpers::getInitiatorUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $openState->division_id){
+                     $email = Helpers::getInitiatorEmail($u->user_id);
+                     if ($email !== null) {
+                         Mail::send(
+                            'mail.view-mail',
+                            ['data' => $openState],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Reject By ".Auth::user()->name);
+                            }
+                        );
+                      }
+                    } 
+                }
                 toastr()->success('Document Sent');
                 return back();
             } else {

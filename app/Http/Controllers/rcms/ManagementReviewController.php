@@ -21,6 +21,8 @@ use App\Models\RootCauseAnalysis;
 use App\Models\User;
 use Carbon\Carbon;
 use PDF;
+use Helpers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -79,7 +81,7 @@ class ManagementReviewController extends Controller
        // $management->topic = json_encode($request->topic);
         
       // $management = new ManagementReview();
-        $management->form_type = "management-review";
+        $management->form_type = "Management Review";
         $management->division_id = $request->division_id;
         $management->record = ((RecordNumber::first()->value('counter')) + 1);
         $management->initiator_id = Auth::user()->id;
@@ -1354,6 +1356,23 @@ class ManagementReviewController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submited';
                 $history->save();
+                
+                $list = Helpers::getResponsibleUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                     $email = Helpers::getInitiatorEmail($u->user_id);
+                     if ($email !== null) {
+                         Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By ".Auth::user()->name);
+                            }
+                        );
+                      }
+                    } 
+                }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1376,6 +1395,22 @@ class ManagementReviewController extends Controller
                 $history->stage='Completed';
                 $history->save();
                 $changeControl->update();
+                $list = Helpers::getInitiatorUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                     $email = Helpers::getInitiatorEmail($u->user_id);
+                     if ($email !== null) {
+                         Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By ".Auth::user()->name);
+                            }
+                        );
+                      }
+                    } 
+                }
                 toastr()->success('Document Sent');
                 return back();
             }

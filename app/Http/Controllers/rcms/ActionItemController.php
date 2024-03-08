@@ -17,11 +17,11 @@ use App\Models\User;
 use Carbon\Carbon;
 use PDF;
 use Helpers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use App\Models\OpenStage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -63,6 +63,7 @@ class ActionItemController extends Controller
             return redirect()->back();
         }
         $openState = new ActionItem();
+        $openState->form_type = "Action Item";
         $openState->cc_id = $request->ccId;
         $openState->initiator_id = Auth::user()->id;
         $openState->record = DB::table('record_numbers')->value('counter') + 1;
@@ -722,6 +723,23 @@ class ActionItemController extends Controller
                     $history->stage_id = $changeControl->stage;
                     $history->status = $changeControl->status;
                     $history->save();
+                    $list = Helpers::getActionOwnerUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $openState->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $openState],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Submitted By ".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
                     toastr()->success('Document Sent');
 
                     return back();
@@ -753,6 +771,23 @@ class ActionItemController extends Controller
                 $history->stage_id = $changeControl->stage;
                 $history->status = $changeControl->status;
                 $history->save();
+                $list = Helpers::getInitiatorUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $openState->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $openState],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By ".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 toastr()->success('Document Sent');
 
                 return back();
@@ -822,6 +857,23 @@ public function actionStageCancel(Request $request, $id)
             $history->stage_id = $changeControl->stage;
             $history->status = $changeControl->status;
             $history->save();
+            $list = Helpers::getActionOwnerUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $openState->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $openState],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Cancel By ".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
         }
@@ -851,6 +903,23 @@ public function actionStageCancel(Request $request, $id)
             $history->stage_id = $changeControl->stage;
             $history->status = "More-information Required";
             $history->save();
+            $list = Helpers::getInitiatorUserList();
+            foreach ($list as $u) {
+                if($u->q_m_s_divisions_id == $openState->division_id){
+                    $email = Helpers::getInitiatorEmail($u->user_id);
+                     if ($email !== null) {
+                  
+                      Mail::send(
+                          'mail.view-mail',
+                           ['data' => $openState],
+                        function ($message) use ($email) {
+                            $message->to($email)
+                                ->subject("Document is Send By ".Auth::user()->name);
+                        }
+                      );
+                    }
+             } 
+          }
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
         }

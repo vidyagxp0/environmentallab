@@ -49,7 +49,7 @@ class CapaController extends Controller
             return redirect()->back();
         }
         $capa = new Capa();
-        $capa->form_type = "capa";
+        $capa->form_type = "CAPA";
         $capa->record = ((RecordNumber::first()->value('counter')) + 1);
         $capa->initiator_id = Auth::user()->id;
         $capa->division_id = $request->division_id;
@@ -1576,7 +1576,7 @@ class CapaController extends Controller
                         ['data' => $capa],
                         function ($message) use ($email) {
                             $message->to($email)
-                                ->subject("Qa More Info Required By ".Auth::user()->name);
+                                ->subject("Document is Send By ".Auth::user()->name);
                         }
                     );
                   }
