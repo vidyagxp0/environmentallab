@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use PDF;
+use Helpers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 
 class RiskManagementController extends Controller
@@ -2026,7 +2028,23 @@ class RiskManagementController extends Controller
                 // $history->status = $lastDocument->status;
                 $history->stage='Submitted';
                 $history->save();
-                
+                $list = Helpers::getHodUserList();
+               
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2048,6 +2066,23 @@ class RiskManagementController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Evaluated';
                 $history->save();
+                $list = Helpers::getWorkGroupUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2055,6 +2090,23 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "4";
                 $changeControl->status = 'Pending HOD Approval';
+                $list = Helpers::getHodUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2076,6 +2128,23 @@ class RiskManagementController extends Controller
                 $history->origin_state = $lastDocument->status;       
                $history->stage='Plan Approved';
                 $history->save();
+                $list = Helpers::getQAHeadUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
 
                 toastr()->success('Document Sent');
@@ -2084,6 +2153,23 @@ class RiskManagementController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "6";
                 $changeControl->status = 'Residual Risk Evaluation';
+                $list = Helpers::getHodUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

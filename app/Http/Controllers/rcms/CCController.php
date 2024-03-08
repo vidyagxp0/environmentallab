@@ -26,6 +26,7 @@ use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
 use Helpers;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
@@ -2213,6 +2214,22 @@ class CCController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'Submit';
                             $history->save();
+             $list = Helpers::getHodUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2251,6 +2268,23 @@ class CCController extends Controller
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'HOD Review Complete';
                                 $history->save();
+                                $list = Helpers::getInitiatorUserList();
+                                foreach ($list as $u) {
+                                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                         if ($email !== null) {
+                                      
+                                          Mail::send(
+                                              'mail.view-mail',
+                                               ['data' => $changeControl],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document is Send By".Auth::user()->name);
+                                            }
+                                          );
+                                        }
+                                 } 
+                              }            
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2279,6 +2313,23 @@ class CCController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Send to CFT/SME/QA Review';
                         $history->save();
+                        $list = Helpers::getCFTUserList();
+                                foreach ($list as $u) {
+                                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                                        $email = Helpers::getInitiatorEmail($u->user_id);
+                                         if ($email !== null) {
+                                      
+                                          Mail::send(
+                                              'mail.view-mail',
+                                               ['data' => $changeControl],
+                                            function ($message) use ($email) {
+                                                $message->to($email)
+                                                    ->subject("Document is Send By".Auth::user()->name);
+                                            }
+                                          );
+                                        }
+                                 } 
+                              }     
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2296,6 +2347,23 @@ class CCController extends Controller
                 if ($evaluation->training_required == "yes") {
                     $changeControl->stage = "6";
                     $changeControl->status = "Pending Training Completion";
+                    $list = Helpers::getHodUserList();
+                    foreach ($list as $u) {
+                        if($u->q_m_s_divisions_id == $changeControl->division_id){
+                            $email = Helpers::getInitiatorEmail($u->user_id);
+                             if ($email !== null) {
+                          
+                              Mail::send(
+                                  'mail.view-mail',
+                                   ['data' => $changeControl],
+                                function ($message) use ($email) {
+                                    $message->to($email)
+                                        ->subject("Document is Send By".Auth::user()->name);
+                                }
+                              );
+                            }
+                     } 
+                  }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2425,6 +2493,23 @@ class CCController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'Implemented';
                             $history->save();
+            $list = Helpers::getHodUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2447,10 +2532,28 @@ class CCController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
+            $openState = CC::find($id);
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed-Cancelled";
+                $list = Helpers::getHodUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -2466,6 +2569,23 @@ class CCController extends Controller
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $list = Helpers::getInitiatorUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -2481,6 +2601,23 @@ class CCController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
                 $changeControl->status = "HOD Review";
+                $list = Helpers::getHodUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -2496,6 +2633,23 @@ class CCController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "3";
                 $changeControl->status = "Under Supervisor review";
+                $list = Helpers::getHodUserList();
+                foreach ($list as $u) {
+                    if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        $email = Helpers::getInitiatorEmail($u->user_id);
+                         if ($email !== null) {
+                      
+                          Mail::send(
+                              'mail.view-mail',
+                               ['data' => $changeControl],
+                            function ($message) use ($email) {
+                                $message->to($email)
+                                    ->subject("Document is Send By".Auth::user()->name);
+                            }
+                          );
+                        }
+                 } 
+              }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -2535,7 +2689,7 @@ class CCController extends Controller
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
-
+            $openState = CC::find($id);
 
             $changeControl->stage = "7";
             $changeControl->status = "Pending Change Implementation";
@@ -2572,8 +2726,9 @@ class CCController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
+            $openState = CC::find($id);
 
-
+ 
             $changeControl->stage = "0";
             $changeControl->status = "Closed-Cancelled";
             $changeControl->update();
