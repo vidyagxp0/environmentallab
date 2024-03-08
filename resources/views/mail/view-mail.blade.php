@@ -66,6 +66,12 @@ h2{
 .fl-table tr:nth-child(even) {
     background: #F8F8F8;
 }
+.logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom:10px;
+        }
 
 /* Responsive */
 
@@ -183,15 +189,18 @@ h2{
     <div id="main-container">
         <div class="notification-container">
             <div class="inner-block">
+            <div class="logo-container">
                 <div class="logo">
                     <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
+                    <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="...">
                 </div>
+            </div>
                 <div class="mail-content">
 
 
                     <h4>Hey !</h4>
                     <br>
-                    <p style="font-size: 15px;">{{$data->form_type}} Records is Assigned to You.</p>
+                    <p style="font-size: 15px;">{{strtoupper($data->form_type) }} Records is Assigned to You.</p>
                     <br>
                     <h3>Record Information:</h3>
                     <br>
@@ -231,7 +240,7 @@ h2{
                 </div>
 
 
-                <h4>Connexo eQMS</h4>
+                <h4>Connexo QMS</h4>
             </div>
         </div>
     </div>
