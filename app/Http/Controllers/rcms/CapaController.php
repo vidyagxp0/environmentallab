@@ -1352,7 +1352,7 @@ class CapaController extends Controller
                                    ['data' => $capa],
                                 function ($message) use ($email) {
                                     $message->to($email)
-                                        ->subject("Document is Submitted By".Auth::user()->name);
+                                        ->subject("Document is Submitted By ".Auth::user()->name);
                                 }
                               );
                             }
@@ -1392,7 +1392,7 @@ class CapaController extends Controller
                             ['data' => $capa],
                             function ($message) use ($email) {
                                 $message->to($email)
-                                    ->subject("Plan Approved By".Auth::user()->name);
+                                    ->subject("Plan Approved By ".Auth::user()->name);
                             }
                         );
                     }
@@ -1518,7 +1518,7 @@ class CapaController extends Controller
                         ['data' => $capa],
                         function ($message) use ($email) {
                             $message->to($email)
-                                ->subject("Cancelled By".Auth::user()->name);
+                                ->subject("Cancelled By ".Auth::user()->name);
                         }
                      );
                   }
@@ -1576,7 +1576,7 @@ class CapaController extends Controller
                         ['data' => $capa],
                         function ($message) use ($email) {
                             $message->to($email)
-                                ->subject("Qa More Info Required By".Auth::user()->name);
+                                ->subject("Qa More Info Required By ".Auth::user()->name);
                         }
                     );
                   }
@@ -1652,7 +1652,7 @@ class CapaController extends Controller
                             ['data' => $capa],
                             function ($message) use ($email) {
                                 $message->to($email)
-                                    ->subject("More Info Required".Auth::user()->name);
+                                    ->subject("More Info Required ".Auth::user()->name);
                             }
                         );
                       }
