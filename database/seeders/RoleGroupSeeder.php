@@ -877,15 +877,15 @@ $group->save();
 // Estonia Management Review
 $group = new RoleGroup();
 $group->id = 121;
-$group->name = "Estonia-Management Review- Initiator";
-$group->description = "Estonia-Management Review- Initiator";
+$group->name = "Estonia-Management Review- Lead Auditor";
+$group->description = "Estonia-Management Review- Lead Auditor";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
 $group = new RoleGroup();
 $group->id = 122;
-$group->name = "Estonia-Management Review- Responsible Person";
-$group->description = "Estonia-Management Review- Responsible Person";
+$group->name = "Estonia-Management Review- Lead Auditee";
+$group->description = "Estonia-Management Review- Lead Auditee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -906,15 +906,15 @@ $group->save();
 // Egypt Management Review
 $group = new RoleGroup();
 $group->id = 125;
-$group->name = "Egypt-Management Review- Initiator";
-$group->description = "Egypt-Management Review- Initiator";
+$group->name = "Egypt-Management Review- Lead Auditor";
+$group->description = "Egypt-Management Review- Lead Auditor";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
 $group = new RoleGroup();
 $group->id = 126;
-$group->name = "Egypt-Management Review- Responsible Person";
-$group->description = "Egypt-Management Review- Responsible Person";
+$group->name = "Egypt-Management Review- Lead Auditee";
+$group->description = "Egypt-Management Review- Lead Auditee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
@@ -935,15 +935,15 @@ $group->save();
 // Jordan Management Review
 $group = new RoleGroup();
 $group->id = 129;
-$group->name = "Jordan-Management Review- Initiator";
-$group->description = "Jordan-Management Review- Initiator";
+$group->name = "Jordan-Management Review- Lead Auditor";
+$group->description = "Jordan-Management Review- Lead Auditor";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 
 $group = new RoleGroup();
 $group->id = 130;
-$group->name = "Jordan-Management Review- Responsible Person";
-$group->description = "Jordan-Management Review- Responsible Person";
+$group->name = "Jordan-Management Review- Lead Auditee";
+$group->description = "Jordan-Management Review- Lead Auditee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
 

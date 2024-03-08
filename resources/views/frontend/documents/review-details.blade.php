@@ -94,11 +94,9 @@
                                     <div class="buttons"> 
                                         @if (empty($review_reject))
                                             @if ($stagereview && empty($stagereview_submit))
-                                                @if($document->stage < 3)
                                                 <button data-bs-toggle="modal" data-bs-target="#review-cancel">
                                                     Reject&nbsp;<i class="fa-regular fa-circle-xmark"></i>
                                                 </button>
-                                                @endif
                                             @endif
                                         @elseif($document->stage == 2)
                                             <button data-bs-toggle="modal" data-bs-target="#review-cancel">
@@ -121,11 +119,11 @@
                                             @endif
                                         @endif
                                         @if ($stagereview && empty($stagereview_submit))
-                                            {{-- @if ($stagereview->stage == 'Reviewed')
+                                            @if ($stagereview->stage == 'Reviewed')
                                                 <button data-bs-toggle="modal" data-bs-target="#review-sign">
                                                     Submit&nbsp;<i class="fa-regular fa-paper-plane"></i>
                                                 </button>
-                                            @endif --}}
+                                            @endif
                                         @endif
                                     </div>
 

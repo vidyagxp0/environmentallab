@@ -66,16 +66,16 @@ class DashboardController extends Controller
             $array2 = [];
             $document = Document::where('stage', '>=', 2)->get();
 
-            foreach ($document as $data) {
-                $data->originator_name = User::where('id', $data->originator_id)->value('name');
-                if ($data->reviewers_group) {
-                    $datauser = explode(',', $data->reviewers_group);
-                    for ($i = 0; $i < count($datauser); $i++) {
+            foreach($document as $data){
+                $data->originator_name = User::where('id',$data->originator_id)->value('name');
+                if($data->reviewers_group){
+                    $datauser = explode(',',$data->reviewers_group);
+                    for($i=0; $i<count($datauser); $i++){
                         $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
-                        $ids = explode(',', $group);
-                        for ($j = 0; $j < count($ids); $j++) {
-                            if ($ids[$j] == Auth::user()->id) {
-                                array_push($array1, $data);
+                        $ids = explode(',',$group);
+                        for($j=0; $j<count($ids); $j++){
+                            if($ids[$j]== Auth::user()->id){
+                                array_push($array1,$data);
                             }
                         }
                     }
@@ -112,16 +112,16 @@ class DashboardController extends Controller
             $array1 = [];
             $array2 = [];
             $document = Document::where('stage', '>=', 4)->get();
-            foreach ($document as $data) {
-                $data->originator_name = User::where('id', $data->originator_id)->value('name');
-                if ($data->approver_group) {
-                    $datauser = explode(',', $data->approver_group);
-                    for ($i = 0; $i < count($datauser); $i++) {
+            foreach($document as $data){
+                $data->originator_name = User::where('id',$data->originator_id)->value('name');
+                if($data->approver_group){
+                    $datauser = explode(',',$data->approver_group);
+                    for($i=0; $i<count($datauser); $i++){
                         $group = Grouppermission::where('id', $datauser[$i])->value('user_ids');
-                        $ids = explode(',', $group);
-                        for ($j = 0; $j < count($ids); $j++) {
-                            if ($ids[$j] == Auth::user()->id) {
-                                array_push($array1, $data);
+                        $ids = explode(',',$group);
+                        for($j=0; $j<count($ids); $j++){
+                            if($ids[$j]== Auth::user()->id){
+                                array_push($array1,$data);
                             }
                         }
                     }
@@ -145,21 +145,20 @@ class DashboardController extends Controller
         }
     }
 
-    public function subscribe(Request $request)
-    {
+    public function subscribe(Request $request){
         $data = new Subscribe();
         $data->user_id = Auth::user()->id;
         $data->type = $request->type;
         $data->week = $request->week;
-        if ($request->type == "Weekly") {
+        if($request->type == "Weekly"){
             $data->day = $request->day;
         }
-        if ($request->type == "Monthly") {
+        if($request->type == "Monthly"){
             $data->day = $request->days;
         }
         $data->time = $request->time;
 
-        if ($request->status) {
+        if($request->status){
             $data->status = $request->status;
         }
 
@@ -168,10 +167,10 @@ class DashboardController extends Controller
         $recipent->subscribe_id = $data->id;
         $recipent->user_id = Auth::user()->id;
         $recipent->save();
-        if (!empty($request->recipents)) {
-            $imode = implode(',', $request->recipents);
-            $datas = explode(',', $imode);
-            foreach ($datas as $temp) {
+        if(!empty($request->recipents)){
+            $imode = implode(',',$request->recipents);
+            $datas = explode(',',$imode);
+            foreach($datas as $temp){
                 $recipent = new Recipent();
                 $recipent->subscribe_id = $data->id;
                 $recipent->user_id = $temp;
@@ -182,47 +181,27 @@ class DashboardController extends Controller
 
         toastr()->success('Subscribed !!');
         return back();
+
     }
-    public function analytics()
-    {
+    public function analytics(){
         return view('frontend.analytics');
     }
-    public function analyticsData(Request $request)
-    {
-        if ($request->value == "due") {
-            $current_date = date('Y-m-d');
-            $data = [
-                'InternalAudit' => InternalAudit::whereDate('due_date', '<', $current_date)->count(),
-                'Extension' => Extension::whereDate('due_date', '<', $current_date)->count(),
-                'Capa' => Capa::whereDate('due_date', '<', $current_date)->count(),
-                'AuditProgram' => AuditProgram::whereDate('due_date', '<', $current_date)->count(),
-                'LabIncident' => LabIncident::whereDate('due_date', '<', $current_date)->count(),
-                'RiskManagement' => RiskManagement::whereDate('due_date', '<', $current_date)->count(),
-                'RootCauseAnalysis' => RootCauseAnalysis::whereDate('due_date', '<', $current_date)->count(),
-                'ManagementReview' => ManagementReview::whereDate('due_date', '<', $current_date)->count(),
-                'CC' => CC::whereDate('due_date', '<', $current_date)->count(),
-                'ActionItem' => ActionItem::whereDate('due_date', '<', $current_date)->count(),
-                'EffectivenessCheck' => EffectivenessCheck::whereDate('due_date', '<', $current_date)->count(),
-                'Auditee' => Auditee::whereDate('due_date', '<', $current_date)->count(),
-                'Observation' => Observation::whereDate('due_date', '<', $current_date)->count(),
-            ];
-        } else {
-            $data = [
-                'InternalAudit' => InternalAudit::count(),
-                'Extension' => Extension::count(),
-                'Capa' => Capa::count(),
-                'AuditProgram' => AuditProgram::count(),
-                'LabIncident' => LabIncident::count(),
-                'RiskManagement' => RiskManagement::count(),
-                'RootCauseAnalysis' => RootCauseAnalysis::count(),
-                'ManagementReview' => ManagementReview::count(),
-                'CC' => CC::count(),
-                'ActionItem' => ActionItem::count(),
-                'EffectivenessCheck' => EffectivenessCheck::count(),
-                'Auditee' => Auditee::count(),
-                'Observation' => Observation::count(),
-            ];
-        }
+    public function analyticsData(){
+        $data = [
+            'InternalAudit' => InternalAudit::count(),
+            'Extension' => Extension::count(),
+            'Capa' => Capa::count(), 
+            'AuditProgram' => AuditProgram::count(),
+            'LabIncident' => LabIncident::count(),
+            'RiskManagement' => RiskManagement::count(),
+            'RootCauseAnalysis' => RootCauseAnalysis::count(),
+            'ManagementReview' => ManagementReview::count(),
+            'CC' => CC::count(),
+            'ActionItem' => ActionItem::count(),
+            'EffectivenessCheck' => EffectivenessCheck::count(),
+            'Auditee' => Auditee::count(),
+            'Observation' => Observation::count(),
+        ];
         $dataCounts = array_values($data);
         return response()->json(array_values($data));
     }
