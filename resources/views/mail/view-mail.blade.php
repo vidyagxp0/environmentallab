@@ -190,7 +190,7 @@ h2{
                     <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
                     <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="...">
                 </div>
-            </div>
+           
                 <div class="mail-content">
 
 
