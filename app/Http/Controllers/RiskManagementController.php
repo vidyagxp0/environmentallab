@@ -61,7 +61,7 @@ class RiskManagementController extends Controller
         $data->Initiator_Group = $request->Initiator_Group;
         $data->initiator_group_code = $request->initiator_group_code;
         $data->departments = implode(',', $request->departments);
-        $data->team_members = implode(',', $request->team_members);
+        // $data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
         $data->source_of_risk2 = $request->source_of_risk2;
         $data->type = $request->type;
@@ -447,19 +447,19 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if (!empty($data->team_members)) {
-            $history = new RiskAuditTrail();
-            $history->risk_id = $data->id;
-            $history->activity_type = 'Team Members';
-            $history->previous = "Null";
-            $history->current = $data->team_members;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        // if (!empty($data->team_members)) {
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $data->id;
+        //     $history->activity_type = 'Team Members';
+        //     $history->previous = "Null";
+        //     $history->current = $data->team_members;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->save();
+        // }
 
         if (!empty($data->source_of_risk)) {
             $history = new RiskAuditTrail();
@@ -1043,7 +1043,7 @@ class RiskManagementController extends Controller
         $data->Initiator_Group = $request->Initiator_Group;
         $data->initiator_group_code = $request->initiator_group_code;
         $data->departments = implode(',', $request->departments);
-        $data->team_members = implode(',', $request->team_members);
+        // $data->team_members = implode(',', $request->team_members);
         $data->source_of_risk = $request->source_of_risk;
         $data->source_of_risk2 = $request->source_of_risk2;
         $data->type = $request->type;
@@ -1395,20 +1395,20 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->team_members != $data->team_members || !empty($request->team_members_comment)) {
+        // if ($lastDocument->team_members != $data->team_members || !empty($request->team_members_comment)) {
 
-            $history = new RiskAuditTrail();
-            $history->risk_id = $id;
-            $history->activity_type = 'Team Members';
-            $history->previous = $lastDocument->team_members;
-            $history->current = $data->team_members;
-            $history->comment = $request->team_members_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Team Members';
+        //     $history->previous = $lastDocument->team_members;
+        //     $history->current = $data->team_members;
+        //     $history->comment = $request->team_members_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         if ($lastDocument->source_of_risk != $data->source_of_risk || !empty($request->source_of_risk_comment)) {
 
