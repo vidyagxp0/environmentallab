@@ -158,6 +158,7 @@
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
+                        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
 
@@ -165,17 +166,11 @@
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
                         <div class="main-scope-table">
-                            <div class="main-scope-table">
-                                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                            <div >
                                 <button id="toggleChartButton">Change Chart</button>
-                                <!-- Add a button for toggling charts -->
                                 <canvas id="myChart" width="400" height="115"></canvas>
                                 <div id="paichart" style="width: 400px; height: 115px; margin: 0 auto;"></div>
                             </div>
-
-                            <!-- Include Axios and Chart.js scripts -->
-                            <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
-                            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
                             <script>
                                 var barChartVisible = true; // Track the visibility state of the bar chart
@@ -191,8 +186,7 @@
                                     barChartVisible = !barChartVisible; // Toggle the visibility state
                                 }
 
-                                document.getElementById('toggleChartButton').addEventListener('click',
-                                toggleCharts); // Add event listener to the button
+                                document.getElementById('toggleChartButton').addEventListener('click', toggleCharts);
                             </script>
 
                             <script>
@@ -253,10 +247,12 @@
                                             }
                                         });
                                     });
+                            </script>
+
+                            <script>
                                 axios.get('/api/analyticsData')
                                     .then(function(response) {
                                         var dataCountsdata = response.data;
-
 
                                         var options = {
                                             series: dataCountsdata,
@@ -269,6 +265,11 @@
                                                 'Auditee',
                                                 'Observation'
                                             ],
+                                            legend: {
+                                                position: 'bottom',
+                                                offsetY: 10, // adjust this value if needed
+                                                height: 50 // adjust this value if needed
+                                            },
                                             responsive: [{
                                                 breakpoint: 480,
                                                 options: {
@@ -288,9 +289,7 @@
                             </script>
 
                             <div id="test">
-                                </br>
                                 <hr>
-                                </br>
                                 <h4 align="center" id="selectedValueText"></h4>
                                 <div id="chart">
                                     <hr>
@@ -360,250 +359,248 @@
                                             });
                                         })
                                 </script>
-
-
-                            </div>
-                            <!-- <div align="center" id="new-chart-id"> -->
-                            <!-- <h4>Status</h4> -->
-                            <!-- </div> -->
-                        </div>
-                        {{-- <div class="scope-pagination">
+                                {{-- <div class="scope-pagination">
                             {{ $datag->links() }}
                 </div> --}}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="modal fade modal-sm" id="record-modal">
-        <div class="modal-contain">
-            <div class="modal-dialog m-0">
-                <div class="modal-content">
+            <div class="modal fade modal-sm" id="record-modal">
+                <div class="modal-contain">
+                    <div class="modal-dialog m-0">
+                        <div class="modal-content">
 
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <!-- Modal body -->
+                            <div class="modal-body " id="auditTableinfo">
+                                Please wait...
+                            </div>
+
+                        </div>
                     </div>
-
-                    <!-- Modal body -->
-                    <div class="modal-body " id="auditTableinfo">
-                        Please wait...
-                    </div>
-
                 </div>
             </div>
-        </div>
-    </div>
 
-    <script>
-        function showChild() {
-            $(".child-row").toggle();
-        }
+            <script>
+                function showChild() {
+                    $(".child-row").toggle();
+                }
 
-        $(".view-list").hide();
+                $(".view-list").hide();
 
-        function toggleview() {
-            $(".view-list").toggle();
-        }
+                function toggleview() {
+                    $(".view-list").toggle();
+                }
 
-        $("#record-modal .drop-list").hide();
+                $("#record-modal .drop-list").hide();
 
-        function showAction() {
-            $("#record-modal .drop-list").toggle();
-        }
-    </script>
-    <script type='text/javascript'>
-        $(document).ready(function() {
-            $('#auditTable').on('click', '.viewdetails', function() {
-                var auditid = $(this).attr('data-id');
-                var formType = $(this).attr('data-type');
-                if (auditid > 0) {
-                    // AJAX request
-                    var url = "{{ route('ccView', ['id' => ':auditid', 'type' => ':formType']) }}";
-                    url = url.replace(':auditid', auditid).replace(':formType', formType);
+                function showAction() {
+                    $("#record-modal .drop-list").toggle();
+                }
+            </script>
+            <script type='text/javascript'>
+                $(document).ready(function() {
+                    $('#auditTable').on('click', '.viewdetails', function() {
+                        var auditid = $(this).attr('data-id');
+                        var formType = $(this).attr('data-type');
+                        if (auditid > 0) {
+                            // AJAX request
+                            var url = "{{ route('ccView', ['id' => ':auditid', 'type' => ':formType']) }}";
+                            url = url.replace(':auditid', auditid).replace(':formType', formType);
 
-                    // Empty modal data
-                    $('#auditTableinfo').empty();
-                    $.ajax({
-                        url: url,
-                        dataType: 'json',
-                        success: function(response) {
-                            // Add employee details
-                            $('#auditTableinfo').append(response.html);
-                            // Display Modal
-                            $('#record-modal').modal('show');
+                            // Empty modal data
+                            $('#auditTableinfo').empty();
+                            $.ajax({
+                                url: url,
+                                dataType: 'json',
+                                success: function(response) {
+                                    // Add employee details
+                                    $('#auditTableinfo').append(response.html);
+                                    // Display Modal
+                                    $('#record-modal').modal('show');
+                                }
+                            });
                         }
                     });
+                });
+            </script>
+            <script>
+                function showChart() {
+                    var selectElement = document.getElementById("test");
+                    var chartDiv = document.getElementById("chart");
+
+                    // Hide the chart if no option is selected
+                    if (!selectElement.value) {
+                        chartDiv.style.display = "none";
+                        return;
+                    } else {
+                        chartDiv.style.display = "block";
+                    }
+
+                    // Clear the existing chart data
+                    var chartElement = document.querySelector("#chart");
+                    if (chartElement) {
+                        chartElement.innerHTML = ""; // Clear the chart container
+                    }
+                    var selectedValue = selectElement.value;
+                    document.getElementById("selectedValueText").textContent = selectedValue + " (Division)";
+                    fetchData(selectedValue);
                 }
-            });
-        });
-    </script>
-    <script>
-        function showChart() {
-            var selectElement = document.getElementById("test");
-            var chartDiv = document.getElementById("chart");
+            </script>
 
-            // Hide the chart if no option is selected
-            if (!selectElement.value) {
-                chartDiv.style.display = "none";
-                return;
-            } else {
-                chartDiv.style.display = "block";
-            }
-
-            // Clear the existing chart data
-            var chartElement = document.querySelector("#chart");
-            if (chartElement) {
-                chartElement.innerHTML = ""; // Clear the chart container
-            }
-            var selectedValue = selectElement.value;
-            document.getElementById("selectedValueText").textContent = selectedValue + " (Division)";
-            fetchData(selectedValue);
-        }
-    </script>
-
-    <script>
-        function fetchData(selectedValue) {
-            fetch(`/chart-data?value=${selectedValue}`)
-                .then(response => response.json())
-                .then(data => {
-                    var options = {
-                        series: [{
-                            name: 'Total',
-                            data: data.map(item => item.value),
-                            // Define color for each category
-                            colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560']
-                        }],
-                        chart: {
-                            type: 'bar',
-                            height: 350,
-                            stacked: true,
-                            toolbar: {
-                                show: true
-                            },
-                            zoom: {
-                                enabled: true
-                            }
-                        },
-                        plotOptions: {
-                            bar: {
-                                horizontal: false,
-                                borderRadius: 10,
-                                dataLabels: {
-                                    total: {
-                                        enabled: true,
-                                        style: {
-                                            fontSize: '13px',
-                                            fontWeight: 900
+            <script>
+                function fetchData(selectedValue) {
+                    fetch(`/chart-data?value=${selectedValue}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            var options = {
+                                series: [{
+                                    name: 'Total',
+                                    data: data.map(item => item.value),
+                                    // Define color for each category
+                                    colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560']
+                                }],
+                                chart: {
+                                    type: 'bar',
+                                    height: 350,
+                                    stacked: true,
+                                    toolbar: {
+                                        show: true
+                                    },
+                                    zoom: {
+                                        enabled: true
+                                    }
+                                },
+                                plotOptions: {
+                                    bar: {
+                                        horizontal: false,
+                                        borderRadius: 10,
+                                        dataLabels: {
+                                            total: {
+                                                enabled: true,
+                                                style: {
+                                                    fontSize: '13px',
+                                                    fontWeight: 900
+                                                }
+                                            }
                                         }
+                                    },
+                                },
+                                xaxis: {
+                                    type: 'category',
+                                    categories: data.map(item => item.division)
+                                },
+                                legend: {
+                                    position: 'right',
+                                    offsetY: 40
+                                },
+                                fill: {
+                                    opacity: 1
+                                }
+                            };
+
+                            var chart = new ApexCharts(document.querySelector("#chart"), options);
+                            chart.render();
+                        });
+                }
+            </script>
+
+
+            <script>
+                var options = {
+                    series: [{
+                        name: 'Opend',
+                        data: [44, 55, 22, 43]
+                    }, {
+                        name: 'Cancelled',
+                        data: [13, 8, 13, 27]
+                    }, {
+                        name: 'Testing C',
+                        data: [11, 15, 21, 14]
+                    }, {
+                        name: 'Complete D',
+                        data: [21, 13, 22, 8]
+                    }],
+                    chart: {
+                        type: 'bar',
+                        height: 350,
+                        stacked: true,
+                        toolbar: {
+                            show: true
+                        },
+                        zoom: {
+                            enabled: true
+                        }
+                    },
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            legend: {
+                                position: 'bottom',
+                                offsetX: -10,
+                                offsetY: 0
+                            }
+                        }
+                    }],
+                    plotOptions: {
+                        bar: {
+                            horizontal: false,
+                            borderRadius: 10,
+                            dataLabels: {
+                                total: {
+                                    enabled: true,
+                                    style: {
+                                        fontSize: '13px',
+                                        fontWeight: 900
                                     }
                                 }
-                            },
-                        },
-                        xaxis: {
-                            type: 'category',
-                            categories: data.map(item => item.division)
-                        },
-                        legend: {
-                            position: 'right',
-                            offsetY: 40
-                        },
-                        fill: {
-                            opacity: 1
-                        }
-                    };
-
-                    var chart = new ApexCharts(document.querySelector("#chart"), options);
-                    chart.render();
-                });
-        }
-    </script>
-
-
-    <script>
-        var options = {
-            series: [{
-                name: 'Opend',
-                data: [44, 55, 22, 43]
-            }, {
-                name: 'Cancelled',
-                data: [13, 8, 13, 27]
-            }, {
-                name: 'Testing C',
-                data: [11, 15, 21, 14]
-            }, {
-                name: 'Complete D',
-                data: [21, 13, 22, 8]
-            }],
-            chart: {
-                type: 'bar',
-                height: 350,
-                stacked: true,
-                toolbar: {
-                    show: true
-                },
-                zoom: {
-                    enabled: true
-                }
-            },
-            responsive: [{
-                breakpoint: 480,
-                options: {
-                    legend: {
-                        position: 'bottom',
-                        offsetX: -10,
-                        offsetY: 0
-                    }
-                }
-            }],
-            plotOptions: {
-                bar: {
-                    horizontal: false,
-                    borderRadius: 10,
-                    dataLabels: {
-                        total: {
-                            enabled: true,
-                            style: {
-                                fontSize: '13px',
-                                fontWeight: 900
                             }
-                        }
+                        },
+                    },
+                    xaxis: {
+                        type: 'text',
+                        categories: ['KSA', 'Egypt', 'Estonia', 'Jordan', ],
+                    },
+                    legend: {
+                        position: 'right',
+                        offsetY: 40
+                    },
+                    fill: {
+                        opacity: 1
                     }
-                },
-            },
-            xaxis: {
-                type: 'text',
-                categories: ['KSA', 'Egypt', 'Estonia', 'Jordan', ],
-            },
-            legend: {
-                position: 'right',
-                offsetY: 40
-            },
-            fill: {
-                opacity: 1
-            }
-        };
+                };
 
-        var chart = new ApexCharts(document.querySelector("#new-chart-id"), options);
-        chart.render();
-    </script>
-    <style>
-        #chart {
-            display: none;
-            width: 50%;
-            height: 100px;
-            margin-top: 10px;
-            margin-left: auto;
-            margin-right: auto;
-        }
+                var chart = new ApexCharts(document.querySelector("#new-chart-id"), options);
+                chart.render();
+            </script>
+            <style>
+                #chart {
+                    display: none;
+                    width: 50%;
+                    height: 100px;
+                    margin-top: 10px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
 
-        #new-chart-id {
+                #new-chart-id {
 
-            width: 50%;
-            height: 100px;
-            margin-top: 10px;
-            /* margin-left: auto; */
-            /* margin-right: auto; */
-        }
-    </style>
-@endsection
+                    width: 50%;
+                    height: 100px;
+                    margin-top: 10px;
+                    /* margin-left: auto; */
+                    /* margin-right: auto; */
+                }
+
+                #paichart {
+                    display: none;
+                    /* Hide the pie chart initially */
+                }
+            </style>
+        @endsection
