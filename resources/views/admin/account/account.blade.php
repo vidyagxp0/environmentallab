@@ -55,7 +55,11 @@
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
                                     <td>{{ $user->dname }}</td>
-                                    <th>{{ $roleName }}</th>
+                                    <td>
+                                        {{-- {{ $roleName }} --}}
+                                        <button class="btn btn-dark view-role" data-role="{{ $roleName }}"><i class="fas fa-eye"></i> </button>
+
+                                    </td>
                                     <td>
                                         <a class="mdi mdi-table-edit"
                                             href="{{ route('user_management.edit', $user->id) }}"><button
@@ -70,7 +74,43 @@
                                     </td>
                                 </tr>
                             @endforeach
-
+                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                            <script>
+                                $(document).ready(function() {
+                                    $('.view-role').click(function() {
+                                        var roleName = $(this).data('role');
+                                        var roleList = roleName.split(','); // Split the role names into an array
+                            
+                                        // Create an unordered list
+                                        var roleDisplay = $('<div><ul></ul></div>').css({
+                                            'position': 'fixed',
+                                            'top': '50%',
+                                            'left': '78%',
+                                            'transform': 'translate(-50%, -50%)',
+                                            'background-color': '#fff',
+                                            'padding': '20px',
+                                            'border': '1px solid #000',
+                                            'border-radius': '10px',
+                                            'box-shadow': '0px 0px 10px rgba(0, 0, 0, 0.3)',
+                                            'z-index': '9999'
+                                        });
+                            
+                                        // Append list items for each role
+                                        $.each(roleList, function(index, role) {
+                                            roleDisplay.find('ul').append('<li>' + role + '</li>');
+                                        });
+                            
+                                        // Append the list to the body
+                                        $('body').append(roleDisplay);
+                            
+                                        // Remove the role display after a certain time
+                                        setTimeout(function() {
+                                            roleDisplay.remove();
+                                        }, 2000); // Adjust the time (in milliseconds) as needed
+                                    });
+                                });
+                            </script>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
                             </tfoot>
                     </table>
                 </div>
