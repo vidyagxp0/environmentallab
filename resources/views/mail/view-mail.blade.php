@@ -66,12 +66,6 @@ h2{
 .fl-table tr:nth-child(even) {
     background: #F8F8F8;
 }
-.logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding-bottom:10px;
-        }
 
 /* Responsive */
 
@@ -163,14 +157,16 @@ h2{
         }
 
         #main-container .logo {
-            width: 120px;
-            aspect-ratio: 1/0.3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
             margin-bottom: 30px;
         }
 
         #main-container .logo img {
-            width: 100%;
-            height: 100%;
+            width: 120px;
+            aspect-ratio: 1/0.3;
         }
 
         #main-container .mail-content {
@@ -189,7 +185,7 @@ h2{
     <div id="main-container">
         <div class="notification-container">
             <div class="inner-block">
-            <div class="logo-container">
+           
                 <div class="logo">
                     <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
                     <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="...">
