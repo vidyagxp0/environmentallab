@@ -836,24 +836,24 @@ use Illuminate\Support\Facades\Hash;
                 $history->stage='Acknowledge';
 
                 $history->save();
-                $list = Helpers::getQAUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $root->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if ($email !== null) {
+            //     $list = Helpers::getQAUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id == $root->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //              if ($email !== null) {
                         
                       
-                          Mail::send(
-                              'mail.view-mail',
-                               ['data' => $root],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document sent ".Auth::user()->name);
-                            }
-                          );
-                        }
-                 } 
-              }
+            //               Mail::send(
+            //                   'mail.view-mail',
+            //                    ['data' => $root],
+            //                 function ($message) use ($email) {
+            //                     $message->to($email)
+            //                         ->subject("Document sent ".Auth::user()->name);
+            //                 }
+            //               );
+            //             }
+            //      } 
+            //   }
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -969,23 +969,23 @@ use Illuminate\Support\Facades\Hash;
              $history->origin_state = $lastDocument->status;
             $history->stage='Cancelled ';
             $history->save();
-            $list = Helpers::getQAUserList();
-            foreach ($list as $u) {
-                if($u->q_m_s_divisions_id == $root->division_id){
-                    $email = Helpers::getInitiatorEmail($u->user_id);
-                     if ($email !== null) {
+        //     $list = Helpers::getQAUserList();
+        //     foreach ($list as $u) {
+        //         if($u->q_m_s_divisions_id == $root->division_id){
+        //             $email = Helpers::getInitiatorEmail($u->user_id);
+        //              if ($email !== null) {
                   
-                      Mail::send(
-                          'mail.view-mail',
-                           ['data' => $root],
-                        function ($message) use ($email) {
-                            $message->to($email)
-                                ->subject("Document sent ".Auth::user()->name);
-                        }
-                      );
-                    }
-             } 
-          }
+        //               Mail::send(
+        //                   'mail.view-mail',
+        //                    ['data' => $root],
+        //                 function ($message) use ($email) {
+        //                     $message->to($email)
+        //                         ->subject("Document sent ".Auth::user()->name);
+        //                 }
+        //               );
+        //             }
+        //      } 
+        //   }
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";

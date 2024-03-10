@@ -652,23 +652,23 @@ class EffectivenessCheckController extends Controller
                             $history->step = 'Submit';
                             $history->save();
                             
-                    $list = Helpers:: getSupervisorUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                //     $list = Helpers:: getSupervisorUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Submitted By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Submitted By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
            
 
                     $changeControl->update();
@@ -717,23 +717,23 @@ class EffectivenessCheckController extends Controller
                             $history->step = 'Effective';
                             $history->save();
                             
-                    $list = Helpers:: getQAUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                //     $list = Helpers:: getQAUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Send By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
            
                     $changeControl->update();
                     $history = new CCStageHistory();
@@ -809,23 +809,23 @@ class EffectivenessCheckController extends Controller
                             $history->step = 'Not Effective';
                             $history->save();
                             
-                    $list = Helpers:: getQAUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                //     $list = Helpers:: getQAUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' =>  $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Send By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' =>  $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
            
                 $changeControl->update();
                 $history = new CCStageHistory();

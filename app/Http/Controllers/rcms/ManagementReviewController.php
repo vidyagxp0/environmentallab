@@ -1357,22 +1357,22 @@ class ManagementReviewController extends Controller
                 $history->stage='Submited';
                 $history->save();
                 
-                $list = Helpers::getResponsibleUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $changeControl->division_id){
-                     $email = Helpers::getInitiatorEmail($u->user_id);
-                     if ($email !== null) {
-                         Mail::send(
-                            'mail.view-mail',
-                            ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Send By ".Auth::user()->name);
-                            }
-                        );
-                      }
-                    } 
-                }
+                // $list = Helpers::getResponsibleUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1395,22 +1395,22 @@ class ManagementReviewController extends Controller
                 $history->stage='Completed';
                 $history->save();
                 $changeControl->update();
-                $list = Helpers::getInitiatorUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id == $changeControl->division_id){
-                     $email = Helpers::getInitiatorEmail($u->user_id);
-                     if ($email !== null) {
-                         Mail::send(
-                            'mail.view-mail',
-                            ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Send By ".Auth::user()->name);
-                            }
-                        );
-                      }
-                    } 
-                }
+                // $list = Helpers::getInitiatorUserList();
+                // foreach ($list as $u) {
+                //     if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //      $email = Helpers::getInitiatorEmail($u->user_id);
+                //      if ($email !== null) {
+                //          Mail::send(
+                //             'mail.view-mail',
+                //             ['data' => $changeControl],
+                //             function ($message) use ($email) {
+                //                 $message->to($email)
+                //                     ->subject("Document is Send By ".Auth::user()->name);
+                //             }
+                //         );
+                //       }
+                //     } 
+                // }
                 toastr()->success('Document Sent');
                 return back();
             }

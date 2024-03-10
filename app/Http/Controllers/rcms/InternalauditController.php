@@ -1483,23 +1483,23 @@ class InternalauditController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Audit Schedule";
                             $history->save();
-                       $list = Helpers::getLeadAuditorUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);                           
-                             if ($email !== null) {
+                //        $list = Helpers::getLeadAuditorUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);                           
+                //              if ($email !== null) {
                        
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document sent ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document sent ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1529,23 +1529,23 @@ class InternalauditController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Audit Preparation Completed";
                             $history->save();
-                            $list = Helpers::getAuditManagerUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                //             $list = Helpers::getAuditManagerUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document sent ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document sent ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1566,24 +1566,24 @@ class InternalauditController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Audit Mgr More Info Reqd";
                             $history->save();
-                            $list = Helpers::getLeadAuditeeUserList();
-                            foreach ($list as $u) {
-                                if($u->q_m_s_divisions_id == $changeControl->division_id){
-                                    $email = Helpers::getInitiatorEmail($u->user_id);
+                        //     $list = Helpers::getLeadAuditeeUserList();
+                        //     foreach ($list as $u) {
+                        //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        //             $email = Helpers::getInitiatorEmail($u->user_id);
 
-                                     if ($email !== null) {
+                        //              if ($email !== null) {
                                   
-                                      Mail::send(
-                                          'mail.view-mail',
-                                           ['data' => $changeControl],
-                                        function ($message) use ($email) {
-                                            $message->to($email)
-                                                ->subject("Document sent ".Auth::user()->name);
-                                        }
-                                      );
-                                    }
-                             } 
-                          }
+                        //               Mail::send(
+                        //                   'mail.view-mail',
+                        //                    ['data' => $changeControl],
+                        //                 function ($message) use ($email) {
+                        //                     $message->to($email)
+                        //                         ->subject("Document sent ".Auth::user()->name);
+                        //                 }
+                        //               );
+                        //             }
+                        //      } 
+                        //   }
                       
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1680,23 +1680,23 @@ class InternalauditController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Rejected";
                             $history->save();
-                            $list = Helpers::getAuditManagerUserList();
-                            foreach ($list as $u) {
-                                if($u->q_m_s_divisions_id == $changeControl->division_id){
-                                    $email = Helpers::getInitiatorEmail($u->user_id);
-                                     if ($email !== null) {
+                        //     $list = Helpers::getAuditManagerUserList();
+                        //     foreach ($list as $u) {
+                        //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                        //             $email = Helpers::getInitiatorEmail($u->user_id);
+                        //              if ($email !== null) {
                                   
-                                      Mail::send(
-                                          'mail.view-mail',
-                                           ['data' => $changeControl],
-                                        function ($message) use ($email) {
-                                            $message->to($email)
-                                                ->subject("Document is Rejected ".Auth::user()->name);
-                                        }
-                                      );
-                                    }
-                             } 
-                          }
+                        //               Mail::send(
+                        //                   'mail.view-mail',
+                        //                    ['data' => $changeControl],
+                        //                 function ($message) use ($email) {
+                        //                     $message->to($email)
+                        //                         ->subject("Document is Rejected ".Auth::user()->name);
+                        //                 }
+                        //               );
+                        //             }
+                        //      } 
+                        //   }
                    
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
@@ -1752,23 +1752,23 @@ class InternalauditController extends Controller
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = "Cancelled";
                                 $history->save();
-                                  $list = Helpers::getHodUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getLeadAuditorUserList($u->user_id);
-                             if ($email !== null) {
+                //                   $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getLeadAuditorUserList($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is cancel By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is cancel By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
