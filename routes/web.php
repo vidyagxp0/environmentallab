@@ -57,6 +57,10 @@ Route::get('/error', function () {
 //!---------------- starting login  ---------------------------//
 
 Route::get('/', [UserLoginController::class, 'userlogin']);
+Route::get('/forget-password', [UserLoginController::class, 'forgetPassword'])->name("forget.password");
+Route::post('/forget-password', [UserLoginController::class, 'forgetPasswordPost'])->name("forget.password.post");
+Route::get('/reset-password/{token}', [UserLoginController::class, 'resetPassword'])->name("reset.password");
+Route::post('/reset-password', [UserLoginController::class, 'resetPasswordPost'])->name("reset.password.post");
 Route::view('forgot-password', 'frontend.forgot-password');
 // Route::view('dashboard', 'frontend.dashboard');
 

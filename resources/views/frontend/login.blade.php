@@ -186,6 +186,14 @@
             transition: all 0.3s linear;
             cursor: pointer;
         }
+        #rcms_login_block .forget-password {
+            text-align: center;
+            color: white;
+            margin-bottom: 10px;
+        }
+        #rcms_login_block .forget-password a {
+             color: white !important;
+       }
     </style>
 </head>
 
@@ -562,6 +570,7 @@
                         </option>
                     </select>
                 </div>
+                <div class="forget-password"> <a href="{{route('forget.password')}}">Forget Password</a></div>
                 <div>
                     <input type="submit" value="Login">
                 </div>
