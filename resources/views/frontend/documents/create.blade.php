@@ -180,7 +180,7 @@
                                             data-silent-initial-value-set="true" id="notify_to">
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}
-                                                    ({{ $data->role }})
+                                                    {{-- ({{ $data->role }}) --}}
                                                 </option>
                                             @endforeach
 

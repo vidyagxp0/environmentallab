@@ -275,7 +275,7 @@
                                         data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}} >
                                         @foreach ($users as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}
-                                                ({{ $data->role }})
+                                                {{-- ({{ $data->role }}) --}}
                                             </option>
                                         @endforeach
                                     </select>
