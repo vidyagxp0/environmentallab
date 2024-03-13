@@ -134,7 +134,7 @@
                     <th>Activity Type</th>
                     <th>Performed On</th>
                     <th>Performed By</th>
-                    <th>Performer Role</th>
+                    {{-- <th>Performer Role</th> --}}
                     <th>Origin State</th>
                     <th>Resulting State</th>
                 </tr>
@@ -144,7 +144,7 @@
                     <td>Document Type</td>
                     <td>12-12-2023 11:00 PM</td>
                     <td>Shaleen Mishra</td>
-                    <td>HOD</td>
+                    {{-- <td>HOD</td> --}}
                     <td>Under Review</td>
                     <td>Reviewed</td>
                 </tr>
