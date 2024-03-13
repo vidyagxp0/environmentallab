@@ -111,7 +111,16 @@ class UserLoginController extends Controller
 
     public function rcmscheck(Request $request)
     {
-                TotalLogin::userCheck();
+        if($request->confirmPassword){
+            $user = User::find(Auth::user()->id);
+            $user->password = Hash::make($request->confirmPassword);
+            $user->f_login = 1;
+            $user->save();
+            Auth::logout();
+            toastr()->success('Login With New Password.');
+            return redirect('/login');
+        }
+        TotalLogin::userCheck();
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -132,9 +141,7 @@ class UserLoginController extends Controller
                     // Save the user ID to the total_logins table for check login user limit
                     if(Auth::User()->f_login==0){
                         // dd(Auth::User()->f_login);
-                        TotalLogin::addUser();
-                        toastr()->success('Login Successfully.');
-                        session()->put('last_activity', time());
+                        toastr()->success('Create New Password.');
                         return view('frontend.rcms.makePassword');
 
                     }else{
