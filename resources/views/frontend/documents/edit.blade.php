@@ -392,7 +392,7 @@
                                             @foreach ($document_data as $temp)
                                             
                                                 <option value="{{ $temp->id }}">
-                                                    {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-000{{ $temp->id }}
+                                                    {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}
                                                 </option>
                                             @endforeach
                                         @endif
