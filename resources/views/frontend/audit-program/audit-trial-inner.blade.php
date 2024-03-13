@@ -36,12 +36,12 @@
                                 <div>:</div>
                                 <div>{{ $temp->user_name }}</div>
                             </div>
-                            <div class="list-item">
+                            {{-- <div class="list-item">
                                 <div class="head">Modifier role</div>
                                 <div>:</div>
                                 <div>{{ $temp->user_role }}</div>
-                            </div>
-                            <div class="list-item">
+                            </div> --}}
+                                <div class="list-item">
                                 <div class="head">Modified On</div>
                                 <div>:</div>
                                 <div>{{ Helpers::getdateFormat1($temp->created_at) }}</div>

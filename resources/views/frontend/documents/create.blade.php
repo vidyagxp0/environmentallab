@@ -180,7 +180,7 @@
                                             data-silent-initial-value-set="true" id="notify_to">
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}
-                                                    ({{ $data->role }})
+                                                    {{-- ({{ $data->role }}) --}}
                                                 </option>
                                             @endforeach
 
@@ -214,7 +214,7 @@
                                             @if (!empty($document))
                                                 @foreach ($document as $temp)
                                                     <option value="{{ $temp->id }}">
-                                                        {{ $temp->division }}/{{ $temp->typecode }}/{{ $temp->year }}/SOP-000{{ $temp->id }}
+                                                        {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}
                                                     </option>
                                                 @endforeach
                                             @endif
