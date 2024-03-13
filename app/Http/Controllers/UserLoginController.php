@@ -111,7 +111,7 @@ class UserLoginController extends Controller
 
     public function rcmscheck(Request $request)
     {
-        TotalLogin::userCheck();
+                TotalLogin::userCheck();
         $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required'],
@@ -130,10 +130,20 @@ class UserLoginController extends Controller
                     return redirect()->back()->withInput();
                 } else {
                     // Save the user ID to the total_logins table for check login user limit
-                    TotalLogin::addUser();
-                    toastr()->success('Login Successfully.');
-                    session()->put('last_activity', time());
-                    return redirect('rcms/qms-dashboard');
+                    if(Auth::User()->f_login==0){
+                        // dd(Auth::User()->f_login);
+                        TotalLogin::addUser();
+                        toastr()->success('Login Successfully.');
+                        session()->put('last_activity', time());
+                        return view('frontend.rcms.makePassword');
+
+                    }else{
+                        TotalLogin::addUser();
+                        toastr()->success('Login Successfully.');
+                        session()->put('last_activity', time());
+                        return redirect('rcms/qms-dashboard');
+                    }
+                   
                 }
             } else {
                 toastr()->error('Login failed.');
