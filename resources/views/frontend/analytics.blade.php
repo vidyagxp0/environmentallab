@@ -171,7 +171,7 @@
 
                         <div class="main-scope-table">
                             <div>
-                                <button id="toggleChartButton">Change Chart</button>
+                                <button id="toggleChartButton">Bar Chart</button>
                                 <canvas id="myChart" width="400" height="115"></canvas>
                                 <canvas id="myLineChart" width="400" height="115" style="display:none;"></canvas>
                                 <div id="paichart" style="width: 400px; height: 115px; margin: 0 auto; display:none;"></div>
@@ -181,56 +181,25 @@
                                 var chartTypes = ['bar', 'pie', 'line']; // Available chart types
                                 var currentChartIndex = 0; // Index to track the current chart type
                             
-                                // Initialize chart
-                                var ctx = document.getElementById('myChart').getContext('2d');
-                                var myChart = new Chart(ctx, {
-                                    type: chartTypes[currentChartIndex],
-                                    data: {
-                                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-                                        datasets: [{
-                                            label: '# of Votes',
-                                            data: [12, 19, 3, 5, 2, 3],
-                                            backgroundColor: [
-                                                'rgba(255, 99, 132, 0.2)',
-                                                'rgba(54, 162, 235, 0.2)',
-                                                'rgba(255, 206, 86, 0.2)',
-                                                'rgba(75, 192, 192, 0.2)',
-                                                'rgba(153, 102, 255, 0.2)',
-                                                'rgba(255, 159, 64, 0.2)'
-                                            ],
-                                            borderColor: [
-                                                'rgba(255, 99, 132, 1)',
-                                                'rgba(54, 162, 235, 1)',
-                                                'rgba(255, 206, 86, 1)',
-                                                'rgba(75, 192, 192, 1)',
-                                                'rgba(153, 102, 255, 1)',
-                                                'rgba(255, 159, 64, 1)'
-                                            ],
-                                            borderWidth: 1
-                                        }]
-                                    },
-                                    options: {
-                                        scales: {
-                                            y: {
-                                                beginAtZero: true
-                                            }
-                                        }
-                                    }
-                                });
+                             
                             
                                 function toggleCharts() {
                                     currentChartIndex = (currentChartIndex + 1) % chartTypes.length; // Cycle through chart types
                                     var chartType = chartTypes[currentChartIndex];
+                                    var button = document.getElementById('toggleChartButton');
                                     
                                     if (chartType === 'bar') {
+                                        button.textContent = 'Bar Chart';
                                         document.getElementById('myChart').style.display = 'block';
                                         document.getElementById('myLineChart').style.display = 'none';
                                         document.getElementById('paichart').style.display = 'none';
                                     } else if (chartType === 'pie') {
+                                        button.textContent = 'Pie Chart';
                                         document.getElementById('myChart').style.display = 'none';
                                         document.getElementById('myLineChart').style.display = 'none';
                                         document.getElementById('paichart').style.display = 'block';
                                     } else if (chartType === 'line') {
+                                        button.textContent = 'Line Chart';
                                         document.getElementById('myChart').style.display = 'none';
                                         document.getElementById('myLineChart').style.display = 'block';
                                         document.getElementById('paichart').style.display = 'none';
