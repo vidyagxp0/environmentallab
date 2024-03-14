@@ -174,20 +174,21 @@
                                 <button id="toggleChartButton">Bar Chart</button>
                                 <canvas id="myChart" width="400" height="115"></canvas>
                                 <canvas id="myLineChart" width="400" height="115" style="display:none;"></canvas>
-                                <div id="paichart" style="width: 400px; height: 115px; margin: 0 auto; display:none;"></div>
+                                <div id="paichart" style="width: 400px; height: 115px; margin: 0 auto; display:none;">
+                                </div>
                             </div>
-                            
+
                             <script>
                                 var chartTypes = ['bar', 'pie', 'line']; // Available chart types
                                 var currentChartIndex = 0; // Index to track the current chart type
-                            
-                             
-                            
+
+
+
                                 function toggleCharts() {
                                     currentChartIndex = (currentChartIndex + 1) % chartTypes.length; // Cycle through chart types
                                     var chartType = chartTypes[currentChartIndex];
                                     var button = document.getElementById('toggleChartButton');
-                                    
+
                                     if (chartType === 'bar') {
                                         button.textContent = 'Bar Chart';
                                         document.getElementById('myChart').style.display = 'block';
@@ -205,10 +206,10 @@
                                         document.getElementById('paichart').style.display = 'none';
                                     }
                                 }
-                            
+
                                 document.getElementById('toggleChartButton').addEventListener('click', toggleCharts);
                             </script>
-                            
+
 
                             <script>
                                 axios.get('/api/analyticsData')
@@ -309,32 +310,33 @@
                                     })
                             </script>
                             <script type="text/javascript">
-                             axios.get('/api/analyticsData')
+                                axios.get('/api/analyticsData')
                                     .then(function(response) {
                                         var dataCounts = response.data;
-                                var labelsLine = ['InternalAudit', 'Extension', 'Capa', 'AuditProgram', 'LabIncident', 'RiskManagement',
-                                    'RootCauseAnalysis', 'ManagementReview', 'CC', 'ActionItem', 'EffectivenessCheck', 'Auditee', 'Observation'
-                                ];
-                                var users = [65, 59, 80, 81, 56, 55, 40];
-                                const dataLine = {
-                                    labels: labelsLine,
-                                    datasets: [{
-                                        label: '',
-                                        backgroundColor: 'rgb(255, 99, 132)',
-                                        borderColor: 'rgb(255, 99, 132)',
-                                        data: dataCounts,
-                                    }]
-                                };
-                                const configLine = {
-                                    type: 'line',
-                                    data: dataLine,
-                                    options: {}
-                                };
-                                const myChartLine = new Chart(
-                                    document.getElementById('myLineChart'),
-                                    configLine
-                                );
-                            });
+                                        var labelsLine = ['InternalAudit', 'Extension', 'Capa', 'AuditProgram', 'LabIncident', 'RiskManagement',
+                                            'RootCauseAnalysis', 'ManagementReview', 'CC', 'ActionItem', 'EffectivenessCheck', 'Auditee',
+                                            'Observation'
+                                        ];
+                                        var users = [65, 59, 80, 81, 56, 55, 40];
+                                        const dataLine = {
+                                            labels: labelsLine,
+                                            datasets: [{
+                                                label: '',
+                                                backgroundColor: 'rgb(255, 99, 132)',
+                                                borderColor: 'rgb(255, 99, 132)',
+                                                data: dataCounts,
+                                            }]
+                                        };
+                                        const configLine = {
+                                            type: 'line',
+                                            data: dataLine,
+                                            options: {}
+                                        };
+                                        const myChartLine = new Chart(
+                                            document.getElementById('myLineChart'),
+                                            configLine
+                                        );
+                                    });
                             </script>
                             <div id="test">
                                 </br>
@@ -801,6 +803,11 @@
                 #paichart {
                     display: none;
                     /* Hide the pie chart initially */
+                }
+
+                #toggleChartButton {
+                    color: #bf5313;
+                    background: #e4e4f2;
                 }
             </style>
         @endsection
