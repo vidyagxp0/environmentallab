@@ -267,4 +267,20 @@ class UserManagementController extends Controller
             return redirect()->back();
         }
     }
+    public function activePage()
+    {
+        $users = user::leftJoin("departments", "departments.id", "=", "users.departmentid")
+        ->orWhere('users.attempt', '>=',3)
+        ->get(['users.*', 'departments.name as dname']);
+        return view('admin.account.locked', compact('users'));
+    }
+    public function Unlocked($id)
+    {
+            $user = User::find($id);
+            $user->attempt=0;
+            $user->save();
+            toastr()->success('Unlocked successfully');
+            return redirect()->back();
+     
+    }
 }

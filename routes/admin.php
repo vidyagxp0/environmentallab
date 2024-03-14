@@ -52,10 +52,12 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('role_groups', RoleGroupController::class);
             Route::resource('printcontrol', PrintControlController::class);
             Route::resource('downloadcontrol', DownloadControlController::class);
-               Route::resource('product', ProductController::class);
+            Route::resource('product', ProductController::class);
             Route::resource('material', MaterialController::class);
             Route::resource('qms-division', QMSDivisionController::class);
             Route::resource('qms-process', QMSProcessController::class);
+            Route::get('locakedList', [UserManagementController::class, 'activePage'])->name('locakedList');
+            Route::post('unlocked/{id}', [UserManagementController::class, 'unlocked'])->name('Unlocked');
         }
     );
 });
