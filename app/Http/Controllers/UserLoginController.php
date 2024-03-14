@@ -129,6 +129,25 @@ class UserLoginController extends Controller
         // Set the timezone
         $checkEmail = User::where('email', $request->email)->count();
         if ($checkEmail > 0) {
+            $userData=User::where('email', $request->email)->first();
+            $currentTime = Carbon::now();
+            if ($userData->updated_at <= $currentTime->subMinutes(3)) {
+                $userData->attempt=1;
+                $userData->save();
+            } else {
+                if ($userData->updated_at >= $currentTime->subMinutes(3)) {
+                    if ($userData->attempt >= 3) {
+                        toastr()->error('Too many login attempts. Please try again in 3 minutes .');
+                        return redirect()->back();
+                    }
+                }
+                if ($userData->attempt==3) {
+                    $userData->attempt=1;
+                    $userData->save();
+                } else {
+                    $userData->increment('attempt');
+                }
+            }
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 // check user login limit
                 if (TotalLogin::ifUserExist(Auth::id())) {
