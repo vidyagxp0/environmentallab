@@ -261,6 +261,13 @@
 <script>
 
 function togglePasswordVisibility(fieldId) {
+    var passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+        if (!passwordPattern.test(password.value)) {
+            password.setCustomValidity("Password must contain at least 8 characters with at least one number, one uppercase letter, and one lowercase letter.");
+        } else {
+            password.setCustomValidity("");
+        }
+        
             var field = document.getElementById(fieldId);
             if (field.type === "password") {
                 field.type = "text";
