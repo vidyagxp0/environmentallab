@@ -160,6 +160,10 @@
                         </div>
                         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+                        {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+
+
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 
                         <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
@@ -169,25 +173,73 @@
                             <div>
                                 <button id="toggleChartButton">Change Chart</button>
                                 <canvas id="myChart" width="400" height="115"></canvas>
-                                <div id="paichart" style="width: 400px; height: 115px; margin: 0 auto;"></div>
+                                <canvas id="myLineChart" width="400" height="115" style="display:none;"></canvas>
+                                <div id="paichart" style="width: 400px; height: 115px; margin: 0 auto; display:none;"></div>
                             </div>
-
+                            
                             <script>
-                                var barChartVisible = true; // Track the visibility state of the bar chart
-
-                                function toggleCharts() {
-                                    if (barChartVisible) {
-                                        document.getElementById('myChart').style.display = 'none'; // Hide the bar chart
-                                        document.getElementById('paichart').style.display = 'block'; // Show the pie chart
-                                    } else {
-                                        document.getElementById('myChart').style.display = 'block'; // Show the bar chart
-                                        document.getElementById('paichart').style.display = 'none'; // Hide the pie chart
+                                var chartTypes = ['bar', 'pie', 'line']; // Available chart types
+                                var currentChartIndex = 0; // Index to track the current chart type
+                            
+                                // Initialize chart
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: chartTypes[currentChartIndex],
+                                    data: {
+                                        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                                        datasets: [{
+                                            label: '# of Votes',
+                                            data: [12, 19, 3, 5, 2, 3],
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.2)',
+                                                'rgba(54, 162, 235, 0.2)',
+                                                'rgba(255, 206, 86, 0.2)',
+                                                'rgba(75, 192, 192, 0.2)',
+                                                'rgba(153, 102, 255, 0.2)',
+                                                'rgba(255, 159, 64, 0.2)'
+                                            ],
+                                            borderColor: [
+                                                'rgba(255, 99, 132, 1)',
+                                                'rgba(54, 162, 235, 1)',
+                                                'rgba(255, 206, 86, 1)',
+                                                'rgba(75, 192, 192, 1)',
+                                                'rgba(153, 102, 255, 1)',
+                                                'rgba(255, 159, 64, 1)'
+                                            ],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true
+                                            }
+                                        }
                                     }
-                                    barChartVisible = !barChartVisible; // Toggle the visibility state
+                                });
+                            
+                                function toggleCharts() {
+                                    currentChartIndex = (currentChartIndex + 1) % chartTypes.length; // Cycle through chart types
+                                    var chartType = chartTypes[currentChartIndex];
+                                    
+                                    if (chartType === 'bar') {
+                                        document.getElementById('myChart').style.display = 'block';
+                                        document.getElementById('myLineChart').style.display = 'none';
+                                        document.getElementById('paichart').style.display = 'none';
+                                    } else if (chartType === 'pie') {
+                                        document.getElementById('myChart').style.display = 'none';
+                                        document.getElementById('myLineChart').style.display = 'none';
+                                        document.getElementById('paichart').style.display = 'block';
+                                    } else if (chartType === 'line') {
+                                        document.getElementById('myChart').style.display = 'none';
+                                        document.getElementById('myLineChart').style.display = 'block';
+                                        document.getElementById('paichart').style.display = 'none';
+                                    }
                                 }
-
+                            
                                 document.getElementById('toggleChartButton').addEventListener('click', toggleCharts);
                             </script>
+                            
 
                             <script>
                                 axios.get('/api/analyticsData')
@@ -287,7 +339,34 @@
                                         chart.render();
                                     })
                             </script>
-
+                            <script type="text/javascript">
+                             axios.get('/api/analyticsData')
+                                    .then(function(response) {
+                                        var dataCounts = response.data;
+                                var labelsLine = ['InternalAudit', 'Extension', 'Capa', 'AuditProgram', 'LabIncident', 'RiskManagement',
+                                    'RootCauseAnalysis', 'ManagementReview', 'CC', 'ActionItem', 'EffectivenessCheck', 'Auditee', 'Observation'
+                                ];
+                                var users = [65, 59, 80, 81, 56, 55, 40];
+                                const dataLine = {
+                                    labels: labelsLine,
+                                    datasets: [{
+                                        label: 'My First dataset',
+                                        backgroundColor: 'rgb(255, 99, 132)',
+                                        borderColor: 'rgb(255, 99, 132)',
+                                        data: dataCounts,
+                                    }]
+                                };
+                                const configLine = {
+                                    type: 'line',
+                                    data: dataLine,
+                                    options: {}
+                                };
+                                const myChartLine = new Chart(
+                                    document.getElementById('myLineChart'),
+                                    configLine
+                                );
+                            });
+                            </script>
                             <div id="test">
                                 </br>
                                 <hr>
