@@ -187,6 +187,19 @@
             transition: all 0.3s linear;
             cursor: pointer;
         }
+        .group-input {
+            position: relative;
+        }
+        .group-input input[type="password"] {
+            padding-right: 30px; /* Adjust this value as needed */
+        }
+        .toggle-password {
+            position: absolute;
+            right: 5px; /* Adjust this value as needed */
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
     </style>
 </head>
 
@@ -211,15 +224,21 @@
                 <div class="head">
                     Set Your New Password </div>
             </div>
-            <form action="{{ url('rcms_check') }}" method="POST">
+            <form id="updatePasswordForm" action="{{ url('rcms_check') }}" method="POST">
                 @csrf
                 <div class="group-input">
                     <label for="password"><i class="fa-solid fa-lock"></i></label>
-                    <input type="password" id="password" name="password" placeholder="Enter Your Password">
+                    <input type="password" id="password" name="password" placeholder="Enter Your Password" required minlength="8">
+                    <span class="toggle-password" onclick="togglePasswordVisibility('password')">
+                        <i class="fa-solid fa-eye"></i>
+                    </span>
                 </div>
                 <div class="group-input">
                     <label for="confirmPassword"><i class="fa-solid fa-lock"></i></label>
-                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Enter Your Confirm Password">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Your Password" required minlength="8">
+                    <span class="toggle-password" onclick="togglePasswordVisibility('confirmPassword')">
+                        <i class="fa-solid fa-eye"></i>
+                    </span>
                 </div>
                 <div>
                     <input type="submit" value="Update Password">
@@ -240,19 +259,40 @@
     </script>
 
 <script>
-    var password = document.getElementById("password"),
-        confirmPassword = document.getElementById("confirmPassword");
+
+function togglePasswordVisibility(fieldId) {
+            var field = document.getElementById(fieldId);
+            if (field.type === "password") {
+                field.type = "text";
+            } else {
+                field.type = "password";
+            }
+        }
+    var password = document.getElementById("password");
+    var confirmPassword = document.getElementById("confirmPassword");
 
     function validatePassword() {
-        if (password.value != confirmPassword.value) {
+        if (password.value !== confirmPassword.value) {
             confirmPassword.setCustomValidity("Passwords Don't Match");
         } else {
             confirmPassword.setCustomValidity('');
         }
     }
 
-    password.onchange = validatePassword;
-    confirmPassword.onkeyup = validatePassword;
+    password.addEventListener("change", validatePassword);
+    confirmPassword.addEventListener("keyup", validatePassword);
+
+    // Display error messages
+    password.addEventListener("input", function() {
+        if (password.validity.patternMismatch) {
+            password.setCustomValidity("Password must contain at least 8 characters.");
+        } else {
+            password.setCustomValidity("");
+        }
+    });
+    confirmPassword.addEventListener("input", function() {
+        confirmPassword.setCustomValidity('');
+    });
 </script>
 
 </body>
