@@ -9,7 +9,7 @@
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
 
-    <title>Connexo - Software</title>
+    <title>VidyaGxP - Software</title>
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css"
         integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
@@ -114,11 +114,11 @@
                 <div class="container-fluid">
                     <div class="middle-head">
                         <div class="logo-container">
-                            <div class="logo">
+                            <!-- <div class="logo">
                                 <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
-                            </div>
+                            </div> -->
                             <div class="logo">
-                                <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100">
+                                <img src="{{ asset('user/images/vidyagxp2.png') }}" alt="..." class="w-100 h-100">
                             </div>
                             {{-- <div class="logo">
                                 <img src="{{ asset('user/images/logo3.png') }}" alt="..." class="w-20 h-">
