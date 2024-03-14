@@ -461,15 +461,24 @@ let chart; // Declare chart variable outside to make it accessible globally
         let currentChartType = 'pie'; // Initially set to pie chart
         
                 function fetchData(selectedValue) {
-document.getElementById("toggleChartTypeText").textContent = currentChartType === 'pie' ? 'Bar Chart' : 'Pie Chart';
+                    if(currentChartType==='pie'){
+                    document.getElementById("toggleChartTypeText").textContent= 'Bar Chart';
+                    }else if(currentChartType==='bar'){
+                        document.getElementById("toggleChartTypeText").textContent= 'Line Chart';
+                    }else{
+                        document.getElementById("toggleChartTypeText").textContent= 'Pie Chart';
+                    }
+// document.getElementById("toggleChartTypeText").textContent = currentChartType === 'pie' ? 'Bar Chart' : 'Pie Chart';
                     fetch(`/chart-data?value=${selectedValue}`)
                         .then(response => response.json())
                         .then(data => {
-if (currentChartType === 'pie') {
-                        renderPieChart(data);
-                    } else {
-                        renderBarChart(data);
-                    }
+           if (currentChartType === 'pie') {
+                renderPieChart(data);
+            } else if (currentChartType === 'bar') {
+                renderBarChart(data);
+            } else if (currentChartType === 'line') {
+                renderLineChart(data);
+            }
                 });
         }
 
@@ -522,7 +531,6 @@ if (currentChartType === 'pie') {
             chart = new ApexCharts(document.querySelector("#chart"), options);
             chart.render();
         }
-
         function renderBarChart(data) {
                             var options = {
                                 series: [{
@@ -579,10 +587,73 @@ if (currentChartType === 'pie') {
             chart = new ApexCharts(document.querySelector("#chart"), options);
                             chart.render();
                         }
+        function renderLineChart(data) {
+                            var options = {
+                                series: [{
+                                    name: 'Total',
+                                    data: data.map(item => item.value),
+                                    // Define color for each category
+                                    colors: ['#008FFB', '#00E396', '#FEB019', '#FF4560']
+                                }],
+                                chart: {
+                                    type: 'line',
+                                    height: 350,
+                                    stacked: true,
+                                    toolbar: {
+                                        show: true
+                                    },
+                                    zoom: {
+                                        enabled: true
+                                    }
+                                },
+                                plotOptions: {
+                                    bar: {
+                                        horizontal: false,
+                                        borderRadius: 10,
+                                        dataLabels: {
+                                            total: {
+                                                enabled: true,
+                                                style: {
+                                                    fontSize: '13px',
+                                                    fontWeight: 900
+                                                }
+                                            }
+                                        }
+                                    },
+                                },
+                                xaxis: {
+                                    type: 'category',
+                                    categories: data.map(item => item.division)
+                                },
+                                legend: {
+                                    position: 'right',
+                                    offsetY: 40
+                                },
+                                fill: {
+                                    opacity: 1
+                                }
+                            };
+
+                            // Check if chart exists and destroy
+            if (chart) {
+                chart.destroy();
+            }
+
+            // Initialize a new chart
+            chart = new ApexCharts(document.querySelector("#chart"), options);
+                            chart.render();
+                        }
 
         function toggleChartType() {
             var selectElement = document.getElementById("test");
-            currentChartType = currentChartType === 'pie' ? 'bar' : 'pie';
+            if(currentChartType==='pie'){
+                currentChartType = 'bar';
+            }else if(currentChartType==='bar'){
+                currentChartType = 'line';
+            }else{
+                currentChartType = 'pie';
+            }
+            // currentChartType = currentChartType ===  'pie' ? 'bar' : 'pie';
             var selectedValue = selectElement ? selectElement.value : 'defaultValue'; // Added a fallback value
             fetchData(selectedValue);
         }
