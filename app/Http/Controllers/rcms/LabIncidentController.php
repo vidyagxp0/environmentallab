@@ -1212,24 +1212,24 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submited';
                 $history->save();
-                $list = Helpers::getHodUserList();
-                    foreach ($list as $u) {
+                // $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
                       
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Submitted By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Submitted By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1252,23 +1252,23 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Incident Review completed';
                 $history->save();
-                $list = Helpers::getQCHeadUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl ->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                // $list = Helpers::getQCHeadUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl ->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl ],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is Send By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl ],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is Send By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1291,23 +1291,23 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Investigation Completed';
                 $history->save();
-                $list = Helpers::getHodUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                // $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Investigation is Completed By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Investigation is Completed By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1350,23 +1350,23 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Review Completed';
                 $history->save();  
-                $list = Helpers::getQAUserList();
-                foreach ($list as $u) {
-                    if($u->q_m_s_divisions_id ==$changeControl->division_id){
-                        $email = Helpers::getInitiatorEmail($u->user_id);
-                         if ($email !== null) {
+            //     $list = Helpers::getQAUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id ==$changeControl->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //              if ($email !== null) {
                       
-                          Mail::send(
-                              'mail.view-mail',
-                               ['data' => $changeControl],
-                            function ($message) use ($email) {
-                                $message->to($email)
-                                    ->subject("Document is Submitted By ".Auth::user()->name);
-                            }
-                          );
-                        }
-                 } 
-              }          
+            //               Mail::send(
+            //                   'mail.view-mail',
+            //                    ['data' => $changeControl],
+            //                 function ($message) use ($email) {
+            //                     $message->to($email)
+            //                         ->subject("Document is Submitted By ".Auth::user()->name);
+            //                 }
+            //               );
+            //             }
+            //      } 
+            //   }          
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1410,23 +1410,23 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='QA Head Approval Completed';
                 $history->save();
-                $list = Helpers::getHodUserList();
-                    foreach ($list as $u) {
-                        if($u->q_m_s_divisions_id ==$changeControl->division_id){
-                            $email = Helpers::getInitiatorEmail($u->user_id);
-                             if ($email !== null) {
+                // $list = Helpers::getHodUserList();
+                //     foreach ($list as $u) {
+                //         if($u->q_m_s_divisions_id ==$changeControl->division_id){
+                //             $email = Helpers::getInitiatorEmail($u->user_id);
+                //              if ($email !== null) {
                           
-                              Mail::send(
-                                  'mail.view-mail',
-                                   ['data' => $changeControl],
-                                function ($message) use ($email) {
-                                    $message->to($email)
-                                        ->subject("Document is send By ".Auth::user()->name);
-                                }
-                              );
-                            }
-                     } 
-                  }
+                //               Mail::send(
+                //                   'mail.view-mail',
+                //                    ['data' => $changeControl],
+                //                 function ($message) use ($email) {
+                //                     $message->to($email)
+                //                         ->subject("Document is send By ".Auth::user()->name);
+                //                 }
+                //               );
+                //             }
+                //      } 
+                //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
