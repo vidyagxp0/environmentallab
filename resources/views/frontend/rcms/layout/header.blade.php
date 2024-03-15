@@ -115,10 +115,10 @@
                     <div class="middle-head">
                         <div class="logo-container">
                             <!-- <div class="logo">
-                                <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
+                                <img src="{{ asset('user/images/vidhyagxp2.png') }}" alt="..." class="w-100 h-100">
                             </div> -->
                             <div class="logo">
-                                <img src="{{ asset('user/images/vidyagxp2.png') }}" alt="..." class="w-100 h-100">
+                                <img src="{{ asset('user/images/vidhyagxp2.png') }}" alt="..." class="w-100 h-100">
                             </div>
                             {{-- <div class="logo">
                                 <img src="{{ asset('user/images/logo3.png') }}" alt="..." class="w-20 h-">

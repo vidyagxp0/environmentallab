@@ -122,9 +122,9 @@
             margin: 0 auto 30px;
         }
 
-        #rcms_login_block .login-form-block .logo img {
+        /* #rcms_login_block .login-form-block .logo img {
             filter: brightness(0) invert(1);
-        }
+        } */
 
         #rcms_login_block .login-form-block .head {
             font-size: 1.6rem;
@@ -205,7 +205,7 @@
         <div class="login-form-block" style="background-image: url('{{ asset('user/images/rcms-login-bg2.png') }}')">
             <div class="top-block">
                 <div class="logo">
-                    <img src="{{ asset('user/images/vidhyagxp1.png') }}" alt="..." class="w-100 h-100">
+                    <img style="margin-left: -14px;" src="{{ asset('user/images/vidhyagxp2.png') }}" alt="..." class="w-100 h-100">
                 </div>
                 <div class="head">
                     Welcome to VidyaGxP
