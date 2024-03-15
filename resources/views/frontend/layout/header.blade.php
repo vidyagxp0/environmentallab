@@ -72,12 +72,11 @@
             <div>
                 <div class="middle-head">
                     <div class="logo-container">
+                        
+                       
                         <div class="logo">
-                            <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
-                        </div>
-                        <div class="logo">
-                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100">
-                        </div>
+                                <img src="{{ asset('user/images/vidhyagxp2.png') }}" alt="..." class="w-100 h-100">
+                            </div>
                     </div>
                     <div class="search-bar">
                         <form action="#" class="w-100">

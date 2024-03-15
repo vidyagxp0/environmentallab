@@ -327,18 +327,22 @@
         <table class="border p-20">
             <tbody>
                 <tr>
-                    <td class="logo w-20">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
+                    <td  class="logo w-100">
+                        <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt="..." class="w-100 h-100">
                     </td>
                     <td class="title w-60">
                         {{ $data->document_name }}
                     </td>
-                    <td class="logo w-20">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="...">
+                    <td class="logo w-100">
+                        <img src="https://development.vidyagxp.com/public/user/images/logo.png" alt="..." class="w-100 h-100">
                     </td>
                 </tr>
             </tbody>
         </table>
+
+      
+
+
         <table class="border border-top-none p-10">
             <tbody>
                 <tr>
