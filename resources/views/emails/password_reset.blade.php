@@ -32,7 +32,7 @@
                 Reset Password</a>
                
                
-              This link is valid for <span style="color: #f7895e;">2 days.</span> After it expires, you can request a new one.
+              This link is valid for <span style="color: #f7895e;">1 Hour.</span> After it expires, you can request a new one.
             </p>
           </td>
         </tr>
