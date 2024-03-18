@@ -41,7 +41,7 @@
 
         <tr bgcolor="#1c4e81" style="margin-top: 20px;">
           <td colspan="6" style="color: white; font-size: 12px; text-align: center; padding: 8px; line-height: 20px;">
-        <br aria-hidden="true" />
+          QMS © 2024 Mydemosoftware Pvt. Ltd.<br aria-hidden="true" />
       </tr> 
       </tbody>
     </table>

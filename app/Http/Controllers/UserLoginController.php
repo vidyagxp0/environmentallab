@@ -310,24 +310,39 @@ class UserLoginController extends Controller
         }
     }
     public function forgetPassword(Request $request){
-//         $request->validate([
-//             'email' => 'required|email|exists:users',
-//         ]);
+        // $request->validate([
+        //         'email' => 'required|email|exists:users',
+        // ]);
+   
         $employee=DB ::table('users')->where('email', $request->email)->select('users.name')->first();
         $token = Str::random(60);
-// // dd($token);
-        Mail::send('emails.password_reset', ['token' => $token,'employee'=>$employee->name], function ($message) use ($request) {
-            $message->from('info@mydemosoftware.com');
-            $message->to($request->email); /** input your email to send */
+        // dd($request->email);
+        $a=Mail::send('emails.password_reset', ['token' =>$request->email,'employee'=>$employee->name], function ($message) use ($request) {
+            $message->from('bizest@yahoo.com');
+            $message->to($request->email); 
             $message->subject('Reset Password Notification');
         });
+            toastr()->success('Email sent successfully');
+            return redirect('/login');
        
-        
-            return response()->json(['message' => 'Email sent successfully'], 200);
+            // return response()->json(['message' => 'Email sent successfully'], 200);
    
-// } catch (\Exception $e) {
-//     return response()->json(['message' => 'Failed to send email'], 500);
-// }
         return back();
+    }
+    public function resetPage($email){
+        return view('emails.reset',['email'=> $email]);
+    }
+    public function UpdateNewPassword(Request $request){
+        // $request->validate([
+        //     'password' => 'required|string|min:6|confirmed',
+        //     'password_confirmation' => 'required',
+        // ]);
+     
+            $user = User::where('email', $request->mailId)
+            ->update(['password' => Hash::make($request->password)]);
+            toastr()->success('Your password has been changed! :');
+
+            return redirect('/login');
+        
     }
 }

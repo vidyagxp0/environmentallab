@@ -58,6 +58,9 @@ Route::get('/error', function () {
 
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::view('forgot-password', 'frontend.forgot-password');
+Route::get('reset-password/{token}', [UserLoginController::class,'resetPage']);
+Route::post('reset-password', [UserLoginController::class,'UpdateNewPassword']);
+
 // Route::view('dashboard', 'frontend.dashboard');
 Route::get('forgetPassword-user', [UserLoginController::class, 'forgetPassword']);
 
