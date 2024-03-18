@@ -186,6 +186,9 @@
             transition: all 0.3s linear;
             cursor: pointer;
         }
+        .red-text {
+            color: red;
+        }
     </style>
 </head>
 
@@ -221,6 +224,7 @@
                     <label for="password"><i class="fa-solid fa-lock"></i></label>
                     <input type="password" name="password" placeholder="Enter Your Password">
                 </div>
+
                 <div class="group-input">
                     <label for="timezone"><i class="fa-solid fa-calendar-check"></i></label>
                     <select name="timezone">
@@ -564,6 +568,9 @@
                 </div>
                 <div>
                     <input type="submit" value="Login">
+                </div>
+                <div >
+                    <a  class="red-text" href="forgot-password">Forgot Password</a>
                 </div>
             </form>
         </div>

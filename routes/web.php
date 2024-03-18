@@ -59,6 +59,7 @@ Route::get('/error', function () {
 Route::get('/', [UserLoginController::class, 'userlogin']);
 Route::view('forgot-password', 'frontend.forgot-password');
 // Route::view('dashboard', 'frontend.dashboard');
+Route::get('forgetPassword-user', [UserLoginController::class, 'forgetPassword']);
 
 Route::get('data-fields', function () {
     return view('frontend.change-control.data-fields');

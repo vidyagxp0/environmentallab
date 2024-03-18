@@ -10,7 +10,13 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PasswordReset;
+use DB;
+use Str;
+use Log;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mime\Part\TextPart;
 class UserLoginController extends Controller
 {
     public function userlogin()
@@ -302,5 +308,26 @@ class UserLoginController extends Controller
         else{
             return response()->json('Email is required');
         }
+    }
+    public function forgetPassword(Request $request){
+//         $request->validate([
+//             'email' => 'required|email|exists:users',
+//         ]);
+        $employee=DB ::table('users')->where('email', $request->email)->select('users.name')->first();
+        $token = Str::random(60);
+// // dd($token);
+        Mail::send('emails.password_reset', ['token' => $token,'employee'=>$employee->name], function ($message) use ($request) {
+            $message->from('info@mydemosoftware.com');
+            $message->to($request->email); /** input your email to send */
+            $message->subject('Reset Password Notification');
+        });
+       
+        
+            return response()->json(['message' => 'Email sent successfully'], 200);
+   
+// } catch (\Exception $e) {
+//     return response()->json(['message' => 'Failed to send email'], 500);
+// }
+        return back();
     }
 }
