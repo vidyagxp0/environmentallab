@@ -36,11 +36,14 @@ class TMSController extends Controller
                 if($temp->training){
                     $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                     $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                    $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                    // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                    // $temp->division_name= {{ Helpers::getDivisionName($_GET['id'])}
+                    $temp->division_name = Helpers::getDivisionName($temp->training->id);
+
 
                 }
-         
-
+              
+                
             }
            }
              
@@ -51,10 +54,11 @@ class TMSController extends Controller
                 if($temp->training){
                 $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                 $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                $temp->division_name = Helpers::getDivisionName($temp->training->id);
                 }
             }
-    
+           
             }
 
             $pending = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Pending")->orderByDesc('id')->get();
@@ -65,7 +69,8 @@ class TMSController extends Controller
                  if($temp->training){
                 $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                 $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                $temp->division_name = Helpers::getDivisionName($temp->training->id);
                  }
             }
             
@@ -80,7 +85,8 @@ class TMSController extends Controller
                  if($temp->training){
                 $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                 $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                $temp->division_name = Helpers::getDivisionName($temp->training->id);
                  }
             }
             }
@@ -172,7 +178,8 @@ class TMSController extends Controller
                 $temp->originator = User::where('id',$temp->training->originator_id)->value('name');
                 $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                 $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                $temp->division_name = Helpers::getDivisionName($temp->training->id);
                 $temp->major = $temp->training->major;
                 $temp->minor = $temp->training->minor;
                 $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
@@ -553,7 +560,9 @@ class TMSController extends Controller
                 $temp->originator = User::where('id',$temp->training->originator_id)->value('name');
                 $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                 $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                $temp->division_name = Helpers::getDivisionName($temp->training->id);
+
                 }
             }
             $users = User::where('role', '!=', 6)->get();

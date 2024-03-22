@@ -376,7 +376,7 @@ function addRiskAssessment(tableId) {
         "<select onchange='calculateInitialResult(this)' class='fieldN' name='initial_detectability[]'><option value=''>-- Select --</option><option value='1'>1</option><option value='2'>2</option><option value='3'>3</option></select>";
 
     var cell9 = newRow.insertCell(8);
-    cell9.innerHTML = "<input name='initial_rpn[]' disabled='text' class='initial-rpn'>";
+    cell9.innerHTML = "<input name='initial_rpn[]' ='text' class='initial-rpn'>";
 
     var cell10 = newRow.insertCell(9);
     cell10.innerHTML =
