@@ -65,7 +65,7 @@
                                                 <ul>
                                                     @if (!empty($temp->answers))
                                                         @foreach (unserialize($temp->answers) as $options)
-                                                            <li>{{ $options }}</li>
+                                                            <li>{{ $options+1 }}</li>
                                                         @endforeach
                                                     @endif
                                                 </ul>

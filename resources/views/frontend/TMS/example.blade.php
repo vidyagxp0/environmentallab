@@ -203,12 +203,13 @@ function saveAnswer() {
       answer.push(i);
     } else if (inputs[i].type === 'radio' && inputs[i].checked) {
       answer = [i];
-      answer = i+1;
+     // answer = i+1;
       break;
     }
   }
   
   userAnswers[currentQuestion] = answer;
+  console.log('userAnswer',userAnswers);
 }
 
 // Function to compare two arrays

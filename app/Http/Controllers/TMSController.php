@@ -831,8 +831,8 @@ class TMSController extends Controller
                 }
                 elseif($question->type == "Multi Selection Questions"){
                     foreach($json_answer as $key => $value){
-                        foreach($options as $option){
-                            if($option == $value){
+                        foreach($options as $key1 => $option){
+                            if($key1 == $value){
                             array_push($answers,$key);
                             }
                         }
@@ -842,8 +842,8 @@ class TMSController extends Controller
                 elseif($question->type == "Single Selection Questions"){
                     
                     foreach($json_answer as $key => $value){
-                        foreach($options as $option){
-                            if($option == $value){
+                        foreach($options as $key1 => $option){
+                            if($key1 == $value){
                               $answers = intval($value);
                               
                             }
