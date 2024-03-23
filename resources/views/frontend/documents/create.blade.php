@@ -946,7 +946,7 @@
                         <div class="orig-head">
                             Distribution & Retrieval
                         </div>
-                        <div class="col-md-12 input-fields">
+                        {{-- <div class="col-md-12 input-fields">
                             <div class="group-input">
                                 <label for="distribution" id="distribution">
                                     Distribution & Retrieval<button type="button" id="distributionbtnadd" >+</button>
@@ -955,8 +955,8 @@
                                 <input type="text" name="distribution[]" class="myclassname">
                                 <div id="distributiondiv"></div>
                             </div>
-                        </div>
-                        {{-- <div class="input-fields">
+                        </div> --}}
+                        <div class="input-fields">
                             <div class="group-input">
                                 <label for="distriution_retrieval">
                                     Distribution & Retrieval
@@ -1074,7 +1074,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div> --}}
+                        </div> 
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
