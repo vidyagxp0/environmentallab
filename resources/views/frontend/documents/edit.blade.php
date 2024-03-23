@@ -2272,7 +2272,7 @@
                     <div class="orig-head">
                         Distribution & Retrieval
                     </div>
-                    <div class="col-md-12 input-fields">
+                    {{-- <div class="col-md-12 input-fields">
                         <div class="group-input">
 
                             <label for="distribution" id="distribution">
@@ -2314,7 +2314,7 @@
 
                     @if (Auth::user()->role != 3)
 
-                        {{-- Add Comment  --}}
+                        {{-- Add Comment 
                         <div class="comment">
                             <div>
                                 <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -2324,8 +2324,8 @@
                             </div>
                             <div class="button">Add Comment</div>
                         </div>
-                    @endif
-                    {{-- <div class="input-fields">
+                    @endif --}}
+                    <div class="input-fields">
                         <div class="group-input">
                             <label for="distriution_retrieval">
                                 Distribution & Retrieval
@@ -2336,6 +2336,7 @@
                                 <table class="table table-bordered" id="distribution-retrieval-grid">
                                     <thead>
                                         <tr>
+                                            <th>Row </th>
                                             <th class="copy-name">Document Title</th>
                                             <th class="copy-name">Document Number</th>
                                             <th class="copy-name">Document Printed By</th>
@@ -2369,16 +2370,16 @@
                                                     <td class="copy-name">{{ $document->originator_name }}</td>
                                                     <td class="copy-name">{{ $document->dept_name }}</td>
                                                     <td class="copy-num">12</td>
-                                            <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                                Cumque eum neque quam.</td>
-                                            <td class="copy-name">29-12-2023</td>
-                                            <td class="copy-name">Amit Patel</td>
-                                            <td class="copy-num">12</td>
-                                            <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum
-                                                maiores reiciendis sint.</td>
-                                            <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                                Expedita culpa ab assumenda delectus beatae facilis itaque deserunt harum, quae
-                                                doloribus!</td>
+                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                                        Cumque eum neque quam.</td>
+                                                    <td class="copy-name">29-12-2023</td>
+                                                    <td class="copy-name">Amit Patel</td>
+                                                    <td class="copy-num">12</td>
+                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum
+                                                        maiores reiciendis sint.</td>
+                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                                                        Expedita culpa ab assumenda delectus beatae facilis itaque deserunt harum, quae
+                                                        doloribus!</td>
                                                 </tr>
                                             @endforeach
 
@@ -2387,7 +2388,7 @@
                                 </table>
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
                     <div class="button-block">
                         <button type="submit" name="submit" value="save" class="saveButton">Save</button>
                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
