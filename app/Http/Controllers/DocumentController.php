@@ -161,7 +161,23 @@ class DocumentController extends Controller
         $documentLanguages = DocumentLanguage::all();
         $reviewer = User::get();
         $trainer = User::get();
-        $approvers = User::get();
+
+        // $approvers = DB::table('user_roles')
+        // ->join('users', 'user_roles.user_id', '=', 'users.id')
+        // ->where('user_roles.q_m_s_processes_id', 89)
+        // ->where('q_m_s_roles_id', 1)
+        // ->get();;
+
+        $approvers = DB::table('user_roles')
+        ->join('users', 'user_roles.user_id', '=', 'users.id')
+        ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+        ->where('user_roles.q_m_s_processes_id', 89)
+        ->where('user_roles.q_m_s_roles_id', 1)
+        ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+        ->get();
+
+
+
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         // Retrieve the current counter value
@@ -224,7 +240,15 @@ class DocumentController extends Controller
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
         $reviewer = User::get();
-        $approvers = User::get();
+
+        //sdd($temp->division_id);
+        $approvers = DB::table('user_roles')
+        ->join('users', 'user_roles.user_id', '=', 'users.id')
+        ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+        ->where('user_roles.q_m_s_processes_id', 89)
+        ->where('user_roles.q_m_s_roles_id', 1)
+        ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+        ->get();
 
         $trainer = User::get();
         
