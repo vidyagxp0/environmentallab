@@ -307,7 +307,7 @@ class DocumentController extends Controller
     public function documentExportPDF()
     {
         $documents = Document::all();
-        dd($documents);
+       
     }
 
     // documentExportEXCEL
@@ -557,7 +557,7 @@ class DocumentController extends Controller
                     $temp->year = Carbon::parse($temp->created_at)->format('Y');
                 }
             }
-            dd($document_data);
+            
         }
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
