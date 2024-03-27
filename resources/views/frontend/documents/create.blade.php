@@ -107,9 +107,9 @@
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         @if(isset($_GET['id']))
-                                        <label for="Division Code"><b>Site/Location Code111e</b></label>
+                                        <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($_GET['id'])}}">
-                                        <input type="hidden" name="division_id" value="{{ $divisionValue}}">
+                                        <input type="hidden" name="division_id" value="{{session()->get('division')  }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                         @else
                                         <label for="Division Code"><b>Site/Location Code </b></label>
