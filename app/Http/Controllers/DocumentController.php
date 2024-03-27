@@ -159,7 +159,14 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
-        $reviewer = User::get();
+        //$reviewer = User::get();
+        $reviewer = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 2)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
         $trainer = User::get();
 
         // $approvers = DB::table('user_roles')
@@ -169,12 +176,12 @@ class DocumentController extends Controller
         // ->get();;
 
         $approvers = DB::table('user_roles')
-        ->join('users', 'user_roles.user_id', '=', 'users.id')
-        ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-        ->where('user_roles.q_m_s_processes_id', 89)
-        ->where('user_roles.q_m_s_roles_id', 1)
-        ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-        ->get();
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 1)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
 
 
 
@@ -239,16 +246,23 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
-        $reviewer = User::get();
+        //$reviewer = User::get();
+        $reviewer = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 2)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
 
         //sdd($temp->division_id);
         $approvers = DB::table('user_roles')
-        ->join('users', 'user_roles.user_id', '=', 'users.id')
-        ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-        ->where('user_roles.q_m_s_processes_id', 89)
-        ->where('user_roles.q_m_s_roles_id', 1)
-        ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-        ->get();
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 1)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
 
         $trainer = User::get();
         
@@ -554,8 +568,22 @@ class DocumentController extends Controller
         $annexure = Annexure::where('document_id', $id)->first();
 
         $signature = StageManage::where('document_id', $id)->get();
-        $reviewer = User::get();
-        $approvers = User::get();
+        //$reviewer = User::get();
+        $reviewer = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 2)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
+        //$approvers = User::get();
+        $approvers = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_roles_id', 1)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         $user = User::all();
