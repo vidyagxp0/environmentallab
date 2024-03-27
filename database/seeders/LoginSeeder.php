@@ -17,7 +17,7 @@ class LoginSeeder extends Seeder
     {
 
         DB::table('admins')->insert([
-            'name' => 'Deepak',
+            'name' => 'Admin',
             'email' => 'superadmin@gmail.com',
             'role' => 'superadmin',
             'password' => Hash::make('admin'),
