@@ -230,6 +230,7 @@ class RiskManagementController extends Controller
         if (!empty($request->residual_rpn)) {
             $data1->residual_rpn = serialize($request->residual_rpn);
         }
+        
         if (!empty($request->risk_acceptance2)) {
             $data1->risk_acceptance2 = serialize($request->risk_acceptance2);
         }

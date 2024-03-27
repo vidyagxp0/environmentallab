@@ -102,19 +102,23 @@
                                         <div class="default-name">{{ $recordNumber }}</div>
                                     </div>
                                 </div> --}}
+                                           
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         @if(isset($_GET['id']))
-                                        <label for="Division Code"><b>Site/Location Code </b></label>
-                                        <input readonly type="text" name="division_id"
-                                            value="{{ Helpers::getDivisionName($_GET['id'])}}">
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        <label for="Division Code"><b>Site/Location Code111e</b></label>
+                                        <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($_GET['id'])}}">
+                                        <input type="hidden" name="division_id" value="{{ $divisionValue}}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                         @else
                                         <label for="Division Code"><b>Site/Location Code </b></label>
-                                        <input readonly type="text" name="division_id"
+                                        {{-- <input readonly type="text" name="division_id"
                                             value="">
-                                        <input type="hidden" name="division_id" value="">
+                                        <input type="hidden" name="division_id" value=""> --}}
+                                        <input readonly type="text" name="division_code"
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                       <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         @endif
                                     </div>
                                 </div>

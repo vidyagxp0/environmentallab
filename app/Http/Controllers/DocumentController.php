@@ -7,6 +7,7 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
+
 use Helpers;
 use App\Models\DocumentContent;
 //use App\Models\ContentsDocument;
@@ -52,6 +53,9 @@ class DocumentController extends Controller
 
         $new = new SetDivision;
         $new->division_id = $request->division_id;
+      
+       
+       
         $new->process_id = $request->process_id;
         $new->user_id = Auth::user()->id;
         $new->save();
@@ -67,6 +71,7 @@ class DocumentController extends Controller
         $new = new Document;
         $new->originator_id = $request->originator_id;
         $new->division_id = $request->division_id;
+        
         $new->process_id = $request->process_id;
         $new->record = $request->record;
         $new->revised = $request->revised;
@@ -222,10 +227,13 @@ class DocumentController extends Controller
     {
         //
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
+       
         if(!empty( $division)){
             $division->dname = Division::where('id', $division->division_id)->value('name');
             $division->pname = Process::where('id', $division->process_id)->value('process_name');
         }
+         
+      
         $users = User::all();
         if (! empty($users)) {
             foreach ($users as $data) {
@@ -242,6 +250,7 @@ class DocumentController extends Controller
                 }
             }
         }
+       
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
@@ -321,8 +330,9 @@ class DocumentController extends Controller
         if ($request->submit == 'save') {
 
             $document = new Document();
-            $division = SetDivision::where('user_id', Auth::id())->latest()->first();
             
+            $division = SetDivision::where('user_id', Auth::id())->latest()->first();
+           
             if(empty($request->division_id) && empty($request->process_id) ){
               $document->division_id = $division->division_id;
               $document->process_id = $division->process_id;
@@ -330,8 +340,7 @@ class DocumentController extends Controller
                 $document->division_id = $request->division_id;
                 $document->process_id = $request->process_id;
             }
-
-
+       
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
             $document->document_name = $request->document_name;
@@ -352,6 +361,8 @@ class DocumentController extends Controller
             $document->comments = $request->comments;
             $document->revision_type = $request->revision_type;
             $document->major = $request->major;
+            $document->division_id = $request->division_id;
+       
             $document->minor = $request->minor;
             $document->sop_type = $request->sop_type;
             $document->notify_to = json_encode($request->notify_to);
@@ -546,6 +557,7 @@ class DocumentController extends Controller
                     $temp->year = Carbon::parse($temp->created_at)->format('Y');
                 }
             }
+            dd($document_data);
         }
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')

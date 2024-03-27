@@ -366,12 +366,12 @@ public static function getInitiatorGroupFullName($shortName)
 // }
 
 
-    public static function hodMail($data)
-    {
-        Mail::send('hod-mail',['data' => $data],
-    function ($message){
-            $message->to("shaleen.mishra@mydemosoftware.com")
-                    ->subject('Record is for Review');
-        });
-    }
+    // public static function hodMail($data)
+    // {
+    //     Mail::send('hod-mail',['data' => $data],
+    // function ($message){
+    //         $message->to("shaleen.mishra@mydemosoftware.com")
+    //                 ->subject('Record is for Review');
+    //     });
+    // }
 }

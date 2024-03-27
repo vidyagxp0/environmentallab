@@ -745,10 +745,6 @@
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        {{--<input type="text" id="date_due{{$key}}" readonly placeholder="DD-MMM-YYYY" value= "{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}"/>
-                                                                        <input type="date" name="date_due[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}" id="date_due{{$key}}_checkdate" class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date_due{{$key}}`);checkDate(`date_due{{$key}}_checkdate`,`date_closed{{$key}}_checkdate`)" /></div></div></div></td>
-                                                                            --}}
                                                                         <input type="text"   id="date_due{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}"/>
                                                                         <input type="date"  id="date_due{{$key}}_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} value="{{unserialize($action_item_details->date_due)[$key]}}"  name="date_due[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) }}
                                                                         "class="hide-input" 
@@ -874,11 +870,7 @@
                                                         <td><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
-                                                                        {{-- <input type="text" id="date_closed2' + serialNumber +'" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY"value= "{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}"/>
-                                                                        <input type="date" name="date_closed2[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{ $data->date_closed2 }} "class="hide-input" 
-                                                                        oninput="handleDateInput(this, `date_closed2' + serialNumber +'`)" /></div></div></div></td>'
-                                                                        ------ --}}
-                                                                        <input type="text"   id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}" />
+                                                              <input type="text"   id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}" />
                                                                 <input type="date" id="date_closed2{{$key}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{unserialize($capa_detail_details->date_closed2)[$key]}}"  name="date_closed2[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) }}"class="hide-input" 
                                                                 oninput="handleDateInput(this, `date_closed2{{$key}}`)"  /></div></div></div></td>
 

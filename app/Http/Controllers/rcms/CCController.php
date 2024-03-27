@@ -2248,7 +2248,7 @@ class CCController extends Controller
                     $history->stage_id = $changeControl->stage;
                     $history->status = $changeControl->status;
                     $history->save();
-                    Helpers::hodMail($changeControl);
+                    // Helpers::hodMail($changeControl);
                     toastr()->success('Document Sent');
                     return back();
 
@@ -2778,6 +2778,7 @@ class CCController extends Controller
         if($request->revision == "New Document"){
             $cc->originator = User::where('id',$cc->initiator_id)->value('name');
             return redirect()->route('documents.create');
+            
         }
         else{
             toastr()->warning('Not Working');
