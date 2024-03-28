@@ -365,15 +365,19 @@
                                 <div class="group-input">
                                     <label for="doc-num">Document Number</label>
                                     <div class="default-name">
+                                        @php
+                                        $temp = DB::table('document_types')
+                                            ->where('name', $document->document_type_name)
+                                            ->value('typecode');
+                                       @endphp
                                         @if($document->revised === 'Yes') 
-                                           
-                                        {{ Helpers::getDivisionName($document->division_id) }}
-                                        /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
+                                         {{ Helpers::getDivisionName($document->division_id) }}
+                                        /@if($document->document_type_name){{  $temp }} /@endif{{ $year }}
                                         /000{{ $document->revised_doc }}/R{{$document->major}}.{{$document->minor}}
-
+                                       
                                         @else
                                         {{ Helpers::getDivisionName($document->division_id) }}
-                                        /@if($document->document_type_name){{ $document->document_type_name }} /@endif{{ $year }}
+                                        /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
                                         /000{{ $document->id }}/R{{$document->major}}.{{$document->minor}}
                                         
                                     @endif

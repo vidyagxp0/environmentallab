@@ -39,6 +39,9 @@ class TMSController extends Controller
                     // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
                     // $temp->division_name= {{ Helpers::getDivisionName($_GET['id'])}
                     $temp->division_name = Helpers::getDivisionName($temp->training->id);
+                    $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
+                    $temp->major = $temp->training->major;
+                    $temp->minor = $temp->training->minor;
 
 
                 }
