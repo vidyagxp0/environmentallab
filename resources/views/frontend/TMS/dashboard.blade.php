@@ -71,8 +71,8 @@
                                     @foreach ($documents as $temp)
                                     @if(!empty($temp->training) AND $temp->training->stage >=6)
                                         <tr>
-                                            <td>{{ $temp->division_name }}/{{ $temp->document_type_name }}/
-                                                000{{ $temp->document_id }}</td>
+                                            <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
+                                                000{{ $temp->document_id }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td>
                                             <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>

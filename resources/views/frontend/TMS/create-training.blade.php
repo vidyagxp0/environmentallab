@@ -121,11 +121,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                           
                                             @foreach ($due as $temp)
                                                 <tr>
+                                                    
                                                     <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
                                                             value="{{ $temp->document_id }}"></td>
-                                                    <td>{{ Helpers::getDivisionName(session()->get('division')) }}/@if($temp->document_type_name){{ $temp->document_type_name }} /@endif {{$temp->year}}/
+                                                            @php
+                                                            $temp1 = DB::table('document_types')
+                                                                ->where('name', $temp->document_type_name)
+                                                                ->value('typecode');
+                                                            @endphp        
+                                                    <td>{{ Helpers::getDivisionName(session()->get('division')) }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
                                                         000{{ $temp->document_id }}/R{{ $temp->major}}.{{$temp->minor}}</td>
                                                     {{-- <td>&nbsp;</td> --}}
                                                     <td>{{ $temp->originator }}</td>

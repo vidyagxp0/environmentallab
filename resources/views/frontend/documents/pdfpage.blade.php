@@ -343,15 +343,20 @@
             <tbody>
                 <tr>
                     <td class="doc-num w-100"> 
+                        @php
+                        $temp = DB::table('document_types')
+                            ->where('name', $data->document_type_name)
+                            ->value('typecode');
+                       @endphp
                         @if($data->revised === 'Yes') 
                                
                         {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                         /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
 
                         @else
                         {{ Helpers::getDivisionName($data->division_id) }}
-                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                         /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
                     @endif
                 </tr>
@@ -808,15 +813,20 @@
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Document Number</th>
                                     <td class="w-70 text-left">
+                                        @php
+                                        $temp = DB::table('document_types')
+                                            ->where('name', $data->document_type_name)
+                                            ->value('typecode');
+                                       @endphp
                                         @if($data->revised === 'Yes') 
                                            
                                         {{ Helpers::getDivisionName($data->division_id) }}
-                                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                                         /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
 
                                         @else
                                         {{ Helpers::getDivisionName($data->division_id) }}
-                                        /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                                         /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
                                         
                                     @endif
@@ -1294,15 +1304,20 @@
             <tbody>
                 <tr>
                     <td class="text-left w-36">
+                                @php
+                                $temp = DB::table('document_types')
+                                    ->where('name', $data->document_type_name)
+                                    ->value('typecode');
+                                @endphp
                             @if($data->revised === 'Yes') 
                                
                             {{ Helpers::getDivisionName($data->division_id) }}
-                            /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                             /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
 
                             @else
                             {{ Helpers::getDivisionName($data->division_id) }}
-                            /@if($data->document_type_name){{ $data->document_type_name }} /@endif{{ $data->year }}
+                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                             /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}                           
                         @endif
                         
