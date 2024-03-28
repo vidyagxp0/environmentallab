@@ -132,7 +132,7 @@
                                                                 ->where('name', $temp->document_type_name)
                                                                 ->value('typecode');
                                                             @endphp        
-                                                    <td>{{ Helpers::getDivisionName(session()->get('division')) }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
+                                                    <td>{{ $temp->division_name }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
                                                         000{{ $temp->document_id }}/R{{ $temp->major}}.{{$temp->minor}}</td>
                                                     {{-- <td>&nbsp;</td> --}}
                                                     <td>{{ $temp->originator }}</td>

@@ -38,7 +38,7 @@ class TMSController extends Controller
                     $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
                     // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
                     // $temp->division_name= {{ Helpers::getDivisionName($_GET['id'])}
-                    $temp->division_name = Helpers::getDivisionName($temp->training->id);
+                    $temp->division_name = Helpers::getDivisionName( $temp->training->division_id);
                     $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
                     $temp->major = $temp->training->major;
                     $temp->minor = $temp->training->minor;
@@ -182,7 +182,7 @@ class TMSController extends Controller
                 $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
                 $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
                 // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
-                $temp->division_name = Helpers::getDivisionName($temp->training->id);
+                $temp->division_name = Helpers::getDivisionName($temp->training->division_id);
                 $temp->major = $temp->training->major;
                 $temp->minor = $temp->training->minor;
                 $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
