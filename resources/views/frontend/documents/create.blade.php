@@ -204,13 +204,13 @@
                         </div>
                         <div class="input-fields">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="doc-num">Document Number</label>
                                         <div class="default-name">Not available</div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="link-doc">Reference Record</label>
                                         <select multiple name="reference_record[]" placeholder="Select Reference Records"
@@ -218,7 +218,7 @@
                                             @if (!empty($document))
                                                 @foreach ($document as $temp)
                                                     <option value="{{ $temp->id }}">
-                                                        {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}
+                                                        {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
                                                     </option>
                                                 @endforeach
                                             @endif
