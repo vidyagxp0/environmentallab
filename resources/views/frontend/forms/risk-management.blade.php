@@ -313,8 +313,13 @@
                                                 <option value="1">QA</option>
                                                 <option value="2">QC</option>
                                                 <option value="3">R&D</option>
-                                                <option value="4">Manufacturing</option>
+                                                <option value="4">Wet Chemistry Area</option>
                                                 <option value="5">Warehouse</option>
+                                                <option value="6"> Molecular Area</option>
+                                                <option value="7"> Microbiology Area</option>
+                                                <option value="8"> Instrumental Area</option>
+                                                <option value="9"> Administration</option>
+                                                <option value="10"> Financial Department</option>
                                             </select>
                                         </div>
                                     </div>
@@ -459,9 +464,13 @@
                                                 <option value="1">QA</option>
                                                 <option value="2">QC</option>
                                                 <option value="3">R&D</option>
-                                                <option value="4">Manufacturing</option>
+                                                <option value="4">Wet Chemistry Area</option>
                                                 <option value="5">Warehouse</option>
-
+                                                <option value="6"> Molecular Area</option>
+                                                <option value="7"> Microbiology Area</option>
+                                                <option value="8"> Instrumental Area</option>
+                                                <option value="9"> Administration</option>
+                                                <option value="10"> Financial Department</option>
                                             </select>
                                         </div>
                                     </div>
