@@ -333,8 +333,8 @@
                     <td class="title w-60">
                         {{ $data->document_name }}
                     </td>
-                    <td class="logo w-20">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="...">
+                    <td class="logo">
+                        <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="scale: 4;">
                     </td>
                 </tr>
             </tbody>
