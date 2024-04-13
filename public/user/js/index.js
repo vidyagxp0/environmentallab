@@ -218,6 +218,13 @@ function addTrainRow(tableID) {
     var element5 = document.createElement("input");
     element5.type = "text";
     cell5.appendChild(element5);
+
+    var cell6 = row.insertCell(5);
+    var element6 = document.createElement("button");
+    element6.className = "removeTrainRow";
+    element6.innerHTML = "Remove";
+
+    cell6.appendChild(element6);
 }
 
 // ================================= ADD DOCUMENT DETAILS ROW
@@ -539,6 +546,11 @@ function addDistributionRetrieval(tableId) {
 
     let cell17 = newRow.insertCell(16);
     cell17.innerHTML = "<input type='string'>";
+
+    var cell18 = newRow.insertCell(17);
+    cell18.innerHTML = "<button class='removeTrainRow'>Remove</button>";
+
+    cell18.appendChild(element18);
 
     for (let i = 1; i < currentRowCount; i++) {
         let row = table.rows[i];

@@ -371,6 +371,7 @@ class DocumentController extends Controller
             if ($request->keywords) {
                 $document->keywords = implode(',', $request->keywords);
             }
+
             // if ($request->notify_to) {
             //     $document->notify_to = implode(',', $request->notify_to);
             // }
@@ -602,7 +603,7 @@ class DocumentController extends Controller
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
- 
+
         return view('frontend.documents.edit', compact(
             'document',
             'departments',
@@ -634,6 +635,9 @@ class DocumentController extends Controller
      */
     public function update($id, Request $request)
     {
+        // return $request;
+
+        // return $request->notify_to;
 
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
@@ -643,6 +647,7 @@ class DocumentController extends Controller
             $document->document_name = $request->document_name;
             $document->short_description = $request->short_desc;
             $document->description = $request->description;
+
 
             $document->due_dateDoc = $request->due_dateDoc;
             $document->sop_type = $request->sop_type;
@@ -660,6 +665,7 @@ class DocumentController extends Controller
             if ($request->keywords) {
                 $document->keywords = implode(',', $request->keywords);
             }
+
             // if ($request->notify_to) {
             //     $document->notify_to = implode(',', $request->notify_to);
             // }
@@ -711,8 +717,18 @@ class DocumentController extends Controller
             if (! empty($request->approver_group)) {
                 $document->approver_group = implode(',', $request->approver_group);
             }
+
             $document->update();
+
+            $existing_keywords = Keyword::where('document_id', $document->id)->get();
+
+            foreach ($existing_keywords as $existing_keyword)
+            {
+                $existing_keyword->delete();
+            }
+
             if (! empty($request->keywords)) {
+
                 foreach ($request->keywords as $key) {
                     $keyword = new Keyword();
                     $keyword->user_id = Auth::user()->id;

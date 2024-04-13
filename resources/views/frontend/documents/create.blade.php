@@ -40,6 +40,27 @@
     border: 2px solid #000000;
     border-radius: 40px;
 }
+#displayField {
+    border: 1px solid #f0f0f0;
+    background: white;
+    padding: 20px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#displayField li {
+    margin-left: 1rem;
+    background-color: #f0f0f0;
+    padding: 5px;
+}
+
+.close-icon {
+    color: red;
+    margin-left: auto; /* Pushes the icon to the right */
+    cursor: pointer;
+}
+
 
     </style>
 <?php $division_id = isset($_GET['id'])?$_GET['id']:'';?>
@@ -374,7 +395,8 @@
                                             <input type="text" id="sourceField" class="mb-0">
                                             <button id="addButton" type="button">ADD</button>
                                         </div>
-                                        <select name="keywords[]" class="targetField" multiple id="keywords">
+                                        <ul id="displayField"></ul>
+                                        <select name="keywords[]" class="targetField" multiple id="keywords" style="display: none">
 
                                         </select>
                                     </div>
@@ -396,7 +418,7 @@
 
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input ">
-                                        <label for="review-period">Review Period</label>
+                                        <label for="review-period">Review Period (in years)</label>
 
                                         <input type="number" name="review_period" id="review_period">
                                     </div>
@@ -406,9 +428,9 @@
                                     <div class="group-input input-date">
                                         <label for="next_review_date">Next Review Date</label>
                                         <div class="calenderauditee"> 
-                                            <input type="text" name="next_review_date" id="next_review_date"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" name="next_review_date" id="next_review_date" class="new_review_date_show"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" id="next_review_date"
-                                        class="hide-input"
+                                        class="hide-input new_review_date_hide"
                                         oninput="handleDateInput(this, 'next_review_date')"/>
                                         </div>
                                     </div>
@@ -606,6 +628,7 @@
                                                     <th class="answer">Answer</th>
                                                     <th class="result">Result</th>
                                                     <th class="comment">Comment</th>
+                                                    <th class="comment">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -628,6 +651,7 @@
                                                     <th class="answer">Topic</th>
                                                     <th class="result">Rating</th>
                                                     <th class="comment">Comment</th>
+                                                    <th class="comment">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -738,7 +762,7 @@
                                     <div class="group-input">
                                         <label for="procedure">Procedure</label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <textarea name="procedure" id="summernote">
+                                        <textarea name="procedure" class="summernote">
                                     </textarea>
                                     </div>
                                 </div>
@@ -748,7 +772,7 @@
                                             Reporting<button type="button" id="reportingbtadd" name="button">+</button>
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <input type="text" name="reporting[]" class="myclassname">
+                                        <input type="text" name="reporting[]" class="summernote">
 
 
                                         <div id="reportingdiv"></div>
@@ -988,6 +1012,7 @@
                                                 <th>Number of Retrieved Copies</th>
                                                 <th>Reason for Retrieval</th>
                                                 <th>Remarks</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1518,23 +1543,62 @@
     <script>
         $(document).ready(function() {
             $('#addButton').click(function() {
-                var sourceValue = $('#sourceField').val(); // Get the value from the source field
-                var targetField = $(
-                    '.targetField'); // The target field where the data will be added and selected
+                var sourceValue = $('#sourceField').val().trim(); // Get the trimmed value from the source field
+                if (!sourceValue) return; // Prevent adding empty values
 
-                // Create a new option with the source value
+                // Create a new list item with the source value and a close icon
+                var newItem = $('<li>', { class: 'd-flex justify-content-between align-items-center' }).text(sourceValue);
+                var closeButton = $('<span>', {
+                    text: '×',
+                    class: 'close-icon ms-2' // Bootstrap class for margin-left spacing
+                }).appendTo(newItem);
+
+                // Append the new list item to the display field
+                $('#displayField').append(newItem);
+
+                // Create a corresponding option in the hidden select
                 var newOption = $('<option>', {
                     value: sourceValue,
-                    text: sourceValue
-                });
+                    text: sourceValue,
+                    selected: 'selected'
+                }).appendTo('#keywords');
 
-                // Append the new option to the target field
-                targetField.append(newOption);
-
-                // Set the new option as selected
-                newOption.prop('selected', true);
+                // Clear the input field
                 $('#sourceField').val('');
+
+                // Add click event for the close icon
+                closeButton.on('click', function() {
+                    var thisValue = $(this).parent().text().slice(0, -1); // Remove the '×' from the value
+                    $(this).parent().remove(); // Remove the parent list item on click
+                    $('#keywords option').filter(function() {
+                        return $(this).val() === thisValue;
+                    }).remove(); // Also remove the corresponding option from the select
+                });
             });
+
+
+            // $('#addButton').click(function() {
+            //     var sourceValue = $('#sourceField').val(); // Get the value from the source field
+            //     var targetField = $(
+            //         '.targetField'); // The target field where the data will be added and selected
+
+            //     // Create a new option with the source value
+            //     var newOption = $('<option>', {
+            //         value: sourceValue,
+            //         text: sourceValue,
+            //     });
+
+            //     // Append the new option to the target field
+            //     targetField.append(newOption);
+
+            //     // Set the new option as selected
+            //     newOption.prop('selected', true);
+            //     $('#sourceField').val('');
+            // });
+        });
+
+        $(document).on('click', '.removeTag', function() {
+            $(this).remove();
         });
     </script>
 

@@ -186,7 +186,7 @@
         $('#responsibilitybtnadd').click(function(e) {
 
             var html =
-                '<div class="resrow"><input type="text" name="responsibility[]" class="myclassname"></div>';
+                '<div class="resrow row"><div class="col-11"><input type="text" name="responsibility[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             $('#responsibilitydiv').append(html);
 
@@ -197,25 +197,40 @@
         $('#abbreviationbtnadd').click(function(e) {
 
             var html =
-                '<div class="resrow"><input type="text" name="abbreviation[]" class="myclassname"></div>';
+                '<div class="resrow row"> <div class="col-11"><input type="text" name="abbreviation[]" class="myclassname"></div>  <div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             $('#abbreviationdiv').append(html);
 
         });
 
+        $(document).on('click', '.abbreviationbtnRemove', function() {
+            $(this).closest('div.row').remove();
+        })
+
+
+       
+
         $('#Definitionbtnadd').click(function(e) {
 
             var html =
-                '<div class="resrow"><input type="text" name="defination[]" class="myclassname"></div>';
+                '<div class="resrow row"><div class="col-11"><input type="text" name="defination[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             $('#definitiondiv').append(html);
 
         });
 
+        $(document).on('click', '.DefinitionbtnRemove', function() {
+            $(this).closest('div.row').remove();
+        })
+
+        $(document).on('click', '.removeTrainRow', function() {
+            $(this).closest('tr').remove();
+        })
+
         $('#reportingbtadd').click(function(e) {
 
             var html =
-                '<div class="resrow"><input type="text" name="reporting[]" class="myclassname"></div>';
+                '<div class="resrow row"><div class="col-11"><input type="text" name="reporting[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             $('#reportingdiv').append(html);
 
@@ -224,7 +239,7 @@
         $('#referencesbtadd').click(function(e) {
 
             var html =
-                '<div class="resrow"><input type="text" name="references[]" class="myclassname"></div>';
+                '<div class="resrow row"><div class="col-11"><input type="text" name="references[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             $('#referencesdiv').append(html);
 
@@ -232,7 +247,7 @@
         $('#annbtadd').click(function(e) {
 
             var html =
-              '<div class="resrow"><input type="text" name="ann[]" class="myclassname"></div>';
+              '<div class="resrow row"><div class="col-11"><input type="text" name="ann[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             $('#anndiv').append(html);
 
@@ -250,7 +265,7 @@
         $('#materialsbtadd').click(function(e) {
 
             var html =
-                '<div class="resrow"><input type="text" name="materials_and_equipments[]" class="myclassname"></div>';
+                '<div class="resrow row"><div class="col-11"><input type="text" name="materials_and_equipments[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button</div></div>';
 
             $('#materialsdiv').append(html);
 
@@ -1109,21 +1124,56 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
     integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
-    document.querySelector("#next_review_date").addEventListener("click", function() {
-        var effectveDate = document.querySelector("#effectve_date").value;
+    // document.querySelector("#next_review_date").addEventListener("click", function() {
+    //     console.log('change')
+    //     var effectveDate = document.querySelector("#effective_date").value;
+    //     var years = Number(document.querySelector("#review_period").value);
+    //     var dueDateElement = document.querySelector("#next_review_date");
+
+    //     console.log('effectveDate', effectveDate);
+
+    //     if (!isNaN(years) && effectveDate.length) {
+    //         effectveDate = effectveDate.split("-");
+    //         effectveDate = new Date(effectveDate[0], effectveDate[1] - 1, effectveDate[2]);
+    //         effectveDate.setFullYear(effectveDate.getFullYear() + years);
+    //         // dueDateElement.valueAsDate = null;
+    //         // dueDateElement.valueAsDate = effectveDate;
+    //         $('.new_review_date_hide').val(effectveDate)
+    //         $('.new_review_date_show').val(effectveDate)
+    //         $('.new_review_date_hide').trigger('input')
+    //     }
+    // });
+
+    function addYear(dateString, years) {
+        var date = moment(dateString, "DD-MMM-YYYY");  // Using moment.js for date parsing and manipulation
+        date.add(parseInt(years), 'years');  // Add one year
+        return date.format("DD-MMM-YYYY");  // Return the new date in the same format
+    }
+
+    $('#review_period').change(function() {
+        console.log('change')
+        var effectveDate = document.querySelector("#effective_date").value;
         var years = Number(document.querySelector("#review_period").value);
         var dueDateElement = document.querySelector("#next_review_date");
 
+        console.log('effectveDate', effectveDate);
+
+        var newEffectiveDate = addYear(effectveDate, years)
+
         if (!isNaN(years) && effectveDate.length) {
-            effectveDate = effectveDate.split("-");
-            effectveDate = new Date(effectveDate[0], effectveDate[1] - 1, effectveDate[2]);
-            effectveDate.setFullYear(effectveDate.getFullYear() + years);
-            dueDateElement.valueAsDate = null;
-            dueDateElement.valueAsDate = effectveDate;
+            // effectveDate = effectveDate.split("-");
+            // effectveDate = new Date(effectveDate[0], effectveDate[1] - 1, effectveDate[2]);
+            // effectveDate.setFullYear(effectveDate.getFullYear() + years);
+            // dueDateElement.valueAsDate = null;
+            // dueDateElement.valueAsDate = effectveDate;
+            $('.new_review_date_hide').val(newEffectiveDate)
+            $('.new_review_date_show').val(newEffectiveDate)
+            $('.new_review_date_hide').trigger('input')
         }
-    });
+    })
 </script>
 
 <script>

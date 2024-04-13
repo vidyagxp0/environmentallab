@@ -324,17 +324,21 @@
 <body>
 
     <header class="mb-20">
-        <table class="border" style="padding: 10px;">
+        <table class="border" style="padding: 0px;">
             <tbody>
                 <tr>
                     <td class="logo w-20">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="...">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
+                        <br>
+                        <strong>Environmental Laboratory</strong>
                     </td>
-                    <td class="title w-60">
+                    <td class="title w-60" style="border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
                         {{ $data->document_name }}
                     </td>
                     <td class="logo w-20 h-20">
                         <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="max-height: 60px;">
+                        <br >
+                        <strong>Environmental Laboratory</strong>
                     </td>
                 </tr>
             </tbody>

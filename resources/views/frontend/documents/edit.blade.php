@@ -29,6 +29,28 @@
             border-radius: 40px;
         }
  
+        #displayField {
+            border: 1px solid #f0f0f0;
+            background: white;
+            padding: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            list-style-type: none;
+        }
+
+        #displayField li {
+            margin-left: 1rem;
+            background-color: #f0f0f0;
+            padding: 5px;
+        }
+
+        .close-icon {
+            color: red;
+            margin-left: auto; /* Pushes the icon to the right */
+            cursor: pointer;
+        }
+
     </style>
 
     <div id="data-fields">
@@ -273,8 +295,11 @@
                                     <label for="notify_to">Notify To</label>
                                     <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
                                         data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}} >
+                                        @php
+                                            $notify_user_id = json_decode($document->notify_to); 
+                                        @endphp
                                         @foreach ($users as $data)
-                                            <option value="{{ $data->id }}">{{ $data->name }}
+                                            <option value="{{ $data->id }}" {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>{{ $data->name }}
                                                 {{-- ({{ $data->role }}) --}}
                                             </option>
                                         @endforeach
@@ -395,7 +420,7 @@
                                         @if (!empty($document_data))
                                             @foreach ($document_data as $temp)
                                             
-                                                <option value="{{ $temp->id }}">
+                                                <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
                                                     {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
                                                 </option>
                                             @endforeach
@@ -868,22 +893,21 @@
                                         <input type="text" id="sourceField" class="mb-0" {{Helpers::isRevised($document->stage)}} >
                                         <button id="addButton" type="button">ADD</button>
                                     </div>
-                                    <select name="keywords[]" class="targetField" multiple id="keywords">
+                                    <ul id="displayField" class="d-flex justify-content-between align-items-center">
                                         @if (!empty($keywords))
                                             @foreach ($keywords as $lan)
-                                                <option value="{{ $lan->id }}"
-                                                    @if ($document->keywords) @php
-                                               $data = explode(",",$document->keywords);
-                                                $count = count($data);
-                                                $i=0;
-                                            @endphp
-                                            @for ($i = 0; $i < $count; $i++)
-                                                @if ($data[$i] == $lan->keyword)
-                                                 selected @endif
-                                                    @endfor
-                                            @endif
-                                            >
-                                            {{ $lan->keyword }}
+                                                <li>
+                                                    {{ $lan->keyword }}
+                                                    <span class="close-icon ms-2">x</span>
+                                                </li>
+                                        @endforeach
+                                        @endif
+                                    </ul>
+                                    <select name="keywords[]" class="targetField" multiple id="keywords" style="display: none">
+                                        @if (!empty($keywords))
+                                            @foreach ($keywords as $lan)
+                                            <option value="{{ $lan->keyword }}" selected>
+                                                {{ $lan->keyword }}
                                             </option>
                                         @endforeach
                                         @endif
@@ -957,7 +981,7 @@
                             </div>
                               <div class="col-md-4">
                                 <div class="group-input">
-                                    <label for="review-period">Review Period</label>
+                                    <label for="review-period">Review Period (in years)</label>
                                     <input type="number" name="review_period" id="review_period" {{Helpers::isRevised($document->stage)}}  value="{{ $document->review_period }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
@@ -1579,6 +1603,7 @@
                                                 <th class="answer">Answer</th>
                                                 <th class="result">Result</th>
                                                 <th class="comment">Comment</th>
+                                                <th class="comment">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1601,6 +1626,7 @@
                                                 <th class="answer">Topic</th>
                                                 <th class="result">Rating</th>
                                                 <th class="comment">Comment</th>
+                                                <th class="comment">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1944,11 +1970,11 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->reporting))
                                         @foreach (unserialize($document->document_content->reporting) as $data)
-                                            <input type="text" name="reporting[]" class="myclassname"
+                                            <input type="text" name="reporting[]" class="summernote"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
                                         @endforeach
                                     @else
-                                        <input type="text" name="reporting[]" class="myclassname">
+                                        <input type="text" name="reporting[]" class="summernote">
                                     @endif
 
                                     <div id="reportingdiv"></div>
@@ -2357,6 +2383,7 @@
                                             <th class="copy-num">Number of Retrieved Copies</th>
                                             <th class="copy-long">Reason for Retrieval</th>
                                             <th class="copy-long">Remarks</th>
+                                            <th class="copy-long">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2876,23 +2903,46 @@
     <script>
         $(document).ready(function() {
             $('#addButton').click(function() {
-                var sourceValue = $('#sourceField').val(); // Get the value from the source field
-                var targetField = $(
-                    '.targetField'); // The target field where the data will be added and selected
+                var sourceValue = $('#sourceField').val().trim(); // Get the trimmed value from the source field
+                if (!sourceValue) return; // Prevent adding empty values
 
-                // Create a new option with the source value
+                // Create a new list item with the source value and a close icon
+                var newItem = $('<li>', { class: 'd-flex justify-content-between align-items-center' }).text(sourceValue);
+                var closeButton = $('<span>', {
+                    text: '×',
+                    class: 'close-icon ms-2' // Bootstrap class for margin-left spacing
+                }).appendTo(newItem);
+
+                // Append the new list item to the display field
+                $('#displayField').append(newItem);
+
+                // Create a corresponding option in the hidden select
                 var newOption = $('<option>', {
                     value: sourceValue,
-                    text: sourceValue
-                });
+                    text: sourceValue,
+                    selected: 'selected'
+                }).appendTo('#keywords');
 
-                // Append the new option to the target field
-                targetField.append(newOption);
-
-                // Set the new option as selected
-                newOption.prop('selected', true);
+                // Clear the input field
                 $('#sourceField').val('');
+
+                // Add click event for the close icon
+                closeButton.on('click', function() {
+                    var thisValue = $(this).parent().text().slice(0, -1); // Remove the '×' from the value
+                    $(this).parent().remove(); // Remove the parent list item on click
+                    $('#keywords option').filter(function() {
+                        return $(this).val() === thisValue;
+                    }).remove(); // Also remove the corresponding option from the select
+                });
             });
+
+            $(document).on('click', '.close-icon', function() {
+                var thisValue = $(this).parent().text().trim().slice(0, -1).trim(); // Remove the '×' from the value
+                $(this).closest('li').remove();
+                $('#keywords option').filter(function() {
+                    return $(this).text().trim() === thisValue;
+                }).remove()
+            })
         });
     </script>
 
