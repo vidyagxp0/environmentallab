@@ -324,7 +324,7 @@
 <body>
 
     <header class="mb-20">
-        <table class="border p-20">
+        <table class="border" style="padding: 10px;">
             <tbody>
                 <tr>
                     <td class="logo w-20">
@@ -333,8 +333,8 @@
                     <td class="title w-60">
                         {{ $data->document_name }}
                     </td>
-                    <td class="logo">
-                        <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="scale: 4;">
+                    <td class="logo w-20 h-20">
+                        <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="max-height: 60px;">
                     </td>
                 </tr>
             </tbody>

@@ -20,7 +20,7 @@
                     <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100" >
                         </div>
                         <div class="logo">
-                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-150 h-150">
+                            <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-100 h-100">
                         </div>
                     </div>
             <!-- <img style="border-radius: 8% " src="{{ asset('images/logo/logo.png') }}" height="80" alt=""><br> -->
