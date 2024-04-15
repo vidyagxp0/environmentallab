@@ -324,7 +324,7 @@ class DocumentController extends Controller
     public function store(Request $request)
     {
         // $request->dd();
-        //  return $request;
+        // effective_date, review_period
 
 
         if ($request->submit == 'save') {
@@ -354,7 +354,12 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
-            $document->next_review_date = $request->next_review_date;
+            try {
+                $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
+                $document->next_review_date = $next_review_date;
+            } catch (\Exception $e) {
+                // 
+            }
             $document->review_period = $request->review_period;
             $document->training_required = $request->training_required;
             $document->trainer = $request->trainer;
@@ -655,8 +660,13 @@ class DocumentController extends Controller
             $document->document_type_id = $request->document_type_id;
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
-            $document->effective_date = $request->effective_date;
-            $document->next_review_date = $request->next_review_date;
+            $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
+            try {
+                $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
+                $document->next_review_date = $next_review_date;
+            } catch (\Exception $e) {
+                // 
+            }
             $document->review_period = $request->review_period;
             $document->training_required = $request->training_required;
             $document->attach_draft_doocument = $request->attach_draft_doocument;
@@ -1158,6 +1168,7 @@ class DocumentController extends Controller
             if (! empty($request->reporting)) {
                 $documentcontet->reporting = serialize($request->reporting);
             }
+
             if (! empty($request->materials_and_equipments)) {
                 $documentcontet->materials_and_equipments = serialize($request->materials_and_equipments);
             }
@@ -1373,7 +1384,9 @@ class DocumentController extends Controller
 
     public function createPDF($id)
     {
-        $controls = DownloadControl::where('role_id', Auth::user()->role)->first();
+        $roles = explode(',', Auth::user()->role);
+        $controls = PrintControl::whereIn('role_id', $roles)->first();
+
         if ($controls) {
             set_time_limit(30);
             $data = Document::find($id);
@@ -1619,7 +1632,9 @@ class DocumentController extends Controller
 
     public function printPDF($id)
     {
-        $controls = PrintControl::where('role_id', Auth::user()->role)->first();
+        $roles = explode(',', Auth::user()->role);
+        $controls = PrintControl::whereIn('role_id', $roles)->first();
+
         if ($controls) {
             set_time_limit(30);
             $data = Document::find($id);

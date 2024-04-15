@@ -1951,8 +1951,8 @@
                                     @endforeach
                                 </div>
                             </div>
-                            @foreach ($history as $tempHistory)
-                                @if (Auth::user()->role != 3)
+                            {{-- @foreach ($history as $tempHistory)
+                                @if (Auth::user()->role != 3) --}}
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1960,8 +1960,8 @@
                                         </div>
                                         <div class="button">Add Comment</div>
                                     </div>
-                                @endif
-                            @endforeach
+                                {{-- @endif
+                            @endforeach --}}
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="reporting" id="newreport">
@@ -1970,11 +1970,11 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->reporting))
                                         @foreach (unserialize($document->document_content->reporting) as $data)
-                                            <input type="text" name="reporting[]" class="summernote"
-                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                            <textarea type="text" name="reporting[]" class="summernote"
+                                             {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                         @endforeach
                                     @else
-                                        <input type="text" name="reporting[]" class="summernote">
+                                        <textarea type="text" name="reporting[]" class="summernote"></textarea>
                                     @endif
 
                                     <div id="reportingdiv"></div>
@@ -2020,8 +2020,10 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->references))
                                         @foreach (unserialize($document->document_content->references) as $data)
-                                            <input type="text" name="references[]" class="myclassname"
+                                            @if (!empty($data))
+                                                <input type="text" name="references[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                            @endif
                                         @endforeach
                                     @else
                                         <input type="text" name="references[]" class="myclassname">
@@ -2110,8 +2112,10 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if (!empty($document->document_content->ann))
                                         @foreach (unserialize($document->document_content->ann) as $data)
-                                            <input type="text" name="ann[]" class="myclassname"
+                                            @if (!empty($data))
+                                                <input type="text" name="ann[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                            @endif
                                         @endforeach
                                     @else
                                         <input type="text" name="ann[]" class="myclassname">
@@ -2141,9 +2145,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
-
-                                {{-- Add Comment  --}}
+                            {{-- @if (Auth::user()->role != 3)
                                 <div class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -2153,7 +2155,7 @@
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
-                            @endif
+                            @endif --}}
                             {{-- <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="test">

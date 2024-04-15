@@ -306,16 +306,17 @@
 
         .annexure-block {
             margin: 40px 0 0;
-
         }
 
         .empty-page {
             page-break-after: always;
-
         }
 
         #pdf-page {
             /* page-break-inside: avoid; */
+        }
+        .page-break-before {
+            page-break-before: always;
         }
     </style>
 
@@ -329,16 +330,14 @@
                 <tr>
                     <td class="logo w-20">
                         <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
-                        <br>
-                        <strong>Environmental Laboratory</strong>
                     </td>
                     <td class="title w-60" style="border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
+                        <p style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
+                        <br>
                         {{ $data->document_name }}
                     </td>
                     <td class="logo w-20 h-20">
                         <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="max-height: 60px;">
-                        <br >
-                        <strong>Environmental Laboratory</strong>
                     </td>
                 </tr>
             </tbody>
@@ -435,18 +434,20 @@
                                         @endphp
                                         @if (!empty($data->document_content->responsibility))
                                             @foreach (unserialize($data->document_content->responsibility) as $res)
-                                                <tr>
-                                                    <td class="w-5 vertical-baseline">3.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-left">
+                                                @if (!empty($res))
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">3.<?php echo $i; ?></td>
+                                                        <td class="w-95 text-left">
 
-                                                        {{ $res }}
+                                                            {{ $res }}
 
-                                                    </td>
-                                                    @php
-                                                        $i = $i + 1;
+                                                        </td>
+                                                        @php
+                                                            $i = $i + 1;
 
-                                                    @endphp
-                                                </tr>
+                                                        @endphp
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -476,15 +477,17 @@
                                         @endphp
                                         @if (!empty($data->document_content->abbreviation))
                                             @foreach (unserialize($data->document_content->abbreviation) as $res)
-                                                <tr>
-                                                    <td class="w-5 vertical-baseline">4.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-justify">
-                                                        {{ $res }}
-                                                    </td>
-                                                    @php
-                                                        $i = $i + 1;
-                                                    @endphp
-                                                </tr>
+                                                @if (!empty($res))
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">4.<?php echo $i; ?></td>
+                                                        <td class="w-95 text-justify">
+                                                            {{ $res }}
+                                                        </td>
+                                                        @php
+                                                            $i = $i + 1;
+                                                        @endphp
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -495,7 +498,7 @@
                 </tbody>
             </table>
 
-            <table class="mb-20">
+            <table class="mb-20 page-break-before">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">5.</th>
@@ -505,25 +508,48 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <div>
+                            <div class="definition-block">
                                 <table>
                                     <tbody>
-
                                         @php
+                                            $definitions = unserialize($data->document_content->defination);
+                                            $contentLength = 0;
+                                            $maxContentLengthPerPage = 3000; 
                                             $i = 1;
                                         @endphp
                                         @if (!empty($data->document_content->defination))
-                                            @foreach (unserialize($data->document_content->defination) as $res)
-                                                <tr>
-                                                    <td class="w-5 vertical-baseline">5.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-justify">
-                                                        {{ $res }}
-                                                    </td>
+                                            @foreach ($definitions as $index => $definition)
+                                                {{-- @if (!empty($res))
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">5.<?php echo $i; ?></td>
+                                                        <td class="w-95 text-justify">
+                                                            {{ $res }}
+                                                        </td>
+                                                        @php
+                                                            $i = $i + 1;
+                                                        @endphp
+                                                    </tr>
+                                                @endif --}}
+                                                @if (!empty($definition))
                                                     @php
-                                                        $i = $i + 1;
+                                                        $contentLength += strlen($definition);
                                                     @endphp
-                                                </tr>
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">{{ '5.' . ($index + 1) }}</td>
+                                                        <td class="w-95 text-justify">{{ $definition }}</td>
+                                                    </tr>
+                                                    @if ($contentLength >= $maxContentLengthPerPage)
+                                                        </tbody></table>
+                                                        <div style="page-break-after: always;"></div> <!-- Force a page break -->
+                                                        <table><tbody>
+                                                        @php
+                                                            $contentLength = 0; // Reset content length after a break
+                                                        @endphp
+                                                    @endif
+                                                @endif
+
                                             @endforeach
+
                                         @endif
                                     </tbody>
                                 </table>
@@ -551,15 +577,17 @@
                                         @endphp
                                         @if (!empty($data->document_content->materials_and_equipments))
                                             @foreach (unserialize($data->document_content->materials_and_equipments) as $res)
-                                                <tr>
-                                                    <td class="w-5 vertical-baseline">6.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-left">
-                                                        {{ $res }}
-                                                    </td>
-                                                    @php
-                                                        $i = $i + 1;
-                                                    @endphp
-                                                </tr>
+                                                @if (!empty($res))
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">6.<?php echo $i; ?></td>
+                                                        <td class="w-95 text-left">
+                                                            {{ $res }}
+                                                        </td>
+                                                        @php
+                                                            $i = $i + 1;
+                                                        @endphp
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -610,15 +638,17 @@
                                         @endphp
                                         @if (!empty($data->document_content->reporting))
                                             @foreach (unserialize($data->document_content->reporting) as $res)
-                                                <tr>
-                                                    <td class="w-5 vertical-baseline">8.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-left">
-                                                        {{ $res }}
-                                                    </td>
-                                                    @php
-                                                        $i = $i + 1;
-                                                    @endphp
-                                                </tr>
+                                                @if (!empty($res))
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">8.<?php echo $i; ?></td>
+                                                        <td class="w-95 text-left">
+                                                            {{ $res }}
+                                                        </td>
+                                                        @php
+                                                            $i = $i + 1;
+                                                        @endphp
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -647,15 +677,17 @@
                                         @endphp
                                         @if (!empty($data->document_content->references))
                                             @foreach (unserialize($data->document_content->references) as $res)
-                                                <tr>
-                                                    <td class="w-5 vertical-baseline">9.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-left">
-                                                        {{ $res }}
-                                                    </td>
-                                                    @php
-                                                        $i = $i + 1;
-                                                    @endphp
-                                                </tr>
+                                                @if (!empty($res))
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">9.<?php echo $i; ?></td>
+                                                        <td class="w-95 text-left">
+                                                            {{ $res }}
+                                                        </td>
+                                                        @php
+                                                            $i = $i + 1;
+                                                        @endphp
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -684,15 +716,17 @@
                                         @endphp
                                         @if (!empty($data->document_content->ann))
                                             @foreach (unserialize($data->document_content->ann) as $res)
-                                                <tr>
-                                                    <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
-                                                    <td class="w-95 text-left">
-                                                        {{ $res }}
-                                                    </td>
-                                                    @php
-                                                        $i = $i + 1;
-                                                    @endphp
-                                                </tr>
+                                                @if (!empty($res))
+                                                    <tr>
+                                                        <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
+                                                        <td class="w-95 text-left">
+                                                            {{ $res }}
+                                                        </td>
+                                                        @php
+                                                            $i = $i + 1;
+                                                        @endphp
+                                                    </tr>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </tbody>
@@ -1058,7 +1092,7 @@
                                             $date = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
-                                                ->where('stage', 'Review-Submit')
+                                                ->where('stage', 'Reviewed')
                                                 ->latest()
                                                 ->first();
                                             $reject = DB::table('stage_manages')
@@ -1185,7 +1219,7 @@
                                             $date = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
-                                                ->where('stage', 'Approval-Submit')
+                                                ->where('stage', 'Approved')
                                                 ->latest()
                                                 ->first();
                                             $reject = DB::table('stage_manages')

@@ -18,27 +18,38 @@
                                     <button>
                                         <a href="{{ url('audit-trial', $document->id) }}">Audit Trail</a>
                                     </button>
+                                    @php $showEdit = false; @endphp
                                     @if (Helpers::checkRoles(2))
                                         @if (empty($review_reject))
                                             @if (empty($stagereview_submit))
-                                                <button><a
-                                                        href="{{ route('documents.edit', $document->id) }}">Edit</a></button>
+                                                @php
+                                                    $showEdit = true;
+                                                @endphp
                                             @endif
                                         @elseif($document->stage == 2)
-                                            <button><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button>
+                                            @php
+                                                $showEdit = true;
+                                            @endphp
                                         @endif
-
                                     @endif
+
                                     @if (Helpers::checkRoles(1))
                                         @if (empty($approval_reject))
                                             @if (empty($stageapprove_submit))
-                                                <button><a
-                                                        href="{{ route('documents.edit', $document->id) }}">Edit</a></button>
+                                                @php
+                                                    $showEdit = true;
+                                                @endphp
                                             @endif
                                         @elseif($document->stage == 4)
-                                            <button><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button>
+                                            @php
+                                                $showEdit = true;
+                                            @endphp    
                                         @endif
 
+                                    @endif
+
+                                    @if ($showEdit)
+                                        <button><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button>
                                     @endif
 
                                     <button><a href="{{ url('documents/generatePdf', $document->id) }}">Download</a>
@@ -333,7 +344,7 @@
                                                 $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Review-submit')
+                                                ->where('stage', 'Reviewed')
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
@@ -554,6 +565,7 @@
                                                 ->value('name');
                                             $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
+                                                ->where('stage', 'Approved')
                                                 ->where('document_id', $document->id)
                                                 ->where('deleted_at', null)
                                                 ->latest()

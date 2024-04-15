@@ -295,7 +295,7 @@
                                                 $user->status = DB::table('stage_manages')
                                                 ->where('user_id', $rev_data[$i])
                                                 ->where('document_id', $document->id)
-                                                ->where('stage', 'Review-submit') 
+                                                ->where('stage', 'Reviewed') 
                                                 ->where('deleted_at', null)                                                
                                                 ->latest()
                                                 ->first();
