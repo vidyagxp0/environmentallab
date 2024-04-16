@@ -126,11 +126,15 @@ class DocumentDetailsController extends Controller
 
                   $temp_user->fromMain = User::find($document->originator_id);
 
-                            Mail::send('mail.for_review',['document' => $document],
-                            function ($message) use ($temp_user) {
-                                    $message->to($temp_user->email)
-                                            ->subject('Document is for Review');
-                            });
+                            try {
+                              Mail::send('mail.for_review',['document' => $document],
+                              function ($message) use ($temp_user) {
+                                      $message->to($temp_user->email)
+                                              ->subject('Document is for Review');
+                              });
+                            } catch (\Exception $e) {
+                              // 
+                            }
 
                 }
               }
@@ -172,17 +176,25 @@ class DocumentDetailsController extends Controller
           if ($request->stage_id == "Cancel-by-Reviewer") {
             $document->status = "Draft";
             $document->stage = Stage::where('name', $document->status)->value('id');
-            Mail::send('mail.review-reject', ['document' => $document],
-            function ($message) use ($originator) {
-                    $message->to($originator->email)
-                            ->subject('Rejected By'.Auth::user()->name.'(Reviewer)');
-            });
+            try {
+              Mail::send('mail.review-reject', ['document' => $document],
+              function ($message) use ($originator) {
+                      $message->to($originator->email)
+                              ->subject('Rejected By'.Auth::user()->name.'(Reviewer)');
+              });
+            } catch (\Exception $e) {
+              // 
+            }
           } else {
-            Mail::send('mail.reviewed', ['document' => $document],
-            function ($message) use ($originator) {
-                    $message->to($originator->email)
-                            ->subject('Reviewed By'.Auth::user()->name.'(Reviewer)');
-            });
+            try {
+                Mail::send('mail.reviewed', ['document' => $document],
+                function ($message) use ($originator) {
+                        $message->to($originator->email)
+                                ->subject('Reviewed By'.Auth::user()->name.'(Reviewer)');
+                });
+            } catch (\Exception $e) {
+              // 
+            }
             $reviewersData = 0;
             $reviewersDataforgroup = 0;
             if ($document->reviewers) {
@@ -217,6 +229,23 @@ class DocumentDetailsController extends Controller
 
                     $document->stage = 3;
                     $document->status = Stage::where('id', 3)->value('name');
+                    try {
+                      Mail::send(
+                        'mail.reviewed',
+                        ['document' => $document],
+                        function ($message) use ($originator) {
+                          $message->to($originator->email)
+                            ->subject('Document is now Reviewed');
+                        }
+                      );
+                    } catch (\Exception $e) {
+                      // 
+                    }
+                  }
+                } else {
+                  $document->stage = 3;
+                  $document->status = Stage::where('id', 3)->value('name');
+                  try {
                     Mail::send(
                       'mail.reviewed',
                       ['document' => $document],
@@ -225,18 +254,9 @@ class DocumentDetailsController extends Controller
                           ->subject('Document is now Reviewed');
                       }
                     );
+                  } catch (\Exception $e) {
+                    // 
                   }
-                } else {
-                  $document->stage = 3;
-                  $document->status = Stage::where('id', 3)->value('name');
-                  Mail::send(
-                    'mail.reviewed',
-                    ['document' => $document],
-                    function ($message) use ($originator) {
-                      $message->to($originator->email)
-                        ->subject('Document is now Reviewed');
-                    }
-                  );
                 }
               }
             }
@@ -245,27 +265,35 @@ class DocumentDetailsController extends Controller
                 if ($reviewersDataforgroup == 1 && $reviewersData = 1) {
                   $document->stage = 3;
                   $document->status = Stage::where('id', 3)->value('name');
-                  Mail::send(
-                    'mail.reviewed',
-                    ['document' => $document],
-                    function ($message) use ($originator) {
-                      $message->to($originator->email)
-                        ->subject('Document is now Reviewed');
-                    }
-                  );
-                }
+                  try {
+                    Mail::send(
+                      'mail.reviewed',
+                      ['document' => $document],
+                      function ($message) use ($originator) {
+                        $message->to($originator->email)
+                          ->subject('Document is now Reviewed');
+                      }
+                    );
+                  } catch (\Exception $e) {
+                    // 
+                  }
+                } 
               } else {
                 if ($reviewersData == 1) {
                   $document->stage = 3;
                   $document->status = Stage::where('id', 3)->value('name');
-                  Mail::send(
-                    'mail.reviewed',
-                    ['document' => $document],
-                    function ($message) use ($originator) {
-                      $message->to($originator->email)
-                        ->subject('Document is Reviewed');
-                    }
-                  );
+                  try {
+                    Mail::send(
+                      'mail.reviewed',
+                      ['document' => $document],
+                      function ($message) use ($originator) {
+                        $message->to($originator->email)
+                          ->subject('Document is Reviewed');
+                      }
+                    );
+                  } catch (\Exception $e) {
+                    // 
+                  }
                 }
               }
             }
@@ -276,24 +304,32 @@ class DocumentDetailsController extends Controller
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
             $document->stage = Stage::where('name', $document->status)->value('id');
-            Mail::send(
-              'mail.approve-reject',
-              ['document' => $document],
-              function ($message) use ($originator) {
-                $message->to($originator->email)
-                  ->subject('Rejected by' . Auth::user()->name . '(Approver)');
-              }
-            );
+            try {
+              Mail::send(
+                'mail.approve-reject',
+                ['document' => $document],
+                function ($message) use ($originator) {
+                  $message->to($originator->email)
+                    ->subject('Rejected by' . Auth::user()->name . '(Approver)');
+                }
+              );
+            } catch (\Exception $e) {
+              // 
+            }
           } else {
-            Mail::send(
-              'mail.approved',
-              ['document' => $document],
-              function ($message) use ($originator) {
-                $message->to($originator->email)
-                  ->subject('Approved by' . Auth::user()->name . '(Approver)');
-
-              }
-            );
+            try {
+              Mail::send(
+                'mail.approved',
+                ['document' => $document],
+                function ($message) use ($originator) {
+                  $message->to($originator->email)
+                    ->subject('Approved by' . Auth::user()->name . '(Approver)');
+  
+                }
+              );
+            } catch (\Exception $e) {
+              // 
+            }
             $reviewersData = 0;
             $reviewersDataforgroup = 0;
             if ($document->approvers) {
@@ -327,28 +363,36 @@ class DocumentDetailsController extends Controller
                   if ($reviewersData == 1) {
                     $document->stage = 5;
                     $document->status = Stage::where('id', 5)->value('name');
+                    try {
+                      Mail::send(
+                        'mail.approved',
+                        ['document' => $document],
+                        function ($message) use ($originator) {
+                          $message->to($originator->email)
+                            ->subject("Document is now Approved");
+  
+                        }
+                      );
+                    } catch (\Exception $e) {
+                      // 
+                    }
+                  }
+                } else {
+                  $document->stage = 5;
+                  $document->status = Stage::where('id', 5)->value('name');
+                  try {
                     Mail::send(
                       'mail.approved',
                       ['document' => $document],
                       function ($message) use ($originator) {
                         $message->to($originator->email)
                           ->subject("Document is now Approved");
-
+  
                       }
                     );
+                  } catch (\Exception $e) {
+                    // 
                   }
-                } else {
-                  $document->stage = 5;
-                  $document->status = Stage::where('id', 5)->value('name');
-                  Mail::send(
-                    'mail.approved',
-                    ['document' => $document],
-                    function ($message) use ($originator) {
-                      $message->to($originator->email)
-                        ->subject("Document is now Approved");
-
-                    }
-                  );
                 }
               }
             }
@@ -357,29 +401,37 @@ class DocumentDetailsController extends Controller
                 if ($reviewersDataforgroup == 1 && $reviewersData == 1) {
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
-                  Mail::send(
-                    'mail.approved',
-                    ['document' => $document],
-                    function ($message) use ($originator) {
-                      $message->to($originator->email)
-                        ->subject("Document is now Approved.");
-
-                    }
-                  );
+                  try {
+                    Mail::send(
+                      'mail.approved',
+                      ['document' => $document],
+                      function ($message) use ($originator) {
+                        $message->to($originator->email)
+                          ->subject("Document is now Approved.");
+  
+                      }
+                    );
+                  } catch (\Exception $e) {
+                    // 
+                  }
                 }
               } else {
                 if ($reviewersData == 1) {
                   $document->stage = 5;
                   $document->status = Stage::where('id', 5)->value('name');
-                  Mail::send(
-                    'mail.approved',
-                    ['document' => $document],
-                    function ($message) use ($originator) {
-                      $message->to($originator->email)
-                        ->subject("Document is now Approved");
-
-                    }
-                  );
+                  try {
+                    Mail::send(
+                      'mail.approved',
+                      ['document' => $document],
+                      function ($message) use ($originator) {
+                        $message->to($originator->email)
+                          ->subject("Document is now Approved");
+  
+                      }
+                    );
+                  } catch (\Exception $e) {
+                    // 
+                  }
                 }
               }
             }
