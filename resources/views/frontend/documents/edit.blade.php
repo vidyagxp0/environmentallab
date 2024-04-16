@@ -1638,7 +1638,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="comments">Comments</label>
-                                    <textarea name="comments" {{Helpers::isRevised($document->stage)}} ></textarea>
+                                    <textarea name="comments" {{Helpers::isRevised($document->stage)}} >{{ $document->comments }}</textarea>
 
                                 </div>
                             </div>

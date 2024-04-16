@@ -182,7 +182,7 @@
 
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="due-date">Due Date</label>
+                                        <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                         </div>
                                         <div class="calenderauditee"> 
