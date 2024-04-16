@@ -36,4 +36,9 @@ class Document extends Model
     'documents'
 ];
 
+    public function originator()
+    {
+        return $this->belongsTo(User::class, 'originator_id');
+    }
+
 }

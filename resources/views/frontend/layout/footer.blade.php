@@ -1124,7 +1124,7 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"
     integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 <script>
     // document.querySelector("#next_review_date").addEventListener("click", function() {
@@ -1147,21 +1147,16 @@
     //     }
     // });
 
-    function addYear(dateString, years) {
-        var date = moment(dateString, "DD-MMM-YYYY");  // Using moment.js for date parsing and manipulation
-        date.add(parseInt(years), 'years');  // Add one year
-        return date.format("DD-MMM-YYYY");  // Return the new date in the same format
-    }
-
-    $('#review_period').change(function() {
-        console.log('change')
+    function calculateNextReviewDate(dateString, years) {
         var effectveDate = document.querySelector("#effective_date").value;
         var years = Number(document.querySelector("#review_period").value);
         var dueDateElement = document.querySelector("#next_review_date");
 
-        console.log('effectveDate', effectveDate);
+        var date = moment(effectveDate, "DD-MMM-YYYY");
+        var newEffectiveDate = date.add(parseInt(years), 'years');
+        newEffectiveDate = newEffectiveDate.format('DD-MMM-YYYY')
 
-        var newEffectiveDate = addYear(effectveDate, years)
+        console.log('newEffectiveDate', newEffectiveDate)
 
         if (!isNaN(years) && effectveDate.length) {
             // effectveDate = effectveDate.split("-");
@@ -1173,6 +1168,16 @@
             $('.new_review_date_show').val(newEffectiveDate)
             $('.new_review_date_hide').trigger('input')
         }
+    }
+
+    $('#review_period').change(function() {
+        console.log('change')        
+        calculateNextReviewDate()
+    })
+
+    $('#effective_date').change(function() {
+        console.log('change')        
+        calculateNextReviewDate()
     })
 </script>
 
