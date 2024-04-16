@@ -51,6 +51,7 @@ class DocumentDetailsController extends Controller
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
         $originator = User::find($document->originator_id);
+        $lastDocument = Document::withTrashed()->find($request->document_id);
 
         if (Helpers::checkRoles(3)) {
           
@@ -70,6 +71,20 @@ class DocumentDetailsController extends Controller
                 $updateRecords->delete();
               }
             }
+            $history = new DocumentHistory;
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Send for Reviewer';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = $document->status;
+            $history->change_to = 'In-Review';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $document->status;
+            $history->save();
           }
           $stage->save();
         } else {
@@ -80,6 +95,7 @@ class DocumentDetailsController extends Controller
           $stage->stage = $request->stage_id;
           $stage->comment = $request->comment;
           $stage->save();
+
           if ($request->stage_id == 'Reviewed') {
             $stage = new StageManage;
             $stage->document_id = $request->document_id;
@@ -88,6 +104,22 @@ class DocumentDetailsController extends Controller
             $stage->stage = 'Review-Submit';
             $stage->comment = $request->comment;
             $stage->save();
+
+            $history = new DocumentHistory;
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Review Submit';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'Reviewed';
+            $history->change_to = 'Review-Submit';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $document->status;
+            $history->save();
+            dd($history);
           }
           if ($request->stage_id == 'Approved') {
             $stage = new StageManage;
@@ -97,6 +129,21 @@ class DocumentDetailsController extends Controller
             $stage->stage = 'Approval-Submit';
             $stage->comment = $request->comment;
             $stage->save();
+
+            $history = new DocumentHistory;
+            $history->document_id = $request->document_id;
+            $history->activity_type = 'Approval Submit';
+            $history->previous = '';
+            $history->current = '';
+            $history->comment = $request->comment;
+            $history->action_name = 'Submit';
+            $history->change_from = 'Approved';
+            $history->change_to = 'Approval-Submit';
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $document->status;
+            $history->save();
           }
           if ($request->stage_id == 'Cancel-by-Reviewer') {
             StageManage::where('document_id', $request->document_id)
@@ -171,6 +218,20 @@ class DocumentDetailsController extends Controller
         if (Helpers::checkRoles(2)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
             $document->status = "Draft";
+              $history = new DocumentHistory;
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Cancel-by-Reviewer';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'In-Review';
+              $history->change_to = 'Draft';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = $document->status;
+              $history->save();
             $document->stage = Stage::where('name', $document->status)->value('id');
             Mail::send('mail.review-reject', ['document' => $document],
             function ($message) use ($originator) {
@@ -276,6 +337,20 @@ class DocumentDetailsController extends Controller
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
             $document->stage = Stage::where('name', $document->status)->value('id');
+              $history = new DocumentHistory;
+              $history->document_id = $request->document_id;
+              $history->activity_type = 'Cancel-by-Approver';
+              $history->previous = '';
+              $history->current = '';
+              $history->comment = $request->comment;
+              $history->action_name = 'Submit';
+              $history->change_from = 'In-Approver';
+              $history->change_to = 'Draft';
+              $history->user_id = Auth::user()->id;
+              $history->user_name = Auth::user()->name;
+              $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+              $history->origin_state = $document->status;
+              $history->save();
             Mail::send(
               'mail.approve-reject',
               ['document' => $document],
