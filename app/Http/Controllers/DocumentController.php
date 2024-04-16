@@ -751,6 +751,12 @@ class DocumentController extends Controller
 
             if ($request->training_required == 'yes') {
                 $trainning = DocumentTraining::where('document_id', $id)->first();
+
+                if (!$request->trainer) {
+                    toastr()->error('Trainer not selected!');
+                    return back();
+                }
+
                 if (empty($trainning)) {
                     $trainning = new DocumentTraining();
                     $trainning->document_id = $document->id;
@@ -1389,6 +1395,7 @@ class DocumentController extends Controller
 
         if ($controls) {
             set_time_limit(30);
+            $document = Document::find($id);
             $data = Document::find($id);
             $data->department = Department::find($data->department_id);
             $data['originator'] = User::where('id', $data->originator_id)->value('name');
@@ -1403,7 +1410,7 @@ class DocumentController extends Controller
             // $pdf = PDF::loadView('frontend.documents.pdfpage', compact('data'))->setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
 
             $pdf = App::make('dompdf.wrapper');
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time'))
+            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
@@ -1547,6 +1554,7 @@ class DocumentController extends Controller
         $data = Document::find($id);
         //$data->department = Department::find($data->department_id);
         $department = Department::find(Auth::user()->departmentid);
+        $document = Document::find($id);
         
         if($department)
         {
@@ -1568,7 +1576,7 @@ class DocumentController extends Controller
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time'))
+        $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',
                 'isHtml5ParserEnabled' => true,
@@ -1637,6 +1645,7 @@ class DocumentController extends Controller
 
         if ($controls) {
             set_time_limit(30);
+            $document = Document::find($id);
             $data = Document::find($id);
             $data->department = Department::find($data->department_id);
             $data['originator'] = User::where('id', $data->originator_id)->value('name');
@@ -1652,7 +1661,7 @@ class DocumentController extends Controller
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time'))
+            $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

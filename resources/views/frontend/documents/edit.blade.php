@@ -1024,9 +1024,9 @@
                                     <label for="review-date">Next Review Date</label>
                                     
                                         <div class="calenderauditee">                                     
-                                        <input type="text"  id="next_review_date" value="{{ $document->next_review_date }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" value=""
-                                        class="hide-input"
+                                        class="hide-input new_review_date_hide"
                                         oninput="handleDateInput(this, 'next_review_date')"/>
                                         </div>
 

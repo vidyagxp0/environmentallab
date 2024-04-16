@@ -642,7 +642,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">8.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {{ $res }}
+                                                            {!! $res !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -720,7 +720,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {{ $res }}
+                                                            {!! $res !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -1053,7 +1053,7 @@
                             <tbody>
                                 <tr>
                                     <td class="text-left w-25">{{ $data->originator }}</td>
-                                    <td class="text-left w-25">{{ $data->department_name }}</td>
+                                    <td class="text-left w-25">{{ $document->originator && $document->originator->department ? $document->originator->department->name : '' }}</td>
                                     <td class="text-left w-25">Initiation Completed</td>
                                     <td class="text-left w-25">{{ $data->originator_email }}</td>
                                 </tr>

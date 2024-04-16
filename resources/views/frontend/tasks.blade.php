@@ -75,15 +75,22 @@
                                                         <div class="action-down-btn">Action <i class="fa-solid fa-angle-down"></i></div>
                                                         <div class="action-block">
                                                             <a href="{{ url('rev-details', $temp->id) }}">View</a>
+                                                            @php
+                                                                $showEdit = false;
+                                                            @endphp
                                                             @if(Helpers::checkRoles(2))
-                                                            @if($temp->stage <=2 )
-                                                            <a href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                            @endif
+                                                                @if($temp->stage <=2 )
+                                                                    @php $showEdit = true; @endphp
+                                                                @endif
                                                             @endif
                                                             @if(Helpers::checkRoles(1))
-                                                            @if($temp->stage <=4 )
-                                                            <a href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                @if($temp->stage <=4 )
+                                                                    @php $showEdit = true; @endphp
+                                                                @endif
                                                             @endif
+
+                                                            @if ($showEdit)
+                                                                <a href="{{ route('documents.edit', $temp->id) }}">Edit</a>
                                                             @endif
                                                         </div>
                                                     </div>
