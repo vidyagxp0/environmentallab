@@ -274,7 +274,7 @@
         header {
             width: 100%;
             position: fixed;
-            top: -180px;
+            top: -200px;
             right: 0;
             left: 0;
             display: block;
@@ -318,23 +318,39 @@
         .page-break-before {
             page-break-before: always;
         }
+
+        .table-responsive {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+.MsoNormalTable, 
+table{
+    margin: 0px !important;
+    width : 100% !important;
+}
+
+
     </style>
 
 </head>
 
 <body>
 
-    <header class="mb-20">
-        <table class="border" style="padding: 0px;">
+    <header  style="margin-bottom: 100px;" class="">
+        <table class="border" >
             <tbody>
                 <tr>
                     <td class="logo w-20">
                         <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
                     </td>
-                    <td class="title w-60" style="border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
+                    <td class="title w-60" style="height: 170px; margin-bottom: 100px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
                         <p style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
                         <br>
-                        {{ $data->document_name }}
+                        <span >
+
+                            {{ $data->document_name }}
+                        </span>
                     </td>
                     <td class="logo w-20 h-20">
                         <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="max-height: 60px;">
@@ -367,10 +383,8 @@
         </table>
     </header>
 
-    {{-- <div class="empty-page"></div> --}}
 
-    <section id="pdf-page">
-
+    <section   class="main-section" id="pdf-page">
         <section style="page-break-after: never;">
             <div class="other-container">
                 <table>
@@ -519,7 +533,7 @@
                                         @endphp
                                         @if (!empty($data->document_content->defination))
                                             @foreach ($definitions as $index => $definition)
-                                                {{-- @if (!empty($res))
+                                                {{--@if (!empty($res))
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">5.<?php echo $i; ?></td>
                                                         <td class="w-95 text-justify">
@@ -598,7 +612,7 @@
                 </tbody>
             </table>
 
-            <div class="other-container">
+            <div class="other-container ">
                 <table>
                     <thead>
                         <tr>
@@ -612,7 +626,9 @@
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {!! strip_tags($data->document_content->procedure, '<br><p>') !!}
+                                    {{-- {!! $data->document_content->procedure !!} --}}
+
+                                    {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p>') !!}
                                 </div>
                             </div>
                         </div>
@@ -620,7 +636,7 @@
                 </div>
             </div>
 
-            <table class="mb-20">
+            <table class="mb-20 ">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">8.</th>
@@ -1034,6 +1050,29 @@
                         </table>
                     </div>
                 </div> --}}
+
+                @php
+                $signatureOriginatorData = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where(function ($query) {
+                                                        $query->where('stage', 'In-Review')
+                                                            ->orWhere('stage', 'For-Approval');
+                                                    })
+                                                    ->latest()
+                                                    ->first();
+
+                                                    $signatureReviewerData = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('stage', 'Reviewed')
+                                                ->latest()
+                                                ->first();
+
+                                                    $signatureApprovalData = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('stage', 'Approved')
+                                                ->latest()
+                                                ->first();
+                @endphp
                 <div class="block mb-40">
                     <div class="block-head">
                         Originator
@@ -1046,14 +1085,21 @@
                                     <th class="text-left w-25">Department</th>
                                     <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+
                                 </tr>
                             </thead>
                             <tbody>
+                                {{-- @php
+                                dd($data);
+                                @endphp --}}
                                 <tr>
                                     <td class="text-left w-25">{{ $data->originator }}</td>
                                     <td class="text-left w-25">{{ $document->originator && $document->originator->department ? $document->originator->department->name : '' }}</td>
                                     <td class="text-left w-25">Initiation Completed</td>
                                     <td class="text-left w-25">{{ $data->originator_email }}</td>
+                                    <td class="text-left w-25">{{ !$signatureOriginatorData || $signatureOriginatorData->comment == null ? " " : $signatureOriginatorData->comment }}</td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -1071,6 +1117,8 @@
                                     <th class="text-left w-25">Department</th>
                                     <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -1110,9 +1158,11 @@
                                                 <td class="text-left w-25">Review Rejected </td>
                                             @else
                                                 <td class="text-left w-25">Review Pending</td>
-                                            @endif
+                                            @endif                                                
 
                                             <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">{{ !$signatureReviewerData || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td>
+
                                         </tr>
                                     @endfor
                                 @endif
@@ -1198,6 +1248,7 @@
                                     <th class="text-left w-25">Department</th>
                                     <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1226,7 +1277,7 @@
                                                 ->where('stage', 'Cancel-by-Approver')
                                                 ->latest()
                                                 ->first();
-
+                                                
                                         @endphp
                                         <tr>
                                             <td class="text-left w-25">{{ $user->name }}</td>
@@ -1240,6 +1291,7 @@
                                             @endif
 
                                             <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">{{ !$signatureApprovalData || $signatureApprovalData->comment == null ? " " : $signatureApprovalData->comment }}</td>
                                         </tr>
                                     @endfor
                                 @endif
@@ -1292,7 +1344,7 @@
                                                         <td class="text-left w-25">Approval Pending</td>
                                                     @endif
 
-                                                    <td class="text-left w-25">{{ $user->email }}</td>
+                                                    <td class="text-left w-25">{{ $user->email }}</td>                                  
                                                 </tr>
                                             @endfor
                                         @endif
