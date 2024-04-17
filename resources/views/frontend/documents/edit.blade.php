@@ -50,6 +50,10 @@
             margin-left: auto; /* Pushes the icon to the right */
             cursor: pointer;
         }
+        div.note-modal-footer > input
+        {
+            background: black;
+        }
 
     </style>
 

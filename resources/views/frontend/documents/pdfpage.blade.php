@@ -305,7 +305,7 @@
 
         .scope-block,
         .procedure-block {
-            margin: 10px 0 30px;
+            margin: 0px 0 30px;
             word-wrap: break-word;
         }
 
@@ -661,8 +661,7 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; ">
                                     {{-- {!! $data->document_content->procedure !!} --}}
-
-                                    {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p>') !!}
+                                    {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><a>') !!}
                                 </div>
                             </div>
                         </div>
@@ -692,7 +691,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">8.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p>') !!}
+                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a>') !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -770,7 +769,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p>') !!}
+                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a>') !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -798,7 +797,7 @@
                                 <div class="w-100" style="display:inline-block;">
                                     <div class="w-100">
                                         <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p>') !!}
+                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a>') !!}
                                         </div>
                                     </div>
                                 </div>
