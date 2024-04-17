@@ -342,15 +342,15 @@
 
 <body>
 
-    <header  style="margin-bottom: 100px;" class="">
-        <table class="border" >
+    <header class="">
+        <table class="border" style="height: 150px;">
             <tbody>
                 <tr>
                     <td class="logo w-20">
                         <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
                     </td>
                     <td class="title w-60" 
-                    style="padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
+                    style="height: 150px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
                         <p 
                         style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
                         <br>

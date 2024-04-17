@@ -897,7 +897,10 @@ class DocumentDetailsController extends Controller
       })
       ->orwhere(function ($query) use ($request) {
         if (!empty($request->field)) {
-          $query->where('documents.short_description', $request->value);
+          foreach ($request->value as $value)
+          {
+            $query->where('documents.short_description', 'LIKE', '%'. $value .'%');
+          }
         }
       })
       ->orderByDesc('documents.id')->paginate(10);
