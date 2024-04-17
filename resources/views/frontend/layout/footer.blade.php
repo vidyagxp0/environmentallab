@@ -27,8 +27,8 @@
                                 <tr>
                                     <td>
                                         <select class="select-option" name="field[]">
-                                            <option value="document_name">Document Name</option>
-                                            <option value="short_description">Short Description</option>
+                                            <option value="document_name">Short Description</option>
+                                            {{-- <option value="short_description">Short Description</option> --}}
                                             option value="short_description">Keywords</option>
                                         </select>
                                     </td>
