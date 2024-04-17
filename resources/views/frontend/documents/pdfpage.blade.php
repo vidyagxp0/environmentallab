@@ -899,7 +899,7 @@
                                                     ->where('document_id', $data->id)
                                                     ->where(function ($query) {
                                                         $query->where('stage', 'In-Review')
-                                                            ->orWhere('stage', 'For-Approval');
+                                                            ->orWhere('stage', 'In-Approval');
                                                     })
                                                     ->latest()
                                                     ->first();
@@ -907,9 +907,8 @@
                                                     $signatureReviewerData = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('stage', 'Reviewed')
-                                                ->latest()
-                                                ->first();
-
+                                                ->get();
+// dd($signatureReviewerData);
                                                     $signatureApprovalData = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('stage', 'Approved')
@@ -933,9 +932,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @php
-                                dd($data);
-                                @endphp --}}
                                 <tr>
                                     <td class="text-left w-25">{{ $data->originator }}</td>
                                     <td class="text-left w-25">{{ $document->originator && $document->originator->department ? $document->originator->department->name : '' }}</td>
@@ -984,6 +980,14 @@
                                                 ->where('stage', 'Reviewed')
                                                 ->latest()
                                                 ->first();
+                                            
+                                                $comment = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->latest()
+                                                ->first();
+
+
                                             $reject = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
@@ -1004,7 +1008,11 @@
                                             @endif                                                
 
                                             <td class="text-left w-25">{{ $user->email }}</td>
-                                            <td class="text-left w-25">{{ !$signatureReviewerData || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td>
+                                            <td class="text-left w-25"> 
+                                            @if($comment)
+                                                {{ $comment->comment }}
+                                            @endif</td>
+                                            {{-- <td class="text-left w-25">{{ !$comment || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td> --}}
 
                                         </tr>
                                     @endfor
@@ -1039,6 +1047,7 @@
                                                         ->where('stage', 'Review-Submit')
                                                         ->latest()
                                                         ->first();
+                                                        
                                                     $reject = DB::table('stage_manages')
                                                         ->where('document_id', $data->id)
                                                         ->where('user_id', $reviewer[$i])
@@ -1114,6 +1123,11 @@
                                                 ->where('stage', 'Approved')
                                                 ->latest()
                                                 ->first();
+                                                $comment = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->latest()
+                                                ->first();
                                             $reject = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
@@ -1134,7 +1148,11 @@
                                             @endif
 
                                             <td class="text-left w-25">{{ $user->email }}</td>
-                                            <td class="text-left w-25">{{ !$signatureApprovalData || $signatureApprovalData->comment == null ? " " : $signatureApprovalData->comment }}</td>
+                                            <td class="text-left w-25">
+                                                @if($comment)
+                                                {{ $comment->comment }}
+                                            @endif
+                                            </td>
                                         </tr>
                                     @endfor
                                 @endif

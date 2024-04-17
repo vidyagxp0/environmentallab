@@ -113,7 +113,7 @@ class DocumentDetailsController extends Controller
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
             $history->change_from = 'In-Review';
-            $history->change_to = 'Review-Submit';
+            $history->change_to = 'Reviewed';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -137,7 +137,7 @@ class DocumentDetailsController extends Controller
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
             $history->change_from = 'For-Approval';
-            $history->change_to = 'Approval-Submit';
+            $history->change_to = 'Approved';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

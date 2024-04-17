@@ -1358,10 +1358,10 @@ class DocumentController extends Controller
             }
 
             toastr()->success('Document Updated');
-            if (Helpers::checkRoles(1) || Helpers::checkRoles(2)) {
-                return redirect('rev-details/'.$id);
-            } else {
+            if (Helpers::checkRoles(3)) {
                 return redirect('doc-details/'.$id);
+            } else {
+                return redirect('rev-details/'.$id);
             }
         } else {
             toastr()->error('Not working');
