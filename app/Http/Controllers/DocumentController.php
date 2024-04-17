@@ -1577,6 +1577,7 @@ class DocumentController extends Controller
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
+        // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'));
         $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',

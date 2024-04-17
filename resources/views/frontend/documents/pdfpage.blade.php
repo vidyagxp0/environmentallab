@@ -274,19 +274,24 @@
         header {
             width: 100%;
             position: fixed;
-            top: -180px;
+            top: -200px;
             right: 0;
             left: 0;
             display: block;
 
         }
 
+       
         .footer {
-            width: 100%;
             position: fixed;
-            bottom: -60px;
+            bottom: -50px;
+            left: 0;
+            right: 0;
+            width: 100%;
             display: block;
+            border-top: 1px solid #ddd; /* Optional: Add a border at the top of the footer */
         }
+
 
         .other-container {
             margin: 40px 0;
@@ -318,23 +323,41 @@
         .page-break-before {
             page-break-before: always;
         }
+
+        .table-responsive {
+            overflow-x: auto;
+            max-width: 100%;
+        }
+
+    .MsoNormalTable, 
+    table{
+        margin: 0px !important;
+        width : 100% !important;
+    }
+
+
     </style>
 
 </head>
 
 <body>
 
-    <header class="mb-20">
-        <table class="border" style="padding: 0px;">
+    <header  style="margin-bottom: 100px;" class="">
+        <table class="border" >
             <tbody>
                 <tr>
                     <td class="logo w-20">
                         <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
                     </td>
-                    <td class="title w-60" style="border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
-                        <p style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
+                    <td class="title w-60" 
+                    style="padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
+                        <p 
+                        style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
                         <br>
-                        {{ $data->document_name }}
+                        <p style="margin-top: -2rem; margin-bottom: 0px;">
+
+                            {{ $data->document_name }}
+                        </p>
                     </td>
                     <td class="logo w-20 h-20">
                         <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="max-height: 60px;">
@@ -366,11 +389,36 @@
             </tbody>
         </table>
     </header>
+    <footer class="footer">
+        <table class="border p-20">
+            <tbody>
+                <tr>
+                    <td class="text-left w-36">
+                                @php
+                                $temp = DB::table('document_types')
+                                    ->where('name', $data->document_type_name)
+                                    ->value('typecode');
+                                @endphp
+                            @if($data->revised === 'Yes') 
+                               
+                            {{ Helpers::getDivisionName($data->division_id) }}
+                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                            /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
 
-    {{-- <div class="empty-page"></div> --}}
+                            @else
+                            {{ Helpers::getDivisionName($data->division_id) }}
+                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                            /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}                           
+                        @endif
+                        
+                    <td class="w-36">Printed On : {{ $time }}</td>
+                    <td class="text-right w-20"></td>
+                </tr>
+            </tbody>
+        </table>
+    </footer>
 
-    <section id="pdf-page">
-
+    <section  class="main-section" id="pdf-page">
         <section style="page-break-after: never;">
             <div class="other-container">
                 <table>
@@ -498,7 +546,7 @@
                 </tbody>
             </table>
 
-            <table class="mb-20 page-break-before">
+            <table class="mb-20">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">5.</th>
@@ -519,7 +567,7 @@
                                         @endphp
                                         @if (!empty($data->document_content->defination))
                                             @foreach ($definitions as $index => $definition)
-                                                {{-- @if (!empty($res))
+                                                {{--@if (!empty($res))
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">5.<?php echo $i; ?></td>
                                                         <td class="w-95 text-justify">
@@ -598,7 +646,7 @@
                 </tbody>
             </table>
 
-            <div class="other-container">
+            <div class="other-container ">
                 <table>
                     <thead>
                         <tr>
@@ -612,7 +660,9 @@
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {!! strip_tags($data->document_content->procedure, '<br><p>') !!}
+                                    {{-- {!! $data->document_content->procedure !!} --}}
+
+                                    {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p>') !!}
                                 </div>
                             </div>
                         </div>
@@ -620,7 +670,7 @@
                 </div>
             </div>
 
-            <table class="mb-20">
+            <table class="mb-20 ">
                 <tbody>
                     <tr>
                         <th class="w-5 vertical-baseline">8.</th>
@@ -642,7 +692,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">8.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><p>') !!}
+                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p>') !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -720,7 +770,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><p>') !!}
+                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p>') !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -737,79 +787,6 @@
                 </tbody>
             </table>
 
-            {{-- @php
-                $annexure = DB::table('annexures')->where('document_id',$data->id)->first();
-            @endphp --}}
-
-            {{-- <table class="mb-20">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">9.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold mb-10">Annexure</div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div>
-                                <table class="table-bordered">
-                                    <tbody>
-                                        
-                                        <tr>
-                                            <th class="text-left w-20">Sr. No.</th>
-                                            <th class="text-left w-30">Annexure No.</th>
-                                            <th class="text-left w-50">Title of Annexure</th>
-                                        </tr>
-                                       
-                                       
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table> --}}
-
-            {{--  <table class="mb-20">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">10.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold mb-10">Revision History</div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div>
-                                <table class="table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <th class="text-left w-20">SOP Revision No.</th>
-                                            <th class="text-left w-40">Change Control No./ DCRF No.</th>
-                                            <th class="text-left w-40">Changes</th>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-left w-25">1</td>
-                                            <td class="text-left w-25">89457FUHUFH</td>
-                                            <td class="text-left w-50">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, odio?
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-left w-25">1</td>
-                                            <td class="text-left w-25">89457FUHUFH</td>
-                                            <td class="text-left w-50">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, odio?
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table> --}}
-
             @php
                 $i = 1;
             @endphp
@@ -821,7 +798,7 @@
                                 <div class="w-100" style="display:inline-block;">
                                     <div class="w-100">
                                         <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! strip_tags($res, '<br><p>') !!}
+                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p>') !!}
                                         </div>
                                     </div>
                                 </div>
@@ -868,10 +845,6 @@
                                     @endif
                                 </td>
                                 </tr>
-                                {{-- <tr>
-                                    <th class="w-30 text-left vertical-baseline">Version</th>
-                                    <td class="w-70 text-left">1.0</td>
-                                </tr> --}}
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Title</th>
                                     <td class="w-70 text-left">{{ $data->document_name }}</td>
@@ -917,123 +890,33 @@
                                         @endif
                                     </td>
                                 </tr>
-                                {{-- <tr>
-                                    <th class="w-30 text-left vertical-baseline">Library</th>
-                                    <td class="w-70 text-left">REYYTWE5Y</td>
-                                </tr> --}}
-                                {{-- <tr>
-                                    <th class="w-30 text-left vertical-baseline">Category</th>
-                                    <td class="w-70 text-left">Lorem, ipsum.</td>
-                                </tr> --}}
-                                {{-- <tr>
-                                    <th class="w-30 text-left vertical-baseline">Retention</th>
-                                    <td class="w-70 text-left">Lorem ipsum dolor sit amet.</td>
-                                </tr> --}}
-                                {{-- <tr>
-                                    <th class="w-30 text-left vertical-baseline">Authors(Dept)</th>
-                                    <td class="w-70 text-left">{{ $data->originator }}
-                                        ({{ $data->department->name }})</td>
-                                </tr> --}}
-                                {{-- <tr>
-                                    <th class="w-30 text-left vertical-baseline">Readers</th>
-                                    <td class="w-70 text-left">
-                                        <table class="table-bordered small-content">
-                                            <thead>
-                                                <tr>
-                                                    <th>Type</th>
-                                                    <th>Reader Name</th>
-                                                    <th>Print</th>
-                                                    <th>View</th>
-                                                    <th>Read</th>
-                                                    <th>Verify</th>
-                                                    <th>Asmt</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Department</td>
-                                                    <td>Corporate Quality Assurance</td>
-                                                    <td>Y</td>
-                                                    <td>Y</td>
-                                                    <td>Y</td>
-                                                    <td>N</td>
-                                                    <td>N</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Department</td>
-                                                    <td>Corporate Quality Assurance</td>
-                                                    <td>Y</td>
-                                                    <td>Y</td>
-                                                    <td>Y</td>
-                                                    <td>N</td>
-                                                    <td>N</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr> --}}
                             </tbody>
                         </table>
                     </div>
                 </div>
-                {{-- <div class="block mb-40">
-                    <div class="block-head">
-                        Key Dates
-                    </div>
-                    <div class="block-content">
-                        <table class="table-bordered mb-20">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-20">&nbsp;</th>
-                                    <th class="text-left w-20">Planned Start </th>
-                                    <th class="text-left w-20">Planned Stop</th>
-                                    <th class="text-left w-40">Activity Mode Change Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left w-20">Reviewed</th>
-                                    <td class="text-left w-20">NA</td>
-                                    <td class="text-left w-20">NA</td>
-                                    <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-left w-20">Approved</th>
-                                    <td class="text-left w-20">NA</td>
-                                    <td class="text-left w-20">NA</td>
-                                    <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-left w-20">Published</th>
-                                    <td class="text-left w-20">NA</td>
-                                    <td class="text-left w-20">NA</td>
-                                    <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <table class="table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-20">&nbsp;</th>
-                                    <th class="text-left w-20">Start</th>
-                                    <th class="text-left w-20">Stop</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th class="text-left w-20">Training Dates</th>
-                                    <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                    <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                </tr>
-                                <tr>
-                                    <th class="text-left w-20">Effective Dates</th>
-                                    <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                    <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div> --}}
+
+                @php
+                $signatureOriginatorData = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where(function ($query) {
+                                                        $query->where('stage', 'In-Review')
+                                                            ->orWhere('stage', 'For-Approval');
+                                                    })
+                                                    ->latest()
+                                                    ->first();
+
+                                                    $signatureReviewerData = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('stage', 'Reviewed')
+                                                ->latest()
+                                                ->first();
+
+                                                    $signatureApprovalData = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('stage', 'Approved')
+                                                ->latest()
+                                                ->first();
+                @endphp
                 <div class="block mb-40">
                     <div class="block-head">
                         Originator
@@ -1046,14 +929,21 @@
                                     <th class="text-left w-25">Department</th>
                                     <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+
                                 </tr>
                             </thead>
                             <tbody>
+                                {{-- @php
+                                dd($data);
+                                @endphp --}}
                                 <tr>
                                     <td class="text-left w-25">{{ $data->originator }}</td>
                                     <td class="text-left w-25">{{ $document->originator && $document->originator->department ? $document->originator->department->name : '' }}</td>
                                     <td class="text-left w-25">Initiation Completed</td>
                                     <td class="text-left w-25">{{ $data->originator_email }}</td>
+                                    <td class="text-left w-25">{{ !$signatureOriginatorData || $signatureOriginatorData->comment == null ? " " : $signatureOriginatorData->comment }}</td>
+
                                 </tr>
                             </tbody>
                         </table>
@@ -1071,6 +961,8 @@
                                     <th class="text-left w-25">Department</th>
                                     <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -1110,9 +1002,11 @@
                                                 <td class="text-left w-25">Review Rejected </td>
                                             @else
                                                 <td class="text-left w-25">Review Pending</td>
-                                            @endif
+                                            @endif                                                
 
                                             <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">{{ !$signatureReviewerData || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td>
+
                                         </tr>
                                     @endfor
                                 @endif
@@ -1198,6 +1092,7 @@
                                     <th class="text-left w-25">Department</th>
                                     <th class="text-left w-25">Status</th>
                                     <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1226,7 +1121,7 @@
                                                 ->where('stage', 'Cancel-by-Approver')
                                                 ->latest()
                                                 ->first();
-
+                                                
                                         @endphp
                                         <tr>
                                             <td class="text-left w-25">{{ $user->name }}</td>
@@ -1240,6 +1135,7 @@
                                             @endif
 
                                             <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">{{ !$signatureApprovalData || $signatureApprovalData->comment == null ? " " : $signatureApprovalData->comment }}</td>
                                         </tr>
                                     @endfor
                                 @endif
@@ -1292,7 +1188,7 @@
                                                         <td class="text-left w-25">Approval Pending</td>
                                                     @endif
 
-                                                    <td class="text-left w-25">{{ $user->email }}</td>
+                                                    <td class="text-left w-25">{{ $user->email }}</td>                                  
                                                 </tr>
                                             @endfor
                                         @endif
@@ -1305,64 +1201,13 @@
                         </table>
                     </div>
                 </div>
-                {{-- <div class="block mb-40">
-                    <div class="block-head">
-                        Publisher
-                    </div>
-                    <div class="block-content">
-                        <table class="table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-left w-25">Publisher</th>
-                                    <th class="text-left w-25">Department</th>
-                                    <th class="text-left w-25">Status</th>
-                                    <th class="text-left w-25">E-Signature</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-left w-25">{{ $data->originator }}</td>
-                                     <td class="text-left w-25">{{ $data->department_id }}</td> 
-                                    <td class="text-left w-25">{{ $data->created_at }}</td>
-                                    <td class="text-left w-25">{{ $data->originator_email }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div> --}}
             </div>
         </section>
 
     </section>
 
-    <footer class="footer">
-        <table class="border p-20">
-            <tbody>
-                <tr>
-                    <td class="text-left w-36">
-                                @php
-                                $temp = DB::table('document_types')
-                                    ->where('name', $data->document_type_name)
-                                    ->value('typecode');
-                                @endphp
-                            @if($data->revised === 'Yes') 
-                               
-                            {{ Helpers::getDivisionName($data->division_id) }}
-                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                            /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
+  
 
-                            @else
-                            {{ Helpers::getDivisionName($data->division_id) }}
-                            /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                            /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}                           
-                        @endif
-                        
-                    <td class="w-36">Printed On : {{ $time }}</td>
-                    <td class="text-right w-20"></td>
-                </tr>
-            </tbody>
-        </table>
-    </footer>
     <script type="text/php">
         if ( isset($pdf) ) {
             $pdf->page_script('
