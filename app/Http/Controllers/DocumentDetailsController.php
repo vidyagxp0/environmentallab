@@ -71,19 +71,19 @@ class DocumentDetailsController extends Controller
                 $updateRecords->delete();
               }
             }
-            $history = new DocumentHistory;
+            $history = new DocumentHistory();
             $history->document_id = $request->document_id;
             $history->activity_type = 'Send for Reviewer';
             $history->previous = '';
             $history->current = '';
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
-            $history->change_from = $document->status;
+            $history->change_from = 'Draft';
             $history->change_to = 'In-Review';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $document->status;
+            $history->origin_state = 'Draft';
             $history->save();
           }
           $stage->save();
@@ -105,21 +105,20 @@ class DocumentDetailsController extends Controller
             $stage->comment = $request->comment;
             $stage->save();
 
-            $history = new DocumentHistory;
+            $history = new DocumentHistory();
             $history->document_id = $request->document_id;
             $history->activity_type = 'Review Submit';
             $history->previous = '';
             $history->current = '';
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
-            $history->change_from = 'Reviewed';
+            $history->change_from = 'In-Review';
             $history->change_to = 'Review-Submit';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $document->status;
+            $history->origin_state = 'In-Review';
             $history->save();
-            dd($history);
           }
           if ($request->stage_id == 'Approved') {
             $stage = new StageManage;
@@ -130,19 +129,19 @@ class DocumentDetailsController extends Controller
             $stage->comment = $request->comment;
             $stage->save();
 
-            $history = new DocumentHistory;
+            $history = new DocumentHistory();
             $history->document_id = $request->document_id;
             $history->activity_type = 'Approval Submit';
             $history->previous = '';
             $history->current = '';
             $history->comment = $request->comment;
             $history->action_name = 'Submit';
-            $history->change_from = 'Approved';
+            $history->change_from = 'For-Approval';
             $history->change_to = 'Approval-Submit';
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $document->status;
+            $history->origin_state = 'For-Approval';
             $history->save();
           }
           if ($request->stage_id == 'Cancel-by-Reviewer') {
@@ -161,68 +160,11 @@ class DocumentDetailsController extends Controller
 
         }
 
-        if (Helpers::checkRoles(3)) {
-          if ($request->stage_id) {
-            $document->stage = $request->stage_id;
-            $document->status = Stage::where('id', $request->stage_id)->value('name');
-            if ($request->stage_id == 2) {
-              if ($document->reviewers) {
-                $temperory = explode(',', $document->reviewers);
-                for ($i = 0; $i < count($temperory); $i++) {
-                  $temp_user = User::find($temperory[$i]);
-
-                  $temp_user->fromMain = User::find($document->originator_id);
-
-                            try {
-                              Mail::send('mail.for_review',['document' => $document],
-                              function ($message) use ($temp_user) {
-                                      $message->to($temp_user->email)
-                                              ->subject('Document is for Review');
-                              });
-                            } catch (\Exception $e) {
-                              // 
-                            }
-
-                }
-              }
-            }
-            if ($request->stage_id == 4) {
-              if ($document->approvers) {
-                $temperory = explode(',', $document->approvers);
-                for ($i = 0; $i < count($temperory); $i++) {
-                  $temp_user = User::find($temperory[$i]);
-                  $temp_user->fromMain = User::find($document->originator_id);
-                  Mail::send(
-                    'mail.for_approval',
-                    ['document' => $document],
-                    function ($message) use ($temp_user) {
-                      $message->to($temp_user->email)
-                        ->subject('Document is for Approval');
-                    }
-                  );
-                }
-              }
-            }
-            if ($request->stage_id == 6) {
-              $traning = DocumentTraining::where('document_id', $document->id)->first();
-              $traning->trainer = User::find($traning->trainer);
-              Mail::send(
-                'mail.for_training',
-                ['document' => $document],
-                function ($message) use ($traning) {
-                  $message->to($traning->trainer->email)
-                    ->subject('Document is for training');
-                }
-              );
-
-            }
-
-          }
-        }
+        
         if (Helpers::checkRoles(2)) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
             $document->status = "Draft";
-              $history = new DocumentHistory;
+              $history = new DocumentHistory();
               $history->document_id = $request->document_id;
               $history->activity_type = 'Cancel-by-Reviewer';
               $history->previous = '';
@@ -234,7 +176,7 @@ class DocumentDetailsController extends Controller
               $history->user_id = Auth::user()->id;
               $history->user_name = Auth::user()->name;
               $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $document->status;
+              $history->origin_state = 'In-Review';
               $history->save();
             $document->stage = Stage::where('name', $document->status)->value('id');
             try {
@@ -365,7 +307,7 @@ class DocumentDetailsController extends Controller
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
             $document->stage = Stage::where('name', $document->status)->value('id');
-              $history = new DocumentHistory;
+              $history = new DocumentHistory();
               $history->document_id = $request->document_id;
               $history->activity_type = 'Cancel-by-Approver';
               $history->previous = '';
@@ -377,7 +319,7 @@ class DocumentDetailsController extends Controller
               $history->user_id = Auth::user()->id;
               $history->user_name = Auth::user()->name;
               $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $document->status;
+              $history->origin_state = 'In-Approver';
               $history->save();
             try {
               Mail::send(
@@ -513,7 +455,83 @@ class DocumentDetailsController extends Controller
           }
 
         }
+        if (Helpers::checkRoles(3)) {
+          if ($request->stage_id) {
+            $document->stage = $request->stage_id;
+            $document->status = Stage::where('id', $request->stage_id)->value('name');
+            // dd($request->stage_id, $document->status, $document->stage);
+            if ($request->stage_id == 2) {
+              if ($document->reviewers) {
+                $temperory = explode(',', $document->reviewers);
+                for ($i = 0; $i < count($temperory); $i++) {
+                  $temp_user = User::find($temperory[$i]);
 
+                  $temp_user->fromMain = User::find($document->originator_id);
+
+                            try {
+                              Mail::send('mail.for_review',['document' => $document],
+                              function ($message) use ($temp_user) {
+                                      $message->to($temp_user->email)
+                                              ->subject('Document is for Review');
+                              });
+                            } catch (\Exception $e) {
+                              // 
+                            }
+
+                }
+              }
+            }
+            if ($request->stage_id == 4) {
+              if ($document->approvers) {
+                $document['stage'] = $request->stage_id;
+                $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+
+                $document->update();
+                $history = new DocumentHistory();
+                $history->document_id = $request->document_id;
+                $history->activity_type = 'Send for Approver';
+                $history->previous = '';
+                $history->current = '';
+                $history->comment = $request->comment;
+                $history->action_name = 'Submit';
+                $history->change_from = 'Reviewed';
+                $history->change_to = 'For-Approval';
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = 'Reviewed';
+                $history->save();
+                $temperory = explode(',', $document->approvers);
+                for ($i = 0; $i < count($temperory); $i++) {
+                  $temp_user = User::find($temperory[$i]);
+                  $temp_user->fromMain = User::find($document->originator_id);
+                  Mail::send(
+                    'mail.for_approval',
+                    ['document' => $document],
+                    function ($message) use ($temp_user) {
+                      $message->to($temp_user->email)
+                        ->subject('Document is for Approval');
+                    }
+                  );
+                }
+              }
+            }
+            if ($request->stage_id == 6) {
+              $traning = DocumentTraining::where('document_id', $document->id)->first();
+              $traning->trainer = User::find($traning->trainer);
+              Mail::send(
+                'mail.for_training',
+                ['document' => $document],
+                function ($message) use ($traning) {
+                  $message->to($traning->trainer->email)
+                    ->subject('Document is for training');
+                }
+              );
+
+            }
+
+          }
+        }
 
         $document->update();
         toastr()->success('Document has been sent.');
