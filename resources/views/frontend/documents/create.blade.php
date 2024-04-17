@@ -392,7 +392,7 @@
                                     <div class="group-input">
                                         <label for="keyword">Keywords</label>
                                         <div class="add-keyword">
-                                            <input type="text" id="sourceField" class="mb-0">
+                                            <input type="text" id="sourceField" class="mb-0" maxlength="15">
                                             <button id="addButton" type="button">ADD</button>
                                         </div>
                                         <ul id="displayField"></ul>

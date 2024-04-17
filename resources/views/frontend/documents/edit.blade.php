@@ -904,7 +904,7 @@
                                 <div class="group-input">
                                     <label for="keyword">Keywords</label>
                                     <div class="add-keyword">
-                                        <input type="text" id="sourceField" class="mb-0" {{Helpers::isRevised($document->stage)}} >
+                                        <input type="text" id="sourceField" class="mb-0" maxlength="15" {{Helpers::isRevised($document->stage)}} >
                                         <button id="addButton" type="button">ADD</button>
                                     </div>
                                     <ul id="displayField" class="d-flex justify-content-between align-items-center">
