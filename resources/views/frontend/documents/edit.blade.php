@@ -296,7 +296,7 @@
                                     <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
                                         data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}} >
                                         @php
-                                            $notify_user_id = json_decode($document->notify_to); 
+                                            $notify_user_id = explode(',', $document->notify_to); 
                                         @endphp
                                         @foreach ($users as $data)
                                             <option value="{{ $data->id }}" {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>{{ $data->name }}
@@ -938,7 +938,7 @@
                                 <div class="group-input input-date">
                                     <label for="effective-date">Effective Date</label>
                                     <div class="calenderauditee">                                     
-                                        <input type="text"  id="effective_date" value="{{ $document->effective_date }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
+                                        <input type="text"  id="effective_date" value="{{ $document->effective_date ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : '' }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
                                         <input type="date" name="effective_date" value=""
                                         class="hide-input"
                                         oninput="handleDateInput(this, 'effective_date')"/>
@@ -1024,7 +1024,7 @@
                                     <label for="review-date">Next Review Date</label>
                                     
                                         <div class="calenderauditee">                                     
-                                        <input type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" value=""
                                         class="hide-input new_review_date_hide"
                                         oninput="handleDateInput(this, 'next_review_date')"/>

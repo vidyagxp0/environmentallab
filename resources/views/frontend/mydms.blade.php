@@ -1258,7 +1258,7 @@
                                         </div>
                                     </div> --}}
 
-                                    <div class="sub-block inner-block" id="cc-hod-review">
+                                    {{-- <div class="sub-block inner-block" id="cc-hod-review">
                                         <div class="pill">
                                             Change Control
                                         </div>
@@ -1311,7 +1311,7 @@
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     {{-- <div class="sub-block inner-block" id="cc-reviewed">
                                         <div class="pill">

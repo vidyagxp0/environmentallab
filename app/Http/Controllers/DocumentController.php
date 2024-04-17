@@ -676,9 +676,10 @@ class DocumentController extends Controller
                 $document->keywords = implode(',', $request->keywords);
             }
 
-            // if ($request->notify_to) {
-            //     $document->notify_to = implode(',', $request->notify_to);
-            // }
+            if (is_array($request->notify_to)) {
+                $document->notify_to = implode(',', $request->notify_to);
+            }
+
             if ($request->reference_record) {
                 $document->reference_record = implode(',', $request->reference_record);
             }

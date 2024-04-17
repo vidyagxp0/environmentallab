@@ -458,7 +458,7 @@
                         <option value="Asia/Tashkent">
                             (GMT+05:00) Tashkent
                         </option>
-                        <option value="Asia/Kolkata" selected="">
+                        <option value="Asia/Kolkata">
                             (GMT+05:30) Kolkata
                         </option>
                         <option value="Asia/Kathmandu">
@@ -574,11 +574,30 @@
     {{-- ======================================
                     SCRIPT TAGS
     ======================================= --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.45/moment-timezone-with-data.min.js" integrity="sha512-t/mY3un180WRfsSkWy4Yi0tAxEDGcY2rAEx873hb5BrkvLA0QLk54+SjfYgFBBoCdJDV1H86M8uyZdJhAOHeyA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        window.onload = function() {
+        window.onload = async function() {
             document.querySelector("#preloader").style.display = "none";
+
+            async function getTimeZone()
+            {
+                try {
+                    const clientIp = await axios.get('https://ipecho.net/plain');
+                    const ipInfo = await axios.get(`http://ip-api.com/json/${clientIp.data}`)
+                    const timeZone = ipInfo.data?.timezone;
+
+                    // Unselect all
+                    $('select[name=timezone]').find('option').attr('selected', false)
+                    
+                    $('select[name=timezone]').find(`option[value="${timeZone}"]`).attr('selected', true)
+
+                } catch (err) {
+                    console.log('Cannot getTimeZone', err.message)
+                }
+            }
+            
+            await getTimeZone();
         }
     </script>
 

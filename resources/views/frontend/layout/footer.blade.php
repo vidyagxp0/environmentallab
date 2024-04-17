@@ -1175,7 +1175,7 @@
         calculateNextReviewDate()
     })
 
-    $('#effective_date').change(function() {
+    $('input[name=effective_date]').change(function() {
         console.log('change')        
         calculateNextReviewDate()
     })
