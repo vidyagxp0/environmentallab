@@ -104,8 +104,10 @@
                             </div>
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="document_name-desc">Document Name*</label>
-                                    <input type="text" name="document_name" id="docname"
+                                    <label for="document_name-desc">Document Name<span
+                                        class="text-danger">*</span></label><span id="rchars">255</span>
+                                characters remaining
+                                    <input type="text" name="document_name" id="docname" maxlength="255"
                                     {{Helpers::isRevised($document->stage)}}   value="{{ $document->document_name }}" required>
 
 
@@ -132,6 +134,14 @@
                                 <p id="docnameError" style="color:red">**Document Name is required</p>
 
                             </div>
+
+                            <script>
+                                var maxLength = 255;
+                                $('#docname').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#rchars').text(textlen);
+                                });
+                            </script>
 
                             @if (Auth::user()->role != 3)
 
