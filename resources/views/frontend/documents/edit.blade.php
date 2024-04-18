@@ -1675,7 +1675,7 @@
                                 <div class="group-input">
                                     <label for="purpose">Purpose</label>
                                     <input type="text" name="purpose" {{Helpers::isRevised($document->stage)}} 
-                                        value="{{ $document->document_content->purpose }}">
+                                        value="{{ $document->document_content ? $document->document_content->purpose : '' }}">
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
                                             @php
@@ -1713,7 +1713,7 @@
                                 <div class="group-input">
                                     <label for="scope">Scope</label>
 
-                                    <textarea name="scope" {{Helpers::isRevised($document->stage)}} >{{ $document->document_content->scope }}</textarea>
+                                    <textarea name="scope" {{Helpers::isRevised($document->stage)}} >{{ $document->document_content ? $document->document_content->scope : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
                                             @php
@@ -1754,7 +1754,7 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->responsibility))
+                                    @if ($document->document_content && !empty($document->document_content->responsibility))
                                         @foreach (unserialize($document->document_content->responsibility) as $data)
                                             <input type="text" name="responsibility[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
@@ -1803,7 +1803,7 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->abbreviation))
+                                    @if ($document->document_content && !empty($document->document_content->abbreviation))
                                         @foreach (unserialize($document->document_content->abbreviation) as $data)
                                             <input type="text" name="abbreviation[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
@@ -1850,7 +1850,7 @@
                                         Definition<button type="button" id="Definitionbtnadd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->defination))
+                                    @if ($document->document_content && !empty($document->document_content->defination))
                                         @foreach (unserialize($document->document_content->defination) as $data)
                                             <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
                                                 value="{{ $data }}">
@@ -1898,7 +1898,7 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->materials_and_equipments))
+                                    @if ($document->document_content && !empty($document->document_content->materials_and_equipments))
                                         @foreach (unserialize($document->document_content->materials_and_equipments) as $data)
                                             <input type="text" name="materials_and_equipments[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
@@ -1946,7 +1946,7 @@
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea name="procedure" id="summernote">{{ $document->document_content->procedure }}</textarea>
+                                    <textarea name="procedure" id="summernote">{{ $document->document_content ? $document->document_content->procedure : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                             @php
@@ -1982,7 +1982,7 @@
                                         Reporting<button type="button" id="reportingbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->reporting))
+                                    @if ($document->document_content && !empty($document->document_content->reporting))
                                         @foreach (unserialize($document->document_content->reporting) as $data)
                                             <textarea type="text" name="reporting[]" class="summernote"
                                              {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
@@ -2032,7 +2032,7 @@
                                         References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->references))
+                                    @if ($document->document_content && !empty($document->document_content->references))
                                         @foreach (unserialize($document->document_content->references) as $data)
                                             @if (!empty($data))
                                                 <input type="text" name="references[]" class="myclassname"
@@ -2124,7 +2124,7 @@
                                         Annexure<button type="button" id="annbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->ann))
+                                    @if ($document->document_content && !empty($document->document_content->ann))
                                         @foreach (unserialize($document->document_content->ann) as $data)
                                             @if (!empty($data))
                                                 <input type="text" name="ann[]" class="myclassname"
@@ -2216,7 +2216,7 @@
 
                 <div id="annexures" class="tabcontent">
                     <div class="input-fields">
-                        @if (!empty($document->document_content->annexuredata))
+                        @if ($document->document_content && !empty($document->document_content->annexuredata))
                             @foreach (unserialize($document->document_content->annexuredata) as $data)
                                 <label>Annexure</label>
                                 <textarea class="summernote" name="annexuredata[]">{{ $data }}</textarea>
