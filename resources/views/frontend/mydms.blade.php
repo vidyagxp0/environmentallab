@@ -32,375 +32,383 @@
                             <div class="col-md-12">
                                 <div class="doc-block">
                                     @if (Helpers::checkRoles(3))
-                                        <div class="sub-block inner-block" id="draft">
-                                            <div class="pill">
-                                                Document Management System
-                                            </div>
-                                            <div class="head">
-                                                <div class="title">Draft</div>
-                                                <div class="result">{{ count($draft) }} Results</div>
-                                            </div>
-                                            <div class="table-list">
-                                                <table class="table table-bordered mb-0">
-                                                    <thead>
-                                                        <th class="pr-id" data-bs-toggle="modal"
-                                                            data-bs-target="#division-modal">
-                                                            ID
-                                                        </th>   
-                                                        {{-- <th class="division">
-                                                            SOP Type
-                                                        </th> --}}
-                                                        <th class="short-desc">
-                                                            Short Description
-                                                        </th>
-                                                        <th class="create-date">
-                                                            Create Date Time
-                                                        </th>
-                                                        <th class="assign-name">
-                                                            Assigned To
-                                                        </th>
-                                                        <th class="modify-date">
-                                                            Modify Date Time
-                                                        </th>
-                                                        <th class="status">
-                                                            Status
-                                                        </th>
-                                                        <th class="action">
-                                                            Action
-                                                        </th>
-                                                    </thead>
-                                                    <tbody id="searchTable">
-                                                        @foreach ($draft as $temp)
-                                                            <tr>
-                                                                <td class="pr-id" style="text-decoration:underline"><a
-                                                                    href="{{ route('documents.edit', $temp->id) }}">
-                                                                    000{{ $temp->id }}
-                                                                </a>
-                                                            </td>
-                                                                {{-- <td class="division">
-                                                                    {{ $temp->type }}
-                                                                </td> --}}
+                                        @if (count($draft) > 0)
+                                            <div class="sub-block inner-block" id="draft">
+                                                <div class="pill">
+                                                    Document Management System
+                                                </div>
+                                                <div class="head">
+                                                    <div class="title">Draft</div>
+                                                    <div class="result">{{ count($draft) }} Results</div>
+                                                </div>
+                                                <div class="table-list">
+                                                    <table class="table table-bordered mb-0">
+                                                        <thead>
+                                                            <th class="pr-id" data-bs-toggle="modal"
+                                                                data-bs-target="#division-modal">
+                                                                ID
+                                                            </th>   
+                                                            {{-- <th class="division">
+                                                                SOP Type
+                                                            </th> --}}
+                                                            <th class="short-desc">
+                                                                Short Description
+                                                            </th>
+                                                            <th class="create-date">
+                                                                Create Date Time
+                                                            </th>
+                                                            <th class="assign-name">
+                                                                Originator
+                                                            </th>
+                                                            <th class="modify-date">
+                                                                Modify Date Time
+                                                            </th>
+                                                            <th class="status">
+                                                                Status
+                                                            </th>
+                                                            <th class="action">
+                                                                Action
+                                                            </th>
+                                                        </thead>
+                                                        <tbody id="searchTable">
+                                                            @foreach ($draft as $temp)
+                                                                <tr>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
+                                                                    {{-- <td class="division">
+                                                                        {{ $temp->type }}
+                                                                    </td> --}}
 
-                                                                <td class="short-desc">
-                                                                    {{ $temp->short_description }}
-                                                                </td>
-                                                                <td class="create-date">
-                                                                    {{ $temp->created_at }}
-                                                                </td>
-                                                                <td class="assign-name">
-                                                                    {{ $temp->originator->name }}
-                                                                </td>
-                                                                <td class="modify-date">
-                                                                    {{ $temp->updated_at }}
-                                                                </td>
-                                                                <td class="status">
-                                                                    {{ $temp->status }}
-                                                                </td>
-                                                                <td class="action">
-                                                                    <div class="action-dropdown">
-                                                                        <div class="action-down-btn">Action <i
-                                                                                class="fa-solid fa-angle-down"></i></div>
-                                                                        <div class="action-block">
-                                                                            <a href="{{ url('doc-details', $temp->id) }}">View
-                                                                            </a>
+                                                                    <td class="short-desc">
+                                                                        {{ $temp->short_description }}
+                                                                    </td>
+                                                                    <td class="create-date">
+                                                                        {{ $temp->created_at }}
+                                                                    </td>
+                                                                    <td class="assign-name">
+                                                                        {{ $temp->originator->name }}
+                                                                    </td>
+                                                                    <td class="modify-date">
+                                                                        {{ $temp->updated_at }}
+                                                                    </td>
+                                                                    <td class="status">
+                                                                        {{ $temp->status }}
+                                                                    </td>
+                                                                    <td class="action">
+                                                                        <div class="action-dropdown">
+                                                                            <div class="action-down-btn">Action <i
+                                                                                    class="fa-solid fa-angle-down"></i></div>
+                                                                            <div class="action-block">
+                                                                                <a href="{{ url('doc-details', $temp->id) }}">View
+                                                                                </a>
 
-                                                                            <a
-                                                                                href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                            <form
-                                                                                action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit">Delete</button>
-                                                                            </form>
+                                                                                <a
+                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                {{-- <form
+                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit">Delete</button>
+                                                                                </form> --}}
 
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
 
 
-                                                    </tbody>
-                                                </table>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
 
-                                        <div class="sub-block inner-block" id="under-review">
-                                            <div class="pill">
-                                                Document Management System
-                                            </div>
-                                            <div class="head">
-                                                <div class="title">Under Review</div>
-                                                <div class="result">{{ count($under_review) }} Results</div>
-                                            </div>
-                                            <div class="table-list">
-                                                <table class="table table-bordered mb-0">
-                                                    <thead>
-                                                        <th class="pr-id" data-bs-toggle="modal"
-                                                            data-bs-target="#division-modal">
-                                                            ID
-                                                        </th>
-                                                        {{-- <th class="division">
-                                                            SOP Type
-                                                        </th> --}}
-                                                        <th class="short-desc">
-                                                            Short Description
-                                                        </th>
-                                                        <th class="create-date">
-                                                            Create Date Time
-                                                        </th>
-                                                        <th class="assign-name">
-                                                            Assigned To
-                                                        </th>
-                                                        <th class="modify-date">
-                                                            Modify Date Time
-                                                        </th>
-                                                        <th class="status">
-                                                            Status
-                                                        </th>
-                                                        <th class="action">
-                                                            Action
-                                                        </th>
-                                                    </thead>
-                                                    <tbody id="searchTable">
-                                                        @foreach ($under_review as $temp)
-                                                            <tr>
-                                                                <td class="pr-id" style="text-decoration:underline"><a
-                                                                    href="{{ route('documents.edit', $temp->id) }}">
-                                                                    000{{ $temp->id }}
-                                                                </a>
-                                                            </td>
-                                                                {{-- <td class="division">
-                                                                    {{ $temp->type }}
-                                                                </td> --}}
+                                        @if (count($under_review) > 0)
+                                            <div class="sub-block inner-block" id="under-review">
+                                                <div class="pill">
+                                                    Document Management System
+                                                </div>
+                                                <div class="head">
+                                                    <div class="title">Under Review</div>
+                                                    <div class="result">{{ count($under_review) }} Results</div>
+                                                </div>
+                                                <div class="table-list">
+                                                    <table class="table table-bordered mb-0">
+                                                        <thead>
+                                                            <th class="pr-id" data-bs-toggle="modal"
+                                                                data-bs-target="#division-modal">
+                                                                ID
+                                                            </th>
+                                                            {{-- <th class="division">
+                                                                SOP Type
+                                                            </th> --}}
+                                                            <th class="short-desc">
+                                                                Short Description
+                                                            </th>
+                                                            <th class="create-date">
+                                                                Create Date Time
+                                                            </th>
+                                                            <th class="assign-name">
+                                                                Originator
+                                                            </th>
+                                                            <th class="modify-date">
+                                                                Modify Date Time
+                                                            </th>
+                                                            <th class="status">
+                                                                Status
+                                                            </th>
+                                                            <th class="action">
+                                                                Action
+                                                            </th>
+                                                        </thead>
+                                                        <tbody id="searchTable">
+                                                            @foreach ($under_review as $temp)
+                                                                <tr>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
+                                                                    {{-- <td class="division">
+                                                                        {{ $temp->type }}
+                                                                    </td> --}}
 
-                                                                <td class="short-desc">
-                                                                    {{ $temp->short_description }}
-                                                                </td>
-                                                                <td class="create-date">
-                                                                    {{ $temp->created_at }}
-                                                                </td>
-                                                                <td class="assign-name">
-                                                                    {{ $temp->originator->name }}
-                                                                </td>
-                                                                <td class="modify-date">
-                                                                    {{ $temp->updated_at }}
-                                                                </td>
-                                                                <td class="status">
-                                                                    {{ $temp->status }}
-                                                                </td>
-                                                                <td class="action">
-                                                                    <div class="action-dropdown">
-                                                                        <div class="action-down-btn">Action <i
-                                                                                class="fa-solid fa-angle-down"></i></div>
-                                                                        <div class="action-block">
-                                                                            <a href="{{ url('doc-details', $temp->id) }}">View
-                                                                            </a>
+                                                                    <td class="short-desc">
+                                                                        {{ $temp->short_description }}
+                                                                    </td>
+                                                                    <td class="create-date">
+                                                                        {{ $temp->created_at }}
+                                                                    </td>
+                                                                    <td class="assign-name">
+                                                                        {{ $temp->originator->name }}
+                                                                    </td>
+                                                                    <td class="modify-date">
+                                                                        {{ $temp->updated_at }}
+                                                                    </td>
+                                                                    <td class="status">
+                                                                        {{ $temp->status }}
+                                                                    </td>
+                                                                    <td class="action">
+                                                                        <div class="action-dropdown">
+                                                                            <div class="action-down-btn">Action <i
+                                                                                    class="fa-solid fa-angle-down"></i></div>
+                                                                            <div class="action-block">
+                                                                                <a href="{{ url('doc-details', $temp->id) }}">View
+                                                                                </a>
 
-                                                                            <a
-                                                                                href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                            <form
-                                                                                action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit">Delete</button>
-                                                                            </form>
+                                                                                <a
+                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                {{-- <form
+                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit">Delete</button>
+                                                                                </form> --}}
 
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
 
-                                        <div class="sub-block inner-block" id="review-com">
-                                            <div class="pill">
-                                                Document Management System
-                                            </div>
-                                            <div class="head">
-                                                <div class="title">Review Completed</div>
-                                                <div class="result">{{ count($reviewed) }} Results</div>
-                                            </div>
-                                            <div class="table-list">
-                                                <table class="table table-bordered mb-0">
-                                                    <thead>
-                                                        <th class="pr-id" data-bs-toggle="modal"
-                                                            data-bs-target="#division-modal">
-                                                            ID
-                                                        </th>
-                                                        {{-- <th class="division">
-                                                            SOP Type
-                                                        </th> --}}
-                                                        <th class="short-desc">
-                                                            Short Description
-                                                        </th>
-                                                        <th class="create-date">
-                                                            Create Date Time
-                                                        </th>
-                                                        <th class="assign-name">
-                                                            Assigned To
-                                                        </th>
-                                                        <th class="modify-date">
-                                                            Modify Date Time
-                                                        </th>
-                                                        <th class="status">
-                                                            Status
-                                                        </th>
-                                                        <th class="action">
-                                                            Action
-                                                        </th>
-                                                    </thead>
-                                                    <tbody id="searchTable">
-                                                        @foreach ($reviewed as $temp)
-                                                            <tr>
-                                                                <td class="pr-id" style="text-decoration:underline"><a
-                                                                    href="{{ route('documents.edit', $temp->id) }}">
-                                                                    000{{ $temp->id }}
-                                                                </a>
-                                                            </td>
-                                                                {{-- <td class="division">
-                                                                    {{ $temp->type }}
-                                                                </td> --}}
+                                        @if (count($reviewed) > 0)
+                                            <div class="sub-block inner-block" id="review-com">
+                                                <div class="pill">
+                                                    Document Management System
+                                                </div>
+                                                <div class="head">
+                                                    <div class="title">Review Completed</div>
+                                                    <div class="result">{{ count($reviewed) }} Results</div>
+                                                </div>
+                                                <div class="table-list">
+                                                    <table class="table table-bordered mb-0">
+                                                        <thead>
+                                                            <th class="pr-id" data-bs-toggle="modal"
+                                                                data-bs-target="#division-modal">
+                                                                ID
+                                                            </th>
+                                                            {{-- <th class="division">
+                                                                SOP Type
+                                                            </th> --}}
+                                                            <th class="short-desc">
+                                                                Short Description
+                                                            </th>
+                                                            <th class="create-date">
+                                                                Create Date Time
+                                                            </th>
+                                                            <th class="assign-name">
+                                                                Originator
+                                                            </th>
+                                                            <th class="modify-date">
+                                                                Modify Date Time
+                                                            </th>
+                                                            <th class="status">
+                                                                Status
+                                                            </th>
+                                                            <th class="action">
+                                                                Action
+                                                            </th>
+                                                        </thead>
+                                                        <tbody id="searchTable">
+                                                            @foreach ($reviewed as $temp)
+                                                                <tr>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
+                                                                    {{-- <td class="division">
+                                                                        {{ $temp->type }}
+                                                                    </td> --}}
 
-                                                                <td class="short-desc">
-                                                                    {{ $temp->short_description }}
-                                                                </td>
-                                                                <td class="create-date">
-                                                                    {{ $temp->created_at }}
-                                                                </td>
-                                                                <td class="assign-name">
-                                                                    {{ $temp->originator->name }}
-                                                                </td>
-                                                                <td class="modify-date">
-                                                                    {{ $temp->updated_at }}
-                                                                </td>
-                                                                <td class="status">
-                                                                    {{ $temp->status }}
-                                                                </td>
-                                                                <td class="action">
-                                                                    <div class="action-dropdown">
-                                                                        <div class="action-down-btn">Action <i
-                                                                                class="fa-solid fa-angle-down"></i></div>
-                                                                        <div class="action-block">
-                                                                            <a href="{{ url('doc-details', $temp->id) }}">View
-                                                                            </a>
+                                                                    <td class="short-desc">
+                                                                        {{ $temp->short_description }}
+                                                                    </td>
+                                                                    <td class="create-date">
+                                                                        {{ $temp->created_at }}
+                                                                    </td>
+                                                                    <td class="assign-name">
+                                                                        {{ $temp->originator->name }}
+                                                                    </td>
+                                                                    <td class="modify-date">
+                                                                        {{ $temp->updated_at }}
+                                                                    </td>
+                                                                    <td class="status">
+                                                                        {{ $temp->status }}
+                                                                    </td>
+                                                                    <td class="action">
+                                                                        <div class="action-dropdown">
+                                                                            <div class="action-down-btn">Action <i
+                                                                                    class="fa-solid fa-angle-down"></i></div>
+                                                                            <div class="action-block">
+                                                                                <a href="{{ url('doc-details', $temp->id) }}">View
+                                                                                </a>
 
-                                                                            <a
-                                                                                href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                            <form
-                                                                                action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit">Delete</button>
-                                                                            </form>
+                                                                                <a
+                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                {{-- <form
+                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit">Delete</button>
+                                                                                </form> --}}
 
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
 
-                                        <div class="sub-block inner-block" id="pen-approv">
-                                            <div class="pill">
-                                                Document Management System
-                                            </div>
-                                            <div class="head">
-                                                <div class="title">Pending Approval</div>
-                                                <div class="result">{{ count($under_approval) }} Results</div>
-                                            </div>
-                                            <div class="table-list">
-                                                <table class="table table-bordered mb-0">
-                                                    <thead>
-                                                        <th class="pr-id" data-bs-toggle="modal"
-                                                            data-bs-target="#division-modal">
-                                                            ID
-                                                        </th>
-                                                        {{-- <th class="division">
-                                                            SOP Type
-                                                        </th> --}}
-                                                        <th class="short-desc">
-                                                            Short Description
-                                                        </th>
-                                                        <th class="create-date">
-                                                            Create Date Time
-                                                        </th>
-                                                        <th class="assign-name">
-                                                            Assigned To
-                                                        </th>
-                                                        <th class="modify-date">
-                                                            Modify Date Time
-                                                        </th>
-                                                        <th class="status">
-                                                            Status
-                                                        </th>
-                                                        <th class="action">
-                                                            Action
-                                                        </th>
-                                                    </thead>
-                                                    <tbody id="searchTable">
-                                                        @foreach ($under_approval as $temp)
-                                                            <tr>
-                                                                <td class="pr-id" style="text-decoration:underline"><a
-                                                                    href="{{ route('documents.edit', $temp->id) }}">
-                                                                    000{{ $temp->id }}
-                                                                </a>
-                                                            </td>
-                                                                {{-- <td class="division">
-                                                                    {{ $temp->type }}
-                                                                </td> --}}
+                                        @if (count($under_approval) > 0)
+                                            <div class="sub-block inner-block" id="pen-approv">
+                                                <div class="pill">
+                                                    Document Management System
+                                                </div>
+                                                <div class="head">
+                                                    <div class="title">Pending Approval</div>
+                                                    <div class="result">{{ count($under_approval) }} Results</div>
+                                                </div>
+                                                <div class="table-list">
+                                                    <table class="table table-bordered mb-0">
+                                                        <thead>
+                                                            <th class="pr-id" data-bs-toggle="modal"
+                                                                data-bs-target="#division-modal">
+                                                                ID
+                                                            </th>
+                                                            {{-- <th class="division">
+                                                                SOP Type
+                                                            </th> --}}
+                                                            <th class="short-desc">
+                                                                Short Description
+                                                            </th>
+                                                            <th class="create-date">
+                                                                Create Date Time
+                                                            </th>
+                                                            <th class="assign-name">
+                                                                Originator
+                                                            </th>
+                                                            <th class="modify-date">
+                                                                Modify Date Time
+                                                            </th>
+                                                            <th class="status">
+                                                                Status
+                                                            </th>
+                                                            <th class="action">
+                                                                Action
+                                                            </th>
+                                                        </thead>
+                                                        <tbody id="searchTable">
+                                                            @foreach ($under_approval as $temp)
+                                                                <tr>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
+                                                                    {{-- <td class="division">
+                                                                        {{ $temp->type }}
+                                                                    </td> --}}
 
-                                                                <td class="short-desc">
-                                                                    {{ $temp->short_description }}
-                                                                </td>
-                                                                <td class="create-date">
-                                                                    {{ $temp->created_at }}
-                                                                </td>
-                                                                <td class="assign-name">
-                                                                    {{ $temp->originator->name }}
-                                                                </td>
-                                                                <td class="modify-date">
-                                                                    {{ $temp->updated_at }}
-                                                                </td>
-                                                                <td class="status">
-                                                                    {{ $temp->status }}
-                                                                </td>
-                                                                <td class="action">
-                                                                    <div class="action-dropdown">
-                                                                        <div class="action-down-btn">Action <i
-                                                                                class="fa-solid fa-angle-down"></i></div>
-                                                                        <div class="action-block">
-                                                                            <a href="{{ url('doc-details', $temp->id) }}">View
-                                                                            </a>
+                                                                    <td class="short-desc">
+                                                                        {{ $temp->short_description }}
+                                                                    </td>
+                                                                    <td class="create-date">
+                                                                        {{ $temp->created_at }}
+                                                                    </td>
+                                                                    <td class="assign-name">
+                                                                        {{ $temp->originator->name }}
+                                                                    </td>
+                                                                    <td class="modify-date">
+                                                                        {{ $temp->updated_at }}
+                                                                    </td>
+                                                                    <td class="status">
+                                                                        {{ $temp->status }}
+                                                                    </td>
+                                                                    <td class="action">
+                                                                        <div class="action-dropdown">
+                                                                            <div class="action-down-btn">Action <i
+                                                                                    class="fa-solid fa-angle-down"></i></div>
+                                                                            <div class="action-block">
+                                                                                <a href="{{ url('doc-details', $temp->id) }}">View
+                                                                                </a>
 
-                                                                            <a
-                                                                                href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                            <form
-                                                                                action="{{ route('documents.destroy', $temp->id) }}"
-                                                                                method="post">
-                                                                                @csrf
-                                                                                @method('DELETE')
-                                                                                <button type="submit">Delete</button>
-                                                                            </form>
+                                                                                <a
+                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                {{-- <form
+                                                                                    action="{{ route('documents.destroy', $temp->id) }}"
+                                                                                    method="post">
+                                                                                    @csrf
+                                                                                    @method('DELETE')
+                                                                                    <button type="submit">Delete</button>
+                                                                                </form> --}}
 
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
 
 
                                         {{-- <div class="sub-block" id="pen-train">
@@ -517,97 +525,99 @@
                                             </div>
                                         </div> --}}
 
-                                        <div class="sub-block inner-block" id="effective">
-                                            <div class="pill">
-                                                Document Management System
-                                            </div>
-                                            <div class="head">
-                                                <div class="title">Effective</div>
-                                                <div class="result">{{ count($effective) }} Results</div>
-                                            </div>
-                                            <div class="table-list">
-                                                <table class="table table-bordered mb-0">
-                                                    <thead>
-                                                        <th class="pr-id" data-bs-toggle="modal"
-                                                            data-bs-target="#division-modal">
-                                                            ID
-                                                        </th>
-                                                        {{-- <th class="division">
-                                                            SOP Type
-                                                        </th> --}}
-                                                        <th class="short-desc">
-                                                            Short Description
-                                                        </th>
-                                                        <th class="create-date">
-                                                            Create Date Time
-                                                        </th>
-                                                        <th class="assign-name">
-                                                            Assigned To
-                                                        </th>
-                                                        <th class="modify-date">
-                                                            Modify Date Time
-                                                        </th>
-                                                        <th class="status">
-                                                            Status
-                                                        </th>
-                                                        <th class="action">
-                                                            Action
-                                                        </th>
-                                                    </thead>
-                                                    <tbody id="searchTable">
-                                                        @foreach ($effective as $temp)
-                                                            <tr>
-                                                                <td class="pr-id" style="text-decoration:underline"><a
-                                                                    href="{{ route('documents.edit', $temp->id) }}">
-                                                                    000{{ $temp->id }}
-                                                                </a>
-                                                            </td>
-                                                                {{-- <td class="division">
-                                                                    {{ $temp->type }}
-                                                                </td> --}}
+                                        @if (count($effective) > 0)
+                                            <div class="sub-block inner-block" id="effective">
+                                                <div class="pill">
+                                                    Document Management System
+                                                </div>
+                                                <div class="head">
+                                                    <div class="title">Effective</div>
+                                                    <div class="result">{{ count($effective) }} Results</div>
+                                                </div>
+                                                <div class="table-list">
+                                                    <table class="table table-bordered mb-0">
+                                                        <thead>
+                                                            <th class="pr-id" data-bs-toggle="modal"
+                                                                data-bs-target="#division-modal">
+                                                                ID
+                                                            </th>
+                                                            {{-- <th class="division">
+                                                                SOP Type
+                                                            </th> --}}
+                                                            <th class="short-desc">
+                                                                Short Description
+                                                            </th>
+                                                            <th class="create-date">
+                                                                Create Date Time
+                                                            </th>
+                                                            <th class="assign-name">
+                                                                Originator
+                                                            </th>
+                                                            <th class="modify-date">
+                                                                Modify Date Time
+                                                            </th>
+                                                            <th class="status">
+                                                                Status
+                                                            </th>
+                                                            <th class="action">
+                                                                Action
+                                                            </th>
+                                                        </thead>
+                                                        <tbody id="searchTable">
+                                                            @foreach ($effective as $temp)
+                                                                <tr>
+                                                                    <td class="pr-id" style="text-decoration:underline"><a
+                                                                        href="{{ route('documents.edit', $temp->id) }}">
+                                                                        000{{ $temp->id }}
+                                                                    </a>
+                                                                </td>
+                                                                    {{-- <td class="division">
+                                                                        {{ $temp->type }}
+                                                                    </td> --}}
 
-                                                                <td class="short-desc">
-                                                                    {{ $temp->short_description }}
-                                                                </td>
-                                                                <td class="create-date">
-                                                                    {{ $temp->created_at }}
-                                                                </td>
-                                                                <td class="assign-name">
-                                                                    {{ $temp->originator->name }}
-                                                                </td>
-                                                                <td class="modify-date">
-                                                                    {{ $temp->updated_at }}
-                                                                </td>
-                                                                <td class="status">
-                                                                    {{ $temp->status }}
-                                                                </td>
-                                                                <td class="action">
-                                                                    <div class="action-dropdown">
-                                                                        <div class="action-down-btn">Action <i
-                                                                                class="fa-solid fa-angle-down"></i></div>
-                                                                        <div class="action-block">
-                                                                            <a href="{{ url('doc-details', $temp->id) }}">View
-                                                                            </a>
+                                                                    <td class="short-desc">
+                                                                        {{ $temp->short_description }}
+                                                                    </td>
+                                                                    <td class="create-date">
+                                                                        {{ $temp->created_at }}
+                                                                    </td>
+                                                                    <td class="assign-name">
+                                                                        {{ $temp->originator->name }}
+                                                                    </td>
+                                                                    <td class="modify-date">
+                                                                        {{ $temp->updated_at }}
+                                                                    </td>
+                                                                    <td class="status">
+                                                                        {{ $temp->status }}
+                                                                    </td>
+                                                                    <td class="action">
+                                                                        <div class="action-dropdown">
+                                                                            <div class="action-down-btn">Action <i
+                                                                                    class="fa-solid fa-angle-down"></i></div>
+                                                                            <div class="action-block">
+                                                                                <a href="{{ url('doc-details', $temp->id) }}">View
+                                                                                </a>
 
-                                                                            <a
-                                                                                href="{{ route('documents.edit', $temp->id) }}">Edit</a>
-                                                                            {{-- <form
-                                                                            action="{{ route('documents.destroy', $temp->id) }}"
-                                                                            method="post">
-                                                                            @csrf
-                                                                            @method('DELETE')
-                                                                            <button type="submit">Delete</button>
-                                                                        </form> --}}
+                                                                                <a
+                                                                                    href="{{ route('documents.edit', $temp->id) }}">Edit</a>
+                                                                                {{-- <form
+                                                                                action="{{ route('documents.destroy', $temp->id) }}"
+                                                                                method="post">
+                                                                                @csrf
+                                                                                @method('DELETE')
+                                                                                <button type="submit">Delete</button>
+                                                                            </form> --}}
 
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
+                                                                    </td>
+                                                                </tr>
+                                                            @endforeach
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     @else
                                         @php
                                             $draft = 0;
@@ -644,7 +654,7 @@
                                                                     Create Date Time
                                                                 </th>
                                                                 <th class="assign-name">
-                                                                    Assigned To
+                                                                    Originator
                                                                 </th>
                                                                 <th class="modify-date">
                                                                     Modify Date Time
@@ -740,7 +750,7 @@
                                                                     Create Date Time
                                                                 </th>
                                                                 <th class="assign-name">
-                                                                    Assigned To
+                                                                    Originator
                                                                 </th>
                                                                 <th class="modify-date">
                                                                     Modify Date Time
@@ -834,7 +844,7 @@
                                                                     Create Date Time
                                                                 </th>
                                                                 <th class="assign-name">
-                                                                    Assigned To
+                                                                    Originator
                                                                 </th>
                                                                 <th class="modify-date">
                                                                     Modify Date Time
@@ -924,7 +934,7 @@
                                                                     Create Date Time
                                                                 </th>
                                                                 <th class="assign-name">
-                                                                    Assigned To
+                                                                    Originator
                                                                 </th>
                                                                 <th class="modify-date">
                                                                     Modify Date Time
@@ -1131,7 +1141,7 @@
                                                                     Create Date Time
                                                                 </th>
                                                                 <th class="assign-name">
-                                                                    Assigned To
+                                                                    Originator
                                                                 </th>
                                                                 <th class="modify-date">
                                                                     Modify Date Time
