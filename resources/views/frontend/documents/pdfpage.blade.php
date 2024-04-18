@@ -329,11 +329,23 @@
             max-width: 100%;
         }
 
-    .MsoNormalTable, 
-    table{
-        margin: 0px !important;
-        width : 100% !important;
-    }
+        .MsoNormalTable, 
+        table{
+            margin: 0px !important;
+            width : 100% !important;       
+        }
+    
+        .MsoNormalTable tr {
+            border: 1px solid rgb(156, 156, 156);
+        }
+        
+        .MsoNormalTable td {
+            text-align: left!important;
+        }
+        
+        .MsoNormalTable tbody {
+            border: 1px solid rgb(156, 156, 156);
+        }
 
 
     </style>
@@ -343,7 +355,7 @@
 <body>
 
     <header class="">
-        <table class="border" style="height: 150px;">
+        <table class="border" style="height: 147px;">
             <tbody>
                 <tr>
                     <td class="logo w-20">
