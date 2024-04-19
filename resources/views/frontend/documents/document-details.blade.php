@@ -15,18 +15,18 @@
                                     {{ $document->document_name }}
                                 </div>
                                 <div class="buttons">
-                                    <button>
-                                        <a href="{{ url('notification', $document->id) }}">Send Notification</a>
+                                    <button onclick="location.href='{{ url('notification', $document->id) }}';">
+                                        Send Notification
                                     </button>
-                                    <button>
-                                        <a href="{{ url('audit-trial', $document->id) }}">Audit Trail</a>
+                                    <button  onclick="location.href='{{ url('audit-trial', $document->id) }}';">
+                                        Audit Trail
                                     </button>
-                                    <button><a href="{{ route('documents.edit', $document->id) }}">Edit</a> </button>
+                                    <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
                                     <button>Cancel</button>
-                                    <button><a href="{{ url('documents/generatePdf', $document->id) }}">Download</a>
+                                    <button  onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
-                                    <button><a href="{{ url('documents/printPDF', $document->id) }}"
-                                            target="__blank">Print</a>
+                                    <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';" target="__blank">
+                                            Print
                                     </button>
                                     {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>

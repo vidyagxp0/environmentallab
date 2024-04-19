@@ -15,8 +15,8 @@
                                     {{ $document->document_name }}
                                 </div>
                                 <div class="buttons">
-                                    <button>
-                                        <a href="{{ url('audit-trial', $document->id) }}">Audit Trail</a>
+                                    <button onclick="location.href='{{ url('audit-trial', $document->id) }}';" style="cursor:pointer;">
+                                        Audit Trail
                                     </button>
                                     @php $showEdit = false; @endphp
                                     @if (Helpers::checkRoles(2))
@@ -49,13 +49,16 @@
                                     @endif
 
                                     @if ($showEdit)
-                                        <button><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button>
+                                    {{-- <a href="{{ route('documents.edit', $document->id) }}" class="button">Edit</a> --}}
+                                    <button onclick="location.href='{{ route('documents.edit', $document->id) }}';" style="cursor:pointer;">Edit</button>
+
+                                        {{-- <button ><a href="{{ route('documents.edit', $document->id) }}">Edit</a></button> --}}
                                     @endif
 
-                                    <button><a href="{{ url('documents/generatePdf', $document->id) }}">Download</a>
+                                    <button onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
-                                    <button><a href="{{ url('documents/printPDF', $document->id) }}"
-                                            target="__blank">Print</a>
+                                    <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';"
+                                            target="__blank">Print
                                     </button>
                                 </div>
                             </div>
