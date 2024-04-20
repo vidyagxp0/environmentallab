@@ -263,7 +263,7 @@
                                     <div class="calenderauditee">                                     
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc }}" {{Helpers::isRevised($document->stage)}}
-                                        class="hide-input"
+                                        class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
@@ -2403,34 +2403,97 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($print_history)
-                                            @foreach ($print_history as $print_historys)
-                                                <tr>
-                                                    <td class="copy-name">{{ $document->document_name }}</td>
-                                                    <td class="copy-name">{{ $document->division_name }}
-                                                        /{{ $document->document_type_name }} /{{ $year }}
-                                                        /SOP-000{{ $document->id }}</td>
-                                                    <td class="copy-name">{{ $print_historys->user_name }}</td>
-                                                    <td class="copy-name">{{ $print_historys->created_at }}</td>
-                                                    <td class="copy-num">1</td>
-                                                    <td class="copy-name">{{ $document->created_at }}</td>
-                                                    <td class="copy-name">{{ $document->originator_name }}</td>
-                                                    <td class="copy-name">{{ $document->dept_name }}</td>
-                                                    <td class="copy-num">12</td>
-                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                                        Cumque eum neque quam.</td>
-                                                    <td class="copy-name">29-12-2023</td>
-                                                    <td class="copy-name">Amit Patel</td>
-                                                    <td class="copy-num">12</td>
-                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum
-                                                        maiores reiciendis sint.</td>
-                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                                        Expedita culpa ab assumenda delectus beatae facilis itaque deserunt harum, quae
-                                                        doloribus!</td>
-                                                </tr>
-                                            @endforeach
-
-                                        @endif
+                                        @foreach ($document_distribution_grids as $grid)
+                                            <tr>
+                                                <td>
+                                                    {{ $loop->index + 1 }}
+                                                    {{-- <input type="text" value="{{ $loop->index }}" name="distribution[{{ $loop->index }}][serial_number]"> --}}
+                                                </td>
+                                                <td><input type="text" value="{{ $grid->document_title }}"  name="distribution[{{ $loop->index }}][document_title]">
+                                                </td>
+                                                <td><input type="number" value="{{ $grid->document_number }}" name="distribution[{{ $loop->index }}][document_number]">
+                                                </td>
+                                                <td><input type="text" value="{{ $grid->document_printed_by }}" name="distribution[{{ $loop->index }}][document_printed_by]">
+                                                </td>
+                                                <td><input type="text" value="{{ $grid->document_printed_on }}" name="distribution[{{ $loop->index }}][document_printed_on]">
+                                                </td>
+                                                <td><input type="number" value="{{ $grid->document_printed_copies }}" name="distribution[{{ $loop->index }}][document_printed_copies]">
+                                                </td>
+                                                <td><div class="group-input new-date-document_distribution_grid-field mb-0">
+                                                <div class="input-date "><div
+                                                    class="calenderauditee">
+                                                <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ $grid->issuance_date }}"/>
+                                                <input type="date" name="distribution[{{ $loop->index }}][issuance_date]" 
+                                                class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" value="{{ $grid->issuance_date }}"/></div></div></div>
+                                            </td>
+                                            
+                                                <td>
+                                                    <select id="select-state" placeholder="Select..."
+                                                        name="distribution[{{ $loop->index }}][issuance_to]" >
+                                                        <option value='0' {{ $grid->issuance_to == '0' ? 'selected' : '' }}>-- Select --</option>
+                                                        <option value='1' {{ $grid->issuance_to == '1' ? 'selected' : '' }}>Amit Guru</option>
+                                                        <option value='2' {{ $grid->issuance_to == '2' ? 'selected' : '' }}>Shaleen Mishra</option>
+                                                        <option value='3' {{ $grid->issuance_to == '3' ? 'selected' : '' }}>Madhulika Mishra</option>
+                                                        <option value='4' {{ $grid->issuance_to == '4' ? 'selected' : '' }}>Amit Patel</option>
+                                                        <option value='5' {{ $grid->issuance_to == '5' ? 'selected' : '' }}>Harsh Mishra</option>
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select id="select-state" placeholder="Select..."
+                                                        name="distribution[{{ $loop->index }}][location]">
+                                                        <option value='0' {{ $grid->location == '0' ? 'selected' : '' }}>-- Select --</option>
+                                                        <option value='1' {{ $grid->location == '1' ? 'selected' : '' }}>Tech Team</option>
+                                                        <option value='2' {{ $grid->location == '2' ? 'selected' : '' }}>Quality Assurance</option>
+                                                        <option value='3' {{ $grid->location == '3' ? 'selected' : '' }}>Quality Management</option>
+                                                        <option value='4' {{ $grid->location == '4' ? 'selected' : '' }}>IT Administration</option>
+                                                        <option value='5' {{ $grid->location == '5' ? 'selected' : '' }}>Business Administration</option>
+                                                    </select>
+                                                </td>    
+                                            <td><input type="number" name="distribution[{{ $loop->index }}][issued_copies]" value="{{ $grid->issued_copies }}">
+                                            </td>
+                                            <td><input type="text" name="distribution[{{ $loop->index }}][issued_reason]" value="{{ $grid->issued_reason }}">
+                                            </td>
+                                            <td><div class="group-input new-date-data-field mb-0">
+                                                <div class="input-date "><div
+                                                    class="calenderauditee">
+                                                <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ $grid->retrieval_date }}"/>
+                                                <input type="date" name="distribution[{{ $loop->index }}][retrieval_date]" class="hide-input" 
+                                                oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" value="{{ $grid->retrieval_date }}"/></div></div></div>
+                                            </td>
+                                            <td>
+                                                <select id="select-state" placeholder="Select..."
+                                                    name="distribution[{{ $loop->index }}][retrieval_by]">
+                                                    <option value="" {{ $grid->retrieval_by == '' ? 'selected' : '' }}>Select a value</option>
+                                                    <option value='1' {{ $grid->retrieval_by == '1' ? 'selected' : '' }}>Amit Guru</option>
+                                                    <option value='2' {{ $grid->retrieval_by == '2' ? 'selected' : '' }}>Shaleen Mishra</option>
+                                                    <option value='3' {{ $grid->retrieval_by == '3' ? 'selected' : '' }}>Madhulika Mishra</option>
+                                                    <option value='4' {{ $grid->retrieval_by == '4' ? 'selected' : '' }}>Amit Patel</option>
+                                                    <option value='5' {{ $grid->retrieval_by == '5' ? 'selected' : '' }}>Harsh Mishra</option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select id="select-state" placeholder="Select..."
+                                                    name="distribution[{{ $loop->index }}][retrieved_department]">
+                                                    <option value='0' {{ $grid->retrieved_department == '0' ? 'selected' : '' }}>-- Select --</option>
+                                                    <option value='1' {{ $grid->retrieved_department == '1' ? 'selected' : '' }}>Tech Team</option>
+                                                    <option value='2' {{ $grid->retrieved_department == '2' ? 'selected' : '' }}>Quality Assurance</option>
+                                                    <option value='3' {{ $grid->retrieved_department == '3' ? 'selected' : '' }}>Quality Management</option>
+                                                    <option value='4' {{ $grid->retrieved_department == '4' ? 'selected' : '' }}>IT Administration</option>
+                                                    <option value='5' {{ $grid->retrieved_department == '5' ? 'selected' : '' }}>Business Administration</option>
+                                                </select>
+                                            </td>    
+                                            <td><input type="number" name="distribution[{{ $loop->index }}][retrieved_copies]" value="{{ $grid->retrieved_copies }}">
+                                            </td>
+                                            <td><input type="text" name="distribution[{{ $loop->index }}][retrieved_reason]" value="{{ $grid->retrieved_reason }}">
+                                            </td>
+                                            <td><input type="text" name="distribution[{{ $loop->index }}][remark]" value="{{ $grid->remark }}">
+                                            </td>
+                                            <td>
+                                                <button class='removeTrainRow'>Remove</button>
+                                            </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
