@@ -1016,7 +1016,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            {{-- <tr>
                                                  <td><input type="text" Value="1" name="distribution[0][serial_number]" readonly>
                                                  </td>
                                                  <td><input type="text" name="distribution[0][document_title]">
@@ -1099,7 +1099,7 @@
                                                 <td><input type="text" name="distribution[0][remark]">
                                                 </td>
                                                 <td></td>
-                                        </tr>
+                                        </tr> --}}
                                         </tbody>
                                     </table>
                                 </div>

@@ -2432,22 +2432,21 @@
                                                     <select id="select-state" placeholder="Select..."
                                                         name="distribution[{{ $loop->index }}][issuance_to]" >
                                                         <option value='0' {{ $grid->issuance_to == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                        <option value='1' {{ $grid->issuance_to == '1' ? 'selected' : '' }}>Amit Guru</option>
-                                                        <option value='2' {{ $grid->issuance_to == '2' ? 'selected' : '' }}>Shaleen Mishra</option>
-                                                        <option value='3' {{ $grid->issuance_to == '3' ? 'selected' : '' }}>Madhulika Mishra</option>
-                                                        <option value='4' {{ $grid->issuance_to == '4' ? 'selected' : '' }}>Amit Patel</option>
-                                                        <option value='5' {{ $grid->issuance_to == '5' ? 'selected' : '' }}>Harsh Mishra</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}" {{ $grid->issuance_to == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                        @endforeach
                                                     </select>
                                                 </td>
                                                 <td>
                                                     <select id="select-state" placeholder="Select..."
                                                         name="distribution[{{ $loop->index }}][location]">
                                                         <option value='0' {{ $grid->location == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                        <option value='1' {{ $grid->location == '1' ? 'selected' : '' }}>Tech Team</option>
-                                                        <option value='2' {{ $grid->location == '2' ? 'selected' : '' }}>Quality Assurance</option>
-                                                        <option value='3' {{ $grid->location == '3' ? 'selected' : '' }}>Quality Management</option>
-                                                        <option value='4' {{ $grid->location == '4' ? 'selected' : '' }}>IT Administration</option>
-                                                        <option value='5' {{ $grid->location == '5' ? 'selected' : '' }}>Business Administration</option>
+                                                        @foreach ($departments as $department)
+                                                            <option 
+                                                                value='{{ $department->id }}' {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
+                                                                {{ $department->name }}
+                                                            </option>
+                                                        @endforeach
                                                     </select>
                                                 </td>    
                                             <td><input type="number" name="distribution[{{ $loop->index }}][issued_copies]" value="{{ $grid->issued_copies }}">
@@ -2465,22 +2464,21 @@
                                                 <select id="select-state" placeholder="Select..."
                                                     name="distribution[{{ $loop->index }}][retrieval_by]">
                                                     <option value="" {{ $grid->retrieval_by == '' ? 'selected' : '' }}>Select a value</option>
-                                                    <option value='1' {{ $grid->retrieval_by == '1' ? 'selected' : '' }}>Amit Guru</option>
-                                                    <option value='2' {{ $grid->retrieval_by == '2' ? 'selected' : '' }}>Shaleen Mishra</option>
-                                                    <option value='3' {{ $grid->retrieval_by == '3' ? 'selected' : '' }}>Madhulika Mishra</option>
-                                                    <option value='4' {{ $grid->retrieval_by == '4' ? 'selected' : '' }}>Amit Patel</option>
-                                                    <option value='5' {{ $grid->retrieval_by == '5' ? 'selected' : '' }}>Harsh Mishra</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ $grid->retrieval_by == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </td>
                                             <td>
                                                 <select id="select-state" placeholder="Select..."
                                                     name="distribution[{{ $loop->index }}][retrieved_department]">
                                                     <option value='0' {{ $grid->retrieved_department == '0' ? 'selected' : '' }}>-- Select --</option>
-                                                    <option value='1' {{ $grid->retrieved_department == '1' ? 'selected' : '' }}>Tech Team</option>
-                                                    <option value='2' {{ $grid->retrieved_department == '2' ? 'selected' : '' }}>Quality Assurance</option>
-                                                    <option value='3' {{ $grid->retrieved_department == '3' ? 'selected' : '' }}>Quality Management</option>
-                                                    <option value='4' {{ $grid->retrieved_department == '4' ? 'selected' : '' }}>IT Administration</option>
-                                                    <option value='5' {{ $grid->retrieved_department == '5' ? 'selected' : '' }}>Business Administration</option>
+                                                    @foreach ($departments as $department)
+                                                        <option 
+                                                            value='{{ $department->id }}' {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
+                                                            {{ $department->name }}
+                                                        </option>
+                                                    @endforeach
                                                 </select>
                                             </td>    
                                             <td><input type="number" name="distribution[{{ $loop->index }}][retrieved_copies]" value="{{ $grid->retrieved_copies }}">

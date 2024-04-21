@@ -490,105 +490,105 @@ function addRootCauseAnalysisRiskAssessment(tableId) {
     }
 }
 
-function addDistributionRetrieval(tableId) {
-    let table = document.getElementById(tableId);
-    let currentRowCount = table.rows.length;
-    let newRow = table.insertRow(currentRowCount);
-    newRow.setAttribute("id", "row" + currentRowCount);
+// function addDistributionRetrieval(tableId) {
+//     let table = document.getElementById(tableId);
+//     let currentRowCount = table.rows.length;
+//     let newRow = table.insertRow(currentRowCount);
+//     newRow.setAttribute("id", "row" + currentRowCount);
 
-    let cell1 = newRow.insertCell(0);
-    cell1.innerHTML = currentRowCount;
+//     let cell1 = newRow.insertCell(0);
+//     cell1.innerHTML = currentRowCount;
 
-    let cell2 = newRow.insertCell(1);
-    cell2.innerHTML = `<input type="text" name="distribution[${currentRowCount}][document_title]">`;
+//     let cell2 = newRow.insertCell(1);
+//     cell2.innerHTML = `<input type="text" name="distribution[${currentRowCount}][document_title]">`;
 
-    let cell3 = newRow.insertCell(2);
-    cell3.innerHTML = `<input type="number" name="distribution[${currentRowCount}][document_number]">`;
+//     let cell3 = newRow.insertCell(2);
+//     cell3.innerHTML = `<input type="number" name="distribution[${currentRowCount}][document_number]">`;
 
-    let cell4 = newRow.insertCell(3);
-    cell4.innerHTML = `<input type="text" name="distribution[${currentRowCount}][document_printed_by]">`;
+//     let cell4 = newRow.insertCell(3);
+//     cell4.innerHTML = `<input type="text" name="distribution[${currentRowCount}][document_printed_by]">`;
 
-    let cell5 = newRow.insertCell(4);
-    cell5.innerHTML = `<input type="text" name="distribution[${currentRowCount}][document_printed_on]">`;
+//     let cell5 = newRow.insertCell(4);
+//     cell5.innerHTML = `<input type="text" name="distribution[${currentRowCount}][document_printed_on]">`;
 
-    let cell6 = newRow.insertCell(5);
-    cell6.innerHTML = `<input type="number" name="distribution[${currentRowCount}][document_printed_copies]">`;
+//     let cell6 = newRow.insertCell(5);
+//     cell6.innerHTML = `<input type="number" name="distribution[${currentRowCount}][document_printed_copies]">`;
 
-    let cell7 = newRow.insertCell(6);
-    cell7.innerHTML = '<div class="group-input new-date-data-field mb-0"> <div class="input-date "><div class="calenderauditee"><input type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="distribution['+ currentRowCount +'][issuance_date]" class="hide-input" oninput="handleDateInput(this, `issuance_date' + currentRowCount +'`)" /></div></div></div>';
+//     let cell7 = newRow.insertCell(6);
+//     cell7.innerHTML = '<div class="group-input new-date-data-field mb-0"> <div class="input-date "><div class="calenderauditee"><input type="text" id="issuance_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="distribution['+ currentRowCount +'][issuance_date]" class="hide-input" oninput="handleDateInput(this, `issuance_date' + currentRowCount +'`)" /></div></div></div>';
 
-    let cell8 = newRow.insertCell(7)
-    cell8.innerHTML = `<select id="select-state" placeholder="Select..."
-        name="distribution[${currentRowCount}][issuance_to]">
-        <option value='0'>-- Select --</option>
-        <option value='1'>Amit Guru</option>
-        <option value='2'>Shaleen Mishra</option>
-        <option value='3'>Madhulika Mishra</option>
-        <option value='4'>Amit Patel</option>
-        <option value='5'>Harsh Mishra</option>
-    </select>`
+//     let cell8 = newRow.insertCell(7)
+//     cell8.innerHTML = `<select id="select-state" placeholder="Select..."
+//         name="distribution[${currentRowCount}][issuance_to]">
+//         <option value='0'>-- Select --</option>
+//         <option value='1'>Amit Guru</option>
+//         <option value='2'>Shaleen Mishra</option>
+//         <option value='3'>Madhulika Mishra</option>
+//         <option value='4'>Amit Patel</option>
+//         <option value='5'>Harsh Mishra</option>
+//     </select>`
 
-    let cell9 = newRow. insertCell(8)
-    cell9.innerHTML = `<select id="select-state" placeholder="Select..."
-        name="distribution[${currentRowCount}][location]">
-        <option value='0'>-- Select --</option>
-        <option value='1'>Tech Team</option>
-        <option value='2'>Quality Assurance</option>
-        <option value='3'>Quality Management</option>
-        <option value='4'>IT Administration</option>
-        <option value='5'>Business Administration</option>
-    </select>`
+//     let cell9 = newRow. insertCell(8)
+//     cell9.innerHTML = `<select id="select-state" placeholder="Select..."
+//         name="distribution[${currentRowCount}][location]">
+//         <option value='0'>-- Select --</option>
+//         <option value='1'>Tech Team</option>
+//         <option value='2'>Quality Assurance</option>
+//         <option value='3'>Quality Management</option>
+//         <option value='4'>IT Administration</option>
+//         <option value='5'>Business Administration</option>
+//     </select>`
 
-    let cell10 = newRow.insertCell(9);
-    cell10.innerHTML = `<input type="number" name="distribution[${currentRowCount}][issued_copies]">`;
+//     let cell10 = newRow.insertCell(9);
+//     cell10.innerHTML = `<input type="number" name="distribution[${currentRowCount}][issued_copies]">`;
 
-    let cell11 = newRow.insertCell(10);
-    cell11.innerHTML = `<input type="text" name="distribution[${currentRowCount}][issued_reason]">`;
+//     let cell11 = newRow.insertCell(10);
+//     cell11.innerHTML = `<input type="text" name="distribution[${currentRowCount}][issued_reason]">`;
 
-    let cell12 = newRow.insertCell(11);
-    cell12.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="retrieval_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="distribution['+currentRowCount+'][retrieval_date]" class="hide-input" oninput="handleDateInput(this, `retrieval_date' + currentRowCount +'`)" /></div></div></div>';
+//     let cell12 = newRow.insertCell(11);
+//     cell12.innerHTML = '<div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="retrieval_date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="distribution['+currentRowCount+'][retrieval_date]" class="hide-input" oninput="handleDateInput(this, `retrieval_date' + currentRowCount +'`)" /></div></div></div>';
 
-    let cell13 = newRow.insertCell(12)
-    cell13.innerHTML = `<select id="select-state" placeholder="Select..."
-        name="distribution[${currentRowCount}][retrieval_by]">
-        <option value="">Select a value</option>
-        <option value='1'>Amit Guru</option>
-        <option value='2'>Shaleen Mishra</option>
-        <option value='3'>Madhulika Mishra</option>
-        <option value='4'>Amit Patel</option>
-        <option value='5'>Harsh Mishra</option>
-    </select>`;
+//     let cell13 = newRow.insertCell(12)
+//     cell13.innerHTML = `<select id="select-state" placeholder="Select..."
+//         name="distribution[${currentRowCount}][retrieval_by]">
+//         <option value="">Select a value</option>
+//         <option value='1'>Amit Guru</option>
+//         <option value='2'>Shaleen Mishra</option>
+//         <option value='3'>Madhulika Mishra</option>
+//         <option value='4'>Amit Patel</option>
+//         <option value='5'>Harsh Mishra</option>
+//     </select>`;
 
-    let cell14 = newRow.insertCell(13)
-    cell14.innerHTML = `<select id="select-state" placeholder="Select..."
-        name="distribution[${currentRowCount}][retrieved_department]">
-        <option value='0'>-- Select --</option>
-        <option value='1'>Tech Team</option>
-        <option value='2'>Quality Assurance</option>
-        <option value='3'>Quality Management</option>
-        <option value='4'>IT Administration</option>
-        <option value='5'>Business Administration</option>
-    </select>`;
+//     let cell14 = newRow.insertCell(13)
+//     cell14.innerHTML = `<select id="select-state" placeholder="Select..."
+//         name="distribution[${currentRowCount}][retrieved_department]">
+//         <option value='0'>-- Select --</option>
+//         <option value='1'>Tech Team</option>
+//         <option value='2'>Quality Assurance</option>
+//         <option value='3'>Quality Management</option>
+//         <option value='4'>IT Administration</option>
+//         <option value='5'>Business Administration</option>
+//     </select>`;
 
-    let cell15 = newRow.insertCell(14);
-    cell15.innerHTML = `<input type="number" name="distribution[${currentRowCount}][retrieved_copies]">`;
+//     let cell15 = newRow.insertCell(14);
+//     cell15.innerHTML = `<input type="number" name="distribution[${currentRowCount}][retrieved_copies]">`;
 
-    let cell16 = newRow.insertCell(15);
-    cell16.innerHTML = `<input type="text" name="distribution[${currentRowCount}][retrieved_reason]">`;
+//     let cell16 = newRow.insertCell(15);
+//     cell16.innerHTML = `<input type="text" name="distribution[${currentRowCount}][retrieved_reason]">`;
 
-    let cell17 = newRow.insertCell(16);
-    cell17.innerHTML = `<input type="text" name="distribution[${currentRowCount}][remark]">`;
+//     let cell17 = newRow.insertCell(16);
+//     cell17.innerHTML = `<input type="text" name="distribution[${currentRowCount}][remark]">`;
 
-    var cell18 = newRow.insertCell(17);
-    cell18.innerHTML = "<button class='removeTrainRow'>Remove</button>";
+//     var cell18 = newRow.insertCell(17);
+//     cell18.innerHTML = "<button class='removeTrainRow'>Remove</button>";
 
-    cell18.appendChild(element18);
+//     cell18.appendChild(element18);
 
-    for (let i = 1; i < currentRowCount; i++) {
-        let row = table.rows[i];
-        row.cells[0].innerHTML = i;
-    }
-}
+//     for (let i = 1; i < currentRowCount; i++) {
+//         let row = table.rows[i];
+//         row.cells[0].innerHTML = i;
+//     }
+// }
 
 function addManagementReviewParticipants(tableId) {
     let table = document.getElementById(tableId);
