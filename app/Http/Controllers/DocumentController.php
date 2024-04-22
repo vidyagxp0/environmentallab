@@ -10,6 +10,7 @@ use App\Models\Document;
 
 use Helpers;
 use App\Models\DocumentContent;
+use App\Models\DocumentGridData;
 //use App\Models\ContentsDocument;
 use App\Models\DocumentHistory;
 use App\Models\DocumentLanguage;
@@ -30,6 +31,7 @@ use App\Models\SetDivision;
 use App\Models\Stage;
 use App\Models\StageManage;
 use App\Models\User;
+use App\Services\DocumentService;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Dompdf\Options;
@@ -326,7 +328,6 @@ class DocumentController extends Controller
         // $request->dd();
         // effective_date, review_period
 
-
         if ($request->submit == 'save') {
 
             $document = new Document();
@@ -354,12 +355,14 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
+            
             try {
                 $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
                 $document->next_review_date = $next_review_date;
             } catch (\Exception $e) {
                 // 
             }
+
             $document->review_period = $request->review_period;
             $document->training_required = $request->training_required;
             $document->trainer = $request->trainer;
@@ -424,6 +427,11 @@ class DocumentController extends Controller
                 $document->approver_group = implode(',', $request->approver_group);
             }
             $document->save();
+            
+            if($document){
+                DocumentService::handleDistributionGrid($document, $request->distribution);
+            }
+
             // Retrieve the current counter value
             $counter = DB::table('record_numbers')->value('counter');
 
@@ -571,13 +579,14 @@ class DocumentController extends Controller
             ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name', 'departments.name as dept_name')->where('documents.id', $id)->first();
         $document->date = Carbon::parse($document->created_at)->format('d-M-Y');
         $document['document_content'] = DocumentContent::where('document_id', $id)->first();
+        $document_distribution_grids = DocumentGridData::where('document_id', $id)->get();
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
         $trainer = User::get();
         $trainingDoc = DocumentTraining::where('document_id', $id)->first();
         $history = DocumentHistory::where('document_id', $id)->get();
         $documentsubTypes = DocumentSubtype::all();
-
+// dd($document_distribution_grid);
         // $history = [];
         // foreach($historydata as $temp){
         //     array_push($history,$temp);
@@ -609,6 +618,8 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
 
+    // dd( $document);
+
         return view('frontend.documents.edit', compact(
             'document',
             'departments',
@@ -628,7 +639,8 @@ class DocumentController extends Controller
             'history',
             'keywords',
             'annexure',
-            'documentsubTypes'
+            'documentsubTypes',
+            'document_distribution_grids'
         ));
     }
 
@@ -730,6 +742,8 @@ class DocumentController extends Controller
             }
 
             $document->update();
+
+            DocumentService::handleDistributionGrid($document, $request->distribution);
 
             $existing_keywords = Keyword::where('document_id', $document->id)->get();
 

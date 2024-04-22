@@ -417,7 +417,7 @@
                                 </div>
 
                                 <div class="col-md-4 new-date-data-field">
-                                    <div class="group-input ">
+                                    <div class="group-input "> 
                                         <label for="review-period">Review Period (in years)</label>
 
                                         <input type="number" name="review_period" id="review_period">
@@ -1016,30 +1016,30 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                 <td><input type="text" Value="1" name="serial_number[]" readonly>
+                                            {{-- <tr>
+                                                 <td><input type="text" Value="1" name="distribution[0][serial_number]" readonly>
                                                  </td>
-                                                 <td><input type="text" name="document_title[]">
+                                                 <td><input type="text" name="distribution[0][document_title]">
                                                  </td>
-                                                 <td><input type="number" name="document_number[]">
+                                                 <td><input type="number" name="distribution[0][document_number]">
                                                  </td>
-                                                 <td><input type="text" name="document_printed_by[]">
+                                                 <td><input type="text" name="distribution[0][document_printed_by]">
                                                  </td>
-                                                 <td><input type="text" name="document_printed_on[]">
+                                                 <td><input type="text" name="distribution[0][document_printed_on]">
                                                  </td>
-                                                 <td><input type="number" name="document_printed_copies[]">
+                                                 <td><input type="number" name="distribution[0][document_printed_copies]">
                                                  </td>
                                                  <td><div class="group-input new-date-data-field mb-0">
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
                                                     <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="issuance_date[]" class="hide-input" 
+                                                    <input type="date" name="distribution[0][issuance_date]" class="hide-input" 
                                                     oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" /></div></div></div>
                                                 </td>
                                                 
                                                     <td>
                                                         <select id="select-state" placeholder="Select..."
-                                                            name="issuance_to[]">
+                                                            name="distribution[0][issuance_to]">
                                                             <option value='0'>-- Select --</option>
                                                             <option value='1'>Amit Guru</option>
                                                             <option value='2'>Shaleen Mishra</option>
@@ -1050,7 +1050,7 @@
                                                     </td>
                                                     <td>
                                                         <select id="select-state" placeholder="Select..."
-                                                            name="location[]">
+                                                            name="distribution[0][location]">
                                                             <option value='0'>-- Select --</option>
                                                             <option value='1'>Tech Team</option>
                                                             <option value='2'>Quality Assurance</option>
@@ -1059,20 +1059,20 @@
                                                             <option value='5'>Business Administration</option>
                                                         </select>
                                                     </td>    
-                                                <td><input type="number" name="issued_copies[]">
+                                                <td><input type="number" name="distribution[0][issued_copies]">
                                                 </td>
-                                                <td><input type="text" name="issued_reason[]">
+                                                <td><input type="text" name="distribution[0][issued_reason]">
                                                 </td>
                                                 <td><div class="group-input new-date-data-field mb-0">
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
                                                     <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="retrieval_date[]" class="hide-input" 
+                                                    <input type="date" name="distribution[0][retrieval_date]" class="hide-input" 
                                                     oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" /></div></div></div>
                                                 </td>
                                                 <td>
                                                     <select id="select-state" placeholder="Select..."
-                                                        name="retrieval_by[]">
+                                                        name="distribution[0][retrieval_by]">
                                                         <option value="">Select a value</option>
                                                         <option value='1'>Amit Guru</option>
                                                         <option value='2'>Shaleen Mishra</option>
@@ -1083,7 +1083,7 @@
                                                 </td>
                                                 <td>
                                                     <select id="select-state" placeholder="Select..."
-                                                        name="retrieved_department[]">
+                                                        name="distribution[0][retrieved_department]">
                                                         <option value='0'>-- Select --</option>
                                                         <option value='1'>Tech Team</option>
                                                         <option value='2'>Quality Assurance</option>
@@ -1092,13 +1092,14 @@
                                                         <option value='5'>Business Administration</option>
                                                     </select>
                                                 </td>    
-                                                <td><input type="number" name="retrieved_copies[]">
+                                                <td><input type="number" name="distribution[0][retrieved_copies]">
                                                 </td>
-                                                <td><input type="text" name="retrieved_reason[]">
+                                                <td><input type="text" name="distribution[0][retrieved_reason]">
                                                 </td>
-                                                <td><input type="text" name="remark[]">
+                                                <td><input type="text" name="distribution[0][remark]">
                                                 </td>
-                                        </tr>
+                                                <td></td>
+                                        </tr> --}}
                                         </tbody>
                                     </table>
                                 </div>
