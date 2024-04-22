@@ -148,10 +148,14 @@ class DocumentController extends Controller
         
         // dd($request->all(), $query->paginate(10));
         $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
+        // $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
         $documentValues = Document::withoutTrashed()->select('id', 'document_type_id')->get();
         $documentTypeIds = $documentValues->pluck('document_type_id')->unique()->toArray();
         $documentTypes = DocumentType::whereIn('id', $documentTypeIds)->select('id', 'name')->get();
-        $originator = User::whereRaw('FIND_IN_SET(?, role)', [3])->select('id', 'name')->get();
+
+        $OriValues = Document::withoutTrashed()->select('id', 'originator_id')->get();
+        $OriTypeIds = $OriValues->pluck('originator_id')->unique()->toArray();
+        $originator = User::whereIn('id', $OriTypeIds)->select('id', 'name')->get();
 
         // $count = Document::where('documents.originator_id', Auth::user()->id)->count();
         // $documents = Document::join('users', 'documents.originator_id', 'users.id')->join('document_types', 'documents.document_type_id', 'document_types.id')
