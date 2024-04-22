@@ -2383,7 +2383,7 @@
                                     <thead>
                                         <tr>
                                             <th>Row </th>
-                                            <th class="copy-name">Document Title</th>
+                                            <th  class="copy-name">Document Title</th>
                                             <th class="copy-name">Document Number</th>
                                             <th class="copy-name">Document Printed By</th>
                                             <th class="copy-name">Document Printed on</th>
@@ -2400,6 +2400,7 @@
                                             <th class="copy-long">Reason for Retrieval</th>
                                             <th class="copy-long">Remarks</th>
                                             <th class="copy-long">Action</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2409,9 +2410,9 @@
                                                     {{ $loop->index + 1 }}
                                                     {{-- <input type="text" value="{{ $loop->index }}" name="distribution[{{ $loop->index }}][serial_number]"> --}}
                                                 </td>
-                                                <td><input type="text" value="{{ $grid->document_title }}"  name="distribution[{{ $loop->index }}][document_title]">
+                                                <td><input  type="text" value="{{ $grid->document_title }}"  name="distribution[{{ $loop->index }}][document_title]">
                                                 </td>
-                                                <td><input type="number" value="{{ $grid->document_number }}" name="distribution[{{ $loop->index }}][document_number]">
+                                                <td><input type="text" value="{{ $grid->document_number }}" name="distribution[{{ $loop->index }}][document_number]">
                                                 </td>
                                                 <td><input type="text" value="{{ $grid->document_printed_by }}" name="distribution[{{ $loop->index }}][document_printed_by]">
                                                 </td>
