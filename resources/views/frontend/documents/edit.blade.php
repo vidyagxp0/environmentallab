@@ -263,7 +263,7 @@
                                     <div class="calenderauditee">                                     
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc }}" {{Helpers::isRevised($document->stage)}}
-                                        class="hide-input"
+                                        class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
@@ -1675,7 +1675,7 @@
                                 <div class="group-input">
                                     <label for="purpose">Purpose</label>
                                     <input type="text" name="purpose" {{Helpers::isRevised($document->stage)}} 
-                                        value="{{ $document->document_content->purpose }}">
+                                        value="{{ $document->document_content ? $document->document_content->purpose : '' }}">
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
                                             @php
@@ -1713,7 +1713,7 @@
                                 <div class="group-input">
                                     <label for="scope">Scope</label>
 
-                                    <textarea name="scope" {{Helpers::isRevised($document->stage)}} >{{ $document->document_content->scope }}</textarea>
+                                    <textarea name="scope" {{Helpers::isRevised($document->stage)}} >{{ $document->document_content ? $document->document_content->scope : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment))
                                             @php
@@ -1754,7 +1754,7 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->responsibility))
+                                    @if ($document->document_content && !empty($document->document_content->responsibility))
                                         @foreach (unserialize($document->document_content->responsibility) as $data)
                                             <input type="text" name="responsibility[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
@@ -1803,7 +1803,7 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->abbreviation))
+                                    @if ($document->document_content && !empty($document->document_content->abbreviation))
                                         @foreach (unserialize($document->document_content->abbreviation) as $data)
                                             <input type="text" name="abbreviation[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
@@ -1850,7 +1850,7 @@
                                         Definition<button type="button" id="Definitionbtnadd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->defination))
+                                    @if ($document->document_content && !empty($document->document_content->defination))
                                         @foreach (unserialize($document->document_content->defination) as $data)
                                             <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
                                                 value="{{ $data }}">
@@ -1898,7 +1898,7 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->materials_and_equipments))
+                                    @if ($document->document_content && !empty($document->document_content->materials_and_equipments))
                                         @foreach (unserialize($document->document_content->materials_and_equipments) as $data)
                                             <input type="text" name="materials_and_equipments[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
@@ -1946,7 +1946,7 @@
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea name="procedure" id="summernote">{{ $document->document_content->procedure }}</textarea>
+                                    <textarea name="procedure" id="summernote">{{ $document->document_content ? $document->document_content->procedure : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment))
                                             @php
@@ -1982,7 +1982,7 @@
                                         Reporting<button type="button" id="reportingbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->reporting))
+                                    @if ($document->document_content && !empty($document->document_content->reporting))
                                         @foreach (unserialize($document->document_content->reporting) as $data)
                                             <textarea type="text" name="reporting[]" class="summernote"
                                              {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
@@ -2032,7 +2032,7 @@
                                         References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->references))
+                                    @if ($document->document_content && !empty($document->document_content->references))
                                         @foreach (unserialize($document->document_content->references) as $data)
                                             @if (!empty($data))
                                                 <input type="text" name="references[]" class="myclassname"
@@ -2124,7 +2124,7 @@
                                         Annexure<button type="button" id="annbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if (!empty($document->document_content->ann))
+                                    @if ($document->document_content && !empty($document->document_content->ann))
                                         @foreach (unserialize($document->document_content->ann) as $data)
                                             @if (!empty($data))
                                                 <input type="text" name="ann[]" class="myclassname"
@@ -2216,7 +2216,7 @@
 
                 <div id="annexures" class="tabcontent">
                     <div class="input-fields">
-                        @if (!empty($document->document_content->annexuredata))
+                        @if ($document->document_content && !empty($document->document_content->annexuredata))
                             @foreach (unserialize($document->document_content->annexuredata) as $data)
                                 <label>Annexure</label>
                                 <textarea class="summernote" name="annexuredata[]">{{ $data }}</textarea>
@@ -2403,34 +2403,95 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @if ($print_history)
-                                            @foreach ($print_history as $print_historys)
-                                                <tr>
-                                                    <td class="copy-name">{{ $document->document_name }}</td>
-                                                    <td class="copy-name">{{ $document->division_name }}
-                                                        /{{ $document->document_type_name }} /{{ $year }}
-                                                        /SOP-000{{ $document->id }}</td>
-                                                    <td class="copy-name">{{ $print_historys->user_name }}</td>
-                                                    <td class="copy-name">{{ $print_historys->created_at }}</td>
-                                                    <td class="copy-num">1</td>
-                                                    <td class="copy-name">{{ $document->created_at }}</td>
-                                                    <td class="copy-name">{{ $document->originator_name }}</td>
-                                                    <td class="copy-name">{{ $document->dept_name }}</td>
-                                                    <td class="copy-num">12</td>
-                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                                        Cumque eum neque quam.</td>
-                                                    <td class="copy-name">29-12-2023</td>
-                                                    <td class="copy-name">Amit Patel</td>
-                                                    <td class="copy-num">12</td>
-                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum
-                                                        maiores reiciendis sint.</td>
-                                                    <td class="copy-long">Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                                                        Expedita culpa ab assumenda delectus beatae facilis itaque deserunt harum, quae
-                                                        doloribus!</td>
-                                                </tr>
-                                            @endforeach
-
-                                        @endif
+                                        @foreach ($document_distribution_grids as $grid)
+                                            <tr>
+                                                <td>
+                                                    {{ $loop->index + 1 }}
+                                                    {{-- <input type="text" value="{{ $loop->index }}" name="distribution[{{ $loop->index }}][serial_number]"> --}}
+                                                </td>
+                                                <td><input type="text" value="{{ $grid->document_title }}"  name="distribution[{{ $loop->index }}][document_title]">
+                                                </td>
+                                                <td><input type="number" value="{{ $grid->document_number }}" name="distribution[{{ $loop->index }}][document_number]">
+                                                </td>
+                                                <td><input type="text" value="{{ $grid->document_printed_by }}" name="distribution[{{ $loop->index }}][document_printed_by]">
+                                                </td>
+                                                <td><input type="text" value="{{ $grid->document_printed_on }}" name="distribution[{{ $loop->index }}][document_printed_on]">
+                                                </td>
+                                                <td><input type="number" value="{{ $grid->document_printed_copies }}" name="distribution[{{ $loop->index }}][document_printed_copies]">
+                                                </td>
+                                                <td><div class="group-input new-date-document_distribution_grid-field mb-0">
+                                                <div class="input-date "><div
+                                                    class="calenderauditee">
+                                                <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ $grid->issuance_date }}"/>
+                                                <input type="date" name="distribution[{{ $loop->index }}][issuance_date]" 
+                                                class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                                oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" value="{{ $grid->issuance_date }}"/></div></div></div>
+                                            </td>
+                                            
+                                                <td>
+                                                    <select id="select-state" placeholder="Select..."
+                                                        name="distribution[{{ $loop->index }}][issuance_to]" >
+                                                        <option value='0' {{ $grid->issuance_to == '0' ? 'selected' : '' }}>-- Select --</option>
+                                                        @foreach ($users as $user)
+                                                            <option value="{{ $user->id }}" {{ $grid->issuance_to == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <select id="select-state" placeholder="Select..."
+                                                        name="distribution[{{ $loop->index }}][location]">
+                                                        <option value='0' {{ $grid->location == '0' ? 'selected' : '' }}>-- Select --</option>
+                                                        @foreach ($departments as $department)
+                                                            <option 
+                                                                value='{{ $department->id }}' {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
+                                                                {{ $department->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>    
+                                            <td><input type="number" name="distribution[{{ $loop->index }}][issued_copies]" value="{{ $grid->issued_copies }}">
+                                            </td>
+                                            <td><input type="text" name="distribution[{{ $loop->index }}][issued_reason]" value="{{ $grid->issued_reason }}">
+                                            </td>
+                                            <td><div class="group-input new-date-data-field mb-0">
+                                                <div class="input-date "><div
+                                                    class="calenderauditee">
+                                                <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ $grid->retrieval_date }}"/>
+                                                <input type="date" name="distribution[{{ $loop->index }}][retrieval_date]" class="hide-input" 
+                                                oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" value="{{ $grid->retrieval_date }}"/></div></div></div>
+                                            </td>
+                                            <td>
+                                                <select id="select-state" placeholder="Select..."
+                                                    name="distribution[{{ $loop->index }}][retrieval_by]">
+                                                    <option value="" {{ $grid->retrieval_by == '' ? 'selected' : '' }}>Select a value</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ $grid->retrieval_by == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <select id="select-state" placeholder="Select..."
+                                                    name="distribution[{{ $loop->index }}][retrieved_department]">
+                                                    <option value='0' {{ $grid->retrieved_department == '0' ? 'selected' : '' }}>-- Select --</option>
+                                                    @foreach ($departments as $department)
+                                                        <option 
+                                                            value='{{ $department->id }}' {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
+                                                            {{ $department->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </td>    
+                                            <td><input type="number" name="distribution[{{ $loop->index }}][retrieved_copies]" value="{{ $grid->retrieved_copies }}">
+                                            </td>
+                                            <td><input type="text" name="distribution[{{ $loop->index }}][retrieved_reason]" value="{{ $grid->retrieved_reason }}">
+                                            </td>
+                                            <td><input type="text" name="distribution[{{ $loop->index }}][remark]" value="{{ $grid->remark }}">
+                                            </td>
+                                            <td>
+                                                <button class='removeTrainRow'>Remove</button>
+                                            </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

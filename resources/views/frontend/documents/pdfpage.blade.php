@@ -329,11 +329,23 @@
             max-width: 100%;
         }
 
-    .MsoNormalTable, 
-    table{
-        margin: 0px !important;
-        width : 100% !important;
-    }
+        .MsoNormalTable, 
+        table{
+            margin: 0px !important;
+            width : 100% !important;       
+        }
+    
+        .MsoNormalTable tr {
+            border: 1px solid rgb(156, 156, 156);
+        }
+        
+        .MsoNormalTable td {
+            text-align: left!important;
+        }
+        
+        .MsoNormalTable tbody {
+            border: 1px solid rgb(156, 156, 156);
+        }
 
 
     </style>
@@ -343,7 +355,7 @@
 <body>
 
     <header class="">
-        <table class="border" style="height: 150px;">
+        <table class="border" style="height: 147px;">
             <tbody>
                 <tr>
                     <td class="logo w-20">
@@ -431,9 +443,9 @@
                 </table>
                 <div class="scope-block">
                     <div class="w-100">
-                        <div class="w-100" style="display:inline-block;">
+                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                             <div class="w-100">
-                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:700px; ">
+                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
                                     {{ $data->document_content->purpose }}
                                 </div>
                             </div>
@@ -455,7 +467,7 @@
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
-                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:700px; ">
+                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     {{ $data->document_content->scope }}
                                 </div>
                             </div>
@@ -472,39 +484,34 @@
                             <div class="mb-10">Responsibility</div>
                         </th>
                     </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div>
-                                <table>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (!empty($data->document_content->responsibility))
-                                            @foreach (unserialize($data->document_content->responsibility) as $res)
-                                                @if (!empty($res))
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">3.<?php echo $i; ?></td>
-                                                        <td class="w-95 text-left">
-
-                                                            {{ $res }}
-
-                                                        </td>
-                                                        @php
-                                                            $i = $i + 1;
-
-                                                        @endphp
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @if (!empty($data->document_content->responsibility))
+                                    @foreach (unserialize($data->document_content->responsibility) as $res)
+                                        @if (!empty($res))
+                                            <div style="position: relative">
+                                                <span style="position: absolute; left: -2rem; top: 0;">3.{{ $i }}</span> {{ $res }} <br>
+                                            </div>
+                                            @php
+                                                $i = $i + 1;
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                @endif    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <table class="mb-20">
                 <tbody>
@@ -514,37 +521,34 @@
                             <div class="mb-10">Abbreviation</div>
                         </th>
                     </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div>
-                                <table>
-                                    <tbody>
-
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (!empty($data->document_content->abbreviation))
-                                            @foreach (unserialize($data->document_content->abbreviation) as $res)
-                                                @if (!empty($res))
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">4.<?php echo $i; ?></td>
-                                                        <td class="w-95 text-justify">
-                                                            {{ $res }}
-                                                        </td>
-                                                        @php
-                                                            $i = $i + 1;
-                                                        @endphp
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @if (!empty($data->document_content->abbreviation))
+                                    @foreach (unserialize($data->document_content->abbreviation) as $res)
+                                        @if (!empty($res))
+                                            <div style="position: relative">
+                                                <span style="position: absolute; left: -2rem; top: 0;">3.{{ $i }}</span> {{ $res }} <br>
+                                            </div>
+                                            @php
+                                                $i = $i + 1;
+                                            @endphp
+                                        @endif
+                                    @endforeach
+                                @endif    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <table class="mb-20">
                 <tbody>
@@ -554,58 +558,31 @@
                             <div class="bold mb-10">Definitions</div>
                         </th>
                     </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div class="definition-block">
-                                <table>
-                                    <tbody>
-                                        @php
-                                            $definitions = unserialize($data->document_content->defination);
-                                            $contentLength = 0;
-                                            $maxContentLengthPerPage = 3000; 
-                                            $i = 1;
-                                        @endphp
-                                        @if (!empty($data->document_content->defination))
-                                            @foreach ($definitions as $index => $definition)
-                                                {{--@if (!empty($res))
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">5.<?php echo $i; ?></td>
-                                                        <td class="w-95 text-justify">
-                                                            {{ $res }}
-                                                        </td>
-                                                        @php
-                                                            $i = $i + 1;
-                                                        @endphp
-                                                    </tr>
-                                                @endif --}}
-                                                @if (!empty($definition))
-                                                    @php
-                                                        $contentLength += strlen($definition);
-                                                    @endphp
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">{{ '5.' . ($index + 1) }}</td>
-                                                        <td class="w-95 text-justify">{{ $definition }}</td>
-                                                    </tr>
-                                                    @if ($contentLength >= $maxContentLengthPerPage)
-                                                        </tbody></table>
-                                                        <div style="page-break-after: always;"></div> <!-- Force a page break -->
-                                                        <table><tbody>
-                                                        @php
-                                                            $contentLength = 0; // Reset content length after a break
-                                                        @endphp
-                                                    @endif
-                                                @endif
-
-                                            @endforeach
-
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php
+                                    $definitions = unserialize($data->document_content->defination);
+                                @endphp
+                                @if (!empty($data->document_content->defination))
+                                    @foreach ($definitions as $index => $definition)
+                                        @if (!empty($definition))
+                                            <div style="position: relative">
+                                                <span style="position: absolute; left: -2rem; top: 0;">5.{{ $index }}</span> {{ $definition }} <br>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif  
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <table class="mb-20">
                 <tbody>
@@ -616,35 +593,27 @@
                         </th>
                     </tr>
                     <tr>
-                        <td colspan="2">
-                            <div>
-                                <table>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (!empty($data->document_content->materials_and_equipments))
-                                            @foreach (unserialize($data->document_content->materials_and_equipments) as $res)
-                                                @if (!empty($res))
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">6.<?php echo $i; ?></td>
-                                                        <td class="w-95 text-left">
-                                                            {{ $res }}
-                                                        </td>
-                                                        @php
-                                                            $i = $i + 1;
-                                                        @endphp
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php $i = 1; @endphp
+                                @foreach (unserialize($data->document_content->materials_and_equipments) as $res)
+                                    @if (!empty($res))
+                                        <div style="position: relative">
+                                            <span style="position: absolute; left: -2rem; top: 0;">6.{{ $i }}</span> {{ $res }} <br>
+                                        </div>
+                                    @endif
+                                    @php $i++; @endphp
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <div class="other-container ">
                 <table>
@@ -659,9 +628,8 @@
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
-                                <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {{-- {!! $data->document_content->procedure !!} --}}
-                                    {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><a>') !!}
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
                                 </div>
                             </div>
                         </div>
@@ -691,7 +659,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">8.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a>') !!}
+                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -769,7 +737,7 @@
                                                     <tr>
                                                         <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
                                                         <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a>') !!}
+                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
                                                         </td>
                                                         @php
                                                             $i = $i + 1;
@@ -797,7 +765,7 @@
                                 <div class="w-100" style="display:inline-block;">
                                     <div class="w-100">
                                         <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a>') !!}
+                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
                                         </div>
                                     </div>
                                 </div>
