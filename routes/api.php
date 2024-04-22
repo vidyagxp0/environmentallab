@@ -5,6 +5,8 @@ use App\Http\Controllers\UserLoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +25,6 @@ Route::get('/analyticsData', [DashboardController::class, 'analyticsData']);
 Route::get('dashboardStatus', [ApiController::class, 'dashboardStatus']);
 Route::get('getProfile', [ApiController::class, 'getProfile']);
 Route::get('capaStatus', [ApiController::class, 'capaStatus']);
+
+Route::post('/filter-records', [DocumentController::class, 'filterRecord'])->name('record.filter');
 

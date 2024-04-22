@@ -7,6 +7,7 @@ use App\Models\Annexure;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\Document;
+use App\Models\QMSDivision;
 
 use Helpers;
 use App\Models\DocumentContent;
@@ -121,16 +122,87 @@ class DocumentController extends Controller
        public function dcrDivision() {
         return redirect()->route('change-control.create');
        }
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $query = Document::join('users', 'documents.originator_id', 'users.id')
+                    ->join('document_types', 'documents.document_type_id', 'document_types.id')
+                    ->join('divisions', 'documents.division_id', 'divisions.id')
+                    ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name')
+                    ->orderByDesc('documents.id');
 
-        $count = Document::where('documents.originator_id', Auth::user()->id)->count();
-        $documents = Document::join('users', 'documents.originator_id', 'users.id')->join('document_types', 'documents.document_type_id', 'document_types.id')
-            ->join('divisions', 'documents.division_id', 'divisions.id')
-            ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name')->where('documents.originator_id', Auth::user()->id)->orderByDesc('documents.id')->paginate(10);
+        // Apply filters
+        if ($request->has('status')) {
+            $query->where('status', $request->status);
+        }
+        if ($request->has('document_type_id')) {
+            $query->where('document_type_id', $request->document_type_id);
+        }
+        if ($request->has('division_id')) {
+            $query->where('division_id', $request->division_id);
+        }
+        if ($request->has('originator_id')) {
+            $query->where('originator_id', $request->originator_id);
+        }
+        $count = $query->where('documents.originator_id', Auth::user()->id)->count();
+        $documents = $query->paginate(10);
+        
+        // dd($request->all(), $query->paginate(10));
+        $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
+        $documentValues = Document::withoutTrashed()->select('id', 'document_type_id')->get();
+        $documentTypeIds = $documentValues->pluck('document_type_id')->unique()->toArray();
+        $documentTypes = DocumentType::whereIn('id', $documentTypeIds)->select('id', 'name')->get();
+        $originator = User::whereRaw('FIND_IN_SET(?, role)', [3])->select('id', 'name')->get();
 
-        return view('frontend.documents.index', compact('documents', 'count'));
+        // $count = Document::where('documents.originator_id', Auth::user()->id)->count();
+        // $documents = Document::join('users', 'documents.originator_id', 'users.id')->join('document_types', 'documents.document_type_id', 'document_types.id')
+        //     ->join('divisions', 'documents.division_id', 'divisions.id')
+        //     ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name')->where('documents.originator_id', Auth::user()->id)->orderByDesc('documents.id')->paginate(10);
+
+        return view('frontend.documents.index', compact('documents', 'count', 'divisions', 'originator', 'documentTypes'));
+    }
+
+    public function filterRecord(Request $request)
+    {
+        $res = [];
+
+        $query = Document::query();
+
+        if ($request->status && !empty($request->status))
+        {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->document_type_id && !empty($request->document_type_id))
+        {
+            $query->where('document_type_id', $request->document_type_id);
+        }
+
+        if ($request->documentTypes && !empty($request->division_id))
+        {
+            $query->where('division_id', $request->division_id);
+        }
+
+        if ($request->originator_id && !empty($request->originator_id))
+        {
+            $query->where('originator_id', $request->originator_id);
+        }
+
+        $documents = $query->get();
+
+        foreach ($documents as $doc) {
+            $doctype = DocumentType::where('id', $doc->document_type_id)->value('name');
+            $originatorName = User::where('id', $doc->originator_id)->value('name');
+            
+            // Assign the retrieved names to the document object
+            $doc['document_type_name'] = $doctype;
+            $doc['originator_name'] = $originatorName;
+        }
+
+        $html = view('frontend.documents.comps.record_table', compact('documents'))->render();
+
+        $res['html'] = $html;
+
+        return response()->json($res);
     }
 
      /**
