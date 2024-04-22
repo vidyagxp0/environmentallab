@@ -24,245 +24,98 @@
 
                         </div>
                         <div class="inner-block table-block">
+                                <div style="display:flex; justify-content:space-around;" class=" main-filter">
 
-                            <div style="display:flex; justify-content:space-around;" class=" main-filter">
-
-                                <div class="filter-block">
-                                    <div class="drop-filter-block">
-                                        <div class="icon">
-                                            <i class="fa-solid fa-gauge-high"></i>
+                                    <div class="filter-block">
+                                        <div class="drop-filter-block">
+                                            <div class="icon">
+                                                <i class="fa-solid fa-gauge-high"></i>
+                                            </div>
+                                            <div class="right">
+                                                <label for="status">Status</label>
+                                                <select name="status" class="filterSelect">
+                                                       <option value="">All</option>
+                                                    <option value="draft">Draft</option>
+                                                    <option value="under-review">Under Review</option>
+                                                    <option value="reviewd">Reviewed</option>
+                                                    <option value="under-approval">Under Approval</option>
+                                                    <option value="approved">Approved</option>
+                                                    <option value="effective">Effective</option>
+                                                    <option value="effective">Obsolete</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="right">
-                                            <label for="corporate-doc">Status</label>
-                                            <select name="corporate-doc">
-                                                   <option value="select">Select</option> 
-                                                   <option value="all">All</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="under-review">Under Review</option>
-                                                <option value="reviewd">Reviewed</option>
-                                                <option value="under-approval">Under Approval</option>
-                                                <option value="approved">Approved</option>
-                                                <option value="effective">Effective</option>
-                                                <option value="effective">Obsolete</option>
-                                            </select>
+                                        {{-- <div class="search-bar">
+                                            <input id="searchInput" type="text" name="search"
+                                                placeholder="Search from the list...">
+                                            <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
+                                        </div> --}}
+                                    </div>
+    
+                                    <div class="filter-block">
+                                        <div class="drop-filter-block">
+                                            <div class="icon">
+                                                <i class="fa-solid fa-file"></i>
+                                            </div>
+                                            <div class="right">
+                                                <label for="document_type_id">Document Type</label>
+                                                <select name="document_type_id" class="filterSelect">
+                                                <option value="">All</option>
+                                                @foreach ($documentTypes as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                </option>
+                                                @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="search-bar">
-                                        <input id="searchInput" type="text" name="search"
-                                            placeholder="Search from the list...">
-                                        <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                                    </div> --}}
-                                </div>
-
-                                <div class="filter-block">
-                                    <div class="drop-filter-block">
-                                        <div class="icon">
-                                            <i class="fa-solid fa-file"></i>
-                                        </div>
-                                        <div class="right">
-                                            <label for="corporate-doc">Document Type</label>
-                                            <select name="corporate-doc">
-                                            <option value="select">Select</option>
-                                            <option value="all">All</option>
-                                            
-                                                <option value="">Standard Test Procedure </option>
-                                                <option value="">Standard Operating Procedure</option>
-                                                <option value="">Work Instruction</option>
-                                                <option value="">Specification</option>
-                                                <option value="">Validation Protocol</option>
-                                                <option value="">Process Flow Diagram</option>
-                                                <option value="">Qualification Protocol</option>
-                                                <option value="">Standard Operation Procedure for Microbiology </option>
-                                                <option value="">Standard Operation Procedure for Chemistry/Wet Chemistry</option>
-                                                <option value="">
-                                                    Standard Operation Procedure for Instrumental/Analytical Tests </option>
-                                                <option value="">
-                                                    Standard Operation Procedure for Equipment/ Instruments SOP </option>
-                                                <option value="">Quality Policies</option>
-                                                <option value="">Mwthod Validation</option>
-                                                <option value="">Validation Protocol</option>
-                                                <option value="">Electron</option>
-
-                                            </select>
+    
+    
+    
+    
+                                    <div class="filter-block">
+                                        <div class="drop-filter-block">
+                                            <div class="icon">
+                                                <i class="fa-solid fa-sitemap"></i>
+                                            </div>
+                                            <div class="right">
+                                                <label for="division_id">Division</label>
+                                                <select name="division_id" class="filterSelect">
+                                                <option value="">All</option>
+                                                @foreach ($divisions as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                </option>
+                                                @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="search-bar">
-                                        <input id="searchInput" type="text" name="search"
-                                            placeholder="Search from the list...">
-                                        <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                                    </div> --}}
-                                </div>
-
-
-
-
-                                <div class="filter-block">
-                                    <div class="drop-filter-block">
-                                        <div class="icon">
-                                            <i class="fa-solid fa-sitemap"></i>
-                                        </div>
-                                        <div class="right">
-                                            <label for="corporate-doc">Division</label>
-                                            <select name="corporate-doc">
-                                            <option value="select">Select</option>
-                                            <option value="all">All</option>
-                                            
-                                                <option value="ksa">KSA</option>
-                                                <option value="egypt">Egypt</option>
-                                                <option value="estonia">Estonia</option>
-                                                <option value="jordan">Jordan</option>
-
-                                            </select>
+    
+                                    <div class="filter-block">
+                                        <div class="drop-filter-block">
+                                            <div class="icon">
+                                                <i class="fa-solid fa-user"></i>
+                                            </div>
+                                            <div class="right">
+                                                <label for="originator_id">Originator</label>
+                                                <select name="originator_id" class="filterSelect">
+                                                <option value="">All</option>
+                                                @foreach ($originator as $data)
+                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                </option>
+                                                @endforeach
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    {{-- <div class="search-bar">
-                                        <input id="searchInput" type="text" name="search"
-                                            placeholder="Search from the list...">
-                                        <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                                    </div> --}}
                                 </div>
-
-                                <div class="filter-block">
-                                    <div class="drop-filter-block">
-                                        <div class="icon">
-                                            <i class="fa-solid fa-user"></i>
-                                        </div>
-                                        <div class="right">
-                                            <label for="corporate-doc">Originator</label>
-                                            <select name="corporate-doc">
-                                            <option value="select">Select</option>
-                                            <option value="all">All</option>
-                                          
-                                                <!-- <option value="all">All</option>
-                                                <option value="draft">Draft</option>
-                                                <option value="under-review">Under Review</option>
-                                                <option value="reviewd">Reviewed</option>
-                                                <option value="under-approval">Under Approval</option>
-                                                <option value="approved">Approved</option>
-                                                <option value="effective">Effective</option>
-                                                <option value="effective">Obsolete</option> -->
-                                            </select>
-                                        </div>
-                                    </div>
-                                    {{-- <div class="search-bar">
-                                        <input id="searchInput" type="text" name="search"
-                                            placeholder="Search from the list...">
-                                        <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
-                                    </div> --}}
-                                </div>
-
-
-
+    
+                           
+                            <div class="loadingRecords">
+                                <p>Fetching records...</p>
                             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-                            <div class="main-head">
-                                <div>Records</div>
-                                <div>
-                                    {{ count($documents) }} Results out of {{ $count }} Results
-                                </div>
-                            </div>
-                            <div class="table-list">
-                                <table class="table table-bordered">
-                                    <thead>
-                                        <th class="pr-id" data-bs-toggle="modal" data-bs-target="#division-modal">
-                                            ID
-                                        </th>
-                                        <th class="division">
-                                            Document Type
-                                        </th>
-                                        <th class="division">
-                                            Division
-                                        </th>
-                                        <th class="short-desc">
-                                            Short Description
-                                        </th>
-                                        <th class="create-date">
-                                            Create Date Time
-                                        </th>
-                                        <th class="assign-name">
-                                            Originator
-                                        </th>
-                                        <th class="modify-date">
-                                            Modify Date Time
-                                        </th>
-                                        <th class="status">
-                                            Status
-                                        </th>
-                                        <th class="action">
-                                            Action
-                                        </th>
-                                    </thead>
-                                    <tbody id="searchTable">
-                                        @if (count($documents) > 0)
-                                        @foreach ($documents as $doc)
-                                        <tr>
-                                            <td class="pr-id" style="text-decoration:underline"><a href="{{ route('documents.edit', $doc->id) }}">
-                                                    000{{ $doc->id }}
-                                                </a>
-                                            </td>
-                                            <td class="division">
-                                                {{ $doc->document_type_name }}
-                                            </td>
-                                            <td class="division">
-                                                {{ Helpers::getDivisionName($doc->division_id) }}
-                                            </td>
-
-                                            <td class="short-desc">
-                                                {{ $doc->short_description }}
-                                            </td>
-                                            <td class="create-date">
-                                                {{ $doc->created_at }}
-                                            </td>
-                                            <td class="assign-name">
-                                                {{ $doc->originator_name }}
-                                            </td>
-                                            <td class="modify-date">
-                                                {{ $doc->updated_at }}
-                                            </td>
-                                            <td class="status">
-                                                {{ $doc->status }}
-                                            </td>
-                                            <td class="action">
-                                                <div class="action-dropdown">
-                                                    <div class="action-down-btn">Action <i class="fa-solid fa-angle-down"></i></div>
-                                                    <div class="action-block">
-                                                        <a href="{{ url('doc-details', $doc->id) }}">View
-                                                        </a>
-
-                                                        <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
-                                                        <!--<form-->
-                                                        <!--    action="{{ route('documents.destroy', $doc->id) }}"-->
-                                                        <!--    method="post">-->
-                                                        <!--    @csrf-->
-                                                        <!--    @method('DELETE')-->
-                                                        <!--    <button type="submit">Delete</button>-->
-                                                        <!--</form>-->
-
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                        @else
-                                        <center>
-                                            <h5>Data not Found</h5>
-                                        </center>
-                                        @endif
-
-                                    </tbody>
-                                </table>
-                                {!! $documents->links() !!}
+                            <div class="record-body">
+                                @include('frontend.documents.comps.record_table')
                             </div>
                         </div>
                     </div>
@@ -416,5 +269,34 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+        let postUrl = "{{ route('record.filter') }}";
+        $('.loadingRecords').hide();
+        async function updateRecords()
+        {
+            $('.loadingRecords').show();
+            let data = {
+                status: $('select[name=status]').val(),
+                document_type_id: $('select[name=document_type_id]').val(),
+                division_id: $('select[name=division_id]').val(),
+                originator_id: $('select[name=originator_id]').val(),
+            }
+
+            const res = await axios.post(postUrl, data)
+            $('.record-body').html(res.data.html);
+            $('.loadingRecords').hide();
+        }
+
+        $('.filterSelect').change(function() {
+            try {
+                updateRecords()            
+            } catch (err) {
+            console.log("Error", err.message);
+            }
+        })
+    })
+</script>
 
 @endsection
