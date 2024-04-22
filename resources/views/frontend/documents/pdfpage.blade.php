@@ -536,7 +536,7 @@
                                     @foreach (unserialize($data->document_content->abbreviation) as $res)
                                         @if (!empty($res))
                                             <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">3.{{ $i }}</span> {{ $res }} <br>
+                                                <span style="position: absolute; left: -2rem; top: 0;">4.{{ $i }}</span> {{ $res }} <br>
                                             </div>
                                             @php
                                                 $i = $i + 1;
@@ -550,171 +550,168 @@
                 </div>
             </div>
 
-            <table class="mb-20">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">5.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold mb-10">Definitions</div>
-                        </th>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php
-                                    $definitions = unserialize($data->document_content->defination);
-                                @endphp
-                                @if (!empty($data->document_content->defination))
-                                    @foreach ($definitions as $index => $definition)
-                                        @if (!empty($definition))
-                                            <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">5.{{ $index }}</span> {{ $definition }} <br>
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                @endif  
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <table class="mb-20">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">6.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold mb-10">Materials & Equipments</div>
-                        </th>
-                    </tr>
-                    <tr>
-                </tbody>
-            </table>
-            <div class="procedure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                @php $i = 1; @endphp
-                                @foreach (unserialize($data->document_content->materials_and_equipments) as $res)
-                                    @if (!empty($res))
-                                        <div style="position: relative">
-                                            <span style="position: absolute; left: -2rem; top: 0;">6.{{ $i }}</span> {{ $res }} <br>
-                                        </div>
-                                    @endif
-                                    @php $i++; @endphp
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="other-container ">
-                <table>
-                    <thead>
+            {{-- DEFINITIONS START --}}
+                <table class="mb-20">
+                    <tbody>
                         <tr>
-                            <th class="w-5">7.</th>
-                            <th class="text-left">Procedure</th>
+                            <th class="w-5 vertical-baseline">5.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold mb-10">Definitions</div>
+                            </th>
                         </tr>
-                    </thead>
+                    </tbody>
+                </table>
+
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $definitions = unserialize($data->document_content->defination);
+                                    @endphp
+                                    @if (!empty($data->document_content->defination))
+                                        @foreach ($definitions as $index => $definition)
+                                            @if (!empty($definition))
+                                                <div style="position: relative">
+                                                    <span style="position: absolute; left: -2rem; top: 0;">5.{{ $index }}</span> {{ $definition }} <br>
+                                                </div>
+                                            @endif
+                                        @endforeach
+                                    @endif  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- DEFINITIONS END --}}
+
+            {{-- MATERIALS AND EQUIPMENTS START --}}
+                <table class="mb-20">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">6.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold mb-10">Materials & Equipments</div>
+                            </th>
+                        </tr>
+                        <tr>
+                    </tbody>
                 </table>
                 <div class="procedure-block">
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
+                                    @php $i = 1; @endphp
+                                    @foreach (unserialize($data->document_content->materials_and_equipments) as $res)
+                                        @if (!empty($res))
+                                            <div style="position: relative">
+                                                <span style="position: absolute; left: -2rem; top: 0;">6.{{ $i }}</span> {{ $res }} <br>
+                                            </div>
+                                        @endif
+                                        @php $i++; @endphp
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {{-- MATERIALS AND EQUIPMENTS END --}}
 
-            <table class="mb-20 ">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">8.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold mb-10">Reporting</div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div>
-                                <table>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (!empty($data->document_content->reporting))
-                                            @foreach (unserialize($data->document_content->reporting) as $res)
-                                                @if (!empty($res))
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">8.<?php echo $i; ?></td>
-                                                        <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
-                                                        </td>
-                                                        @php
-                                                            $i = $i + 1;
-                                                        @endphp
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
+            {{-- PROCEDURE START --}}
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">7.</th>
+                                <th class="text-left">Procedure</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
+                                    </div>
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            {{-- PROCEDURE END --}}
 
-            <table class="mb-20">
-                <tbody>
-                    <tr>
-                        <th class="w-5 vertical-baseline">9.</th>
-                        <th class="w-95 text-left">
-                            <div class="bold mb-10"> References</div>
-                        </th>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div>
-                                <table>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (!empty($data->document_content->references))
-                                            @foreach (unserialize($data->document_content->references) as $res)
-                                                @if (!empty($res))
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">9.<?php echo $i; ?></td>
-                                                        <td class="w-95 text-left">
-                                                            {{ $res }}
-                                                        </td>
-                                                        @php
-                                                            $i = $i + 1;
-                                                        @endphp
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
+            {{-- REPORTING START --}}
+                <table class="mb-20 ">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">8.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold mb-10">Reporting</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php $i = 1; @endphp
+                                    @if (!empty($data->document_content->reporting))
+                                        @foreach (unserialize($data->document_content->reporting) as $res)
+                                            @if (!empty($res))
+                                                <div style="position: relative">
+                                                    <span style="position: absolute; left: -2rem; top: 0;">8.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!} <br>
+                                                </div>
+                                            @endif
+                                            @php $i++; @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                        </div>
+                    </div>
+                </div>
+            {{-- REPORTING END --}}
 
+            {{-- REFERENCES START --}}
+                <table class="mb-20">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">9.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold mb-10"> References</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php $i = 1; @endphp
+                                    @if (!empty($data->document_content->references))
+                                        @foreach (unserialize($data->document_content->references) as $res)
+                                            @if (!empty($res))
+                                                <div style="position: relative">
+                                                    <span style="position: absolute; left: -2rem; top: 0;">9.{{ $i }}</span> {{ $res }} <br>
+                                                </div>
+                                            @endif
+                                            @php $i++; @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- REFERENCES END --}}
+            
+            {{-- ANNEXSURE START --}}
             <table class="mb-20">
                 <tbody>
                     <tr>
@@ -723,65 +720,60 @@
                             <div class="bold mb-10">Annexure</div>
                         </th>
                     </tr>
-                    <tr>
-                        <td colspan="2">
-                            <div>
-                                <table>
-                                    <tbody>
-                                        @php
-                                            $i = 1;
-                                        @endphp
-                                        @if (!empty($data->document_content->ann))
-                                            @foreach (unserialize($data->document_content->ann) as $res)
-                                                @if (!empty($res))
-                                                    <tr>
-                                                        <td class="w-5 vertical-baseline">10.<?php echo $i; ?></td>
-                                                        <td class="w-95 text-left">
-                                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
-                                                        </td>
-                                                        @php
-                                                            $i = $i + 1;
-                                                        @endphp
-                                                    </tr>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    </tbody>
-                                </table>
-                            </div>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php $i = 1; @endphp
+                                @if (!empty($data->document_content->ann))
+                                    @foreach (unserialize($data->document_content->ann) as $res)
+                                        @if (!empty($res))
+                                            <div style="position: relative">
+                                                <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!} <br>
+                                            </div>
+                                        @endif
+                                        @php $i++; @endphp
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- ANNEXSURE END --}}
 
             @php
                 $i = 1;
             @endphp
             @if (!empty($data->document_content->annexuredata))
-                @foreach (unserialize($data->document_content->annexuredata) as $res)
-                    @if (!empty($res))
-                        <div class="annexure-block">
-                            <div class="w-100">
-                                <div class="w-100" style="display:inline-block;">
-                                    <div class="w-100">
-                                        <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                            {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
-                                        </div>
-                                    </div>
+            @foreach (unserialize($data->document_content->annexuredata) as $res)
+            @if (!empty($res))
+            <div class="annexure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; ">
+                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
                                 </div>
                             </div>
                         </div>
-                    @endif
-                @endforeach
-            @endif
-        </section>
-
-        <section class="doc-control" style="page-break-after: never;">
-            <div class="head">
-                <div>
-                    Document Control Information
+                    </div>
                 </div>
-            </div>
+                @endif
+                @endforeach
+                @endif
+            </section>
+            
+            <section class="doc-control" style="page-break-after: never;">
+                <div class="head">
+                    <div>
+                        Document Control Information
+                    </div>
+                </div>
             <div class="body">
                 <div class="block mb-40">
                     <div class="block-head">
