@@ -51,9 +51,10 @@ class DocumentDetailsController extends Controller
       if (Hash::check($request->password, Auth::user()->password)) {
         $document = Document::withTrashed()->find($request->document_id);
         $originator = User::find($document->originator_id);
+        $reviewer = User::find($document->reviewers);
+        $approvers = User::find($document->approvers);
         $lastDocument = Document::withTrashed()->find($request->document_id);
-
-        if (Helpers::checkRoles(3)) {
+        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id) {
           
           $request['stage_id'] = Stage::where('id', $request->stage_id)->orWhere('name', $request->stage_id)->value('id');
           $stage = new StageManage;
@@ -161,9 +162,10 @@ class DocumentDetailsController extends Controller
         }
 
         
-        if (Helpers::checkRoles(2)) {
+        if (Helpers::checkRoles(2) && in_array(Auth::user()->id, explode(",", $document->reviewers))) {
           if ($request->stage_id == "Cancel-by-Reviewer") {
-            $document->status = "Draft";
+              $document->stage = 1;
+              $document->status = "Draft";
               $history = new DocumentHistory();
               $history->document_id = $request->document_id;
               $history->activity_type = 'Cancel-by-Reviewer';
@@ -178,7 +180,6 @@ class DocumentDetailsController extends Controller
               $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
               $history->origin_state = 'In-Review';
               $history->save();
-            $document->stage = Stage::where('name', $document->status)->value('id');
             try {
               Mail::send('mail.review-reject', ['document' => $document],
               function ($message) use ($originator) {
@@ -303,10 +304,10 @@ class DocumentDetailsController extends Controller
           }
 
         }
-        if (Helpers::checkRoles(1)) {
+        if (Helpers::checkRoles(1) && in_array(Auth::user()->id, explode(",", $document->approvers))) {
           if ($request->stage_id == "Cancel-by-Approver") {
             $document->status = "Draft";
-            $document->stage = Stage::where('name', $document->status)->value('id');
+            $document->stage = 1;
               $history = new DocumentHistory();
               $history->document_id = $request->document_id;
               $history->activity_type = 'Cancel-by-Approver';
@@ -459,7 +460,6 @@ class DocumentDetailsController extends Controller
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
             $document->status = Stage::where('id', $request->stage_id)->value('name');
-            // dd($request->stage_id, $document->status, $document->stage);
             if ($request->stage_id == 2) {
               if ($document->reviewers) {
                 $temperory = explode(',', $document->reviewers);
