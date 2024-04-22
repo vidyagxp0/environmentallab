@@ -2404,7 +2404,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach ($document_distribution_grids as $grid)
+                                        @foreach ($document_distribution_grid as $grid)
                                             <tr>
                                                 <td>
                                                     {{ $loop->index + 1 }}
@@ -2418,7 +2418,7 @@
                                                 </td>
                                                 <td><input type="text" value="{{ $grid->document_printed_on }}" name="distribution[{{ $loop->index }}][document_printed_on]">
                                                 </td>
-                                                <td><input type="number" value="{{ $grid->document_printed_copies }}" name="distribution[{{ $loop->index }}][document_printed_copies]">
+                                                <td><input type="text" value="{{ $grid->document_printed_copies }}" name="distribution[{{ $loop->index }}][document_printed_copies]">
                                                 </td>
                                                 <td><div class="group-input new-date-document_distribution_grid-field mb-0">
                                                 <div class="input-date "><div
@@ -2450,7 +2450,7 @@
                                                         @endforeach
                                                     </select>
                                                 </td>    
-                                            <td><input type="number" name="distribution[{{ $loop->index }}][issued_copies]" value="{{ $grid->issued_copies }}">
+                                            <td><input type="text" name="distribution[{{ $loop->index }}][issued_copies]" value="{{ $grid->issued_copies }}">
                                             </td>
                                             <td><input type="text" name="distribution[{{ $loop->index }}][issued_reason]" value="{{ $grid->issued_reason }}">
                                             </td>

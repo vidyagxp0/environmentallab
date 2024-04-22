@@ -579,7 +579,7 @@ class DocumentController extends Controller
             ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name', 'departments.name as dept_name')->where('documents.id', $id)->first();
         $document->date = Carbon::parse($document->created_at)->format('d-M-Y');
         $document['document_content'] = DocumentContent::where('document_id', $id)->first();
-        $document_distribution_grids = DocumentGridData::where('document_id', $id)->get();
+        $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
         $document['division'] = Division::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
         $trainer = User::get();
@@ -640,7 +640,7 @@ class DocumentController extends Controller
             'keywords',
             'annexure',
             'documentsubTypes',
-            'document_distribution_grids'
+            'document_distribution_grid'
         ));
     }
 
