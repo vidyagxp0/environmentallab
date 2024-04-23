@@ -56,7 +56,7 @@ class DocumentDetailsController extends Controller
         $lastDocument = Document::withTrashed()->find($request->document_id);
         if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id) {
           
-          $request['stage_id'] = Stage::where('id', $request->stage_id)->orWhere('name', $request->stage_id)->value('id');
+          // $request['stage_id'] = Stage::where('id', $request->stage_id)->orWhere('name', $request->stage_id)->value('id');
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
@@ -456,7 +456,7 @@ class DocumentDetailsController extends Controller
           }
 
         }
-        if (Helpers::checkRoles(3)) {
+        if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id) {
           if ($request->stage_id) {
             $document->stage = $request->stage_id;
             $document->status = Stage::where('id', $request->stage_id)->value('name');
