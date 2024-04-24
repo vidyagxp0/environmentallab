@@ -65,7 +65,9 @@
                                                 <ul>
                                                     @if (!empty($temp->answers))
                                                         @foreach (unserialize($temp->answers) as $options)
-                                                            <li>{{ $options+1 }}</li>
+                                                        @if (is_numeric($option))
+                                                            <li>{{ $option + 1 }}</li>
+                                                        @endif
                                                         @endforeach
                                                     @endif
                                                 </ul>
@@ -86,9 +88,6 @@
                                             </td>
                                         </tr>
                                     @endforeach
-
-
-
                                 </tbody>
                             </table>
 
