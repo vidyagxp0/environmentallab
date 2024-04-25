@@ -28,7 +28,7 @@ class TMSController extends Controller
 {
     public function index(){
         if(Helpers::checkRoles(6)){
-            $documents = DocumentTraining::where('trainer',Auth::user()->id)->orderByDesc('id')->get();
+            $documents = DocumentTraining::where('trainer', Auth::user()->id)->with('root_document')->orderByDesc('id')->get();
            if($documents){
                foreach($documents as $temp){
 
@@ -129,6 +129,8 @@ class TMSController extends Controller
             }
            }
             }
+
+
 
             return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete'));
         }

@@ -69,7 +69,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($documents as $temp)
-                                    @if(!empty($temp->training) && $temp->training->stage >=6 && $temp->stage >=5 && $temp->status == 'Cancel-by-Reviewer' && $temp->status == 'Cancel-by-Approver')
+                                    @if(!empty($temp->training) && $temp->training->stage >=6 && $temp->root_document->status == 'Under-Training')
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
                                                 000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td>
@@ -94,7 +94,7 @@
                         @endif
 
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                        <div class="block-table" style="    padding-top: 100px;">
+                        {{-- <div class="block-table" style="    padding-top: 100px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -130,7 +130,7 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                     @endif
                 </div>
 

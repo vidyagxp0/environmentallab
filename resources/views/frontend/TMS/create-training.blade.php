@@ -123,23 +123,24 @@
                                         <tbody>
                                            
                                             @foreach ($due as $temp)
-                                                <tr>
-                                                    
-                                                    <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
-                                                            value="{{ $temp->document_id }}"></td>
+                                                @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training')
+                                                    <tr>
+                                                        <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
+                                                                value="{{ $temp->document_id }}"></td>
 
-                                                            @php
-                                                            $temp1 = DB::table('document_types')
-                                                                ->where('name', $temp->document_type_name)
-                                                                ->value('typecode');
-                                                            @endphp        
-                                                    <td>{{ $temp->division_name }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
-                                                        000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/R{{ $temp->major}}.{{$temp->minor}}</td>
-                                                    <td>
-                                                        {{ $temp->root_document ? $temp->root_document->document_name : '' }}
-                                                    </td>
-                                                    <td>{{ $temp->originator }}</td>
-                                                </tr>
+                                                                @php
+                                                                $temp1 = DB::table('document_types')
+                                                                    ->where('name', $temp->document_type_name)
+                                                                    ->value('typecode');
+                                                                @endphp        
+                                                        <td>{{ $temp->division_name }}/@if($temp->document_type_name){{  $temp1 }} /@endif{{$temp->year}}/
+                                                            000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/R{{ $temp->major}}.{{$temp->minor}}</td>
+                                                        <td>
+                                                            {{ $temp->root_document ? $temp->root_document->document_name : '' }}
+                                                        </td>
+                                                        <td>{{ $temp->originator }}</td>
+                                                    </tr>
+                                                @endif
                                             @endforeach
 
                                         </tbody>
