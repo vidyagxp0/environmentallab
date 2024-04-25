@@ -10,7 +10,7 @@
 
                     <div class="col-12"> 
                         <div class="inner-block doc-info-block">
-                            <div class="top-block">
+                            <div class="top-block"> 
                                 <div class="title">
                                     {{ $document->document_name }}
                                 </div>
@@ -96,12 +96,12 @@
                                     </button>
                                 @endif
 
-                                @if ($document->stage == 3)
+                                {{-- @if ($document->stage == 3)
                                     <input type="hidden" name="stage_id" value="4" />
                                     <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#approve-sign">
                                         Send For Approval<i class="fa-regular fa-paper-plane"></i>
                                     </button>
-                                @endif
+                                @endif --}}
                                 @if ($document->training_required == 'yes')
                                     @if ($document->stage == 5)
                                         <input type="hidden" name="stage_id" value="6" />

@@ -156,7 +156,7 @@ class Helpers
             $datauser = explode(',', $document->approvers);
             for ($i = 0; $i < count($datauser); $i++) {
                 if ($datauser[$i] == Auth::user()->id) {
-                    if($document->stage >= 4){
+                    if($document->stage >= 3){
                         return true;
                     } else {
                         return false;

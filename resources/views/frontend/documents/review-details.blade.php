@@ -183,14 +183,13 @@
                             </div>
                         </div>
                     @endif
-                    @if (Helpers::checkRoles(1))
+                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
                         <div class="col-8">
                             <div class="inner-block tracker">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="main-title">
                                         Record Workflow
                                     </div>
-                                    @if(Helpers::checkRoles_check_approvers($document))
                                     <div class="buttons">
                                         @if (empty($review_approve))
                                             @if ($stageapprove && empty($stageapprove_submit))
@@ -228,7 +227,6 @@
                                             @endif
                                         @endif
                                     </div>
-                                    @endif
                                 </div>
                                 <div class="status">
                                     <div class="head">Current Status</div>
