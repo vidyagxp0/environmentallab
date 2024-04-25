@@ -21,7 +21,10 @@ window.addEventListener("popstate", function(event) {
                 <div class="btns">
                     <a href="{{ route('TMS.index') }}"><button>Close Training</button></a>
                     @if($training->training_plan_type == "Read & Understand")
-                    <button id="complete-training" class="d-none" data-bs-toggle="modal" data-bs-target="#trainee-sign">Complete Training</button>
+                    <button id="complete-training" class="d-none" style="padding: 10px 20px;" data-bs-toggle="modal" data-bs-target="#trainee-sign">Complete Training</button>
+                    @endif
+                    @if($training->training_plan_type == "Classroom Training")
+                    <button id="complete-training" class="d-none" style="padding: 10px 20px;" data-bs-toggle="modal" data-bs-target="#trainee-sign">Complete Training</button>
                     @endif
                     @if($training->training_plan_type == "Read & Understand with Questions")
                     <button id="complete-training" class="d-none" onclick="location.href='{{ url('trainingQuestion',$document->id) }}';">Continue with Question</button>

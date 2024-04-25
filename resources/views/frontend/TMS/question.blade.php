@@ -153,8 +153,8 @@
                                     @if (old('type') == 'Single Selection Questions') selected @endif>Single Selection Questions</option>
                                 <option value="Multi Selection Questions"@if (old('type') == 'Multi Selection Questions') selected @endif>
                                     Multi Selection Questions</option>
-                                <option value="Exact Match Questions"@if (old('type') == 'Exact Match Questions') selected @endif>Exact
-                                    Match Questions</option>
+                                {{-- <option value="Exact Match Questions"@if (old('type') == 'Exact Match Questions') selected @endif>Exact
+                                    Match Questions</option> --}}
                             </select>
                             <p id="typecheck" style="color: red;">
                                 **Question Type is missing

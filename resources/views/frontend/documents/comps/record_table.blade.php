@@ -1,7 +1,7 @@
 <div class="main-head">
     <div>Records</div>
     <div>
-        {{ count($documents) }} Results {{ isset($count) ? ' out of Results' .  $count : 'found' }}
+        {{ count($documents) }} Results {{ isset($count) ? ' out of Results  ' .  $count : 'found' }}
     </div>
 </div>
 <div class="table-list">
