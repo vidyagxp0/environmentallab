@@ -1756,8 +1756,16 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if ($document->document_content && !empty($document->document_content->responsibility))
                                         @foreach (unserialize($document->document_content->responsibility) as $data)
-                                            <input type="text" name="responsibility[]" class="myclassname"
+                                            <div class="row">
+                                                <div class="col-sm-11">
+                                                    <input type="text" name="responsibility[]" class="myclassname"
                                                 value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                </div>
+                                            </div>
+
                                         @endforeach
                                     @else
                                         <input type="text" name="responsibility[]" class="myclassname" >
@@ -1805,8 +1813,15 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if ($document->document_content && !empty($document->document_content->abbreviation))
                                         @foreach (unserialize($document->document_content->abbreviation) as $data)
-                                            <input type="text" name="abbreviation[]" class="myclassname"
-                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                            <div class="row">
+                                                <div class="col-sm-11">
+                                                    <input type="text" name="abbreviation[]" class="myclassname"
+                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     @endif
 
@@ -1852,8 +1867,16 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if ($document->document_content && !empty($document->document_content->defination))
                                         @foreach (unserialize($document->document_content->defination) as $data)
-                                            <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
-                                                value="{{ $data }}">
+                                            <div class="row">
+                                                <div class="col-sm-11">
+                                                    <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
+                                                        value="{{ $data }}">
+                                                </div>
+    
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     @endif
 
@@ -1900,8 +1923,15 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if ($document->document_content && !empty($document->document_content->materials_and_equipments))
                                         @foreach (unserialize($document->document_content->materials_and_equipments) as $data)
-                                            <input type="text" name="materials_and_equipments[]" class="myclassname"
-                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                            <div class="row">
+                                                <div class="col-sm-11">
+                                                    <input type="text" name="materials_and_equipments[]" class="myclassname"
+                                                        value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     @else
                                         <input type="text" name="materials_and_equipments[]" class="myclassname">
@@ -1984,11 +2014,18 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if ($document->document_content && !empty($document->document_content->reporting))
                                         @foreach (unserialize($document->document_content->reporting) as $data)
-                                            <textarea type="text" name="reporting[]" class="summernote"
-                                             {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                            <div class="row">
+                                                <div class="col-sm-11">
+                                                    <textarea type="text" name="reporting[]" class=""
+                                                     {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                               </div>
+                                               <div class="col-sm-1">
+                                                   <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                               </div>
+                                            </div>
                                         @endforeach
                                     @else
-                                        <textarea type="text" name="reporting[]" class="summernote"></textarea>
+                                        <textarea type="text" name="reporting[]" class=""></textarea>
                                     @endif
 
                                     <div id="reportingdiv"></div>
@@ -2035,8 +2072,15 @@
                                     @if ($document->document_content && !empty($document->document_content->references))
                                         @foreach (unserialize($document->document_content->references) as $data)
                                             @if (!empty($data))
-                                                <input type="text" name="references[]" class="myclassname"
-                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                <div class="row">
+                                                    <div class="col-sm-11">
+                                                        <input type="text" name="references[]" class="myclassname"
+                                                        value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                   </div>
+                                                   <div class="col-sm-1">
+                                                       <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                   </div>
+                                                </div>
                                             @endif
                                         @endforeach
                                     @else
@@ -2127,8 +2171,15 @@
                                     @if ($document->document_content && !empty($document->document_content->ann))
                                         @foreach (unserialize($document->document_content->ann) as $data)
                                             @if (!empty($data))
-                                                <input type="text" name="ann[]" class="myclassname"
-                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                <div class="row">
+                                                    <div class="col-sm-11">
+                                                        <input type="text" name="ann[]" class="myclassname"
+                                                        value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn-btn-danger">Remove</button>
+                                                    </div>
+                                                </div>
                                             @endif
                                         @endforeach
                                     @else

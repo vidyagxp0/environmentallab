@@ -294,7 +294,7 @@
 
 
         .other-container {
-            margin: 40px 0;
+            margin: 40px 0 0 0;
 
         }
 
@@ -305,7 +305,7 @@
 
         .scope-block,
         .procedure-block {
-            margin: 0px 0 30px;
+            margin: 0px 0 15px;
             word-wrap: break-word;
         }
 
@@ -574,7 +574,7 @@
                                         @foreach ($definitions as $index => $definition)
                                             @if (!empty($definition))
                                                 <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">5.{{ $index }}</span> {{ $definition }} <br>
+                                                    <span style="position: absolute; left: -2rem; top: 0;">5.{{ $index + 1 }}</span> {{ $definition }} <br>
                                                 </div>
                                             @endif
                                         @endforeach
@@ -634,7 +634,7 @@
                             <div class="w-100" style="display:inline-block;">
                                 <div class="w-100">
                                     <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
+                                        {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!}
                                     </div>
                                 </div>
                             </div>
@@ -664,7 +664,7 @@
                                         @foreach (unserialize($data->document_content->reporting) as $res)
                                             @if (!empty($res))
                                                 <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">8.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!} <br>
+                                                    <span style="position: absolute; left: -2rem; top: 0;">8.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!} <br>
                                                 </div>
                                             @endif
                                             @php $i++; @endphp
@@ -733,7 +733,7 @@
                                     @foreach (unserialize($data->document_content->ann) as $res)
                                         @if (!empty($res))
                                             <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!} <br>
+                                                <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!} <br>
                                             </div>
                                         @endif
                                         @php $i++; @endphp
@@ -757,7 +757,7 @@
                     <div class="w-100" style="display:inline-block;">
                         <div class="w-100">
                             <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span>') !!}
+                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!}
                                 </div>
                             </div>
                         </div>
