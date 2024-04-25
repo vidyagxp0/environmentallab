@@ -395,7 +395,7 @@
                         @else
                         {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
                     @endif
                 </tr>
             </tbody>
