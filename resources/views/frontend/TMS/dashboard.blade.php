@@ -94,7 +94,7 @@
                         @endif
 
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                        {{-- <div class="block-table" style="    padding-top: 100px;">
+                        <div class="block-table" style="    padding-top: 100px;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -130,7 +130,7 @@
 
                                 </tbody>
                             </table>
-                        </div> --}}
+                        </div>
                     @endif
                 </div>
 
