@@ -183,13 +183,14 @@
                             </div>
                         </div>
                     @endif
-                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
+                    @if (Helpers::checkRoles(1))
                         <div class="col-8">
                             <div class="inner-block tracker">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="main-title">
                                         Record Workflow
                                     </div>
+                                    @if(Helpers::checkRoles_check_approvers($document))
                                     <div class="buttons">
                                         @if (empty($review_approve))
                                             @if ($stageapprove && empty($stageapprove_submit))
@@ -227,6 +228,7 @@
                                             @endif
                                         @endif
                                     </div>
+                                    @endif
                                 </div>
                                 <div class="status">
                                     <div class="head">Current Status</div>
@@ -772,18 +774,6 @@
                             and password for this task. You are performing an electronic signature,
                             which is legally binding equivalent of a hand written signature.
                         </div>
-                        {{-- <div class="group-input">
-                            <label for="electronic-meaning">Electronic Signature Approved Meaning</label>
-                            <select name="electronic-meaning">
-                                <option selected>- Please Select -</option>
-                                @if ($document->stage == 2)
-                                    <option value="assure-approved">Document Reviewed</option>
-                                @endif
-                                @if ($document->stage == 4)
-                                    <option value="assure-approved">Document Approved</option>
-                                @endif
-                            </select>
-                        </div> --}}
                         <div class="group-input">
                             <label for="username">Username</label>
                             <input type="text" value="{{ old('username') }}" name="username" required>
