@@ -64,7 +64,7 @@
                                         <th>Division</th>
                                        
                                         {{--  <th>&nbsp;</th>  --}}
-                                        <th>Audit Trial</th>
+                                        {{-- <th>Audit Trial</th> --}}
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -80,9 +80,9 @@
                                             {{--  <td>
                                                 <a href="#"><i class="fa-solid fa-eye"></i></a>            
                                             </td>  --}}
-                                            <td>
+                                            {{-- <td>
                                                 <button onClick="window.location='{{ url('tms-audit',$temp->id) }}';">Audit Trail</button>           
-                                            </td>
+                                            </td> --}}
                                         </tr>
                                         @endif
                                     @endforeach
