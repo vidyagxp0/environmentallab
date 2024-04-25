@@ -69,10 +69,10 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($documents as $temp)
-                                    @if(!empty($temp->training) AND $temp->training->stage >=6)
+                                    @if(!empty($temp->training) && $temp->training->stage >=6 && $temp->stage >=5 && $temp->status == 'Cancel-by-Reviewer' && $temp->status == 'Cancel-by-Approver')
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
-                                                000{{ $temp->document_number }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td>
+                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td>
                                             <td>{{ $temp->training->document_name }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>

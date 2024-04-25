@@ -607,7 +607,7 @@
                                     @foreach (unserialize($data->document_content->materials_and_equipments) as $res)
                                         @if (!empty($res))
                                             <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">6.{{ $i }}</span> {{ $res }} <br>
+                                                {{-- <span style="position: absolute; left: -2rem; top: 0;">6.{{ $i }}</span>  --}} {{ $res }} <br>
                                             </div>
                                         @endif
                                         @php $i++; @endphp

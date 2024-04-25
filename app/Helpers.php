@@ -278,6 +278,13 @@ class Helpers
    
         return   DB::table('users')->where('id',$id)->value('email');
     }
+
+    // Helpers::formatNumberWithLeadingZeros(0)
+    public static function formatNumberWithLeadingZeros($number)
+    {
+        return sprintf('%04d', $number);
+    }
+
     public static function getDepartmentNameWithString($id)
     {
         $response = [];
