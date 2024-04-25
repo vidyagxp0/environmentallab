@@ -9,6 +9,7 @@ use App\Models\DocumentTraining;
 use App\Models\Document;
 use App\Models\Division;
 use App\Models\Process;
+use App\Models\UserRole;
 use App\Models\DocumentContent;
 use App\Models\StageManage;
 use App\Models\RoleGroup;
@@ -54,9 +55,10 @@ class DocumentDetailsController extends Controller
         $reviewer = User::find($document->reviewers);
         $approvers = User::find($document->approvers);
         $lastDocument = Document::withTrashed()->find($request->document_id);
+        // $fullPermission = UserRole::where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $document->division_id])->get();
+        // $fullPermissionIds = $fullPermission->pluck('q_m_s_roles_id')->toArray();
+        
         if (Helpers::checkRoles(3) && $document->originator_id == Auth::user()->id) {
-          
-          // $request['stage_id'] = Stage::where('id', $request->stage_id)->orWhere('name', $request->stage_id)->value('id');
           $stage = new StageManage;
           $stage->document_id = $request->document_id;
           $stage->user_id = Auth::user()->id;
@@ -231,8 +233,8 @@ class DocumentDetailsController extends Controller
                 if ($document->reviewers) {
                   if ($reviewersData == 1) {
 
-                    $document->stage = 3;
-                    $document->status = Stage::where('id', 3)->value('name');
+                    $document->stage = 4;
+                    $document->status = Stage::where('id', 4)->value('name');
                     try {
                       Mail::send(
                         'mail.reviewed',
@@ -247,8 +249,8 @@ class DocumentDetailsController extends Controller
                     }
                   }
                 } else {
-                  $document->stage = 3;
-                  $document->status = Stage::where('id', 3)->value('name');
+                  $document->stage = 4;
+                  $document->status = Stage::where('id', 4)->value('name');
                   try {
                     Mail::send(
                       'mail.reviewed',
@@ -267,8 +269,8 @@ class DocumentDetailsController extends Controller
             if ($document->reviewers) {
               if ($document->reviewers_group) {
                 if ($reviewersDataforgroup == 1 && $reviewersData = 1) {
-                  $document->stage = 3;
-                  $document->status = Stage::where('id', 3)->value('name');
+                  $document->stage = 4;
+                  $document->status = Stage::where('id', 4)->value('name');
                   try {
                     Mail::send(
                       'mail.reviewed',
@@ -284,8 +286,8 @@ class DocumentDetailsController extends Controller
                 } 
               } else {
                 if ($reviewersData == 1) {
-                  $document->stage = 3;
-                  $document->status = Stage::where('id', 3)->value('name');
+                  $document->stage = 4;
+                  $document->status = Stage::where('id', 4)->value('name');
                   try {
                     Mail::send(
                       'mail.reviewed',
