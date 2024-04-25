@@ -503,6 +503,8 @@ class DocumentController extends Controller
                 $document->approver_group = implode(',', $request->approver_group);
             }
             $document->save();
+
+            DocumentService::update_document_numbers();
             
             if($document){
                 DocumentService::handleDistributionGrid($document, $request->distribution);
@@ -1667,7 +1669,7 @@ class DocumentController extends Controller
         // pdf related work
         $pdf = App::make('dompdf.wrapper');
         $time = Carbon::now();
-        // return view('frontend.documents.pdfpage', compact('data', 'time', 'document'));
+        // return view('frontend.documents.pdfpage_new', compact('data', 'time', 'document'));
         $pdf = PDF::loadview('frontend.documents.pdfpage', compact('data', 'time', 'document'))
             ->setOptions([
                 'defaultFont' => 'sans-serif',

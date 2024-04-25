@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Document;
 use App\Models\DocumentGridData;
+use App\Models\DocumentType;
 
 class DocumentService
 {
@@ -45,6 +46,31 @@ class DocumentService
                 'message' => $e->getMessage(),
                 'object' => $e
             ]);
+        }
+    }
+
+    static function update_document_numbers()
+    {
+        try {
+            
+            $document_types = DocumentType::all();
+
+            foreach ($document_types as $document_type)
+            {
+                $documents = Document::where('document_type_id', $document_type->id)->get();
+
+                $record_number = 0;
+
+                foreach ($documents as $document)
+                {
+                    $record_number++;
+                    $document->document_number = $record_number; 
+                    $document->save();
+                }
+            }
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
         }
     }
 }
