@@ -266,7 +266,7 @@
         @page {
             size: A4;
             margin-top: 220px;
-            margin-bottom: 50px;
+            margin-bottom:60px;
 
         }
 
@@ -283,7 +283,7 @@
        
         .footer {
             position: fixed;
-            bottom: -20px;
+            bottom: -30px;
             left: 0;
             right: 0;
             width: 100%;
@@ -776,7 +776,7 @@
                                     @foreach (unserialize($data->document_content->ann) as $res)
                                         @if (!empty($res))
                                             <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
+                                                <span style="position: absolute; left: -2rem; top: 0;">11.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
                                             </div>
                                         @endif
                                         @php $i++; @endphp
