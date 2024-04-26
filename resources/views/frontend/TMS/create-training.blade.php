@@ -42,24 +42,92 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="training-type">Training Plan Type</label>
-                                    <select id="training-select" name="training_plan_type" required>
+                                    <select id="training-select" name="training_plan_type" required onchange="toggleMultiSelect()">
                                         <option value="">---</option>
                                         <option value="Read & Understand">Read & Understand</option>
                                         <option value="Read & Understand with Questions">Read & Understand with Questions
                                         </option>
-                                        <option value="Classroom Training">Classroom Training</option>
+                                        <option value="Classroom">Classroom Training</option>
                                     </select>
                                     <p id="trainingType" style="color: red">
                                         ** Training type is missing...
                                     </p>
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Assessment Required? </label>
+                                    <select  name="classRoom_training[]" placeholder="SelectclassRoom_training Name">
+                                        <option value="Plant 1">-- Select --</option>
+                                        <option value="Plant 1"> name</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input" id="classroomTrainingBlock" style="display: none">
+                                    <label for="classRoom_trainingName">ClassRoom Training</label>
+                                    <select style="display: none" multiple name="classRoom_training[]" placeholder="SelectclassRoom_training Name"
+                                        data-search="false" data-silent-initial-value-set="true" id="classRoom_training">
+                                        <option value="Plant 1"> person</option>
+                                        <option value="Plant 1"> person</option>
+                                   </select>
+                                </div>
+                            </div>
+                            <script>
+                                function toggleMultiSelect() {
+                                  var selectedValue = document.getElementById("training-select").value;
+                                  var multiSelectField = document.getElementById("classroomTrainingBlock");
+                                
+                                  if (selectedValue === "Classroom") {
+                                    multiSelectField.style.display = "block";
+                                  } else {
+                                    multiSelectField.style.display = "none";
+                                  }
+                                }
+                                </script>
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
                                     <textarea name="desc"></textarea>
                                 </div>
                             </div>
+
+                            <div class="col-lg-12">
+                                <div class="group-input">
+                                    <label for=" Attachments"> Attachments</label>
+                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <div class="file-attachment-field">
+                                        <div class="file-attachment-list" id="Initial_attachment"></div>
+                                        <div class="add-btn">
+                                            <div class="add_training_attachment" style="cursor: pointer;">Add</div>
+                                            <input type="file" id="myfile" name="attachment[]"
+                                                oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <script>
+                                function addMultipleFiles(input, block_id) {
+                                    let block = document.getElementById(block_id);
+                                    block.innerHTML = "";
+                                    let files = input.files;
+                                    for (let i = 0; i < files.length; i++) {
+                                        let div = document.createElement('div');
+                                        div.innerHTML += files[i].name;
+                                        let viewLink = document.createElement("a");
+                                        viewLink.href = URL.createObjectURL(files[i]);
+                                        viewLink.textContent = "View";
+                                        div.appendChild(viewLink);
+                                        block.appendChild(div);
+                                    }
+                                }
+                                $(".add_training_attachment").click(function(){
+                                    $("#myfile").trigger("click")
+                                })
+                            </script>
                             <div class="col-12" id="quizz">
                                 <div class="group-input">
                                     <label for="quize">Quizz</label>
@@ -300,6 +368,11 @@
                     selectedList.appendChild(newItem);
                 }
             }
+        });
+    </script>
+      <script>
+        VirtualSelect.init({
+            ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record ,#classRoom_training' 
         });
     </script>
 @endsection
