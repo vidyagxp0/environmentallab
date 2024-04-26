@@ -10,7 +10,7 @@
                     <div class="details">
                         <div>
                             <strong>Division/Project : </strong>
-                            {{ $document->division->name }} / {{ $document->process->process_name }}
+                            {{ $document->division->name }} / {{ $document->process ? $document->process->process_name : '' }}
                         </div>
                         <div>
                             <strong>Record State : </strong>
@@ -18,7 +18,7 @@
                         </div>
                         <div>
                             <strong>Assigned To : </strong>
-                            {{ $document->oreginator->name }}
+                            {{ $document->oreginator ? $document->oreginator->name : '' }}
                         </div>
                         <div>
                             <strong>Recipents - Add : </strong>
