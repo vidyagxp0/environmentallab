@@ -125,20 +125,38 @@
 
 
                             <script>
-                                function addMultipleFiles(input, block_id) {
-                                    let block = document.getElementById(block_id);
-                                    block.innerHTML = "";
-                                    let files = input.files;
-                                    for (let i = 0; i < files.length; i++) {
-                                        let div = document.createElement('div');
-                                        div.innerHTML += files[i].name;
-                                        let viewLink = document.createElement("a");
-                                        viewLink.href = URL.createObjectURL(files[i]);
-                                        viewLink.textContent = "View";
-                                        div.appendChild(viewLink);
-                                        block.appendChild(div);
-                                    }
-                                }
+                                $(document).ready(function () {
+                                        let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+                                            removeItemButton: true,
+                                        });
+                                    });
+
+                                        function addMultipleFiles(input, block_id) {
+                                            let block = document.getElementById(block_id);
+                                            block.innerHTML = "";
+                                            let files = input.files;
+                                            for (let i = 0; i < files.length; i++) {
+                                                let div = document.createElement('div');
+                                                div.innerHTML += files[i].name;
+                                                let viewLink = document.createElement("a");
+                                                viewLink.href = URL.createObjectURL(files[i]);
+                                                viewLink.textContent = "<View>";
+
+                                                let removeLink = document.createElement("a");
+                                                removeLink.className = 'remove-file';
+                                                removeLink.textContent = "<Remove>";
+
+                                                let fileClone = files[i].slice();
+                                                viewLink.addEventListener('click',function(e){
+                                                    e.preventDefault();
+                                                    window.open(viewLink.href,'_blank');
+                                                });
+                                                div.appendChild(viewLink);
+                                                div.appendChild(removeLink);
+                                                block.appendChild(div);
+                                            }
+                                        }
+
                                 $(".add_training_attachment").click(function(){
                                     $("#myfile").trigger("click")
                                 })
