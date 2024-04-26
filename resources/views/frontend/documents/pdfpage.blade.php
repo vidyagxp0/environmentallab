@@ -12,7 +12,6 @@
         table {
             width: 100%;
         }
-
         td,
         th {
             text-align: center;
@@ -328,12 +327,6 @@
             overflow-x: auto;
             max-width: 100%;
         }
-
-        .MsoNormalTable, 
-        table{
-            margin: 0px !important;
-            width : 100% !important;       
-        }
     
         .MsoNormalTable tr {
             border: 1px solid rgb(156, 156, 156);
@@ -351,6 +344,11 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+        }
+        
+        .MsoNormalTable {
+            table-layout: fixed;
+            width: 650px!important;
         }
 
     </style>
