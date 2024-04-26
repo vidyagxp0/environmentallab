@@ -527,9 +527,6 @@ class DocumentController extends Controller
                     $keyword->keyword = $key;
                     $keyword->save();
                 }
-
-
-
                 
             }
             if ($request->training_required == 'yes') {
@@ -560,6 +557,8 @@ class DocumentController extends Controller
             $content->purpose = $request->purpose;
             $content->scope = $request->scope;
             $content->procedure = $request->procedure;
+            $content->safety_precautions = $request->safety_precautions;
+
             if (! empty($request->materials_and_equipments)) {
                 $content->materials_and_equipments = serialize($request->materials_and_equipments);
             }
@@ -730,13 +729,14 @@ class DocumentController extends Controller
      */
     public function update($id, Request $request)
     {
-        // return $request;
 
         // return $request->notify_to;
 
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
-            $lastContent = DocumentContent::where('document_id', $id)->first();
+            $lastContent = DocumentContent::firstOrNew([
+                'document_id' => $id
+            ]);
             $lastTraining = DocumentTraining::where('document_id', $id)->first();
             $document = Document::find($id);
             $document->document_name = $request->document_name;
@@ -1239,7 +1239,10 @@ class DocumentController extends Controller
                 $history->save();
             }
 
-            $annexure = Annexure::where('document_id', $id)->first();
+            $annexure = Annexure::firstOrNew([
+                'document_id' => $id
+            ]);
+
             if (! empty($request->serial_number)) {
                 $annexure->sno = serialize($request->serial_number);
             }
@@ -1249,12 +1252,15 @@ class DocumentController extends Controller
             if (! empty($request->annexure_data)) {
                 $annexure->annexure_title = serialize($request->annexure_data);
             }
-            $annexure->update();
+            $annexure->save();
 
-            $documentcontet = DocumentContent::where('document_id', $id)->first();
+            $documentcontet = DocumentContent::firstOrNew([
+                'document_id' => $id
+            ]);
             $documentcontet->purpose = $request->purpose;
             $documentcontet->scope = $request->scope;
             $documentcontet->procedure = $request->procedure;
+            $documentcontet->safety_precautions = $request->safety_precautions;
             if (! empty($request->responsibility)) {
                 $documentcontet->responsibility = serialize($request->responsibility);
             }
@@ -1301,7 +1307,7 @@ class DocumentController extends Controller
             }
 
 
-            $documentcontet->update();
+            $documentcontet->save();
 
             if ($lastContent->purpose != $documentcontet->purpose || ! empty($request->purpose_comment)) {
                 $history = new DocumentHistory;

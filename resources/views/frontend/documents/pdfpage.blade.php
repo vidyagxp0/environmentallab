@@ -274,7 +274,7 @@
         header {
             width: 100%;
             position: fixed;
-            top: -200px;
+            top: -220px;
             right: 0;
             left: 0;
             display: block;
@@ -346,7 +346,12 @@
         .MsoNormalTable tbody {
             border: 1px solid rgb(156, 156, 156);
         }
-
+        img {
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
     </style>
 
@@ -446,7 +451,7 @@
                         <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                             <div class="w-100">
                                 <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {{ $data->document_content->purpose }}
+                                    {{ $data->document_content ? $data->document_content->purpose : '' }}
                                 </div>
                             </div>
                         </div>
@@ -468,7 +473,7 @@
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    {{ $data->document_content->scope }}
+                                    {{ $data->document_content ? $data->document_content->scope : '' }}
                                 </div>
                             </div>
                         </div>
@@ -495,7 +500,7 @@
                                 @php
                                     $i = 1;
                                 @endphp
-                                @if (!empty($data->document_content->responsibility))
+                                @if ($data->document_content && !empty($data->document_content->responsibility))
                                     @foreach (unserialize($data->document_content->responsibility) as $res)
                                         @if (!empty($res))
                                             <div style="position: relative">
@@ -532,7 +537,7 @@
                                 @php
                                     $i = 1;
                                 @endphp
-                                @if (!empty($data->document_content->abbreviation))
+                                @if ($data->document_content && !empty($data->document_content->abbreviation))
                                     @foreach (unserialize($data->document_content->abbreviation) as $res)
                                         @if (!empty($res))
                                             <div style="position: relative">
@@ -568,9 +573,9 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php
-                                        $definitions = unserialize($data->document_content->defination);
+                                        $definitions = $data->document_content ? unserialize($data->document_content->defination) : [];
                                     @endphp
-                                    @if (!empty($data->document_content->defination))
+                                    @if ($data->document_content && !empty($data->document_content->defination))
                                         @foreach ($definitions as $index => $definition)
                                             @if (!empty($definition))
                                                 <div style="position: relative">
@@ -602,16 +607,28 @@
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
-                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    @php $i = 1; @endphp
-                                    @foreach (unserialize($data->document_content->materials_and_equipments) as $res)
-                                        @if (!empty($res))
-                                            <div style="position: relative">
-                                                {{-- <span style="position: absolute; left: -2rem; top: 0;">6.{{ $i }}</span>  --}} {{ $res }} <br>
-                                            </div>
-                                        @endif
-                                        @php $i++; @endphp
-                                    @endforeach
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
+                                    @php $i = 1; $sub_index = 1; @endphp
+                                    @if ($data->document_content)
+                                        @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
+                                        @endforeach
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -634,7 +651,9 @@
                             <div class="w-100" style="display:inline-block;">
                                 <div class="w-100">
                                     <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!}
+                                        @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!}
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -643,11 +662,37 @@
                 </div>
             {{-- PROCEDURE END --}}
 
+            {{-- SAFETY START --}}
+            <div class="other-container ">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-5">8.</th>
+                            <th class="text-left">Safety & Precautions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @if ($data->document_content)
+                                        {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {{-- SAFETY END --}}
+
             {{-- REPORTING START --}}
                 <table class="mb-20 ">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">8.</th>
+                            <th class="w-5 vertical-baseline">9.</th>
                             <th class="w-95 text-left">
                                 <div class="bold mb-10">Reporting</div>
                             </th>
@@ -660,11 +705,11 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
-                                    @if (!empty($data->document_content->reporting))
+                                    @if ($data->document_content && !empty($data->document_content->reporting))
                                         @foreach (unserialize($data->document_content->reporting) as $res)
                                             @if (!empty($res))
                                                 <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">8.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!} <br>
+                                                    <span style="position: absolute; left: -2rem; top: 0;">8.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
                                                 </div>
                                             @endif
                                             @php $i++; @endphp
@@ -681,7 +726,7 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">9.</th>
+                            <th class="w-5 vertical-baseline">10.</th>
                             <th class="w-95 text-left">
                                 <div class="bold mb-10"> References</div>
                             </th>
@@ -694,7 +739,7 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
-                                    @if (!empty($data->document_content->references))
+                                    @if ($data->document_content && !empty($data->document_content->references))
                                         @foreach (unserialize($data->document_content->references) as $res)
                                             @if (!empty($res))
                                                 <div style="position: relative">
@@ -715,7 +760,7 @@
             <table class="mb-20">
                 <tbody>
                     <tr>
-                        <th class="w-5 vertical-baseline">10.</th>
+                        <th class="w-5 vertical-baseline">11.</th>
                         <th class="w-95 text-left">
                             <div class="bold mb-10">Annexure</div>
                         </th>
@@ -729,11 +774,11 @@
                         <div class="w-100">
                             <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                 @php $i = 1; @endphp
-                                @if (!empty($data->document_content->ann))
+                                @if ($data->document_content && !empty($data->document_content->ann))
                                     @foreach (unserialize($data->document_content->ann) as $res)
                                         @if (!empty($res))
                                             <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!} <br>
+                                                <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
                                             </div>
                                         @endif
                                         @php $i++; @endphp
@@ -749,22 +794,23 @@
             @php
                 $i = 1;
             @endphp
-            @if (!empty($data->document_content->annexuredata))
-            @foreach (unserialize($data->document_content->annexuredata) as $res)
-            @if (!empty($res))
-            <div class="annexure-block">
-                <div class="w-100">
-                    <div class="w-100" style="display:inline-block;">
-                        <div class="w-100">
-                            <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><blockquote><h1><h2><h3><h4><h5><h6>') !!}
+                @if ($data->document_content && !empty($data->document_content->annexuredata))
+                    @foreach (unserialize($data->document_content->annexuredata) as $res)
+                        @if (!empty($res))
+                            <div class="annexure-block">
+                                <div class="w-100">
+                                    <div class="w-100" style="display:inline-block;">
+                                        <div class="w-100">
+                                            <div style="height:auto; overflow-x:hidden; width:650px; ">
+                                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                @endif
-                @endforeach
+                        @endif
+                    @endforeach
                 @endif
             </section>
             

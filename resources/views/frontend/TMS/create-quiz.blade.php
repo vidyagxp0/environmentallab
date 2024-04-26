@@ -53,21 +53,21 @@
                         <div class="col-lg-6">
                             <div class="group-input">
                                 <label for="pass-percent">Passing Percentage</label>
-                                <input type="text" id="passing-percentage" name="passing">
+                                <input type="number" id="passing-percentage" name="passing">
                             </div>
                             <p id="passingcheck"
                             style="color: red;">
                             **Passing Percentage of quize is missing
                             </p>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="checkbox">
                                 <label for="randomize">
                                     <input type="checkbox" name="randomize" id="randomize">
                                     Randomize Questions
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- <div class="col-lg-6">
                             <div class="checkbox">
                                 <label for="feedback">

@@ -309,7 +309,7 @@
             $(this).closest('div.row').remove();
         })
 
-
+        
        
 
         $('#Definitionbtnadd').click(function(e) {
@@ -318,6 +318,16 @@
                 '<div class="resrow row"><div class="col-11"><input type="text" name="defination[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             $('#definitiondiv').append(html);
+
+        });
+
+        let subMaterialsAdd = 0;
+        $(document).on('click', '.subMaterialsAdd', function() {
+            subMaterialsAdd = Math.round(Math.random() * 1000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><input type="text" name="materials_and_equipments[sub_'+ subMaterialsAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            $(this).closest('div.singleMaterialBlock').append(html);
 
         });
 
@@ -367,9 +377,9 @@
         $('#materialsbtadd').click(function(e) {
 
             var html =
-                '<div class="resrow row"><div class="col-11"><input type="text" name="materials_and_equipments[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button</div></div>';
+                '<div class="singleMaterialBlock"><div class="resrow row"><div class="col-10"><input type="text" name="materials_and_equipments[]" class="myclassname"></div><div class="col-1"><button type="button" class="subMaterialsAdd" name="button">+</button></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div></div>';
 
-            $('#materialsdiv').append(html);
+            $('.materialsBlock').append(html);
 
         });
 

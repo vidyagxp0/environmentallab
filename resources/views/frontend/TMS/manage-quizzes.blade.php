@@ -20,9 +20,9 @@
             <div class="inner-block quiz-table">
                 <div class="main-head">
                     <div>Quiz</div>
-                    <div>
+                    {{-- <div>
                         <button>Print</button>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="inner-block-content">
                     <table class="table-bordered table">

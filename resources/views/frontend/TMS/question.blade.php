@@ -55,8 +55,10 @@
                                             <td class="question">
                                                 <ul>
                                                     @if (!empty($temp->options))
-                                                        @foreach (unserialize($temp->options) as $options)
-                                                            <li>{{ $options }}</li>
+                                                        @foreach (unserialize($temp->options) as $option)
+                                                            @if (!empty($option))
+                                                                <li>{{ $option }}</li>
+                                                            @endif
                                                         @endforeach
                                                     @endif
                                                 </ul>
@@ -117,11 +119,11 @@
                                     data-target="multi-select" checked>
                                 Multi Selection Questions
                             </label>
-                            <label for="single-word">
+                            {{-- <label for="single-word">
                                 <input type="checkbox" name="question-type" class="question-filter" id="single-word"
                                     data-target="single-word" checked>
                                 Exact Match Questions
-                            </label>
+                            </label> --}}
                         </div>
                     </div>
 
