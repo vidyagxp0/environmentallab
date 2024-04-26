@@ -59,7 +59,9 @@
                                     <label for="classRoom_trainingName">Assessment Required? </label>
                                     <select  name="classRoom_training[]" placeholder="SelectclassRoom_training Name">
                                         <option value="Plant 1">-- Select --</option>
-                                        <option value="Plant 1"> name</option>
+                                        <option value="yes"> Yes</option>
+                                        <option value="no"> No</option>
+
                                     </select>
                                 </div>
                             </div>
