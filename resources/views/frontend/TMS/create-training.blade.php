@@ -2,6 +2,7 @@
 @section('container')
     @include('frontend.TMS.head')
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     @if(count($errors) > 0)
         @foreach($errors->all() as $error)
@@ -65,9 +66,10 @@
                                     </select>
                                 </div>
                             </div>
+                            
                             <div class="col-6">
                                 <div class="group-input" id="classroomTrainingBlock" style="display: none">
-                                    <label for="classRoom_trainingName">ClassRoom Training</label>
+                                    <label for="classRoom_trainingName">Class Room Trainer</label>
                                     <select style="display: none" multiple name="classRoom_training[]" placeholder="SelectclassRoom_training Name"
                                         data-search="false" data-silent-initial-value-set="true" id="classRoom_training">
                                         <option value="Plant 1"> person</option>
@@ -87,7 +89,18 @@
                                   }
                                 }
                                 </script>
-                            
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Training Start Date & Time </label>
+                                    <input type="datetime-local" name="training_start_date">
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Training End  Date & Time</label>
+                                    <input type="datetime-local" name="training_start_date">
+                                </div>
+                            </div>
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
@@ -112,27 +125,45 @@
 
 
                             <script>
-                                function addMultipleFiles(input, block_id) {
-                                    let block = document.getElementById(block_id);
-                                    block.innerHTML = "";
-                                    let files = input.files;
-                                    for (let i = 0; i < files.length; i++) {
-                                        let div = document.createElement('div');
-                                        div.innerHTML += files[i].name;
-                                        let viewLink = document.createElement("a");
-                                        viewLink.href = URL.createObjectURL(files[i]);
-                                        viewLink.textContent = "View";
-                                        div.appendChild(viewLink);
-                                        block.appendChild(div);
-                                    }
-                                }
+                                $(document).ready(function () {
+                                        let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+                                            removeItemButton: true,
+                                        });
+                                    });
+
+                                        function addMultipleFiles(input, block_id) {
+                                            let block = document.getElementById(block_id);
+                                            block.innerHTML = "";
+                                            let files = input.files;
+                                            for (let i = 0; i < files.length; i++) {
+                                                let div = document.createElement('div');
+                                                div.innerHTML += files[i].name;
+                                                let viewLink = document.createElement("a");
+                                                viewLink.href = URL.createObjectURL(files[i]);
+                                                viewLink.textContent = "<View>";
+
+                                                let removeLink = document.createElement("a");
+                                                removeLink.className = 'remove-file';
+                                                removeLink.textContent = "<Remove>";
+
+                                                let fileClone = files[i].slice();
+                                                viewLink.addEventListener('click',function(e){
+                                                    e.preventDefault();
+                                                    window.open(viewLink.href,'_blank');
+                                                });
+                                                div.appendChild(viewLink);
+                                                div.appendChild(removeLink);
+                                                block.appendChild(div);
+                                            }
+                                        }
+
                                 $(".add_training_attachment").click(function(){
                                     $("#myfile").trigger("click")
                                 })
                             </script>
-                            <div class="col-12" id="quizz">
+                            <div class="col-12" >
                                 <div class="group-input">
-                                    <label for="quize">Quizz</label>
+                                    <label for="quize">Quizz <span id="quizz" class="text-danger">*</span></label>
                                     <select id="quizzz" name="quize">
                                         <option value="">---</option>
                                         @foreach ($quize as $temp)
@@ -145,6 +176,21 @@
                                     </p>
                                 </div>
                             </div>
+                            <script>
+                                $(document).ready(function() {
+                                    $('#quizz').hide();
+                            
+                                    $('[name="classRoom_training[]"]').change(function() {
+                                        if ($(this).val() === 'yes') {
+                                            $('#quizz').show();
+                                            $('#quizz span').show();
+                                        } else {
+                                            $('#quizz').hide();
+                                            $('#quizz span').hide();
+                                        }
+                                    });
+                                });
+                            </script>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="effective-criteria">Effective Criteria(in %)</label>

@@ -614,7 +614,7 @@
                                     </select>
                                 </div>
                             </div> --}}
-                                <div class="col-md-12">
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="test">
                                             Test(0)<button type="button" name="test"
@@ -636,8 +636,8 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                <div class="col-md-12">
+                                </div> --}}
+                                {{-- <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="test">
                                             Survey(0)<button type="button" name="reporting1"
@@ -659,7 +659,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="comments">Comments</label>
