@@ -12,7 +12,6 @@
         table {
             width: 100%;
         }
-
         td,
         th {
             text-align: center;
@@ -267,14 +266,14 @@
         @page {
             size: A4;
             margin-top: 220px;
-            margin-bottom: 80px;
+            margin-bottom: 50px;
 
         }
 
         header {
             width: 100%;
             position: fixed;
-            top: -220px;
+            top: -215px;
             right: 0;
             left: 0;
             display: block;
@@ -284,7 +283,7 @@
        
         .footer {
             position: fixed;
-            bottom: -50px;
+            bottom: -20px;
             left: 0;
             right: 0;
             width: 100%;
@@ -294,7 +293,7 @@
 
 
         .other-container {
-            margin: 40px 0 0 0;
+            margin: 0 0 0 0;
 
         }
 
@@ -328,12 +327,6 @@
             overflow-x: auto;
             max-width: 100%;
         }
-
-        .MsoNormalTable, 
-        table{
-            margin: 0px !important;
-            width : 100% !important;       
-        }
     
         .MsoNormalTable tr {
             border: 1px solid rgb(156, 156, 156);
@@ -351,6 +344,11 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+        }
+        
+        .MsoNormalTable {
+            table-layout: fixed;
+            width: 650px!important;
         }
 
     </style>
@@ -709,7 +707,7 @@
                                         @foreach (unserialize($data->document_content->reporting) as $res)
                                             @if (!empty($res))
                                                 <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">8.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
+                                                    <span style="position: absolute; left: -2rem; top: 0;">9.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
                                                 </div>
                                             @endif
                                             @php $i++; @endphp
@@ -743,7 +741,7 @@
                                         @foreach (unserialize($data->document_content->references) as $res)
                                             @if (!empty($res))
                                                 <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">9.{{ $i }}</span> {{ $res }} <br>
+                                                    <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {{ $res }} <br>
                                                 </div>
                                             @endif
                                             @php $i++; @endphp

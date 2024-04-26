@@ -777,6 +777,15 @@
                                     </textarea>
                                     </div>
                                 </div>
+
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="procedure">Safety & Precautions</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <textarea name="safety_precautions" class="summernote"></textarea>
+                                    </div>
+                                </div>
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
