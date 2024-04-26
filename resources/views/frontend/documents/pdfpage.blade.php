@@ -741,7 +741,7 @@
                                         @foreach (unserialize($data->document_content->references) as $res)
                                             @if (!empty($res))
                                                 <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">9.{{ $i }}</span> {{ $res }} <br>
+                                                    <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {{ $res }} <br>
                                                 </div>
                                             @endif
                                             @php $i++; @endphp
