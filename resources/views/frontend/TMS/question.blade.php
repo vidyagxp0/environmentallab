@@ -30,7 +30,7 @@
                     <div class="inner-block question-table">
                         <div class="head">
                             <div>Questions Lists</div>
-                            <button>Print</button>
+                            {{-- <button>Print</button> --}}
                         </div>
                         <div class="table-block">
                             <table class="table table-bordered">

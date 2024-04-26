@@ -153,6 +153,10 @@ class DocumentController extends Controller
         $documentTypeIds = $documentValues->pluck('document_type_id')->unique()->toArray();
         $documentTypes = DocumentType::whereIn('id', $documentTypeIds)->select('id', 'name')->get();
 
+        $documentStatus = Document::withoutTrashed()->select('id', 'status')->get();
+        $documentStatusIds = $documentValues->pluck('document_type_id')->unique()->toArray();
+        // dd($documentStatus);
+
         $OriValues = Document::withoutTrashed()->select('id', 'originator_id')->get();
         $OriTypeIds = $OriValues->pluck('originator_id')->unique()->toArray();
         $originator = User::whereIn('id', $OriTypeIds)->select('id', 'name')->get();
@@ -161,8 +165,7 @@ class DocumentController extends Controller
         // $documents = Document::join('users', 'documents.originator_id', 'users.id')->join('document_types', 'documents.document_type_id', 'document_types.id')
         //     ->join('divisions', 'documents.division_id', 'divisions.id')
         //     ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name')->where('documents.originator_id', Auth::user()->id)->orderByDesc('documents.id')->paginate(10);
-
-        return view('frontend.documents.index', compact('documents', 'count', 'divisions', 'originator', 'documentTypes'));
+        return view('frontend.documents.index', compact('documents', 'count', 'divisions', 'originator', 'documentTypes', 'documentStatus'));
     }
 
     public function filterRecord(Request $request)

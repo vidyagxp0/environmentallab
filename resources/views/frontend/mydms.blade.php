@@ -19,7 +19,7 @@
                         </div>
                         <div>
                             <a href="#" id="set-division" class="new-doc-btn">New Document</a>
-                            <a href="#" onclick="window.print();return false;" class="new-doc-btn">Print</a>
+                            {{-- <a href="#" onclick="window.print();return false;" class="new-doc-btn">Print</a> --}}
                         </div>
                     </div>
 
