@@ -339,5 +339,12 @@
             optionsContainer.on('click', '.remove-option', removeOption);
             $(document).on('change', 'input[name="answer"]', updateSelectedAnswer);
         });
+
+        // Add event listener for toggle button change event
+        $('#toggle-options').change(function() {
+            const isEnabled = $(this).is(':checked');
+            $('input[name="options[]"]').prop('disabled', !isEnabled);
+            $('input[name="answer"]').prop('disabled', !isEnabled);
+        });
     </script>
 @endsection

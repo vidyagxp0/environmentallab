@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            $table->string('document_number')->nullable();
+        Schema::create('questions_option', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('question_id');
+            $table->integer('option_id');
+            $table->string('options');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -25,9 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('documents', function (Blueprint $table) {
-            Schema::dropIfExists('document_number');
-
-        });
+        Schema::dropIfExists('questions_option');
     }
 };
