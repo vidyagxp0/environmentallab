@@ -422,11 +422,15 @@
         $('#optionsbtnadd').click(function(e) {
 
             var html =
-                '<div class="option-group"><input type="text" name="options[]"><input type="radio" name="answer" value="0"></div>';
+                '<div class="row"><div class="col-10"><div class="option-group"><input type="text" name="options[]"><input type="radio" name="answer" value="0"></div></div><div class="col-2"><a class="btn btn-dark option-remove-btn">&times;</a></div></div>';
 
             $('#optionsdiv').append(html);
 
         });
+
+        $(document).on('click', '.option-remove-btn', function() {
+            $(this).closest('div.row').remove()
+        })
 
         $('#multi_optionsbtnadd').click(function(e) {
 
