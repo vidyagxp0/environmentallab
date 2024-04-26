@@ -1865,18 +1865,19 @@
                                         Definition<button type="button" id="Definitionbtnadd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    
                                     @if ($document->document_content && !empty($document->document_content->defination))
                                         @foreach (unserialize($document->document_content->defination) as $data)
-                                            <div class="row">
-                                                <div class="col-sm-11">
-                                                    <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
-                                                        value="{{ $data }}">
+                                                <div class="row">
+                                                    <div class="col-sm-11">
+                                                        <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
+                                                            value="{{ $data }}">
+                                                    </div>
+        
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                    </div>
                                                 </div>
-    
-                                                <div class="col-sm-1">
-                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                </div>
-                                            </div>
                                         @endforeach
                                     @endif
 
@@ -1922,19 +1923,39 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     @if ($document->document_content && !empty($document->document_content->materials_and_equipments))
-                                        @foreach (unserialize($document->document_content->materials_and_equipments) as $data)
-                                            <div class="row">
-                                                <div class="col-sm-11">
-                                                    <input type="text" name="materials_and_equipments[]" class="myclassname"
-                                                        value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                        <div class="materialsBlock">
+                                            @foreach (unserialize($document->document_content->materials_and_equipments) as $key => $data)
+                                                <div class="singleMaterialBlock">
+                                                    @if (str_contains($key, 'sub'))
+                                                        <div class="resrow row">
+                                                            <div class="col-6">
+                                                                <input type="text" name="materials_and_equipments[{{ $key }}]" class="myclassname" value="{{ $data }}">
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="materials_and_equipments[]" class="myclassname"
+                                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                            </div>
+
+                                                            <div class="col-sm-1">
+                                                                <button type="button" class="subMaterialsAdd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                                            </div>
+
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                                <div class="col-sm-1">
-                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                            @endforeach
+                                        </div>
                                     @else
-                                        <input type="text" name="materials_and_equipments[]" class="myclassname">
+                                        <input type="text" name="materials_and_equipments[]" class="myclassname" >
                                     @endif
 
                                     <div id="materialsdiv"></div>
@@ -1995,6 +2016,31 @@
                                     @endforeach
                                 </div>
                             </div>
+
+                            <div class="col-md-12">
+                                <div class="group-input">
+                                    <label for="procedure">Safety & Precautions</label>
+                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                    <textarea name="safety_precautions" class="summernote">{{ $document->document_content ? $document->document_content->safety_precautions : '' }}</textarea>
+                                    @foreach ($history as $tempHistory)
+                                        @if ($tempHistory->activity_type == 'safety_precautions' && !empty($tempHistory->comment))
+                                            @php
+                                                $users_name = DB::table('users')
+                                                    ->where('id', $tempHistory->user_id)
+                                                    ->value('name');
+                                            @endphp
+                                            <p style="color: blue">Modify by {{ $users_name }} at
+                                                {{ $tempHistory->created_at }}
+                                            </p>
+                                            <input class="input-field"
+                                                style="background: #ffff0061;
+                                    color: black;"
+                                                type="text" value="{{ $tempHistory->comment }}" disabled>
+                                        @endif
+                                    @endforeach
+                                </div>
+                            </div>
+
                             {{-- @foreach ($history as $tempHistory)
                                 @if (Auth::user()->role != 3) --}}
                                     {{-- Add Comment  --}}
@@ -2177,7 +2223,7 @@
                                                         value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn-btn-danger">Remove</button>
+                                                        <button class="btn-btn-danger abbreviationbtnRemove">Remove</button>
                                                     </div>
                                                 </div>
                                             @endif

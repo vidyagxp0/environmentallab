@@ -33,17 +33,21 @@ class DocumentDetailsController extends Controller
 
   function viewdetails($id)
   {
-    $document = Document::find($id);
-    $document->department_name = Department::find($document->department_id);
-    $document->doc_type = DocumentType::find($document->document_type_id);
-    $document->oreginator = User::find($document->originator_id);
-    $document->last_modify_date = DocumentHistory::where('document_id', $document->id)->latest()->first();
-    $document->last_modify = DocumentHistory::where('document_id', $document->id)->latest()->first();
-    $reviewer = User::where('role', 2)->get();
-    $approvers = User::where('role', 1)->get();
-    $reviewergroup = Grouppermission::where('role_id', 2)->get();
-    $approversgroup = Grouppermission::where('role_id', 1)->get();
-    return view('frontend.documents.document-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup'));
+    try {
+      $document = Document::findOrFail($id);
+      $document->department_name = Department::find($document->department_id);
+      $document->doc_type = DocumentType::find($document->document_type_id);
+      $document->oreginator = User::find($document->originator_id);
+      $document->last_modify_date = DocumentHistory::where('document_id', $document->id)->latest()->first();
+      $document->last_modify = DocumentHistory::where('document_id', $document->id)->latest()->first();
+      $reviewer = User::where('role', 2)->get();
+      $approvers = User::where('role', 1)->get();
+      $reviewergroup = Grouppermission::where('role_id', 2)->get();
+      $approversgroup = Grouppermission::where('role_id', 1)->get();
+      return view('frontend.documents.document-details', compact('document', 'reviewer', 'approvers', 'reviewergroup', 'approversgroup'));
+    } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+      return "Document Not Found";
+    }
   }
 
   function sendforstagechanage(Request $request)

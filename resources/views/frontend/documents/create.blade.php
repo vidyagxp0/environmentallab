@@ -751,10 +751,21 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
-                                        <input type="text" name="materials_and_equipments[]" class="myclassname">
-
-
-                                        <div id="materialsdiv"></div>
+                                        <div class="materialsBlock">
+                                            <div class="singleMaterialBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="materials_and_equipments[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button type="button" class="subMaterialsAdd" name="button">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
