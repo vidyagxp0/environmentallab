@@ -53,7 +53,7 @@ return new class extends Migration
             $table->string('revision')->default("No");
             $table->string('revision_policy')->nullable();
             $table->string('trainer')->nullable();
-            $table->string('comments')->nullable();
+            $table->longText('comments')->nullable();
             
 
             $table->softDeletes();
