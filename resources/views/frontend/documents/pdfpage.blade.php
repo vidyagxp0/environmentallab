@@ -499,17 +499,27 @@
                                     $i = 1;
                                 @endphp
                                 @if ($data->document_content && !empty($data->document_content->responsibility))
-                                    @foreach (unserialize($data->document_content->responsibility) as $res)
+                                    @foreach (unserialize($data->document_content->responsibility) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
                                         @if (!empty($res))
-                                            <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">3.{{ $i }}</span> {{ $res }} <br>
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
                                             </div>
-                                            @php
-                                                $i = $i + 1;
-                                            @endphp
                                         @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
                                     @endforeach
                                 @endif    
+
+                                
                             </div>
                         </div>
                     </div>
@@ -536,15 +546,23 @@
                                     $i = 1;
                                 @endphp
                                 @if ($data->document_content && !empty($data->document_content->abbreviation))
-                                    @foreach (unserialize($data->document_content->abbreviation) as $res)
+                                    @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
                                         @if (!empty($res))
-                                            <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">4.{{ $i }}</span> {{ $res }} <br>
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
                                             </div>
-                                            @php
-                                                $i = $i + 1;
-                                            @endphp
                                         @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
                                     @endforeach
                                 @endif    
                             </div>
@@ -571,15 +589,27 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php
+                                        $i = 1;
                                         $definitions = $data->document_content ? unserialize($data->document_content->defination) : [];
                                     @endphp
                                     @if ($data->document_content && !empty($data->document_content->defination))
-                                        @foreach ($definitions as $index => $definition)
-                                            @if (!empty($definition))
-                                                <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">5.{{ $index + 1 }}</span> {{ $definition }} <br>
+                                        @foreach ($definitions as $key => $definition)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
                                                 </div>
                                             @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
                                         @endforeach
                                     @endif  
                                 </div>
@@ -684,7 +714,7 @@
                     </div>
                 </div>
             </div>
-        {{-- SAFETY END --}}
+            {{-- SAFETY END --}}
 
             {{-- REPORTING START --}}
                 <table class="mb-20 ">
@@ -704,13 +734,23 @@
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
                                     @if ($data->document_content && !empty($data->document_content->reporting))
-                                        @foreach (unserialize($data->document_content->reporting) as $res)
+                                        @foreach (unserialize($data->document_content->reporting) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
                                             @if (!empty($res))
-                                                <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">9.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
                                                 </div>
                                             @endif
-                                            @php $i++; @endphp
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
                                         @endforeach
                                     @endif
                                 </div>
@@ -738,13 +778,23 @@
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
                                     @if ($data->document_content && !empty($data->document_content->references))
-                                        @foreach (unserialize($data->document_content->references) as $res)
+                                        @foreach (unserialize($data->document_content->references) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
                                             @if (!empty($res))
-                                                <div style="position: relative">
-                                                    <span style="position: absolute; left: -2rem; top: 0;">10.{{ $i }}</span> {{ $res }} <br>
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
                                                 </div>
                                             @endif
-                                            @php $i++; @endphp
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
                                         @endforeach
                                     @endif
                                 </div>
@@ -774,12 +824,22 @@
                                 @php $i = 1; @endphp
                                 @if ($data->document_content && !empty($data->document_content->ann))
                                     @foreach (unserialize($data->document_content->ann) as $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
                                         @if (!empty($res))
-                                            <div style="position: relative">
-                                                <span style="position: absolute; left: -2rem; top: 0;">11.{{ $i }}</span> {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!} <br>
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
                                             </div>
                                         @endif
-                                        @php $i++; @endphp
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
                                     @endforeach
                                 @endif
                             </div>

@@ -307,7 +307,7 @@
         $('#responsibilitybtnadd').click(function(e) {
 
             var html =
-                '<div class="resrow row"><div class="col-11"><input type="text" name="responsibility[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="singleResponsibilityBlock"><div class="resrow row"><div class="col-10"><input type="text" name="responsibility[]" class="myclassname"></div><div class="col-1"><button class="btn btn-dark subResponsibilityAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#responsibilitydiv').append(html);
 
@@ -318,13 +318,14 @@
         $('#abbreviationbtnadd').click(function(e) {
 
             var html =
-                '<div class="resrow row"> <div class="col-11"><input type="text" name="abbreviation[]" class="myclassname"></div>  <div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="singleAbbreviationBlock"><div class="resrow row"><div class="col-10"><input type="text" name="abbreviation[]" class="myclassname"></div> <div class="col-sm-1"> <button class="btn btn-dark subAbbreviationAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#abbreviationdiv').append(html);
 
         });
 
-        $(document).on('click', '.abbreviationbtnRemove', function() {
+        $(document).on('click', '.abbreviationbtnRemove', function(e) {
+            e.preventDefault();
             $(this).closest('div.row').remove();
         })
 
@@ -334,21 +335,164 @@
         $('#Definitionbtnadd').click(function(e) {
 
             var html =
-                '<div class="resrow row"><div class="col-11"><input type="text" name="defination[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="singleDefinitionBlock"><div class="resrow row"><div class="col-10"><input type="text" name="defination[]" class="myclassname"></div><div class="col-sm-1"> <button class="btn btn-dark subDefinitionAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#definitiondiv').append(html);
 
         });
 
         let subMaterialsAdd = 0;
-        $(document).on('click', '.subMaterialsAdd', function() {
-            subMaterialsAdd = Math.round(Math.random() * 1000);
+        let subResponsibilityAdd = 0;
+        let subAbbreviationAdd = 0;
+        let subDefinitionAdd = 0;
+        let subReferencesAdd = 0;
+        let subAnnexureAdd = 0;
+        let subReportingAdd = 0;
+
+        $(document).on('click', '.removeAllBlocks', function(e) {
+            e.preventDefault();
+            var targetBlock = $(this).parents('div:eq(2)');
+
+            var targetClass = targetBlock.attr('class').split(' ').filter(c => c.includes('Block'))[0];
+
+            console.log('targetBlock', targetBlock)
+            console.log('targetClass', targetClass)
+
+            var subClassPattern = 'sub' + targetClass.charAt(0).toUpperCase() + targetClass.slice(1);
+            var nextSingleBlock = targetBlock.nextAll('.' + targetClass).first();
+            var nextSubBlocks;
+
+            if (nextSingleBlock.length > 0) {
+                nextSubBlocks = targetBlock.nextUntil(nextSingleBlock, 'div[class*="' + subClassPattern + '"]');
+            } else {
+                nextSubBlocks = targetBlock.nextAll('div[class*="' + subClassPattern + '"]');
+            }
+
+            nextSubBlocks.remove();
+
+            targetBlock.remove();
+        });
+
+        $(document).on('click', '.subMaterialsAdd', function(e) {
+            e.preventDefault();
+            subMaterialsAdd = Math.round(Math.random() * 10000);
             var html =
                 '<div class="resrow row"><div class="col-6"><input type="text" name="materials_and_equipments[sub_'+ subMaterialsAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
-            $(this).closest('div.singleMaterialBlock').append(html);
+            var closestSingleBlock = $(this).closest('.singleMaterialBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleMaterialBlock', '.subSingleMaterialBlock');
+
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleMaterialBlock">' + html + '</div>');
+            }
 
         });
+
+        $(document).on('click', '.subResponsibilityAdd', function(e) {
+            e.preventDefault();
+            subResponsibilityAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><input type="text" name="responsibility[sub_'+ subResponsibilityAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleResponsibilityBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleResponsibilityBlock', '.subSingleResponsibilityBlock');
+            
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleResponsibilityBlock">' + html + '</div>');
+            }
+        });
+        
+        $(document).on('click', '.subAbbreviationAdd', function(e) {
+            e.preventDefault();
+            subAbbreviationAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><input type="text" name="abbreviation[sub_'+ subAbbreviationAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAbbreviationBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAbbreviationBlock', '.subSingleAbbreviationBlock');
+            
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleAbbreviationBlock">' + html + '</div>');
+            }
+        });
+        
+        $(document).on('click', '.subDefinitionAdd', function(e) {
+            e.preventDefault();
+            subDefinitionAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><input type="text" name="defination[sub_'+ subDefinitionAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleDefinitionBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleDefinitionBlock', '.subSingleDefinitionBlock');
+            
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleDefinitionBlock">' + html + '</div>');
+            }
+        });
+        
+        $(document).on('click', '.subReferencesAdd', function(e) {
+            e.preventDefault();
+            subReferencesAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><input type="text" name="references[sub_'+ subReferencesAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReferencesBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReferencesBlock', '.subSingleReferencesBlock');
+            
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleReferencesBlock">' + html + '</div>');
+            }
+        });
+        
+        $(document).on('click', '.subAnnexureAdd', function(e) {
+            e.preventDefault();
+            subAnnexureAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><input type="text" name="ann[sub_'+ subAnnexureAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleAnnexureBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleAnnexureBlock', '.subSingleAnnexureBlock');
+            
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleAnnexureBlock">' + html + '</div>');
+            }
+        });
+        
+        $(document).on('click', '.subReportingAdd', function(e) {
+            e.preventDefault();
+            subReportingAdd = Math.round(Math.random() * 10000);
+            var html =
+                '<div class="resrow row"><div class="col-6"><input type="text" name="reporting[sub_'+ subReportingAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+
+            var closestSingleBlock = $(this).closest('.singleReportingBlock');
+
+            var nextSubBlocks = closestSingleBlock.nextUntil('.singleReportingBlock', '.subSingleReportingBlock');
+            
+            if (nextSubBlocks.length > 0) {
+                nextSubBlocks.last().append(html);
+            } else {
+                closestSingleBlock.after('<div class="subSingleReportingBlock">' + html + '</div>');
+            }
+        });
+
 
         $(document).on('click', '.DefinitionbtnRemove', function() {
             $(this).closest('div.row').remove();
@@ -361,7 +505,7 @@
         $('#reportingbtadd').click(function(e) {
 
             var html =
-                '<div class="resrow row"><div class="col-11"><input type="text" name="reporting[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="singleReportingBlock"><div class="resrow row"><div class="col-10"><textarea name="reporting[]" class="myclassname"></textarea></div> <div class="col-sm-1"> <button class="btn btn-dark subReportingAdd">+</button> </div> <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#reportingdiv').append(html);
 
@@ -370,15 +514,28 @@
         $('#referencesbtadd').click(function(e) {
 
             var html =
-                '<div class="resrow row"><div class="col-11"><input type="text" name="references[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="singleReferencesBlock"><div class="resrow row"><div class="col-10"><input type="text" name="references[]" class="myclassname"></div><div class="col-sm-1"> <button class="btn btn-dark subReferencesAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#referencesdiv').append(html);
 
         });
+
         $('#annbtadd').click(function(e) {
 
             var html =
-              '<div class="resrow row"><div class="col-11"><input type="text" name="ann[]" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+            `<div class="singleAnnexureBlock">
+                <div class="resrow row">
+                    <div class="col-10">
+                        <input type="text" name="ann[]" class="myclassname">
+                    </div>
+                    <div class="col-sm-1"> 
+                        <button class="btn btn-dark subAnnexureAdd">+</button> 
+                    </div>
+                    <div class="col-1">
+                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                    </div>
+                </div>
+            </div>`;
 
             $('#anndiv').append(html);
 
@@ -391,12 +548,12 @@
 
             $('#distributiondiv').append(html);
 
-});
+        });
 
         $('#materialsbtadd').click(function(e) {
 
             var html =
-                '<div class="singleMaterialBlock"><div class="resrow row"><div class="col-10"><input type="text" name="materials_and_equipments[]" class="myclassname"></div><div class="col-1"><button type="button" class="subMaterialsAdd" name="button">+</button></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div></div>';
+                '<div class="singleMaterialBlock"><div class="resrow row"><div class="col-10"><input type="text" name="materials_and_equipments[]" class="myclassname"></div><div class="col-1"><button type="button" class="subMaterialsAdd" name="button">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('.materialsBlock').append(html);
 

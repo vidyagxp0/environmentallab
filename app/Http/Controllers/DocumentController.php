@@ -730,8 +730,6 @@ class DocumentController extends Controller
     public function update($id, Request $request)
     {
 
-        // return $request->notify_to;
-
         if ($request->submit == 'save') {
             $lastDocument = Document::find($id);
             $lastContent = DocumentContent::firstOrNew([
@@ -1261,28 +1259,14 @@ class DocumentController extends Controller
             $documentcontet->scope = $request->scope;
             $documentcontet->procedure = $request->procedure;
             $documentcontet->safety_precautions = $request->safety_precautions;
-            if (! empty($request->responsibility)) {
-                $documentcontet->responsibility = serialize($request->responsibility);
-            }
-            if (! empty($request->abbreviation)) {
-                $documentcontet->abbreviation = serialize($request->abbreviation);
-            }
-            if (! empty($request->defination)) {
-                $documentcontet->defination = serialize($request->defination);
-            }
-            if (! empty($request->reporting)) {
-                $documentcontet->reporting = serialize($request->reporting);
-            }
-
-            if (! empty($request->materials_and_equipments)) {
-                $documentcontet->materials_and_equipments = serialize($request->materials_and_equipments);
-            }
-            if (! empty($request->references)) {
-                $documentcontet->references = serialize($request->references);
-            }
-            if (! empty($request->ann)) {
-                $documentcontet->ann = serialize($request->ann);
-            }
+            
+            $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
+            $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
+            $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
+            $documentcontet->reporting = $request->reporting ? serialize($request->reporting) : serialize([]);
+            $documentcontet->materials_and_equipments = $request->materials_and_equipments ? serialize($request->materials_and_equipments) : serialize([]);
+            $documentcontet->references = $request->references ? serialize($request->references) : serialize([]);
+            $documentcontet->ann = $request->ann ? serialize($request->ann) : serialize([]);
             // if ($request->hasfile('references')) {
 
             //     $image = $request->file('references');

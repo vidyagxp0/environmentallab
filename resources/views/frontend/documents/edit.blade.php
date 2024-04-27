@@ -264,6 +264,7 @@
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc }}" {{Helpers::isRevised($document->stage)}}
                                         class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
+                                        min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
@@ -955,6 +956,7 @@
                                         <input type="text"  id="effective_date" value="{{ $document->effective_date ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : '' }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
                                         <input type="date" name="effective_date" value=""
                                         class="hide-input"
+                                        min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'effective_date')"/>
                                     </div>
                                     @foreach ($history as $tempHistory)
@@ -1041,6 +1043,7 @@
                                         <input type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" value=""
                                         class="hide-input new_review_date_hide"
+                                        min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'next_review_date')"/>
                                         </div>
 
@@ -1754,24 +1757,52 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if ($document->document_content && !empty($document->document_content->responsibility))
-                                        @foreach (unserialize($document->document_content->responsibility) as $data)
-                                            <div class="row">
-                                                <div class="col-sm-11">
-                                                    <input type="text" name="responsibility[]" class="myclassname"
-                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                    <div id="responsibilitydiv">
+                                        @if ($document->document_content && !empty($document->document_content->responsibility))
+                                            @foreach (unserialize($document->document_content->responsibility) as $key => $data)
+                                                <div class="{{  str_contains($key, 'sub') ? 'subSingleResponsibilityBlock' : 'singleResponsibilityBlock' }}">
+                                                    @if (str_contains($key, 'sub'))
+                                                        <div class="resrow row">
+                                                            <div class="col-6">
+                                                                <input type="text" name="responsibility[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @else
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="responsibility[]" class="myclassname"
+                                                            value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subResponsibilityAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                                <div class="col-sm-1">
-                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                            @endforeach
+                                        @else
+                                            <div class="singleResponsibilityBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="responsibility[]" class="myclassname" />
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subResponsibilityAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                    </div>
                                                 </div>
                                             </div>
+                                        @endif
+                                    </div>
 
-                                        @endforeach
-                                    @else
-                                        <input type="text" name="responsibility[]" class="myclassname" >
-                                    @endif
-
-                                    <div id="responsibilitydiv"></div>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Responsibility' && !empty($tempHistory->comment))
                                             @php
@@ -1811,21 +1842,39 @@
                                             name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if ($document->document_content && !empty($document->document_content->abbreviation))
-                                        @foreach (unserialize($document->document_content->abbreviation) as $data)
-                                            <div class="row">
-                                                <div class="col-sm-11">
-                                                    <input type="text" name="abbreviation[]" class="myclassname"
-                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                    
+                                    <div id="abbreviationdiv">
+                                        @if ($document->document_content && !empty($document->document_content->abbreviation))
+                                            @foreach (unserialize($document->document_content->abbreviation) as $key => $data)
+                                                <div class="{{  str_contains($key, 'sub') ? 'subSingleAbbreviationBlock' : 'singleAbbreviationBlock' }}">
+                                                    @if (str_contains($key, 'sub'))
+                                                        <div class="resrow row">
+                                                            <div class="col-6">
+                                                                <input type="text" name="abbreviation[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @else 
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="abbreviation[]" class="myclassname"
+                                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subAbbreviationAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </div>
-                                                <div class="col-sm-1">
-                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    @endif
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-                                    <div id="abbreviationdiv"></div>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Abbreviation' && !empty($tempHistory->comment))
                                             @php
@@ -1866,22 +1915,38 @@
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     
-                                    @if ($document->document_content && !empty($document->document_content->defination))
-                                        @foreach (unserialize($document->document_content->defination) as $data)
-                                                <div class="row">
-                                                    <div class="col-sm-11">
-                                                        <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
-                                                            value="{{ $data }}">
-                                                    </div>
-        
-                                                    <div class="col-sm-1">
-                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                    </div>
-                                                </div>
-                                        @endforeach
-                                    @endif
+                                    <div id="definitiondiv">
+                                        @if ($document->document_content && !empty($document->document_content->defination))
+                                            @foreach (unserialize($document->document_content->defination) as $key => $data)
+                                                <div class="{{  str_contains($key, 'sub') ? 'subSingleDefinitionBlock' : 'singleDefinitionBlock' }}">
+                                                    @if (str_contains($key, 'sub'))
+                                                        <div class="resrow row">
+                                                            <div class="col-6">
+                                                                <input type="text" name="defination[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @else 
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
+                                                                    value="{{ $data }}">
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-dark subDefinitionAdd">+</button>
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                </div>    
+                                            @endforeach
+                                        @endif
+                                    </div>
 
-                                    <div id="definitiondiv"></div>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Definiton' && !empty($tempHistory->comment))
                                             @php
@@ -1925,7 +1990,7 @@
                                     @if ($document->document_content && !empty($document->document_content->materials_and_equipments))
                                         <div class="materialsBlock">
                                             @foreach (unserialize($document->document_content->materials_and_equipments) as $key => $data)
-                                                <div class="singleMaterialBlock">
+                                                <div class="{{  str_contains($key, 'sub') ? 'subSingleMaterialBlock' : 'singleMaterialBlock' }}" >
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
@@ -1947,7 +2012,7 @@
                                                             </div>
 
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                <button class="btn btn-danger removeAllBlocks">Remove</button>
                                                             </div>
                                                         </div>
                                                     @endif
@@ -1955,7 +2020,21 @@
                                             @endforeach
                                         </div>
                                     @else
-                                        <input type="text" name="materials_and_equipments[]" class="myclassname" >
+                                        <div class="singleMaterialBlock">
+                                            <div class="row">
+                                                <div class="col-sm-10">
+                                                    <input type="text" name="materials_and_equipments[]" class="myclassname" >
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <button type="button" class="subMaterialsAdd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                                </div>
+
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     @endif
 
                                     <div id="materialsdiv"></div>
@@ -2058,23 +2137,53 @@
                                         Reporting<button type="button" id="reportingbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if ($document->document_content && !empty($document->document_content->reporting))
-                                        @foreach (unserialize($document->document_content->reporting) as $data)
-                                            <div class="row">
-                                                <div class="col-sm-11">
-                                                    <textarea type="text" name="reporting[]" class=""
-                                                     {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
-                                               </div>
-                                               <div class="col-sm-1">
-                                                   <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                               </div>
-                                            </div>
-                                        @endforeach
-                                    @else
-                                        <textarea type="text" name="reporting[]" class=""></textarea>
-                                    @endif
 
-                                    <div id="reportingdiv"></div>
+                                    <div id="reportingdiv">
+                                        @if ($document->document_content && !empty($document->document_content->reporting))
+                                            @foreach (unserialize($document->document_content->reporting) as $key => $data)
+                                                <div class="{{  str_contains($key, 'sub') ? 'subSingleReportingBlock' : 'singleReportingBlock' }}">
+                                                    @if (str_contains($key, 'sub'))
+                                                        <div class="resrow row">
+                                                            <div class="col-6">
+                                                                <input type="text" name="reporting[{{ $key }}]" class="myclassname" value="{{ $data }}" />
+                                                            </div>
+                                                            <div class="col-1">
+                                                                <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                            </div>
+                                                        </div>
+                                                    @else 
+                                                        <div class="row">
+                                                            <div class="col-sm-10">
+                                                                <textarea type="text" name="reporting[]" class=""
+                                                                {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                                <button class="btn btn-dark subReportingAdd">+</button>
+                                                            </div>
+                                                        <div class="col-sm-1">
+                                                            <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                        </div>
+                                                        </div>
+                                                    @endif 
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            <div class="singleReportingBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea type="text" name="reporting[]" class="summernote"></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subReportingAdd">+</button>
+                                                    </div>
+                                                <div class="col-sm-1">
+                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
+
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Reporting' && !empty($tempHistory->comment))
                                             @php
@@ -2115,25 +2224,56 @@
                                         References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if ($document->document_content && !empty($document->document_content->references))
-                                        @foreach (unserialize($document->document_content->references) as $data)
-                                            @if (!empty($data))
+                                    
+                                    <div id="referencesdiv">
+                                        @if ($document->document_content && !empty($document->document_content->references))
+                                            @foreach (unserialize($document->document_content->references) as $key => $data)
+                                                @if (!empty($data))
+                                                    <div class="{{  str_contains($key, 'sub') ? 'subSingleReferencesBlock' : 'singleReferencesBlock' }}">
+                                                        @if (str_contains($key, 'sub'))
+                                                            <div class="resrow row">
+                                                                <div class="col-6">
+                                                                    <input type="text" name="references[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @else    
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" name="references[]" class="myclassname"
+                                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark subReferencesAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <div class="singleReferencesBlock">
                                                 <div class="row">
-                                                    <div class="col-sm-11">
-                                                        <input type="text" name="references[]" class="myclassname"
-                                                        value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
-                                                   </div>
-                                                   <div class="col-sm-1">
-                                                       <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
-                                                   </div>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="references[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subResponsibilityAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                    </div>
                                                 </div>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        <input type="text" name="references[]" class="myclassname">
-                                    @endif
+                                            </div>
+                                        @endif
 
-                                    <div id="referencesdiv"></div>
+                                    </div>
+                                    
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'References' && !empty($tempHistory->comment))
                                             @php
@@ -2214,25 +2354,55 @@
                                         Annexure<button type="button" id="annbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    @if ($document->document_content && !empty($document->document_content->ann))
-                                        @foreach (unserialize($document->document_content->ann) as $data)
-                                            @if (!empty($data))
+                                    
+                                    <div id="anndiv">
+                                        @if ($document->document_content && !empty($document->document_content->ann))
+                                            @foreach (unserialize($document->document_content->ann) as $key => $data)
+                                                @if (!empty($data))
+                                                    <div class="{{ str_contains($key, 'sub') ? 'subSingleAnnexureBlock' : 'singleAnnexureBlock' }}">
+                                                        @if (str_contains($key, 'sub'))
+                                                            <div class="resrow row">
+                                                                <div class="col-6">
+                                                                    <input type="text" name="ann[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                                </div>
+                                                                <div class="col-1">
+                                                                    <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            <div class="row">
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" name="ann[]" class="myclassname"
+                                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn btn-dark subAnnexureAdd">+</button>
+                                                                </div>
+                                                                <div class="col-sm-1">
+                                                                    <button class="btn-btn-danger removeAllBlocks">Remove</button>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    </div>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <div class="singleAnnexureBlock">
                                                 <div class="row">
-                                                    <div class="col-sm-11">
-                                                        <input type="text" name="ann[]" class="myclassname"
-                                                        value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="ann[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subAnnexureAdd">+</button>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn-btn-danger abbreviationbtnRemove">Remove</button>
                                                     </div>
                                                 </div>
-                                            @endif
-                                        @endforeach
-                                    @else
-                                        <input type="text" name="ann[]" class="myclassname">
-                                    @endif
+                                            </div>
+                                        @endif
+                                    </div>
 
-                                    <div id="anndiv"></div>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'ann' && !empty($tempHistory->comment))
                                             @php
