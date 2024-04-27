@@ -14,8 +14,15 @@
     <div id="manage-question-bank">
         <div class="container-fluid">
             <div class="inner-block basic-info">
-                <div class="main-head">
-                    Manage Question Bank
+                <div class="main-class">
+                    <div class="main-head d-flex justify-content-between align-items-center">
+                       <div> Manage Question Bank</div>
+                       {{-- <button class="button_theme1">Edit</button> --}}
+                       <div class="button_theme1" data-bs-toggle="modal" data-bs-target="#question-bank-modal">
+                        Edit
+                    </div>
+                    </div>
+                  
                 </div>
                 <div class="inner-block-content">
                     <div class="bar">
@@ -93,6 +100,45 @@
                 </div>
             </form>
 
+        </div>
+    </div>
+
+    <div class="modal fade" id="question-bank-modal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h4 class="modal-title">Question Bank</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form action="{{ route('question-bank.update', $question->id) }}" method="post">
+                    @csrf
+                    @method('PUT')
+                    <div class="modal-body">
+                        <div class="group-input">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" value="{{ $question->title }}">
+                        </div>
+                        <div class="group-input">
+                            <label for="status">Status</label>
+                            <select name="status">
+                                <option value="active" @if($question->status == "active") selected @endif>Active</option>
+                                <option value="inactive" @if($question->status == "inactive") selected @endif>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="group-input">
+                            <label for="desc">Description</label>
+                            <textarea name="description">{{ $question->description }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit">Save</button>
+                    </div>
+                </form>
+
+            </div>
         </div>
     </div>
 

@@ -192,6 +192,32 @@ $(document).ready(function () {
      }
  }
 
+ //Passing percentage
+ $("#assessmentrequirederror").hide();
+ let assessmentError = true;
+ $("#assessment_required").keyup(function () {
+     trainingAssessment();
+ });
+ function trainingAssessment() {
+     let traning_plan_name = $("#training-select").val();
+     let trainingQuiz = $("#assessment_required").val();
+     if(traning_plan_name == "Classroom Training"){
+         if (trainingQuiz == "") {
+             $("#assessmentrequirederror").show();
+             assessmentError = false;
+             return false;
+         }  else {
+             assessmentError = true;
+             $("#assessmentrequirederror").hide();
+         }
+     }
+     else{
+         assessmentError = true;
+             $("#assessmentrequirederror").hide();
+     }
+
+ }
+
 
   //Passing percentage
   $("#trainingPlan").hide();

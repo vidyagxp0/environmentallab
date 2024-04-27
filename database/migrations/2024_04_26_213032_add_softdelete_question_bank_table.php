@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('document_contents', function (Blueprint $table) {
-            $table->longText('safety_precautions')->nullable();
+        Schema::table('trainings', function (Blueprint $table) {
+            $table->softDeletes();
+        });
+        Schema::table('question_banks', function (Blueprint $table) {
+            $table->softDeletes();
         });
     }
 
@@ -26,8 +29,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('document_contents', function (Blueprint $table) {
-            Schema::dropIfExists('safety_precautions');
-
+            Schema::dropIfExists('deleted_at');
         });
     }
 };

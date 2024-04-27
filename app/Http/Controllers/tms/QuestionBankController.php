@@ -7,9 +7,11 @@ use Illuminate\Pagination\Paginator as PaginationPaginator;
 use App\Http\Controllers\Controller;
 use App\Models\Question;
 use App\Models\QuestionBank;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class QuestionBankController extends Controller
 {
@@ -20,7 +22,7 @@ class QuestionBankController extends Controller
      */
     public function index()
     {
-        $data = QuestionBank::where('trainer_id',Auth::user()->id)->orderByDesc('id')->paginate('10');
+        $data = QuestionBank::withTrashed()->where('trainer_id',Auth::user()->id)->orderByDesc('id')->paginate('10');
         return view('frontend.TMS.question-bank',compact('data'));
     }
 
@@ -33,9 +35,7 @@ class QuestionBankController extends Controller
     {
         //
     }
-public function questiondata(){
-    dd('asdfasdf');
-}
+
     /**
      * Store a newly created resource in storage.
      *
@@ -74,7 +74,7 @@ public function questiondata(){
     public function edit($id)
     {
         $data = Question::where('trainer_id', Auth::user()->id)->paginate('10');
-        $question = QuestionBank::find($id);
+        $question = QuestionBank::withTrashed()->find($id);
         return view('frontend.TMS.manage-question-bank',compact('question','data'));
     }
 
@@ -87,17 +87,37 @@ public function questiondata(){
      */
     public function update(Request $request, $id)
     {
+       $question = QuestionBank::withTrashed()->find($id);
 
-       $question = QuestionBank::find($id);
-       if(empty($question->questions)){
-        $this->validate($request,[
-            'questions'=>'required',
-          ]);
-       }
-       if($request->questions){
-       $question->questions = implode(',', $request->questions);
-       }
-       $question->update();
+    //    dd($request->input('status') == 'active');
+            if($request->input('title') != null){
+                $question->update([
+                    'title' => $request->input('title'),
+                    'status' => $request->input('status'),
+                    'description' => $request->input('description'),
+                    'deleted_at' => Carbon::now(),
+                ]);
+    
+                // Check if status is "active" and update the deleted_at column accordingly
+
+                if ($request->input('status') == 'active') {
+                    $question->restore();
+                } else {
+                    $question->delete(); // Soft delete the question bank
+                }
+               }
+            else{
+                if(empty($question->questions)){
+                    $this->validate($request,[
+                        'questions'=>'required',
+                      ]);
+                   }
+                   if($request->questions){
+                   $question->questions = implode(',', $request->questions);
+                   }
+                   $question->update();
+            }
+        
        toastr()->success('Submit successfully.');
        return redirect()->route('question-bank.index');
     }
@@ -110,14 +130,14 @@ public function questiondata(){
      */
     public function destroy($id)
     {
-        $data = QuestionBank::find($id);
-        $data->delete();
+        $data = QuestionBank::withTrashed()->find($id);
+        $data->forceDelete();
         toastr()->success('Deleted successfully');
         return back();
     }
 
     public function datag($id){
-        $questions = QuestionBank::find($id);
+        $questions = QuestionBank::withTrashed()->find($id);
         if(!empty($questions->questions)){
             $data = explode(',',$questions->questions);
 

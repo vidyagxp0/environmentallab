@@ -48,7 +48,7 @@
                                         <option value="Read & Understand">Read & Understand</option>
                                         <option value="Read & Understand with Questions">Read & Understand with Questions
                                         </option>
-                                        <option value="Classroom">Classroom Training</option>
+                                        <option value="Classroom Training">Classroom Training</option>
                                     </select>
                                     <p id="trainingType" style="color: red">
                                         ** Training type is missing...
@@ -57,23 +57,31 @@
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="classRoom_trainingName">Assessment Required? </label>
-                                    <select  name="classRoom_training[]" placeholder="SelectclassRoom_training Name">
-                                        <option value="Plant 1">-- Select --</option>
+                                    <label for="classRoom_trainingName">Assessment Required? <span id="assessmentrequiredAstrik" style="display: none" class="text-danger">*</span></label>
+                                    <select class="assessment_required" id="assessment_required" name="assessment_required" placeholder="SelectclassRoom_training Name">
+                                        <option value="">-- Select --</option>
                                         <option value="yes"> Yes</option>
                                         <option value="no"> No</option>
-
                                     </select>
+                                    <p id="assessmentrequirederror" style="color: red">
+                                        ** Training assessment required is missing...
+                                    </p>
                                 </div>
                             </div>
                             
                             <div class="col-6">
                                 <div class="group-input" id="classroomTrainingBlock" style="display: none">
-                                    <label for="classRoom_trainingName">Class Room Trainer</label>
-                                    <select style="display: none" multiple name="classRoom_training[]" placeholder="SelectclassRoom_training Name"
-                                        data-search="false" data-silent-initial-value-set="true" id="classRoom_training">
-                                        <option value="Plant 1"> person</option>
-                                        <option value="Plant 1"> person</option>
+                                    <label for="classRoom_trainingName">Class Room Trainer <span class="text-danger">*</span></label>
+                                    <select style="display: none" multiple name="classRoom_training[]" placeholder="Select class room trainer" style="border: 1px solid #ddd"
+                                        data-search="false" data-silent-initial-value-set="true" id="classRoom_training" required>
+                                        @foreach ($traineesPerson as $user_id)
+                                            @php
+                                                $user = \App\Models\User::find($user_id);
+                                            @endphp
+                                            @if ($user)
+                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                            @endif
+                                        @endforeach
                                    </select>
                                 </div>
                             </div>
@@ -82,12 +90,38 @@
                                   var selectedValue = document.getElementById("training-select").value;
                                   var multiSelectField = document.getElementById("classroomTrainingBlock");
                                 
-                                  if (selectedValue === "Classroom") {
+                                  if (selectedValue === "Classroom Training") {
                                     multiSelectField.style.display = "block";
                                   } else {
                                     multiSelectField.style.display = "none";
                                   }
                                 }
+                                </script>
+                                 <script>
+                                    document.addEventListener('DOMContentLoaded', function () {
+                                        var selectField = document.getElementById('training-select');
+                                        var inputsToToggle = [];
+
+                                        // Add elements with class 'facility-name' to inputsToToggle
+                                        var facilityNameInputs = document.getElementsByClassName('assessment_required');
+                                        
+                                        for (var i = 0; i < facilityNameInputs.length; i++) {
+                                            inputsToToggle.push(facilityNameInputs[i]);
+                                        }
+
+                                                                        
+                                        selectField.addEventListener('change', function () {
+                                            var isRequired = this.value === 'Classroom Training';
+
+                                            inputsToToggle.forEach(function (input) {
+                                                input.required = isRequired;
+                                            });
+
+                                            // Show or hide the asterisk icon based on the selected value
+                                            var asteriskIcon = document.getElementById('assessmentrequiredAstrik');
+                                            asteriskIcon.style.display = isRequired ? 'inline' : 'none';
+                                        });
+                                    });
                                 </script>
                             <div class="col-6">
                                 <div class="group-input">
@@ -98,7 +132,7 @@
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Training End  Date & Time</label>
-                                    <input type="datetime-local" name="training_start_date">
+                                    <input type="datetime-local" name="training_end_date">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -113,11 +147,11 @@
                                     <label for=" Attachments"> Attachments</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
-                                        <div class="file-attachment-list" id="Initial_attachment"></div>
+                                        <div class="file-attachment-list" id="training_attachment"></div>
                                         <div class="add-btn">
                                             <div class="add_training_attachment" style="cursor: pointer;">Add</div>
                                             <input type="file" id="myfile" name="attachment[]"
-                                                oninput="addMultipleFiles(this, 'Initial_attachment')" multiple>
+                                                oninput="addMultipleFiles(this, 'training_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>

@@ -29,7 +29,7 @@
                                 <div class="add-question-bank" data-bs-toggle="modal" data-bs-target="#question-bank-modal">
                                     <i class="fa-solid fa-plus"></i>&nbsp;Add Question Bank
                                 </div>
-                                <button>Print</button>
+                                {{-- <button>Print</button> --}}
                             </div>
                         </div>
                         <div class="table-block">

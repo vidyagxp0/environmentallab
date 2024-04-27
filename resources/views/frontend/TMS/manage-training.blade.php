@@ -21,7 +21,7 @@
             <div class="inner-block">
                 <div class="main-head">
                     <div>Manage Training Plan</div>
-                    <div><button>Print</button></div>
+                    {{-- <div><button>Print</button></div> --}}
                 </div>
                 <div class="inner-block-content">
                     <div class="manage-table">

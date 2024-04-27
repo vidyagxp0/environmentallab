@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use App\Models\DocumentType;
 use App\Models\Division;
+use App\Models\UserRole;
 use App\Models\DocumentTraining;
 use App\Http\Controllers\Controller;
 use App\Models\DocumentHistory;
@@ -176,7 +177,8 @@ class TMSController extends Controller
           
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->get();
-           
+           $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
+        //    dd($trainees);
             foreach($due as $temp){
                 $temp->training = Document::find($temp->document_id);
                 if($temp->training){
@@ -195,7 +197,7 @@ class TMSController extends Controller
             foreach($users as $data){
                 $data->department = Department::where('id',$data->departmentid)->value('name');
             }
-            return view('frontend.TMS.create-training',compact('due','users','quize'));
+            return view('frontend.TMS.create-training',compact('due','users','quize', 'traineesPerson'));
         }else{
             abort(404);
         } 
@@ -216,8 +218,26 @@ class TMSController extends Controller
             $training->effective_criteria = $request->effective_criteria;
             $training->trainee_criteria = $request->trainee_criteria;
             $training->quize = $request->quize;
-            $training->sops = implode(',',$request->sops);
-            $training->trainees = implode(',',$request->trainees);
+            $training->training_start_date = $request->training_start_date;
+            $training->training_end_date = $request->training_end_date;
+            $training->assessment_required = $request->assessment_required;
+            $training->desc = $request->desc;
+
+            $training->sops = !empty($request->sops) ? implode(',', $request->sops) : '';
+            $training->classRoom_training = !empty($request->classRoom_training) ? implode(',', $request->classRoom_training) : '';
+            $training->trainees = !empty($request->trainees) ? implode(',', $request->trainees) : '';
+
+            if (!empty($request->training_attachment)) {
+                $files = [];
+                foreach ($request->file('training_attachment') as $file) {
+                    $name = $request->traning_plan_name . 'training_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $file->move('upload/', $name);
+                    $files[] = 'upload/' . $name; // Store the file path
+                }
+                // Save the file paths in the database
+                $training->training_attachment = json_encode($files);
+            }            
+
             $training->save();
             $TrainingHistory = new TrainingHistory();
             $TrainingHistory->plan_id = $training->id;
@@ -555,6 +575,8 @@ class TMSController extends Controller
 
     public function edit($id){
         $train = Training::find($id);
+        $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
+
         if(Helpers::checkRoles(6)){
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
@@ -574,7 +596,7 @@ class TMSController extends Controller
             foreach($users as $data){
                 $data->department = Department::where('id',$data->departmentid)->value('name');
             }
-            return view('frontend.TMS.edit-training',compact('due','users','quize','train'));
+            return view('frontend.TMS.edit-training',compact('due','users','quize','train', 'traineesPerson'));
         }
     }
 
@@ -593,13 +615,36 @@ class TMSController extends Controller
             $training->effective_criteria = $request->effective_criteria;
             $training->trainee_criteria = $request->trainee_criteria;
             $training->quize = $request->quize;
+            $training->training_start_date = $request->training_start_date;
+            $training->training_end_date = $request->training_end_date;
+            $training->assessment_required = $request->assessment_required;
+            // $training->sops = implode(',',$request->sops);
+            // $training->classRoom_training = implode(',',$request->classRoom_training);
+            // $training->trainees = implode(',',$request->trainees);
+            if($request->classRoom_training){
+                $training->classRoom_training = implode(',',$request->classRoom_training);
+            }
             if($request->sops){
                 $training->sops = implode(',',$request->sops);
-
             }
             if($request->trainees){
                 $training->trainees = implode(',',$request->trainees);
+            }
+            if (!empty ($request->training_attachment)) {
+                $files = [];
+                
+                if ($training->training_attachment) {
+                    $files = is_array(json_decode($training->training_attachment)) ? $training->training_attachment : [];
+                }
 
+                if ($request->hasfile('training_attachment')) {
+                    foreach ($request->file('training_attachment') as $file) {
+                        $name = $request->traning_plan_name . 'training_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                        $file->move('upload/', $name);
+                        $files[] = $name;
+                    }
+                }
+                $training->training_attachment = json_encode($files);
             }
             $training->save();
             if($training->traning_plan_name !== $last->traning_plan_name || !empty($request->traning_plan_comment)){

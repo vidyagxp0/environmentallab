@@ -33,15 +33,26 @@
                                             </div>
                                             <div class="right">
                                                 <label for="status">Status</label>
-                                                <select name="status" class="filterSelect">
-                                                       <option value="">All</option>
-                                                    <option value="draft">Draft</option>
-                                                    <option value="under-review">Under Review</option>
-                                                    <option value="reviewd">Reviewed</option>
-                                                    <option value="under-approval">Under Approval</option>
-                                                    <option value="approved">Approved</option>
-                                                    <option value="effective">Effective</option>
-                                                    <option value="effective">Obsolete</option>
+                                                <select name="status" class="filterSelect"> 
+                                                    <option value="">All</option>
+                                                    @foreach ($documentStatus as $data1)
+                                                        {{-- @if($data1->status == "Draft")<option value="Draft">Draft</option>@endif
+                                                        @if($data1->status == "Under Review")<option value="Under Review">Under Review</option>@endif
+                                                        @if($data1->status == "Reviewed")<option value="Reviewed">Reviewed</option>@endif
+                                                        @if($data1->status == "Under Approval")<option value="Under Approval">Under Approval</option>@endif
+                                                        @if($data1->status == "Approved")<option value="Approved">Approved</option>@endif
+                                                        @if($data1->status == "Effective")<option value="Effective">Effective</option>@endif
+                                                        @if($data1->status == "Obsolete")<option value="Obsolete">Obsolete</option>@endif --}}
+                                                        {{-- <option value="under-review">Under Review</option>
+                                                        <option value="reviewd">Reviewed</option>
+                                                        <option value="under-approval">Under Approval</option>
+                                                        <option value="approved">Approved</option>
+                                                        <option value="effective">Effective</option>
+                                                        <option value="effective">Obsolete</option>--}}
+                                                        
+                                                        <option value="{{ $data1->status }}">{{ $data1->status }}</option> 
+                                                        @endforeach
+                                                    
                                                 </select>
                                             </div>
                                         </div>
