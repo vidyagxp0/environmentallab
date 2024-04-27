@@ -189,7 +189,7 @@
                                             <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />                                    
                                         <input
                                          type="date" id="due_dateDoc" name="due_dateDoc" pattern="\d{4}-\d{2}-\d{2}"
-                                         class="hide-input"
+                                         class="hide-input" min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                          oninput="handleDateInput(this, 'due_dateDoc')"/>
                                         </div>
 
