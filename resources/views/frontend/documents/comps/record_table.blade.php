@@ -51,7 +51,11 @@
                     {{ Helpers::getDivisionName($doc->division_id) }}
                 </td>
 
-                <td class="short-desc">
+                <td style="display: inline-block;
+                width: 305px;
+                white-space: nowrap;
+                overflow: hidden !important;
+                text-overflow: ellipsis" class="short-desc">
                     {{ $doc->short_description }}
                 </td>
                 <td class="create-date">

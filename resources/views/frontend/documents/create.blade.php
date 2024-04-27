@@ -189,7 +189,7 @@
                                             <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />                                    
                                         <input
                                          type="date" id="due_dateDoc" name="due_dateDoc" pattern="\d{4}-\d{2}-\d{2}"
-                                         class="hide-input"
+                                         class="hide-input" min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                          oninput="handleDateInput(this, 'due_dateDoc')"/>
                                         </div>
 
@@ -410,6 +410,7 @@
                                         <input 
                                         type="date" name="effective_date" id="effective_date"
                                         class="hide-input"
+                                        min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'effective_date')"
                                         />
                                         </div>
@@ -431,6 +432,7 @@
                                             <input type="text" name="next_review_date" id="next_review_date" class="new_review_date_show"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" id="next_review_date"
                                         class="hide-input new_review_date_hide"
+                                        min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'next_review_date')"/>
                                         </div>
                                     </div>
@@ -703,11 +705,22 @@
                                                 name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
-
-                                        <input type="text" name="responsibility[]" class="myclassname">
-
-
-                                        <div id="responsibilitydiv"></div>
+                                        
+                                        <div id="responsibilitydiv">
+                                            <div class="singleResponsibilityBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="responsibility[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subResponsibilityAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -720,10 +733,22 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
-                                        <input type="text" name="abbreviation[]" class="myclassname">
-
-
-                                        <div id="abbreviationdiv"></div>
+                                        
+                                        <div id="abbreviationdiv">
+                                            <div class="singleAbbreviationBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="abbreviation[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subAbbreviationAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -743,6 +768,7 @@
 
                                     </div>
                                 </div>
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
@@ -761,7 +787,7 @@
                                                         <button type="button" class="subMaterialsAdd" name="button">+</button>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -789,13 +815,25 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button>
+                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button> 
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <input type="text" name="reporting[]" class="summernote">
-
-
-                                        <div id="reportingdiv"></div>
+                                        
+                                        <div id="reportingdiv">
+                                            <div class="singleReportingBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <textarea name="reporting[]" class=""></textarea>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subReportingAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -806,16 +844,21 @@
                                             References<button type="button" id="referencesbtadd" >+</button>
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <input type="text" name="references[]" class="myclassname">
-                                        <div id="referencesdiv"></div>
-                                        {{-- <div class="row reference-data">
-                                            <div class="col-lg-6">
-                                                <input type="text" name="reference-text">
+                                        <div id="referencesdiv">
+                                            <div class="singleReferencesBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="references[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subReferencesAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <input type="file" name="references" class="myclassname">
-                                            </div>
-                                        </div> --}}
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -824,8 +867,22 @@
                                             Annexure<button type="button" id="annbtadd" >+</button>
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        <input type="text" name="ann[]" class="myclassname">
-                                        <div id="anndiv"></div>
+                                        
+                                        <div id="anndiv">
+                                            <div class="singleAnnexureBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="ann[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subAnnexureAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         {{-- <div class="row reference-data">
                                             <div class="col-lg-6">
                                                 <input type="text" name="reference-text">

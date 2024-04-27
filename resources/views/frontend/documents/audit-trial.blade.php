@@ -50,7 +50,7 @@
                                     <tr>
                                         <th>Person</th>
                                         <th>Role</th>
-                                        {{-- <th>Today Print Count</th> --}}
+                                        <th>Today Print Count</th>
                                         <th>Total Count</th>
                                     </tr>
                                 </thead>
@@ -86,7 +86,7 @@
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>Reviewer</td>
-                                            {{-- <td>{{ $print_today }}</td> --}}
+                                            <td>{{ $print_today }}</td>
                                             <td>{{ $print }}</td>
                                         </tr>
                                     @endfor
