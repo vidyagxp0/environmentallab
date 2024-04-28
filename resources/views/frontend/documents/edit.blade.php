@@ -1008,7 +1008,7 @@
                               <div class="col-md-4">
                                 <div class="group-input">
                                     <label for="review-period">Review Period (in years)</label>
-                                    <input  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" {{Helpers::isRevised($document->stage)}}  value="{{ $document->review_period }}">
+                                    <input  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" min="0" {{Helpers::isRevised($document->stage)}}  value="{{ $document->review_period }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Review Period' &&
