@@ -962,6 +962,7 @@
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="effective-date">Effective Date</label>
+                                    <div><small class="text-primary">Kindly Fill Target Date of Completion</small></div>
                                     <div class="calenderauditee">                                     
                                         <input  @if($document->stage != 1) disabled @endif type="text"  id="effective_date" value="{{ $document->effective_date  ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : ''  }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
                                         <input  @if($document->stage != 1) disabled @endif type="date" name="effective_date" value=""
@@ -1008,7 +1009,7 @@
                               <div class="col-md-4">
                                 <div class="group-input">
                                     <label for="review-period">Review Period (in years)</label>
-                                    <input  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" min="0" {{Helpers::isRevised($document->stage)}}  value="{{ $document->review_period }}">
+                                    <input  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" min="0" {{Helpers::isRevised($document->stage)}}  value="3">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Review Period' &&
