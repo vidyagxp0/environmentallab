@@ -77,7 +77,11 @@
                             <a href="{{ url('doc-details', $doc->id) }}">View
                             </a>
 
-                            <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
+                            @if ($doc->status != 'Obsolete')
+                                <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
+                                
+                            @endif
+
                             <!--<form-->
                             <!--    action="{{ route('documents.destroy', $doc->id) }}"-->
                             <!--    method="post">-->
