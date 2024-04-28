@@ -21,8 +21,10 @@
                                     <button  onclick="location.href='{{ url('audit-trial', $document->id) }}';">
                                         Audit Trail
                                     </button>
-                                    <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
-                                    <button>Cancel</button>
+                                    @if ($document->status !== 'Obsolete')
+                                        <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
+                                        {{-- <button>Cancel</button> --}}
+                                    @endif
                                     <button  onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
                                     <button onclick="location.href='{{ url('documents/printPDF', $document->id) }}';" target="__blank">
@@ -31,13 +33,13 @@
                                     {{-- @if ($document->stage >= 7)
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif --}}
-                                    @if ($document->stage >= 8)
-                                    {{-- <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button> --}}
-                                    <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                        Obsolete
-                                    </button>
-                                    {{-- <button>Obsolete</button> --}}
-                                    <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
+                                    @if ($document->stage >= 8 && $document->status !== 'Obsolete')
+                                        {{-- <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button> --}}
+                                        <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                            Obsolete
+                                        </button>
+                                        {{-- <button>Obsolete</button> --}}
+                                        <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
                                     @endif
                                     
                                 </div>
