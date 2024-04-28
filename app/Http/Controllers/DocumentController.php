@@ -742,85 +742,88 @@ class DocumentController extends Controller
             ]);
             $lastTraining = DocumentTraining::where('document_id', $id)->first();
             $document = Document::find($id);
-            $document->document_name = $request->document_name;
-            $document->short_description = $request->short_desc;
-            $document->description = $request->description;
+            if($document->stage <= 7){
+                $document->document_name = $request->document_name;
+                $document->short_description = $request->short_desc;
+                $document->description = $request->description;
 
 
-            $document->due_dateDoc = $request->due_dateDoc;
-            $document->sop_type = $request->sop_type;
-            $document->department_id = $request->department_id;
-            $document->document_type_id = $request->document_type_id;
-            $document->document_subtype_id = $request->document_subtype_id;
-            $document->document_language_id = $request->document_language_id;
-            // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
-            // try {
-            //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
-            //     $document->next_review_date = $next_review_date;
-            // } catch (\Exception $e) {
-            //     // 
-            // }
-            // $document->review_period = $request->review_period;
-            $document->training_required = $request->training_required;
-            $document->attach_draft_doocument = $request->attach_draft_doocument;
-            $document->notify_to = json_encode($request->notify_to);
+                $document->due_dateDoc = $request->due_dateDoc;
+                $document->sop_type = $request->sop_type;
+                $document->department_id = $request->department_id;
+                $document->document_type_id = $request->document_type_id;
+                $document->document_subtype_id = $request->document_subtype_id;
+                $document->document_language_id = $request->document_language_id;
+                // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
+                // try {
+                //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
+                //     $document->next_review_date = $next_review_date;
+                // } catch (\Exception $e) {
+                //     // 
+                // }
+                // $document->review_period = $request->review_period;
+                $document->training_required = $request->training_required;
+                $document->attach_draft_doocument = $request->attach_draft_doocument;
+                $document->notify_to = json_encode($request->notify_to);
 
-            if ($request->keywords) {
-                $document->keywords = implode(',', $request->keywords);
-            }
+                if ($request->keywords) {
+                    $document->keywords = implode(',', $request->keywords);
+                }
 
-            if (is_array($request->notify_to)) {
-                $document->notify_to = implode(',', $request->notify_to);
-            }
+                if (is_array($request->notify_to)) {
+                    $document->notify_to = implode(',', $request->notify_to);
+                }
 
-            if ($request->reference_record) {
-                $document->reference_record = implode(',', $request->reference_record);
+                if ($request->reference_record) {
+                    $document->reference_record = implode(',', $request->reference_record);
+                }
+                
+
+                if ($request->hasfile('attach_draft_doocument')) {
+
+                    $image = $request->file('attach_draft_doocument');
+
+                    $ext = $image->getClientOriginalExtension();
+
+                    $image_name = date('y-m-d').'-'.rand().'.'.$ext;
+
+                    $image->move('upload/document/', $image_name);
+
+                    $document->attach_draft_doocument = $image_name;
+                }
+
+                if ($request->hasfile('attach_effective_docuement')) {
+
+                    $image = $request->file('attach_effective_docuement');
+
+                    $ext = $image->getClientOriginalExtension();
+
+                    $image_name = date('y-m-d').'-'.rand().'.'.$ext;
+
+                    $image->move('upload/document/', $image_name);
+
+                    $document->attach_effective_docuement = $image_name;
+                }
+                $document->revision_summary = $request->revision_summary;
+                $document->revision_type = $request->revision_type;
+                $document->major = $request->major;
+                $document->minor = $request->minor;
+                
+
+                if (! empty($request->reviewers)) {
+                    $document->reviewers = implode(',', $request->reviewers);
+                }
+                if (! empty($request->approvers)) {
+                    $document->approvers = implode(',', $request->approvers);
+                }
+                if (! empty($request->reviewers_group)) {
+                    $document->reviewers_group = implode(',', $request->reviewers_group);
+                }
+                if (! empty($request->approver_group)) {
+                    $document->approver_group = implode(',', $request->approver_group);
+                }
             }
             
-
-            if ($request->hasfile('attach_draft_doocument')) {
-
-                $image = $request->file('attach_draft_doocument');
-
-                $ext = $image->getClientOriginalExtension();
-
-                $image_name = date('y-m-d').'-'.rand().'.'.$ext;
-
-                $image->move('upload/document/', $image_name);
-
-                $document->attach_draft_doocument = $image_name;
-            }
-
-            if ($request->hasfile('attach_effective_docuement')) {
-
-                $image = $request->file('attach_effective_docuement');
-
-                $ext = $image->getClientOriginalExtension();
-
-                $image_name = date('y-m-d').'-'.rand().'.'.$ext;
-
-                $image->move('upload/document/', $image_name);
-
-                $document->attach_effective_docuement = $image_name;
-            }
-            $document->revision_summary = $request->revision_summary;
-            $document->revision_type = $request->revision_type;
-            $document->major = $request->major;
-            $document->minor = $request->minor;
-            
-
-            if (! empty($request->reviewers)) {
-                $document->reviewers = implode(',', $request->reviewers);
-            }
-            if (! empty($request->approvers)) {
-                $document->approvers = implode(',', $request->approvers);
-            }
-            if (! empty($request->reviewers_group)) {
-                $document->reviewers_group = implode(',', $request->reviewers_group);
-            }
-            if (! empty($request->approver_group)) {
-                $document->approver_group = implode(',', $request->approver_group);
-            }
 
             $document->update();
 
