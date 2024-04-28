@@ -1070,6 +1070,7 @@
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
                                                 ->where('stage', 'Reviewed')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                             
@@ -1084,6 +1085,7 @@
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
                                                 ->where('stage', 'Cancel-by-Reviewer')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
 
@@ -1137,6 +1139,7 @@
                                                         ->where('document_id', $data->id)
                                                         ->where('user_id', $reviewer[$i])
                                                         ->where('stage', 'Review-Submit')
+                                                        ->where('deleted_at', null)
                                                         ->latest()
                                                         ->first();
                                                         
@@ -1213,6 +1216,7 @@
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
                                                 ->where('stage', 'Approved')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                                 $comment = DB::table('stage_manages')
@@ -1224,6 +1228,7 @@
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
                                                 ->where('stage', 'Cancel-by-Approver')
+                                                ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
                                                 

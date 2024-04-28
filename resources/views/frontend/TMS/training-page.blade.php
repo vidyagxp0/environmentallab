@@ -35,7 +35,7 @@ window.addEventListener("popstate", function(event) {
 
             <div class="inner-block pdf-block">
                 <div class="main-head">
-                    SOP-000{{ $document->id }}
+                    {{-- SOP-000{{ $document->id }} --}}
                 </div>
                 <div class="inner-block-content">
                     <iframe id="theFrame" width="100%" height="800"

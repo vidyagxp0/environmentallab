@@ -161,7 +161,7 @@ class DocumentDetailsController extends Controller
           if ($request->stage_id == 'Cancel-by-Approver') {
             StageManage::where('document_id', $request->document_id)
               // ->where('user_id', Auth::user()->id)
-              ->where('role', '!=', 'Approver')
+              ->where('stage', 'In-Review')
               ->delete();
           }   
 
@@ -537,7 +537,7 @@ class DocumentDetailsController extends Controller
             }
             if ($request->stage_id == 8) {
               $document->effective_date = Carbon::now()->format('Y-m-d');
-              $document->review_period = 3; //3 year
+              // $document->review_period = 3; //3 year
               try {
                   $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
                   $document->next_review_date = $next_review_date;
