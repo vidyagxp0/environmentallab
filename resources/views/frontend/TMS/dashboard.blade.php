@@ -105,7 +105,7 @@
                                         <th>Content Type</th>
                                         <th>Due Date</th>
                                         <th>Completed Date</th>
-                                        <th>&nbsp;</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody id="searchTable">
@@ -176,7 +176,7 @@
                                         <th>Content Type</th>
                                         <th>Due Dat </th>
                                         <th>Completed Date</th>
-                                        <th>&nbsp;</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -243,7 +243,7 @@
                                         <th>Content Type</th>
                                         <th>Due Date</th>
                                         <th>Completed Date</th>
-                                        <th>&nbsp;</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -310,7 +310,7 @@
                                         <th>Content Type</th>
                                         <th>Due Date</th>
                                         <th>Completed Date</th>
-                                        <th>&nbsp;</th>
+                                        <th>Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
