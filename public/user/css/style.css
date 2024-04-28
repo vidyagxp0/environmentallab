@@ -373,7 +373,7 @@ header .header-bottom .bottom-links a:hover {
 header .header-bottom .bottom-links a:active {
     color: #4274da;
     text-decoration: none;
-    background-color: yellow;
+    /* background-color: yellow; */
 }
 
 header .header-bottom .bottom-links .notification {

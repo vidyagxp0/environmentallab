@@ -69,8 +69,8 @@
                             <div class="col-6">
                                 <div class="group-input" id="classroomTrainingBlock" @if($train->training_plan_type != "Classroom Training") style="display: none" @endif>
                                     <label for="classRoom_trainingName">Class Room Trainer <span class="text-danger">*</span></label>
-                                    <select  multiple name="classRoom_training[]" placeholder="SelectclassRoom_training Name"
-                                        data-search="false" data-silent-initial-value-set="true" id="classRoom_training" required>
+                                    <select  multiple class="classRoom_training" name="classRoom_training[]" placeholder="SelectclassRoom_training Name"
+                                        data-search="false" data-silent-initial-value-set="true" id="classRoom_training">
                                         @foreach ($traineesPerson as $user_id)
                                             @php
                                                 $user = \App\Models\User::find($user_id);
@@ -86,6 +86,33 @@
                                    </select>
                                 </div>
                             </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function () {
+                                    var selectField = document.getElementById('training-select');
+                                    var inputsToToggle = [];
+
+                                    // Add elements with class 'facility-name' to inputsToToggle
+                                    var facilityNameInputs = document.getElementsByClassName('assessment_required');
+                                    var facilityNameInputs1 = document.getElementsByClassName('classRoom_training');
+                                    
+                                    for (var i = 0; i < facilityNameInputs.length; i++) {
+                                        inputsToToggle.push(facilityNameInputs[i]);
+                                    }
+                                    for (var i = 0; i < facilityNameInputs.length; i++) {
+                                        inputsToToggle.push(facilityNameInputs1[i]);
+                                    }
+                                                                    
+                                    selectField.addEventListener('change', function () {
+                                        var isRequired = this.value === 'Classroom Training';
+
+                                        inputsToToggle.forEach(function (input) {
+                                            input.required = isRequired;
+                                        });
+                                    });
+                                });
+                            </script>
+
                             
                             <script>
                                 function toggleMultiSelect() {

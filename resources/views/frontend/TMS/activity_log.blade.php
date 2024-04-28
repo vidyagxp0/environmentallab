@@ -121,19 +121,19 @@
                     <div class="process-table active" id="internal-audit">
 
                         <div class="scope-bar">
-                            <div class="group-input">
+                            {{-- <div class="group-input">
                                 <label for="query">Criteria</label>
                                 <select id="query" name="stage">
                                     <option value="all_records">All Records</option>
                                     <option value="1">Closed Records</option>
                                     <option value="2">Opened Records</option>
                                     <option value="3">Cancelled Records</option>
-                                    {{-- <option value="4">Overdue Records</option>
+                                    <option value="4">Overdue Records</option>
                                     <option value="5">Assigned To Me</option>
-                                    <option value="6">Records Created Today</option> --}}
+                                    <option value="6">Records Created Today</option>
                                 </select>
-                            </div>
-                            <button onclick="window.print()" class="print-btn theme-btn-1">Print</button>
+                            </div> --}}
+                            <button style="width: 70px;" onclick="window.print()" class="print-btn theme-btn-1">Print</button>
                         </div>
 
                         <div class="table-block">
