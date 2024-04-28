@@ -436,8 +436,10 @@ class DocumentController extends Controller
             $document->effective_date = $request->effective_date;
             
             try {
-                $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
-                $document->next_review_date = $next_review_date;
+                if($request->effective_date){
+                    $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
+                    $document->next_review_date = $next_review_date;
+                }
             } catch (\Exception $e) {
                 // 
             }
