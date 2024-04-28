@@ -538,6 +538,21 @@ class DocumentDetailsController extends Controller
             if ($request->stage_id == 8) {
               $document->effective_date = Carbon::now()->format('Y-m-d');
               $document->review_period = 3; //3 year
+            
+              if ($document->revised == 'Yes')
+              {
+                $old_document = Document::where([
+                  'id' => $document->revised_doc,
+                  'status' => 'Effective'
+                ])->first();
+
+                if ($old_document) {
+                  $old_document->stage = 11;
+                  $old_document->status = 'Obsolete';
+                  $old_document->save();
+                }
+              }
+
               try {
                   $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
                   $document->next_review_date = $next_review_date;
