@@ -19,7 +19,7 @@
                                         Audit Trail
                                     </button>
                                     @php $showEdit = false; @endphp
-                                    @if (Helpers::checkRoles(2))
+                                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document))
                                         @if (empty($review_reject))
                                             @if (empty($stagereview_submit))
                                                 @php
@@ -33,7 +33,7 @@
                                         @endif
                                     @endif
 
-                                    @if (Helpers::checkRoles(1))
+                                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
                                         @if (empty($approval_reject))
                                             @if (empty($stageapprove_submit))
                                                 @php
@@ -868,12 +868,12 @@
                         <div class="group-input">
                             <label for="comment">Comment<span class="text-danger">*</span></label>
                             <textarea required name="comment" value="{{ old('comment') }}"></textarea>
-                        </div>
+                        </div> 
                     </div>
-                    @if (Helpers::checkRoles(1))
+                    @if (Helpers::checkRoles(1) AND Helpers::checkRoles_check_approvers($document))
                         <input type="hidden" name="stage_id" value="Cancel-by-Approver" />
                     @endif
-                    @if (Helpers::checkRoles(2))
+                    @if (Helpers::checkRoles(2) AND Helpers::checkRoles_check_reviewers($document))
                         <input type="hidden" name="stage_id" value="Cancel-by-Reviewer" />
                     @endif
 
