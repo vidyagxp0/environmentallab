@@ -68,9 +68,9 @@
                             </div>
                             <div class="col-6">
                                 <div class="group-input" id="classroomTrainingBlock" @if($train->training_plan_type != "Classroom Training") style="display: none" @endif>
-                                    <label for="classRoom_trainingName">Class Room Trainer</label>
+                                    <label for="classRoom_trainingName">Class Room Trainer <span class="text-danger">*</span></label>
                                     <select  multiple name="classRoom_training[]" placeholder="SelectclassRoom_training Name"
-                                        data-search="false" data-silent-initial-value-set="true" id="classRoom_training">
+                                        data-search="false" data-silent-initial-value-set="true" id="classRoom_training" required>
                                         @foreach ($traineesPerson as $user_id)
                                             @php
                                                 $user = \App\Models\User::find($user_id);
