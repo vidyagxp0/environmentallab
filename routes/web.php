@@ -240,6 +240,7 @@ Route::view('new-login', 'frontend.new-login');
 // ============================================
 //                    TMS
 // ============================================
+Route::view('activity_log', 'frontend.TMS.activity_log');
 
 Route::view('helpdesk-personnel', 'frontend.helpdesk-personnel');
 

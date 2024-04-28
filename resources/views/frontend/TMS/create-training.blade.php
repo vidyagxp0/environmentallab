@@ -56,16 +56,13 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="group-input">
-                                    <label for="classRoom_trainingName">Assessment Required? <span id="assessmentrequiredAstrik" style="display: none" class="text-danger">*</span></label>
-                                    <select class="assessment_required" id="assessment_required" name="assessment_required" placeholder="SelectclassRoom_training Name">
+                                <div class="group-input" id="assessmentBlock" style="display: none">
+                                    <label for="classRoom_trainingName">Assessment Required? <span class="text-danger">*</span></label>
+                                    <select class="assessment_required" id="assessment_required" name="assessment_required" placeholder="SelectclassRoom_training Name" required>
                                         <option value="">-- Select --</option>
                                         <option value="yes"> Yes</option>
                                         <option value="no"> No</option>
                                     </select>
-                                    <p id="assessmentrequirederror" style="color: red">
-                                        ** Training assessment required is missing...
-                                    </p>
                                 </div>
                             </div>
                             
@@ -89,15 +86,18 @@
                                 function toggleMultiSelect() {
                                   var selectedValue = document.getElementById("training-select").value;
                                   var multiSelectField = document.getElementById("classroomTrainingBlock");
+                                  var multiSelectField1 = document.getElementById("assessmentBlock");
                                 
                                   if (selectedValue === "Classroom Training") {
                                     multiSelectField.style.display = "block";
+                                    multiSelectField1.style.display = "block";
                                   } else {
                                     multiSelectField.style.display = "none";
+                                    multiSelectField1.style.display = "none";
                                   }
                                 }
                                 </script>
-                                 <script>
+                                 {{-- <script>
                                     document.addEventListener('DOMContentLoaded', function () {
                                         var selectField = document.getElementById('training-select');
                                         var inputsToToggle = [];
@@ -122,19 +122,19 @@
                                             asteriskIcon.style.display = isRequired ? 'inline' : 'none';
                                         });
                                     });
-                                </script>
-                            <div class="col-6">
+                                </script> --}}
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Training Start Date & Time </label>
                                     <input type="datetime-local" name="training_start_date">
                                 </div>
-                            </div>
-                            <div class="col-6">
+                            </div> --}}
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Training End  Date & Time</label>
                                     <input type="datetime-local" name="training_end_date">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
