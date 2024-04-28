@@ -272,12 +272,16 @@ class TMSController extends Controller
             }
             foreach($request->trainees as $trainee){
                 $user = User::find($trainee);
-                Mail::send('mail.assign-training', ['document' => $training],
+                try {
+                    Mail::send('mail.assign-training', ['document' => $training],
                       function ($message) use ($user) {
                               $message->to($user->email)
                               ->subject("Training is assigned to you.");
 
                       });
+                } catch (\Exception $e) {
+                    // log later on
+                }
             }
             toastr()->success('Training Plan created successfully');
             return redirect('TMS/show');
@@ -485,18 +489,27 @@ class TMSController extends Controller
                 $document->doc->status = "Effective";
                 $document->doc->update();
                 $user_data = User::find($document->doc->originator_id);
-                Mail::send('mail.complete-training', ['document' => $document],
+                try {
+                    Mail::send('mail.complete-training', ['document' => $document],
                       function ($message) use ($user_data) {
                               $message->to($user_data->email)
                               ->subject("Training is Completed.");
 
                       });
-                Mail::send('mail.effective', ['document' => $document],
-                function ($message) use ($user_data) {
-                        $message->to($user_data->email)
-                        ->subject("Document Effective Now.");
+                } catch (\Exception $e) {
+                    // log
+                }
+                
+                try {
+                    Mail::send('mail.effective', ['document' => $document],
+                    function ($message) use ($user_data) {
+                            $message->to($user_data->email)
+                            ->subject("Document Effective Now.");
+                    });
+                } catch (\Exception $e) {
+                    // log
+                }
 
-                });
                 $doc = Training::find($document->training_plan);
                 $sop = explode(',',$doc->sops);
 
@@ -511,12 +524,16 @@ class TMSController extends Controller
                         $document->train->status = "Complete";
                         $document->train->update();
                         $user = User::find($document->train->trainner_id);
-                        Mail::send('mail.training', ['document' => $document],
+                        try {
+                            Mail::send('mail.training', ['document' => $document],
                               function ($message) use ($user) {
                                       $message->to($user->email)
                                       ->subject("Training is Completed.");
 
                               });
+                        } catch (\Exception $e) {
+                            // 
+                        }
                               $TrainingHistory = new TrainingHistory();
                               $TrainingHistory->plan_id =  $document->training_plan;
                               $TrainingHistory->sop_id =  $document->train->sops;
@@ -535,12 +552,16 @@ class TMSController extends Controller
             }
             else{
                 $user = User::find($document->train->trainner_id);
-                 Mail::send('mail.training', ['document' => $document],
-                  function ($message) use ($user) {
-                          $message->to($user->email)
-                          ->subject("Training is Completed by ".Auth::user()->name. " .");
+                 try {
+                    Mail::send('mail.training', ['document' => $document],
+                    function ($message) use ($user) {
+                            $message->to($user->email)
+                            ->subject("Training is Completed by ".Auth::user()->name. " .");
 
-                  });
+                    });
+                 } catch (\Exception $e) {
+                    // 
+                 }
                   toastr()->success('Training Complete Successfully !!');
                   return redirect()->route('TMS.index');
             }
@@ -806,12 +827,16 @@ class TMSController extends Controller
             if($request->trainees){
                 foreach($request->trainees as $trainee){
                     $user = User::find($trainee);
-                    Mail::send('mail.assign-training', ['document' => $training],
+                    try {
+                        Mail::send('mail.assign-training', ['document' => $training],
                         function ($message) use ($user) {
                                 $message->to($user->email)
                                 ->subject("Training is assigned to you.");
 
                         });
+                    } catch (\Exception $e) {
+                        // 
+                    }
                 }
            }
             toastr()->success('Training Plan created successfully');
