@@ -710,7 +710,7 @@
                                             <div class="singleResponsibilityBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="responsibility[]" class="myclassname">
+                                                        <textarea name="responsibility[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subResponsibilityAdd">+</button>
@@ -738,7 +738,7 @@
                                             <div class="singleAbbreviationBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="abbreviation[]" class="myclassname">
+                                                        <textarea name="abbreviation[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subAbbreviationAdd">+</button>
@@ -769,7 +769,7 @@
                                             <div class="singleDefinitionBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="defination[]" class="myclassname">
+                                                        <textarea name="defination[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subDefinitionAdd">+</button>
@@ -797,7 +797,7 @@
                                             <div class="singleMaterialBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="materials_and_equipments[]" class="myclassname">
+                                                        <textarea name="materials_and_equipments[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button type="button" class="subMaterialsAdd" name="button">+</button>
@@ -864,7 +864,7 @@
                                             <div class="singleReferencesBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="references[]" class="myclassname">
+                                                        <textarea name="references[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subReferencesAdd">+</button>
@@ -888,7 +888,7 @@
                                             <div class="singleAnnexureBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="ann[]" class="myclassname">
+                                                        <textarea name="ann[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subAnnexureAdd">+</button>

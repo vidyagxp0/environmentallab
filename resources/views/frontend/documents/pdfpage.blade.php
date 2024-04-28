@@ -9,6 +9,11 @@
     <title>DMS Document</title>
 
     <style>
+
+        html{
+            /* text-align: justify;
+            text-justify: inter-word; */
+        }
         table {
             width: 100%;
         }

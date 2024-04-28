@@ -307,7 +307,7 @@
         $('#responsibilitybtnadd').click(function(e) {
 
             var html =
-                '<div class="singleResponsibilityBlock"><div class="resrow row"><div class="col-10"><input type="text" name="responsibility[]" class="myclassname"></div><div class="col-1"><button class="btn btn-dark subResponsibilityAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+                '<div class="singleResponsibilityBlock"><div class="resrow row"><div class="col-10"><textarea name="responsibility[]" class="myclassname"> </textarea> </div><div class="col-1"><button class="btn btn-dark subResponsibilityAdd">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#responsibilitydiv').append(html);
 
@@ -318,7 +318,7 @@
         $('#abbreviationbtnadd').click(function(e) {
 
             var html =
-                '<div class="singleAbbreviationBlock"><div class="resrow row"><div class="col-10"><input type="text" name="abbreviation[]" class="myclassname"></div> <div class="col-sm-1"> <button class="btn btn-dark subAbbreviationAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+                '<div class="singleAbbreviationBlock"><div class="resrow row"><div class="col-10"><textarea name="abbreviation[]" class="myclassname"></textarea> </div> <div class="col-sm-1"> <button class="btn btn-dark subAbbreviationAdd">+</button> </div>  <div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#abbreviationdiv').append(html);
 
@@ -335,7 +335,7 @@
         $('#Definitionbtnadd').click(function(e) {
 
             var html =
-                '<div class="singleDefinitionBlock"><div class="resrow row"><div class="col-10"><input type="text" name="defination[]" class="myclassname"></div><div class="col-sm-1"> <button class="btn btn-dark subDefinitionAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+                '<div class="singleDefinitionBlock"><div class="resrow row"><div class="col-10"><textarea name="defination[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subDefinitionAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#definitiondiv').append(html);
 
@@ -514,7 +514,7 @@
         $('#referencesbtadd').click(function(e) {
 
             var html =
-                '<div class="singleReferencesBlock"><div class="resrow row"><div class="col-10"><input type="text" name="references[]" class="myclassname"></div><div class="col-sm-1"> <button class="btn btn-dark subReferencesAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+                '<div class="singleReferencesBlock"><div class="resrow row"><div class="col-10"><textarea name="references[]" class="myclassname"></textarea> </div><div class="col-sm-1"> <button class="btn btn-dark subReferencesAdd">+</button> </div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('#referencesdiv').append(html);
 
@@ -526,7 +526,7 @@
             `<div class="singleAnnexureBlock">
                 <div class="resrow row">
                     <div class="col-10">
-                        <input type="text" name="ann[]" class="myclassname">
+                        <textarea name="ann[]" class="myclassname"></textarea> 
                     </div>
                     <div class="col-sm-1"> 
                         <button class="btn btn-dark subAnnexureAdd">+</button> 
@@ -553,7 +553,7 @@
         $('#materialsbtadd').click(function(e) {
 
             var html =
-                '<div class="singleMaterialBlock"><div class="resrow row"><div class="col-10"><input type="text" name="materials_and_equipments[]" class="myclassname"></div><div class="col-1"><button type="button" class="subMaterialsAdd" name="button">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
+                '<div class="singleMaterialBlock"><div class="resrow row"><div class="col-10"><textarea name="materials_and_equipments[]" class="myclassname"></textarea> </div><div class="col-1"><button type="button" class="subMaterialsAdd" name="button">+</button></div><div class="col-1"><button class="btn btn-danger removeAllBlocks">Remove</button></div></div></div>';
 
             $('.materialsBlock').append(html);
 

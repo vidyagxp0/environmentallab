@@ -1180,7 +1180,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
-                                    <select @if($document->stage != 1) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{Helpers::isRevised($document->stage)}} 
+                                    <select id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{Helpers::isRevised($document->stage)}} 
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
@@ -1242,7 +1242,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
-                                    <select @if($document->stage != 1) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{Helpers::isRevised($document->stage)}} 
+                                    <select id="choices-multiple-remove-button" class="choices-multiple-approver" {{Helpers::isRevised($document->stage)}} 
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
@@ -1773,8 +1773,7 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="responsibility[]" class="myclassname"
-                                                            value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                                <textarea name="responsibility[]" class="myclassname" {{Helpers::isRevised($document->stage)}} >{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-dark subResponsibilityAdd">+</button>
@@ -1790,7 +1789,7 @@
                                             <div class="singleResponsibilityBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="responsibility[]" class="myclassname" />
+                                                        <textarea name="responsibility[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subResponsibilityAdd">+</button>
@@ -1859,8 +1858,7 @@
                                                     @else 
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="abbreviation[]" class="myclassname"
-                                                                value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                                <textarea name="abbreviation[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-dark subAbbreviationAdd">+</button>
@@ -1931,8 +1929,7 @@
                                                     @else 
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}} 
-                                                                    value="{{ $data }}">
+                                                                <textarea name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-dark subDefinitionAdd">+</button>
@@ -2003,8 +2000,7 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <input type="text" name="materials_and_equipments[]" class="myclassname"
-                                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}} >
+                                                                <textarea name="materials_and_equipments[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea> 
                                                             </div>
 
                                                             <div class="col-sm-1">
@@ -2023,7 +2019,7 @@
                                         <div class="singleMaterialBlock">
                                             <div class="row">
                                                 <div class="col-sm-10">
-                                                    <input type="text" name="materials_and_equipments[]" class="myclassname" >
+                                                    <textarea name="materials_and_equipments[]" class="myclassname"></textarea>
                                                 </div>
 
                                                 <div class="col-sm-1">
@@ -2171,7 +2167,7 @@
                                             <div class="singleReportingBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <textarea type="text" name="reporting[]" class="summernote"></textarea>
+                                                        <textarea type="text" name="reporting[]" class=""></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-dark subReportingAdd">+</button>
@@ -2242,8 +2238,7 @@
                                                         @else    
                                                             <div class="row">
                                                                 <div class="col-sm-10">
-                                                                    <input type="text" name="references[]" class="myclassname"
-                                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                                    <textarea name="references[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                     <button class="btn btn-dark subReferencesAdd">+</button>
@@ -2260,10 +2255,10 @@
                                             <div class="singleReferencesBlock">
                                                 <div class="row">
                                                     <div class="col-sm-10">
-                                                        <input type="text" name="references[]" class="myclassname">
+                                                        <textarea name="references[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-dark subResponsibilityAdd">+</button>
+                                                        <button class="btn btn-dark subReferencesAdd">+</button>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -2372,14 +2367,13 @@
                                                         @else
                                                             <div class="row">
                                                                 <div class="col-sm-10">
-                                                                    <input type="text" name="ann[]" class="myclassname"
-                                                                    value="{{ $data }}" {{Helpers::isRevised($document->stage)}}>
+                                                                    <textarea name="ann[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-sm-1">
                                                                     <button class="btn btn-dark subAnnexureAdd">+</button>
                                                                 </div>
                                                                 <div class="col-sm-1">
-                                                                    <button class="btn-btn-danger removeAllBlocks">Remove</button>
+                                                                    <button class="btn btn-danger removeAllBlocks">Remove</button>
                                                                 </div>
                                                             </div>
                                                         @endif
