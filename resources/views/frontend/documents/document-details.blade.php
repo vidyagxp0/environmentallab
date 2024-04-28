@@ -499,9 +499,9 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
-                    @if ($document->stage <= 2)
+                    {{-- @if ($document->stage <= 2)
                         <button type="submit">Update</button>
-                    @endif
+                    @endif --}}
                     <button type="button" data-bs-dismiss="modal">Close</button>
                 </div>
         </form>
@@ -778,9 +778,9 @@
 
     <!-- Modal footer -->
     <div class="modal-footer">
-        @if ($document->stage <= 4)
+        {{-- @if ($document->stage != 1)
             <button type="submit">Update</button>
-        @endif
+        @endif --}}
         <button type="button" data-bs-dismiss="modal">Close</button>
     </div>
     </form>
