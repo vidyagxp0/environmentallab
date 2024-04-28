@@ -856,7 +856,7 @@
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
                                         @if (!empty($res))
-                                            <div style="position: relative; page-break-after: auto; page-break-inside: avoid;">
+                                            <div style="position: relative;">
                                                 <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
