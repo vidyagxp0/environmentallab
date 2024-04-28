@@ -163,8 +163,10 @@
                            
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="short-desc">Short Description*</label>
-                                    <input type="text" name="short_desc" id="short_desc"
+                                    <label for="short-desc">Short Description* <span id="editrchars">255</span>
+                                characters remaining
+                            </label>
+                                    <input type="text" name="short_desc" id="short_desc" maxlength="255"
                                      {{Helpers::isRevised($document->stage)}} 
                                         value="{{ $document->short_description }}">
                                     @foreach ($history as $tempHistory)
@@ -187,6 +189,14 @@
                                 <p id="short_descError" style="color:red">**Short description is required</p>
 
                             </div>
+
+                            <script>
+                                var maxLength = 255;
+                                $('#short_desc').keyup(function() {
+                                    var textlen = maxLength - $(this).val().length;
+                                    $('#editrchars').text(textlen);
+                                });
+                            </script>
 
                             @if (Auth::user()->role != 3)
 
@@ -953,8 +963,8 @@
                                 <div class="group-input input-date">
                                     <label for="effective-date">Effective Date</label>
                                     <div class="calenderauditee">                                     
-                                        <input type="text"  id="effective_date" value="{{ $document->effective_date ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : '' }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
-                                        <input type="date" name="effective_date" value=""
+                                        <input  @if($document->stage != 1) disabled @endif type="text"  id="effective_date" value="{{ $document->effective_date  ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : ''  }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
+                                        <input  @if($document->stage != 1) disabled @endif type="date" name="effective_date" value=""
                                         class="hide-input"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'effective_date')"/>
@@ -998,7 +1008,7 @@
                               <div class="col-md-4">
                                 <div class="group-input">
                                     <label for="review-period">Review Period (in years)</label>
-                                    <input type="number" name="review_period" id="review_period" {{Helpers::isRevised($document->stage)}}  value="{{ $document->review_period }}">
+                                    <input  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" {{Helpers::isRevised($document->stage)}}  value="{{ $document->review_period }}">
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Review Period' &&
@@ -1040,8 +1050,8 @@
                                     <label for="review-date">Next Review Date</label>
                                     
                                         <div class="calenderauditee">                                     
-                                        <input type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="next_review_date" value=""
+                                        <input @if($document->stage != 1) disabled @endif type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
+                                        <input @if($document->stage != 1) disabled @endif type="date" name="next_review_date" value=""
                                         class="hide-input new_review_date_hide"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'next_review_date')"/>
@@ -1084,12 +1094,30 @@
                             </div>
 
 
-
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="draft-doc">Attach Draft document</label>
-                                    <input type="file" name="attach_draft_doocument" {{Helpers::isRevised($document->stage)}} 
+                                    <input type="file" name="attach_draft_doocument"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}} 
                                         value="{{ $document->attach_draft_doocument }}">
+                                        @if($document->attach_draft_doocument)
+                                            <input type="hidden" name="attach_draft_doocument" value="{{ $document->attach_draft_doocument }}">
+                                            <p>Current file: {{ basename($document->attach_draft_doocument) }}</p>
+                                        @endif
+
+                                        {{-- @if($document->attach_draft_doocument)
+                                            <input type="hidden" name="attach_draft_doocument" value="{{ $document->attach_draft_doocument }}">
+                                            @php
+                                                $draftDocumentUrl = asset('upload/document/' . basename($document->attach_draft_doocument));
+                                            @endphp
+                                            @if(pathinfo($document->attach_draft_doocument, PATHINFO_EXTENSION) == 'pdf')
+                                                <iframe src="{{ $draftDocumentUrl }}" width="100%" height="600"></iframe>
+                                            @elseif(in_array(pathinfo($document->attach_draft_doocument, PATHINFO_EXTENSION), ['jpg', 'jpeg', 'png', 'gif']))
+                                                <img src="{{ $draftDocumentUrl }}" alt="Draft document" style="max-width: 100%;">
+                                            @else
+                                                <p>Preview not available for this file type.</p>
+                                            @endif
+                                        @endif --}}
+
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Draft Document' &&
@@ -1130,8 +1158,12 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="effective-doc">Attach Effective document</label>
-                                    <input type="file" name="attach_effective_docuement" {{Helpers::isRevised($document->stage)}} 
+                                    <input type="file" name="attach_effective_docuement"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}} 
                                         value="{{ $document->attach_effective_docuement }}">
+                                        @if($document->attach_effective_docuement)
+                                            <input type="hidden" name="attach_effective_docuement" value="{{ $document->attach_effective_docuement }}">
+                                            <p>Current file: {{ basename($document->attach_effective_docuement) }}</p>
+                                        @endif
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Effective Document' &&
@@ -1180,7 +1212,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
-                                    <select id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{Helpers::isRevised($document->stage)}} 
+                                    <select   @if($document->stage != 1) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{Helpers::isRevised($document->stage)}} 
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
@@ -1242,7 +1274,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
-                                    <select id="choices-multiple-remove-button" class="choices-multiple-approver" {{Helpers::isRevised($document->stage)}} 
+                                    <select   @if($document->stage != 1) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{Helpers::isRevised($document->stage)}} 
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)

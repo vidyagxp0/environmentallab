@@ -751,14 +751,14 @@ class DocumentController extends Controller
             $document->document_type_id = $request->document_type_id;
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
-            $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
-            try {
-                $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
-                $document->next_review_date = $next_review_date;
-            } catch (\Exception $e) {
-                // 
-            }
-            $document->review_period = $request->review_period;
+            // $document->effective_date = $request->effective_date ? $request->effective_date : $document->effectve_date;
+            // try {
+            //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
+            //     $document->next_review_date = $next_review_date;
+            // } catch (\Exception $e) {
+            //     // 
+            // }
+            // $document->review_period = $request->review_period;
             $document->training_required = $request->training_required;
             $document->attach_draft_doocument = $request->attach_draft_doocument;
             $document->notify_to = json_encode($request->notify_to);
