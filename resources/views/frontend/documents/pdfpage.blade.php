@@ -828,7 +828,7 @@
                             <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                 @php $i = 1; @endphp
                                 @if ($data->document_content && !empty($data->document_content->ann))
-                                    @foreach (unserialize($data->document_content->ann) as $res)
+                                    @foreach (unserialize($data->document_content->ann) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
@@ -857,7 +857,7 @@
             @php
                 $i = 1;
             @endphp
-                @if ($data->document_content && !empty($data->document_content->annexuredata))
+                {{-- @if ($data->document_content && !empty($data->document_content->annexuredata))
                     @foreach (unserialize($data->document_content->annexuredata) as $res)
                         @if (!empty($res))
                             <div class="annexure-block">
@@ -874,7 +874,7 @@
                             </div>
                         @endif
                     @endforeach
-                @endif
+                @endif --}}
             </section>
             
             <section class="doc-control" style="page-break-after: never;">
