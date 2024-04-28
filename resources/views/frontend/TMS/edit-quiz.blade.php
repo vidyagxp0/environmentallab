@@ -61,14 +61,14 @@
                             **Passing Percentage of quize is missing
                             </p>
                         </div>
-                        <div class="col-lg-6">
+                        {{-- <div class="col-lg-6">
                             <div class="checkbox">
                                 <label for="randomize">
                                     <input type="checkbox" name="randomize" id="randomize">
                                     Randomize Questions
                                 </label>
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- <div class="col-lg-6">
                             <div class="checkbox">
                                 <label for="feedback">

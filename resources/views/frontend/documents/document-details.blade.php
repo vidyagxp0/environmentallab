@@ -32,7 +32,10 @@
                                         <button data-bs-toggle="modal" data-bs-target="#child-modal">Child</button>
                                     @endif --}}
                                     @if ($document->stage >= 8)
-                                    <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button>
+                                    {{-- <button type="button" class="btn btn-danger" id="obsolete-button">Obsolete</button> --}}
+                                    <button  class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                        Obsolete
+                                    </button>
                                     {{-- <button>Obsolete</button> --}}
                                     <button data-bs-toggle="modal" data-bs-target="#child-modal">Revise</button>
                                     @endif
@@ -154,9 +157,9 @@
                                     @else
                                         <div class="">For-Approval</div>
                                     @endif
-                                    @if ($document->stage == 10)
+                                    {{-- @if ($document->stage == 10)
                                         <div class="active">Rejected</div>
-                                    @endif
+                                    @endif --}}
                                     @if ($document->stage >= 5)
                                         <div class="active">Approved</div>
                                     @else
@@ -179,7 +182,7 @@
                                     @else
                                         <div class="">Effective</div>
                                     @endif
-                                    @if ($document->stage == 10)
+                                    @if ($document->stage == 11)
                                         <div class="active">Obsolete</div>
                                     @else
                                         <div class="">Obsolete</div>
@@ -805,24 +808,6 @@
                             and password for this task. You are performing an electronic signature,
                             which is legally binding equivalent of a hand written signature.
                         </div>
-                        {{-- <div class="group-input">
-                            <label for="electronic-meaning">Electronic Signature Approved Meaning</label>
-                            <select name="electronic-meaning">
-                                <option selected>- Please Select -</option>
-                                @if ($document->stage == 1)
-                                    <option value="assure-approved">Document send for Review</option>
-                                @endif
-                                @if ($document->stage == 3)
-                                    <option value="assure-approved">Document send for Approval</option>
-                                @endif
-                                @if ($document->stage == 5)
-                                    <option value="assure-approved">Document send for Training</option>
-                                @endif
-                                @if ($document->stage == 7)
-                                    <option value="assure-approved">Document Effective</option>
-                                @endif
-                            </select>
-                        </div> --}}
                         <div class="group-input">
                             <label for="username">Username</label>
                             <input type="text" value="{{ old('username') }}" name="username" required>
@@ -883,7 +868,7 @@
                 <form action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
                     @method('PUT')
-                    <input type="hidden" name="stage_id" value="10" />
+                    <input type="hidden" name="stage_id" value="11" />
                     <input type="hidden" name="document_id" value="{{ $document->id }}">
                     <!-- Modal body -->
                     <div class="modal-body">

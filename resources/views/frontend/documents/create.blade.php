@@ -157,7 +157,9 @@
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="short-desc">Short Description<span class="text-danger">*</span></label>
-                                        <input type="text" id="short_desc" name="short_desc">
+                                        <span id="new-rchars">255</span>
+                                        characters remaining
+                                        <input type="text" id="short_desc" name="short_desc" maxlength="255">
                                     </div>
                                     <p id="short_descError" style="color:red">**Short description is required</p>
 
@@ -421,9 +423,16 @@
                                     <div class="group-input "> 
                                         <label for="review-period">Review Period (in years)</label>
 
-                                        <input type="number" name="review_period" id="review_period">
+                                        <input type="number" name="review_period" id="review_period" min="0" oninput="validateInput(this)">
                                     </div>
                                 </div>
+                                <script>
+                                    function validateInput(input) {
+                                        if (input.value < 0) {
+                                            input.value = 0;
+                                        }
+                                    }
+                                </script>
 
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input input-date">
@@ -1582,6 +1591,13 @@
         $('#docname').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchars').text(textlen);
+        });
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#short_desc').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#new-rchars').text(textlen);
         });
     </script>
 
