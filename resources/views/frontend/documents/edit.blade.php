@@ -271,8 +271,8 @@
                                     <div><small class="text-primary" >Kindly Fill Target Date of Completion</small>
                                     </div>
                                     <div class="calenderauditee">                                     
-                                        <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : ''  }}" {{Helpers::isRevised($document->stage)}}
+                                        <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}"  placeholder="DD-MMM-YYYY" />
+                                        <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : ''  }}" readonly {{Helpers::isRevised($document->stage)}}
                                         class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
