@@ -162,6 +162,9 @@
                 window.open('/Supplier-Dashboard-Report', '_blank');
             } else if (value === "logs") {
                 window.open('/rcms_desktop', '_blank', 'width=1200, height=900, top=0, left=0');
+            } 
+            else if (value === "tmslog") {
+                window.open('/activity_log', '_blank', 'width=1200, height=900, top=0, left=0');
             } else {
                 let pdfUrl = '';
 

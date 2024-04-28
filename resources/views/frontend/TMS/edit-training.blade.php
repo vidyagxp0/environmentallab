@@ -56,8 +56,8 @@
                                 </div>
                             </div>
                             <div class="col-6">
-                                <div class="group-input">
-                                    <label for="classRoom_trainingName">Assessment Required? <span id="assessmentrequiredAstrik" @if($train->training_plan_type == "Classroom Training") @else style="display: none" @endif class="text-danger">*</span></label>
+                                <div class="group-input"  id="assessmentBlock" @if($train->training_plan_type != "Classroom Training") style="display: none" @endif>
+                                    <label for="classRoom_trainingName">Assessment Required?  <span class="text-danger">*</span></label>
                                     <select class="assessment_required"  name="assessment_required[]" placeholder="SelectclassRoom_training Name">
                                         <option value="">-- Select --</option>
                                         <option @if($train->assessment_required == "yes") selected @endif value="yes"> Yes</option>
@@ -86,56 +86,37 @@
                                    </select>
                                 </div>
                             </div>
-                            <script>
-                                document.addEventListener('DOMContentLoaded', function () {
-                                    var selectField = document.getElementById('training-select');
-                                    var inputsToToggle = [];
-
-                                    // Add elements with class 'facility-name' to inputsToToggle
-                                    var facilityNameInputs = document.getElementsByClassName('assessment_required');
-                                    
-                                    for (var i = 0; i < facilityNameInputs.length; i++) {
-                                        inputsToToggle.push(facilityNameInputs[i]);
-                                    }
-
-                                                                    
-                                    selectField.addEventListener('change', function () {
-                                        var isRequired = this.value === 'Classroom Training';
-
-                                        inputsToToggle.forEach(function (input) {
-                                            input.required = isRequired;
-                                        });
-
-                                        // Show or hide the asterisk icon based on the selected value
-                                        var asteriskIcon = document.getElementById('assessmentrequiredAstrik');
-                                        asteriskIcon.style.display = isRequired ? 'inline' : 'none';
-                                    });
-                                });
-                            </script>
+                            
                             <script>
                                 function toggleMultiSelect() {
                                   var selectedValue = document.getElementById("training-select").value;
                                   var multiSelectField = document.getElementById("classroomTrainingBlock");
+                                  var multiSelectField1 = document.getElementById("assessmentBlock");
+
                                 
                                   if (selectedValue === "Classroom Training") {
                                     multiSelectField.style.display = "block";
+                                    multiSelectField1.style.display = "block";
+
                                   } else {
                                     multiSelectField.style.display = "none";
+                                    multiSelectField1.style.display = "none";
+
                                   }
                                 }
                                 </script>
-                            <div class="col-6">
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Training Start Date & Time </label>
                                     <input type="datetime-local" name="training_start_date" value="{{ $train->training_start_date }}">
                                 </div>
-                            </div>
-                            <div class="col-6">
+                            </div> --}}
+                            {{-- <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Training End  Date & Time</label>
                                     <input type="datetime-local" name="training_end_date" value="{{ $train->training_end_date }}">
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="col-12">
                                 <div class="group-input"> 
                                     <label for="desc">Training Plan Description</label>

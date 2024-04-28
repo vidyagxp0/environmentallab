@@ -6288,7 +6288,9 @@ section#pdf-page .watermark {
 
   }
   
-   
+  #calendar > div.fc-header-toolbar.fc-toolbar > div:nth-child(3) > button{
+    text-transform: capitalize;
+  }
   .file-attachment-list{
     background: white;
     border: 1px solid rgb(126, 124, 124);
