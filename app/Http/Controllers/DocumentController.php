@@ -1929,8 +1929,6 @@ class DocumentController extends Controller
 
     public function revision(Request $request, $id)
     {
-        return $id;
-
 
         $document = Document::find($id);
 
