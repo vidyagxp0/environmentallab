@@ -54,7 +54,7 @@
 
                 <div class="inner-block tms-block" id="tms-all-block">
                     @if (Helpers::checkRoles(6))
-                        <div class="block-table">
+                        {{-- <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -63,8 +63,8 @@
                                         <th>Document Type</th>
                                         <th>Division</th>
                                        
-                                        {{--  <th>&nbsp;</th>  --}}
-                                        {{-- <th>Audit Trial</th> --}}
+                                         <th>&nbsp;</th>  --}}
+                                        {{-- <th>Audit Trial</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,12 +77,12 @@
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                            
-                                            {{--  <td>
+                                            <td>
                                                 <a href="#"><i class="fa-solid fa-eye"></i></a>            
-                                            </td>  --}}
-                                            {{-- <td>
+                                            </td>  
+                                            <td>
                                                 <button onClick="window.location='{{ url('tms-audit',$temp->id) }}';">Audit Trail</button>           
-                                            </td> --}}
+                                            </td>
                                         </tr>
                                         @endif
                                     @endforeach
@@ -90,7 +90,7 @@
 
                                 </tbody>
                             </table>
-                        </div>
+                        </div> --}}
                         @endif
 
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
