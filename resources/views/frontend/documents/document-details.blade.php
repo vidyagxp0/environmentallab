@@ -21,9 +21,9 @@
                                     <button  onclick="location.href='{{ url('audit-trial', $document->id) }}';">
                                         Audit Trail
                                     </button>
-                                    <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
                                     @if ($document->status !== 'Obsolete')
-                                        <button>Cancel</button>
+                                        <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
+                                        {{-- <button>Cancel</button> --}}
                                     @endif
                                     <button  onclick="location.href='{{ url('documents/generatePdf', $document->id) }}';">Download
                                     </button>
