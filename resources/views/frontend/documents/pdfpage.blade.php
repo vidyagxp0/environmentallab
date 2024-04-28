@@ -288,7 +288,7 @@
        
         .footer {
             position: fixed;
-            bottom: -30px;
+            bottom: -40px;
             left: 0;
             right: 0;
             width: 100%;
@@ -356,6 +356,30 @@
             width: 650px!important;
         }
 
+        /* CSS to allow page breaks after and inside common HTML elements */
+        p, b, div, h1, h2, h3, h4, h5, h6, ol, ul, li, span {
+            page-break-after: auto;  /* Allows automatic page breaks after these elements */
+            page-break-inside: auto; /* Allows page breaks inside these elements */
+        }
+
+        /* Additional styles to ensure list items are handled correctly */
+        ol, ul {
+            page-break-before: auto; /* Allows page breaks before lists */
+            page-break-inside: avoid; /* Prefer avoiding breaks inside lists */
+        }
+
+        li {
+            page-break-after: auto; /* Allows automatic page breaks after list items */
+            page-break-inside: avoid; /* Prefer avoiding breaks inside list items */
+        }
+
+        /* Handling headings to maintain section integrity */
+        h1, h2, h3, h4, h5, h6 {
+            page-break-after: avoid; /* Avoids breaking immediately after headings */
+            page-break-inside: avoid; /* Avoids breaking inside headings */
+            page-break-before: auto; /* Allows automatic page breaks before headings */
+        }
+
     </style>
 
 </head>
@@ -414,13 +438,12 @@
             <tbody>
                 <tr>
                     <td class="text-left w-36">
-                                @php
-                                $temp = DB::table('document_types')
-                                    ->where('name', $data->document_type_name)
-                                    ->value('typecode');
-                                @endphp
-                            @if($data->revised === 'Yes') 
-                               
+                        @php
+                            $temp = DB::table('document_types')
+                                ->where('name', $data->document_type_name)
+                                ->value('typecode');
+                        @endphp
+                        @if($data->revised === 'Yes')  
                             {{ Helpers::getDivisionName($data->division_id) }}
                             /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                             /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
@@ -454,7 +477,7 @@
                         <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
                             <div class="w-100">
                                 <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
-                                    {{ $data->document_content ? $data->document_content->purpose : '' }}
+                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
                                 </div>
                             </div>
                         </div>
@@ -489,7 +512,7 @@
                     <tr>
                         <th class="w-5 vertical-baseline">3.</th>
                         <th class="w-95 text-left">
-                            <div class="mb-10">Responsibility</div>
+                            <div class="">Responsibility</div>
                         </th>
                     </tr>
                 </tbody>
@@ -536,7 +559,7 @@
                     <tr>
                         <th class="w-5 vertical-baseline">4.</th>
                         <th class="w-95 text-left">
-                            <div class="mb-10">Abbreviation</div>
+                            <div class="">Abbreviation</div>
                         </th>
                     </tr>
                 </tbody>
@@ -582,7 +605,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">5.</th>
                             <th class="w-95 text-left">
-                                <div class="bold mb-10">Definitions</div>
+                                <div class="bold">Definitions</div>
                             </th>
                         </tr>
                     </tbody>
@@ -630,7 +653,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">6.</th>
                             <th class="w-95 text-left">
-                                <div class="bold mb-10">Materials & Equipments</div>
+                                <div class="bold">Materials & Equipments</div>
                             </th>
                         </tr>
                         <tr>
@@ -727,7 +750,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">9.</th>
                             <th class="w-95 text-left">
-                                <div class="bold mb-10">Reporting</div>
+                                <div class="bold">Reporting</div>
                             </th>
                         </tr>
                     </tbody>
@@ -771,7 +794,7 @@
                         <tr>
                             <th class="w-5 vertical-baseline">10.</th>
                             <th class="w-95 text-left">
-                                <div class="bold mb-10"> References</div>
+                                <div class="bold"> References</div>
                             </th>
                         </tr>
                     </tbody>
@@ -815,7 +838,7 @@
                     <tr>
                         <th class="w-5 vertical-baseline">11.</th>
                         <th class="w-95 text-left">
-                            <div class="bold mb-10">Annexure</div>
+                            <div class="bold">Annexure</div>
                         </th>
                     </tr>
                 </tbody>
@@ -833,7 +856,7 @@
                                             $isSub = str_contains($key, 'sub');
                                         @endphp
                                         @if (!empty($res))
-                                            <div style="position: relative;">
+                                            <div style="position: relative; page-break-after: auto; page-break-inside: avoid;">
                                                 <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
@@ -1302,12 +1325,12 @@
                     $size = 12;
                     $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
                     $y = 788;
-                    $x = 490;
+                    $x = 485;
                     $pdf->text($x, $y, $pageText, $font, $size);
                 }
             ');
         }
-        </script>
+    </script>
 </body>
 
 </html>

@@ -1,818 +1,1031 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>DMS Document</title>
-
+    <title>Document</title>
     <style>
-        table {
+        html{
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+        @page {
+            margin: 24mm 15mm 24mm 15mm; /* Adjust sizes accordingly */
+        }
+        header {
+            position: fixed;
+            top: -24mm; /* Adjust based on your header size */
+            left: 0;
             width: 100%;
+            height: 170px; /* Adjust based on your content */
+            background-color: #f8f9fa;
+            padding: 10px 0;
         }
-
-        td,
-        th {
+        footer {
+            position: fixed;
+            bottom: -24mm; /* Adjust based on your footer size */
+            left: 0;
+            width: 100%;
+            background-color: #f8f9fa;
+            color: black;
             text-align: center;
+            padding: 10px;
+            height: 24mm;
         }
-
-        .w-5 {
-            width: 5%;
+        body {
+            font-family: 'Helvetica', sans-serif;
         }
-
-        .w-10 {
-            width: 10%;
+        .content {
+            margin-top: 175px;
+            margin-bottom: 24mm;
         }
-
-        .w-15 {
-            width: 15%;
+        table.header-footer-table {
+            width: 100%;
+            border-collapse: collapse;
         }
-
-        .w-20 {
+        table.header-footer-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        table.header-footer-table td.logo {
             width: 20%;
         }
-
-        .w-25 {
-            width: 25%;
-        }
-
-        .w-30 {
-            width: 30%;
-        }
-
-        .w-33 {
-            width: 33%;
-        }
-
-        .w-35 {
-            width: 35%;
-        }
-
-        .w-40 {
-            width: 40%;
-        }
-
-        .w-45 {
-            width: 45%;
-        }
-
-        .w-50 {
-            width: 50%;
-        }
-
-        .w-55 {
-            width: 55%;
-        }
-
-        .w-60 {
+        table.header-footer-table td.title {
             width: 60%;
+            font-size: 16px;
+            line-height: 1.4;
         }
-
-        .w-65 {
-            width: 65%;
-        }
-
-        .w-70 {
-            width: 70%;
-        }
-
-        .w-75 {
-            width: 75%;
-        }
-
-        .w-80 {
-            width: 80%;
-        }
-
-        .w-85 {
-            width: 85%;
-        }
-
-        .w-75 {
-            width: 75%;
-        }
-
-        .w-80 {
-            width: 80%;
-        }
-
-        .w-85 {
-            width: 85%;
-        }
-
-        .w-90 {
-            width: 90%;
-        }
-
-        .w-95 {
-            width: 95%;
-        }
-
-        .w-100 {
+        table.footer-table {
             width: 100%;
-        }
-
-        .border {
-            border: 1px solid black;
-        }
-
-        .border-top {
-            border-top: 1px solid black;
-        }
-
-        .border-bottom {
-            border-bottom: 1px solid black;
-        }
-
-        .border-left {
-            border-left: 1px solid black;
-        }
-
-        .border-right {
-            border-right: 1px solid black;
-        }
-
-        .border-top-none {
-            border-top: 0px solid black;
-        }
-
-        .border-bottom-none {
-            border-bottom: 0px solid black;
-        }
-
-        .border-left-none {
-            border-left: 0px solid black;
-        }
-
-        .border-right-none {
-            border-right: 0px solid black;
-        }
-
-        .p-20 {
-            padding: 20px;
-        }
-
-        .p-10 {
-            padding: 10px;
-        }
-
-        .mb-50 {
-            margin-bottom: 50px;
-        }
-
-        .mb-40 {
-            margin-bottom: 40px;
-        }
-
-        .mb-30 {
-            margin-bottom: 30px;
-        }
-
-        .mb-20 {
-            margin-bottom: 20px;
-        }
-
-        .mb-10 {
-            margin-bottom: 10px;
-        }
-
-        .text-left {
-            text-align: left;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .text-justify {
-            text-align: justify;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        .vertical-baseline {
-            vertical-align: baseline;
-        }
-
-        table.table-bordered {
             border-collapse: collapse;
-            border: 1px solid grey;
         }
-
-        table.table-bordered td,
-        table.table-bordered th {
-            border: 1px solid grey;
-            padding: 5px 10px;
-        }
-
-        table.small-content td,
-        table.small-content th {
-            font-size: 0.85rem;
-        }
-
-        #pdf-page {
-            padding: 20px;
-        }
-
-        td.title {
-            font-size: 2.5rem;
-            font-weight: bold;
-        }
-
-        td.logo img {
-            width: 100%;
-            max-width: 300px;
-            aspect-ratio: 1/0.35;
-        }
-
-        td.doc-num {
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .doc-control .head {
-            max-width: 600px;
-            margin: 0 auto 30px;
-        }
-
-        .doc-control .head div:nth-child(1) {
-            font-size: 1.5rem;
+        table.footer-table td {
+            border: 1px solid black;
+            width: 33.33%;
             text-align: center;
-            font-weight: bold;
-            margin-bottom: 5px;
         }
 
-        .doc-control .body .block-head {
-            border-bottom: 2px solid black;
-            font-size: 1.2rem;
-            font-weight: bold;
-            margin-bottom: 15px;
+        /* FOR SUMMERNOTE */
+        .table-responsive {
+            overflow-x: auto;
+            max-width: 100%;
         }
+    
+        .MsoNormalTable tr {
+            border: 1px solid rgb(156, 156, 156);
+        }
+        
+        .MsoNormalTable td {
+            text-align: left!important;
+        }
+        
+        .MsoNormalTable tbody {
+            border: 1px solid rgb(156, 156, 156);
+        }
+        img {
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .MsoNormalTable, .table {
+            table-layout: fixed;
+            width: 650px!important;
+        }
+
+        /* ALLOW PAGE BREAKS */
+        p, b, div, h1, h2, h3, h4, h5, h6, ol, ul, li, span {
+            page-break-after: auto;  /* Allows automatic page breaks after these elements */
+            page-break-inside: auto; /* Allows page breaks inside these elements */
+        }
+
+        /* Additional styles to ensure list items are handled correctly */
+        ol, ul {
+            page-break-before: auto; /* Allows page breaks before lists */
+            page-break-inside: avoid; /* Prefer avoiding breaks inside lists */
+        }
+
+        li {
+            page-break-after: auto; /* Allows automatic page breaks after list items */
+            page-break-inside: avoid; /* Prefer avoiding breaks inside list items */
+        }
+
+        /* Handling headings to maintain section integrity */
+        h1, h2, h3, h4, h5, h6 {
+            page-break-after: avoid; /* Avoids breaking immediately after headings */
+            page-break-inside: avoid; /* Avoids breaking inside headings */
+            page-break-before: auto; /* Allows automatic page breaks before headings */
+        }
+
     </style>
-
 </head>
-
 <body>
+    <header>
+        <table class="header-footer-table">
+            <tr>
+                <td class="logo"><img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="Logo 1" height="50"></td>
+                <td class="title"><b>Environmental Laboratory</b><br>{{ $data->document_name }}</td>
+                <td class="logo"><img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="Logo 2" height="125"></td>
+            </tr>
+        </table>
+    </header>
 
-    <section id="pdf-page">
-        <div class="pdf-container">
+    <footer>
+        <table class="footer-table">
+            <tr>
+                <td>
+                    @php
+                        $temp = DB::table('document_types')
+                            ->where('name', $data->document_type_name)
+                            ->value('typecode');
+                    @endphp
+                    @if($data->revised === 'Yes')  
+                        {{ Helpers::getDivisionName($data->division_id) }}
+                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                        /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
 
-            <header class="mb-20">
-                <table class="border p-20">
-                    <tbody>
-                        <tr>
-                            <td class="title w-75">
-                                Test Document
-                            </td>
-                            <td class="logo w-25">
-                                <img src="/user/images/logo.png" alt="...">
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="border border-top-none p-10">
-                    <tbody>
-                        <tr>
-                            <td class="doc-num w-100">Document Number</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="border border-top-none p-10">
-                    <tbody>
-                        <td class="short-desc">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
-                            galley of type and scrambled it to make a type specimen book.
-                        </td>
-                    </tbody>
-                </table>
-            </header>
+                        @else
+                        {{ Helpers::getDivisionName($data->division_id) }}
+                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                        /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}                           
+                    @endif
+                </td>
+                <td>Printed On : {{ $time }}</td>
+                <td>
 
-            <section class="mb-50">
-                <table class="mb-20">
-                    <tbody>
+                </td>
+            </tr>
+        </table>
+    </footer>
+    
+    <div class="content">
+        <section>
+            <div class="other-container">
+                <table>
+                    <thead>
                         <tr>
-                            <td class="w-5 vertical-baseline">1.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Purpose</div>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quibusdam enim nam
-                                    corrupti
-                                    praesentium repudiandae dignissimos magni debitis sapiente recusandae.
-                                </div>
-                            </td>
+                            <th class="w-5">1.</th>
+                            <th class="text-left">Purpose</th>
                         </tr>
-                    </tbody>
+                    </thead>
                 </table>
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <td class="w-5 vertical-baseline">2.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Scope</div>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Modi cum eos molestias
-                                    possimus hic alias odit vitae vero libero, quo totam facere? Libero optio error et,
-                                    nemo
-                                    cum eum mollitia dolorem? Eum dicta quam deleniti, necessitatibus harum fugit odit
-                                    quaerat!
+                <div class="scope-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block; margin-left: 2.5rem;">
+                            <div class="w-100">
+                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; ">
+                                    {!! $data->document_content ? nl2br($data->document_content->purpose) : '' !!}
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="mb-20">
-                    <tbody>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="other-container">
+                <table>
+                    <thead>
                         <tr>
-                            <td class="w-5 vertical-baseline">3.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Responsibility</div>
-                                <div>
-                                    <table>
-                                        <tbody>
-                                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                            <tr>
-                                                <td class="w-5">3.<?php echo $i; ?></td>
-                                                <td class="w-95 text-left">
-                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam,
-                                                    illo?
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                            <th class="w-5">2.</th>
+                            <th class="text-left">Scope</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="scope-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
                                 </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="mb-20">
+                <tbody>
+                    <tr>
+                        <th class="w-5 vertical-baseline">3.</th>
+                        <th class="w-95 text-left">
+                            <div class="mb-10">Responsibility</div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @if ($data->document_content && !empty($data->document_content->responsibility))
+                                    @foreach (unserialize($data->document_content->responsibility) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
+                                        @if (!empty($res))
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
+                                    @endforeach
+                                @endif    
+
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <table class="mb-20">
+                <tbody>
+                    <tr>
+                        <th class="w-5 vertical-baseline">4.</th>
+                        <th class="w-95 text-left">
+                            <div class="mb-10">Abbreviation</div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php
+                                    $i = 1;
+                                @endphp
+                                @if ($data->document_content && !empty($data->document_content->abbreviation))
+                                    @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
+                                        @if (!empty($res))
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
+                                    @endforeach
+                                @endif    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- DEFINITIONS START --}}
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <td class="w-5 vertical-baseline">4.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Abbreviation</div>
-                                <div>
-                                    <table>
-                                        <tbody>
-                                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                            <tr>
-                                                <td class="w-5">4.<?php echo $i; ?></td>
-                                                <td class="w-95 text-left">
-                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam,
-                                                    illo?
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <td class="w-5 vertical-baseline">5.</td>
-                            <td class="w-95 text-left">
+                            <th class="w-5 vertical-baseline">5.</th>
+                            <th class="w-95 text-left">
                                 <div class="bold mb-10">Definitions</div>
-                                <div>
-                                    <table>
-                                        <tbody>
-                                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                            <tr>
-                                                <td class="w-5">5.<?php echo $i; ?></td>
-                                                <td class="w-95 text-left">
-                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam,
-                                                    illo?
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
+                            </th>
                         </tr>
                     </tbody>
                 </table>
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <td class="w-5 vertical-baseline">6.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Materials & Equipments</div>
-                                <div>
-                                    <table>
-                                        <tbody>
-                                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                            <tr>
-                                                <td class="w-5">6.<?php echo $i; ?></td>
-                                                <td class="w-95 text-left">
-                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam,
-                                                    illo?
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <td class="w-5 vertical-baseline">7.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Procedure</div>
-                                <div>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quibusdam enim nam
-                                    corrupti
-                                    praesentium repudiandae dignissimos magni debitis sapiente recusandae.
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quibusdam enim nam
-                                    corrupti
-                                    praesentium repudiandae dignissimos magni debitis sapiente recusandae.
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quibusdam enim nam
-                                    corrupti
-                                    praesentium repudiandae dignissimos magni debitis sapiente recusandae.
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quibusdam enim nam
-                                    corrupti
-                                    praesentium repudiandae dignissimos magni debitis sapiente recusandae.
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab quibusdam enim nam
-                                    corrupti
-                                    praesentium repudiandae dignissimos magni debitis sapiente recusandae.
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <td class="w-5 vertical-baseline">8.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Reporting</div>
-                                <div>
-                                    <table>
-                                        <tbody>
-                                            <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                            <tr>
-                                                <td class="w-5">6.<?php echo $i; ?></td>
-                                                <td class="w-95 text-left">
-                                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Magnam,
-                                                    illo?
-                                                </td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <td class="w-5 vertical-baseline">9.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Annexure</div>
-                                <div>
-                                    <table class="table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <th class="text-left w-20">Sr. No.</th>
-                                                <th class="text-left w-30">Annexure No.</th>
-                                                <th class="text-left w-50">Title of Annexure</th>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-left w-20">1</td>
-                                                <td class="text-left w-30">89457FUHUFH</td>
-                                                <td class="text-left w-50">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, odio?
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-left w-20">1</td>
-                                                <td class="text-left w-30">89457FUHUFH</td>
-                                                <td class="text-left w-50">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, odio?
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="mb-20">
-                    <tbody>
-                        <tr>
-                            <td class="w-5 vertical-baseline">10.</td>
-                            <td class="w-95 text-left">
-                                <div class="bold mb-10">Revision History</div>
-                                <div>
-                                    <table class="table-bordered">
-                                        <tbody>
-                                            <tr>
-                                                <th class="text-left w-25">SOP Revision No.</th>
-                                                <th class="text-left w-25">Change Control No./ DCRF No.</th>
-                                                <th class="text-left w-50">Changes</th>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-left w-25">1</td>
-                                                <td class="text-left w-25">89457FUHUFH</td>
-                                                <td class="text-left w-50">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, odio?
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-left w-25">1</td>
-                                                <td class="text-left w-25">89457FUHUFH</td>
-                                                <td class="text-left w-50">
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, odio?
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
 
-            <section class="doc-control">
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php
+                                        $i = 1;
+                                        $definitions = $data->document_content ? unserialize($data->document_content->defination) : [];
+                                    @endphp
+                                    @if ($data->document_content && !empty($data->document_content->defination))
+                                        @foreach ($definitions as $key => $definition)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
+                                        @endforeach
+                                    @endif  
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- DEFINITIONS END --}}
+
+            {{-- MATERIALS AND EQUIPMENTS START --}}
+                <table class="mb-20">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">6.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold mb-10">Materials & Equipments</div>
+                            </th>
+                        </tr>
+                        <tr>
+                    </tbody>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
+                                    @php $i = 1; $sub_index = 1; @endphp
+                                    @if ($data->document_content)
+                                        @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- MATERIALS AND EQUIPMENTS END --}}
+
+            {{-- SAFETY START --}}
+            <div class="other-container ">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="w-5">7.</th>
+                            <th class="text-left">Safety & Precautions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @if ($data->document_content)
+                                        {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- SAFETY END --}}
+
+            {{-- PROCEDURE START --}}
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">8.</th>
+                                <th class="text-left">Procedure</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- PROCEDURE END --}}
+
+            {{-- REPORTING START --}}
+                <table class="mb-20 ">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">9.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold mb-10">Reporting</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php $i = 1; @endphp
+                                    @if ($data->document_content && !empty($data->document_content->reporting))
+                                        @foreach (unserialize($data->document_content->reporting) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- REPORTING END --}}
+
+            {{-- REFERENCES START --}}
+                <table class="mb-20">
+                    <tbody>
+                        <tr>
+                            <th class="w-5 vertical-baseline">10.</th>
+                            <th class="w-95 text-left">
+                                <div class="bold mb-10"> References</div>
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="procedure-block">
+                    <div class="w-100">
+                        <div class="w-100" style="display:inline-block;">
+                            <div class="w-100">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    @php $i = 1; @endphp
+                                    @if ($data->document_content && !empty($data->document_content->references))
+                                        @foreach (unserialize($data->document_content->references) as $key => $res)
+                                            @php
+                                                $isSub = str_contains($key, 'sub');
+                                            @endphp
+                                            @if (!empty($res))
+                                                <div style="position: relative;">
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                </div>
+                                            @endif
+                                            @php
+                                                if (!$isSub) {
+                                                    $i++;  
+                                                    $sub_index = 1; 
+                                                } else {
+                                                    $sub_index++;
+                                                } 
+                                            @endphp
+                                        @endforeach
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- REFERENCES END --}}
+            
+            {{-- ANNEXSURE START --}}
+            <table class="mb-20">
+                <tbody>
+                    <tr>
+                        <th class="w-5 vertical-baseline">11.</th>
+                        <th class="w-95 text-left">
+                            <div class="bold mb-10">Annexure</div>
+                        </th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="procedure-block">
+                <div class="w-100">
+                    <div class="w-100" style="display:inline-block;">
+                        <div class="w-100">
+                            <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                @php $i = 1; @endphp
+                                @if ($data->document_content && !empty($data->document_content->ann))
+                                    @foreach (unserialize($data->document_content->ann) as $key => $res)
+                                        @php
+                                            $isSub = str_contains($key, 'sub');
+                                        @endphp
+                                        @if (!empty($res))
+                                            <div style="position: relative;">
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                            </div>
+                                        @endif
+                                        @php
+                                            if (!$isSub) {
+                                                $i++;  
+                                                $sub_index = 1; 
+                                            } else {
+                                                $sub_index++;
+                                            } 
+                                        @endphp
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- ANNEXSURE END --}}
+
+            @php
+                $i = 1;
+            @endphp
+                {{-- @if ($data->document_content && !empty($data->document_content->annexuredata))
+                    @foreach (unserialize($data->document_content->annexuredata) as $res)
+                        @if (!empty($res))
+                            <div class="annexure-block">
+                                <div class="w-100">
+                                    <div class="w-100" style="display:inline-block;">
+                                        <div class="w-100">
+                                            <div style="height:auto; overflow-x:hidden; width:650px; ">
+                                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                @endif --}}
+            </section>
+            
+            <section class="doc-control" style="page-break-after: never;">
                 <div class="head">
                     <div>
                         Document Control Information
                     </div>
-                    <div class="text-center">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iusto, velit. Quasi impedit sit
-                        distinctio
-                        corporis doloremque deserunt, similique aliquam nulla a! Quia aut praesentium, natus doloribus
-                        dignissimos veritatis perspiciatis mollitia!
+                </div>
+            <div class="body">
+                <div class="block mb-40">
+                    <div class="block-head">
+                        General Information
+                    </div>
+                    <div class="block-content">
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <th class="w-30 text-left vertical-baseline">Document Number</th>
+                                    <td class="w-70 text-left">
+                                        @php
+                                        $temp = DB::table('document_types')
+                                            ->where('name', $data->document_type_name)
+                                            ->value('typecode');
+                                       @endphp
+                                        @if($data->revised === 'Yes') 
+                                           
+                                        {{ Helpers::getDivisionName($data->division_id) }}
+                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                                        /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
+
+                                        @else
+                                        {{ Helpers::getDivisionName($data->division_id) }}
+                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                                        /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                                        
+                                    @endif
+                                </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-30 text-left vertical-baseline">Title</th>
+                                    <td class="w-70 text-left">{{ $data->document_name }}</td>
+                                </tr>
+                                <tr>
+                                    <th class="w-30 text-left vertical-baseline">
+                                        Short Description
+                                    </th>
+                                    <td class="w-70 text-left">
+                                        {{ $data->short_description }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-30 text-left vertical-baseline">Description</th>
+                                    <td class="w-70 text-left">
+                                        {{ $data->description }}
+                                    </td>
+                                </tr>
+                                @php
+                                    $last = DB::table('document_histories')
+                                        ->where('document_id', $data->id)
+                                        ->latest()
+                                        ->first();
+                                @endphp
+
+                                <tr>
+                                    <th class="w-30 text-left vertical-baseline">Last Changed</th>
+                                    <td class="w-70 text-left">
+                                        @if ($last)
+                                            {{ $last->created_at }}
+                                        @else
+                                            {{ $data->created_at }}
+                                        @endif
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th class="w-30 text-left vertical-baseline">Changed By</th>
+                                    <td class="w-70 text-left">
+                                        @if ($last)
+                                            {{ $last->user_name }}
+                                        @else
+                                            {{ $data->originator }}
+                                        @endif
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="body">
-                    <div class="block mb-40">
-                        <div class="block-head">
-                            General Information
-                        </div>
-                        <div class="block-content">
-                            <table>
-                                <tbody>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Document Number</th>
-                                        <td class="w-70 text-left">78T5H23795H2GH7TGH</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Version</th>
-                                        <td class="w-70 text-left">7</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Title</th>
-                                        <td class="w-70 text-left">Test Document</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Description</th>
-                                        <td class="w-70 text-left">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. At nisi magni
-                                            accusamus accusantium sit aliquid reiciendis dicta quaerat vel soluta!
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. At nisi magni
-                                            accusamus accusantium sit aliquid reiciendis dicta quaerat vel soluta!
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. At nisi magni
-                                            accusamus accusantium sit aliquid reiciendis dicta quaerat vel soluta!
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Last Changed</th>
-                                        <td class="w-70 text-left">12-11-2023</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Changed By</th>
-                                        <td class="w-70 text-left">Piyush Sahu</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Library</th>
-                                        <td class="w-70 text-left">REYYTWE5Y</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Category</th>
-                                        <td class="w-70 text-left">Lorem, ipsum.</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Retention</th>
-                                        <td class="w-70 text-left">Lorem ipsum dolor sit amet.</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Authors(Dept)</th>
-                                        <td class="w-70 text-left">Piyush Sahu (Quality Analysis)</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="w-30 text-left vertical-baseline">Readers</th>
-                                        <td class="w-70 text-left">
-                                            <table class="table-bordered small-content">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Type</th>
-                                                        <th>Reader Name</th>
-                                                        <th>Print</th>
-                                                        <th>View</th>
-                                                        <th>Read</th>
-                                                        <th>Verify</th>
-                                                        <th>Asmt</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>Department</td>
-                                                        <td>Corporate Quality Assurance</td>
-                                                        <td>Y</td>
-                                                        <td>Y</td>
-                                                        <td>Y</td>
-                                                        <td>N</td>
-                                                        <td>N</td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td>Department</td>
-                                                        <td>Corporate Quality Assurance</td>
-                                                        <td>Y</td>
-                                                        <td>Y</td>
-                                                        <td>Y</td>
-                                                        <td>N</td>
-                                                        <td>N</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+
+                @php
+                $signatureOriginatorData = DB::table('stage_manages')
+                                                    ->where('document_id', $data->id)
+                                                    ->where(function ($query) {
+                                                        $query->where('stage', 'In-Review')
+                                                            ->orWhere('stage', 'In-Approval');
+                                                    })
+                                                    ->latest()
+                                                    ->first();
+
+                                                    $signatureReviewerData = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('stage', 'Reviewed')
+                                                ->get();
+// dd($signatureReviewerData);
+                                                    $signatureApprovalData = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('stage', 'Approved')
+                                                ->latest()
+                                                ->first();
+                @endphp
+                <div class="block mb-40">
+                    <div class="block-head">
+                        Originator
                     </div>
-                    <div class="block mb-40">
-                        <div class="block-head">
-                            Key Dates
-                        </div>
-                        <div class="block-content">
-                            <table class="table-bordered mb-20">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left w-20">&nbsp;</th>
-                                        <th class="text-left w-20">Planned Start </th>
-                                        <th class="text-left w-20">Planned Stop</th>
-                                        <th class="text-left w-40">Activity Mode Change Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th class="text-left w-20">Reviewed</th>
-                                        <td class="text-left w-20">NA</td>
-                                        <td class="text-left w-20">NA</td>
-                                        <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-left w-20">Approved</th>
-                                        <td class="text-left w-20">NA</td>
-                                        <td class="text-left w-20">NA</td>
-                                        <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-left w-20">Published</th>
-                                        <td class="text-left w-20">NA</td>
-                                        <td class="text-left w-20">NA</td>
-                                        <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <table class="table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left w-20">&nbsp;</th>
-                                        <th class="text-left w-20">Start</th>
-                                        <th class="text-left w-20">Stop</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th class="text-left w-20">Training Dates</th>
-                                        <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                        <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                    </tr>
-                                    <tr>
-                                        <th class="text-left w-20">Effective Dates</th>
-                                        <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                        <td class="text-left w-40">12-12-2034 11:12 PM</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    <div class="block-content">
+                        <table class="table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left w-25">Originator</th>
+                                    <th class="text-left w-25">Department</th>
+                                    <th class="text-left w-25">Status</th>
+                                    <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-left w-25">{{ $data->originator }}</td>
+                                    <td class="text-left w-25">{{ $document->originator && $document->originator->department ? $document->originator->department->name : '' }}</td>
+                                    <td class="text-left w-25">Initiation Completed</td>
+                                    <td class="text-left w-25">{{ $data->originator_email }}</td>
+                                    <td class="text-left w-25">{{ !$signatureOriginatorData || $signatureOriginatorData->comment == null ? " " : $signatureOriginatorData->comment }}</td>
+
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="block mb-40">
-                        <div class="block-head">
-                            Reviews
-                        </div>
-                        <div class="block-content">
-                            <table class="table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left w-25">Reviewer</th>
-                                        <th class="text-left w-25">Department</th>
-                                        <th class="text-left w-25">Date/Time</th>
-                                        <th class="text-left w-25">E-Signature</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                </div>
+                <div class="block mb-40">
+                    <div class="block-head">
+                        Reviews
+                    </div>
+                    <div class="block-content">
+                        <table class="table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left w-25">Reviewer</th>
+                                    <th class="text-left w-25">Department</th>
+                                    <th class="text-left w-25">Status</th>
+                                    <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($data->reviewers)
+                                    @php
+                                        $reviewer = explode(',', $data->reviewers);
+                                        $i = 0;
+                                    @endphp
+                                    @for ($i = 0; $i < count($reviewer); $i++)
+                                        @php
+                                            $user = DB::table('users')
+                                                ->where('id', $reviewer[$i])
+                                                ->first();
+                                            $dept = DB::table('departments')
+                                                ->where('id', $user->departmentid)
+                                                ->value('name');
+                                            $date = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->where('stage', 'Reviewed')
+                                                ->latest()
+                                                ->first();
+                                            
+                                                $comment = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->latest()
+                                                ->first();
+
+
+                                            $reject = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->where('stage', 'Cancel-by-Reviewer')
+                                                ->latest()
+                                                ->first();
+
+                                        @endphp
+                                        <tr>
+                                            <td class="text-left w-25">{{ $user->name }}</td>
+                                            <td class="text-left w-25">{{ $dept }}</td>
+                                            @if ($date)
+                                                <td class="text-left w-25">Review Completed</td>
+                                            @elseif(!empty($reject))
+                                                <td class="text-left w-25">Review Rejected </td>
+                                            @else
+                                                <td class="text-left w-25">Review Pending</td>
+                                            @endif                                                
+
+                                            <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25"> 
+                                            @if($comment)
+                                                {{ $comment->comment }}
+                                            @endif</td>
+                                            {{-- <td class="text-left w-25">{{ !$comment || $signatureReviewerData->comment == null ? " " : $signatureReviewerData->comment }}</td> --}}
+
+                                        </tr>
+                                    @endfor
+                                @endif
+                                @if ($data->reviewers_group)
+                                    @php
+                                        $group = explode(',', $data->reviewers_group);
+                                        $i = 0;
+
+                                    @endphp
+                                    @for ($i = 0; $i < count($group); $i++)
+                                        @php
+
+                                            $users_id = DB::table('group_permissions')
+                                                ->where('id', $group[$i])
+                                                ->value('user_ids');
+                                            $reviewer = explode(',', $users_id);
+                                            $i = 0;
+                                        @endphp
+                                        @if ($users_id)
+                                            @for ($i = 0; $i < count($reviewer); $i++)
+                                                @php
+                                                    $user = DB::table('users')
+                                                        ->where('id', $reviewer[$i])
+                                                        ->first();
+                                                    $dept = DB::table('departments')
+                                                        ->where('id', $user->departmentid)
+                                                        ->value('name');
+                                                    $date = DB::table('stage_manages')
+                                                        ->where('document_id', $data->id)
+                                                        ->where('user_id', $reviewer[$i])
+                                                        ->where('stage', 'Review-Submit')
+                                                        ->latest()
+                                                        ->first();
+                                                        
+                                                    $reject = DB::table('stage_manages')
+                                                        ->where('document_id', $data->id)
+                                                        ->where('user_id', $reviewer[$i])
+                                                        ->where('stage', 'Cancel-by-Reviewer')
+                                                        ->latest()
+                                                        ->first();
+
+                                                @endphp
+                                                <tr>
+                                                    <td class="text-left w-25">{{ $user->name }}</td>
+                                                    <td class="text-left w-25">{{ $dept }}</td>
+                                                    @if ($date)
+                                                        <td class="text-left w-25">Review Completed</td>
+                                                    @elseif(!empty($reject))
+                                                        <td class="text-left w-25">Review Rejected </td>
+                                                    @else
+                                                        <td class="text-left w-25">Review Pending</td>
+                                                    @endif
+
+                                                    <td class="text-left w-25">{{ $user->email }}</td>
+                                                </tr>
+                                            @endfor
+                                        @endif
+                                    @endfor
+
+
+                                @endif
+
+                            </tbody>
+                            {{-- <tbody>
                                     <tr>
                                         <td class="text-left w-25">Vivek</td>
                                         <td class="text-left w-25">Quality Control</td>
                                         <td class="text-left w-25">12-12-2023 11:12PM</td>
                                         <td class="text-left w-25">vivek@gmail.com</td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="block mb-40">
-                        <div class="block-head">
-                            Approvals
-                        </div>
-                        <div class="block-content">
-                            <table class="table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left w-25">Approver</th>
-                                        <th class="text-left w-25">Department</th>
-                                        <th class="text-left w-25">Date/Time</th>
-                                        <th class="text-left w-25">E-Signature</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-left w-25">Vivek</td>
-                                        <td class="text-left w-25">Quality Control</td>
-                                        <td class="text-left w-25">12-12-2023 11:12PM</td>
-                                        <td class="text-left w-25">vivek@gmail.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="block mb-40">
-                        <div class="block-head">
-                            Publisher
-                        </div>
-                        <div class="block-content">
-                            <table class="table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="text-left w-25">Publisher</th>
-                                        <th class="text-left w-25">Department</th>
-                                        <th class="text-left w-25">Date/Time</th>
-                                        <th class="text-left w-25">E-Signature</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="text-left w-25">Piyush Sahu</td>
-                                        <td class="text-left w-25">Quality Control</td>
-                                        <td class="text-left w-25">12-12-2023 11:12PM</td>
-                                        <td class="text-left w-25">piyush@gmail.com</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                                </tbody> --}}
+                        </table>
                     </div>
                 </div>
-            </section>
+                <div class="block mb-40">
+                    <div class="block-head">
+                        Approvals
+                    </div>
+                    <div class="block-content">
+                        <table class="table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class="text-left w-25">Approver</th>
+                                    <th class="text-left w-25">Department</th>
+                                    <th class="text-left w-25">Status</th>
+                                    <th class="text-left w-25">E-Signature</th>
+                                    <th class="text-left w-25">Comments</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($data->approvers)
+                                    @php
+                                        $reviewer = explode(',', $data->approvers);
+                                        $i = 0;
+                                    @endphp
+                                    @for ($i = 0; $i < count($reviewer); $i++)
+                                        @php
+                                            $user = DB::table('users')
+                                                ->where('id', $reviewer[$i])
+                                                ->first();
+                                            $dept = DB::table('departments')
+                                                ->where('id', $user->departmentid)
+                                                ->value('name');
+                                            $date = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->where('stage', 'Approved')
+                                                ->latest()
+                                                ->first();
+                                                $comment = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->latest()
+                                                ->first();
+                                            $reject = DB::table('stage_manages')
+                                                ->where('document_id', $data->id)
+                                                ->where('user_id', $reviewer[$i])
+                                                ->where('stage', 'Cancel-by-Approver')
+                                                ->latest()
+                                                ->first();
+                                                
+                                        @endphp
+                                        <tr>
+                                            <td class="text-left w-25">{{ $user->name }}</td>
+                                            <td class="text-left w-25">{{ $dept }}</td>
+                                            @if ($date)
+                                                <td class="text-left w-25">Approval Completed</td>
+                                            @elseif(!empty($reject))
+                                                <td>Approval Rejected</td>
+                                            @else
+                                                <td class="text-left w-25">Approval Pending</td>
+                                            @endif
 
-            <footer>
-                <table class="border p-20">
-                    <tbody>
-                        <tr>
-                            <td class="text-left w-33">Document Number</td>
-                            <td class="w-33">Printed On : 12-12-2023</td>
-                            <td class="text-right w-33">Page 1</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </footer>
+                                            <td class="text-left w-25">{{ $user->email }}</td>
+                                            <td class="text-left w-25">
+                                                @if($comment)
+                                                {{ $comment->comment }}
+                                            @endif
+                                            </td>
+                                        </tr>
+                                    @endfor
+                                @endif
+                                @if ($data->approver_group)
+                                    @php
+                                        $group = explode(',', $data->approver_group);
+                                        $i = 0;
 
-        </div>
-    </section>
+                                    @endphp
+                                    @for ($i = 0; $i < count($group); $i++)
+                                        @php
 
+                                            $users_id = DB::table('group_permissions')
+                                                ->where('id', $group[$i])
+                                                ->value('user_ids');
+                                            $reviewer = explode(',', $users_id);
+                                            $i = 0;
+                                        @endphp
+                                        @if ($users_id)
+                                            @for ($i = 0; $i < count($reviewer); $i++)
+                                                @php
+                                                    $user = DB::table('users')
+                                                        ->where('id', $reviewer[$i])
+                                                        ->first();
+                                                    $dept = DB::table('departments')
+                                                        ->where('id', $user->departmentid)
+                                                        ->value('name');
+                                                    $date = DB::table('stage_manages')
+                                                        ->where('document_id', $data->id)
+                                                        ->where('user_id', $reviewer[$i])
+                                                        ->where('stage', 'Approval-Submit')
+                                                        ->latest()
+                                                        ->first();
+                                                    $reject = DB::table('stage_manages')
+                                                        ->where('document_id', $data->id)
+                                                        ->where('user_id', $reviewer[$i])
+                                                        ->where('stage', 'Cancel-by-Approver')
+                                                        ->latest()
+                                                        ->first();
+
+                                                @endphp
+                                                <tr>
+                                                    <td class="text-left w-25">{{ $user->name }}</td>
+                                                    <td class="text-left w-25">{{ $dept }}</td>
+                                                    @if ($date)
+                                                        <td class="text-left w-25">Approval Completed</td>
+                                                    @elseif(!empty($reject))
+                                                        <td class="text-left w-25">Approval Rejected </td>
+                                                    @else
+                                                        <td class="text-left w-25">Approval Pending</td>
+                                                    @endif
+
+                                                    <td class="text-left w-25">{{ $user->email }}</td>                                  
+                                                </tr>
+                                            @endfor
+                                        @endif
+                                    @endfor
+
+
+                                @endif
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script type="text/php">
+        if ( isset($pdf) ) {
+            $pdf->page_script('
+                if ($PAGE_COUNT > 1) {
+                    $font = $fontMetrics->get_font("Arial, Helvetica, sans-serif", "normal");
+                    $size = 12;
+                    $pageText = "Page " . $PAGE_NUM . " of " . $PAGE_COUNT;
+                    $y = 811;
+                    $x = 445;
+                    $pdf->text($x, $y, $pageText, $font, $size);
+                }
+            ');
+        }
+    </script>
 </body>
-
 </html>
