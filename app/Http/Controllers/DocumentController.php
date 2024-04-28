@@ -1933,6 +1933,7 @@ class DocumentController extends Controller
         $document = Document::find($id);
 
         $revisionExists = Document::where([
+            'document_type_id' => $document->document_type_id,
             'document_number' => $document->document_number,
             'major' => $request->major,
             'minor' => $request->minor
@@ -1940,7 +1941,7 @@ class DocumentController extends Controller
 
         if ($revisionExists) {
             toastr()->error('Same version of document is already revised!!');
-            return redirect()->route('documents.index');
+            return redirect()->back();
         } else {
             $document->revision = 'Yes';
             $document->revision_policy = $request->revision;
