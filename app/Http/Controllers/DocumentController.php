@@ -1931,7 +1931,21 @@ class DocumentController extends Controller
     {
         // return $id;
 
+
         $document = Document::find($id);
+
+        $revisionExists = Document::where([
+            'document_number' => $document->document_number,
+            'major' => $request->major,
+            'minor' => $request->minor
+        ])->first();
+
+        if ($revisionExists) {
+            toastr()->error('Same version of document is already revised!!');
+            return redirect()->route('documents.index');
+        }
+
+
         $document->revision = 'Yes';
         $document->revision_policy = $request->revision;
         $document->update();
