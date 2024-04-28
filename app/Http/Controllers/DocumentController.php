@@ -1379,6 +1379,7 @@ class DocumentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
+
             if ($lastContent->procedure != $documentcontet->procedure || ! empty($request->procedure_comment)) {
                 $history = new DocumentHistory;
                 $history->document_id = $id;
