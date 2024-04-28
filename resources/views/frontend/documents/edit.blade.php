@@ -262,7 +262,7 @@
                                     </div>
                                     <div class="calenderauditee">                                     
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}" readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc }}" {{Helpers::isRevised($document->stage)}}
+                                        <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : ''  }}" {{Helpers::isRevised($document->stage)}}
                                         class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'due_dateDoc')"/>
@@ -1763,7 +1763,7 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <input type="text" name="responsibility[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                                <textarea name="responsibility[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -1848,7 +1848,7 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <input type="text" name="abbreviation[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                                <textarea name="abbreviation[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -1919,7 +1919,7 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <input type="text" name="defination[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                                <textarea name="defination[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -1990,7 +1990,7 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <input type="text" name="materials_and_equipments[{{ $key }}]" class="myclassname" value="{{ $data }}">
+                                                                <textarea name="materials_and_equipments[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -2140,7 +2140,7 @@
                                                     @if (str_contains($key, 'sub'))
                                                         <div class="resrow row">
                                                             <div class="col-6">
-                                                                <input type="text" name="reporting[{{ $key }}]" class="myclassname" value="{{ $data }}" />
+                                                                <textarea name="reporting[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-1">
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -2228,7 +2228,7 @@
                                                         @if (str_contains($key, 'sub'))
                                                             <div class="resrow row">
                                                                 <div class="col-6">
-                                                                    <input type="text" name="references[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                                    <textarea name="references[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-1">
                                                                     <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -2357,7 +2357,7 @@
                                                         @if (str_contains($key, 'sub'))
                                                             <div class="resrow row">
                                                                 <div class="col-6">
-                                                                    <input type="text" name="ann[{{ $key }}]" class="myclassname" value="{{ $data }}"/>
+                                                                    <textarea name="ann[{{ $key }}]" class="myclassname">{{ $data }}</textarea>
                                                                 </div>
                                                                 <div class="col-1">
                                                                     <button class="btn btn-danger abbreviationbtnRemove">Remove</button>

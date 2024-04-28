@@ -377,7 +377,7 @@
             e.preventDefault();
             subMaterialsAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><input type="text" name="materials_and_equipments[sub_'+ subMaterialsAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="materials_and_equipments[sub_'+ subMaterialsAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singleMaterialBlock');
 
@@ -395,7 +395,7 @@
             e.preventDefault();
             subResponsibilityAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><input type="text" name="responsibility[sub_'+ subResponsibilityAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="responsibility[sub_'+ subResponsibilityAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singleResponsibilityBlock');
 
@@ -412,7 +412,7 @@
             e.preventDefault();
             subAbbreviationAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><input type="text" name="abbreviation[sub_'+ subAbbreviationAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="abbreviation[sub_'+ subAbbreviationAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singleAbbreviationBlock');
 
@@ -429,7 +429,7 @@
             e.preventDefault();
             subDefinitionAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><input type="text" name="defination[sub_'+ subDefinitionAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="defination[sub_'+ subDefinitionAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singleDefinitionBlock');
 
@@ -446,7 +446,7 @@
             e.preventDefault();
             subReferencesAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><input type="text" name="references[sub_'+ subReferencesAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="references[sub_'+ subReferencesAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singleReferencesBlock');
 
@@ -463,7 +463,7 @@
             e.preventDefault();
             subAnnexureAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><input type="text" name="ann[sub_'+ subAnnexureAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="ann[sub_'+ subAnnexureAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singleAnnexureBlock');
 
@@ -480,7 +480,7 @@
             e.preventDefault();
             subReportingAdd = Math.round(Math.random() * 10000);
             var html =
-                '<div class="resrow row"><div class="col-6"><input type="text" name="reporting[sub_'+ subReportingAdd +']" class="myclassname"></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
+                '<div class="resrow row"><div class="col-6"><textarea name="reporting[sub_'+ subReportingAdd +']" class="myclassname"></textarea></div><div class="col-1"><button class="btn btn-danger abbreviationbtnRemove">Remove</button></div></div>';
 
             var closestSingleBlock = $(this).closest('.singleReportingBlock');
 
