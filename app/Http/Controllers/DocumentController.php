@@ -1978,7 +1978,7 @@ class DocumentController extends Controller
             $newdoc->revision_summary = $document->revision_summary;
             $newdoc->training_required = $document->training_required;
             $newdoc->trainer = $request->trainer;
-            $newdoc->document_number = $request->document_number;
+            $newdoc->document_number = $document->document_number;
             $newdoc->comments = $request->comments;
             //$newdoc->purpose = $request->purpose;
             $newdoc->stage = 1;
