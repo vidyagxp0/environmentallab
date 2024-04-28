@@ -112,7 +112,7 @@
                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                 characters remaining
                                     <input type="text" name="document_name" id="docname" maxlength="255"
-                                    {{Helpers::isRevised($document->stage)}}   value="{{ $document->document_name }}" required>
+                                    {{Helpers::isRevised($document->stage)}}  value="{{ $document->document_name }}" required>
 
 
                                     @foreach ($history as $tempHistory)
@@ -163,9 +163,9 @@
                            
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="short-desc">Short Description* <span id="editrchars">255</span>
+                                    <label for="short-desc">Short Description*    </label>
+                                    <span id="editrchars">255</span>
                                 characters remaining
-                            </label>
                                     <input type="text" name="short_desc" id="short_desc" maxlength="255"
                                      {{Helpers::isRevised($document->stage)}} 
                                         value="{{ $document->short_description }}">

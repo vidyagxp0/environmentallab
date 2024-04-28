@@ -544,6 +544,10 @@ class DocumentDetailsController extends Controller
                   // 
               }
             }
+            if ($request->stage_id == 11) {
+                $document['stage'] = $request->stage_id;
+                $document['status'] = Stage::where('id', $request->stage_id)->value('name');
+            }
           }
         }
 
