@@ -116,8 +116,8 @@
                                             <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
-                                            <td>{{ $temp->due_dateDoc }}</td>
-                                            <td>{{ $temp->due_dateDoc  }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
                                             @if($temp->traningstatus->status == 'Complete')
                                             <th>{{$temp->traningstatus->status}}</th>
                                             @else
@@ -174,7 +174,7 @@
                                         <th>Revision</th>
                                         <th>Training Status</th>
                                         <th>Content Type</th>
-                                        <th>Due Date</th>
+                                        <th>Due Dat </th>
                                         <th>Completed Date</th>
                                         <th>&nbsp;</th>
                                     </tr>
@@ -189,6 +189,7 @@
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
+                                            
                                             <td><a
                                                     href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
