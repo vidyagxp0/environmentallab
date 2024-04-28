@@ -2132,12 +2132,32 @@
                                     </div>
                                 </div>
 
+                            @foreach ($history as $tempHistory)
+                                @if ($tempHistory->activity_type == 'Safety' && !empty($tempHistory->comment) )
+                                    @php
+                                        $users_name = DB::table('users')
+                                            ->where('id', $tempHistory->user_id)
+                                            ->value('name');
+                                    @endphp
+                                    <p style="color: blue">Modify by {{ $users_name }} at
+                                        {{ $tempHistory->created_at }}
+                                    </p>
+                                    <input class="input-field"
+                                        style="background: #ffff0061;
+                            color: black;"
+                                        type="text" value="{{ $tempHistory->comment }}" disabled>
+                                @endif
+                            @endforeach
+
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
+
                                 <div class="comment">
                                     <div>
-                                        <input class="input-field" type="text" name="procedure_comment">
+                                        <input class="input-field" type="text" name="safety_comment">
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
+                            @endif
                             {{-- SAFETY & PRECATIONS END --}}
 
                             <div class="col-md-12">
