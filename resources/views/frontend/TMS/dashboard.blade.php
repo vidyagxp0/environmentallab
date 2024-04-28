@@ -73,7 +73,7 @@
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
                                                 000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td>
-                                            <td>{{ $temp->training->document_name }}</td>
+                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                            
@@ -152,8 +152,8 @@
                                     @foreach ($due as $temp)
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
-                                                000{{ $temp->document_id }}</td>
-                                                <td>{{ $temp->training->document_name }}</td>
+                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}</td>
+                                                <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                             <td>{{ $temp->status }} </td>
@@ -219,7 +219,7 @@
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
                                                 000{{ $temp->document_id }}</td>
-                                                <td>{{ $temp->training->document_name }}</td>
+                                                <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                             <td>{{ $temp->status }} </td>
@@ -285,7 +285,7 @@
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
                                                 000{{ $temp->document_id }}</td>
-                                                <td>{{ $temp->training->document_name }}</td>
+                                                <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                             <td>{{ $temp->status }} </td>
