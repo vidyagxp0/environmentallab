@@ -50,7 +50,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="train-status">Training Status</label>
+                                <label for="train-status">Overall Training Status</label>
                                 <div class="static">{{ $trainning->status }}</div>
                             </div>
                         </div>
