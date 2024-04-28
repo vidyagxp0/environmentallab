@@ -116,7 +116,7 @@
 
 
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Document Name' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Document Name' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -147,7 +147,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -170,7 +170,7 @@
                                      {{Helpers::isRevised($document->stage)}} 
                                         value="{{ $document->short_description }}">
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Short Description' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Short Description' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -198,7 +198,7 @@
                                 });
                             </script>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -234,7 +234,7 @@
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'SOP Type' &&
-                                            !empty($tempHistory->comment) && $document->stage < 8 &&
+                                            !empty($tempHistory->comment)  &&
                                             $tempHistory->user_id == Auth::user()->id)
                                         @php
                                             $users_name = DB::table('users')
@@ -251,7 +251,7 @@
                                     @endif
                                     @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -280,7 +280,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Due Date' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -299,7 +299,7 @@
                                 </div>
                                 <p id="due_dateDocError" style="color:red">**Due Date is required</p>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -332,7 +332,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Notify To' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -350,7 +350,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -372,7 +372,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Description' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -390,7 +390,7 @@
                                     @endforeach
                                 </div>
                             </div>
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -454,7 +454,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reference Record' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -472,7 +472,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                     {{-- Add Comment  --}}
                                     <div class="comment">
@@ -556,7 +556,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Department' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -576,7 +576,7 @@
                                 <p id="depart-nameError" style="color:red">**Department Name is required</p>
 
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -620,7 +620,7 @@
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'Major' &&
-                                            !empty($tempHistory->comment) && $document->stage < 8 &&
+                                            !empty($tempHistory->comment)  &&
                                             $tempHistory->user_id == Auth::user()->id)
                                         @php
                                             $users_name = DB::table('users')
@@ -637,7 +637,7 @@
                                     @endif
                                 @endforeach
                                 </div> 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                 {{-- Add Comment  --}}
                                 <div class="comment">
                                     <div>
@@ -686,7 +686,7 @@
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'Minor' &&
-                                            !empty($tempHistory->comment) && $document->stage < 8 &&
+                                            !empty($tempHistory->comment)  &&
                                             $tempHistory->user_id == Auth::user()->id)
                                         @php
                                             $users_name = DB::table('users')
@@ -703,7 +703,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -730,7 +730,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -748,7 +748,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -795,7 +795,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document Sub Type' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -815,7 +815,7 @@
 
 
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                  Add Comment  
                                     <div class="comment">
                                         <div>
@@ -861,7 +861,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Document Language' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -879,7 +879,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -940,7 +940,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Keywords' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -973,7 +973,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Effective Date' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -991,7 +991,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1013,7 +1013,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Review Period' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1038,7 +1038,7 @@
                                     }
                                 </script>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1068,7 +1068,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Next-Review Date' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1086,7 +1086,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1129,7 +1129,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Draft Document' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1147,7 +1147,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1175,7 +1175,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Effective Document' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1193,7 +1193,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1245,7 +1245,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1264,7 +1264,7 @@
                                 </div>
                                 <p id="reviewerError" style="color:red">**Reviewers are required</p>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1307,7 +1307,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1326,7 +1326,7 @@
                                 </div>
                                 <p id="approverError" style="color:red">**Approvers are required</p>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1367,7 +1367,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Reviewers Group' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1385,7 +1385,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1426,7 +1426,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Approvers Group' &&
-                                                !empty($tempHistory->comment) && $document->stage < 8 &&
+                                                !empty($tempHistory->comment)  &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1445,7 +1445,7 @@
                                 </div>
 
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1472,7 +1472,7 @@
                                             value="NA">NA</option>
                                     </select>
                                     @foreach ($history as $tempHistory)
-                                    @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment) && $document->stage < 8)
+                                    @if ($tempHistory->activity_type == 'Revision Type' && !empty($tempHistory->comment) )
                                         @php
                                             $users_name = DB::table('users')
                                                 ->where('id', $tempHistory->user_id)
@@ -1488,7 +1488,7 @@
                                     @endif
                                 @endforeach
                                 </div>
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1509,7 +1509,7 @@
 
                                     <textarea name="revision_summary" {{Helpers::isRevised($document->stage)}} >{{ $document->revision_summary }}</textarea>
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Revision Summary' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Revision Summary' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -1526,7 +1526,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3)
+                                @if (Auth::user()->role != 3 && $document->stage < 8)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1574,7 +1574,7 @@
 
                                     </select>
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Training Required' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Training Required' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -1605,7 +1605,7 @@
                                         @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Trainer' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Trainer' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -1719,7 +1719,7 @@
                                     <label for="purpose">Purpose</label>
                                     <textarea name="purpose" {{Helpers::isRevised($document->stage)}}>{{ $document->document_content ? $document->document_content->purpose : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -1737,7 +1737,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1757,7 +1757,7 @@
 
                                     <textarea name="scope" {{Helpers::isRevised($document->stage)}} >{{ $document->document_content ? $document->document_content->scope : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Scope' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -1775,7 +1775,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1842,7 +1842,7 @@
                                     </div>
 
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Responsibility' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Responsibility' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -1860,7 +1860,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
                                 {{-- Add Comment  --}}
                                 <div class="comment">
                                     <div>
@@ -1913,7 +1913,7 @@
                                     </div>
 
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Abbreviation' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Abbreviation' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -1931,7 +1931,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -1984,7 +1984,7 @@
                                     </div>
 
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Definiton' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Definiton' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -2002,7 +2002,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2074,7 +2074,7 @@
 
                                     <div id="materialsdiv"></div>
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Materials and Equipments' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Materials and Equipments' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -2092,7 +2092,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2114,7 +2114,7 @@
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         <textarea name="safety_precautions" class="summernote">{{ $document->document_content ? $document->document_content->safety_precautions : '' }}</textarea>
                                         @foreach ($history as $tempHistory)
-                                            @if ($tempHistory->activity_type == 'safety_precautions' && !empty($tempHistory->comment) && $document->stage < 8)
+                                            @if ($tempHistory->activity_type == 'safety_precautions' && !empty($tempHistory->comment) )
                                                 @php
                                                     $users_name = DB::table('users')
                                                         ->where('id', $tempHistory->user_id)
@@ -2146,7 +2146,7 @@
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     <textarea name="procedure" id="summernote">{{ $document->document_content ? $document->document_content->procedure : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Procedure' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -2220,7 +2220,7 @@
                                     </div>
 
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'Reporting' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'Reporting' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -2238,7 +2238,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2309,7 +2309,7 @@
                                     </div>
                                     
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'References' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'References' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -2331,7 +2331,7 @@
                                 </div>
                             </div>
 
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2437,7 +2437,7 @@
                                     </div>
 
                                     @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'ann' && !empty($tempHistory->comment) && $document->stage < 8)
+                                        @if ($tempHistory->activity_type == 'ann' && !empty($tempHistory->comment) )
                                             @php
                                                 $users_name = DB::table('users')
                                                     ->where('id', $tempHistory->user_id)
@@ -2459,7 +2459,7 @@
                                 </div>
                             </div>
 
-                            {{-- @if (Auth::user()->role != 3)
+                            {{-- @if (Auth::user()->role != 3 && $document->stage < 8)
                                 <div class="comment">
                                     <div>
                                         <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -2492,7 +2492,7 @@
                                     </table>
                                 </div>
                             </div> --}}
-                            @if (Auth::user()->role != 3)
+                            @if (Auth::user()->role != 3 && $document->stage < 8)
 
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -2636,7 +2636,7 @@
 
                             <div id="distributiondiv"></div>
                             @foreach ($history as $tempHistory)
-                                @if ($tempHistory->activity_type == 'distribution' && !empty($tempHistory->comment) && $document->stage < 8)
+                                @if ($tempHistory->activity_type == 'distribution' && !empty($tempHistory->comment) )
                                     @php
                                         $users_name = DB::table('users')
                                             ->where('id', $tempHistory->user_id)
@@ -2658,7 +2658,7 @@
                         </div>
                     </div>
 
-                    @if (Auth::user()->role != 3)
+                    @if (Auth::user()->role != 3 && $document->stage < 8)
 
                         {{-- Add Comment 
                         <div class="comment">
