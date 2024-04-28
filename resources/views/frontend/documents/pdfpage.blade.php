@@ -11,8 +11,8 @@
     <style>
 
         html{
-            /* text-align: justify;
-            text-justify: inter-word; */
+            text-align: justify;
+            text-justify: inter-word;
         }
         table {
             width: 100%;
@@ -351,7 +351,7 @@
             margin-right: auto;
         }
         
-        .MsoNormalTable {
+        .MsoNormalTable, .table {
             table-layout: fixed;
             width: 650px!important;
         }
@@ -476,7 +476,7 @@
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
                                 <div class="text-justify" style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                    {{ $data->document_content ? $data->document_content->scope : '' }}
+                                    {!! $data->document_content ? nl2br($data->document_content->scope) : '' !!}
                                 </div>
                             </div>
                         </div>
@@ -510,7 +510,7 @@
                                         @endphp
                                         @if (!empty($res))
                                             <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">3.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
                                         @php
@@ -557,7 +557,7 @@
                                         @endphp
                                         @if (!empty($res))
                                             <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">4.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
                                         @php
@@ -604,7 +604,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -649,7 +649,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">6.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -669,38 +669,12 @@
                 </div>
             {{-- MATERIALS AND EQUIPMENTS END --}}
 
-            {{-- PROCEDURE START --}}
-                <div class="other-container ">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="w-5">7.</th>
-                                <th class="text-left">Procedure</th>
-                            </tr>
-                        </thead>
-                    </table>
-                    <div class="procedure-block">
-                        <div class="w-100">
-                            <div class="w-100" style="display:inline-block;">
-                                <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
-                                        @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!}
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {{-- PROCEDURE END --}}
-
             {{-- SAFETY START --}}
             <div class="other-container ">
                 <table>
                     <thead>
                         <tr>
-                            <th class="w-5">8.</th>
+                            <th class="w-5">7.</th>
                             <th class="text-left">Safety & Precautions</th>
                         </tr>
                     </thead>
@@ -720,6 +694,32 @@
                 </div>
             </div>
             {{-- SAFETY END --}}
+
+            {{-- PROCEDURE START --}}
+                <div class="other-container ">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="w-5">8.</th>
+                                <th class="text-left">Procedure</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div class="procedure-block">
+                        <div class="w-100">
+                            <div class="w-100" style="display:inline-block;">
+                                <div class="w-100">
+                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                        @if ($data->document_content)
+                                            {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b>') !!}
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {{-- PROCEDURE END --}}
 
             {{-- REPORTING START --}}
                 <table class="mb-20 ">
@@ -745,7 +745,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">9.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -789,7 +789,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">10.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -834,7 +834,7 @@
                                         @endphp
                                         @if (!empty($res))
                                             <div style="position: relative;">
-                                                <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {{ $res }} <br>
+                                                <span style="position: absolute; left: -2.5rem; top: 0;">11.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
                                             </div>
                                         @endif
                                         @php

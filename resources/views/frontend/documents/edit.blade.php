@@ -1677,8 +1677,7 @@
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="purpose">Purpose</label>
-                                    <input type="text" name="purpose" {{Helpers::isRevised($document->stage)}} 
-                                        value="{{ $document->document_content ? $document->document_content->purpose : '' }}">
+                                    <textarea name="purpose" {{Helpers::isRevised($document->stage)}}>{{ $document->document_content ? $document->document_content->purpose : '' }}</textarea>
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Purpose' && !empty($tempHistory->comment))
                                             @php
@@ -2068,6 +2067,39 @@
                                 </div>
                             @endif
 
+                            {{-- SAFETY & PRECATIONS START --}}
+                                <div class="col-md-12">
+                                    <div class="group-input">
+                                        <label for="procedure">Safety & Precautions</label>
+                                        <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
+                                        <textarea name="safety_precautions" class="summernote">{{ $document->document_content ? $document->document_content->safety_precautions : '' }}</textarea>
+                                        @foreach ($history as $tempHistory)
+                                            @if ($tempHistory->activity_type == 'safety_precautions' && !empty($tempHistory->comment))
+                                                @php
+                                                    $users_name = DB::table('users')
+                                                        ->where('id', $tempHistory->user_id)
+                                                        ->value('name');
+                                                @endphp
+                                                <p style="color: blue">Modify by {{ $users_name }} at
+                                                    {{ $tempHistory->created_at }}
+                                                </p>
+                                                <input class="input-field"
+                                                    style="background: #ffff0061;
+                                        color: black;"
+                                                    type="text" value="{{ $tempHistory->comment }}" disabled>
+                                            @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <div class="comment">
+                                    <div>
+                                        <input class="input-field" type="text" name="procedure_comment">
+                                    </div>
+                                    <div class="button">Add Comment</div>
+                                </div>
+                            {{-- SAFETY & PRECATIONS END --}}
+
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="procedure">Procedure</label>
@@ -2092,41 +2124,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-12">
-                                <div class="group-input">
-                                    <label for="procedure">Safety & Precautions</label>
-                                    <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    <textarea name="safety_precautions" class="summernote">{{ $document->document_content ? $document->document_content->safety_precautions : '' }}</textarea>
-                                    @foreach ($history as $tempHistory)
-                                        @if ($tempHistory->activity_type == 'safety_precautions' && !empty($tempHistory->comment))
-                                            @php
-                                                $users_name = DB::table('users')
-                                                    ->where('id', $tempHistory->user_id)
-                                                    ->value('name');
-                                            @endphp
-                                            <p style="color: blue">Modify by {{ $users_name }} at
-                                                {{ $tempHistory->created_at }}
-                                            </p>
-                                            <input class="input-field"
-                                                style="background: #ffff0061;
-                                    color: black;"
-                                                type="text" value="{{ $tempHistory->comment }}" disabled>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
+                            
 
-                            {{-- @foreach ($history as $tempHistory)
-                                @if (Auth::user()->role != 3) --}}
-                                    {{-- Add Comment  --}}
-                                    <div class="comment">
-                                        <div>
-                                            <input class="input-field" type="text" name="procedure_comment">
-                                        </div>
-                                        <div class="button">Add Comment</div>
-                                    </div>
-                                {{-- @endif
-                            @endforeach --}}
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="reporting" id="newreport">
