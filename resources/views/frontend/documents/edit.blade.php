@@ -959,10 +959,10 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4 new-date-data-field">
+                            <div class="col-md-5 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="effective-date">Effective Date</label>
-                                    <div><small class="text-primary">Kindly Fill Target Date of Completion</small></div>
+                                    <div><small class="text-primary">The effective date will be automatically populated once the record becomes effective</small></div>
                                     <div class="calenderauditee">                                     
                                         <input  @if($document->stage != 1) disabled @endif type="text"  id="effective_date" value="{{ $document->effective_date  ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : ''  }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
                                         <input  @if($document->stage != 1) disabled @endif type="date" name="effective_date" value=""
@@ -973,7 +973,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Effective Date' &&
-                                                !empty($tempHistory->comment)  &&
+                                                !empty($tempHistory->comment) &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -991,7 +991,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if (Auth::user()->role != 3)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1006,14 +1006,14 @@
                                 @endif
 
                             </div>
-                              <div class="col-md-4">
+                              <div class="col-md-2">
                                 <div class="group-input">
                                     <label for="review-period">Review Period (in years)</label>
-                                    <input  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" min="0" {{Helpers::isRevised($document->stage)}}  value="3">
+                                    <input  style="margin-top: 25px;"  @if($document->stage != 1) readonly @endif type="number" name="review_period" id="review_period" min="0" {{Helpers::isRevised($document->stage)}}  value={{ $document->review_period }}>
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Review Period' &&
-                                                !empty($tempHistory->comment)  &&
+                                                !empty($tempHistory->comment) &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1038,7 +1038,7 @@
                                     }
                                 </script>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if (Auth::user()->role != 3)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>
@@ -1053,12 +1053,12 @@
 
                             </div>
 
-                            <div class="col-md-4 new-date-data-field">
+                            <div class="col-md-5 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="review-date">Next Review Date</label>
                                     
                                         <div class="calenderauditee">                                     
-                                        <input @if($document->stage != 1) disabled @endif type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
+                                        <input  style="margin-top: 25px;" @if($document->stage != 1) disabled @endif type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
                                         <input @if($document->stage != 1) disabled @endif type="date" name="next_review_date" value=""
                                         class="hide-input new_review_date_hide"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
@@ -1068,7 +1068,7 @@
                                     @foreach ($history as $tempHistory)
                                         @if (
                                             $tempHistory->activity_type == 'Next-Review Date' &&
-                                                !empty($tempHistory->comment)  &&
+                                                !empty($tempHistory->comment) &&
                                                 $tempHistory->user_id == Auth::user()->id)
                                             @php
                                                 $users_name = DB::table('users')
@@ -1086,7 +1086,7 @@
                                     @endforeach
                                 </div>
 
-                                @if (Auth::user()->role != 3 && $document->stage < 8)
+                                @if (Auth::user()->role != 3)
                                     {{-- Add Comment  --}}
                                     <div class="comment">
                                         <div>

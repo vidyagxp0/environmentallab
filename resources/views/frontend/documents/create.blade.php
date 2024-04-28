@@ -404,14 +404,14 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 new-date-data-field">
+                                <div class="col-md-5 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="effective-date">Effective Date</label>
-                                        <div><small class="text-primary">Kindly Fill Target Date of Completion</small></div>
+                                        <div> <small class="text-primary">The effective date will be automatically populated once the record becomes effective</small></div>
                                         <div class="calenderauditee"> 
-                                        <input type="text" name="effective_date" id="effective_date" readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text" name="effective_date" id="effective_date"  placeholder="DD-MMM-YYYY" />
                                         <input 
-                                        type="date" name="effective_date" id="effective_date" readonly
+                                        type="date" name="effective_date" id="effective_date" 
                                         class="hide-input"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'effective_date')"
@@ -420,11 +420,11 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-4 new-date-data-field">
+                                <div class="col-md-2 new-date-data-field">
                                     <div class="group-input "> 
                                         <label for="review-period">Review Period (in years)</label>
 
-                                        <input type="number" name="review_period" id="review_period" value="3" min="0" readonly oninput="validateInput(this)">
+                                        <input type="number" name="review_period" id="review_period" style="margin-top: 25px;" value="3" min="0" oninput="validateInput(this)">
                                     </div>
                                 </div>
                                 <script>
@@ -435,11 +435,11 @@
                                     }
                                 </script>
 
-                                <div class="col-md-4 new-date-data-field">
+                                <div class="col-md-5 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="next_review_date">Next Review Date</label>
                                         <div class="calenderauditee"> 
-                                            <input type="text" name="next_review_date" id="next_review_date" class="new_review_date_show"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" name="next_review_date" id="next_review_date"  style="margin-top: 25px;"  class="new_review_date_show"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" id="next_review_date"
                                         class="hide-input new_review_date_hide" readonly
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
