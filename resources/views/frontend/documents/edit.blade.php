@@ -423,7 +423,7 @@
                                         @if($document->revised === 'Yes') 
                                          {{ Helpers::getDivisionName($document->division_id) }}
                                         /@if($document->document_type_name){{  $temp }} /@endif{{ $year }}
-                                        /000{{ $document->revised_doc }}/R{{$document->major}}.{{$document->minor}}
+                                        /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}}
                                        
                                         @else
                                         {{ Helpers::getDivisionName($document->division_id) }}

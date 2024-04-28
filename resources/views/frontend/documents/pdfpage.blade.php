@@ -422,7 +422,7 @@
                                
                         {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                        /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
+                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
 
                         @else
                         {{ Helpers::getDivisionName($data->division_id) }}
@@ -526,7 +526,7 @@
                                 @php
                                     $i = 1;
                                 @endphp
-                                @if ($data->document_content && !empty($data->document_content->responsibility))
+                                @if ($data->document_content && !empty($data->document_content->responsibility) && is_array(unserialize($data->document_content->materials_and_equipments)))
                                     @foreach (unserialize($data->document_content->responsibility) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
@@ -573,7 +573,7 @@
                                 @php
                                     $i = 1;
                                 @endphp
-                                @if ($data->document_content && !empty($data->document_content->abbreviation))
+                                @if ($data->document_content && !empty($data->document_content->abbreviation) && is_array(unserialize($data->document_content->abbreviation)))
                                     @foreach (unserialize($data->document_content->abbreviation) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
@@ -620,7 +620,7 @@
                                         $i = 1;
                                         $definitions = $data->document_content ? unserialize($data->document_content->defination) : [];
                                     @endphp
-                                    @if ($data->document_content && !empty($data->document_content->defination))
+                                    @if ($data->document_content && !empty($data->document_content->defination) && is_array($definitions))
                                         @foreach ($definitions as $key => $definition)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
@@ -665,7 +665,7 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 3rem;">
                                     @php $i = 1; $sub_index = 1; @endphp
-                                    @if ($data->document_content)
+                                    @if ($data->document_content && is_array(unserialize($data->document_content->materials_and_equipments)))
                                         @foreach (unserialize($data->document_content->materials_and_equipments) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
@@ -761,7 +761,7 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
-                                    @if ($data->document_content && !empty($data->document_content->reporting))
+                                    @if ($data->document_content && !empty($data->document_content->reporting) && is_array(unserialize($data->document_content->reporting)))
                                         @foreach (unserialize($data->document_content->reporting) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
@@ -805,7 +805,7 @@
                             <div class="w-100">
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                     @php $i = 1; @endphp
-                                    @if ($data->document_content && !empty($data->document_content->references))
+                                    @if ($data->document_content && !empty($data->document_content->references) && is_array(unserialize($data->document_content->references)))
                                         @foreach (unserialize($data->document_content->references) as $key => $res)
                                             @php
                                                 $isSub = str_contains($key, 'sub');
@@ -850,7 +850,7 @@
                         <div class="w-100">
                             <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                 @php $i = 1; @endphp
-                                @if ($data->document_content && !empty($data->document_content->ann))
+                                @if ($data->document_content && !empty($data->document_content->ann) && is_array(unserialize($data->document_content->ann)))
                                     @foreach (unserialize($data->document_content->ann) as $key => $res)
                                         @php
                                             $isSub = str_contains($key, 'sub');
@@ -926,12 +926,12 @@
                                            
                                         {{ Helpers::getDivisionName($data->division_id) }}
                                         /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                                        /000{{ $data->revised_doc }}/R{{$data->major}}.{{$data->minor}}
+                                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
 
                                         @else
                                         {{ Helpers::getDivisionName($data->division_id) }}
                                         /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                                        /000{{ $data->id }}/R{{$data->major}}.{{$data->minor}}
+                                        /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
                                         
                                     @endif
                                 </td>
