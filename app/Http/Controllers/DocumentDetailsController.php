@@ -537,6 +537,7 @@ class DocumentDetailsController extends Controller
             }
             if ($request->stage_id == 8) {
               $document->effective_date = Carbon::now()->format('Y-m-d');
+              $document->review_period = 3; //3 year
               try {
                   $next_review_date = Carbon::parse($document->effective_date)->addYears($document->review_period)->format('Y-m-d');
                   $document->next_review_date = $next_review_date;
@@ -544,7 +545,7 @@ class DocumentDetailsController extends Controller
                   // 
               }
             }
-            if ($request->stage_id == 11) {
+            if ($request->stage_id == 11) { 
                 $document['stage'] = $request->stage_id;
                 $document['status'] = Stage::where('id', $request->stage_id)->value('name');
             }

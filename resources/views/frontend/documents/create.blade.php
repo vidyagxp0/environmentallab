@@ -407,10 +407,11 @@
                                 <div class="col-md-4 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="effective-date">Effective Date</label>
+                                        <div><small class="text-primary">Kindly Fill Target Date of Completion</small></div>
                                         <div class="calenderauditee"> 
-                                        <input type="text" name="effective_date" id="effective_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text" name="effective_date" id="effective_date" readonly placeholder="DD-MMM-YYYY" />
                                         <input 
-                                        type="date" name="effective_date" id="effective_date"
+                                        type="date" name="effective_date" id="effective_date" readonly
                                         class="hide-input"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'effective_date')"
@@ -423,7 +424,7 @@
                                     <div class="group-input "> 
                                         <label for="review-period">Review Period (in years)</label>
 
-                                        <input type="number" name="review_period" id="review_period" min="0" oninput="validateInput(this)">
+                                        <input type="number" name="review_period" id="review_period" value="3" min="0" readonly oninput="validateInput(this)">
                                     </div>
                                 </div>
                                 <script>
@@ -440,7 +441,7 @@
                                         <div class="calenderauditee"> 
                                             <input type="text" name="next_review_date" id="next_review_date" class="new_review_date_show"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" id="next_review_date"
-                                        class="hide-input new_review_date_hide"
+                                        class="hide-input new_review_date_hide" readonly
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'next_review_date')"/>
                                         </div>
