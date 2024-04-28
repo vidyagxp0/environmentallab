@@ -762,9 +762,25 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
-                                        <input type="text" name="defination[]" class="myclassname">
+                                        
 
-                                        <div id="definitiondiv"></div>
+                                        <div id="definitiondiv">
+
+                                            <div class="singleDefinitionBlock">
+                                                <div class="row">
+                                                    <div class="col-sm-10">
+                                                        <input type="text" name="defination[]" class="myclassname">
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-dark subDefinitionAdd">+</button>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <button class="btn btn-danger removeAllBlocks">Remove</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
 
                                     </div>
                                 </div>
