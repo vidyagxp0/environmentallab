@@ -321,7 +321,7 @@
                                                             </td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
-                                                    @elseif($temp->root_document->status == 'Effective' || $temp->root_document->status == 'Obsolete')
+                                                    @elseif($temp->root_document->status == 'Effective')
                                                         <tr>
                                                             <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
                                                                     value="{{ $temp->document_id }}"></td>
