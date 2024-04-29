@@ -175,6 +175,7 @@ class TMSController extends Controller
     public function create(){ 
         if(Helpers::checkRoles(6) || Helpers::checkRoles(3)){
           
+
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
             $due = DocumentTraining::where('trainer', Auth::user()->id)->whereIn('status', ["Past-due", 'Assigned'])->get();
             $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
