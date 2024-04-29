@@ -168,9 +168,27 @@
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
-                        <div class="main-scope-table">
+
+                        <style>
+.table-container {
+  overflow: auto;
+  max-height: 350px; 
+}
+
+.table-header11 {
+  position: sticky;
+  top: 0;
+  background-color: white; 
+  z-index: 1;
+}
+
+.table-body-new {
+  margin-top: 30px; 
+}
+                        </style>
+                        <div class="main-scope-table table-container" >
                             <table class="table table-bordered" id="auditTable">
-                                <thead>
+                                <thead class="table-header11">
                                     <tr>
                                         <th>Record</th>
                                         {{-- <th>Parent ID</th> --}}
@@ -183,7 +201,7 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="searchTable">
+                                <tbody id="searchTable" class="table-body-new">
                                     @php
                                         $table = json_encode($datag);
                                         $tables = json_decode($table);
