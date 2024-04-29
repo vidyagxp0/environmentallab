@@ -139,7 +139,7 @@
                                     <option value="">All Records</option>
                                     <option value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
-                                    <option value="Capa">Capa</option>
+                                    <option value="Capa">CAPA</option>
                                     <option value="Audit-Program">Audit Program</option>
                                     <option value="Lab Incident">Lab Incident</option>
                                     <option value="Risk Assesment">Risk Assesment</option>
@@ -402,7 +402,8 @@
                                                             {{ $datas->parent }}
                                                         </td>
                                                     @endif --}}
-                                            <td class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td 
+                                            class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if ($datas->division_id)
@@ -413,7 +414,7 @@
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
-                                                data-bs-target="#record-modal">
+                                                data-bs-target="#record-modal" style="{{ $datas->type == 'Capa' ? 'text-transform: uppercase' : '' }}">
                                                 {{ $datas->type }}
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
