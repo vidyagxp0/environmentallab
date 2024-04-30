@@ -174,12 +174,11 @@ class TMSController extends Controller
     }
     public function create(){ 
         if(Helpers::checkRoles(6) || Helpers::checkRoles(3)){
-          
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
-            $due = DocumentTraining::where('trainer', Auth::user()->id)->where('status', ["Past-due", 'Assigned', 'Complete'])->get();
+            $due = DocumentTraining::where('trainer', Auth::user()->id)->whereIn('status', ["Past-due", 'Assigned', 'Complete'])->get();
             $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
-        //    dd($trainees);
+
             foreach($due as $temp){
                 $temp->training = Document::find($temp->document_id);
                 if($temp->training){
@@ -195,9 +194,11 @@ class TMSController extends Controller
             }
            
             $users = User::where('role', '!=', 6)->get();
+
             foreach($users as $data){
                 $data->department = Department::where('id',$data->departmentid)->value('name');
             }
+
             return view('frontend.TMS.create-training',compact('due','users','quize', 'traineesPerson'));
         }else{
             abort(404);

@@ -2,8 +2,6 @@
 @section('container')
     @include('frontend.TMS.head')
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     @if(count($errors) > 0)
         @foreach($errors->all() as $error)
         @php
@@ -306,8 +304,12 @@
                                                 @if ($temp->root_document)
                                                     @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
                                                         <tr>
-                                                            <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
-                                                                    value="{{ $temp->document_id }}"></td>
+                                                            <td class="text-center">
+                                                                <input 
+                                                                class="select-sop-js"
+                                                                data-id="{{ $temp->root_document->id }}"
+                                                                type="checkbox" id="sopData" name="sops[]" value="{{ $temp->document_id }}">
+                                                            </td>
 
                                                                     @php
                                                                     $temp1 = DB::table('document_types')
@@ -323,8 +325,12 @@
                                                         </tr>
                                                     @elseif($temp->root_document->status == 'Effective')
                                                         <tr>
-                                                            <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
-                                                                    value="{{ $temp->document_id }}"></td>
+                                                            <td class="text-center">
+                                                                <input 
+                                                                class="select-sop-js"
+                                                                data-id="{{ $temp->root_document->id }}"
+                                                                type="checkbox" id="sopData" name="sops[]" value="{{ $temp->document_id }}">
+                                                            </td>
 
                                                                     @php
                                                                     $temp1 = DB::table('document_types')
@@ -361,29 +367,11 @@
                                     <input type="text" name="search" placeholder="Search Trainees">
                                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
                                 </div>
-                                <div class="selection-table">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <th>Trainees Name</th>
-                                                <th>Department</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($users as $temp)
-                                                <tr>
-                                                    <td class="text-center"><input type="checkbox" id="trainee" name="trainees[]"
-                                                            value="{{ $temp->id }}"></td>
-                                                    <td>{{ $temp->name }}</td>
-                                                    <td>{{ $temp->department }}</td>
-                                                </tr>
-                                            @endforeach
-                                            <p id="TraineeType" style="color: red">
-                                                ** Please Select atliest one Trainee...
-                                            </p>
-                                        </tbody>
-                                    </table>
+                                <div class="text-center" style="display: none" id="fetchUserBlock">
+                                    fetching users...
+                                </div>
+                                <div class="selection-table user-selection-table-js">
+                                    @include('frontend.TMS.comps.training-users')
                                 </div>
                             </div>
                         </div>
@@ -457,6 +445,43 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+
+        $('input[name="sops[]"]').change(async function() {
+
+            let getUrl = "{{ route('sop_training_users') }}";
+            const isChecked = $(this).is(':checked');
+
+            if (isChecked) {
+                let sopId = $(this).data('id');
+                getUrl = `${getUrl}/${sopId}`;
+             
+                $('#fetchUserBlock').show();
+
+                try {
+                    
+                    const res = await axios.get(getUrl);
+
+                    if (res.data.status == 'ok') {
+
+                        $('.user-selection-table-js').html(res.data.body);
+
+                    } else {
+                        throw Error(res.data.message);
+                    }
+
+                } catch (err) {
+                    console.log('Error in sop user fetching', err.message);
+                }
+
+                $('#fetchUserBlock').hide();
+
+            }
+        })
+
+    </script>
+
     <script>
         $(document).ready(function() {
             $("#training-select").change(function() {
@@ -475,9 +500,6 @@
                 }
             });
         });
-
-
-
 
         const itemList = document.getElementById('training-question');
         const selectedList = document.getElementById('training-ques-selected');
