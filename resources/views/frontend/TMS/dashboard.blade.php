@@ -54,35 +54,43 @@
 
                 <div class="inner-block tms-block" id="tms-all-block">
                     @if (Helpers::checkRoles(6))
-                        {{-- <div class="block-table">
+                        <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Document Number</th>
-                                        <th>Document Title</th>
-                                        <th>Document Type</th>
-                                        <th>Division</th>
-                                       
-                                         <th>&nbsp;</th>  --}}
-                                        {{-- <th>Audit Trial</th>
+                                        <th>Training Plan</th>
+                                        <th>Number of SOPs</th>
+                                        <th>Effective Criteria</th>
+                                        <th>Number of Trainees </th>
+                                        <th>Status</th>
+                                         <th>&nbsp;</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($documents as $temp)
-                                    @if(!empty($temp->training) && $temp->training->stage >=6 && $temp->root_document->status == 'Under-Training')
+                                    @if(!empty($temp->training) && $temp->training->stage >=6)
                                         <tr>
-                                            <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
-                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td>
-                                            <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
-                                            <td>{{ $temp->document_type_name }}</td>
-                                            <td>{{ $temp->division_name }}</td>
+                                            @php
+                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
+                                                    if ($trainingPlan) {
+                                                        $traineesCount = count(explode(',', $trainingPlan->trainees));
+                                                        $sopsCount = count(explode(',', $trainingPlan->sops));
+                                                    }
+                                            @endphp
+
+                                            <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
+                                            {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
+                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
+                                            <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
+                                            <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
+                                            <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
+                                            <td>{{ $temp->status }}</td>
                                            
-                                            <td>
+                                            {{-- <td>
                                                 <a href="#"><i class="fa-solid fa-eye"></i></a>            
-                                            </td>  
-                                            <td>
-                                                <button onClick="window.location='{{ url('tms-audit',$temp->id) }}';">Audit Trail</button>           
-                                            </td>
+                                            </td> --}}
+                                            <td><a href="{{ url('training-overall-status', $temp->root_document) }}"><i class="fa-solid fa-eye"></i></a></td>
+
                                         </tr>
                                         @endif
                                     @endforeach
@@ -90,7 +98,7 @@
 
                                 </tbody>
                             </table>
-                        </div> --}}
+                        </div>
                         @endif
 
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
@@ -99,8 +107,7 @@
                                 <thead>
                                     <tr>
                                         <th>Document Number</th>
-                                        <th>Name</th>
-                                        <th>Revision</th>
+                                        <th>Document Title</th>
                                         <th>Training Status</th>
                                         <th>Content Type</th>
                                         <th>Due Date</th>
@@ -113,7 +120,6 @@
                                         <tr>
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
-                                            <th>1</th>
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
@@ -126,8 +132,6 @@
                                             @endif
                                         </tr>
                                     @endforeach
-
-
                                 </tbody>
                             </table>
                         </div>
