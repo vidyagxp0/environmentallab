@@ -36,7 +36,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Sr. No.</th>
+                                        <th style="width: 80px;">Sr. No.</th>
                                         <th>Title</th>
                                         <th>Description</th>
                                         <th>Status</th>
@@ -49,7 +49,7 @@
                                         <tr class="single-select">
                                             <td>{{ $key+1 }}.</td>
                                             <td>
-                                                {{ $temp->title }}.
+                                                {{ $temp->title }}
                                             </td>
                                             <td class="question">
                                                 {{ $temp->description }}
@@ -103,8 +103,8 @@
                         <div class="group-input">
                             <label for="status">Status</label>
                             <select name="status">
-                                <option value="active" selected>Active</option>
-                                <option value="inactive">Inactive</option>
+                                <option value="Active" selected>Active</option>
+                                <option value="Inactive">Inactive</option>
                             </select>
                         </div>
                         <div class="group-input">

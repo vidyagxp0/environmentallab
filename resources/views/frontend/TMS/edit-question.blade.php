@@ -14,11 +14,11 @@
                         @method('PUT')
                         <div class="group-input">
                             <label for="ques-type">Question Type</label>
-                            <select name="type" id="questionType" onchange="handleChange(this.value)">
+                            <select name="type" id="questionType" onchange="handleChange(this.value)" disabled>
                                 <option value="">---</option>
                                 <option value="Single Selection Questions" @if($question->type == 'Single Selection Questions')selected @endif>Single Selection Questions</option>
                                 <option value="Multi Selection Questions"@if($question->type == 'Multi Selection Questions')selected @endif>Multi Selection Questions</option>
-                                <option value="Exact Match Questions"@if($question->type == 'Exact Match Questions')selected @endif>Exact Match Questions</option>
+                                {{-- <option value="Exact Match Questions"@if($question->type == 'Exact Match Questions')selected @endif>Exact Match Questions</option> --}}
                             </select>
                                 <p id="typecheck"
                                 style="color: red;">
@@ -33,20 +33,22 @@
                             **Question is missing
                           </p>
                         </div>
+                        @if($question->type == 'Single Selection Questions')
+                        
                         <div class="group-input question-options" id="options-group">
                             <label for="options">
                                 Options<button type="button" id="optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
                             </label>
                             @if (!empty($question->options))
-                            @foreach (unserialize($question->options) as $data)
-                            @if (!is_null($data))                                
-                                <div class="option-group">
-                                        <input type="text" id="option" name="options[]"
-                                            value="{{ $data }}">
-                                            <input type="radio" class="answer" name="answer" value="0">
-                                </div>
-                            @endif
-                            @endforeach
+                                @foreach (unserialize($question->options) as $option)
+                                    @if (!is_null($option))
+                                        <div class="option-group">
+                                            <input type="text" id="option" name="options[]" value="{{ $option }}">
+                                            <input type="radio" class="answer" name="answer" value="{{ $option }}" 
+                                                {{ in_array($option, unserialize($question->answers)) ? 'checked' : '' }}>
+                                        </div>
+                                    @endif
+                                @endforeach
                             @else
                             <input type="text" id="option" name="options[]">
                             <input type="radio" class="answer" name="answer" value="0">
@@ -59,20 +61,52 @@
                             **Options are missing
                             </p>
 
+                            @else
+                            <div class="group-input multi_question-options" id="multi_options-group">
+                                <label for="options">
+                                    Optionsss<button type="button" id="multi_optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
+                                </label>
+                                @if (!empty($question->options))
+                                    @foreach (unserialize($question->options) as $option)
+                                        @if (!is_null($option))
+                                            <div class="option-group">
+                                                <input type="text" id="option" name="options[]" value="{{ $option }}">
+                                                <input type="checkbox" class="answer" name="answer" value="{{ $option }}" 
+                                                    {{ in_array($option, unserialize($question->answers)) ? 'checked' : '' }}>
+                                            </div>
+                                        @endif
+                                    @endforeach
+                                @endif
+                                
+                                    
+                                    <div id="multi_optionsdiv"></div>
+                                    <p id="optioncheck2" style="color: red;">
+                                        **Options are missing
+                                    </p>
+                                </div> 
+
+                            @endif
+
+
+                            
+ 
                         <div class="group-input question-answer">
                             <label for="answer" id="answer-label">
                                 Answer<button type="button" id="answersbtnadd"><i class="fa-solid fa-plus"></i></button>
+                                <div> <small style="
+                                    font-weight: 500;
+                                " class="text-primary">The value auto-populates upon selecting correct answer above.</small></div>
                             </label>
                             @if (!empty($question->answers))
                             @foreach (unserialize($question->answers) as $data)
                             <div class="answer-group">
-                                    <input type="text" id="answer" name="answers[]"
+                                    <input type="text" id="answer" readonly name="answers[]" multiple
                                         value="{{ $data }}">
                             </div>
                             @endforeach
                             @else
                             <input type="text" id="answer" name="answers[]">
-                            <input type="radio" class="answer" name="answer" value="0">
+                            <input type="radio" class="answer" name="answer" value="" readonly>
                             @endif
                             
                             <div id="answersdiv"></div>

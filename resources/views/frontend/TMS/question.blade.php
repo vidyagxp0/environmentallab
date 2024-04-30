@@ -50,7 +50,7 @@
                                         <tr class="single-select">
                                             <td>{{ $temp->id }}.</td>
                                             <td>
-                                                {{ $temp->question }}.
+                                                {{ $temp->question }}
                                             </td>
                                             <td class="question">
                                                 <ul>
@@ -66,10 +66,14 @@
                                             <td>
                                                 <ul>
                                                     @if (!empty($temp->answers))
-                                                        @foreach (unserialize($temp->answers) as $options)
-                                                        @if (is_numeric($options))
-                                                            <li>{{ $options + 1 }}</li>                                                            
-                                                        @endif
+                                                        @foreach (unserialize($temp->answers) as $option)
+                                                            <li>
+                                                                @if (is_numeric($option))
+                                                                    {{ $loop->index + 1 }}
+                                                                @else
+                                                                    {{ $option }}
+                                                                @endif
+                                                            </li>
                                                         @endforeach
                                                     @endif
                                                 </ul>
@@ -188,11 +192,11 @@
                                 Options<button type="button" id="multi_optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
                             </label>
                             <div class="option-group">
-                                <input type="text" id="option" name="options[]">
+                                <input type="text" id="option2" name="options[]">
                                 <input type="checkbox" class="answer" name="answer" value="0">
                             </div>
                             <div id="multi_optionsdiv"></div>
-                            <p id="optioncheck" style="color: red;">
+                            <p id="optioncheck2" style="color: red;">
                                 **Options are missing
                             </p>
                         </div> 
@@ -271,7 +275,7 @@
             var multiOptionsGroup = document.querySelector('.multi_question-options');
             var answerButton = document.querySelector('#answer-label button');
             var optionsButton = document.querySelector('.question-options button');
-        answerGroup.style.display = 'block';
+                answerGroup.style.display = 'block';
                 answerButton.style.display = 'none';
                 singleOptionsGroup.style.display = 'block';
                 multiOptionsGroup.style.display = 'none';
