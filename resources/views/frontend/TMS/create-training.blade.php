@@ -304,7 +304,7 @@
                                            
                                             @foreach ($due as $temp)
                                                 @if ($temp->root_document)
-                                                    @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training')
+                                                    @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
                                                         <tr>
                                                             <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
                                                                     value="{{ $temp->document_id }}"></td>

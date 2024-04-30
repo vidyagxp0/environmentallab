@@ -177,7 +177,7 @@ class TMSController extends Controller
           
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
-            $due = DocumentTraining::where('trainer', Auth::user()->id)->whereIn('status', ["Past-due", 'Assigned'])->get();
+            $due = DocumentTraining::where('trainer', Auth::user()->id)->where('status', ["Past-due", 'Assigned', 'Complete'])->get();
             $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
         //    dd($trainees);
             foreach($due as $temp){
