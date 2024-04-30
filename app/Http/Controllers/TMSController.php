@@ -233,7 +233,7 @@ class TMSController extends Controller
                 foreach ($request->file('training_attachment') as $file) {
                     $name = $request->traning_plan_name . 'training_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
-                    $files[] = 'upload/' . $name; // Store the file path
+                    $files[] =  $name; // Store the file path
                 }
                 // Save the file paths in the database
                 $training->training_attachment = json_encode($files);
