@@ -63,9 +63,17 @@ class DocumentService
 
                 foreach ($documents as $document)
                 {
-                    $record_number++;
-                    $document->document_number = $record_number; 
-                    $document->save();
+                    if ($document->revised !== 'Yes') {
+                        $record_number++;
+                        $document->document_number = $record_number; 
+                        $document->save();
+                    } else {
+                        $parent_document = Document::find($document->revised_doc);
+                        if ($parent_document) {
+                            $document->document_number = $parent_document->document_number;
+                            $document->save();
+                        }
+                    }
                 }
             }
 

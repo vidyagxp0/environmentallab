@@ -542,7 +542,7 @@ class DocumentDetailsController extends Controller
               if ($document->revised == 'Yes')
               {
                 $old_document = Document::where([
-                  'id' => $document->revised_doc,
+                  'document_number' => $document->document_number,
                   'status' => 'Effective'
                 ])->first();
 

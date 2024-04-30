@@ -9,6 +9,9 @@
     <title>DMS Document</title>
 
     <style>
+        .symbol-support {
+            font-family:"DeJaVu Sans Mono",monospace !important;
+        }
 
         html{
             text-align: justify;
@@ -349,6 +352,9 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+            page-break-after: auto;
+            page-break-inside: auto;
+            page-break-before: auto;
         }
         
         .MsoNormalTable, .table {
@@ -365,19 +371,23 @@
         /* Additional styles to ensure list items are handled correctly */
         ol, ul {
             page-break-before: auto; /* Allows page breaks before lists */
-            page-break-inside: avoid; /* Prefer avoiding breaks inside lists */
+            page-break-inside: auto; /* Prefer avoiding breaks inside lists */
         }
 
         li {
             page-break-after: auto; /* Allows automatic page breaks after list items */
-            page-break-inside: avoid; /* Prefer avoiding breaks inside list items */
+            page-break-inside: auto; /* Prefer avoiding breaks inside list items */
         }
 
         /* Handling headings to maintain section integrity */
         h1, h2, h3, h4, h5, h6 {
-            page-break-after: avoid; /* Avoids breaking immediately after headings */
-            page-break-inside: avoid; /* Avoids breaking inside headings */
+            page-break-after: auto; /* Avoids breaking immediately after headings */
+            page-break-inside: auto; /* Avoids breaking inside headings */
             page-break-before: auto; /* Allows automatic page breaks before headings */
+        }
+        
+        .main-section {
+            text-align: left;
         }
 
     </style>
@@ -627,7 +637,7 @@
                                             @endphp
                                             @if (!empty($res))
                                                 <div style="position: relative;">
-                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($res) !!} <br>
+                                                    <span style="position: absolute; left: -2.5rem; top: 0;">5.{{ $isSub ? $i - 1 . '.' . $sub_index : $i }}</span> {!! nl2br($definition) !!} <br>
                                                 </div>
                                             @endif
                                             @php
@@ -706,8 +716,9 @@
                     <div class="w-100">
                         <div class="w-100" style="display:inline-block;">
                             <div class="w-100">
-                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
                                     @if ($data->document_content)
+                                        {{-- {!! $data->document_content->safety_precautions !!} --}}
                                         {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><b><ol><li>') !!}
                                     @endif
                                 </div>

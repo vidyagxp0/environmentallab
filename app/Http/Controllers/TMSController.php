@@ -176,20 +176,20 @@ class TMSController extends Controller
         if(Helpers::checkRoles(6) || Helpers::checkRoles(3)){
           
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
-            $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->get();
-           $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
+            $due = DocumentTraining::where('trainer', Auth::user()->id)->whereIn('status', ["Past-due", 'Assigned'])->get();
+            $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
         //    dd($trainees);
             foreach($due as $temp){
                 $temp->training = Document::find($temp->document_id);
                 if($temp->training){
-                $temp->originator = User::where('id',$temp->training->originator_id)->value('name');
-                $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
-                $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
-                $temp->division_name = Helpers::getDivisionName($temp->training->division_id);
-                $temp->major = $temp->training->major;
-                $temp->minor = $temp->training->minor;
-                $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
+                    $temp->originator = User::where('id',$temp->training->originator_id)->value('name');
+                    $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
+                    $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
+                    // $temp->division_name = QMSDivision::where('id',$temp->training->division_id)->value('name');
+                    $temp->division_name = Helpers::getDivisionName($temp->training->division_id);
+                    $temp->major = $temp->training->major;
+                    $temp->minor = $temp->training->minor;
+                    $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
                 }
             }
            
