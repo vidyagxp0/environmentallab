@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ActionItemController;
+use App\Http\Controllers\Ajax\AjaxController;
 use App\Http\Controllers\OpenStageController;
 use App\Http\Controllers\rcms\InternalauditController;
 use App\Http\Controllers\rcms\RootCauseController;
@@ -395,4 +396,10 @@ Route::view('review-management-report', 'frontend.review-management.review-manag
 //!                    External Audit
 //! ============================================
 
+
+/**
+ * AJAX ROUTES
+ */
+
+ Route::get('/sop/users/{id?}', [AjaxController::class, 'getSopTrainingUsers'])->name('sop_training_users');
 

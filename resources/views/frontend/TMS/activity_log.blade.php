@@ -240,7 +240,7 @@
                                         <th style="width: 10%;">Due Date</th>
                                         <th style="width: 15%;">Training Completion Date</th>
                                         <th><div class="dropdown">
-                                            <a class=" dropdown-toggle" type="button" data-toggle="dropdown">ClassRoom Trainer
+                                            <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Classroom Trainer
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
                                             <ul style="width: 180px;" class="dropdown-menu">
                                               <div class="filter-main">

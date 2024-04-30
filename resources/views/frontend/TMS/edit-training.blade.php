@@ -184,7 +184,7 @@
                                         <div class="add-btn">
                                             <div>Add</div>
                                             <input type="file" id="myfile" name="training_attachment[]"{{ $train->stage == 0 || $train->stage == 7 ? 'disabled' : '' }}
-                                                oninput="addMultipleFiles(this, 'training_attachment')"
+                                                oninput="addAttachmentFiles(this, 'training_attachment')"
                                                 multiple>
                                         </div>
                                     </div>
@@ -194,40 +194,45 @@
 
                             <script>
                                 $(document).ready(function () {
-                                        let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
-                                            removeItemButton: true,
-                                        });
+                                    $(".add_training_attachment").click(function(){
+                                        $("#myfile").trigger("click");
                                     });
+                                });
 
-                                        function addMultipleFiles(input, block_id) {
-                                            let block = document.getElementById(block_id);
-                                            block.innerHTML = "";
-                                            let files = input.files;
-                                            for (let i = 0; i < files.length; i++) {
-                                                let div = document.createElement('div');
-                                                div.innerHTML += files[i].name;
-                                                let viewLink = document.createElement("a");
-                                                viewLink.href = URL.createObjectURL(files[i]);
-                                                viewLink.textContent = "<View>";
+                                function addAttachmentFiles(input, block_id) {
+                                    console.log('test')
+                                        let block = document.getElementById(block_id);
+                                        let files = input.files;
+                                        for (let i = 0; i < files.length; i++) {
+                                            let div = document.createElement('div');
+                                            div.className = 'attachment-item'; 
+                                            div.innerHTML = files[i].name;
+                            
+                                            let viewLink = document.createElement("a");
+                                            viewLink.href = URL.createObjectURL(files[i]);
+                                            viewLink.textContent = "</View>";
+                                            viewLink.addEventListener('click', function(e){
+                                                e.preventDefault();
+                                                window.open(viewLink.href,'_blank');
+                                            });
+                            
+                                          
+                                            let removeButton = document.createElement("a");
+                                            removeButton.className = 'remove-button';
+                                            removeButton.textContent = "</Remove>";
+                                            removeButton.addEventListener('click', function() {
+                                                div.remove();
+                                                input.value = ''; 
+                                            });
 
-                                                let removeLink = document.createElement("a");
-                                                removeLink.className = 'remove-file';
-                                                removeLink.textContent = "<Remove>";
-
-                                                let fileClone = files[i].slice();
-                                                viewLink.addEventListener('click',function(e){
-                                                    e.preventDefault();
-                                                    window.open(viewLink.href,'_blank');
-                                                });
-                                                div.appendChild(viewLink);
-                                                div.appendChild(removeLink);
-                                                block.appendChild(div);
-                                            }
+                                            console.log(removeButton)
+                            
+                                            div.appendChild(viewLink);
+                                            div.appendChild(removeButton);
+                                            block.appendChild(div);
                                         }
-
-                                $(".add_training_attachment").click(function(){
-                                    $("#myfile").trigger("click")
-                                })
+                                    }
+                                    
                             </script>
                             <div class="col-12" id="quizz">
                                 <div class="group-input">

@@ -139,7 +139,7 @@
                                     <option value="">All Records</option>
                                     <option value="Internal-Audit">Internal Audit</option>
                                     <option value="External-Audit">External Audit</option>
-                                    <option value="Capa">Capa</option>
+                                    <option value="Capa">CAPA</option>
                                     <option value="Audit-Program">Audit Program</option>
                                     <option value="Lab Incident">Lab Incident</option>
                                     <option value="Risk Assesment">Risk Assesment</option>
@@ -168,9 +168,27 @@
                             </div>
                             <div class="item-btn" onclick="window.print()">Print</div>
                         </div>
-                        <div class="main-scope-table">
+
+                        <style>
+.table-container {
+  overflow: auto;
+  max-height: 350px; 
+}
+
+.table-header11 {
+  position: sticky;
+  top: 0;
+  background-color: white; 
+  z-index: 1;
+}
+
+.table-body-new {
+  margin-top: 30px; 
+}
+                        </style>
+                        <div class="main-scope-table table-container" >
                             <table class="table table-bordered" id="auditTable">
-                                <thead>
+                                <thead class="table-header11">
                                     <tr>
                                         <th>Record</th>
                                         {{-- <th>Parent ID</th> --}}
@@ -183,7 +201,7 @@
                                         <th>Status</th>
                                     </tr>
                                 </thead>
-                                <tbody id="searchTable">
+                                <tbody id="searchTable" class="table-body-new">
                                     @php
                                         $table = json_encode($datag);
                                         $tables = json_decode($table);
@@ -384,7 +402,8 @@
                                                             {{ $datas->parent }}
                                                         </td>
                                                     @endif --}}
-                                            <td class="viewdetails" data-id="{{ $datas->id }}"
+                                            <td 
+                                            class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
                                                 @if ($datas->division_id)
@@ -395,7 +414,7 @@
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
-                                                data-bs-target="#record-modal">
+                                                data-bs-target="#record-modal" style="{{ $datas->type == 'Capa' ? 'text-transform: uppercase' : '' }}">
                                                 {{ $datas->type }}
                                             </td>
                                             <td class="viewdetails" data-id="{{ $datas->id }}"

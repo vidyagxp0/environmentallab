@@ -2,8 +2,6 @@
 @section('container')
     @include('frontend.TMS.head')
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
     @if(count($errors) > 0)
         @foreach($errors->all() as $error)
         @php
@@ -17,7 +15,7 @@
     <div id="create-training-plan">
         <div class="container-fluid">
 
-            <form action="{{ route('TMS.store') }}" method="POST">
+            <form action="{{ route('TMS.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="inner-block">
                     <div class="main-head">
@@ -168,59 +166,63 @@
                                 </div>
                             </div>
 
+                             
+                            <script>
+                                $(document).ready(function () {
+                                    $(".add_training_attachment").click(function(){
+                                        $("#myfile").trigger("click");
+                                    });
+                                });
+
+                                function addAttachmentFiles(input, block_id) {
+                                    console.log('test')
+                                        let block = document.getElementById(block_id);
+                                        let files = input.files;
+                                        for (let i = 0; i < files.length; i++) {
+                                            let div = document.createElement('div');
+                                            div.className = 'attachment-item'; 
+                                            div.innerHTML = files[i].name;
+                            
+                                            let viewLink = document.createElement("a");
+                                            viewLink.href = URL.createObjectURL(files[i]);
+                                            viewLink.textContent = "</View>";
+                                            viewLink.addEventListener('click', function(e){
+                                                e.preventDefault();
+                                                window.open(viewLink.href,'_blank');
+                                            });
+                            
+                                          
+                                            let removeButton = document.createElement("a");
+                                            removeButton.className = 'remove-button';
+                                            removeButton.textContent = "</Remove>";
+                                            removeButton.addEventListener('click', function() {
+                                                div.remove();
+                                                input.value = ''; 
+                                            });
+
+                                            console.log(removeButton)
+                            
+                                            div.appendChild(viewLink);
+                                            div.appendChild(removeButton);
+                                            block.appendChild(div);
+                                        }
+                                    }
+                                    
+                            </script>
                             <div class="col-lg-12">
                                 <div class="group-input">
-                                    <label for=" Attachments"> Attachments</label>
-                                    <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+                                    <label for="attachments">Attachments</label>
+                                    <div><small class="text-primary">Please attach all relevant or supporting documents</small></div>
                                     <div class="file-attachment-field">
                                         <div class="file-attachment-list" id="training_attachment"></div>
                                         <div class="add-btn">
                                             <div class="add_training_attachment" style="cursor: pointer;">Add</div>
-                                            <input type="file" id="myfile" name="attachment[]"
-                                                oninput="addMultipleFiles(this, 'training_attachment')" multiple>
+                                            <input type="file" id="myfile" name="training_attachment[]" oninput="addAttachmentFiles(this, 'training_attachment')" multiple>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
-                            <script>
-                                $(document).ready(function () {
-                                        let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
-                                            removeItemButton: true,
-                                        });
-                                    });
-
-                                        function addMultipleFiles(input, block_id) {
-                                            let block = document.getElementById(block_id);
-                                            block.innerHTML = "";
-                                            let files = input.files;
-                                            for (let i = 0; i < files.length; i++) {
-                                                let div = document.createElement('div');
-                                                div.innerHTML += files[i].name;
-                                                let viewLink = document.createElement("a");
-                                                viewLink.href = URL.createObjectURL(files[i]);
-                                                viewLink.textContent = "<View>";
-
-                                                let removeLink = document.createElement("a");
-                                                removeLink.className = 'remove-file';
-                                                removeLink.textContent = "<Remove>";
-
-                                                let fileClone = files[i].slice();
-                                                viewLink.addEventListener('click',function(e){
-                                                    e.preventDefault();
-                                                    window.open(viewLink.href,'_blank');
-                                                });
-                                                div.appendChild(viewLink);
-                                                div.appendChild(removeLink);
-                                                block.appendChild(div);
-                                            }
-                                        }
-
-                                $(".add_training_attachment").click(function(){
-                                    $("#myfile").trigger("click")
-                                })
-                            </script>
+                           
                             <div class="col-12" >
                                 <div class="group-input">
                                     <label for="quize">Quizz <span id="quizz" class="text-danger">*</span></label>
@@ -300,10 +302,14 @@
                                            
                                             @foreach ($due as $temp)
                                                 @if ($temp->root_document)
-                                                    @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training')
+                                                    @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
                                                         <tr>
-                                                            <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
-                                                                    value="{{ $temp->document_id }}"></td>
+                                                            <td class="text-center">
+                                                                <input 
+                                                                class="select-sop-js"
+                                                                data-id="{{ $temp->root_document->id }}"
+                                                                type="checkbox" id="sopData" name="sops[]" value="{{ $temp->document_id }}">
+                                                            </td>
 
                                                                     @php
                                                                     $temp1 = DB::table('document_types')
@@ -317,10 +323,14 @@
                                                             </td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
-                                                    @elseif($temp->root_document->status == 'Effective' || $temp->root_document->status == 'Obsolete')
+                                                    @elseif($temp->root_document->status == 'Effective')
                                                         <tr>
-                                                            <td class="text-center"><input type="checkbox" id="sopData" name="sops[]"
-                                                                    value="{{ $temp->document_id }}"></td>
+                                                            <td class="text-center">
+                                                                <input 
+                                                                class="select-sop-js"
+                                                                data-id="{{ $temp->root_document->id }}"
+                                                                type="checkbox" id="sopData" name="sops[]" value="{{ $temp->document_id }}">
+                                                            </td>
 
                                                                     @php
                                                                     $temp1 = DB::table('document_types')
@@ -357,29 +367,11 @@
                                     <input type="text" name="search" placeholder="Search Trainees">
                                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
                                 </div>
-                                <div class="selection-table">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>&nbsp;</th>
-                                                <th>Trainees Name</th>
-                                                <th>Department</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($users as $temp)
-                                                <tr>
-                                                    <td class="text-center"><input type="checkbox" id="trainee" name="trainees[]"
-                                                            value="{{ $temp->id }}"></td>
-                                                    <td>{{ $temp->name }}</td>
-                                                    <td>{{ $temp->department }}</td>
-                                                </tr>
-                                            @endforeach
-                                            <p id="TraineeType" style="color: red">
-                                                ** Please Select atliest one Trainee...
-                                            </p>
-                                        </tbody>
-                                    </table>
+                                <div class="text-center" style="display: none" id="fetchUserBlock">
+                                    fetching users...
+                                </div>
+                                <div class="selection-table user-selection-table-js">
+                                    @include('frontend.TMS.comps.training-users')
                                 </div>
                             </div>
                         </div>
@@ -453,6 +445,43 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+
+        $('input[name="sops[]"]').change(async function() {
+
+            let getUrl = "{{ route('sop_training_users') }}";
+            const isChecked = $(this).is(':checked');
+
+            if (isChecked) {
+                let sopId = $(this).data('id');
+                getUrl = `${getUrl}/${sopId}`;
+             
+                $('#fetchUserBlock').show();
+
+                try {
+                    
+                    const res = await axios.get(getUrl);
+
+                    if (res.data.status == 'ok') {
+
+                        $('.user-selection-table-js').html(res.data.body);
+
+                    } else {
+                        throw Error(res.data.message);
+                    }
+
+                } catch (err) {
+                    console.log('Error in sop user fetching', err.message);
+                }
+
+                $('#fetchUserBlock').hide();
+
+            }
+        })
+
+    </script>
+
     <script>
         $(document).ready(function() {
             $("#training-select").change(function() {
@@ -471,9 +500,6 @@
                 }
             });
         });
-
-
-
 
         const itemList = document.getElementById('training-question');
         const selectedList = document.getElementById('training-ques-selected');
