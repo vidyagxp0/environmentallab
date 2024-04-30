@@ -17,7 +17,7 @@
     <div id="create-training-plan">
         <div class="container-fluid">
 
-            <form action="{{ route('TMS.store') }}" method="POST">
+            <form action="{{ route('TMS.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="inner-block">
                     <div class="main-head">

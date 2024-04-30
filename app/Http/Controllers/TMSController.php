@@ -228,7 +228,7 @@ class TMSController extends Controller
             $training->classRoom_training = !empty($request->classRoom_training) ? implode(',', $request->classRoom_training) : '';
             $training->trainees = !empty($request->trainees) ? implode(',', $request->trainees) : '';
 
-            if (!empty($request->training_attachment)) {
+            if (!empty($request->training_attachment) && $request->file('training_attachment')) {
                 $files = [];
                 foreach ($request->file('training_attachment') as $file) {
                     $name = $request->traning_plan_name . 'training_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
