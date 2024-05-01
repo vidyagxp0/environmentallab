@@ -89,7 +89,7 @@
                                             {{-- <td>
                                                 <a href="#"><i class="fa-solid fa-eye"></i></a>            
                                             </td> --}}
-                                            <td><a href="{{ url('training-overall-status', $temp->root_document) }}"><i class="fa-solid fa-eye"></i></a></td>
+                                            <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
 
                                         </tr>
                                         @endif
