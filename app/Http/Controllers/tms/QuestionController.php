@@ -58,23 +58,17 @@ class QuestionController extends Controller
                     'answers'=>'required',
                   ]);
              }
-            //  foreach ($request->options as $key => $option) {
-            //     if (in_array($option, $request->answers)) { 
-            //         $request->answers[array_search($option, $request->answers)] = $key;
-            //         break; // Exit loop once value is updated
-            //     }
-            // }
             $options = $request->options;
             $answers = $request->answers;
 
-                foreach ($options as $key => $option) {
-                    if (in_array($option, $answers)) {
-                        $index = array_search($option, $answers);
-                        $answers[$index] = $key;
-                        break; // Exit loop once value is updated
-                    }
-                }
-            $request->merge(['answers' => $answers]);
+            //     foreach ($options as $key => $option) {
+            //         if (in_array($option, $answers)) {
+            //             $index = array_search($option, $answers);
+            //             $answers[$index] = $key;
+            //             break; // Exit loop once value is updated
+            //         }
+            //     }
+            // $request->merge(['answers' => $answers]);
             $question = new Question();
             $question->trainer_id = Auth::user()->id;
             $question->type = $request->type;
@@ -125,7 +119,7 @@ class QuestionController extends Controller
 
             $question = Question::find($id);
             $question->trainer_id = Auth::user()->id;
-            $question->type = $request->type;
+            // $question->type = $request->type;
             $question->question = $request->question;
             $question->options = serialize($request->options);
             $question->answers = serialize($request->answers);

@@ -113,6 +113,7 @@ Route::middleware(['auth', 'prevent-back-history', 'user-activity'])->group(func
     Route::get('trainingQuestion/{id}/', [TMSController::class, 'trainingQuestion']);
     Route::get('training-notification/{id}', [TMSController::class, 'notification']);
     Route::post('trainingComplete/{id}', [TMSController::class, 'trainingStatus']);
+    Route::get('training-overall-status/{id}', [TMSController::class, 'trainingOverallStatus']);
     //Route::post('trainingSubmitData/{id}', [TMSController::class, 'trainingSubmitData']);
     Route::get('tms-audit/{id}', [TMSController::class, 'auditTrial']);
     Route::get('tms-audit-detail/{id}', [TMSController::class, 'auditDetails']);

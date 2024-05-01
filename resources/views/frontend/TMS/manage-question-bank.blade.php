@@ -95,9 +95,14 @@
                 </div>
 
                 <div class="foot-btns">
-                    <a href="{{ route('question-bank.index') }}"> <button>Cancel</button></a>
+                    <button type="button" class="btn" onclick="goBack()">Cancel</button>
                     <button type="submit">Save</button>
                 </div>
+                <script>
+                    function goBack() {
+                        window.history.back();
+                    }
+                </script>
             </form>
 
         </div>
@@ -122,8 +127,8 @@
                         <div class="group-input">
                             <label for="status">Status</label>
                             <select name="status">
-                                <option value="active" @if($question->status == "active") selected @endif>Active</option>
-                                <option value="inactive" @if($question->status == "inactive") selected @endif>Inactive</option>
+                                <option value="Active" @if($question->status == "Active") selected @endif>Active</option>
+                                <option value="Inactive" @if($question->status == "Inactive") selected @endif>Inactive</option>
                             </select>
                         </div>
                         <div class="group-input">

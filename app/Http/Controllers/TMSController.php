@@ -515,7 +515,7 @@ class TMSController extends Controller
                 $doc = Training::find($document->training_plan);
                 $sop = explode(',',$doc->sops);
 
-                if(count($sop) > 1){
+                if(count($sop) > 0){
                     $trainingArray = [];
                     foreach($sop as $sops){
                         $documentTrain = DocumentTraining::where('document_id',$sops)->where('status',"Complete")->first();
@@ -943,4 +943,30 @@ class TMSController extends Controller
         return back();
        }
     }
+
+    public function trainingOverallStatus($id){
+        $training = Training::where('id', $id)->latest()->first();
+
+        if (!$training) {
+            toastr()->error('Training plan not found');
+            return back();
+        }
+        
+        // Extract SOP IDs from the comma-separated string
+        $sopIds = explode(',', $training->sops);
+        $userIds = explode(',', $training->trainees);
+        
+        // Query SOP records
+        $sops = Document::whereIn('id', $sopIds)->get();
+        $trainingUsers = User::whereIn('id', $userIds)->get();
+
+        // dd($trainingUsers);
+        
+        // Query Training Status records for the given training ID and SOP IDs
+        $trainingStatus = TrainingStatus::where('training_id', $id)
+                                         ->whereIn('sop_id', $sopIds)
+                                         ->get();
+
+        return view('frontend.TMS.training-overall-status',compact('trainingStatus','sops','training','trainingUsers'));
+    } 
 }

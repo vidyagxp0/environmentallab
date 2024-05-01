@@ -41,22 +41,52 @@ $(document).ready(function () {
 		option();
 	});
     function option() {
-		let option = $("#option").val();
-        let questionType = $("#questionType").val();
-        if(questionType != "Exact Match Questions"){
-            if (option.length == "") {
-                $("#optioncheck").show();
-                optionError = false;
-                return false;
-            }  else {
-                optionError = true;
-                $("#optioncheck").hide();
-            }
-        }
-        else{
-            optionError = true;
+		// let option = $("#option").val();
+        // let questionType = $("#questionType").val();
+        // if(questionType != "Exact Match Questions"){
+        //     if (option.length == "") {
+        //         $("#optioncheck").show();
+        //         optionError = false;
+        //         return false;
+        //     }  else {
+        //         optionError = true;
+        //         $("#optioncheck").hide();
+        //     }
+        // }
+        // else{
+        //     optionError = true;
+        //     $("#optioncheck").hide();
+        // }
+        optionError = true;
             $("#optioncheck").hide();
-        }
+
+	}
+
+    //options check
+    $("#optioncheck2").hide();
+	let optionError2 = true;
+	$("#option2").keyup(function () {
+		option();
+	});
+    function option() {
+		// let option = $("#option").val();
+        // let questionType = $("#questionType").val();
+        // if(questionType != "Exact Match Questions"){
+        //     if (option.length == "") {
+        //         $("#optioncheck2").show();
+        //         optionError2 = false;
+        //         return false;
+        //     }  else {
+        //         optionError2 = true;
+        //         $("#optioncheck2").hide();
+        //     }
+        // }
+        // else{
+        //     optionError2 = true;
+        //     $("#optioncheck2").hide();
+        // }
+        optionError2 = true;
+            $("#optioncheck2").hide();
 
 	}
 
