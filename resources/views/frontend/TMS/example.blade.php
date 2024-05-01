@@ -11,12 +11,17 @@
     {{-- ======================================
                     HEAD BUTTONS
     ======================================= --}}
+    <style>
+      #complete-training{
+        background: Black !important;
+      }
+    </style>
     <div id="training-quiz-page">
         <div class="container-fluid">
 
             <div class="training-head-block">
                 <div class="btns">
-                    <a href="{{ route('TMS.index') }}"><button>Close Training</button></a>
+                    <a href="{{ route('TMS.index') }}"><button style="background: Black">Close Training</button></a>
 
                 </div>
             </div>
@@ -25,7 +30,7 @@
                 <div class="inner-block-content">
                     <header class="header">
                         <div class="left-title">Quiz</div>
-                        <div class="right-title">Total Questions: <span id="tque"></span></div>
+                        {{-- <div class="right-title">Total Questions: <span id="tque"></span></div> --}}
                     </header>
                     <div class="content">
                         <div id="result" class="quiz-body">

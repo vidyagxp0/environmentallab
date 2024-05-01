@@ -64,7 +64,7 @@
                             @else
                             <div class="group-input multi_question-options" id="multi_options-group">
                                 <label for="options">
-                                    Optionsss<button type="button" id="multi_optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
+                                    Options<button type="button" id="multi_optionsbtnadd"><i class="fa-solid fa-plus"></i></button>
                                 </label>
                                 @if (!empty($question->options))
                                     @foreach (unserialize($question->options) as $option)
@@ -92,10 +92,10 @@
  
                         <div class="group-input question-answer">
                             <label for="answer" id="answer-label">
-                                Answer<button type="button" id="answersbtnadd"><i class="fa-solid fa-plus"></i></button>
+                                Answer @if($question->type == 'Single Selection Questions') @else <button type="button" id="answersbtnadd"><i class="fa-solid fa-plus"></i></button> @endif
                                 <div> <small style="
                                     font-weight: 500;
-                                " class="text-primary">The value auto-populates upon selecting correct answer above.</small></div>
+                                " class="text-primary" id="infoQuestion">@if($question->type == 'Single Selection Questions') Info: Value auto-populates upon selecting correct answer above. @else You need to write down the correct value answer in the below answer field and click the + button to add more correct answers.@endif </small></div>
                             </label>
                             @if (!empty($question->answers))
                             @foreach (unserialize($question->answers) as $data)

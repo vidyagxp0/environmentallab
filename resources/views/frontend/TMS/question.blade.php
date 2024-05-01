@@ -17,12 +17,12 @@
     <div id="tms-question">
         <div class="container-fluid">
 
-            <div class="search-bar">
+            {{-- <div class="search-bar">
                 <form action="#">
                     <input type="text" name="search" placeholder="Search Questions...">
                     <label for="search"><i class="fa-solid fa-magnifying-glass"></i></label>
                 </form>
-            </div>
+            </div> --}}
 
             <div class="row">
                 <div class="col-lg-9">
@@ -205,7 +205,8 @@
                             <label for="answer" id="answer-label">
                                 Answer<button type="button" id="answersbtnadd"><i class="fa-solid fa-plus"></i></button>
                             </label>
-                            <input type="text" class="answer" id="answer" name="answers[]">
+                            <div><small class="text-primary" id="infoQuestion"></small></div>
+                            <input type="text" class="answer" id="answer" name="answers[]" >
                             <div id="answersdiv"></div>
                         </div>
                         <p id="answercheck" style="color: red;">
@@ -222,7 +223,21 @@
             </div>
         </div>
     </div>
-
+        <script>
+            document.getElementById('questionType').addEventListener('change', function() {
+            var selectedValues = Array.from(this.selectedOptions).map(option => option.value);
+            var infoTag = document.getElementById('infoQuestion');
+            var answerInput = document.getElementById('answer');
+            if (selectedValues.includes('Multi Selection Questions')) {
+                answerInput.setAttribute('readonly');
+                infoTag.textContent = "You need to write down the correct value answer in the below answer field and click the + button to add more correct answers.";
+            } else if (selectedValues.includes('Single Selection Questions')) {
+                infoTag.textContent = "Info: Value auto-populates upon selecting correct answer above.";
+                answerInput.setAttribute('readonly', true);
+                answerInput.value = "";
+            }
+            });
+        </script>
 
     <script>
         // ================================ Show and Hide Rows
@@ -304,7 +319,7 @@
                 answerButton.style.display = 'none';
                 singleOptionsGroup.style.display = 'block';
                 multiOptionsGroup.style.display = 'none';
-                optionsButton.style.display = 'inline-block';
+                // optionsButton.style.display = 'inline-block';
             }
         }
     </script>
