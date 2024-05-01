@@ -4,12 +4,14 @@
     <div id="tms-head">
         <div class="head">Training Management System</div>
         <div class="link-list">
-            {{-- <a style="cursor: pointer" onclick="
-                            
-            window.open('/activity_log', '_blank', 'width=1200, height=900, top=0, left=0');"
-                data-bs-toggle="tooltip" title="Training Log">
-             Training Log
-        </a> --}}
+            @if(Helpers::checkRoles(6))
+                <a style="cursor: pointer" onclick="
+                                
+                window.open('/activity_log', '_blank', 'width=1200, height=900, top=0, left=0');"
+                    data-bs-toggle="tooltip" title="Training Log">
+                 Training Log
+            </a>
+            @endif
 
             <a href="{{ route('TMS.index') }}" class="tms-link">Dashboard</a>
             <div class="tms-drop-block">

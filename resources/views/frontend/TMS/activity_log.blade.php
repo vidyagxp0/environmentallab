@@ -18,84 +18,53 @@
             }
         }
     </script>
-    {{-- <script>
-        function updateQueryOptions() {
-            var scopeSelect = document.getElementById('scope');
-            var querySelect = document.getElementById('query');
-            var scopeValue = scopeSelect.value;
-
-            querySelect.innerHTML = '';
-
-            if (scopeValue === 'external_audit') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Audit Preparation', '2'));
-                querySelect.options.add(new Option('Pending Audit', '3'));
-                querySelect.options.add(new Option('Pending Response', '4'));
-                querySelect.options.add(new Option('CAPA Execution in Progress', '5'));
-                querySelect.options.add(new Option('Closed - Done', '6'));
-
-
-            } else if (scopeValue === 'internal_audit') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Audit Preparation', '2'));
-                querySelect.options.add(new Option('Pending Audit', '3'));
-                querySelect.options.add(new Option('Pending Response', '4'));
-                querySelect.options.add(new Option('CAPA Execution in Progress', '5'));
-                querySelect.options.add(new Option('Closed - Done', '6'));
-
-            } else if (scopeValue === 'capa') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending CAPA Plan', '2'));
-                querySelect.options.add(new Option('CAPA In Progress', '3'));
-                querySelect.options.add(new Option('Pending Approval', '4'));
-                querySelect.options.add(new Option('Pending Actions Completion', '5'));
-                querySelect.options.add(new Option('Closed - Done', '6'));
-
-            } else if (scopeValue === 'lab_incident') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Pending Incident Review ', '2'));
-                querySelect.options.add(new Option('Pending Investigation', '3'));
-                querySelect.options.add(new Option('Pending Activity Completion', '4'));
-                querySelect.options.add(new Option('Pending CAPA', '5'));
-                querySelect.options.add(new Option('Pending QA Review', '6'));
-                querySelect.options.add(new Option('Pending QA Head Approve', '7'));
-                querySelect.options.add(new Option('Close - done', '8'));
-
-            } else if (scopeValue === 'risk_assement') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Risk Analysis & Work Group Assignment', '2'));
-                querySelect.options.add(new Option('Risk Processing & Action Plan', '3'));
-                querySelect.options.add(new Option('Pending HOD Approval ', '4'));
-                querySelect.options.add(new Option('Actions Items in Progress', '5'));
-                querySelect.options.add(new Option('Residual Risk Evaluation', '6'));
-                querySelect.options.add(new Option('Close - done', '7'));
-
-            } else if (scopeValue === 'root_cause_analysis') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Investigation in Progress', '2'));
-                querySelect.options.add(new Option('Pending Group Review Discussion', '3'));
-                querySelect.options.add(new Option('Pending Group Review', '4'));
-                querySelect.options.add(new Option('Pending QA Review', '5'));
-                querySelect.options.add(new Option('Close - done', '6'));
-
-            } else if (scopeValue === 'management_review') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('In Progress', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
-
-            }
-
-            else if (scopeValue === 'extension') {
-                querySelect.options.add(new Option('Opened', '1'));
-                querySelect.options.add(new Option('Close - Cancel', '2'));
-                querySelect.options.add(new Option('Close - done', '3'));
-
-            }
-
-            // Add more conditions based on other scope values
-
+    <style>
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(2) > div > ul{
+            top: 10px !important;
+    left: -10px !important;
+    overflow-y: auto;
+    height: 160px;
         }
-    </script> --}}
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(3) > div > ul{
+            top: 10px !important;
+    left: -10px !important;  
+    overflow-y: auto;
+    height: 160px;
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(4) > div > ul{
+            top: 10px !important;
+    left: -10px !important; 
+    overflow-y: auto;
+    height: 160px; 
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(5) > div > ul{
+            top: 10px !important;
+    left: -10px !important;
+    overflow-y: auto;
+    height: 160px;  
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(6) > div > ul{
+            top: 10px !important;
+    left: -10px !important;  
+    overflow-y: auto;
+    height: 160px;
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(8) > div > ul{
+            top: 10px !important;
+    left: -10px !important; 
+    overflow-y: auto;
+    height: 160px;   
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(9) > div > ul{
+            top: 10px !important;
+    left: -10px !important;  
+    overflow-y: auto;
+    height: 160px;  
+        }
+
+       
+    </style>
+    
     <style>
         header .header_rcms_bottom {
             display: none;
@@ -138,6 +107,9 @@
 
                         <div class="table-block">
                             <div class="table-responsive" style="height: 300px">
+                                @php
+                                $userTraining = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
+                            @endphp
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
@@ -145,10 +117,11 @@
                                         <th><div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Employee Name
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
-                                            <ul style="width: 180px;" class="dropdown-menu">
+                                            <ul style="width: 180px; top: 10px;
+                                            left: -13px;" class="dropdown-menu">
                                               <div class="filter-main">
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="employee_name" type="checkbox">
                                                 <li><a href="#">Employee Name</a></li>
                                                 </div>
                                                 <div class="filter-sub">
@@ -159,10 +132,7 @@
                                                     <input type="checkbox">
                                                 <li><a href="#">Employee Name</a></li>
                                                 </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Employee Name</a></li>
-                                                </div>
+                                        
                                               </div>
                                             </ul>
                                           </div></th>
@@ -172,7 +142,7 @@
                                             <ul style="width: 180px;" class="dropdown-menu">
                                               <div class="filter-main">
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="document_title" type="checkbox">
                                                 <li><a href="#">Document Title</a></li>
                                                 </div>
                                                 <div class="filter-sub">
@@ -192,12 +162,12 @@
                                           </div></th>
 
                                         <th><div class="dropdown">
-                                            <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Trainig Plan Name
+                                            <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Training Plan Name
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
                                             <ul style="width: 190px;" class="dropdown-menu">
                                               <div class="filter-main">
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="training_plan_name" type="checkbox">
                                                 <li><a href="#">Trainig Plan Name</a></li>
                                                 </div>
                                                 <div class="filter-sub">
@@ -221,15 +191,15 @@
                                             <ul style="width: 180px;" class="dropdown-menu">
                                               <div class="filter-main">
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="pass" type="checkbox">
                                                 <li><a href="#">Pass</a></li>
                                                 </div>
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="fail" type="checkbox">
                                                 <li><a href="#">Fail</a></li>
                                                 </div>
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="pending_training" type="checkbox">
                                                 <li><a href="#">Panding/Training</a></li>
                                                 </div>
                                                
@@ -245,7 +215,7 @@
                                             <ul style="width: 180px;" class="dropdown-menu">
                                               <div class="filter-main">
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="due_date" type="checkbox">
                                                 <li><a href="#">ClassRoom Trainer</a></li>
                                                 </div>
                                                 <div class="filter-sub">
@@ -266,7 +236,7 @@
                                             <ul style="width: 180px;" class="dropdown-menu">
                                               <div class="filter-main">
                                                 <div class="filter-sub">
-                                                    <input type="checkbox">
+                                                    <input name="training_coordinator" type="checkbox">
                                                 <li><a href="#">Training Coordinator</a></li>
                                                 </div>
                                                 <div class="filter-sub">
@@ -287,19 +257,28 @@
                                 </thead>
 
                                 <tbody>
+                                    @foreach($userTraining as $training)
+                                        $trainees = explode(',', $training->trainees);
+                                        $trainingUsers = DB::table('users')->whereIn('id', $trainees)->get();
+                                        $sopIds = explode(',', $training->sops); 
+                                        $trainingDoc = DB::table('documents')->whereIn('id', $sopIds)->get();
+
                                         <tr>
                                            
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{ $training->traning_plan_name }}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+ 
+                                         </tr>
+                                    @endforeach
 
-                                        </tr>
+                                        
 
                                 </tbody>
                             </table>

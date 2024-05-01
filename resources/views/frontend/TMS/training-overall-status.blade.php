@@ -19,14 +19,11 @@
         <div class="container-fluid">
         <div class="inner-block">
             <div style="padding-bottom: 10px">
-                <div style="    font-size: 18px;
-                font-weight: 600;
-            ">SOPs</div>
+                <div style="font-size: 18px; font-weight: 600px;">SOPs</div>
                 @foreach ($sops as $index => $sop)
                     <div>{{ $index + 1 }}. {{ $sop->document_name }}</div>
                 @endforeach
             </div>
-            
             
             <div class="table-responsive">
                 <table class="table table-bordered">
