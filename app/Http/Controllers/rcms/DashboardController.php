@@ -14,8 +14,10 @@ use App\Models\RiskManagement;
 use App\Models\LabIncident;
 use App\Models\Auditee;
 use App\Models\AuditProgram;
+use App\Models\Division;
 use App\Models\RootCauseAnalysis;
 use App\Models\Observation;
+use App\Models\QMSDivision;
 use Helpers;
 use App\Models\User;
 use Carbon\Carbon;
@@ -640,61 +642,89 @@ class DashboardController extends Controller
     public function ccView($id, $type)
     {
 
+        $division_name = "NA";
 
         if ($type == "Change-Control") {
             $data = CC::find($id);
             $single = "change_control_single_pdf/" . $data->id;
             $audit = "audit/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Capa") {
             $data = Capa::find($id);
             $single = "capaSingleReport/" . $data->id;
             $audit = "capaAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Internal-Audit") {
             $data = InternalAudit::find($id);
             $single = "internalSingleReport/" . $data->id;
             $audit = "internalauditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Risk-Assesment") {
             $data = RiskManagement::find($id);
             $single = "riskSingleReport/" . $data->id;
             $audit = "riskAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Lab-Incident") {
             $data = LabIncident::find($id);
             $single = "LabIncidentSingleReport/" . $data->id;
             $audit = "LabIncidentAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "External-Audit") {
             $data = Auditee::find($id);
             $single = "ExternalAuditSingleReport/" . $data->id;
             $audit = "ExternalAuditTrialReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Audit-Program") {
             $data = AuditProgram::find($id);
             $single = "auditProgramSingleReport/" . $data->id;
             $audit = "auditProgramAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Action-Item") {
             $data = ActionItem::find($id);
             $single = "actionitemSingleReport/"  . $data->id;
             $audit = "actionitemAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Extension") {
             $data = Extension::find($id);
             $single = "extensionSingleReport/" .$data->id;
             $audit = "extensionAuditReport/" .$data->id;
-
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
             $single = "#";
             $audit = "ObservationAuditTrialShow/" .$data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Effectiveness-Check") {
             $data = EffectivenessCheck::find($id);
             $single = "effectiveSingleReport/" .$data->id;
             $audit = "effectiveAuditReport/" .$data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Management-Review") {
             $data = ManagementReview::find($id);
             $single = "managementReview/" . $data->id;
             $audit = "managementReviewReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         } elseif ($type == "Root-Cause-Analysis") {
             $data = RootCauseAnalysis::find($id);
             $single = "rootSingleReport/" . $data->id;
             $audit = "rootAuditReport/" . $data->id;
+            $division = QMSDivision::find($data->division_id);
+            $division_name = $division->name;
         }
+
+        $type = $type == 'Capa' ? 'CAPA' : $type;
 
         $html = '';
         $html = '<div class="block">
@@ -702,7 +732,7 @@ class DashboardController extends Controller
             Record No. ' . str_pad($data->record, 4, '0', STR_PAD_LEFT) .
             '</div>
         <div class="division">
-        ' . Helpers::getDivisionName(session()->get('division')) . '/ ' . $type . '
+        ' . $division_name . '/ ' . $type . '
         </div>
         <div class="status">' .
             $data->status . '
