@@ -16,6 +16,7 @@ use App\Models\Extension;
 use App\Models\GroupComments;
 use App\Models\QaApprovalComments;
 use App\Models\Qareview;
+use App\Models\QMSDivision;
 use App\Models\RiskAssessment;
 use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
@@ -43,6 +44,19 @@ class CCController extends Controller
         $riskData = RiskLevelKeywords::all();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_capa = Capa::where('division_id', $division->id)->latest()->first();
+
+            if ($last_capa) {
+                $record_number = $last_capa->record_number ? str_pad($last_capa->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+        
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
@@ -66,6 +80,19 @@ class CCController extends Controller
         $riskData = RiskLevelKeywords::all();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_cc = CC::where('division_id', $division->id)->latest()->first();
+
+            if ($last_cc) {
+                $record_number = $last_cc->record_number ? str_pad($last_cc->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
