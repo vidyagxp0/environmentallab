@@ -194,6 +194,7 @@
                                         {{-- <th>Parent ID</th> --}}
                                         <th>Division</th>
                                         <th>Process</th>
+                                        <th>Initiated Through</th>
                                         <th class="td_desc">Short Description</th>
                                         <th>Date Opened</th>
                                         <th>Originator</th>
@@ -417,6 +418,13 @@
                                                 data-bs-target="#record-modal" style="{{ $datas->type == 'Capa' ? 'text-transform: uppercase' : '' }}">
                                                 {{ $datas->type }}
                                             </td>
+                                            
+                                            <td class="viewdetails" data-id="{{ $datas->id }}"
+                                                data-type="{{ $datas->type }}" data-bs-toggle="modal"
+                                                data-bs-target="#record-modal">
+                                                {{ ucwords(str_replace("_", " ", $datas->initiated_through)); }}
+                                            </td>
+                                           
                                             <td class="viewdetails" data-id="{{ $datas->id }}"
                                                 data-type="{{ $datas->type }}" data-bs-toggle="modal"
                                                 data-bs-target="#record-modal">
