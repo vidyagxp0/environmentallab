@@ -34,7 +34,7 @@
                                     ** Training plan is missing...
                                 </p>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="training-id">Training Plan ID</label>
                                     <div class="static">Not-Applicable</div>
@@ -53,14 +53,36 @@
                                     <p id="trainingType" style="color: red">
                                         ** Training type is missing...
                                     </p>
+                                </div> 
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="effective-criteria">Effective Criteria(in %) <span class="text-danger">*</span></label>
+                                    <input type="number" min='0' max='100' value="{{ $train->effective_criteria }}" name="effective_criteria" oninput="validateInput(this)" required>
                                 </div>
                             </div>
+                            <script>
+                                function validateInput(input) {
+                                    if (input.value < 0) {
+                                        input.value = 0;
+                                    }
+                                    if (input.value > 100) {
+                                        input.value = 100;
+                                    }
+                                }
+                            </script>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Training Due Date <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" name="training_end_date" value="{{$train->training_end_date}}">
+                                </div>
+                            </div> 
                             <div class="col-6">
                                 <div class="group-input"  id="assessmentBlock" @if($train->training_plan_type != "Classroom Training") style="display: none" @endif>
                                     <label for="classRoom_trainingName">Assessment Required?  <span class="text-danger">*</span></label>
-                                    <select class="assessment_required"  name="assessment_required[]" placeholder="SelectclassRoom_training Name">
+                                    <select class="assessment_required" id="assessment_required" name="assessment_required[]" placeholder="SelectclassRoom_training Name"  onchange="toggleAssessmentQuiz()">
                                         <option value="">-- Select --</option>
-                                        <option @if($train->assessment_required == "yes") selected @endif value="yes"> Yes</option>
+                                        <option @if($train->assessment_required == "yes") selected @endif value="yes">Yes</option>
                                         <option @if($train->assessment_required == "no") selected @endif value="no"> No</option>
 
                                     </select>
@@ -119,7 +141,7 @@
                                   var selectedValue = document.getElementById("training-select").value;
                                   var multiSelectField = document.getElementById("classroomTrainingBlock");
                                   var multiSelectField1 = document.getElementById("assessmentBlock");
-
+                                  var AssessmentQuiz = document.getElementById("AssessmentQuiz");
                                 
                                   if (selectedValue === "Classroom Training") {
                                     multiSelectField.style.display = "block";
@@ -128,7 +150,12 @@
                                   } else {
                                     multiSelectField.style.display = "none";
                                     multiSelectField1.style.display = "none";
+                                  }
 
+                                  if (selectedValue === "Read & Understand with Questions") {
+                                    AssessmentQuiz.style.display = "block";
+                                  } else {
+                                    AssessmentQuiz.style.display = "none";
                                   }
                                 }
                                 </script>
@@ -234,9 +261,24 @@
                                     }
                                     
                             </script>
-                            <div class="col-12" id="quizz">
+                            <script>
+                                function toggleAssessmentQuiz() {
+                                    console.log('enter');
+                                  var selectedValue = document.getElementById("assessment_required").value;
+                                  var AssessmentQuiz = document.getElementById("AssessmentQuiz");
+                                
+                                  if (selectedValue === "yes") {
+                                    AssessmentQuiz.style.display = "block";
+                                  } else {
+                                    AssessmentQuiz.style.display = "none";
+                                  }
+
+                                }
+                            </script>
+
+                            <div class="col-12" id="AssessmentQuiz" @if($train->training_plan_type != "Read & Understand with Questions" || $train->assessment_required == "yes") style="display: none" @endif style="display:none;">
                                 <div class="group-input">
-                                    <label for="quize">Quizz <span id="quizz" class="text-danger">*</span></label>
+                                    <label for="quize">Quizz <span class="text-danger">*</span></label></label>
                                     <select id="quizzz" name="quize">
                                         <option value="">---</option>
                                         @foreach ($quize as $temp)
@@ -268,6 +310,15 @@
                                 <div class="group-input">
                                     <label for="effective-criteria">Effective Criteria(in %)</label>
                                     <input type="number" name="effective_criteria" value="{{ $train->effective_criteria }}" required>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Status </label>
+                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >                
+                                        <option value="active"> Active</option>
+                                        <option value="inactive"> Inactive</option>
+                                    </select>
                                 </div>
                             </div>
                             {{-- <div class="col-lg-6" id="trainee-criteria">
@@ -347,7 +398,14 @@
                                         <tbody>
                                             @foreach ($users as $temp)
                                                 <tr>
+                                                    @php
+                                                            if ($train->trainees) {
+                                                                $traineesCount = count(explode(',', $train->trainees));
+                                                            }
+                                                    @endphp
+
                                                     <td class="text-center"><input type="checkbox" id="trainee" name="trainees[]"
+                                                        @if ($traineesCount == $temp->id) checked @endif 
                                                             value="{{ $temp->id }}"></td>
                                                     <td>{{ $temp->name }}</td>
                                                     <td>{{ $temp->department }}</td>
