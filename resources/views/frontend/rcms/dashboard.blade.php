@@ -190,7 +190,7 @@
                             <table class="table table-bordered" id="auditTable">
                                 <thead class="table-header11">
                                     <tr>
-                                        <th>Record</th>
+                                        <th>ID</th>
                                         {{-- <th>Parent ID</th> --}}
                                         <th>Division</th>
                                         <th>Process</th>
