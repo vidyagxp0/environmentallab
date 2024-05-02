@@ -25,14 +25,14 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="training-name">Training Plan Name</label>
+                                    <label for="training-name">Training Plan Name <span class="text-danger">*</span></label>
                                     <input type="text" id="traning_plan_name" name="traning_plan_name" required>
                                 </div>
                                 <p id="trainingPlan" style="color: red">
                                     ** Training plan is missing...
                                 </p>
                             </div>
-                            <div class="col-lg-6">
+                            <div class="col-lg-12">
                                 <div class="group-input">
                                     <label for="training-id">Training Plan ID</label>
                                     <div class="static">Not-Applicable</div>
@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="training-type">Training Plan Type</label>
+                                    <label for="training-type">Training Plan Type <span class="text-danger">*</span></label>
                                     <select id="training-select" name="training_plan_type" required onchange="toggleMultiSelect()">
                                         <option value="">---</option>
                                         <option value="Read & Understand">Read & Understand</option>
@@ -54,9 +54,15 @@
                                 </div>
                             </div>
                             <div class="col-6">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Training Due Date <span class="text-danger">*</span></label>
+                                    <input type="datetime-local" name="training_end_date">
+                                </div>
+                            </div>
+                            <div class="col-6">
                                 <div class="group-input" id="assessmentBlock" style="display: none">
                                     <label for="classRoom_trainingName">Assessment Required? <span class="text-danger">*</span></label>
-                                    <select class="assessment_required" id="assessment_required" name="assessment_required" placeholder="SelectclassRoom_training Name">
+                                    <select class="assessment_required" id="assessment_required" name="assessment_required" placeholder="SelectclassRoom_training Name" onchange="toggleAssessmentQuiz()">
                                         <option value="">-- Select --</option>
                                         <option value="yes"> Yes</option>
                                         <option value="no"> No</option>
@@ -110,6 +116,7 @@
                                 function toggleMultiSelect() {
                                   var selectedValue = document.getElementById("training-select").value;
                                   var multiSelectField = document.getElementById("classroomTrainingBlock");
+                                  var AssessmentQuiz = document.getElementById("AssessmentQuiz");
                                   var multiSelectField1 = document.getElementById("assessmentBlock");
                                 
                                   if (selectedValue === "Classroom Training") {
@@ -119,8 +126,15 @@
                                     multiSelectField.style.display = "none";
                                     multiSelectField1.style.display = "none";
                                   }
+
+                                  if (selectedValue === "Read & Understand with Questions") {
+                                    AssessmentQuiz.style.display = "block";
+                                  } else {
+                                    AssessmentQuiz.style.display = "none";
+                                  }
+
                                 }
-                                </script>
+                            </script>
                                  {{-- <script>
                                     document.addEventListener('DOMContentLoaded', function () {
                                         var selectField = document.getElementById('training-select');
@@ -153,12 +167,7 @@
                                     <input type="datetime-local" name="training_start_date">
                                 </div>
                             </div> --}}
-                            {{-- <div class="col-6">
-                                <div class="group-input">
-                                    <label for="classRoom_trainingName">Training End  Date & Time</label>
-                                    <input type="datetime-local" name="training_end_date">
-                                </div>
-                            </div> --}}
+                            
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="desc">Training Plan Description</label>
@@ -222,10 +231,24 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <script>
+                                function toggleAssessmentQuiz() {
+                                  var selectedValue = document.getElementById("assessment_required").value;
+                                  var AssessmentQuiz = document.getElementById("AssessmentQuiz");
+                                
+                                  if (selectedValue === "yes") {
+                                    AssessmentQuiz.style.display = "block";
+                                  } else {
+                                    AssessmentQuiz.style.display = "none";
+                                  }
+
+                                }
+                            </script>
                            
-                            <div class="col-12" >
+                            <div class="col-12" id="AssessmentQuiz" style="display: none">
                                 <div class="group-input">
-                                    <label for="quize">Quizz <span id="quizz" class="text-danger">*</span></label>
+                                    <label for="quize">Quizz <span class="text-danger">*</span></label>
                                     <select id="quizzz" name="quize">
                                         <option value="">---</option>
                                         @foreach ($quize as $temp)
@@ -255,10 +278,29 @@
                             </script>
                             <div class="col-lg-6">
                                 <div class="group-input">
-                                    <label for="effective-criteria">Effective Criteria(in %)</label>
-                                    <input type="number" name="effective_criteria" required>
+                                    <label for="effective-criteria">Effective Criteria(in %) <span class="text-danger">*</span></label>
+                                    <input type="number" min='0' max='100'  name="effective_criteria" oninput="validateInput(this)" required>
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="group-input">
+                                    <label for="classRoom_trainingName">Status </label>
+                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >                
+                                        <option value="active"> Active</option>
+                                        <option value="inactive"> Inactive</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <script>
+                                function validateInput(input) {
+                                    if (input.value < 0) {
+                                        input.value = 0;
+                                    }
+                                    if (input.value > 100) {
+                                        input.value = 100;
+                                    }
+                                }
+                            </script>
                             {{-- <div class="col-lg-6" id="trainee-criteria">
                                 <div class="group-input">
                                     <label for="trainee-criteria">Trainee Criteria(in %)</label>
@@ -295,6 +337,9 @@
                                                 <th>&nbsp;</th>
                                                 <th>Document Number</th>
                                                 <th>Document Title</th>
+                                                <th>Due Date</th>
+                                                <th>Status</th>
+                                                <th>Effective Date</th>
                                                 <th>Originator</th>
                                             </tr>
                                         </thead>
@@ -321,6 +366,9 @@
                                                             <td>
                                                                 {{ $temp->root_document ? $temp->root_document->document_name : '' }}
                                                             </td>
+                                                            <td>{{ $temp->due_dateDoc }}</td>
+                                                            <td>{{ $temp->status }}</td>
+                                                            <td>{{ $temp->effective_date }}</td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
                                                     @elseif($temp->root_document->status == 'Effective')
@@ -342,6 +390,9 @@
                                                             <td>
                                                                 {{ $temp->root_document ? $temp->root_document->document_name : '' }}
                                                             </td>
+                                                            <td>{{ $temp->root_document->due_dateDoc }}</td>
+                                                            <td>{{ $temp->root_document->status }}</td>
+                                                            <td>{{ $temp->root_document->effective_date ? $temp->root_document->effective_date : '-'  }}</td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
                                                     @endif

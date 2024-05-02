@@ -12,6 +12,7 @@ use App\Models\RoleGroup;
 use App\Models\CapaGrid;
 use App\Models\Extension;
 use App\Models\CC;
+use App\Models\Division;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -22,6 +23,8 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\OpenStage;
+use App\Models\QMSDivision;
+use App\Services\DocumentService;
 
 class CapaController extends Controller
 {
@@ -32,6 +35,19 @@ class CapaController extends Controller
         $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_capa = Capa::where('division_id', $division->id)->latest()->first();
+
+            if ($last_capa) {
+                $record_number = $last_capa->record_number ? str_pad($last_capa->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
@@ -686,6 +702,7 @@ class CapaController extends Controller
         }
        
 
+        DocumentService::update_qms_numbers();
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
@@ -1287,6 +1304,9 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        DocumentService::update_qms_numbers();
+
         toastr()->success("Record is updated Successfully");
         return back();
     }

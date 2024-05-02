@@ -9,8 +9,10 @@ use App\Models\Extension;
 use App\Models\QaApproval;
 use App\Models\RecordNumber;
 use App\Models\ExtensionAuditTrail;
+use App\Models\QMSDivision;
 use App\Models\User;
 use App\Models\RoleGroup;
+use App\Services\DocumentService;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -39,6 +41,19 @@ class ExtensionController extends Controller
         $old_record = Extension::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_extension = Extension::where('division_id', $division->id)->latest()->first();
+
+            if ($last_extension) {
+                $record_number = $last_extension->record_number ? str_pad($last_extension->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         if($request->child_type=='documents'){
             return redirect('documents/create');
         }
@@ -219,6 +234,7 @@ class ExtensionController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
 
+        DocumentService::update_qms_numbers();
 
         toastr()->success('Document created');
         return redirect('rcms/qms-dashboard');
@@ -407,6 +423,9 @@ class ExtensionController extends Controller
         // $appro->cc_id =  $openState->id;
         // $appro->appro_comments = $request->appro_comments;
         // $appro->update();
+
+        DocumentService::update_qms_numbers();
+
         toastr()->success('Document update');
         return back();
     }

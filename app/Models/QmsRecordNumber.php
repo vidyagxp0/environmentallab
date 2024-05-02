@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Extension extends Model
+class QmsRecordNumber extends Model
 {
     use HasFactory;
 
-    public function record_number()
+    public function recordable()
     {
-        return $this->morphOne(QmsRecordNumber::class, 'recordable');
+        return $this->morphTo();
     }
 }

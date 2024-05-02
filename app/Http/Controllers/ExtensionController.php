@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CC;
 use App\Models\Extension;
 use App\Models\User;
+use App\Services\DocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -45,8 +46,11 @@ class ExtensionController extends Controller
          $recordNumber = str_pad($counter, 5, '0', STR_PAD_LEFT);
          // Increment the counter value
          $newCounter = $counter + 1;
-         DB::table('record_numbers')->update(['counter' => $newCounter]);
+        DB::table('record_numbers')->update(['counter' => $newCounter]);
         toastr()->success('Document created');
+        
+        DocumentService::update_qms_numbers();
+
         return redirect()->route('extension.index');
     }
 
@@ -72,6 +76,9 @@ class ExtensionController extends Controller
 
         $openState->save();
         toastr()->success('Document update');
+
+        DocumentService::update_qms_numbers();
+
         return back();
     }
 

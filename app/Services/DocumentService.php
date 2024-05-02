@@ -2,9 +2,15 @@
 
 namespace App\Services;
 
+use App\Models\Capa;
+use App\Models\CC;
 use App\Models\Document;
 use App\Models\DocumentGridData;
 use App\Models\DocumentType;
+use App\Models\Extension;
+use App\Models\QMSDivision;
+use App\Models\QmsRecordNumber;
+use App\Models\RecordNumber;
 
 class DocumentService
 {
@@ -81,4 +87,89 @@ class DocumentService
             return $e->getMessage();
         }
     }
+
+    static function update_qms_numbers()
+    {
+        try {
+
+            $divisions = QMSDivision::all();
+
+            foreach ($divisions as $division)
+            {
+                $capas = Capa::where('division_id', $division->id)->get();
+                $extensions = Extension::where('division_id', $division->id)->get();
+                $change_controls = CC::where('division_id', $division->id)->get();
+
+                $capa_record_number = 1;
+                $extensions_record_number = 1;
+                $change_controls_record_number = 1;
+
+                foreach ($capas as $capa)
+                {
+                    if ($capa->record_number) {
+                        $r_n = $capa->record_number;
+                        $r_n->record_number = $capa_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $capa_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $capa->record_number()->save($r_n);
+
+                    $capa_record_number++;
+                }
+
+                foreach ($extensions as $extension)
+                {
+                    if ($extension->record_number) {
+                        $r_n = $extension->record_number;
+                        $r_n->record_number = $extensions_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $extensions_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $extension->record_number()->save($r_n);
+
+                    $extensions_record_number++;
+                }
+                
+                foreach ($change_controls as $change_control)
+                {
+                    if ($change_control->record_number) {
+                        $r_n = $change_control->record_number;
+                        $r_n->record_number = $change_controls_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $change_controls_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $change_control->record_number()->save($r_n);
+
+                    $change_controls_record_number++;
+                }
+
+
+
+            }
+            
+
+            $record_number = 1;
+            foreach ($capas as $capa)
+            {
+                $record_number++;
+            }
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
+
+
 }

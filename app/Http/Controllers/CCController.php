@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\CC;
 use App\Models\User;
+use App\Services\DocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -59,6 +60,9 @@ class CCController extends Controller
          $newCounter = $counter + 1;
          DB::table('record_numbers')->update(['counter' => $newCounter]);
         toastr()->success('Document created');
+
+        DocumentService::update_qms_numbers();
+
         return redirect()->route('CC.index');
     }
 
@@ -96,6 +100,9 @@ class CCController extends Controller
 
         $openState->save();
         toastr()->success('Document created');
+
+        DocumentService::update_qms_numbers();
+
         return redirect()->route('CC.index');
     }
 
