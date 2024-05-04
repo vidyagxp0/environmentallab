@@ -103,6 +103,7 @@
                 <div id="step-form">
                     <!-- Tab content -->
                     <div id="doc-info" class="tabcontent">
+
                         <div class="input-fields">
                             <div class="row">
                                 <div class="col-md-4">
@@ -1547,6 +1548,7 @@
 
     {{-- ======================================
                   DIVISION MODAL
+
     ======================================= --}}
     <style>
         #step-form>div {
@@ -1557,7 +1559,6 @@
             display: block;
         }
     </style>
-
     <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to'

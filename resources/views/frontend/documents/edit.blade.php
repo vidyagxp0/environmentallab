@@ -1220,7 +1220,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
-                                    <select   @if($document->stage != 1) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{Helpers::isRevised($document->stage)}} 
+                                    <select   @if($document->stage != 1 && !Helpers::userIsQA() ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
@@ -1282,7 +1282,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
-                                    <select   @if($document->stage != 1) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{Helpers::isRevised($document->stage)}} 
+                                    <select   @if($document->stage != 1 && !Helpers::userIsQA()) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)

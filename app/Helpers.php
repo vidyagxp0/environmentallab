@@ -37,7 +37,7 @@ class Helpers
 
     public static function isRevised($data)
     {   
-        if($data  >= 8 ){
+        if($data  >= 8){
             return 'disabled';
         }else{
             return  '';
@@ -372,6 +372,25 @@ public static function getInitiatorGroupFullName($shortName)
         }
     }
 // }
+
+    static public function userIsQA()
+    {
+        $isQA = false;
+
+        try {
+
+            $auth_user = auth()->user();
+
+            if ($auth_user && $auth_user->department && $auth_user->department->dc == 'QA') {
+                return true;
+            }
+
+        } catch (\Exception $e) {
+            info('Error in Helpers::userIsQA', [ 'message' => $e->getMessage(), 'obj' => $e ]);
+        }
+
+        return $isQA;
+    }
 
 
     // public static function hodMail($data)
