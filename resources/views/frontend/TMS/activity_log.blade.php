@@ -159,7 +159,8 @@
                                                 </div>
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
 
                                         <th><div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Training Plan Name
@@ -184,7 +185,8 @@
                                                 </div>
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
                                           <th><div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Status
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
@@ -205,7 +207,8 @@
                                                
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
                                         
                                         <th style="width: 10%;">Due Date</th>
                                         <th style="width: 15%;">Training Completion Date</th>
@@ -229,7 +232,8 @@
                                                
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
                                           <th><div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Training Coordinator
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
@@ -247,10 +251,11 @@
                                                     <input type="checkbox">
                                                 <li><a href="#">Training Coordinator</a></li>
                                                 </div>
-                                               
+                                            
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
                                        
 
                                     </tr>
@@ -262,7 +267,6 @@
                                         $trainingUsers = DB::table('users')->whereIn('id', $trainees)->get();
                                         $sopIds = explode(',', $training->sops); 
                                         $trainingDoc = DB::table('documents')->whereIn('id', $sopIds)->get();
-
                                         <tr>
                                            
                                             <td></td>
@@ -278,17 +282,13 @@
                                          </tr>
                                     @endforeach
 
-                                        
-
                                 </tbody>
                             </table>
                         </div>
                         </div>
                         
-                       
                     </div>
 
-                    
                 </div>
             </div>
         </div>
