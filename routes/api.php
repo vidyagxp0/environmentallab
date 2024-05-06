@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\HelperController;
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Http\Request;
@@ -28,6 +27,4 @@ Route::get('getProfile', [ApiController::class, 'getProfile']);
 Route::get('capaStatus', [ApiController::class, 'capaStatus']);
 
 Route::post('/filter-records', [DocumentController::class, 'filterRecord'])->name('record.filter');
-
-Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api.upload.file');
 
