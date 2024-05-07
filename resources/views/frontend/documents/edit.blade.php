@@ -1,5 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' /><script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
     <style>
         textarea.note-codable {
             display: none !important;
@@ -80,6 +81,11 @@
             <form method="POST" action="{{ route('documents.update', $document->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+
+                {{-- <textarea id="editor"><h1>Test</h1></textarea>
+                <script>
+                    const editor = Jodit.make('#editor');
+                </script> --}}
 
                 <!-- Tab content -->
                 {{-- @foreach ($history as $tempHistory) --}}
@@ -3268,6 +3274,20 @@
     </style>
 
 
+    <script>
+        var editor = new FroalaEditor('.summernote', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
+            imageUploadParam: 'image_param',
+            imageUploadMethod: 'POST',
+            imageMaxSize: 20 * 1024 * 1024,
+            imageUploadURL: "{{ route('api.upload.file') }}",
+            fileUploadParam: 'image_param',
+            fileUploadURL: "{{ route('api.upload.file') }}",
+            videoUploadParam: 'image_param',
+            videoUploadURL: "{{ route('api.upload.file') }}",
+            videoMaxSize: 500 * 1024 * 1024,
+        });
+    </script>
     <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to'
