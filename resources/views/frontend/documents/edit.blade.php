@@ -3293,29 +3293,29 @@
             ele: '#reference_record, #notify_to'
         });
 
-        $('#summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+        // $('#summernote').summernote({
+        //     toolbar: [
+        //         ['style', ['style']],
+        //         ['font', ['bold', 'underline', 'clear', 'italic']],
+        //         ['color', ['color']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['table', ['table']],
+        //         ['insert', ['link', 'picture', 'video']],
+        //         ['view', ['fullscreen', 'codeview', 'help']]
+        //     ]
+        // });
 
-        $('.summernote').summernote({
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear', 'italic']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
+        // $('.summernote').summernote({
+        //     toolbar: [
+        //         ['style', ['style']],
+        //         ['font', ['bold', 'underline', 'clear', 'italic']],
+        //         ['color', ['color']],
+        //         ['para', ['ul', 'ol', 'paragraph']],
+        //         ['table', ['table']],
+        //         ['insert', ['link', 'picture', 'video']],
+        //         ['view', ['fullscreen', 'codeview', 'help']]
+        //     ]
+        // });
     </script>
 
     <script>
