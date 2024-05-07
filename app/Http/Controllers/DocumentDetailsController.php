@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\DownloadHistory;
 use App\Models\PrintHistory;
 use App\Models\Department;
+use App\Models\QMSDivision;
 use App\Models\DocumentTraining;
 use App\Models\Document;
 use App\Models\Division;
@@ -939,7 +940,23 @@ class DocumentDetailsController extends Controller
       })
       ->orderByDesc('documents.id')->paginate(10);
 
-    return view('frontend.documents.index', compact('documents', 'count'));
+      $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
+        // $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
+        $documentValues = Document::withoutTrashed()->select('id', 'document_type_id')->get();
+        $documentTypeIds = $documentValues->pluck('document_type_id')->unique()->toArray();
+        $documentTypes = DocumentType::whereIn('id', $documentTypeIds)->select('id', 'name')->get();
+
+        $documentStatus = Document::withoutTrashed()->select('id', 'status')->get();
+        $documentStatusIds = $documentValues->pluck('document_type_id')->unique()->toArray();
+        // dd($documentStatus);
+
+        $OriValues = Document::withoutTrashed()->select('id', 'originator_id')->get();
+        $OriTypeIds = $OriValues->pluck('originator_id')->unique()->toArray();
+        $originator = User::whereIn('id', $OriTypeIds)->select('id', 'name')->get();
+
+    return view('frontend.documents.index', compact('documents', 'count', 'divisions', 'originator', 'documentTypes', 'documentStatus'));
+
+    // return view('frontend.documents.index', compact('documents', 'count'));
 
   }
 
