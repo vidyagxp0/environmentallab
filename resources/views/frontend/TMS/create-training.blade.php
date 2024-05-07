@@ -285,9 +285,9 @@
                             <div class="col-6">
                                 <div class="group-input">
                                     <label for="classRoom_trainingName">Status </label>
-                                    <select class="assessment_required" id="status" name="status" placeholder="SelectclassRoom_training Name" >                
-                                        <option value="active"> Active</option>
-                                        <option value="inactive"> Inactive</option>
+                                    <select class="trainingstatus" id="trainingstatus" name="trainingstatus" placeholder="" >                
+                                        <option value="Active"> Active</option>
+                                        <option value="Inactive"> Inactive</option>
                                     </select>
                                 </div>
                             </div>

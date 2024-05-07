@@ -14,10 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('trainings', function (Blueprint $table) {
-            $table->softDeletes();
-        });
-        Schema::table('question_banks', function (Blueprint $table) {
-            $table->softDeletes();
+            $table->boolean('isActive')->default(true);
         });
     }
 
@@ -29,10 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('trainings', function (Blueprint $table) {
-            Schema::dropIfExists('deleted_at');
-        });
-        Schema::table('question_banks', function (Blueprint $table) {
-            Schema::dropIfExists('deleted_at');
+            $table->dropColumn('isActive');
         });
     }
 };
