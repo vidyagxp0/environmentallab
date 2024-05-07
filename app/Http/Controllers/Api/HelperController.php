@@ -29,4 +29,5 @@ class HelperController extends Controller
         return response()->json($res);
 
     }
+
 }

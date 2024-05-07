@@ -1,7 +1,6 @@
 @extends('frontend.layout.main')
 @section('container')
     <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' /><script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
-    
     <style>
         #fr-logo {
             display: none;
@@ -88,6 +87,11 @@
             <form method="POST" action="{{ route('documents.update', $document->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
+
+                {{-- <textarea id="editor"><h1>Test</h1></textarea>
+                <script>
+                    const editor = Jodit.make('#editor');
+                </script> --}}
 
                 <!-- Tab content -->
                 {{-- @foreach ($history as $tempHistory) --}}
@@ -3279,6 +3283,7 @@
 
     <script>
         var editor = new FroalaEditor('.summernote', {
+            key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
             imageUploadMethod: 'POST',
             imageMaxSize: 20 * 1024 * 1024,
