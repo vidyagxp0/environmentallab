@@ -2,6 +2,12 @@
 @section('container')
 
     <style>
+        #fr-logo {
+            display: none;
+        }
+        .fr-logo {
+            display: none;
+        }
         textarea.note-codable {
             display: none !important;
         }
