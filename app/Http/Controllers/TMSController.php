@@ -205,6 +205,8 @@ class TMSController extends Controller
         } 
     }
     public function store(Request $request){
+        // dd($request->all());
+
         if(Helpers::checkRoles(6)){
             $this->validate($request,[
                 'traning_plan_name' =>'required|unique:trainings,traning_plan_name',
@@ -224,6 +226,7 @@ class TMSController extends Controller
             $training->training_end_date = $request->training_end_date;
             $training->assessment_required = $request->assessment_required;
             $training->desc = $request->desc;
+            $training->isActive = $request->trainingstatus == 'Active' ? true : false;
 
             $training->sops = !empty($request->sops) ? implode(',', $request->sops) : '';
             $training->classRoom_training = !empty($request->classRoom_training) ? implode(',', $request->classRoom_training) : '';
@@ -624,6 +627,7 @@ class TMSController extends Controller
     }
 
     public function update(Request $request, $id){
+        dd($request->all());
         $last = Training::find($id);
         if(Helpers::checkRoles(6)){
             $this->validate($request,[
@@ -641,6 +645,9 @@ class TMSController extends Controller
             $training->training_start_date = $request->training_start_date;
             $training->training_end_date = $request->training_end_date;
             $training->assessment_required = $request->assessment_required;
+            
+            $training->isActive = $request->trainingstatus == 'Active' ? true : false;
+
             // $training->sops = implode(',',$request->sops);
             // $training->classRoom_training = implode(',',$request->classRoom_training);
             // $training->trainees = implode(',',$request->trainees);

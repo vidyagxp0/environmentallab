@@ -62,6 +62,8 @@
                                         <th>Number of SOPs</th>
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
+                                        <th>Training Status</th>
+                                        <th>Due Date</th>
                                         <th>Status</th>
                                          <th>&nbsp;</th> 
                                     </tr>
@@ -75,16 +77,20 @@
                                                     if ($trainingPlan) {
                                                         $traineesCount = count(explode(',', $trainingPlan->trainees));
                                                         $sopsCount = count(explode(',', $trainingPlan->sops));
+                                                        $isActiveTraining = $trainingPlan->isActive ? 'Active' : 'In-active';
+                                                        $dueDate = $trainingPlan->training_end_date;
                                                     }
                                             @endphp
 
                                             <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
-                                            {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
-                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
-                                            <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
+                                            <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
+                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td>
+                                            {{-- <td>{{ $trainingPlan ? $sopsCount : 0 }}</td> --}}
                                             <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
                                             <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
                                             <td>{{ $temp->status }}</td>
+                                            <td>{{ $trainingPlan ? \Carbon\Carbon::parse($dueDate)->format('d M Y H:i') : '-' }}</td>
+                                            <td>{{ $trainingPlan ? $isActiveTraining : 'In-active'}}</td>
                                            
                                             {{-- <td>
                                                 <a href="#"><i class="fa-solid fa-eye"></i></a>            
@@ -116,21 +122,45 @@
                                     </tr>
                                 </thead>
                                 <tbody id="searchTable">
+                                    {{-- {{dd($documents2);}} --}}
                                     @foreach ($documents2 as $temp)
-                                        <tr>
-                                            <td>Sop-000{{ $temp->id }}</td>
-                                            <td>{{ $temp->document_name }}</td>
-                                            <td>{{ $temp->traningstatus->status }}</td>
-                                            <td>Document</td>
-                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            @if($temp->traningstatus->status == 'Complete')
-                                            <th>{{$temp->traningstatus->status}}</th>
-                                            @else
-                                            <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
-                                                class="fa-solid fa-eye"></i></a></td>
-                                            @endif
-                                        </tr>
+                                        @php
+                                            $checkTraining = DB::table('trainings')->where('id',$temp->traningstatus->training_plan)->first();
+                                            // $temp->document_type_name = DB::table('document_types')->where('id',$temp->training->document_type_id)->value('name');
+                                            // $temp->typecode = DB::table('document_types')->where('id',$temp->training->document_type_id)->value('typecode');
+                                            // $temp->division_name = Helpers::getDivisionName($temp->training->id);
+                                        @endphp
+                                        @if($checkTraining && $checkTraining->isActive)
+                                            <tr>
+                                                @php
+                                                        $trainingPlan = DB::table('trainings')->where('id',$temp->traningstatus->training_plan)->first(); 
+                                                        $trainingComplete = DB::table('training_statuses')->where(['user_id' => Auth::user()->id, 'training_id'=> $temp->training_plan, 'sop_id' => $temp->id])->first(); 
+                                                        if ($trainingPlan) {
+                                                            $traineesCount = count(explode(',', $trainingPlan->trainees));
+                                                            $sopsCount = count(explode(',', $trainingPlan->sops));
+                                                            $isActiveTraining = $trainingPlan->isActive ? 'Active' : 'In-active';
+                                                            $dueDate = $trainingPlan->training_end_date;
+                                                        }
+                                                @endphp
+
+                                                {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
+                                                    000{{ $temp ? $temp->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
+                                                <td>Sop-000{{ $temp->id }}</td>
+                                                <td>{{ $temp->document_name }}</td>
+                                                <td>{{ $temp->traningstatus->status }}</td>
+                                                <td>Document</td>
+                                                {{-- <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td> --}}
+                                                <td>{{ $trainingPlan ? \Carbon\Carbon::parse($dueDate)->format('d M Y H:i') : '-' }}</td>
+                                                <td>{{ $trainingComplete ? $trainingComplete->created_at : '-' }}</td>
+                                                {{-- <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td> --}}
+                                                @if($temp->traningstatus->status == 'Complete')
+                                                <th>{{$temp->traningstatus->status}}</th>
+                                                @else
+                                                <td><a href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
+                                                    class="fa-solid fa-eye"></i></a></td>
+                                                @endif
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             </table>

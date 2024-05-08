@@ -18,6 +18,51 @@
             }
         }
     </script>
+    <style>
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(2) > div > ul{
+            top: 10px !important;
+            left: -10px !important;
+            overflow-y: auto;
+            height: 180px;
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(3) > div > ul{
+            top: 10px !important;
+            left: -10px !important;
+            overflow-y: auto;
+            height: 180px;
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(4) > div > ul{
+            top: 10px !important;
+            left: -10px !important;
+            overflow-y: auto;
+            height: 180px;
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(5) > div > ul{
+            top: 10px !important;
+            left: -10px !important;
+            overflow-y: auto;
+            height: 180px;
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(6) > div > ul{
+            top: 10px !important;
+            left: -10px !important;
+            overflow-y: auto;
+            height: 180px;
+        }
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(8) > div > ul{
+            top: 10px !important;
+            left: -10px !important;
+            overflow-y: auto;
+            height: 180px;
+        }
+
+        #internal-audit > div.table-block > div > table > thead > tr > th:nth-child(9) > div > ul{
+            top: 10px !important;
+            left: -10px !important;
+            overflow-y: auto;
+            height: 180px;
+        }
+    </style>
     {{-- <script>
         function updateQueryOptions() {
             var scopeSelect = document.getElementById('scope');
@@ -140,85 +185,81 @@
                             <div class="table-responsive" style="height: 300px">
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
+                                    @php
+                                        $training = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
+                                    @endphp
                                     <tr>
                                         <th>Sr No.</th>
-                                        <th><div class="dropdown">
+                                        <th>
+                                            <div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Employee Name
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
                                             <ul style="width: 180px;" class="dropdown-menu">
                                               <div class="filter-main">
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Employee Name</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Employee Name</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Employee Name</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Employee Name</a></li>
-                                                </div>
+                                                @foreach($training as $train)
+                                                    @php
+                                                        $trainees = explode(',', $train->trainees);
+                                                    @endphp
+                                                    @foreach($trainees as $trainee)
+                                                        @php
+                                                            $userTrainingName = DB::table('users')->where(['id'=>$trainee])->latest()->first();
+                                                        @endphp
+                                                        <div class="filter-sub">
+                                                            <input type="checkbox">
+                                                            <li><a href="#">{{ $userTrainingName ? $userTrainingName->name : '' }}</a></li>
+                                                        </div>
+                                                    @endforeach
+                                                @endforeach
                                               </div>
                                             </ul>
-                                          </div></th>
-                                          <th><div class="dropdown">
+                                          </div>
+                                        </th>
+                                          <th>
+                                            <div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Document Title
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
-                                            <ul style="width: 180px;" class="dropdown-menu">
+                                            <ul style="width: 235px;" class="dropdown-menu">
                                               <div class="filter-main">
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Document Title</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Document Title</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Document Title</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Document Title</a></li>
-                                                </div>
+                                                @foreach($training as $train)
+                                                    @php
+                                                        $traineesSops = explode(',', $train->sops);
+                                                    @endphp
+                                                    @foreach($traineesSops as $doc)
+                                                        @php
+                                                            $userDocName = DB::table('documents')->where(['id'=>$doc])->latest()->first();
+                                                        @endphp
+                                                        <div class="filter-sub">
+                                                            <input type="checkbox">
+                                                            <li><a href="#">{{ $userDocName ? $userDocName->document_name : '' }}</a></li>
+                                                        </div>
+                                                    @endforeach
+                                                @endforeach
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
 
-                                        <th><div class="dropdown">
+                                        <th>
+                                            <div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Trainig Plan Name
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
-                                            <ul style="width: 190px;" class="dropdown-menu">
+                                            <ul style="width: 190px; " class="dropdown-menu">
                                               <div class="filter-main">
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Trainig Plan Name</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Trainig Plan Name</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Trainig Plan Name</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">Trainig Plan Name</a></li>
-                                                </div>
+                                                @foreach($training as $train)
+                                                        <div class="filter-sub">
+                                                            <input type="checkbox">
+                                                            <li><a href="#">{{ $train->traning_plan_name }}</a></li>
+                                                        </div>
+                                                @endforeach
                                               </div>
                                             </ul>
-                                          </div></th>
-                                          <th><div class="dropdown">
+                                          </div>
+                                        </th>
+                                          <th>
+                                            <div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Status
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
-                                            <ul style="width: 180px;" class="dropdown-menu">
+                                            <ul style="width: 80px;" class="dropdown-menu">
                                               <div class="filter-main">
                                                 <div class="filter-sub">
                                                     <input type="checkbox">
@@ -230,12 +271,13 @@
                                                 </div>
                                                 <div class="filter-sub">
                                                     <input type="checkbox">
-                                                <li><a href="#">Panding/Training</a></li>
+                                                <li><a href="#">Panding</a></li>
                                                 </div>
                                                
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
                                         
                                         <th style="width: 10%;">Due Date</th>
                                         <th style="width: 15%;">Training Completion Date</th>
@@ -244,23 +286,21 @@
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
                                             <ul style="width: 180px;" class="dropdown-menu">
                                               <div class="filter-main">
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">ClassRoom Trainer</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">ClassRoom Trainer</a></li>
-                                                </div>
-                                                <div class="filter-sub">
-                                                    <input type="checkbox">
-                                                <li><a href="#">ClassRoom Trainer</a></li>
-                                                </div>
-                                               
+                                                @foreach($training as $train)
+                                                        @php
+                                                            $userTrainingName2 = DB::table('users')->where(['id'=>$train->classRoom_training])->latest()->first();
+                                                        @endphp
+                                                        <div class="filter-sub">
+                                                            <input type="checkbox">
+                                                            <li><a href="#">{{ $userTrainingName2 ? $userTrainingName2->name : '' }}</a></li>
+                                                        </div>
+                                                @endforeach
                                               </div>
                                             </ul>
-                                          </div></th>
-                                          <th><div class="dropdown">
+                                          </div>
+                                        </th>
+                                          <th>
+                                            <div class="dropdown">
                                             <a class=" dropdown-toggle" type="button" data-toggle="dropdown">Training Coordinator
                                             &nbsp; &nbsp;&nbsp; &nbsp;<span class="caret"></span></a>
                                             <ul style="width: 180px;" class="dropdown-menu">
@@ -280,36 +320,56 @@
                                                
                                               </div>
                                             </ul>
-                                          </div></th>
+                                          </div>
+                                        </th>
                                        
 
                                     </tr>
                                 </thead>
-
                                 <tbody>
-                                        <tr>
-                                           
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
-                                           <td></td>
+                                    @php
+                                        $training = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
+                                        $sno = 1;
+                                    @endphp
+                                @foreach($training as $train)
+                                    @php
+                                        $trainees = explode(',', $train->trainees);
+                                        $sops = explode(',', $train->sops);
+                                    @endphp
+                                    @foreach($trainees as $trainee)
+                                        @foreach($sops as $sop)
+                                            <tr>
+                                                <td>{{ $sno++ }}</td>
+                                                @php
+                                                    $userTrainingName = DB::table('users')->where(['id'=>$trainee])->latest()->first();
+                                                @endphp
+                                                <td>{{ $userTrainingName ? $userTrainingName->name : '' }}</td>
+                                                @php
+                                                    $userTrainingDoc = DB::table('documents')->where(['id'=> $sop])->latest()->first();
+                                                @endphp
+                                                <td>{{ $userTrainingDoc ? $userTrainingDoc->document_name : '' }}</td>
+                                                <td>{{ $train->traning_plan_name }}</td>
+                                                @php
+                                                    $userTrainingStatus = DB::table('training_statuses')->where(['user_id'=>$trainee, 'sop_id'=> $sop, 'training_id'=>$train->id])->latest()->first();
+                                                @endphp
+                                                <td>{{ $userTrainingStatus ? $userTrainingStatus->status : 'Pending' }}</td>
+                                                <td>{{ \Carbon\Carbon::parse($train->training_end_date)->format('d M Y H:i') }}</td>
+                                                <td>{{ $userTrainingStatus ? \Carbon\Carbon::parse($userTrainingStatus->created_at)->format('d M Y H:i') : '-' }}</td>
+                                                @php
+                                                    $userTrainingClassRoom = DB::table('users')->where(['id'=>$train->classRoom_training])->latest()->first();
+                                                @endphp
+                                                <td>{{ $userTrainingClassRoom ? $userTrainingClassRoom->name : '' }}</td>
 
-                                        </tr>
-
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                    @endforeach
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
-                        </div>
-                        
-                       
+                        </div>                
                     </div>
-
-                    
                 </div>
             </div>
         </div>
