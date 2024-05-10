@@ -1140,8 +1140,11 @@ class DocumentController extends Controller
                 $temped = explode(',', $document->reviewers);
                 $revewnew = [];
                 for ($i = 0; $i < count($temp); $i++) {
-                    $dataRenew = User::where('id', $temped[$i])->value('name');
-                    array_push($revewnew, $dataRenew);
+                    if (array_key_exists($i, $temped)) 
+                    {
+                        $dataRenew = User::where('id', $temped[$i])->value('name');
+                        array_push($revewnew, $dataRenew);
+                    }
                 }
 
                 $history->previous = implode(',', $revew);

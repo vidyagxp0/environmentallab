@@ -35,12 +35,14 @@
                                                 <label for="status">Status</label>
                                                 <select name="status" class="filterSelect"> 
                                                     <option value="">All</option>
-                                                    @php
-                                                        $uniqueStatus = $documentStatus->pluck('status')->unique();
-                                                    @endphp
-                                                    @foreach ($uniqueStatus as $status)
-                                                        <option value="{{ $status }}">{{ $status }}</option> 
-                                                    @endforeach
+                                                    @if (isset($documentStatus))
+                                                        @php
+                                                            $uniqueStatus = $documentStatus->pluck('status')->unique();
+                                                        @endphp
+                                                        @foreach ($uniqueStatus as $status)
+                                                            <option value="{{ $status }}">{{ $status }}</option> 
+                                                        @endforeach
+                                                    @endif
                                                     
                                                 </select>
                                             </div>
