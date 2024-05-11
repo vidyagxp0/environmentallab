@@ -741,7 +741,7 @@
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
                                     @if ($data->document_content)
                                         {{-- {!! $data->document_content->safety_precautions !!} --}}
-                                        {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><ol><li>') !!}
+                                        {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
                                     @endif
                                 </div>
                             </div>
@@ -767,7 +767,7 @@
                                 <div class="w-100">
                                     <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
                                         @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><ol><li>') !!}
+                                            {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
                                         @endif
                                     </div>
                                 </div>
@@ -921,7 +921,7 @@
                                     <div class="w-100" style="display:inline-block;">
                                         <div class="w-100">
                                             <div style="height:auto; overflow-x:hidden; width:650px; ">
-                                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><ol><li>') !!}
+                                                {!! strip_tags($res, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
                                                 </div>
                                             </div>
                                         </div>
