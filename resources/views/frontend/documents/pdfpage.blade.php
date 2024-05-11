@@ -13,13 +13,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
 
     <style>
+
+        @font-face {
+            font-family: 'times-roman';
+            src: url("{{ asset('fonts/Times New Roman.ttf') }}"");
+        }
         * {
-            font-family: "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
+            font-family: times-roman, "Open Sans", "Roboto", "Noto Sans KR", "Poppins", sans-serif;
             font-optical-sizing: auto;
             font-weight: <weight>;
             font-style: normal;
             font-variation-settings:
                 "wdth" 100;
+        }
+
+        p {
+            font-size: 12px;
         }
 
         .symbol-support {
@@ -419,9 +428,9 @@
                     <td class="title w-60" 
                     style="height: 150px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
                         <p 
-                        style="margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
+                        style="font-size: 1rem; margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
                         <br>
-                        <p style="margin-top: -2rem; margin-bottom: 0px;">
+                        <p style="font-size: 1rem; margin-top: -2rem; margin-bottom: 0px;">
 
                             {{ $data->document_name }}
                         </p>
@@ -490,8 +499,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="w-5">1.</th>
-                            <th class="text-left">Purpose</th>
+                            <th class="w-5" style="font-weight: bold">1.</th>
+                            <th class="text-left" style="font-weight: bold">Purpose</th>
                         </tr>
                     </thead>
                 </table>
@@ -512,8 +521,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="w-5">2.</th>
-                            <th class="text-left">Scope</th>
+                            <th class="w-5" style="font-weight: bold">2.</th>
+                            <th class="text-left" style="font-weight: bold">Scope</th>
                         </tr>
                     </thead>
                 </table>
@@ -533,9 +542,9 @@
             <table class="mb-20">
                 <tbody>
                     <tr>
-                        <th class="w-5 vertical-baseline">3.</th>
+                        <th class="w-5 vertical-baseline" style="font-weight: bold">3.</th>
                         <th class="w-95 text-left">
-                            <div class="">Responsibility</div>
+                            <div class="" style="font-weight: bold">Responsibility</div>
                         </th>
                     </tr>
                 </tbody>
@@ -580,9 +589,9 @@
             <table class="mb-20">
                 <tbody>
                     <tr>
-                        <th class="w-5 vertical-baseline">4.</th>
+                        <th class="w-5 vertical-baseline" style="font-weight: bold">4.</th>
                         <th class="w-95 text-left">
-                            <div class="">Abbreviation</div>
+                            <div class="" style="font-weight: bold">Abbreviation</div>
                         </th>
                     </tr>
                 </tbody>
@@ -626,9 +635,9 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">5.</th>
+                            <th class="w-5 vertical-baseline" style="font-weight: bold">5.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Definitions</div>
+                                <div class="bold" style="font-weight: bold">Definitions</div>
                             </th>
                         </tr>
                     </tbody>
@@ -674,9 +683,9 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">6.</th>
+                            <th class="w-5 vertical-baseline" style="font-weight: bold">6.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Materials & Equipments</div>
+                                <div class="bold" style="font-weight: bold">Materials & Equipments</div>
                             </th>
                         </tr>
                         <tr>
@@ -720,8 +729,8 @@
                 <table>
                     <thead>
                         <tr>
-                            <th class="w-5">7.</th>
-                            <th class="text-left">Safety & Precautions</th>
+                            <th class="w-5" style="font-weight: bold">7.</th>
+                            <th class="text-left" style="font-weight: bold">Safety & Precautions</th>
                         </tr>
                     </thead>
                 </table>
@@ -747,8 +756,8 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="w-5">8.</th>
-                                <th class="text-left">Procedure</th>
+                                <th class="w-5" style="font-weight: bold">8.</th>
+                                <th class="text-left" style="font-weight: bold">Procedure</th>
                             </tr>
                         </thead>
                     </table>
@@ -772,9 +781,9 @@
                 <table class="mb-20 ">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">9.</th>
+                            <th class="w-5 vertical-baseline" style="font-weight: bold">9.</th>
                             <th class="w-95 text-left">
-                                <div class="bold">Reporting</div>
+                                <div class="bold" style="font-weight: bold">Reporting</div>
                             </th>
                         </tr>
                     </tbody>
@@ -816,9 +825,9 @@
                 <table class="mb-20">
                     <tbody>
                         <tr>
-                            <th class="w-5 vertical-baseline">10.</th>
+                            <th class="w-5 vertical-baseline" style="font-weight: bold">10.</th>
                             <th class="w-95 text-left">
-                                <div class="bold"> References</div>
+                                <div class="bold" style="font-weight: bold"> References</div>
                             </th>
                         </tr>
                     </tbody>
@@ -860,9 +869,9 @@
             <table class="mb-20">
                 <tbody>
                     <tr>
-                        <th class="w-5 vertical-baseline">11.</th>
+                        <th class="w-5 vertical-baseline" style="font-weight: bold">11.</th>
                         <th class="w-95 text-left">
-                            <div class="bold">Annexure</div>
+                            <div class="bold" style="font-weight: bold">Annexure</div>
                         </th>
                     </tr>
                 </tbody>
