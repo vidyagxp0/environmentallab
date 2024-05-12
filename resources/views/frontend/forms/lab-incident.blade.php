@@ -202,6 +202,7 @@
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="Biological">Biological</option>
                                             <option value="Chemical">Chemical</option>
+                                            <option value="Deviation">Deviation</option>
                                             <option value="Others">Others</option>
                                         </select>
                                     </div>
@@ -218,6 +219,7 @@
                                         <label for="Invocation Type">Invocation Type</label>
                                         <select name="Invocation_Type">
                                             <option value="">Enter Your Selection Here</option>
+                                            <option value="NA">NA</option>
                                             <option value="1">1</option>
                                             <option value="2">2</option>
                                             <option value="3">3</option>
@@ -503,7 +505,13 @@
                                 </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Incident Type">Incident Type</label>
+                                        <label for="Incident Type">Incident Type
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#lab-incident-type-of-change-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
                                         <select name="Incident_Type">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1">Type A</option>
@@ -541,6 +549,32 @@
                         </div>
                     </div>
 
+                    <div class="modal fade" id="lab-incident-type-of-change-instruction-modal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Instructions</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                
+                                <div class="modal-body">
+                                    <h4>A. Equipment Malfunction or Failure:</h4>
+                                    <p>
+                                        This type might involve incidents related to the malfunction, failure, or breakdown of laboratory equipment or instruments. It could include situations where equipment doesn't perform as expected or required.
+                                    </p>
+                
+                
+                                    <h4>B. Procedural Error or Deviation:</h4>
+                                    <p>
+                                        This type could encompass incidents resulting from errors or deviations in standard operating procedures (SOPs), protocols, or methods. It might involve mistakes made during testing, analysis, or other laboratory proced.
+                                    </p>
+                
+                                </div>
+                
+                            </div>
+                        </div>
+                    </div>
                     <!-- Activity Log content -->
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">

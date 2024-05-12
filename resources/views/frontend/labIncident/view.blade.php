@@ -377,6 +377,9 @@
                                             <option value="Chemical" @if ($data->Incident_Category== 'Chemical') selected @endif>
                                                 Chemical
                                             </option>
+                                            <option value="Deviation" @if ($data->Incident_Category== 'Deviation') selected @endif>
+                                                Deviation
+                                            </option>
                                             <option value="Others" @if ($data->Incident_Category== 'Others') selected @endif>
                                                 Others
                                             </option>
@@ -395,6 +398,8 @@
                                         <label for="Invocation Type">Invocation Type</label>
                                         <select  name="Invocation_Type" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
+                                            <option value="NA" @if ($data->Invocation_Type== 'NA') selected @endif>NA
+                                            </option>
                                             <option value="1" @if ($data->Invocation_Type== '1') selected @endif>1
                                             </option>
                                             <option value="2" @if ($data->Invocation_Type== '2') selected @endif>2
@@ -772,7 +777,13 @@
                                 </div>  -->
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Incident Type">Incident Type</label>
+                                        <label for="Incident Type">Incident Type
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#lab-incident-type-of-change-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
                                         <select name="Incident_Type" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1" @if ($data->Incident_Type == '1') selected @endif>Type
@@ -811,6 +822,33 @@
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="lab-incident-type-of-change-instruction-modal">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Instructions</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                
+                                <div class="modal-body">
+                                    <h4>A. Equipment Malfunction or Failure:</h4>
+                                    <p>
+                                        This type might involve incidents related to the malfunction, failure, or breakdown of laboratory equipment or instruments. It could include situations where equipment doesn't perform as expected or required.
+                                    </p>
+                
+                
+                                    <h4>B. Procedural Error or Deviation:</h4>
+                                    <p>
+                                        This type could encompass incidents resulting from errors or deviations in standard operating procedures (SOPs), protocols, or methods. It might involve mistakes made during testing, analysis, or other laboratory proced.
+                                    </p>
+                
+                                </div>
+                
                             </div>
                         </div>
                     </div>
