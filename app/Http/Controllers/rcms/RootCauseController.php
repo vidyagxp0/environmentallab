@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Models\QMSDivision;
 use App\Models\RecordNumber;
 use App\Models\RootAuditTrial;
 use App\Models\RoleGroup;
@@ -14,6 +15,7 @@ use App\Models\User;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
 use App\Models\RootcauseAnalysisDocDetails;
+use App\Services\DocumentService;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Http\Request;
@@ -30,6 +32,19 @@ use Illuminate\Support\Facades\Hash;
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_extension = RootCauseAnalysis::where('division_id', $division->id)->latest()->first();
+
+            if ($last_extension) {
+                $record_number = $last_extension->record_number ? str_pad($last_extension->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         return view("frontend.forms.root-cause-analysis", compact('due_date', 'record_number'));
     }
     public function root_store(Request $request)
@@ -401,6 +416,9 @@ use Illuminate\Support\Facades\Hash;
         $history->save();
 
         }
+
+        DocumentService::update_qms_numbers();
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -792,6 +810,8 @@ use Illuminate\Support\Facades\Hash;
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        
         toastr()->success("Record is update Successfully");
         return back();
     }

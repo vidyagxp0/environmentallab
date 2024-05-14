@@ -11,6 +11,7 @@ use App\Models\Extension;
 use App\Models\QMSDivision;
 use App\Models\QmsRecordNumber;
 use App\Models\RecordNumber;
+use App\Models\RootCauseAnalysis;
 
 class DocumentService
 {
@@ -99,10 +100,12 @@ class DocumentService
                 $capas = Capa::where('division_id', $division->id)->get();
                 $extensions = Extension::where('division_id', $division->id)->get();
                 $change_controls = CC::where('division_id', $division->id)->get();
+                $all_rca = RootCauseAnalysis::where('division_id', $division->id)->get();
 
                 $capa_record_number = 1;
                 $extensions_record_number = 1;
                 $change_controls_record_number = 1;
+                $rca_record_number = 1;
 
                 foreach ($capas as $capa)
                 {
@@ -155,7 +158,22 @@ class DocumentService
                     $change_controls_record_number++;
                 }
 
+                foreach ($all_rca as $rca)
+                {
+                    if ($rca->record_number) {
+                        $r_n = $rca->record_number;
+                        $r_n->record_number = $rca_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $rca_record_number;
+                    }
 
+                    $r_n->save();
+
+                    $rca->record_number()->save($r_n);
+
+                    $rca_record_number++;
+                }
 
             }
             
