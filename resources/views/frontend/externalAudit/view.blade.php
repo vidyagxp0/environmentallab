@@ -390,6 +390,37 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div>
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="search">
+                                                    Name of Auditor <span class="text-danger"></span>
+                                                </label>
+                                                <input type="text" placeholder="External Auditor Name" value="{{ $data->external_auditor_name }}" name="external_auditor_name">
+                                                @error('external_auditor_name')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+        
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="search">
+                                                    Area of Auditing <span class="text-danger"></span>
+                                                </label>
+                                                
+                                                <input 
+                                                type="text" placeholder="Area of Auditing" 
+                                                value="{{ $data->area_of_auditing }}" name="area_of_auditing" 
+                                                {{ $data->stage == 0 || $data->stage ? 'disabled' : '' }}>
+                                                
+                                                @error('area_of_auditing')
+                                                    <p class="text-danger">{{ $message }}</p>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>

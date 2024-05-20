@@ -11,6 +11,8 @@ use App\Models\Extension;
 use App\Models\QMSDivision;
 use App\Models\QmsRecordNumber;
 use App\Models\RecordNumber;
+use App\Models\RiskAssessment;
+use App\Models\RiskManagement;
 use App\Models\RootCauseAnalysis;
 
 class DocumentService
@@ -101,11 +103,13 @@ class DocumentService
                 $extensions = Extension::where('division_id', $division->id)->get();
                 $change_controls = CC::where('division_id', $division->id)->get();
                 $all_rca = RootCauseAnalysis::where('division_id', $division->id)->get();
+                $risk_managements = RiskManagement::where('division_id', $division->id)->get();
 
                 $capa_record_number = 1;
                 $extensions_record_number = 1;
                 $change_controls_record_number = 1;
                 $rca_record_number = 1;
+                $risk_management_record_number = 1;
 
                 foreach ($capas as $capa)
                 {
@@ -158,6 +162,7 @@ class DocumentService
                     $change_controls_record_number++;
                 }
 
+                
                 foreach ($all_rca as $rca)
                 {
                     if ($rca->record_number) {
@@ -169,10 +174,27 @@ class DocumentService
                     }
 
                     $r_n->save();
-
+                    
                     $rca->record_number()->save($r_n);
-
+                    
                     $rca_record_number++;
+                }
+                
+                foreach ($risk_managements as $risk_management)
+                {
+                    if ($risk_management->record_number) {
+                        $r_n = $risk_management->record_number;
+                        $r_n->record_number = $risk_management_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $risk_management_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $risk_management->record_number()->save($r_n);
+
+                    $risk_management_record_number++;
                 }
 
             }

@@ -21,7 +21,19 @@
                                     <button  onclick="location.href='{{ url('audit-trial', $document->id) }}';">
                                         Audit Trail
                                     </button>
-                                    @if ($document->status !== 'Obsolete')
+
+                                    @php
+                                        $showEdit = true;
+
+                                        // In-review to Approved Stage Disable for Initiator
+                                        if ( $document->stage > 1 && $document->stage <= 5 && Helpers::checkUserIsOnlyInitiator(auth()->user()) ) 
+                                        {
+                                            $showEdit = false;
+                                        }
+
+                                    @endphp
+
+                                    @if ($document->status !== 'Obsolete' && $showEdit)
                                         <button onclick="location.href='{{ route('documents.edit', $document->id) }}';">Edit </button>
                                         {{-- <button>Cancel</button> --}}
                                     @endif

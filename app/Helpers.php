@@ -210,6 +210,33 @@ class Helpers
         }
     }
 
+    public static function checkUserIsOnlyInitiator($data)
+    {
+        if ($data->role) {
+            $roles = explode(',', $data->role);
+
+            $hasRoleInitiator = false;
+            $hasRoleAppOrRev = false;
+
+            foreach ($roles as $role) {
+                if ($role == '3') {
+                    $hasRoleInitiator = true;
+                }
+                if ($role == '1' || $role == '2') {
+                    $hasRoleAppOrRev = true;
+                }
+            }
+
+            if ($hasRoleInitiator && !$hasRoleAppOrRev) {
+                return true;
+            }
+
+            return false;
+        } else {
+            return false;
+        }
+    }
+
     public static function checkUserRolesassign_to($data)
     {
         if ($data->role) {

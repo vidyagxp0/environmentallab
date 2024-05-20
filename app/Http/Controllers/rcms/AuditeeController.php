@@ -65,6 +65,9 @@ class AuditeeController extends Controller
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
 
+        $internalAudit->external_auditor_name = $request->external_auditor_name;
+        $internalAudit->area_of_auditing = $request->area_of_auditing;
+
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
         $internalAudit->others = $request->others;

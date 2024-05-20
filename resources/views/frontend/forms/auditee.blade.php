@@ -259,6 +259,30 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
+                                            Name of Auditor <span class="text-danger"></span>
+                                        </label>
+                                        <input type="text" placeholder="External Auditor Name" name="external_auditor_name">
+                                        @error('external_auditor_name')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Area of Auditing <span class="text-danger"></span>
+                                        </label>
+                                        <input type="text" placeholder="Area of Auditing" name="area_of_auditing">
+                                        @error('area_of_auditing')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="select-state" placeholder="Select..." name="assign_to">

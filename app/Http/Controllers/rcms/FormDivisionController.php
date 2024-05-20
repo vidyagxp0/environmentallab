@@ -12,6 +12,7 @@ class FormDivisionController extends Controller
     {
         $request->session()->forget('division');
         $request->session()->put('division', $request->division_id);
+
         if ($request->process_name == "Internal Audit") {
             return redirect('audit');
         } elseif ($request->process_name == "External Audit") {

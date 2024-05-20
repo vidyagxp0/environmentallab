@@ -44,6 +44,9 @@ class ActionItemController extends Controller
        
         $document = ActionItem::all();
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        
         foreach ($document as $data) {
             $cc = CC::find($data->cc_id);
             $data->originator = User::where('id', $cc->initiator_id)->value('name');
