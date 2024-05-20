@@ -58,6 +58,7 @@ class AuditeeController extends Controller
         $internalAudit->division_code = $request->division_code;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
+        $internalAudit->multiple_assignee_to =  implode(',', $request->multiple_assignee_to);
         $internalAudit->due_date = $request->due_date;
         $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
@@ -208,7 +209,7 @@ class AuditeeController extends Controller
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = $request->auditor;
         }
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
@@ -756,6 +757,7 @@ class AuditeeController extends Controller
         //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
+        $internalAudit->multiple_assignee_to =  implode(',', $request->multiple_assignee_to);
         $internalAudit->due_date = $request->due_date;
         $internalAudit->Initiator_Group = $request->Initiator_Group;
         $internalAudit->initiator_group_code = $request->initiator_group_code;
@@ -905,7 +907,7 @@ class AuditeeController extends Controller
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = $request->auditor;
         }
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);

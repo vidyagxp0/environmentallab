@@ -404,19 +404,19 @@ function addMultipleFiles(input, block_id) {
                                         
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Assigned to">Assigned to 1
+                                                <label for="Assigned to">Assigned to
                                                     @if($data->user)
                                                         {{ $data->user->name }}
                                                     @endif
 
                                                 </label>
 
-                                                <select name="assign_to"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <select id="assign_toe" multiple name="multiple_assignee_to[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
-                                                        <option value="{{ $value->id }}"
-                                                            @if ($data->assign_to == $value->id) selected @endif>
-                                                            {{ $value->name }}</option>
+                                                        <option value="{{ $value->id }}"{{ in_array($value->id, explode(',', $data->multiple_assignee_to)) ? 'selected' : '' }}>
+                                                            {{ $value->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -806,18 +806,22 @@ function addMultipleFiles(input, block_id) {
                                                                <td><input type="time" name="scheduled_end_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                              </td>
-                                                            <td> <select id="select-state" placeholder="Select..."
+                                                            <td>
+                                                                <input type="text" name="auditor[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    value="{{ $grid_data->auditor }}">
+                                                                 {{-- <select id="select-state" placeholder="Select..."
                                                                 name="auditor[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                <option value="">-Select-</option>
-                                                                @foreach ($users as $value)
-                                                                    <option
-                                                                    {{ unserialize($grid_data->auditor)[$key] ? (unserialize($grid_data->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                    value="{{ $value->id }}">
-                                                                        {{ $value->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select></td>
-                                                            <td> <select id="select-state" placeholder="Select..."
+                                                                    <option value="">-Select-</option>
+                                                                    @foreach ($users as $value)
+                                                                        <option
+                                                                        {{ unserialize($grid_data->auditor)[$key] ? (unserialize($grid_data->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                        value="{{ $value->id }}">
+                                                                            {{ $value->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select> --}}
+                                                            </td> 
+                                                            <td> <select id="auditee" placeholder="Select..." multiple
                                                                 name="auditee[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)
@@ -937,7 +941,8 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Lead Auditor">Lead Auditor</label>
-                                                <select name="lead_auditor"
+                                                <input type="text" name="lead_auditor" value="{{ $data->lead_auditor }}">
+                                                {{-- <select name="lead_auditor"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
@@ -945,7 +950,7 @@ function addMultipleFiles(input, block_id) {
                                                             @if ($data->lead_auditor == $value->id) selected @endif>
                                                             {{ $value->name }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -1965,7 +1970,7 @@ function addMultipleFiles(input, block_id) {
 
             <script>
                 VirtualSelect.init({
-                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
+                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record, #assign_toe, #auditee'
                 });
 
                 function openCity(evt, cityName) {
