@@ -2,12 +2,20 @@
 
 namespace App\Services;
 
+use App\Models\ActionItem;
+use App\Models\Auditee;
+use App\Models\AuditProgram;
 use App\Models\Capa;
 use App\Models\CC;
 use App\Models\Document;
 use App\Models\DocumentGridData;
 use App\Models\DocumentType;
+use App\Models\EffectivenessCheck;
 use App\Models\Extension;
+use App\Models\ExternalAudit;
+use App\Models\InternalAudit;
+use App\Models\LabIncident;
+use App\Models\Observation;
 use App\Models\QMSDivision;
 use App\Models\QmsRecordNumber;
 use App\Models\RecordNumber;
@@ -104,12 +112,24 @@ class DocumentService
                 $change_controls = CC::where('division_id', $division->id)->get();
                 $all_rca = RootCauseAnalysis::where('division_id', $division->id)->get();
                 $risk_managements = RiskManagement::where('division_id', $division->id)->get();
+                $external_audits = Auditee::where('division_id', $division->id)->get();
+                $internal_audits = InternalAudit::where('division_id', $division->id)->get();
+                $lab_incidents = LabIncident::where('division_id', $division->id)->get();
+                $effective_checks = EffectivenessCheck::where('division_id', $division->id)->get();
+                $action_items = ActionItem::where('division_id', $division->id)->get();
+                $audit_programs = AuditProgram::where('division_id', $division->id)->get();
 
                 $capa_record_number = 1;
                 $extensions_record_number = 1;
                 $change_controls_record_number = 1;
                 $rca_record_number = 1;
                 $risk_management_record_number = 1;
+                $external_audit_record_number = 1;
+                $internal_audit_record_number = 1;
+                $lab_incident_record_number = 1;
+                $effective_check_record_number = 1;
+                $action_item_record_number = 1;
+                $audit_program_record_number = 1;
 
                 foreach ($capas as $capa)
                 {
@@ -162,7 +182,6 @@ class DocumentService
                     $change_controls_record_number++;
                 }
 
-                
                 foreach ($all_rca as $rca)
                 {
                     if ($rca->record_number) {
@@ -196,15 +215,111 @@ class DocumentService
 
                     $risk_management_record_number++;
                 }
+                
+                foreach ($external_audits as $external_audit)
+                {
+                    if ($external_audit->record_number) {
+                        $r_n = $external_audit->record_number;
+                        $r_n->record_number = $external_audit_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $external_audit_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $external_audit->record_number()->save($r_n);
+
+                    $external_audit_record_number++;
+                }
+                
+                foreach ($internal_audits as $internal_audit)
+                {
+                    if ($internal_audit->record_number) {
+                        $r_n = $internal_audit->record_number;
+                        $r_n->record_number = $internal_audit_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $internal_audit_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $internal_audit->record_number()->save($r_n);
+
+                    $internal_audit_record_number++;
+                }
+                
+                foreach ($lab_incidents as $lab_incident)
+                {
+                    if ($lab_incident->record_number) {
+                        $r_n = $lab_incident->record_number;
+                        $r_n->record_number = $lab_incident_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $lab_incident_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $lab_incident->record_number()->save($r_n);
+
+                    $lab_incident_record_number++;
+                }
+                
+                foreach ($effective_checks as $effective_check)
+                {
+                    if ($effective_check->record_number) {
+                        $r_n = $effective_check->record_number;
+                        $r_n->record_number = $effective_check_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $effective_check_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $effective_check->record_number()->save($r_n);
+
+                    $effective_check_record_number++;
+                }
+                
+                foreach ($action_items as $action_item)
+                {
+                    if ($action_item->record_number) {
+                        $r_n = $action_item->record_number;
+                        $r_n->record_number = $action_item_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $action_item_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $action_item->record_number()->save($r_n);
+
+                    $action_item_record_number++;
+                }
+                
+                foreach ($audit_programs as $audit_program)
+                {
+                    if ($audit_program->record_number) {
+                        $r_n = $audit_program->record_number;
+                        $r_n->record_number = $audit_program_record_number;
+                    } else {
+                        $r_n = new QmsRecordNumber;
+                        $r_n->record_number = $audit_program_record_number;
+                    }
+
+                    $r_n->save();
+
+                    $audit_program->record_number()->save($r_n);
+
+                    $audit_program_record_number++;
+                }
 
             }
             
-
-            $record_number = 1;
-            foreach ($capas as $capa)
-            {
-                $record_number++;
-            }
 
         } catch (\Exception $e) {
             return $e->getMessage();

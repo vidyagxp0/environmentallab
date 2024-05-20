@@ -12,8 +12,10 @@ use App\Models\RecordNumber;
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\AuditTrialExternal;
+use App\Models\QMSDivision;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Services\DocumentService;
 use PDF;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
@@ -31,6 +33,18 @@ class AuditeeController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = Auditee::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
 
 
         return view("frontend.forms.auditee", compact('due_date', 'record_number', 'old_record'));
@@ -732,8 +746,11 @@ class AuditeeController extends Controller
             $history->save();
         }
 
+        DocumentService::update_qms_numbers();
+
         toastr()->success("Record is Create Successfully");
         return redirect(url('rcms/qms-dashboard'));
+    
     }
 
     public function show($id)
@@ -1427,6 +1444,7 @@ class AuditeeController extends Controller
             $history->save();
         }
 
+        DocumentService::update_qms_numbers();
 
         toastr()->success("Record is Update Successfully");
         return back();

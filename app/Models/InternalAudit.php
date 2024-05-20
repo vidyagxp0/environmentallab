@@ -13,4 +13,9 @@ class InternalAudit extends Model
     {
         return $this->hasOne(User::class, 'id', 'assign_to');
     }
+
+    public function record_number()
+    {
+        return $this->morphOne(QmsRecordNumber::class, 'recordable');
+    }
 }

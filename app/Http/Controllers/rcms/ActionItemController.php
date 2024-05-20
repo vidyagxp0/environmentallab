@@ -20,6 +20,8 @@ use Helpers;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\App;
 use App\Models\OpenStage;
+use App\Models\QMSDivision;
+use App\Services\DocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Auth;
@@ -37,6 +39,19 @@ class ActionItemController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = ActionItem::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         return view('frontend.forms.action-item', compact('due_date', 'record_number','old_record'));
     }
     public function index()
@@ -51,6 +66,7 @@ class ActionItemController extends Controller
             $cc = CC::find($data->cc_id);
             $data->originator = User::where('id', $cc->initiator_id)->value('name');
         }
+
         return view('frontend.action-item.at', compact('document', 'record_number','old_record'));
     }
 
@@ -349,8 +365,8 @@ class ActionItemController extends Controller
         }
    
    
-                             
-       
+        DocumentService::update_qms_numbers();
+
         toastr()->success('Document created');
         return redirect('rcms/qms-dashboard');
     }
@@ -653,6 +669,9 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
+
+        DocumentService::update_qms_numbers();
+        
         toastr()->success('Document update');
 
         return back();

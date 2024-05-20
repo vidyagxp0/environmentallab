@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\CC;
 use App\Models\CCStageHistory;
 use App\Models\EffectivenessCheck;
+use App\Models\QMSDivision;
 use App\Models\RecordNumber;
 use App\Models\User;
 use App\Models\RoleGroup;
+use App\Services\DocumentService;
 use Carbon\Carbon;
 use PDF;
 use Helpers;
@@ -31,6 +33,19 @@ class EffectivenessCheckController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_cc = EffectivenessCheck::where('division_id', $division->id)->latest()->first();
+
+            if ($last_cc) {
+                $record_number = $last_cc->record_number ? str_pad($last_cc->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         return view('frontend.forms.effectiveness-check', compact('due_date', 'record_number'));
     }
 
@@ -335,10 +350,10 @@ class EffectivenessCheckController extends Controller
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $openState->status;
                 $history->update();
-                }
+            }
 
 
-
+        DocumentService::update_qms_numbers();
 
         toastr()->success('Record created succesfully');
         return redirect('rcms/qms-dashboard');
@@ -605,6 +620,8 @@ class EffectivenessCheckController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->update();
         }
+
+        DocumentService::update_qms_numbers();
 
         toastr()->success('Record Updated succesfully');
         return back();

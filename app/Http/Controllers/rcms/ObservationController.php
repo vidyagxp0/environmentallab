@@ -14,6 +14,8 @@ use Helpers;
 use App\Models\RoleGroup;
 use App\Models\ObservationGrid;
 use App\Models\InternalAuditGrid;
+use App\Models\QMSDivision;
+use App\Services\DocumentService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
@@ -28,6 +30,19 @@ class ObservationController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = Observation::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         return view('frontend.forms.observation', compact('due_date', 'record_number'));
     }
 
@@ -591,8 +606,12 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
 
+        DocumentService::update_qms_numbers();
+
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
+
     }
 
 
@@ -1235,6 +1254,8 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        DocumentService::update_qms_numbers();
 
         toastr()->success("Record is update successfully");
         return back();

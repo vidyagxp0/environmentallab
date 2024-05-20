@@ -262,7 +262,7 @@ $users = DB::table('users')
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input type="hidden" name="record_number">
                                         <input disabled type="text"
-                                            value="{{ $data->division_code }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                            value="{{ $data->division_code }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

@@ -19,6 +19,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\OpenStage;
 use App\Models\LabIncident;
+use App\Models\QMSDivision;
+use App\Services\DocumentService;
 use Illuminate\Support\Facades\App;
 
 class LabIncidentController extends Controller
@@ -31,6 +33,18 @@ class LabIncidentController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = LabIncident::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
 
         return view('frontend.forms.lab-incident', compact('due_date', 'record_number'));
     }
@@ -590,9 +604,12 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
+        DocumentService::update_qms_numbers();
+
         toastr()->success('Record is created Successfully');
 
         return redirect('rcms/qms-dashboard');
+    
     }
     public function updateLabIncident(request $request, $id)
     {
@@ -1147,9 +1164,13 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+    
+        DocumentService::update_qms_numbers();
+
         toastr()->success('Record is updated Successfully');
 
         return back();
+    
     }
 
     public function LabIncidentShow($id)

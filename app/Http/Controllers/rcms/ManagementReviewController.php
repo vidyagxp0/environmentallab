@@ -15,10 +15,12 @@ use App\Models\ManagementReview;
 use App\Models\RecordNumber;
 use App\Models\ManagementAuditTrial;
 use App\Models\ManagementReviewDocDetails;
+use App\Models\QMSDivision;
 use App\Models\RiskManagement;
 use App\Models\RoleGroup;
 use App\Models\RootCauseAnalysis;
 use App\Models\User;
+use App\Services\DocumentService;
 use Carbon\Carbon;
 use PDF;
 use Helpers;
@@ -41,6 +43,18 @@ class ManagementReviewController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+        
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = ManagementReview::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
 
         return view("frontend.forms.meeting", compact('due_date', 'record_number'));
     }
@@ -663,10 +677,11 @@ class ManagementReviewController extends Controller
         $history->save();
 
 
-
+        DocumentService::update_qms_numbers();
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
+        
     }
     
     public function manageUpdate(Request $request, $id)
@@ -718,7 +733,7 @@ class ManagementReviewController extends Controller
         $management->control_externally_provide_services = $request->control_externally_provide_services;
         $management->production_service_provision= $request->production_service_provision;
         $management->release_product_services = $request->release_product_services;
-       $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
+        $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
          $management->external_supplier_performance = $request->external_supplier_performance;
          $management->customer_satisfaction_level = $request->customer_satisfaction_level;
          $management->budget_estimates = $request->budget_estimates; 
@@ -1286,9 +1301,12 @@ class ManagementReviewController extends Controller
             $data5->remark2 = serialize($request->remark2);
         }
         $data5->update();
+    
+        DocumentService::update_qms_numbers();
         
         toastr()->success("Record is updated Successfully");
         return back();
+    
     }
 
     public function ManagementReviewAuditTrial($id)
@@ -1300,6 +1318,7 @@ class ManagementReviewController extends Controller
         $document->originator = User::where('id', $document->initiator_id)->value('name');
 
         return view('frontend.management-review.audit-trial', compact('audit', 'document', 'today'));
+    
     }
 
 

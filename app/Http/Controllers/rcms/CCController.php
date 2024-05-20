@@ -48,10 +48,10 @@ class CCController extends Controller
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
         if ($division) {
-            $last_capa = Capa::where('division_id', $division->id)->latest()->first();
+            $last_cc = CC::where('division_id', $division->id)->latest()->first();
 
-            if ($last_capa) {
-                $record_number = $last_capa->record_number ? str_pad($last_capa->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            if ($last_cc) {
+                $record_number = $last_cc->record_number ? str_pad($last_cc->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
             } else {
                 $record_number = '0001';
             }

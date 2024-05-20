@@ -335,7 +335,7 @@
                                                     <label for="rls">Record Number</label>
                                                     <div class="static">
                                                         <input disabled type="text"
-                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
+                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
                                                     </div>
                                                 </div>
                                             </div>

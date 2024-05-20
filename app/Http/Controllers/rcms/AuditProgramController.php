@@ -15,6 +15,8 @@ use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
 use App\Models\AuditProgramAuditTrial;
+use App\Models\QMSDivision;
+use App\Services\DocumentService;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +34,19 @@ class AuditProgramController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = AuditProgram::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
+
         return view('frontend.forms.audit-program', compact('due_date', 'record_number', 'old_record'));
     }
     public function create(request $request)
@@ -356,6 +371,8 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
+        DocumentService::update_qms_numbers();
+
         toastr()->success('Record is created Successfully');
 
         return redirect('rcms/qms-dashboard');
@@ -662,6 +679,9 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        DocumentService::update_qms_numbers();
+
         toastr()->success('Record is created Successfully');
 
         return back();

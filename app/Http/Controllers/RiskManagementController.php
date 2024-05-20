@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\QMSDivision;
 use App\Models\RecordNumber;
 use App\Models\RiskAuditTrail;
 use App\Models\RiskManagement;
 use App\Models\RiskAssesmentGrid;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Services\DocumentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -30,6 +32,17 @@ class RiskManagementController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
 
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = RiskManagement::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
 
         return view("frontend.forms.risk-management", compact('due_date', 'record_number', 'old_record'));
     }
@@ -1022,6 +1035,8 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        DocumentService::update_qms_numbers();
+
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
     }
@@ -1980,6 +1995,7 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
+        DocumentService::update_qms_numbers();
 
         toastr()->success("Record is update Successfully");
         return redirect()->back();

@@ -14,6 +14,7 @@ use App\Models\InternalAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
+use App\Models\QMSDivision;
 use App\Models\User;
 use PDF;
 use Helpers;
@@ -40,6 +41,18 @@ class InternalauditController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
         // return $old_record;
+
+        $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
+        if ($division) {
+            $last_record = InternalAudit::where('division_id', $division->id)->latest()->first();
+
+            if ($last_record) {
+                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
         
         return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record', 'rca_old_record', 'cc_old_record', 'action_items_old_record', 'capa_old_record'));
     
