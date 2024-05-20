@@ -1202,10 +1202,10 @@
                                             <select name="severity_rate" id="analysisR"
                                                 onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Negligible</option>
-                                                <option value="2">Moderate</option>
-                                                <option value="3">Major</option>
-                                                <option value="4">Fatal</option>
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                {{-- <option value="4">4</option> --}}
                                             </select>
                                         </div>
                                     </div>
@@ -1214,11 +1214,11 @@
                                             <label for="Occurrence">Occurrence</label>
                                             <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="5">Extremely Unlikely</option>
-                                                <option value="4">Rare</option>
-                                                <option value="3">Unlikely</option>
-                                                <option value="2">Likely</option>
-                                                <option value="1">Very Likely</option>
+                                                {{-- <option value="5">5</option>
+                                                <option value="4">4</option> --}}
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1227,11 +1227,11 @@
                                             <label for="Detection">Detection</label>
                                             <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="5">Impossible</option>
-                                                <option value="4">Rare</option>
-                                                <option value="3">Unlikely</option>
-                                                <option value="2">Likely</option>
-                                                <option value="1">Very Likely</option>
+                                                {{-- <option value="5">5</option>
+                                                <option value="4">4</option> --}}
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
                                             </select>
                                         </div>
                                     </div>

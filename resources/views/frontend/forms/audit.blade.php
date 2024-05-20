@@ -994,12 +994,64 @@
                                 </div>
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Reference Recores">Reference Record</label>
+                                        <label for="Reference Recores">Reference Record (Internal Audit)</label>
                                         <select multiple id="reference_record" name="refrence_record[]" id="">
                                             <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}/{{$new->short_description}}  
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (CAPA)</label>
+                                        <select multiple id="reference_record" name="capa_refrence_record[]" id="">
+                                            <option value="">--Select---</option>
+                                            @foreach ($capa_old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}/{{$new->short_description}}  
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (Change Control)</label>
+                                        <select multiple id="reference_record" name="cc_refrence_record[]" id="">
+                                            <option value="">--Select---</option>
+                                            @foreach ($cc_old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/Change Control/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}/{{$new->short_description}}  
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (Root Cause Analysis)</label>
+                                        <select multiple id="reference_record" name="rca_refrence_record[]" id="">
+                                            <option value="">--Select---</option>
+                                            @foreach ($rca_old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/RCA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}/{{$new->short_description}}  
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (Action Item)</label>
+                                        <select multiple id="reference_record" name="ai_refrence_record[]" id="">
+                                            <option value="">--Select---</option>
+                                            @foreach ($action_items_old_record as $new)
+                                                <option value="{{ $new->id }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/Action Item/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}/{{$new->short_description}}  
                                                 </option>
                                             @endforeach
                                         </select>

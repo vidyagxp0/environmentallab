@@ -359,21 +359,28 @@
                                 </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        <label for="Reference Records">Reference Records</label>
+                                        <label for="Reference Records">Reference Records (CAPA)</label>
                                <select multiple id="capa_related_record" name="capa_related_record[]" id="">
-                             <option value="">--Select---</option>
+                                    <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                    {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}/{{$new->short_description}}
                                                 </option>
                                             @endforeach
                                         </select>
-                                        {{-- <div class="related-record-block">
-                                            <input type="text" name="capa_related_record">
-                                            <div data-bs-toggle="modal" data-bs-target="#related-records-modal">
-                                                Add
-                                            </div>
-                                        </div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Records">Reference Records (Root Cause Analysis)</label>
+                                    <select multiple id="capa_related_record" name="rca_related_record[]" id="">
+                                    <option value="">--Select---</option>
+                                            @foreach ($rca_old_record as $new1)
+                                                <option value="{{ $new1->id }}">
+                                                    {{ Helpers::getDivisionName($new1->division_id) }}/Root Cause Analysis/{{ date('Y') }}/{{ Helpers::recordFormat($new1->record)}}/{{$new1->short_description}} 
+                                                </option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12">

@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\RecordNumber;
 use Illuminate\Http\Request;
 use App\Models\InternalAudit;
+use App\Models\CC;
+use App\Models\Capa;
+use App\Models\ActionItem;
+use App\Models\RootCauseAnalysis;
 use App\Models\InternalAuditTrial;
 use App\Models\RoleGroup;
 use App\Models\InternalAuditGrid;
@@ -25,7 +29,11 @@ class InternalauditController extends Controller
 {
     public function internal_audit()
     {
-        $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $old_record = InternalAudit::select('id', 'division_id', 'record', 'short_description')->get();
+        $capa_old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
+        $action_items_old_record = ActionItem::select('id', 'division_id', 'record', 'short_description')->get();
+        $cc_old_record = CC::select('id', 'division_id', 'record', 'short_description')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -33,7 +41,7 @@ class InternalauditController extends Controller
         $due_date = $formattedDate->format('Y-m-d');
         // return $old_record;
         
-        return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record'));
+        return view("frontend.forms.audit", compact('due_date', 'record_number', 'old_record', 'rca_old_record', 'cc_old_record', 'action_items_old_record', 'capa_old_record'));
     
     }
     public function create(request $request)
@@ -88,6 +96,10 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->refrence_record=  implode(',', $request->refrence_record);
+        $internalAudit->capa_refrence_record=  implode(',', $request->capa_refrence_record);
+        $internalAudit->cc_refrence_record=  implode(',', $request->cc_refrence_record);
+        $internalAudit->ai_refrence_record=  implode(',', $request->ai_refrence_record);
+        $internalAudit->rca_refrence_record=  implode(',', $request->rca_refrence_record);
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date= $request->audit_start_date;
@@ -798,6 +810,10 @@ class InternalauditController extends Controller
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
         $internalAudit->refrence_record=implode(',', $request->refrence_record);
+        $internalAudit->capa_refrence_record=  implode(',', $request->capa_refrence_record);
+        $internalAudit->cc_refrence_record=  implode(',', $request->cc_refrence_record);
+        $internalAudit->ai_refrence_record=  implode(',', $request->ai_refrence_record);
+        $internalAudit->rca_refrence_record=  implode(',', $request->rca_refrence_record);
         $internalAudit->severity_level_form= $request->severity_level_form;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
@@ -1450,7 +1466,11 @@ class InternalauditController extends Controller
 
     public function internalAuditShow($id)
     {
-        $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $old_record = InternalAudit::select('id', 'division_id', 'record', 'short_description')->get();
+        $capa_old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
+        $action_items_old_record = ActionItem::select('id', 'division_id', 'record', 'short_description')->get();
+        $cc_old_record = CC::select('id', 'division_id', 'record', 'short_description')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
         $data = InternalAudit::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
@@ -1458,7 +1478,7 @@ class InternalauditController extends Controller
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
      //   dd($grid_data);
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
-        return view('frontend.internalAudit.view', compact('data', 'old_record','grid_data','grid_data1'));
+        return view('frontend.internalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'rca_old_record', 'cc_old_record', 'action_items_old_record', 'capa_old_record'));
     }
 
     public function InternalAuditStateChange(Request $request, $id)

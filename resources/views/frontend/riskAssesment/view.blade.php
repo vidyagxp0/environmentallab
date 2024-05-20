@@ -1781,14 +1781,12 @@
                                                 <select name="severity_rate" id="analysisR" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->severity_rate == 'Negligible' ? 'selected' : '' }}
-                                                        value="1">Negligible</option>
-                                                    <option {{ $data->severity_rate == 'Moderate' ? 'selected' : '' }}
-                                                        value="2">Moderate</option>
-                                                    <option {{ $data->severity_rate == 'Major' ? 'selected' : '' }}
-                                                        value="3">Major</option>
-                                                    <option {{ $data->severity_rate == 'Fatal' ? 'selected' : '' }}
-                                                        value="4">Fatal</option>
+                                                    <option {{ $data->severity_rate == '1' ? 'selected' : '' }}
+                                                        value="1">1</option>
+                                                    <option {{ $data->severity_rate == '2' ? 'selected' : '' }}
+                                                        value="2">2</option>
+                                                    <option {{ $data->severity_rate == '3' ? 'selected' : '' }}
+                                                        value="3">3</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1798,17 +1796,12 @@
                                                 <select name="occurrence" id="analysisP" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option
-                                                        {{ $data->occurrence == 'Extremely Unlikely' ? 'selected' : '' }}
-                                                        value="Extremely Unlikely">Extremely Unlikely</option>
-                                                    <option {{ $data->occurrence == '4' ? 'selected' : '' }}
-                                                        value="4">Rare</option>
-                                                    <option {{ $data->occurrence == '3' ? 'selected' : '' }}
-                                                        value="3">Unlikely</option>
-                                                    <option {{ $data->occurrence == '2' ? 'selected' : '' }}
-                                                        value="2">Likely</option>
                                                     <option {{ $data->occurrence == '1' ? 'selected' : '' }}
-                                                        value="1">Very Likely</option>
+                                                        value="1">1</option>
+                                                    <option {{ $data->occurrence == '2' ? 'selected' : '' }}
+                                                        value="2">2</option>
+                                                    <option {{ $data->occurrence == '3' ? 'selected' : '' }}
+                                                        value="3">3</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1818,16 +1811,12 @@
                                                 <select name="detection" id="analysisN" onchange='calculateRiskAnalysis(this)'
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
-                                                    <option {{ $data->detection == '5' ? 'selected' : '' }}
-                                                        value="5">Impossible</option>
-                                                    <option {{ $data->detection == '4' ? 'selected' : '' }}
-                                                        value="4">Rare</option>
-                                                    <option {{ $data->detection == '3' ? 'selected' : '' }}
-                                                        value="3">Unlikely</option>
-                                                    <option {{ $data->detection == '2' ? 'selected' : '' }}
-                                                        value="2">Likely</option>
                                                     <option {{ $data->detection == '1' ? 'selected' : '' }}
-                                                        value="1">Very Likely</option>
+                                                        value="1">1</option>
+                                                    <option {{ $data->detection == '2' ? 'selected' : '' }}
+                                                        value="2">2</option>
+                                                    <option {{ $data->detection == '3' ? 'selected' : '' }}
+                                                        value="3">3</option>
                                                 </select>
                                             </div>
                                         </div>

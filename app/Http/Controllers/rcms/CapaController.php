@@ -5,6 +5,7 @@ namespace App\Http\Controllers\rcms;
 use App\Http\Controllers\Controller;
 use App\Models\Capa;
 use App\Models\CapaHistory;
+use App\Models\RootCauseAnalysis;
 use App\Models\RecordNumber;
 use App\Models\User;
 use App\Models\CapaAuditTrial;
@@ -32,7 +33,8 @@ class CapaController extends Controller
     public function capa()
     {
         $cft = [];
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
@@ -53,7 +55,7 @@ class CapaController extends Controller
         $due_date= $formattedDate->format('Y-m-d');
         $changeControl = OpenStage::find(1);
          if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record', 'cft'));
+        return view("frontend.forms.capa", compact('due_date', 'record_number', 'old_record', 'cft', 'rca_old_record'));
     }
 
     public function capastore(Request $request)
@@ -113,6 +115,7 @@ class CapaController extends Controller
        $capa->Production_Person= $request->Production_Person;
     //    $capa->additional_attachments= json_encode($request->additional_attachments);
          $capa->capa_related_record= implode(',', $request->capa_related_record);
+         $capa->rca_related_record= implode(',', $request->rca_related_record);
        
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
@@ -386,6 +389,19 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA Related Records';
             $history->previous = "Null";
             $history->current = $capa->capa_related_record;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->save();
+        }
+        if (!empty($capa->rca_related_record)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'CAPA Related Records';
+            $history->previous = "Null";
+            $history->current = $capa->rca_related_record;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -753,6 +769,7 @@ class CapaController extends Controller
         $capa->effective_check_plan = $request->effective_check_plan;
         $capa->due_date_extension = $request->due_date_extension;
          $capa->capa_related_record=  implode(',', $request->capa_related_record);
+         $capa->rca_related_record=  implode(',', $request->rca_related_record);
         // $capa->reference_record = $request->reference_record;
         $capa->Microbiology_new= $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
@@ -989,6 +1006,20 @@ class CapaController extends Controller
             $history->activity_type = 'CAPA Related Records';
             $history->previous = $lastDocument->capa_related_record;
             $history->current = $capa->capa_related_record;
+            $history->comment = $request->capa_related_record_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if ($lastDocument->rca_related_record!= $capa->rca_related_record || !empty($request->capa_related_record_comment)) {
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Root Cause Analysis Related Records';
+            $history->previous = $lastDocument->rca_related_record;
+            $history->current = $capa->rca_related_record;
             $history->comment = $request->capa_related_record_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1317,7 +1348,8 @@ class CapaController extends Controller
         $revised_date = "";
         $data = Capa::find($id);
         //dd($data);
-        $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
         $revised_date = Extension::where('parent_id', $id)->where('parent_type', "Capa")->value('revised_date');
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
@@ -1331,7 +1363,7 @@ class CapaController extends Controller
         // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
         // dd( $EquipmentsQueryData->json());
         
-        return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft' ));
+        return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft', 'rca_old_record' ));
     }
 
 
