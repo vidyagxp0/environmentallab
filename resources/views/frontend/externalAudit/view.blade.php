@@ -401,9 +401,6 @@ function addMultipleFiles(input, block_id) {
                                                         <option value="{{ $value->id }}"{{ in_array($value->id, explode(',', $data->multiple_assignee_to)) ? 'selected' : '' }}>
                                                             {{ $value->name }}
                                                         </option>
-                                                        {{-- <option value="{{ $value->id }}"
-                                                            @if ($data->multiple_assignee_to == $value->id) selected @endif>
-                                                            {{ $value->name }}</option> --}}
                                                     @endforeach
                                                 </select>
                                             </div>
