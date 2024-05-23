@@ -69,6 +69,8 @@ class AuditeeController extends Controller
         $internalAudit->division_id = $request->division_id;
         //$internalAudit->parent_id = $request->parent_id;
         //$internalAudit->parent_type = $request->parent_type;
+        $internalAudit->external_auditor_name =  $request->external_auditor_name;
+        $internalAudit->area_of_auditing =  $request->area_of_auditing;
         $internalAudit->division_code = $request->division_code;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
@@ -100,7 +102,9 @@ class AuditeeController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
+        $internalAudit->Audit_team =  $request->Audit_team;
+        $internalAudit->external_auditor_name =  $request->external_auditor_name;
+        $internalAudit->area_of_auditing =  $request->area_of_auditing;
         $internalAudit->Auditee =  implode(',', $request->Auditee);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
@@ -801,7 +805,7 @@ class AuditeeController extends Controller
         $internalAudit->material_name = $request->material_name;
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
-        $internalAudit->Audit_team =  implode(',', $request->Audit_team);
+        $internalAudit->Audit_team =  $request->Audit_team;
         $internalAudit->Auditee =  implode(',', $request->Auditee);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Audit_Category = $request->Audit_Category;

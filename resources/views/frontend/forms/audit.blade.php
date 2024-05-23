@@ -757,12 +757,13 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Audit Team">Audit Team</label>
-                                        <select multiple name="Audit_team[]" placeholder="Select Audit Team"
+                                        <input type="text" name="Audit_team">
+                                        {{-- <select multiple name="Audit_team[]" placeholder="Select Audit Team"
                                             data-search="false" data-silent-initial-value-set="true" id="Audit">
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 <div class="col-6">

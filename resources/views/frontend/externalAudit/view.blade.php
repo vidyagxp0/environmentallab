@@ -155,13 +155,9 @@ function addMultipleFiles(input, block_id) {
             cell6.innerHTML = "<input type='time' name='scheduled_end_time[]' >";
 
             var cell7 = newRow.insertCell(6);
-            var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
-                    for (var i = 0; i < users.length; i++) {
-                        userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-                    userHtml +='</select>';
+            var userHtml = "<input type='text' name='auditor'> ";
             
-                    cell7.innerHTML = userHtml;
+                    // cell7.innerHTML = userHtml;
 
             var cell8 = newRow.insertCell(7);
             var cell8 = newRow.insertCell(7);
@@ -390,13 +386,12 @@ function addMultipleFiles(input, block_id) {
 
                                             </div>
                                         </div>
-
                                         <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="search">
                                                     Name of Auditor <span class="text-danger"></span>
                                                 </label>
-                                                <input type="text" placeholder="External Auditor Name" value="{{ $data->external_auditor_name }}" name="external_auditor_name">
+                                                <input type="text" {{ $data->stage == 0 || $data->stage ? 'disabled' : '' }} placeholder="External Auditor Name" value="{{ $data->external_auditor_name }}" name="external_auditor_name">
                                                 @error('external_auditor_name')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
@@ -428,9 +423,9 @@ function addMultipleFiles(input, block_id) {
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
-                                                        <option value="{{ $value->id }}"
-                                                            @if ($data->assign_to == $value->id) selected @endif>
-                                                            {{ $value->name }}</option>
+                                                        <option value="{{ $value->id }}"{{ in_array($value->id, explode(',', $data->multiple_assignee_to)) ? 'selected' : '' }}>
+                                                            {{ $value->name }}
+                                                        </option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -681,9 +676,32 @@ function addMultipleFiles(input, block_id) {
                                         
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Inv Attachments">Initial Attachment</label>
+                                                <label for="Inv Attachments">Initial Attachments</label>
                                                 <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
+
                                                 <div class="file-attachment-field">
+                                                    <div disabled  class="file-attachment-list" id="inv_attachment">
+                                                        @if ($data->inv_attachment)
+                                                            @foreach(json_decode($data->inv_attachment) as $file)
+                                                                <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
+                                                                    <b>{{ $file }}</b>
+                                                                    <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                </h6>
+                                                            @endforeach
+                                                        @endif
+
+                                                    </div>
+                                                    <div  class="add-btn">
+                                                        <div>Add</div>
+                                                        <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="inv_attachment[]"
+                                                         oninput="addMultipleFiles(this, 'inv_attachment')"
+                                                            multiple>
+                                                    </div>
+                                                </div>
+
+
+                                                {{-- <div class="file-attachment-field">
                                                     <div disabled class="file-attachment-list" id="inv_attachment">
                                                         @if ($data->inv_attachment)
                                                         @foreach(json_decode($data->inv_attachment) as $file)
@@ -698,9 +716,9 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} type="file" id="myfile" name="inv_attachment[]"
-                                                            oninput="addMultipleFiles(this, 'inv_attachment1')"
+                                                            oninput="addMultipleFiles(this, 'inv_attachment')"
                                                             multiple>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -798,7 +816,10 @@ function addMultipleFiles(input, block_id) {
                                                             <td><input type="time" name="scheduled_end_time[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                             </td>
-                                                            <td> <select id="select-state" placeholder="Select..."
+                                                            <td> 
+                                                                <input type="text" name="auditor"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    value="{{ $grid_data->auditor }}">
+                                                                {{-- <select id="select-state" placeholder="Select..."
                                                                 name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)
@@ -1017,7 +1038,8 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Audit Team">Audit Team</label>
-                                                <select multiple name="Audit_team[]" placeholder="Select Audit Team"
+                                                <input type="text" name="Audit_team" value="{{$data->Audit_team}}">
+                                                {{-- <select multiple name="Audit_team[]" placeholder="Select Audit Team"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="Audit"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
@@ -1027,7 +1049,7 @@ function addMultipleFiles(input, block_id) {
                                                             {{ $user->name }}
                                                         </option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col-6">

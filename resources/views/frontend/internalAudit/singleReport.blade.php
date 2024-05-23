@@ -164,8 +164,8 @@
                    Internal Audit Single Report
                 </td>
                 <td class="w-30">
-                    <div class="logo">
-                    <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+                    <div class="logo" style="position: relative; height: 60px; width: 150px;">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 60px; position: absolute; left: 40%;">
                     </div>
                 </td>
             </tr>
@@ -212,7 +212,12 @@
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->multiple_assignee_to)
+                            {{-- {{ Helpers::getInitiatorName($data->multiple_assignee_to) }} --}}
+                            @foreach (explode(',', $data->multiple_assignee_to) as $Key => $value)
+                            <li>{{ Helpers::getInitiatorName($value) }}</li>
+                        @endforeach
+                             @else Not Applicable @endif</td>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
                     </tr>
@@ -304,7 +309,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Lead Auditor</th>
-                        <td class="w-30">@if($data->lead_auditor){{ Helpers::getInitiatorName($data->lead_auditor) }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->lead_auditor){{ $data->lead_auditor }}@else Not Applicable @endif</td>
                         <th class="w-20">External Auditor Details</th>
                         <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
                     </tr> 
@@ -323,9 +328,10 @@
                         <th class="w-20">Audit team</th>
                         <td class="w-30">
                             @if($data->Audit_team)
-                            @foreach (explode(',', $data->Audit_team) as $Key => $value)
+                            {{-- @foreach (explode(',', $data->Audit_team) as $Key => $value)
                                 <li>{{ Helpers::getInitiatorName($value) }}</li>
-                            @endforeach
+                            @endforeach --}}
+                            {{$data->Audit_team}}
                             @else Not Applicable
                             @endif
                         </td>

@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('auditees', function (Blueprint $table) {
-            $table->string('external_auditor_name')->nullable();
-            $table->string('area_of_auditing')->nullable();
+            // $table->string('external_auditor_name')->nullable();
+            // $table->string('area_of_auditing')->nullable();
         });
     }
 
@@ -28,10 +28,10 @@ return new class extends Migration
     {
         Schema::table('auditees', function (Blueprint $table) {
             Schema::whenTableHasColumn('auditees', 'external_auditor_name', function () {
-                Schema::dropColumns('auditees', 'external_auditor_name');
+                // Schema::dropColumns('auditees', 'external_auditor_name');
             });
             Schema::whenTableHasColumn('auditees', 'area_of_auditing', function () {
-                Schema::dropColumns('auditees', 'area_of_auditing');
+                // Schema::dropColumns('auditees', 'area_of_auditing');
             });
         });
     }
