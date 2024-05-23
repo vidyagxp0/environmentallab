@@ -807,7 +807,7 @@ function addMultipleFiles(input, block_id) {
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                              </td>
                                                             <td>
-                                                                <input type="text" name="auditor[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                <input type="text" name="auditor"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                     value="{{ $grid_data->auditor }}">
                                                                  {{-- <select id="select-state" placeholder="Select..."
                                                                 name="auditor[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
