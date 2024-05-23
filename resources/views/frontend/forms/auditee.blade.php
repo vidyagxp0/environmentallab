@@ -259,7 +259,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Name of Auditor <span class="text-danger"></span>
+                                            Name of Auditor <span class="text-danger">*</span>
                                         </label>
                                         <input type="text" placeholder="External Auditor Name" name="external_auditor_name">
                                         @error('external_auditor_name')
@@ -271,21 +271,24 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Area of Auditing <span class="text-danger"></span>
+                                            Area of Auditing <span class="text-danger">*</span>
                                         </label>
-                                        <input type="text" placeholder="Area of Auditing" name="area_of_auditing">
+                                        
+                                        <input 
+                                        type="text" placeholder="Area of Auditing" 
+                                         name="area_of_auditing">
+                                        
                                         @error('area_of_auditing')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select id="select-state" placeholder="Select..." name="assign_to">
+                                        <select multiple id="assign_toe" placeholder="Select..." name="multiple_assignee_to[]">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -638,14 +641,16 @@
 
                                                 <td><input type="time" name="scheduled_end_time[]"></td>
                                                 
-                                                <td> <select id="select-state" placeholder="Select..." name="auditor[]">
+                                                <td> <input type="text" name="auditor"> 
+                                                    {{-- <select id="select-state" placeholder="Select..." name="auditor[]">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
                                                             </option>
                                                         @endforeach
-                                                    </select></td>
-                                                <td><select id="select-state" placeholder="Select..." name="auditee[]">
+                                                    </select> --}}
+                                                </td>
+                                                <td><select multiple id="auditee" placeholder="Select..." name="auditee[]">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
@@ -715,12 +720,13 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Lead Auditor">Lead Auditor</label>
-                                        <select name="lead_auditor">
+                                        <input type="text" name="lead_auditor">
+                                        {{-- <select name="lead_auditor">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -749,12 +755,15 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Audit Team">Audit Team</label>
-                                        <select multiple name="Audit_team[]" placeholder="Select Audit Team"
+                                        <input 
+                                        type="text" placeholder="" 
+                                         name="Audit_team">
+                                        {{-- <select multiple name="Audit_team[]" placeholder="Select Audit Team"
                                             data-search="false" data-silent-initial-value-set="true" id="Audit">
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 <div class="col-6">
@@ -1217,7 +1226,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #assign_toe, #auditee'
         });
 
         function openCity(evt, cityName) {
