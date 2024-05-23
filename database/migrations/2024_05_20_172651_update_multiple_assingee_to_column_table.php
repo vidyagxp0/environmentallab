@@ -18,6 +18,8 @@ return new class extends Migration
         });
         Schema::table('auditees', function (Blueprint $table) {
             $table->string('multiple_assignee_to')->nullable();
+            $table->string('external_auditor_name')->nullable();
+            $table->string('area_of_auditing')->nullable();
         });
         Schema::table('audit_program_grids', function (Blueprint $table) {
             $table->string('auditee')->nullable();

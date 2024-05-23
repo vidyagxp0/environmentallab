@@ -1089,7 +1089,9 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-6">
                                             <div class="group-input">
                                                 <label for="Audit Team">Audit Team</label>
-                                                <select multiple name="Audit_team[]" placeholder="Select Audit Team"
+                                                <input type="text" value="{{ $data->Audit_team }}" 
+                                         name="Audit_team">
+                                                {{-- <select multiple name="Audit_team[]" placeholder="Select Audit Team"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="Audit"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
@@ -1099,7 +1101,7 @@ function addMultipleFiles(input, block_id) {
                                                             {{ $user->name }}
                                                         </option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col-6">

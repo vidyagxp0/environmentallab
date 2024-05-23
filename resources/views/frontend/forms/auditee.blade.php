@@ -259,6 +259,33 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
+                                            Name of Auditor <span class="text-danger">*</span>
+                                        </label>
+                                        <input type="text" placeholder="External Auditor Name" name="external_auditor_name">
+                                        @error('external_auditor_name')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
+                                            Area of Auditing <span class="text-danger">*</span>
+                                        </label>
+                                        
+                                        <input 
+                                        type="text" placeholder="Area of Auditing" 
+                                         name="area_of_auditing">
+                                        
+                                        @error('area_of_auditing')
+                                            <p class="text-danger">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="group-input">
+                                        <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select multiple id="assign_toe" placeholder="Select..." name="multiple_assignee_to[]">
@@ -728,12 +755,15 @@
                                 <div class="col-6">
                                     <div class="group-input">
                                         <label for="Audit Team">Audit Team</label>
-                                        <select multiple name="Audit_team[]" placeholder="Select Audit Team"
+                                        <input 
+                                        type="text" placeholder="" 
+                                         name="Audit_team">
+                                        {{-- <select multiple name="Audit_team[]" placeholder="Select Audit Team"
                                             data-search="false" data-silent-initial-value-set="true" id="Audit">
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
                                     </div>
                                 </div>
                                 <div class="col-6">
