@@ -22,6 +22,7 @@ use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Services\DocumentService;
 // use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -82,6 +83,7 @@ class CCController extends Controller
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
+
 
         if ($division) {
             $last_cc = CC::where('division_id', $division->id)->latest()->first();
@@ -1115,6 +1117,8 @@ class CCController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
        // toastr()->success('Record is created Successfully ');
+
+       DocumentService::update_qms_numbers();
 
         return redirect('rcms/qms-dashboard');
     }
@@ -2212,7 +2216,10 @@ class CCController extends Controller
            // return $history;
         }
        // toastr()->success('Record is updated Successfully');
-        return back();
+       
+       DocumentService::update_qms_numbers();
+       
+       return back();
     }
 
 
