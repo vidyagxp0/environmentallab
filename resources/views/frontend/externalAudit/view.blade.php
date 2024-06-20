@@ -415,11 +415,11 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
 
-                                        
+                                        {{-- {{ dd($data->multiple_assignee_to); }} --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to</label>
-                                                <select name="assign_to"
+                                                <select name="multiple_assignee_to[]"  multiple id="assign_toe"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
@@ -829,8 +829,9 @@ function addMultipleFiles(input, block_id) {
                                                                         {{ $value->name }}
                                                                     </option>
                                                                 @endforeach
-                                                            </select></td>
-                                                            <td> <select id="select-state" placeholder="Select..."
+                                                            </select> --}}
+                                                        </td>
+                                                            <td> <select multiple id="auditee" placeholder="Select..."
                                                                 name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)
@@ -890,7 +891,8 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Lead Auditor">Lead Auditor</label>
-                                                <select name="lead_auditor"
+                                                <input type="text" name="lead_auditor" value="{{ $data->lead_auditor}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                {{-- <select name="lead_auditor"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
                                                     @foreach ($users as $key => $value)
@@ -898,7 +900,7 @@ function addMultipleFiles(input, block_id) {
                                                             @if ($data->lead_auditor == $value->id) selected @endif>
                                                             {{ $value->name }}</option>
                                                     @endforeach
-                                                </select>
+                                                </select> --}}
                                             </div>
                                         </div>
                                         <div class="col-lg-12">
@@ -1847,7 +1849,7 @@ function addMultipleFiles(input, block_id) {
 
             <script>
                 VirtualSelect.init({
-                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record'
+                    ele: '#Facility, #Group, #Audit, #Auditee , #reference_record, #assign_toe, #auditee'
                 });
 
                 function openCity(evt, cityName) {

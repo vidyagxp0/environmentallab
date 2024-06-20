@@ -512,28 +512,36 @@ class DocumentDetailsController extends Controller
                 for ($i = 0; $i < count($temperory); $i++) {
                   $temp_user = User::find($temperory[$i]);
                   $temp_user->fromMain = User::find($document->originator_id);
-                  Mail::send(
-                    'mail.for_approval',
-                    ['document' => $document],
-                    function ($message) use ($temp_user) {
-                      $message->to($temp_user->email)
-                        ->subject('Document is for Approval');
-                    }
-                  );
+                  try {
+                    Mail::send(
+                      'mail.for_approval',
+                      ['document' => $document],
+                      function ($message) use ($temp_user) {
+                        $message->to($temp_user->email)
+                          ->subject('Document is for Approval');
+                      }
+                    );
+                  } catch (\Exception $e) {
+                    // log2
+                  }
                 }
               }
             }
             if ($request->stage_id == 6) {
               $traning = DocumentTraining::where('document_id', $document->id)->first();
               $traning->trainer = User::find($traning->trainer);
-              Mail::send(
-                'mail.for_training',
-                ['document' => $document],
-                function ($message) use ($traning) {
-                  $message->to($traning->trainer->email)
-                    ->subject('Document is for training');
-                }
-              );
+              try {
+                Mail::send(
+                  'mail.for_training',
+                  ['document' => $document],
+                  function ($message) use ($traning) {
+                    $message->to($traning->trainer->email)
+                      ->subject('Document is for training');
+                  }
+                );
+              } catch (\Exception $e) {
+                // log2
+              }
 
             }
             if ($request->stage_id == 8) {
@@ -763,14 +771,18 @@ class DocumentDetailsController extends Controller
   public function sendNotification(Request $request)
   {
     $user = User::find($request->option);
-    Mail::send(
-      'frontend.message',
-      ['request' => $request],
-      function ($message) use ($user) {
-        $message->to($user->email)
-          ->subject('You have receiverd a new notification');
-      }
-    );
+    try {
+      Mail::send(
+        'frontend.message',
+        ['request' => $request],
+        function ($message) use ($user) {
+          $message->to($user->email)
+            ->subject('You have receiverd a new notification');
+        }
+      );
+    } catch (\Exception $e) {
+      // logMailError
+    }
     toastr()->success('Mail sent');
     return back();
 

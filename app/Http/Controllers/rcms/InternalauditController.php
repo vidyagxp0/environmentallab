@@ -72,6 +72,7 @@ class InternalauditController extends Controller
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
         $internalAudit->assign_to = $request->assign_to;
+        $internalAudit->multiple_assignee_to =  implode(',', $request->multiple_assignee_to);
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_schedule_start_date= $request->audit_schedule_start_date;
         $internalAudit->audit_schedule_end_date= $request->audit_schedule_end_date;
@@ -773,7 +774,7 @@ class InternalauditController extends Controller
 
         return redirect('rcms/qms-dashboard');
     }
-
+ 
 
     public function update(request $request, $id)
     {
@@ -939,7 +940,7 @@ class InternalauditController extends Controller
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
+            $data3->auditor = $request->auditor;
         }
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
