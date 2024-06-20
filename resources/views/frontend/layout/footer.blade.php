@@ -79,6 +79,7 @@
 <script src="{{ asset('user/js/index.js') }}"></script>
 <script src="{{ asset('user/js/validate.js') }}"></script>
 <script src="{{ asset('user/js/countryState.js') }}"></script>
+<script src="{{ asset('asset/froala_editor_4.2.1/js/froala_editor.pkgd.min.js') }}"></script>
 {{-- @toastr_js @toastr_render @jquery --}}
 
 <script>
