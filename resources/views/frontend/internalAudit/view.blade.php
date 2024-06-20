@@ -363,7 +363,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input type="hidden" name="record">
                                                 {{-- <div class="static">QMS-EMEA/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}</div> --}}
                                                 <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1302,7 +1302,7 @@ function addMultipleFiles(input, block_id) {
                                                             </tr>
                                                         </thead>
                                                         <tbody id="observationDetail">
-                                                            @if ($grid_data1->observation_id)
+                                                            @if ($grid_data1 && $grid_data1->observation_id)
                                                             @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
                                                             <tr>      
                                                                     <td>{{ $key + 1 }}</td>
