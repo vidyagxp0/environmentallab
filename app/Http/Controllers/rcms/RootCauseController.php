@@ -811,6 +811,7 @@ use Illuminate\Support\Facades\Hash;
             $history->save();
         }
 
+        DocumentService::update_qms_numbers();
         
         toastr()->success("Record is update Successfully");
         return back();

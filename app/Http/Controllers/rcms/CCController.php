@@ -22,6 +22,7 @@ use App\Models\RcmDocHistory;
 use App\Models\RiskLevelKeywords;
 use App\Models\RoleGroup;
 use App\Models\User;
+use App\Services\DocumentService;
 // use Barryvdh\DomPDF\PDF;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
@@ -1141,6 +1142,8 @@ class CCController extends Controller
         }
         $pre = CC::all();
         $due_date_extension = $data->due_date_extension;
+
+        DocumentService::update_qms_numbers();
     
         return view('frontend.change-control.CCview', compact(
             'data',
@@ -2211,6 +2214,9 @@ class CCController extends Controller
             $history->save();
            // return $history;
         }
+
+        DocumentService::update_qms_numbers();
+
        // toastr()->success('Record is updated Successfully');
         return back();
     }
