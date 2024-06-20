@@ -16,6 +16,7 @@ use App\Models\InternalAuditGrid;
 use App\Models\InternalAuditStageHistory;
 use App\Models\QMSDivision;
 use App\Models\User;
+use App\Services\DocumentService;
 use PDF;
 use Helpers;
 use Illuminate\Support\Facades\Mail;
@@ -210,6 +211,8 @@ class InternalauditController extends Controller
         //dd($internalAudit);
          //return $internalAudit;
         $internalAudit->save();
+
+        DocumentService::update_qms_numbers();
 
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -1473,6 +1476,9 @@ class InternalauditController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        DocumentService::update_qms_numbers();
+
         toastr()->success('Record is Update Successfully');
 
         return back();
