@@ -236,7 +236,7 @@ class InternalauditController extends Controller
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = $request->auditor;
+            $data3->auditor = serialize($request->auditor);
         }
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);

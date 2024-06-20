@@ -10,6 +10,7 @@ use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session as FacadesSession;
 
 class UserLoginController extends Controller
 {
@@ -67,6 +68,8 @@ class UserLoginController extends Controller
             'timezone' => ['required']
         ]);
         // Set the timezone
+        
+
         $checkEmail = User::where('email', $request->email)->count();
         if ($checkEmail > 0) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
@@ -117,7 +120,9 @@ class UserLoginController extends Controller
             'password' => ['required'],
             'timezone' => ['required']
         ]);
-        // Set the timezone
+        
+        FacadesSession::put('login_timezone', $request->timezone);
+
         $checkEmail = User::where('email', $request->email)->count();
         if ($checkEmail > 0) {
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
