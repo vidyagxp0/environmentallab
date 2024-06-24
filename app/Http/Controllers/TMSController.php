@@ -20,6 +20,7 @@ use App\Models\Quize;
 use App\Models\RoleGroup;
 use App\Models\TrainingAudit;
 use App\Models\TrainingHistory;
+use App\Models\TrainingActivityLog;
 use App\Models\TrainingStatus;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -241,6 +242,17 @@ class TMSController extends Controller
             }            
 
             $training->save();
+            $TrainingActivityLog = new TrainingActivityLog();
+            $TrainingHistory->training_id = $training->id;
+            $TrainingHistory->doc_id = $training->id;
+            $TrainingHistory->user_id = $training->id;
+            $TrainingHistory->status = $training->id;
+            $TrainingHistory->training_complition = $training->id;
+            $TrainingHistory->classroom_trainer = $training->id;
+            $TrainingHistory->training_cordinator = $training->id;
+            $TrainingHistory->due_date = $training->id;
+
+
             $TrainingHistory = new TrainingHistory();
             $TrainingHistory->plan_id = $training->id;
             $TrainingHistory->sop_id = $training->sops;
@@ -804,7 +816,7 @@ class TMSController extends Controller
                         $history->comment = $request->quize_comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role )->value('name');
                         $history->origin_state = "Pending-Training";
                         $history->save();
                     }
