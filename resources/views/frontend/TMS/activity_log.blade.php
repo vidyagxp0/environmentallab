@@ -108,8 +108,8 @@
                         <div class="table-block">
                             <div class="table-responsive" style="height: 300px">
                                 @php
-                                    $userTraining = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
-                                @endphp
+                                $userTraining = DB::table('trainings')->where('trainner_id', Auth::user()->id)->get();
+                            @endphp
                             <table class="table table-bordered" style="width: 120%;">
                                 <thead>
                                     <tr>
@@ -263,20 +263,15 @@
 
                                 <tbody>
                                     @foreach($userTraining as $training)
-                                    @php
                                         $trainees = explode(',', $training->trainees);
                                         $trainingUsers = DB::table('users')->whereIn('id', $trainees)->get();
                                         $sopIds = explode(',', $training->sops); 
                                         $trainingDoc = DB::table('documents')->whereIn('id', $sopIds)->get();
-                                    @endphp
                                         <tr>
+                                           
                                             <td></td>
-                                                @foreach ($trainingUsers as $user)
-                                                    <td>{{ $user->name }}</td>   
-                                                @endforeach
-                                                @foreach ($trainingDoc as $doc)
-                                                    <td>{{ $doc->document_name }}</td>   
-                                                @endforeach
+                                            <td></td>
+                                            <td></td>
                                             <td>{{ $training->traning_plan_name }}</td>
                                             <td></td>
                                             <td></td>
