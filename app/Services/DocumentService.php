@@ -22,6 +22,8 @@ use App\Models\RecordNumber;
 use App\Models\RiskAssessment;
 use App\Models\RiskManagement;
 use App\Models\RootCauseAnalysis;
+use Helpers;
+use Illuminate\Support\Facades\DB;
 
 class DocumentService
 {
@@ -93,6 +95,10 @@ class DocumentService
                     }
                 }
             }
+
+            // UPDATE SOP NO:
+
+            return self::update_sop_numbers();
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -326,5 +332,28 @@ class DocumentService
         }
     }
 
+    static function update_sop_numbers()
+    {
+        try {
+            
+            $documents = Document::all();
 
+            foreach ($documents as $doc)
+            {
+                $type = DocumentType::find($doc->document_type_id);
+
+                if($doc->revised === 'Yes')  {
+                    $doc_sop_no = Helpers::getDivisionName($doc->division_id) . '/' . $type->typecode . '/' . $doc->created_at->format('Y') . '/' .  $doc->document_number . '/ R' . $doc->major .'.'. $doc->minor;
+                } else {
+                    $doc_sop_no = Helpers::getDivisionName($doc->division_id) . '/' . $type->typecode . '/' . $doc->created_at->format('Y') . '/' .  $doc->document_number . '/' . $doc->major .'.'. $doc->minor;
+                }
+
+                $doc->sop_no = $doc_sop_no;
+                $doc->save();
+            }
+
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
+    }
 }
