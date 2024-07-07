@@ -326,7 +326,7 @@
                                             <div class="calenderauditee">                                     
                                                 <input type="text"  id="start_date" readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                  />
-                                                <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date }}"
+                                                <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date"  value="{{ $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                             </div>    
@@ -338,7 +338,7 @@
                                             <div class="calenderauditee">                                     
                                             <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                              />
-                                            <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date }}"
+                                            <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date"  value="{{ $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             class="hide-input"
                                             oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                             </div>
