@@ -1976,64 +1976,60 @@
                 <div class="block-head">
                     Operational planning and control
                 </div>
-                <table>
-                 <tr>
-                        <th class="w-20">Operations </th>
-                        <td class="w-30">@if($managementReview->Operations){{ $managementReview->Operations }}@else Not Applicable @endif</td>
-                        <th class="w-20">Requirements for Products and Services
-                        </th>
-                        <td class="w-30">@if($managementReview->requirement_products_services){{ $managementReview->requirement_products_services }}@else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Design and Development of Products and Services</th>
-                        <td class="w-30">@if($managementReview->design_development_product_services){{($managementReview->design_development_product_services)}} @else Not Applicable @endif</td>
-                        <th class="w-20">Control of Externally Provided Processes, Products and Services</th>
-                        <td class="w-30">@if($managementReview->control_externally_provide_services){{ $managementReview->control_externally_provide_services }}@else Not Applicable @endif</td>
-                    </tr> 
-                     <tr>  
-                        <th class="w-20">Production and Service Provision</th>
-                        <td class="w-30">@if($managementReview->production_service_provision){{ $managementReview->production_service_provision }}@else Not Applicable @endif</td>
-                        <th class="w-20">Release of Products and Services</th>
-                        <td class="w-30">@if($managementReview->release_product_services){{ $managementReview->release_product_services }}@else Not Applicable @endif</td>
-                    </tr>
-                        <th class="w-20">Control of Non-conforming Outputs </th>
-                        <td class="w-30">@if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif</td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Audit team</th>
-                        <td class="w-30">
-                            @if($managementReview->Audit_team)
+                <div>
+                    <h3>Operations</h3>
+                    <p>
+                        @if($managementReview->Operations){{ $managementReview->Operations }}@else Not Applicable @endif
+                    </p>
+                </div>
+                <div>
+                    <h3>Requirements for Products and Services</h3>
+                    <p>
+                        @if($managementReview->requirement_products_services){{ $managementReview->requirement_products_services }}@else Not Applicable @endif
+                    </p>
+                </div>
+                <div>
+                    <h3>Design and Development of Products and Services</h3>
+                    <p>
+                        @if($managementReview->design_development_product_services){{($managementReview->design_development_product_services)}} @else Not Applicable @endif
+                    </p>
+                </div>
+                <div>
+                    <h3>Control of Externally Provided Processes, Products and Services</h3>
+                    <p>
+                        @if($managementReview->control_externally_provide_services){{ $managementReview->control_externally_provide_services }}@else Not Applicable @endif
+                    </p>
+                </div>
+                <div>
+                    <h3>Production and Service Provision</h3>
+                    <p>
+                        @if($managementReview->production_service_provision){{ $managementReview->production_service_provision }}@else Not Applicable @endif
+                    </p>
+                </div>
+                <div>
+                    <h3>Release of Products and Services</h3>
+                    <p>
+                        @if($managementReview->release_product_services){{ $managementReview->release_product_services }}@else Not Applicable @endif
+                    </p>
+                </div>
+                <div>
+                    <h3>Control of Non-conforming Outputs</h3>
+                    <p>
+                        @if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif
+                    </p>
+                </div>
+                <div>
+                    <h3>Audit team</h3>
+                    <p>
+                        @if($managementReview->Audit_team)
                             @foreach (explode(',', $managementReview->Audit_team) as $Key => $value)
                                 <li>{{ Helpers::getInitiatorName($value) }}</li>
                             @endforeach
-                            @else Not Applicable
-                            @endif
-                        </td>
-                        {{-- <th class="w-20">Auditee</th> --}}
-                        {{-- <td class="w-30">
-                            @if($managementReview->Auditee)
-                            @foreach (explode(',', $managementReview->Auditee) as $Key => $value)
-                                <li>{{ Helpers::getInitiatorName($value) }}</li>
-                            @endforeach
-                            @else Not Applicable
-                            @endif
-                        </td> --}}
-
-                    </tr>
-                    {{-- <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-30">@if($managementReview->Comments){{ $managementReview->Comments }}@else Not Applicable @endif</td>
-                        <th class="w-20">Audit Category</th>
-                        <td class="w-30">@if($managementReview->Audit_Category){{ $managementReview->Audit_Category }}@else Not Applicable @endif</td>
-                    </tr>    --}}
-                   {{-- <tr>
-                        <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
-                        <td class="w-30">@if($managementReview->Supplier_Site){{ $managementReview->Supplier_Site }}@else Not Applicable @endif</td>
-                        <th class="w-20">Supplier/Vendor/Manufacturer Details</th>
-                        <td class="w-30">@if($managementReview->Supplier_Details){{ $managementReview->Supplier_Details}}@else Not Applicable @endif</td>
-                    </tr> --}}
-                </table>
+                        @else 
+                            Not Applicable
+                        @endif
+                    </p>
+                </div>
             </div>
              <div class="border-table">
                 {{-- <div class="block-head">
