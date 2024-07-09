@@ -144,6 +144,15 @@ class DocumentController extends Controller
         if ($request->has('originator_id')) {
             $query->where('originator_id', $request->originator_id);
         }
+
+        if ($request->query('search_query') && !empty($request->query('search_query'))) {
+            $query->where('document_name', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('sop_no', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('sop_type', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('status', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('short_description', 'LIKE', '%'. $request->search_query .'%');
+        }
+
         $count = $query->where('documents.originator_id', Auth::user()->id)->count();
         $documents = $query->paginate(10);
         

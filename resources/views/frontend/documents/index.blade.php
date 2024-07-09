@@ -7,6 +7,8 @@
     <div class="container-fluid">
         <div class="dashboard-container">
             <div class="row">
+
+                
                 <div class="col-xl-12 col-lg-12">
                     <div class="document-left-block">
                         <div class="inner-block create-block">
@@ -24,6 +26,21 @@
 
                         </div>
                         <div class="inner-block table-block">
+
+                            <div class="mb-5 mt-3">
+                                <form action="" method="get">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            <input type="text" id="searchQueryInput" name="search_query" value="{{ request()->query('search_query') }}" class="form-control" placeholder="Enter your search query here..">
+                                        </div>
+                                        <div class="col-2 btn-group">
+                                            <button type="submit" class="btn btn-primary w-50">Search</button>
+                                            <button onclick="document.getElementById('searchQueryInput').value = '';" type="submit" class="btn btn-secondary w-50">Clear</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
                                 <div style="display:flex; justify-content:space-around;" class=" main-filter">
 
                                     <div class="filter-block">
@@ -122,6 +139,7 @@
                         </div>
                     </div>
                 </div>
+                
                 {{-- <div class="col-xl-3 col-lg-3">
                         <div class="document-right-block">
                             <div class="inner-block recent-record">

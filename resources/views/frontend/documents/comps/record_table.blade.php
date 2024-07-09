@@ -14,6 +14,12 @@
                 Document Type
             </th>
             <th class="division">
+                Document Name
+            </th>
+            <th class="division">
+                SOP No.
+            </th>
+            <th class="division">
                 Division
             </th>
             <th class="short-desc">
@@ -46,6 +52,12 @@
                 </td>
                 <td class="division">
                     {{ $doc->document_type_name }}
+                </td>
+                <td class="division">
+                    {{ $doc->document_name }}
+                </td>
+                <td class="division">
+                    {{ $doc->sop_no }}
                 </td>
                 <td class="division">
                     {{ Helpers::getDivisionName($doc->division_id) }}

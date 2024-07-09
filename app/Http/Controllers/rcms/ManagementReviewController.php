@@ -722,6 +722,7 @@ class ManagementReviewController extends Controller
         $management->building = $request->building;
         $management->floor = $request->floor;
         $management->room = $request->room;
+        $management->risk_opportunities = $request->risk_opportunities;
         $management->priority_level = $request->priority_level;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
         $management->assign_to = $request->assign_to;
@@ -1477,7 +1478,7 @@ class ManagementReviewController extends Controller
     {
         $parent_id = $id;
         $parent_initiator_id = ManagementReview::where('id', $id)->value('initiator_id');
-        $parent_type = "Action-Item";
+        $parent_type = "Management-Review";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $parent_record = $record_number;
@@ -1486,6 +1487,8 @@ class ManagementReviewController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = ManagementReview::select('id', 'division_id', 'record')->get();
+        $management = ManagementReview::find($id);
+        session()->put('division', $management->division_id);
         return view('frontend.forms.action-item', compact('parent_intiation_date','parent_initiator_id','parent_record', 'record_number', 'due_date', 'parent_id', 'parent_type','old_record'));
     }
 

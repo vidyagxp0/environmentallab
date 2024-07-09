@@ -326,7 +326,7 @@
                                             <div class="calenderauditee">                                     
                                                 <input type="text"  id="start_date" readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                  />
-                                                <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->start_date }}"
+                                                <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date"  value="{{ $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                             </div>    
@@ -338,7 +338,7 @@
                                             <div class="calenderauditee">                                     
                                             <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                              />
-                                            <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->end_date }}"
+                                            <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date"  value="{{ $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             class="hide-input"
                                             oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                             </div>
@@ -375,7 +375,7 @@
                                                         
                                                                 <td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee">
                                                                     <input type="text" id="date{{$key}}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($agenda->date)[$key] ?? null) }}" />
-                                                                    <input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input" 
+                                                                    <input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ $data->created_at ? $data->created_at->format('Y-m-d') : '' }}"  value="{{unserialize($agenda->date)[$key] ?? null }}" class="hide-input" 
                                                                     oninput="handleDateInput(this, `date{{$key }}`)" /></div></div></div></td>
                                                         <td><input type="text" name="topic[]" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} 
                                                                 value="{{ unserialize($agenda->topic)[$key] ?? '' }}">
@@ -1253,7 +1253,7 @@
             cell1.innerHTML = currentRowCount;
 
             var cell2 = newRow.insertCell(1);
-            cell2.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date' + currentRowCount +'`);" /></div></div></div></td>';
+            cell2.innerHTML = '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="date' + currentRowCount +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}   id="date' + currentRowCount +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `date' + currentRowCount +'`);" /></div></div></div></td>';
 
             var cell3 = newRow.insertCell(2);
             cell3.innerHTML = "<input type='text' name='topic[]' >";
