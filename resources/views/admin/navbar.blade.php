@@ -53,15 +53,13 @@
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right card card-widget widget-user">
                     <div class="widget-user-header bg-danger">
                         <h3 class="widget-user-username">
-                            <!-- @if (Auth::guard('admin')->check())
                                 {{ Auth::guard('admin')->user()->name }}
-                            @endif -->
                         </h3>
-                        <h5 class="widget-user-desc">
+                        {{-- <h5 class="widget-user-desc">
                             @if (Auth::guard('admin')->check())
                                 {{ Auth::guard('admin')->user()->role }}
                             @endif
-                        </h5>
+                        </h5> --}}
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle elevation-2" src="{{ asset('user/images/logo1.png') }}" alt="User Avatar">
@@ -98,11 +96,6 @@
                             <img src="{{ asset('user/images/logo1.png') }}" alt="..." class="w-50 h-50">
                         </div>
 </div>
-    <!-- <a href="{{ URL::to('admin/dashboard') }}" class="brand-link">
-        <img src="{{ asset('admin/images/logo/logo.png') }}" alt="{{ config('app.name') }} Logo"
-            class="brand-image  elevation-3" style="opacity: .8  height:60px">
-        <span class="brand-text font-weight-light">{{ config('app.name') }}</span>
-    </a> -->
 
     <!-- Sidebar -->
     <div class="sidebar">
