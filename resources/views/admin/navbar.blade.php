@@ -53,13 +53,15 @@
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right card card-widget widget-user">
                     <div class="widget-user-header bg-danger">
                         <h3 class="widget-user-username">
+                             @if (Auth::guard('admin')->check())
                                 {{ Auth::guard('admin')->user()->name }}
-                        </h3>
-                        {{-- <h5 class="widget-user-desc">
-                            @if (Auth::guard('admin')->check())
-                                {{ Auth::guard('admin')->user()->role }}
                             @endif
-                        </h5> --}}
+                        </h3>
+                        <!--<h5 class="widget-user-desc">-->
+                        <!--    @if (Auth::guard('admin')->check())-->
+                        <!--        {{ Auth::guard('admin')->user()->role }}-->
+                        <!--    @endif-->
+                        <!--</h5>-->
                     </div>
                     <div class="widget-user-image">
                         <img class="img-circle elevation-2" src="{{ asset('user/images/logo1.png') }}" alt="User Avatar">
@@ -194,7 +196,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('role_groups.index') }}"
                                 class="nav-link @php
                             if($submenu=="Role Permission"){
@@ -213,7 +215,7 @@
                                 <i class="fa fa-users nav-icon"></i>
                                 <p>Group Permission</p>
                             </a>
-                        </li>
+                        </li> --}}
 
                     </ul>
                 </li>
@@ -315,7 +317,7 @@ if($submenu=="Process"){
                         </li>
 
                     </ul>
-                </li>
+                </li>--}}
 
                 
 
@@ -360,7 +362,7 @@ if($submenu=="Download Control"){
                     </ul>
                 </li>
 
-  <li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
+  {{--<li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Product & Material"){
