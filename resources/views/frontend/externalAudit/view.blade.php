@@ -391,7 +391,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="search">
                                                     Name of Auditor <span class="text-danger"></span>
                                                 </label>
-                                                <input type="text" {{ $data->stage == 0 || $data->stage ? 'disabled' : '' }} placeholder="External Auditor Name" value="{{ $data->external_auditor_name }}" name="external_auditor_name">
+                                                <input type="text"  placeholder="Name of Auditor" value="{{ $data->external_auditor_name }}" name="external_auditor_name">
                                                 @error('external_auditor_name')
                                                     <p class="text-danger">{{ $message }}</p>
                                                 @enderror
@@ -407,7 +407,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input 
                                                 type="text" placeholder="Area of Auditing" 
                                                 value="{{ $data->area_of_auditing }}" name="area_of_auditing" 
-                                                {{ $data->stage == 0 || $data->stage ? 'disabled' : '' }}>
+                                                >
                                                 
                                                 @error('area_of_auditing')
                                                     <p class="text-danger">{{ $message }}</p>
@@ -522,7 +522,7 @@ function addMultipleFiles(input, block_id) {
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{ $data->short_description }}">
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
@@ -636,7 +636,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="external_agencies">External Agencies</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="external_agencies">
+                                                <select  onchange="otherController(this.value, 'others', 'if_external')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="external_agencies">
                                                     <option value="">-- Select --</option>
                                                     <option @if ($data->external_agencies == 'jordan_fda') selected @endif
                                                          value="jordan_fda">Jordan FDA</option>
@@ -661,7 +661,7 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
-                                            <div class="group-input">
+                                            <div class="group-input" id="if_external">
                                                 <label for="others">Others<span
                                                     class="text-danger d-none">*</span></label>
                                                 <textarea name="others" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->others}}</textarea>
@@ -671,6 +671,12 @@ function addMultipleFiles(input, block_id) {
                                             <div class="group-input">
                                                 <label for="Initial Comments">Description</label>
                                                 <textarea name="initial_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initial_comments }}</textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="group-input">
+                                                <label for="Initial Comments">Reason For Audit</label>
+                                                <textarea name="reason_for_audit" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->reason_for_audit }}</textarea>
                                             </div>
                                         </div>
                                         
@@ -745,7 +751,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="calenderauditee">                                     
                                                     <input type="text"  id="start_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="start_date_checkdate" name="start_date"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
+                                                    <input type="date" id="start_date_checkdate" name="start_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->start_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -756,7 +762,7 @@ function addMultipleFiles(input, block_id) {
                                                 <div class="calenderauditee">                                     
                                                     <input type="text"  id="end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
-                                                    <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
+                                                    <input type="date" id="end_date_checkdate" name="end_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->end_date }}" class="hide-input"
                                                     oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                                 </div>
                                             </div>
@@ -1188,7 +1194,7 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="calenderauditee">                                     
                                                         <input type="text"  id="audit_start_date"  readonly placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->audit_start_date) }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
+                                                        <input type="date" id="audit_start_date_checkdate" name="audit_start_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_start_date }}"
                                                         class="hide-input"
                                                         oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>    
@@ -1200,7 +1206,7 @@ function addMultipleFiles(input, block_id) {
                                                     <div class="calenderauditee">                                     
                                                     <input type="text"  id="audit_end_date"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->audit_end_date) }}"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
-                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
+                                                    <input type="date" id="audit_end_date_checkdate" name="audit_end_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->audit_end_date }}"
                                                     class="hide-input"
                                                     oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')"/>
                                                     </div>

@@ -89,7 +89,7 @@ class AuditProgramController extends Controller
         $data->Initiator_Group = $request->Initiator_Group;
         $data->initiator_group_code = $request->initiator_group_code;
         // $data->assign_to = $request->assign_to;
-        $data->assign_to =  implode(',', $request->assign_to);
+        $data->assign_to =  $request->assign_to;
         $data->due_date = $request->due_date;
         $data->type = $request->type;
         $data->year = $request->year;

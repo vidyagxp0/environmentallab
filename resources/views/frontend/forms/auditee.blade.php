@@ -259,9 +259,9 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Name of Auditor <span class="text-danger">*</span>
+                                            Name of Auditor 
                                         </label>
-                                        <input type="text" placeholder="External Auditor Name" name="external_auditor_name">
+                                        <input type="text" placeholder="Name of Auditor" name="external_auditor_name">
                                         @error('external_auditor_name')
                                             <p class="text-danger">{{ $message }}</p>
                                         @enderror
@@ -271,7 +271,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
-                                            Area of Auditing <span class="text-danger">*</span>
+                                            Area of Auditing 
                                         </label>
                                         
                                         <input 
@@ -511,6 +511,13 @@
                                         <textarea name="initial_comments"></textarea>
                                     </div>
                                 </div>
+
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Initial Comments">Reason For Audit</label>
+                                        <textarea name="reason_for_audit"></textarea>
+                                    </div>
+                                </div>
                                
                                 <div class="col-12">
                                     <div class="group-input">
@@ -570,7 +577,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="start_date_checkdate" name="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input"
+                                            <input type="date" id="start_date_checkdate" name="start_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
 
@@ -582,7 +589,7 @@
                                         <div class="calenderauditee">
                                             <input type="text" id="end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="end_date_checkdate" name="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                            <input type="date" id="end_date_checkdate" name="end_date" class="hide-input" 
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
 
@@ -872,7 +879,7 @@
                                         <div class="calenderauditee">
                                             <input type="text"  id="audit_start_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="audit_start_date_checkdate" name="audit_start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" id="audit_start_date_checkdate" name="audit_start_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                     </div>
@@ -884,7 +891,7 @@
                                             <div class="calenderauditee">
                                             <input type="text" id="audit_end_date" readonly
                                                 placeholder="DD-MMM-YYYY" />
-                                            <input type="date" id="audit_end_date_checkdate" name="audit_end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            <input type="date" id="audit_end_date_checkdate" name="audit_end_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
                                         </div>

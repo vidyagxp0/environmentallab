@@ -165,7 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo" style="position: relative; height: 60px; width: 150px;">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 60px; position: absolute; left: 40%;">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt="" style="width: 60px; position: absolute; left: 40%;">
                     </div>
                 </td>
             </tr>
@@ -217,17 +217,32 @@
                         <td class="w-30">@if($data->severity_level){{ $data->severity_level }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Others</th>
-                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
-                        <th class="w-20">External Agencies </th>
+                             <th class="w-20">External Agencies </th>
                         <td class="w-30">@if($data->external_agencies){{ $data->external_agencies }} @else Not Applicable @endif</td>
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->others){{ $data->others }} @else Not Applicable @endif</td>
+                  
                     </tr>
+                    <tr>
+                        <th class="w-20">Short Description</th>
+                        <td class="w-30"> @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
+                        </tr>
                     <tr>
                         <th class="w-20">Description</th>
                         <td class="w-30">@if($data->initial_comments){{ $data->initial_comments }} @else Not Applicable @endif</td>
-                        <th class="w-20">If Others</th>
-                        <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>                       
-                    </tr>
+                 </tr>
+                 <tr>
+                    <th class="w-20">Reason For Audit</th>
+                    <td class="w-30">@if($data->reason_for_audit){{ $data->reason_for_audit }} @else Not Applicable @endif</td>
+             </tr>
+                 <tr>
+                    <th class="w-20">Type of Audit</th>
+                    <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>                       
+               
+                    <th class="w-20">If Others</th>
+                    <td class="w-30">@if($data->if_other){{ $data->if_other }}@else Not Applicable @endif</td>                       
+               
+                 </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">
@@ -238,19 +253,23 @@
                             @else Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Initiated Through</th>
-                        <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Short Description</th>
-                        <td class="w-30"> @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
-                    </tr>
+                   
+                        </tr>
                     <tr>
+                        <th class="w-20">Initiated Through</th>
+                        <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>
+                   
+                        <th class="w-20">Others</th>
+                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>
+                        
+                    </tr>
+                   
+                    {{-- <tr>
                         <th class="w-20">Audit type</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                    </tr>
+                    </tr> --}}
         
 
                 </table>
@@ -262,7 +281,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File</th>
                         </tr>
                             @if($data->inv_attachment)
                             @foreach(json_decode($data->inv_attachment) as $key => $file)
@@ -332,15 +351,21 @@
                     <tr>
                         <th class="w-20">Lead Auditor</th>
                         <td class="w-30">@if($data->lead_auditor){{ $data->lead_auditor }}@else Not Applicable @endif</td>
-                        <th class="w-20">External Auditor Details</th>
+                         </tr>
+                         <tr>
+                            <th class="w-20">External Auditor Details</th>
                         <td class="w-30">@if($data->Auditor_Details){{ $data->Auditor_Details }}@else Not Applicable @endif</td>
-                    </tr>
+                   
+                         </tr>
                     <tr>
                         <th class="w-20">External Auditing Agency</th>
                         <td class="w-30">@if($data->External_Auditing_Agency){{ $data->External_Auditing_Agency }}@else Not Applicable @endif</td>
-                        <th class="w-20">Relevant Guidelines / Industry Standards</th>
-                        <td class="w-30">@if($data->Relevant_Guidelines){{ $data->Relevant_Guidelines }}@else Not Applicable @endif</td>
-                    </tr>
+                         </tr>
+                         <tr>
+                            <th class="w-20">Relevant Guidelines / Industry Standards</th>
+                        <td class="w-80">@if($data->Relevant_Guidelines){{ $data->Relevant_Guidelines }}@else Not Applicable @endif</td>
+                   
+                         </tr>
                     <tr>
                         <th class="w-20">QA Comments</th>
                         <td class="w-30">@if($data->QA_Comments){{$data->QA_Comments}}@else Not Applicable @endif</td>
@@ -355,10 +380,12 @@
                     <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
                         <td class="w-30">@if($data->Supplier_Site){{$data->Supplier_Site }}@else Not Applicable @endif</td>
+                         </tr>
+                    <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Details</th>
                         <td class="w-30">@if($data->Supplier_Details){{ $data->Supplier_Details }}@else Not Applicable @endif</td>
-                    </tr>
 
+                    </tr>
                     <tr>
                         <th class="w-20">Audit team</th>
                         <td class="w-30">@if($data->Audit_team){{$data->Audit_team }}@else Not Applicable @endif
@@ -390,7 +417,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">File</th>
                     </tr>
                         @if($data->file_attachment)
                         @foreach(json_decode($data->file_attachment) as $key => $file)
@@ -416,7 +443,7 @@
 
                     <tr class="table_bg">
                         <th class="w-20">S.N.</th>
-                        <th class="w-60">Batch No</th>
+                        <th class="w-60">File</th>
                     </tr>
                         @if($data->file_attachment_guideline)
                         @foreach(json_decode($data->file_attachment_guideline) as $key => $file)
@@ -473,7 +500,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File</th>
                         </tr>
                             @if($data->myfile)
                             @foreach(json_decode($data->myfile) as $key => $file)
@@ -558,7 +585,7 @@
 
                         <tr class="table_bg">
                             <th class="w-20">S.N.</th>
-                            <th class="w-60">Batch No</th>
+                            <th class="w-60">File</th>
                         </tr>
                             @if($data->report_file)
                             @foreach(json_decode($data->report_file) as $key => $file)

@@ -82,8 +82,8 @@ class AuditeeController extends Controller
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
 
-        $internalAudit->external_auditor_name = $request->external_auditor_name;
-        $internalAudit->area_of_auditing = $request->area_of_auditing;
+        // $internalAudit->external_auditor_name = $request->external_auditor_name;
+        // $internalAudit->area_of_auditing = $request->area_of_auditing;
 
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
@@ -104,8 +104,10 @@ class AuditeeController extends Controller
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team =  $request->Audit_team;
-        $internalAudit->external_auditor_name =  $request->external_auditor_name;
-        $internalAudit->area_of_auditing =  $request->area_of_auditing;
+        $internalAudit->reason_for_audit =  $request->reason_for_audit;
+
+        // $internalAudit->external_auditor_name =  $request->external_auditor_name;
+        // $internalAudit->area_of_auditing =  $request->area_of_auditing;
         $internalAudit->Auditee =  implode(',', $request->Auditee);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
@@ -788,6 +790,9 @@ class AuditeeController extends Controller
         $internalAudit->short_description = $request->short_description;
         $internalAudit->audit_type = $request->audit_type;
         $internalAudit->if_other = $request->if_other;
+        $internalAudit->area_of_auditing =  $request->area_of_auditing;
+        $internalAudit->external_auditor_name =  $request->external_auditor_name;
+        $internalAudit->reason_for_audit =  $request->reason_for_audit;
 
         $internalAudit->initiated_through = $request->initiated_through;
         $internalAudit->initiated_if_other = $request->initiated_if_other;
