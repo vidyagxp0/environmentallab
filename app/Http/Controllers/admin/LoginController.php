@@ -26,7 +26,7 @@ class LoginController extends Controller
             $request->session()->regenerate();
             if (Auth::guard('admin')->user()->active) {
                 toastr()->success('Login Successfully.');
-                return redirect()->intended('admin/dashboard');
+                return redirect()->intended('admin/admin_management');
             }
             else {
 

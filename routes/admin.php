@@ -10,6 +10,7 @@ use App\Http\Controllers\admin\PrintControlController;
 use App\Http\Controllers\admin\DownloadControlController;
 use App\Http\Controllers\admin\LoginController;
 use App\Http\Controllers\admin\UserManagementController;
+use App\Http\Controllers\admin\AdminManagementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\admin\DivisionController;
 use App\Http\Controllers\admin\DocSubtypeController;
@@ -49,6 +50,7 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('process', ProcessController::class);
             Route::resource('risk-level', RiskLevelController::class);
             Route::resource('user_management', UserManagementController::class);
+            Route::resource('admin_management', AdminManagementController::class);
             Route::resource('role_groups', RoleGroupController::class);
             Route::resource('printcontrol', PrintControlController::class);
             Route::resource('downloadcontrol', DownloadControlController::class);
