@@ -10,7 +10,7 @@
 @section('container')
     <div class="card card-primary">
         <div class="card-header">
-            <h3 class="card-title">Create Account </h3>
+            <h3 class="card-title">Edit Account </h3>
         </div>
         <!-- /.card-header -->
         <!-- form start -->

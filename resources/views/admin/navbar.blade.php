@@ -45,7 +45,7 @@
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
                 <div class="image">
-                    <img width="30" src="{{ asset('admin/dist/img/user8-128x128.jpg') }}"
+                    <img width="30" src="{{ asset('user/images/logo1.png') }}"
                         class="img-circle elevation-2" alt="User Image">
                 </div>
             </a>
@@ -53,18 +53,18 @@
                 <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right card card-widget widget-user">
                     <div class="widget-user-header bg-danger">
                         <h3 class="widget-user-username">
-                            <!-- @if (Auth::guard('admin')->check())
+                             @if (Auth::guard('admin')->check())
                                 {{ Auth::guard('admin')->user()->name }}
-                            @endif -->
-                        </h3>
-                        <h5 class="widget-user-desc">
-                            @if (Auth::guard('admin')->check())
-                                {{ Auth::guard('admin')->user()->role }}
                             @endif
-                        </h5>
+                        </h3>
+                        <!--<h5 class="widget-user-desc">-->
+                        <!--    @if (Auth::guard('admin')->check())-->
+                        <!--        {{ Auth::guard('admin')->user()->role }}-->
+                        <!--    @endif-->
+                        <!--</h5>-->
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle elevation-2" src="{{ asset('admin/dist/img/user8-128x128.jpg') }}" alt="User Avatar">
+                        <img class="img-circle elevation-2" src="{{ asset('user/images/logo1.png') }}" alt="User Avatar">
                     </div>
                     <div class="card-footer m-2">
                         <center> <a href="{{ url('admin/logout') }}">LogOut
@@ -113,7 +113,7 @@
 
 
         <!-- SidebarSearch Form -->
-        <div class="form-inline">
+        {{-- <div class="form-inline">
             <div class="input-group" data-widget="sidebar-search">
                 <input class="form-control form-control-sidebar" type="search" placeholder="Search"
                     aria-label="Search">
@@ -123,32 +123,62 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-flat nav-child-indent nav-sidebar flex-column " data-widget="treeview"
                 role="menu" data-accordion="false">
-                <li class="nav-header">Home</li>
+                {{-- <li class="nav-header">Home</li> --}}
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="{{ URL('admin/dashboard') }}"
                         class="nav-link @php
-if($mainmenu=="Dashboard"){
-                echo "active";
-            } @endphp">
+                        if($mainmenu=="Dashboard"){
+                                        echo "active";
+                                    } @endphp">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
                         <p>
                             Dashboard
 
                         </p>
                     </a>
+                </li> --}}
+
+                <li class="nav-item {{ $mainmenu == 'Admin Management' ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link  
+                    @php
+                        if($mainmenu=="Admin Management"){
+                            echo "active";
+                        } 
+                    @endphp">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            Admin Management
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{ route('admin_management.index') }}"
+                                class="nav-link 
+                                @php
+                                    if($submenu=="Admin Login Account"){
+                                        echo "active";
+                                    }
+                                @endphp">
+                                <i class="far fa-plus-square nav-icon"></i>
+                                <p>Login</p>
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
                 <li class="nav-item {{ $mainmenu == 'User Management' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
-if($mainmenu=="User Management"){
+                    if($mainmenu=="User Management"){
                                                 echo "active";
                                             } @endphp">
                         <i class="nav-icon fa fa-users"></i>
@@ -163,7 +193,7 @@ if($mainmenu=="User Management"){
                         <li class="nav-item">
                             <a href="{{ route('user_management.index') }}"
                                 class="nav-link @php
-if($submenu=="Login Account"){
+                                    if($submenu=="Login Account"){
                                                             echo "active";
                                                         } @endphp">
                                 <i class="far fa-plus-square nav-icon"></i>
@@ -174,7 +204,7 @@ if($submenu=="Login Account"){
                         <li class="nav-item">
                             <a href="{{ route('role_groups.index') }}"
                                 class="nav-link @php
-if($submenu=="Role Permission"){
+                            if($submenu=="Role Permission"){
                             echo "active";
                         } @endphp">
                                 <i class="fa fa-user-circle nav-icon"></i>
@@ -184,7 +214,7 @@ if($submenu=="Role Permission"){
                         <li class="nav-item">
                             <a href="{{ route('GroupPermission.index') }}"
                                 class="nav-link @php
-if($submenu=="Group Permission"){
+                                if($submenu=="Group Permission"){
                             echo "active";
                         } @endphp">
                                 <i class="fa fa-users nav-icon"></i>
@@ -195,7 +225,7 @@ if($submenu=="Group Permission"){
                     </ul>
                 </li>
 
-                <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
+                {{-- <li class="nav-item {{ $mainmenu == 'System Configuration' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="System Configuration"){
@@ -252,9 +282,9 @@ if($submenu=="Document Language"){
                             </a>
                         </li>
                     </ul>
-                </li>
+                </li> --}}
 
-                <li class="nav-item {{ $mainmenu == 'Division & Process' ? 'menu-open' : '' }} ">
+                {{-- <li class="nav-item {{ $mainmenu == 'Division & Process' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Division & Process"){
@@ -393,7 +423,7 @@ if($mainmenu=="risk-level"){
                 </li>
 
 
-                </li>
+                </li> --}}
 
 
             </ul>
