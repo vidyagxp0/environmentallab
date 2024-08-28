@@ -201,7 +201,7 @@
                             </a>
                         </li>
 
-                        <li class="nav-item">
+                        {{-- <li class="nav-item">
                             <a href="{{ route('role_groups.index') }}"
                                 class="nav-link @php
                             if($submenu=="Role Permission"){
@@ -220,7 +220,7 @@
                                 <i class="fa fa-users nav-icon"></i>
                                 <p>Group Permission</p>
                             </a>
-                        </li>
+                        </li> --}}
 
                     </ul>
                 </li>
@@ -322,7 +322,7 @@ if($submenu=="Process"){
                         </li>
 
                     </ul>
-                </li>
+                </li>--}}
 
                 
 
@@ -367,7 +367,7 @@ if($submenu=="Download Control"){
                     </ul>
                 </li>
 
-  <li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
+  {{--<li class="nav-item {{ $mainmenu == 'Product & Material' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
 if($mainmenu=="Product & Material"){
