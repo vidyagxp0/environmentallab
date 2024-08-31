@@ -1462,6 +1462,7 @@ class DocumentController extends Controller
             }
 
             toastr()->success('Document Updated');
+            DocumentService::update_document_numbers();
             if (Helpers::checkRoles(3)) {
                 return redirect('doc-details/'.$id);
             } else {
