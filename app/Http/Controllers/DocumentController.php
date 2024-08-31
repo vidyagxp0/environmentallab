@@ -678,7 +678,7 @@ class DocumentController extends Controller
         $trainingDoc = DocumentTraining::where('document_id', $id)->first();
         $history = DocumentHistory::where('document_id', $id)->get();
         $documentsubTypes = DocumentSubtype::all();
-// dd($document_distribution_grid);
+        // dd($document_distribution_grid);
         // $history = [];
         // foreach($historydata as $temp){
         //     array_push($history,$temp);
@@ -710,7 +710,7 @@ class DocumentController extends Controller
         $documentTypes = DocumentType::all();
         $documentLanguages = DocumentLanguage::all();
 
-    // dd( $document);
+            // dd( $document);
 
         return view('frontend.documents.edit', compact(
             'document',
@@ -1473,6 +1473,8 @@ class DocumentController extends Controller
             return redirect()->back();
         }
 
+        DocumentService::update_document_numbers();
+
         toastr()->success('Document Updated');
 
         return redirect()->route('documents.index');
@@ -2040,6 +2042,8 @@ class DocumentController extends Controller
             $new_annexure->annexure_no = $annexure->annexure_no;
             $new_annexure->annexure_title = $annexure->annexure_title;
             $new_annexure->save();
+
+            DocumentService::update_document_numbers();
     
             toastr()->success('Document is revised, you can change the body!!');
             return redirect()->route('documents.edit', $newdoc->id);
