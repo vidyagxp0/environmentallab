@@ -47,19 +47,31 @@ class AdminManagementController extends Controller
             'roles' => 'required',
         ]);
 
-        $user = new Admin();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->role = $request->roles;
-        $user->password = Hash::make($request->password);
-        if($user){
-            $user->save();
-            toastr()->success('User added successfully');
-            return redirect()->route('admin_management.index');
+        $admins = Admin::all()->count();
+        $users = User::all()->count();
+        
+        $total_users =  $admins + $users;
+
+        if ($total_users <= 40)
+        {
+            $user = new Admin();
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->role = $request->roles;
+            $user->password = Hash::make($request->password);
+            if($user){
+                $user->save();
+                toastr()->success('User added successfully');
+                return redirect()->route('admin_management.index');
+            } else {
+                toastr()->error('Something went wrong');
+                return redirect()->back();
+            }
         } else {
-            toastr()->error('Something went wrong');
+            toastr()->error('Cannot add more than 40 users!');
             return redirect()->back();
         }
+
     }
 
     public function show($id)
