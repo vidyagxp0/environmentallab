@@ -1847,10 +1847,12 @@ class AuditeeController extends Controller
     {
         $data = Auditee::find($id);
         if (!empty($data)) {
+            $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
+            $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_data','grid_data1'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

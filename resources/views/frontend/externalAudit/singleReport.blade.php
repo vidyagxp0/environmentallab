@@ -492,7 +492,98 @@
                                 </div>
                             </td>
                         </tr>
-                        <div class="border-table">
+                  
+                    </table>
+                    <div class="block-head">
+                        <table>
+                            <div class="block">
+                                <div class="block-head">
+                                    Observation Details
+                                </div>
+                                <div class="border-table">
+                                    <table>
+                                        <tr class="table_bg">
+                                            <th>Row#</th>
+                                            <th>Observation Details</th>
+                                            <th>Pre Comments</th>
+                                            <th>CAPA Details if any</th>
+                                            <th>Post Comments</th>
+                                        </tr>
+                                        @if ($grid_data1->observation_id)
+                                            @foreach (unserialize($grid_data1->observation_id) as $key => $tempData)
+                                            <tr style="color: black; font-weight: normal;">
+                                                    <td>{{ $key + 1 }}</td>
+                                                    <td>{{ $tempData ? $tempData : "" }}</td>
+                                                    <td>{{unserialize($grid_data1->observation_description)[$key] ? unserialize($grid_data1->observation_description)[$key]: "" }}</td> 
+                                                    <td>{{unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key]: "" }}</td>
+                                                    <td>{{unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key]: "" }}</td>
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                                <tr>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                </tr>
+                                            @endif
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                    </table>
+                    </div>
+                    <div class="block-head">
+                        <table>
+                            <div class="block">
+                                <div class="block-head">
+                                    Audit Agenda
+                                </div>
+                                <div class="border-table">
+                                    <table>
+                                        <tr class="table_bg">
+                                            <th>Row #</th>
+                                                        <th>Area of Audit</th>
+                                                        <th>Scheduled Start Date</th>
+                                                        <th>Scheduled Start Time</th>
+                                                        <th>Scheduled End Date</th>
+                                                        <th>Scheduled End Time</th>
+                                                        <th>Auditor</th>
+                                                        <th>Auditee</th>
+                                                        <th>Remarks</th>
+                                        </tr>
+                                        @if ($grid_data->start_date)
+                                                    @foreach (unserialize($grid_data->start_date) as $key => $temps)
+                                            <tr style="color: black; font-weight: normal;">
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}</td>
+                                                <td>{{ unserialize($grid_data->start_date)[$key] }}</td>
+                                                <td>{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}</td>
+                                                <td>{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}</td>
+                                                <td>{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}</td>
+                                                <td>{{ $grid_data->auditor }}</td>
+                                                <td>{{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}</td>
+                                                <td>{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}</td>
+                
+                                            </tr>
+                                            @endforeach
+                                            @else
+                                                <tr>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                </tr>
+                                            @endif
+                                        
+                                    </table>
+                                </div>
+                            </div>
+                    </table>
+                    </div>
+                     <div class="border-table">
                     <div class="block-head">
                         Audit Attachments
                     </div>
@@ -671,6 +762,17 @@
             </div>
         </div>
     </div>
+
+    
+    
+    
+
+
+
+
+
+
+
 
     <footer>
         <table>

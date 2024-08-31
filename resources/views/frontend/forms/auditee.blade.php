@@ -616,10 +616,9 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="audit[]"></td>
-                                                 
+                                                <td><input disabled type="text" name="serial_number[]" value="1"> </td>
+                                                {{-- <td><input type="text" name="audit[]"></td> --}}
+                                                 <td> <input type="text" name="audit[]"> </td>
 
                                                  <td>
                                                     <div class="group-input new-date-data-field mb-0">
