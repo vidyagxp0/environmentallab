@@ -47,9 +47,12 @@ class AdminManagementController extends Controller
             'roles' => 'required',
         ]);
 
-        $total_users = User::all();
+        $admins = Admin::all()->count();
+        $users = User::all()->count();
+        
+        $total_users =  $admins + $users;
 
-        if (count($total_users) >= 40)
+        if ($total_users <= 40)
         {
             $user = new Admin();
             $user->name = $request->name;
