@@ -43,69 +43,91 @@
         </thead>
         <tbody id="searchTable">
             @if (count($documents) > 0)
+            {{-- {{dd($documents);}} --}}
             @foreach ($documents as $doc)
-            {{-- {{dd($doc);}} --}}
-            <tr>
-                <td class="pr-id" style="text-decoration:underline"><a href="{{ route('documents.edit', $doc->id) }}">
-                        000{{ $doc->id }}
-                    </a>
-                </td>
-                <td class="division">
-                    {{ $doc->document_type_name }}
-                </td>
-                <td class="division">
-                    {{ $doc->document_name }}
-                </td>
-                <td class="division">
-                    {{ $doc->sop_no }}
-                </td>
-                <td class="division">
-                    {{ Helpers::getDivisionName($doc->division_id) }}
-                </td>
+            @php
+                                            $userRoles = DB::table('user_roles')
+                                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $doc->division_id])
+                                            ->pluck('q_m_s_roles_id')
+                                            ->toArray();
+                                            
+                                            $stagesToHide = [
+                                                'Obsolete'
+                                            ];
+                                            
+                                            // Check if the stage is in the stagesToHide array
+                                            $hideRecord = in_array($doc->status, $stagesToHide);
+                                            
+                                            // dd($hideRecord);
+                                            // Check if the user has one of the allowed roles
+                                            $userHasAllowedRole = in_array(19, $userRoles);
+                                        @endphp
 
-                <td style="display: inline-block;
-                width: 305px;
-                white-space: nowrap;
-                overflow: hidden !important;
-                text-overflow: ellipsis" class="short-desc">
-                    {{ $doc->short_description }}
-                </td>
-                <td class="create-date">
-                    {{ $doc->created_at }}
-                </td>
-                <td class="assign-name">
-                    {{ $doc->originator_name }}
-                </td>
-                <td class="modify-date">
-                    {{ $doc->updated_at }}
-                </td>
-                <td class="status">
-                    {{ $doc->status }}
-                </td>
-                <td class="action">
-                    <div class="action-dropdown">
-                        <div class="action-down-btn">Action <i class="fa-solid fa-angle-down"></i></div>
-                        <div class="action-block">
-                            <a href="{{ url('doc-details', $doc->id) }}">View
-                            </a>
+                                        {{-- @if(!$hideRecord || $userHasAllowedRole)
+            @endphp --}}
+            @if(!$hideRecord || $userHasAllowedRole)
+                <tr>
+                    <td class="pr-id" style="text-decoration:underline"><a href="{{ route('documents.edit', $doc->id) }}">
+                            000{{ $doc->id }}
+                        </a>
+                    </td>
+                    <td class="division">
+                        {{ $doc->document_type_name }}
+                    </td>
+                    <td class="division">
+                        {{ $doc->document_name }}
+                    </td>
+                    <td class="division">
+                        {{ $doc->sop_no }}
+                    </td>
+                    <td class="division">
+                        {{ Helpers::getDivisionName($doc->division_id) }}
+                    </td>
 
-                            @if ($doc->status != 'Obsolete')
-                                <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
-                                
-                            @endif
+                    <td style="display: inline-block;
+                    width: 305px;
+                    white-space: nowrap;
+                    overflow: hidden !important;
+                    text-overflow: ellipsis" class="short-desc">
+                        {{ $doc->short_description }}
+                    </td>
+                    <td class="create-date">
+                        {{ $doc->created_at }}
+                    </td>
+                    <td class="assign-name">
+                        {{ $doc->originator_name }}
+                    </td>
+                    <td class="modify-date">
+                        {{ $doc->updated_at }}
+                    </td>
+                    <td class="status">
+                        {{ $doc->status }}
+                    </td>
+                    <td class="action">
+                        <div class="action-dropdown">
+                            <div class="action-down-btn">Action <i class="fa-solid fa-angle-down"></i></div>
+                            <div class="action-block">
+                                <a href="{{ url('doc-details', $doc->id) }}">View
+                                </a>
 
-                            <!--<form-->
-                            <!--    action="{{ route('documents.destroy', $doc->id) }}"-->
-                            <!--    method="post">-->
-                            <!--    @csrf-->
-                            <!--    @method('DELETE')-->
-                            <!--    <button type="submit">Delete</button>-->
-                            <!--</form>-->
+                                @if ($doc->status != 'Obsolete')
+                                    <a href="{{ route('documents.edit', $doc->id) }}">Edit</a>
+                                    
+                                @endif
 
+                                <!--<form-->
+                                <!--    action="{{ route('documents.destroy', $doc->id) }}"-->
+                                <!--    method="post">-->
+                                <!--    @csrf-->
+                                <!--    @method('DELETE')-->
+                                <!--    <button type="submit">Delete</button>-->
+                                <!--</form>-->
+
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
+                    </td>
+                </tr>
+            @endif
             @endforeach
             @else
             <center>

@@ -346,7 +346,7 @@
                                         <tbody>
                                            
                                             @foreach ($due as $temp)
-                                                @if ($temp->root_document)
+                                            @if ($temp->root_document)
                                                     @if ($temp->root_document->stage >= 6 && $temp->trainer == auth()->id() && $temp->root_document->status == 'Under-Training' && $temp->status == 'Past-due')
                                                         <tr>
                                                             <td class="text-center">
@@ -366,9 +366,9 @@
                                                             <td>
                                                                 {{ $temp->root_document ? $temp->root_document->document_name : '' }}
                                                             </td>
-                                                            <td>{{ $temp->due_dateDoc }}</td>
+                                                            <td>{{ $temp->root_document->due_dateDoc }}</td>
                                                             <td>{{ $temp->status }}</td>
-                                                            <td>{{ $temp->effective_date }}</td>
+                                                            <td>{{ $temp->root_document->effective_date }}</td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
                                                     @elseif($temp->root_document->status == 'Effective')

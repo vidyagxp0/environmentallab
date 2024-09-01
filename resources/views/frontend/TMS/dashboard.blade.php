@@ -117,13 +117,22 @@
                                 </thead>
                                 <tbody id="searchTable">
                                     @foreach ($documents2 as $temp)
+                                    @php
+                                        $trainingStatusCheck = DB::table('training_statuses')
+                                            ->where([
+                                            'user_id' => Auth::user()->id,
+                                            'sop_id' => $temp->id,
+                                            'training_id' => $temp->traningstatus->training_plan,
+                                            'status' => 'Complete'
+                                            ])->first();
+                                    @endphp 
                                         <tr>
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
                                             <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($temp->due_dateDoc)->format('d M Y') }}</td>
+                                            <td>{{ $trainingStatusCheck ? \Carbon\Carbon::parse($trainingStatusCheck->created_at)->format('d M Y') : '-' }}</td>
                                             @if($temp->traningstatus->status == 'Complete')
                                             <th>{{$temp->traningstatus->status}}</th>
                                             @else

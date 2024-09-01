@@ -1943,5 +1943,33 @@ $group->name = "Jordan-Lab Incident- QC Head/ Designee";
 $group->description = "Jordan-Lab Incident- QC Head/ Designee";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
+
+$group = new RoleGroup();
+$group->id = 269;
+$group->name = "KSA-New Document- Obsolete";
+$group->description = "Jordan-New Document- Obsolete";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
+
+$group = new RoleGroup();
+$group->id = 270;
+$group->name = "Estonia-New Document- Obsolete";
+$group->description = "Jordan-New Document- Obsolete";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
+
+$group = new RoleGroup();
+$group->id = 271;
+$group->name = "Egypt-New Document- Obsolete";
+$group->description = "Jordan-New Document- Obsolete";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
+
+$group = new RoleGroup();
+$group->id = 272;
+$group->name = "Jordan-New Document- Obsolete";
+$group->description = "Jordan-New Document- Obsolete";
+$group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+$group->save();
     }
 }
