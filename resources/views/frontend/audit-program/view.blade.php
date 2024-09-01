@@ -317,7 +317,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                                 <input disabled type="text" name="record_number"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/AP/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/AP/{{ Helpers::year($data->created_at) }}/{{ $data->record}}">
                                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                             </div>
                                         </div>
@@ -438,8 +438,7 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group Code">Initiator Group Code</label>
-                                                <input type="text" name="initiator_group_code"{{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                                                    value="{{ $data->Initiator_Group}}" id="initiator_group_code"
+                                                <input type="text" name="initiator_group_code" value="{{ $data->Initiator_Group}}" id="initiator_group_code" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                     readonly>
                                             </div>
                                         </div>

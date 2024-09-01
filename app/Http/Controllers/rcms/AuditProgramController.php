@@ -164,6 +164,48 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
+        if (!empty($data->intiation_date)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Initiation Date';
+            $history->previous = "Null";
+            $history->current = $data->intiation_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($data->due_date)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Due Date';
+            $history->previous = "Null";
+            $history->current = $data->due_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($data->initiator_group_code)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = "Null";
+            $history->current = $data->initiator_group_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($data->assign_to)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -178,12 +220,26 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
-        if (!empty($data->due_date)) {
+        // if (!empty($data->due_date)) {
+        //     $history = new AuditProgramAuditTrial();
+        //     $history->AuditProgram_id = $data->id;
+        //     $history->activity_type = 'Date Due';
+        //     $history->previous = "Null";
+        //     $history->current = $data->due_date;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->save();
+        // }
+
+        if (!empty($data->type)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Date Due';
+            $history->activity_type = 'Type';
             $history->previous = "Null";
-            $history->current = $data->due_date;
+            $history->current = $data->type;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -192,12 +248,55 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
-        if (!empty($data->type)) {
+        if (!empty($data->severity1_level)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Type';
+            $history->activity_type = 'Severity Level';
             $history->previous = "Null";
-            $history->current = $data->type;
+            $history->current = $data->severity1_level;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+
+        if (!empty($data->initiated_through)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = "Null";
+            $history->current = $data->initiated_through;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($data->initiated_through_req)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Others';
+            $history->previous = "Null";
+            $history->current = $data->initiated_through_req;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($data->due_date_extension)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Due Date Extension Justification';
+            $history->previous = "Null";
+            $history->current = $data->due_date_extension;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -399,7 +498,8 @@ class AuditProgramController extends Controller
         $data->due_date_extension = $request->due_date_extension;
 
         // $data->assign_to = $request->assign_to;
-        $data->assign_to =  implode(',', $request->assign_to);
+        $data->assign_to = is_array($request->assign_to) ? implode(',', $request->assign_to) : $request->assign_to;
+
         $data->due_date = $request->due_date;
         $data->Initiator_Group = $request->Initiator_Group;
         $data->initiator_group_code = $request->initiator_group_code;
@@ -470,6 +570,79 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        if ($lastDocument->initiator_group_code != $data->initiator_group_code || !empty($request->initiator_group_code_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $id;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = $lastDocument->initiator_group_code;
+            $history->current = $data->initiator_group_code;
+            $history->comment = $request->initiator_group_code_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->severity1_level != $data->severity1_level || !empty($request->severity1_level_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $id;
+            $history->activity_type = 'Severity Level';
+            $history->previous = $lastDocument->severity1_level;
+            $history->current = $data->severity1_level;
+            $history->comment = $request->severity1_level_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+
+        if ($lastDocument->initiated_through != $data->initiated_through || !empty($request->initiated_through_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = $lastDocument->initiated_through;
+            $history->current = $data->initiated_through;
+            $history->comment = $request->initiated_through_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+
+        if ($lastDocument->initiated_through_req != $data->initiated_through_req || !empty($request->initiated_through_req_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $id;
+            $history->activity_type = 'Others';
+            $history->previous = $lastDocument->initiated_through_req;
+            $history->current = $data->initiated_through_req;
+            $history->comment = $request->initiated_through_req_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+
+        if ($lastDocument->due_date_extension != $data->due_date_extension || !empty($request->due_date_extension_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $id;
+            $history->activity_type = 'Due Date Extension Justification';
+            $history->previous = $lastDocument->due_date_extension;
+            $history->current = $data->due_date_extension;
+            $history->comment = $request->due_date_extension_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new AuditProgramAuditTrial();
@@ -484,20 +657,7 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
-
-            $history = new AuditProgramAuditTrial();
-            $history->AuditProgram_id = $id;
-            $history->activity_type = 'Date Due';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $data->due_date;
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        
         if ($lastDocument->type != $data->type || !empty($request->type_comment)) {
 
             $history = new AuditProgramAuditTrial();
@@ -767,7 +927,7 @@ class AuditProgramController extends Controller
             }
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "3";
-                $changeControl->status = "Audit Period";
+                $changeControl->status = "Pending Audit";
                 $changeControl->approved_by = Auth::user()->name;
                 $changeControl->approved_on = Carbon::now()->format('d-M-Y');
                     $history = new AuditProgramAuditTrial();
@@ -968,8 +1128,15 @@ class AuditProgramController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $capa_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $cc_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $rca_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+        $action_items_old_record = InternalAudit::select('id', 'division_id', 'record')->get();
+
+
+
         if ($request->child_type == "Internal_Audit") {
-            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type'));
+            return view('frontend.forms.audit', compact('old_record','record_number', 'due_date', 'parent_id', 'parent_type','capa_old_record','cc_old_record','rca_old_record','action_items_old_record'));
         }
         if ($request->child_type == "extension") {
             $parent_due_date = "";
