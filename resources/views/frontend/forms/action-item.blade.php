@@ -81,7 +81,7 @@
                                             value="{{ Helpers::getInitiatorName($parent_initiator_id) }}">
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
+                                <!-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Opened">Date of Initiation</label>
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
@@ -90,7 +90,21 @@
                                             name="intiation_date">
                                         <input type="hidden" value="{{ $parent_intiation_date }}" name="intiation_date">
                                     </div>
-                                </div>
+                                </div> -->
+
+                                <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Date Opened">Date of Initiation</label>
+                                            <input disabled type="text"
+                                                value="{{ Helpers::getdateFormat($parent_intiation_date) }}"
+                                                id="initiation_date_display" name="intiation_date_display">
+                                            <input type="hidden" id="initiation_date" value="{{ $parent_intiation_date }}" name="intiation_date">
+                                        </div>
+                                    </div>
+
+                                    
+
+
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Due Date">Due Date</label>
@@ -116,19 +130,38 @@
                                         @enderror
                                     </div>
                                 </div>
-                                <div class="col-md-6 new-date-data-field">
+                                <!-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                        <!-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                         <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
                                             value="" name="due_date"> -->
-                                        <div class="calenderauditee">                                     
+                                        <!-- <div class="calenderauditee">                                     
                                             <input type="text"  id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="due_date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value=""
                                             class="hide-input"
                                             oninput="handleDateInput(this, 'due_date')"/>
                                         </div>
                                     </div>
+                                </div> --> 
+
+                                <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date</label>
+                                        <div>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('d-M-Y') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                        </div>
+                                    </div>
                                 </div>
+
+
+         
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span

@@ -42,7 +42,7 @@
                 {{-- <div class="head">PR-0001</div> --}}
                 <div class="slogan">
                     <strong>Division / Project :</strong>
-                    {{ Helpers::getDivisionName($data->division_id) }} / Action item
+                    {{ Helpers::getDivisionName($data->division_id) }} / ACTION ITEM
                 </div>
             </div>
         </div>
@@ -56,30 +56,32 @@
                     <div class="main-head">Record Workflow </div>
 
                     <div class="d-flex" style="gap:20px;">
-                        @php
-                        $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
-                        $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
-                    @endphp
+                    @php
+            $userRoles = DB::table('user_roles')->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $data->division_id])->get();
+            $userRoleIds = $userRoles->pluck('q_m_s_roles_id')->toArray();
+        @endphp
                         <button class="button_theme1" onclick="window.print();return false;"
                             class="new-doc-btn">Print</button>
                         {{--  <button class="button_theme1"> <a class="text-white" href="{{ url('send-notification', $data->id) }}"> Send Notification </a> </button>  --}}
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1 && in_array(3, $userRoleIds) || in_array(18, $userRoleIds))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(8, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+            @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
+            @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+           
                         @endif
                         <a class="text-white button_theme1" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                     </div>
@@ -151,7 +153,7 @@
                                         <div class="group-input">
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input disabled type="text" name="record_number"
-                                                value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/AI/{{ Helpers::year($data->created_at) }}/{{ $data->record}}">
                                             {{-- <div class="static"></div> --}}
                                         </div>
                                     </div>
@@ -193,20 +195,38 @@
 
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <div class="group-input">
                                             <label for="due-date">Due Date <span class="text-danger"></span></label>
                                             <input disabled type="text"
                                                 value="{{ Helpers::getdateFormat($data->due_date) }}">
                                         </div>
+                                    </div> -->
+
+                                    <div class="col-md-6 new-date-data-field">
+                                <div class="group-input input-date">
+                                    <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                                
+                                    <div class="calenderauditee">
+                                        <input type="text" id="due_date" readonly
+                                            placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}/>
+                                        <input type="date" id="due_date" name="due_date"
+                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}} 
+                                            min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                            value="{{ $data->due_date }}" oninput="handleDateInput(this, 'due_date')" />
                                     </div>
+                                </div>
+                            </div>
+
+
                                     <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         
-                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                        <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} value= "{{ $data->short_description }}" />
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
                                 </div>
@@ -443,7 +463,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit"  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} class="saveButton">Save</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">
@@ -497,7 +517,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
@@ -583,7 +603,7 @@
                                    
                        
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
@@ -615,7 +635,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
@@ -683,7 +703,7 @@
                                 </div>
                                 <div class="button-block">
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} class="saveButton">Save</button>
                                     <button type="button"> <a class="text-white"
                                             href="{{ url('rcms/qms-dashboard') }}">Exit
                                         </a> </button>
@@ -836,11 +856,13 @@
                             which is legally binding equivalent of a hand written signature.
                         </div>
                         <div class="group-input">
-                            <label for="username">Username</label>
+                            <label for="username">Username <span
+                            class="text-danger">*</span></label>
                             <input type="text" name="username" required>
                         </div>
                         <div class="group-input">
-                            <label for="password">Password</label>
+                            <label for="password">Password <span
+                            class="text-danger">*</span></label>
                             <input type="password" name="password" required>
                         </div>
                         <div class="group-input">

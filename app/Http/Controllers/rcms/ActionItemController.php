@@ -413,6 +413,7 @@ class ActionItemController extends Controller
         $openState->comments = $request->comments;
         $openState->qa_comments = $request->qa_comments;
         $openState->due_date_extension= $request->due_date_extension;
+        $openState->due_date = $request->due_date;
         $openState->assign_to = $request->assign_to;
         $openState->departments = $request->departments;
 
