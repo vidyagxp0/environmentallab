@@ -36,15 +36,15 @@ class AuditeeController extends Controller
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
-        if ($division) {
-            $last_record = Auditee::where('division_id', $division->id)->latest()->first();
+        // if ($division) {
+        //     $last_record = Auditee::where('division_id', $division->id)->latest()->first();
 
-            if ($last_record) {
-                $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
-            } else {
-                $record_number = '0001';
-            }
-        }
+        //     if ($last_record) {
+        //         $record_number = $last_record->record_number ? str_pad($last_record->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+        //     } else {
+        //         $record_number = '0001';
+        //     }
+        // }
 
 
         return view("frontend.forms.auditee", compact('due_date', 'record_number', 'old_record'));
@@ -232,7 +232,7 @@ class AuditeeController extends Controller
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = $request->auditor;
+            $data3->auditor = serialize($request->auditor);
         }
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
@@ -240,7 +240,7 @@ class AuditeeController extends Controller
         if (!empty($request->remarks)) {
             $data3->remark = serialize($request->remarks);
         }
-
+        //  dd($data3);
         $data3->save();
          // -----------------grid ---- Observation Details
         $data4 = new InternalAuditGrid();
@@ -408,7 +408,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit Schedule Start Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->start_date;
+            $history->current = Helpers::getdateFormat( $internalAudit->start_date);
             $history->comment = "Na";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -422,7 +422,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Audit Schedule End Date';
             $history->previous = "Null";
-            $history->current = $internalAudit->end_date;
+            $history->current = Helpers::getdateFormat( $internalAudit->end_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -486,6 +486,20 @@ class AuditeeController extends Controller
             $history->origin_state = $internalAudit->status;
             $history->save();
         }
+        if (!empty($internalAudit->if_comments)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Comments(If Any)';
+            $history->previous = "Null";
+            $history->current = $internalAudit->if_comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->save();
+        }
+
 
         if (!empty($internalAudit->lead_auditor)) {
             $history = new AuditTrialExternal();
@@ -570,6 +584,19 @@ class AuditeeController extends Controller
             $history->origin_state = $internalAudit->status;
             $history->save();
         }
+        if (!empty($internalAudit->due_date_extension)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Due Date Extension Justification';
+            $history->previous = "Null";
+            $history->current = $internalAudit->due_date_extension;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->save();
+        }
 
         if (!empty($internalAudit->Remarks)) {
             $history = new AuditTrialExternal();
@@ -588,7 +615,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->Reference_Recores1)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Record';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores1;
             $history->comment = "NA";
@@ -602,7 +629,7 @@ class AuditeeController extends Controller
         if (!empty($internalAudit->Reference_Recores2)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Record';
             $history->previous = "Null";
             $history->current = $internalAudit->Reference_Recores2;
             $history->comment = "NA";
@@ -936,7 +963,7 @@ class AuditeeController extends Controller
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = $request->auditor;
+            $data3->auditor = serialize($request->auditor);
         }
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
@@ -1109,8 +1136,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Audit Schedule Start Date';
-            $history->previous = $lastDocument->start_date;
-            $history->current = $internalAudit->start_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->start_date);
+            $history->current =  Helpers::getdateFormat($internalAudit->start_date);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1123,8 +1150,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Audit Schedule End Date';
-            $history->previous = $lastDocument->end_date;
-            $history->current = $internalAudit->end_date;
+            $history->previous =  Helpers::getdateFormat($lastDocument->end_date);
+            $history->current =  Helpers::getdateFormat($internalAudit->end_date);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1181,6 +1208,20 @@ class AuditeeController extends Controller
             $history->activity_type = 'Product/Material Name';
             $history->previous = $lastDocument->material_name;
             $history->current = $internalAudit->material_name;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if ($lastDocument->if_comments != $internalAudit->if_comments || !empty($request->if_comments_comment)) {
+
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Comments(If Any)';
+            $history->previous = $lastDocument->if_comments;
+            $history->current = $internalAudit->if_comments;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1258,6 +1299,20 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        if ($lastDocument->due_date_extension != $internalAudit->due_date_extension || !empty($request->due_date_extension_comment)) {
+
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $id;
+            $history->activity_type = 'Due Date Extension Justification';
+            $history->previous = $lastDocument->due_date_extension;
+            $history->current = $internalAudit->due_date_extension;
+            $history->comment = $request->date_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if ($lastDocument->Audit_Comments1 != $internalAudit->Audit_Comments1 || !empty($request->Audit_Comments1_comment)) {
 
             $history = new AuditTrialExternal();
@@ -1290,7 +1345,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Record';
             $history->previous = $lastDocument->Reference_Recores1;
             $history->current = $internalAudit->Reference_Recores1;
             $history->comment = $request->date_comment;
@@ -1304,7 +1359,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Reference Recores';
+            $history->activity_type = 'Reference Record';
             $history->previous = $lastDocument->Reference_Recores2;
             $history->current = $internalAudit->Reference_Recores2;
             $history->comment = $request->date_comment;
