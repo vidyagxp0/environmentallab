@@ -602,7 +602,15 @@
 
                                                         </tr>
                                                     @endforeach
-                                                        @endif
+                                                    @else
+                                                    <tr>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                    <td>Not Applicable</td>
+                                                </tr>
 
                                                     </tbody>
                                                 </table>

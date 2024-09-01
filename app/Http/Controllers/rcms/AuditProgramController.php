@@ -1158,11 +1158,21 @@ class AuditProgramController extends Controller
     public static function singleReport($id)
     {
         $data = AuditProgram::find($id);
+        $AuditProgramGrid = AuditProgramGrid::where('audit_program_id', $id)->first();
+        $startdate = [];
+        if($AuditProgramGrid->start_date){
+            $startdate = unserialize($AuditProgramGrid->start_date);
+        }
+        $enddate = [];
+        if($AuditProgramGrid->end_date){
+            $enddate = unserialize($AuditProgramGrid->end_date);
+        }
+        
         if (!empty($data)) {
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.audit-program.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.audit-program.singleReport', compact('data','AuditProgramGrid'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

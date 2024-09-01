@@ -282,8 +282,14 @@
         </div>
               
              
-     <!-- ------------------------------- audit program grid--------------------------------------- -->
-            <!-- <div class="block">
+        <!-- ------------------------------- audit program grid--------------------------------------- -->
+        @php
+        $users = DB::table('users')
+            ->select('id', 'name')
+            ->get();
+
+    @endphp
+            <div class="block">
                 <div class="block-head">
                 Audit Program
                 </div>
@@ -293,19 +299,50 @@
                         <th class="w-20">Row #</th>
                             <th class="w-20">Auditees</th>
                             <th class="w-20">Date Start	</th>
-                            <th class="w-20">Date End</th>
+                            <!-- <th class="w-20">Date End</th>
                             <th class="w-20">Lead Investigator</th>
-                            <th class="w-20">Comment</th>
+                            <th class="w-20">Comment</th> -->
                         </tr>
-                        @if($data->Auditees)
-                        @foreach (unserialize($data->Auditees) as $key => $dataDemo)
+                        @if ($AuditProgramGrid)
+                        @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
                         <tr>
-                            <td class="w-15">{{ $dataDemo ? $key + 1  : "Not Applicable" }}</td>
-                            <td class="w-15">{{ unserialize($data->Audit_Program->Auditees)[$key] ?  unserialize($data->Audit_Program->Auditees)[$key]: "Not Applicable"}}</td>
-                            <td class="w-15">{{unserialize($data->Audit_Program->start_date)[$key] ?  unserialize($data->Audit_Program->start_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-5">{{unserialize($data->Audit_Program->end_date)[$key] ?  unserialize($data->Audit_Program->end_date)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Audit_Program->lead_investigator)[$key] ?  unserialize($data->Audit_Program->lead_investigator)[$key] : "Not Applicable" }}</td>
-                            <td class="w-15">{{unserialize($data->Audit_Program->comment)[$key] ?  unserialize($data->Audit_Program->comment)[$key] : "Not Applicable" }}</td>  
+                            <td class="w-15"><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                            value="{{ $key + 1 }}" ></td>
+                            <td class="w-15"> <select id="select-state" placeholder="Select..."
+                                                                    name="Auditees[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                    <option value="">-Select-</option>
+                                                                    @foreach ($users as $value)
+                                                                        <option
+                                                                            {{ unserialize($AuditProgramGrid->auditor)[$key] ? (unserialize($AuditProgramGrid->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                            value="{{ $value->id }}">
+                                                                            {{ $value->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select></td>
+                            <td class="w-15"><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div class="calenderauditee">
+                                                                         <input  type="text"   id="start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
+                                                                                <input class="hide-input" type="date"  id="start_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->start_date)[$key]}}"  name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}
+                                                                                   oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
+                            <!-- <td class="w-5"><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div
+                                                                         class="calenderauditee">
+                                                                         <input type="text"   id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
+                                                                <input class="hide-input" type="date"  id="end_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->end_date)[$key]}}"  name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}
+                                                                  oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
+                            <td class="w-15"> <select id="select-state" placeholder="Select..."
+                                                                    name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                    <option value="">-Select-</option>
+                                                                    @foreach ($users as $value)
+                                                                        <option
+                                                                            {{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? (unserialize($AuditProgramGrid->lead_investigator)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                            value="{{ $value->id }}">
+                                                                            {{ $value->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select></td>
+                            <td class="w-15"><input type="text" name="comment[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                            value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}"></td>   -->
                             
                         </tr>
                         @endforeach
@@ -316,12 +353,73 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                            <td>Not Applicable</td
+                            <td>Not Applicable</td>
                         </tr>
                         @endif
                     </table>
                 </div>
-            </div> -->
+            </div>
+
+
+
+
+            <div class="block">
+                <div class="block-head">
+                Audit Program
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+
+                            <th class="w-20">Date End</th>
+                            <th class="w-20">Lead Investigator</th>
+                            <th class="w-20">Comment</th>
+                        </tr>
+                        @if ($AuditProgramGrid)
+                        @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
+                        <tr>
+                            <!-- <td class="w-15"><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                            value="{{ $key + 1 }}" ></td> -->
+
+
+                            <td class="w-5"><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div
+                                                                         class="calenderauditee">
+                                                                         <input type="text"   id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
+                                                                <input class="hide-input" type="date"  id="end_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->end_date)[$key]}}"  name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}
+                                                                  oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
+                            <td class="w-15"> <select id="select-state" placeholder="Select..."
+                                                                    name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                                    <option value="">-Select-</option>
+                                                                    @foreach ($users as $value)
+                                                                        <option
+                                                                            {{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? (unserialize($AuditProgramGrid->lead_investigator)[$key] == $value->id ? 'selected' : ' ') : '' }}
+                                                                            value="{{ $value->id }}">
+                                                                            {{ $value->name }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select></td>
+                            <td class="w-15"><input type="text" name="comment[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
+                            value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}"></td>  
+                            
+                        </tr>
+                        @endforeach
+                        @else
+                        <tr>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                            <td>Not Applicable</td>
+                        </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+
+
+                
      <!--  ------------------------------- audit program grid--------------------------------------- -->
 
 
