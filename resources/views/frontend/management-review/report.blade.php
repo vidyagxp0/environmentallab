@@ -1850,14 +1850,13 @@
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($managementReview->record){{ $managementReview->record }} @else Not Applicable @endif</td>
+                        <td class="w-80">{{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($managementReview->division_code){{ $managementReview->division_code }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <!-- <td class="w-30">@if($managementReview->initiator_Group){{ $managementReview->initiator_Group }} @else Not Applicable @endif</td> -->
-                        <td class="w-30">{{ Helpers::getInitiatorName($managementReview->initiator_Group) }}</td>
+                        <td class="w-30">  @if($managementReview->Initiator_Group){{ \Helpers::getInitiatorGroupFullName($managementReview->Initiator_Group) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($managementReview->initiator_group_code){{ $managementReview->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
