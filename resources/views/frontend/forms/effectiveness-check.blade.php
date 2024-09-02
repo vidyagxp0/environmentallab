@@ -205,20 +205,20 @@
                                 <div class="col-12 sub-head">
                                     Effectiveness Check Results
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness Results">Effectiveness Results</label>
                                         <textarea type="text" name="Effectiveness_Results"></textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Effectiveness check Attachments"><b>Effectiveness check
-                                                                                                                                Attachment</b></label>
-                                                                                                                        <input type="file" id="myfile" name="Effectiveness_check_Attachment">
-                                                                                                                    </div>
-                                                                                                                </div> -->
-                                <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Effectiveness check Attachments"><b>Effectiveness check
+                                                                                                                                        Attachment</b></label>
+                                                                                                                                <input type="file" id="myfile" name="Effectiveness_check_Attachment">
+                                                                                                                            </div>
+                                                                                                                        </div> -->
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -238,19 +238,19 @@
                                 <div class="col-12 sub-head">
                                     Reopen
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Addendum Comments"><b>Addendum Comments</b></label>
                                         <textarea type="text" name="Addendum_Comments"></textarea>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
-                                                                                                                        <input type="file" id="myfile" name="Addendum_Attachment">
-                                                                                                                    </div>
-                                                                                                                </div> -->
-                                <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Addendum Attachments"><b>Addendum Attachment</b></label>
+                                                                                                                                <input type="file" id="myfile" name="Addendum_Attachment">
+                                                                                                                            </div>
+                                                                                                                        </div> -->
+                                <div class="col-12">
                                     <div class="group-input">
                                         <label for="Addendum Attachments">Addendum Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
@@ -290,11 +290,11 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Attachments"><b>Attachment</b></label>
-                                                                                                                        <input type="file" id="myfile" name="Attachment">
-                                                                                                                    </div>
-                                                                                                                </div> -->
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Attachments"><b>Attachment</b></label>
+                                                                                                                                <input type="file" id="myfile" name="Attachment">
+                                                                                                                            </div>
+                                                                                                                        </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Attachment</label>
@@ -312,12 +312,12 @@
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Reference Records"><b>Reference Records</b></label>
-                                                                                                                          <div class="static"></div>
-                                                                                                                        <input type="file" id="myfile" name="refer_record">
-                                                                                                                    </div>
-                                                                                                                </div> -->
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Reference Records"><b>Reference Records</b></label>
+                                                                                                                                  <div class="static"></div>
+                                                                                                                                <input type="file" id="myfile" name="refer_record">
+                                                                                                                            </div>
+                                                                                                                        </div> -->
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records</label>
@@ -349,20 +349,20 @@
                             <div class="row">
                                 <!-- Activity History -->
                                 <!-- <div class="col-12 sub-head">
-                                                                                                                    Data History
-                                                                                                                </div>
-                                                                                                                <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
-                                                                                                                        <div class="static"></div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Original Date Due"><b>Original Date Due</b></label>
-                                                                                                                        <div class="static"></div>
-                                                                                                                    </div>
-                                                                                                                </div>  -->
+                                                                                                                            Data History
+                                                                                                                        </div>
+                                                                                                                        <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Actual Closure Date"><b>Actual Closure Date</b></label>
+                                                                                                                                <div class="static"></div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Original Date Due"><b>Original Date Due</b></label>
+                                                                                                                                <div class="static"></div>
+                                                                                                                            </div>
+                                                                                                                        </div>  -->
                                 <div class="col-12 sub-head">
                                     Record Signature
                                 </div>
@@ -409,14 +409,14 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Not Effective Approval Complete By"><b>Not Effective Approval Complete
+                                        <label for="Not Effective Approval Complete By"><b>Not Effective Approval Completed
                                                 By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Not Effective Approval Complete On"><b>Not Effective Approval Complete
+                                        <label for="Not Effective Approval Complete On"><b>Not Effective Approval Completed
                                                 On</b></label>
                                         <div class="static"></div>
                                     </div>
@@ -450,73 +450,73 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Effective Approval Complete By"><b>Effective Approval Complete
+                                        <label for="Effective Approval Complete By"><b>Effective Approval Completed
                                                 By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Effective Approval Complete On"><b>Effective Approval Complete
+                                        <label for="Effective Approval Complete On"><b>Effective Approval Completed
                                                 On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <!-- <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
-                                                                                                                        <div class="static"></div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Re Open For Addendum On"><b>Re Open For Addendum On</b></label>
-                                                                                                                        <div class="static"></div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Cancellation Approve By"><b>Cancellation Approve By</b></label>
-                                                                                                                        <div class="static"></div>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Cancellation Approve On"><b>Cancellation Approve On</b></label>
-                                                                                                                        <div class="static"></div>
-                                                                                                                    </div>
-                                                                                                                </div> -->
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Re Open For Addendum By"><b>Re Open For Addendum By</b></label>
+                                                                                                                                <div class="static"></div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Re Open For Addendum On"><b>Re Open For Addendum On</b></label>
+                                                                                                                                <div class="static"></div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Cancellation Approve By"><b>Cancellation Approve By</b></label>
+                                                                                                                                <div class="static"></div>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Cancellation Approve On"><b>Cancellation Approve On</b></label>
+                                                                                                                                <div class="static"></div>
+                                                                                                                            </div>
+                                                                                                                        </div> -->
                                 <!-- <div class="col-12 sub-head">
-                                                                                                                    Cancellation Details
-                                                                                                                </div>
-                                                                                                                <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Cancellation Category"><b>Cancellation Category</b></label>
-                                                                                                                        <select>
-                                                                                                                            <option value="">Enter Your Selection Here</option>
-                                                                                                                            <option value="Duplicate Entry">Duplicate Entry</option>
-                                                                                                                            <option value="Entered in Error">Entered in Error</option>
-                                                                                                                            <option value="No Longer Necessary">No Longer Necessary</option>
-                                                                                                                            <option value="Parent Record Closed">Parent Record Closed</option>
-                                                                                                                        </select>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="col-lg-6">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="TrackWise Record Type"><b>TrackWise Record Type</b></label>
-                                                                                                                        <select>
-                                                                                                                            <option >Enter Your Selection Here</option>
-                                                                                                                            <option value="Effectiveness Check">Effectiveness Check</option>
-                                                                                                                        </select>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                                <div class="col-12">
-                                                                                                                    <div class="group-input">
-                                                                                                                        <label for="Cancellation Justification">Cancellation Justification</label>
-                                                                                                                        <textarea name="cancel_justification"></textarea>
-                                                                                                                    </div>
-                                                                                                                </div>
-                                                                                                            </div>  -->
+                                                                                                                            Cancellation Details
+                                                                                                                        </div>
+                                                                                                                        <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Cancellation Category"><b>Cancellation Category</b></label>
+                                                                                                                                <select>
+                                                                                                                                    <option value="">Enter Your Selection Here</option>
+                                                                                                                                    <option value="Duplicate Entry">Duplicate Entry</option>
+                                                                                                                                    <option value="Entered in Error">Entered in Error</option>
+                                                                                                                                    <option value="No Longer Necessary">No Longer Necessary</option>
+                                                                                                                                    <option value="Parent Record Closed">Parent Record Closed</option>
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-lg-6">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="TrackWise Record Type"><b>TrackWise Record Type</b></label>
+                                                                                                                                <select>
+                                                                                                                                    <option >Enter Your Selection Here</option>
+                                                                                                                                    <option value="Effectiveness Check">Effectiveness Check</option>
+                                                                                                                                </select>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                        <div class="col-12">
+                                                                                                                            <div class="group-input">
+                                                                                                                                <label for="Cancellation Justification">Cancellation Justification</label>
+                                                                                                                                <textarea name="cancel_justification"></textarea>
+                                                                                                                            </div>
+                                                                                                                        </div>
+                                                                                                                    </div>  -->
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
