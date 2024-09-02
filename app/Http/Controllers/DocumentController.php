@@ -194,7 +194,7 @@ class DocumentController extends Controller
             $query->where('document_type_id', $request->document_type_id);
         }
 
-        if ($request->documentTypes && !empty($request->division_id))
+        if ($request->division_id && !empty($request->division_id))
         {
             $query->where('division_id', $request->division_id);
         }

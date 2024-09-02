@@ -47,7 +47,7 @@
             @foreach ($documents as $doc)
             @php
                                             $userRoles = DB::table('user_roles')
-                                            ->where(['user_id' => Auth::user()->id, 'q_m_s_divisions_id' => $doc->division_id])
+                                            ->where(['user_id' => auth()->id(), 'q_m_s_divisions_id' => $doc->division_id])
                                             ->pluck('q_m_s_roles_id')
                                             ->toArray();
                                             
