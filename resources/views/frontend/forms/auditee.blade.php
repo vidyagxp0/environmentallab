@@ -988,7 +988,7 @@
                                         <textarea name="Remarks"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
                                         <select multiple id="reference_record" name="refrence_record[]" id="">
@@ -996,6 +996,21 @@
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/IA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Related Records">Reference Record</label>
+                                        <select multiple id="reference_record" name="refrence_record[]"
+                                            placeholder="Select Reference Records">
+
+                                            @foreach ($old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>

@@ -365,7 +365,7 @@ function addMultipleFiles(input, block_id) {
                                                 <input type="hidden" name="record_number">
                                                 {{-- <div class="static">QMS-EMEA/IA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}</div> --}}
                                                 <input disabled type="text"
-                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
+                                                value="{{ Helpers::getDivisionName($data->division_id) }}/EA/{{ date('Y') }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
@@ -1402,7 +1402,7 @@ function addMultipleFiles(input, block_id) {
                                             </div>
                                         </div>
 
-                                        <div class="col-lg-12">
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
@@ -1414,6 +1414,38 @@ function addMultipleFiles(input, block_id) {
                                                     @endforeach
                                                 </select>
                                             </div>
+                                        </div> --}}
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Related Records">Reference Records</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} multiple
+                                                    id="reference_record" name="refrence_record[]"
+                                                    placeholder="Select Reference Records">
+        
+                                                    @if (!empty($old_record))
+                                                        @foreach ($old_record as $new)
+                                                            @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName($new->division_id) .
+                                                                    '/AI/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($new->record);
+                                                                $selected = in_array(
+                                                                    $recordValue,
+                                                                    explode(',', $data->Reference_Recores1),
+                                                                )
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                {{ $recordValue }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+        
                                         </div>
                                         <div class="col-lg-12">
                                             <div class="group-input">
@@ -1501,13 +1533,13 @@ function addMultipleFiles(input, block_id) {
                                     <div class="row">
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule By</label>
+                                                <label for="Audit Schedule On">Schedule Audit By</label>
                                                 <div class="static">{{ $data->audit_schedule_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Schedule On">Audit Schedule On</label>
+                                                <label for="Audit Schedule On">Schedule Audit On</label>
                                                 <div class="static">{{ $data->audit_schedule_on }}</div>
                                             </div>
                                         </div>
@@ -1525,75 +1557,69 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                                <label for="Audit Preparation Completed On">Complete Audit Preparation
                                                     By</label>
                                                 <div class="static">{{ $data->audit_preparation_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Preparation Completed On">Audit Preparation Completed
+                                                <label for="Complete Audit Preparation On">Complete Audit Preparation
                                                     On</label>
                                                 <div class="static">{{ $data->audit_preparation_completed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd
+                                                <label for="Audit Mgr.more Info Reqd By">Issue Report By
                                                     By</label>
                                                 <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd
+                                                <label for="Issue Report On">Issue Report On
                                                     On</label>
                                                 <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted By">Audit Observation Submitted
-                                                    By</label>
+                                                <label for="Audit Observation Submitted By">CAPA Plan Proposed By</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Observation Submitted On">Audit Observation Submitted
-                                                    On</label>
+                                                <label for="CAPA Plan Proposed On">CAPA Plan Proposed On</label>
                                                 <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd
-                                                    By</label>
+                                                <label for="Audit Lead More Info Reqd By">All CAPA Closed By</label>
                                                 <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd
-                                                    On</label>
+                                                <label for="All CAPA Closed On">All CAPA Closed On</label>
                                                 <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Response Completed By">Audit Response Completed
-                                                    By</label>
+                                                <label for="Audit Response Completed By">No CAPAs Required By</label>
                                                 <div class="static">{{ $data->audit_response_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Audit Response Completed On">Audit Response Completed
-                                                    On</label>
+                                                <label for="No CAPAs Required On">No CAPAs Required On</label>
                                                 <div class="static">{{ $data->audit_response_completed_on }}</div>
                                             </div>
                                         </div>
-                                        <div class="col-lg-6">
+                                        {{-- <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Response Feedback Verified By">Response Feedback Verified
                                                     By</label>
@@ -1606,7 +1632,7 @@ function addMultipleFiles(input, block_id) {
                                                     On</label>
                                                 <div class="static">{{ $data->response_feedback_verified_on }}</div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Response Feedback Verified By"> Rejected By
