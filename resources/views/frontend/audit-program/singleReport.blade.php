@@ -289,7 +289,7 @@
             ->get();
 
     @endphp
-            <div class="block">
+            <div class="border-table">
                 <div class="block-head">
                 Audit Program
                 </div>
@@ -308,22 +308,20 @@
                         <tr>
                             <td class="w-15">
                             {{ $key + 1 }}</td>
-                            <td class="w-15"> <select id="select-state" placeholder="Select..."
-                                                                    name="Auditees[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                                    <option value="">-Select-</option>
-                                                                    @foreach ($users as $value)
-                                                                        <option
-                                                                            {{ unserialize($AuditProgramGrid->auditor)[$key] ? (unserialize($AuditProgramGrid->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                            value="{{ $value->id }}">
-                                                                            {{ $value->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select></td>
-                            <td class="w-15"><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div class="calenderauditee">
-                                                                         <input  type="text"   id="start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
-                                                                                <input class="hide-input" type="date"  id="start_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->start_date)[$key]}}"  name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}
-                                                                                   oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
+                            <td class="w-15">
+    {{ unserialize($AuditProgramGrid->auditor)[$key] ? $users->firstWhere('id', unserialize($AuditProgramGrid->auditor)[$key])->name : '-' }}
+</td>
+
+<td class="w-15">
+    <div class="group-input new-date-data-field mb-0">
+        <div class="input-date">
+            <div class="calenderauditee">
+                {{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) ?? '-' }}
+            </div>
+        </div>
+    </div>
+</td>
+
                             <!-- <td class="w-5"><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
@@ -382,25 +380,24 @@
                             value="{{ $key + 1 }}" ></td> -->
 
 
-                            <td class="w-5"><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div
-                                                                         class="calenderauditee">
-                                                                         <input type="text"   id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
-                                                                <input class="hide-input" type="date"  id="end_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->end_date)[$key]}}"  name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}
-                                                                  oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
-                            <td class="w-15"> <select id="select-state" placeholder="Select..."
-                                                                    name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                                    <option value="">-Select-</option>
-                                                                    @foreach ($users as $value)
-                                                                        <option
-                                                                            {{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? (unserialize($AuditProgramGrid->lead_investigator)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                            value="{{ $value->id }}">
-                                                                            {{ $value->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select></td>
-                            <td class="w-15"><input type="text" name="comment[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                            value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}"></td>  
+                            <td class="w-5">
+    <div class="group-input new-date-data-field mb-0">
+        <div class="input-date">
+            <div class="calenderauditee">
+                {{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) ?? '-' }}
+            </div>
+        </div>
+    </div>
+</td>
+
+<td class="w-15">
+    {{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? $users->firstWhere('id', unserialize($AuditProgramGrid->lead_investigator)[$key])->name : '-' }}
+</td>
+
+<td class="w-15">
+    {{ unserialize($AuditProgramGrid->comment)[$key] ?? '-' }}
+</td>
+
                             
                         </tr>
                         @endforeach
