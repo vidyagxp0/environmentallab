@@ -116,7 +116,7 @@ class CapaController extends Controller
     //    $capa->additional_attachments= json_encode($request->additional_attachments);
          $capa->capa_related_record= implode(',', $request->capa_related_record);
          $capa->rca_related_record= implode(',', $request->rca_related_record);
-       
+
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
@@ -164,7 +164,7 @@ class CapaController extends Controller
             }
             $capa->group_attachments_new = json_encode($files);
         }
-        
+
         $capa->capa_qa_comments= $request->capa_qa_comments;
         $capa->capa_qa_comments2 = $request->capa_qa_comments2;
         $capa->details_new = $request->details_new;
@@ -249,8 +249,8 @@ class CapaController extends Controller
         if (!empty($request->material_batch_status)) {
             $data2->material_batch_status = serialize($request->material_batch_status);
         }
-       
-        
+
+
         $data2->save();
 
         $data3 = new CapaGrid();
@@ -716,7 +716,7 @@ class CapaController extends Controller
             $history->origin_state = $capa->status;
             $history->save();
         }
-       
+
 
         DocumentService::update_qms_numbers();
 
@@ -774,7 +774,7 @@ class CapaController extends Controller
         $capa->Microbiology_new= $request->Microbiology_new;
         $capa->goup_review = $request->goup_review;
         $capa->initial_observation = $request->initial_observation;
-        
+
         $capa->interim_containnment = $request->interim_containnment;
         $capa->containment_comments = $request->containment_comments;
         $capa->capa_qa_comments= $request->capa_qa_comments;
@@ -842,7 +842,7 @@ class CapaController extends Controller
             if (!empty($request->product_batch_desposition)) {
                 $data1->batch_desposition = serialize($request->product_batch_desposition);
             }
-         
+
             if (!empty($request->product_remark)) {
                 $data1->remark = serialize($request->product_remark);
             }
@@ -853,13 +853,13 @@ class CapaController extends Controller
         }
 
         // // --------------------------
-       
+
         if ($request->material_name) {
             $data2 = CapaGrid::where('type','Material_Details')->where('capa_id',$id)->first();
             if(empty( $data2)){
                 $data2 = new CapaGrid();
-            } 
-          
+            }
+
             $data2->capa_id = $capa->id;
             $data2->type = "Material_Details";
             if (!empty($request->material_name)) {
@@ -868,7 +868,7 @@ class CapaController extends Controller
             if (!empty($request->material_batch_no)) {
                 $data2->material_batch_no = serialize($request->material_batch_no);
             }
-            
+
             if (!empty($request->material_mfg_date)) {
                 $data2->material_mfg_date = serialize($request->material_mfg_date);
             }
@@ -884,11 +884,11 @@ class CapaController extends Controller
             if (!empty($request->material_batch_status)) {
                 $data2->material_batch_status = serialize($request->material_batch_status);
             }
-         
-            
+
+
             $data2->update();
         }
-        
+
         // // ----------------------------------------
         if ($request->equipment) {
             $data3 = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
@@ -1362,7 +1362,7 @@ class CapaController extends Controller
         // dd( $MaterialsQueryData->json());
         // $EquipmentsQueryData = Http::get('http://103.167.99.37/LIMS_EL/WebServices.Query.EquipmentsQuery.lims');
         // dd( $EquipmentsQueryData->json());
-        
+
         return view('frontend.capa.capaView', compact('data', 'data1', 'data2', 'data3', 'old_record','revised_date','cft', 'rca_old_record' ));
     }
 
@@ -1379,7 +1379,7 @@ class CapaController extends Controller
                 $capa->status = "Pending CAPA Plan";
                 $capa->plan_proposed_by = Auth::user()->name;
                 $capa->plan_proposed_on = Carbon::now()->format('d-M-Y');
-                   
+
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1398,7 +1398,7 @@ class CapaController extends Controller
                 //         if($u->q_m_s_divisions_id == $capa->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $capa],
@@ -1408,9 +1408,9 @@ class CapaController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
-           
+
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1420,7 +1420,7 @@ class CapaController extends Controller
                 $capa->status = "CAPA In Progress";
                 $capa->plan_approved_by = Auth::user()->name;
                 $capa->plan_approved_on = Carbon::now()->format('d-M-Y');
-                  
+
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
                 $history->activity_type = 'Activity Log';
@@ -1433,7 +1433,7 @@ class CapaController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'Plan Approved';
                 $history->save();
-                
+
                 // $list = Helpers::getQAUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $capa->division_id){
@@ -1448,9 +1448,9 @@ class CapaController extends Controller
                 //             }
                 //         );
                 //     }
-                //   } 
+                //   }
                 // }
-                
+
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1502,7 +1502,7 @@ class CapaController extends Controller
                 $capa->stage = "6";
                 $capa->status = "Closed - Done";
                 $capa->completed_by = Auth::user()->name;
-                $capa->completed_on = Carbon::now()->format('d-M-Y');  
+                $capa->completed_on = Carbon::now()->format('d-M-Y');
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -1564,7 +1564,7 @@ class CapaController extends Controller
             //     if($u->q_m_s_divisions_id == $capa->division_id){
             //       $email = Helpers::getInitiatorEmail($u->user_id);
             //       if ($email !== null) {
-                    
+
             //         Mail::send(
             //             'mail.view-mail',
             //             ['data' => $capa],
@@ -1574,7 +1574,7 @@ class CapaController extends Controller
             //             }
             //          );
             //       }
-            //     } 
+            //     }
             // }
 
             toastr()->success('Document Sent');
@@ -1584,7 +1584,7 @@ class CapaController extends Controller
             return back();
         }
     }
-  
+
     public function capa_qa_more_info(Request $request, $id)
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
@@ -1632,12 +1632,12 @@ class CapaController extends Controller
             //             }
             //         );
             //       }
-            //     } 
+            //     }
             // }
             toastr()->success('Document Sent');
             return back();
           }
-            
+
         if($capa->stage == 4){
         $capa->stage = "3";
         $capa->status = "CAPA In Progress";
@@ -1654,7 +1654,7 @@ class CapaController extends Controller
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Rejected';
-                    $history->save();   
+                    $history->save();
         $capa->update();
         $history = new CapaHistory();
         $history->type = "Capa";
@@ -1667,7 +1667,7 @@ class CapaController extends Controller
         toastr()->success('Document Sent');
         return back();
         }
-        } 
+        }
         else {
             toastr()->error('E-signature Not match');
             return back();
@@ -1700,7 +1700,7 @@ class CapaController extends Controller
                 //     if($u->q_m_s_divisions_id == $capa->division_id){
                 //     $email = Helpers::getInitiatorEmail($u->user_id);
                 //     if ($email !== null) {
-                       
+
                 //         Mail::send(
                 //             'mail.view-mail',
                 //             ['data' => $capa],
@@ -1710,7 +1710,7 @@ class CapaController extends Controller
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 $history->save();
 
@@ -1733,7 +1733,7 @@ class CapaController extends Controller
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Qa More Info Required';
-                        $history->save();   
+                        $history->save();
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";
@@ -1831,10 +1831,11 @@ class CapaController extends Controller
     {
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = Capa::where('id', $id)->value('division_id');
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date= $formattedDate->format('Y-m-d');
-        return view("frontend.forms.effectiveness-check", compact('due_date', 'record_number'));
+        return view("frontend.forms.effectiveness-check", compact('due_date','parent_division_id', 'record_number'));
     }
 
 
