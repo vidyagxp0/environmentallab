@@ -37,15 +37,15 @@ class EffectivenessCheckController extends Controller
 
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
-        // if ($division) {
-        //     $last_cc = EffectivenessCheck::where('division_id', $division->id)->latest()->first();
+        if ($division) {
+            $last_cc = EffectivenessCheck::where('division_id', $division->id)->latest()->first();
 
-        //     if ($last_cc) {
-        //         $record_number = $last_cc->record_number ? str_pad($last_cc->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
-        //     } else {
-        //         $record_number = '0001';
-        //     }
-        // }
+            if ($last_cc) {
+                $record_number = $last_cc->record_number ? str_pad($last_cc->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+            } else {
+                $record_number = '0001';
+            }
+        }
 
         return view('frontend.forms.effectiveness-check', compact('due_date', 'record_number'));
     }
@@ -883,7 +883,7 @@ class EffectivenessCheckController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status;
-                            $history->step = 'Effective Approval Complete';
+                            $history->step = 'Effective Approval Completed';
                             $history->save();
                 $changeControl->update();
                 $history = new CCStageHistory();
@@ -977,7 +977,7 @@ class EffectivenessCheckController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->step = 'Not Effective Approval Complete';
+                        $history->step = 'Not Effective Approval Completed';
                         $history->save();
 
                 $changeControl->update();

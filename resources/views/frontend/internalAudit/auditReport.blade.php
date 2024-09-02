@@ -150,7 +150,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Trail Report
+                    Internal Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -165,7 +165,7 @@
                     <strong>Internal Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -195,27 +195,36 @@
                             <div>{{ $datas->activity_type }}</div>
                             <div>
                                 <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
+                                @if (!empty($datas->previous))
+                                    <div>{{ $datas->previous }}</div>
                                 @else
-                                <div>Null</div>
+                                    <div>Null</div>
                                 @endif
                             </div>
+
                             <div>
                                 <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
+                                @if ($datas->activity_type == 'Assigned To')
+                                    <div>{{ Helpers::getInitiatorName($datas->current) }}</div>
+                                @else
+                                    <div>{{ $datas->current }}</div>
+                                @endif
                             </div>
-                            <div><strong>Changed To :</strong></div>
-                            @if($datas->activity_type == "Assigned To")
-                            @foreach(explode(',',$datas->current) as $curr)
-                            <div>{{ Helpers::getInitiatorName($curr) }}</div>
-                            @endforeach
-                           @endif
+                            {{-- <div>
+                                <div><strong>Changed To :</strong></div>
+                                <div>{{ $datas->current }}</div>
+                            </div> --}}
+                            {{-- <div><strong>Changed To :</strong></div>
+                            @if ($datas->activity_type == 'Assigned To')
+                                @foreach (explode(',', $datas->current) as $curr)
+                                    <div>{{ Helpers::getInitiatorName($curr) }}</div>
+                                @endforeach
+                            @endif --}}
                         </td>
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if (!empty($datas->previous== "NULL"))
+                            @if (!empty($datas->previous == 'NULL'))
                                 Modify
                             @else
                                 New
