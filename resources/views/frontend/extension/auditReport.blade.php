@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                Extension Audit Trial Report
+                Extension Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -166,7 +166,7 @@
                     <strong> Extension Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/Extension/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -177,10 +177,10 @@
 
     <div class="inner-block">
 
-        <div class="head">Extension Audit Trial Report</div>
+        <div class="head">Extension Audit Trail Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/Extension/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         

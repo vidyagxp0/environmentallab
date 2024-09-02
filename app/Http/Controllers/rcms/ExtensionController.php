@@ -220,20 +220,6 @@ class ExtensionController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
         }
-        if (!empty($request->justification)) {
-
-            $history = new ExtensionAuditTrail();
-            $history->extension_id = $openState->id;
-            $history->activity_type = 'Justification of Extention';
-            $history->previous = "Null";
-            $history->current = $openState->justification;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $openState->status;
-            $history->save();
-         }
         if (!empty($request->division_id)) {
 
             $history = new ExtensionAuditTrail();
@@ -260,34 +246,6 @@ class ExtensionController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->save();
-        }
-        if (!empty($request->approver_comments)) {
-
-        $history = new ExtensionAuditTrail();
-        $history->extension_id = $openState->id;
-        $history->activity_type = 'Approver Comment';
-        $history->previous = "Null";
-        $history->current = $openState->approver_comments;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
-        }
-       
-        if (!empty($request->justification)) {
-        $history = new ExtensionAuditTrail();
-        $history->extension_id = $openState->id;
-        $history->activity_type = 'Justification of Extention';
-        $history->previous = "Null";
-        $history->current = $openState->justification;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
         }
 
         if (!empty($request->initiated_through)) {
@@ -472,20 +430,7 @@ class ExtensionController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->approver_comments != $openState->approver_comments || !empty($request->approver_comment)) {
-
-            $history = new ExtensionAuditTrail();
-            $history->extension_id = $id;
-            $history->activity_type = 'Approver Comment';
-            $history->previous = $lastDocument->approver_comments;
-            $history->current = $openState->approver_comments;
-            $history->comment = $request->approver_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+       
         if ($lastDocument->short_description != $openState->short_description || !empty($request->short_description_comment)) {
 
             $history = new ExtensionAuditTrail();

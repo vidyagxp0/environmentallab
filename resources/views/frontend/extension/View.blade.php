@@ -144,7 +144,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number">Record Number</label>
                                                 <input disabled type="text" name="record_number"
-                                                    value="{{ Helpers::getDivisionName(session()->get('division')) }}/Extension/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value="{{ Helpers::getDivisionName($data->division_id) }}/Extension/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
                                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                             </div>
                                         </div>
@@ -180,7 +180,7 @@
                                                     <input type="text" id="due_date" readonly 
                                                         placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}" />
                                                     <input type="date" name="due_date" value="{{ $data->due_date }}"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
+                                                        oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -191,7 +191,7 @@
                                                     <input type="text" id="revised_date" readonly
                                                         placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
                                                     <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'revised_date')" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} />
+                                                        oninput="handleDateInput(this, 'revised_date')" {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} />
                                                 </div>
                                             </div>
                                         </div>
@@ -209,7 +209,7 @@
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         
@@ -217,7 +217,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Justification of Extention">Justification of Extention</label>
-                                                <textarea name="justification"  {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->justification }}</textarea>
+                                                <textarea name="justification"  {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->justification }}</textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-lg-6">
@@ -244,21 +244,21 @@
                                             <div class="group-input">
                                                 <label for="Initiator Group">Initiated Through</label>
                                                 <div><small class="text-primary" >Please select related information</small></div>
-                                                <select name="initiated_through" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} {{$data->initiated_through}}
+                                                <select name="initiated_through" {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} {{$data->initiated_through}}
                                                     onchange="otherController(this.value, 'others', 'initiated_through_req')">
                                                     <option  selected value="">-- select --</option>
-                                                    <option @if ($data->initiated_through == 'Internal') selected @endif value="Internal ">Internal Audit</option>
-                                                    <option @if ($data->initiated_through == 'External') selected @endif value="External">External Audit</option>
-                                                    <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA<">CAPA</option>
-                                                    <option  @if ($data->initiated_through == 'Audit') selected @endif value="Audit ">Audit Program</option>
-                                                    <option @if ($data->initiated_through == 'Lab') selected @endif value="Lab ">Lab Incident</option>
-                                                    <option @if ($data->initiated_through == 'Risk') selected @endif value="Risk">Risk Assessment</option>
-                                                    <option @if ($data->initiated_through == 'Root Cause') selected @endif value="Root Cause">Root Cause Analysis</option>
-                                                    <option @if ($data->initiated_through == 'Change') selected @endif value="Change">Change Control</option>
-                                                    <option @if ($data->initiated_through == 'Management') selected @endif value="Management">Management Review</option>
+                                                    <option @if ($data->initiated_through == 'Internal Audit') selected @endif value="Internal Audit">Internal Audit</option>
+                                                    <option @if ($data->initiated_through == 'External Audit') selected @endif value="External Audit">External Audit</option>
+                                                    <option @if ($data->initiated_through == 'CAPA') selected @endif value="CAPA">CAPA</option>
+                                                    <option  @if ($data->initiated_through == 'Audit Program') selected @endif value="Audit Program">Audit Program</option>
+                                                    <option @if ($data->initiated_through == 'Lab Incident') selected @endif value="Lab Incident">Lab Incident</option>
+                                                    <option @if ($data->initiated_through == 'Risk Assessment') selected @endif value="Risk Assessment">Risk Assessment</option>
+                                                    <option @if ($data->initiated_through == 'Root Cause Analysis') selected @endif value="Root Cause Analysis">Root Cause Analysis</option>
+                                                    <option @if ($data->initiated_through == 'Change Control') selected @endif value="Change Control">Change Control</option>
+                                                    <option @if ($data->initiated_through == 'Management Review') selected @endif value="Management Review">Management Review</option>
                                                     <option @if ($data->initiated_through == 'New Document') selected @endif value="New Document">New Document</option>
-                                                    <option @if ($data->initiated_through == 'Action') selected @endif value="Action ">Action Item</option>
-                                                    <option @if ($data->initiated_through == 'Effectivness') selected @endif value="Effectivness">Effectivness Check</option>
+                                                    <option @if ($data->initiated_through == 'Action Item') selected @endif value="Action Item">Action Item</option>
+                                                    <option @if ($data->initiated_through == 'Effectivness Check') selected @endif value="Effectivness Check">Effectivness Check</option>
                                                 </select>
                                             </div>
                                     </div>
@@ -266,7 +266,7 @@
                                         <div class="group-input">
                                             <label for="If Other">Reference Record</label>
                                             <div><small class="text-primary">Kindly specify the record from which the extension is being raised.</small></div>
-                                            <textarea name="initiated_if_other" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->initiated_if_other }}</textarea>
+                                            <textarea name="initiated_if_other" {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->initiated_if_other }}</textarea>
                                         </div>
                                     </div>
 
@@ -314,7 +314,7 @@
                                                         <div class="add-btn">
                                                             <div>Add</div>
                                                             
-                                                            <input {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} type="file" id="myfile" name="extention_attachment[]"
+                                                            <input {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} type="file" id="myfile" name="extention_attachment[]"
                                                                 oninput="addMultipleFiles(this, 'extention_attachment')" multiple>
                                                         </div>
                                                     </div>
@@ -324,7 +324,7 @@
                                      <div class="group-input">
                                         <label for="Assigned to">Approver</label>
                                         <select name="approver1"
-                                        {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>
+                                        {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $key => $value)
                                                 <option value="{{ $value->id }}"
@@ -348,7 +348,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Approver Comments">Approver Comments</label>
-                                                <textarea name="approver_comments" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->approver_comments }}  </textarea>
+                                                <textarea name="approver_comments" {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->approver_comments }}  </textarea>
                                             </div>
                                         </div>
                                         {{-- <div class="col-12">
@@ -375,7 +375,7 @@
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }} type="file" id="myfile" name="closure_attachments[]"
+                                                            <input {{ $data->stage == 0 || $data->stage == 3  || $data->stage == 4 ? "disabled" : "" }} type="file" id="myfile" name="closure_attachments[]"
                                                                 oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                                         </div>
                                                     </div>

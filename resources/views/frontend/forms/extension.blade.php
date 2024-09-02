@@ -110,7 +110,7 @@
                                     <div class="group-input">
                                         <label for="Date Due">Date of Initiation</label>
                                         <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('d-M-Y') }}" name="intiation_date">
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                     </div>
                                 </div>
@@ -219,18 +219,18 @@
                                         <div><small class="text-primary">Please select related information</small></div>
                                         <select name="initiated_through">
                                             <option value="">-- select --</option>
-                                            <option value="Internal ">Internal Audit</option>
-                                            <option value="External">External Audit</option>
-                                            <option value="CAPA<">CAPA</option>
-                                            <option value="Audit ">Audit Program</option>
-                                            <option value="Lab ">Lab Incident</option>
-                                            <option value="Risk">Risk Assessment</option>
-                                            <option value="Root Cause">Root Cause Analysis</option>
-                                            <option value="Change ">Change Control</option>
+                                            <option value="Internal Audit">Internal Audit</option>
+                                            <option value="External Audit">External Audit</option>
+                                            <option value="CAPA">CAPA</option>
+                                            <option value="Audit Program">Audit Program</option>
+                                            <option value="Lab Incident">Lab Incident</option>
+                                            <option value="Risk Assessment">Risk Assessment</option>
+                                            <option value="Root Cause Analysis">Root Cause Analysis</option>
+                                            <option value="Change Control">Change Control</option>
                                             <option value="Management">Management Review</option>
                                             <option value="New Documen">New Document</option>
-                                            <option value="Action ">Action Item</option>
-                                            <option value="Effectivness">Effectivness Check</option>
+                                            <option value="Action Item">Action Item</option>
+                                            <option value="Effectivness Check">Effectivness Check</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>
