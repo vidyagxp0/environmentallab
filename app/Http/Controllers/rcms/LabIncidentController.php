@@ -157,68 +157,60 @@ class LabIncidentController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        if(!empty($data->short_desc)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Short Description';
-            $history->previous = "Null";
-            $history->current = $data->short_desc;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        $history = new LabIncidentAuditTrial();
+        $history->LabIncident_id = $data->id;
+        $history->activity_type = 'Division Code';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($request->division_id);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->save();
 
-        if (!empty($data->Initiator_Group)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Initiator Group';
-            $history->previous = "Null";
-            $history->current = $data->Initiator_Group;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        $history = new LabIncidentAuditTrial();
+        $history->LabIncident_id = $data->id;
+        $history->activity_type = 'Initiator';
+        $history->previous = "Null";
+        $history->current = Auth::user()->name;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->save();
 
-        if (!empty($data->Other_Ref)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Other Ref.Doc.No';
-            $history->previous = "Null";
-            $history->current = $data->Other_Ref;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        $history = new LabIncidentAuditTrial();
+        $history->LabIncident_id = $data->id;
+        $history->activity_type = 'Initiation Date';
+        $history->previous = "Null";
+        $history->current = Helpers::getdateFormat($request->intiation_date);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->save();
 
-        if (!empty($data->due_date)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Due Date';
-            $history->previous = "Null";
-            $history->current = $data->due_date;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        $history = new LabIncidentAuditTrial();
+        $history->LabIncident_id = $data->id;
+        $history->activity_type = 'Short Description';
+        $history->previous = "Null";
+        $history->current = $data->short_desc;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->save();
 
-        if (!empty($data->assign_to)) {
+        if (!empty($request->assign_to)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $data->assign_to;
+            $history->current = Helpers::getInitiatorName($request->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -227,12 +219,68 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->Incident_Category)) {
+        if (!empty($request->due_date)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Due Date';
+            $history->previous = "Null";
+            $history->current = Helpers::getdateFormat($request->due_date);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Initiator_Group)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Initiator Group';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorGroupFullName($request->Initiator_Group);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->initiator_group_code)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = "Null";
+            $history->current = $request->initiator_group_code;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->severity_level2)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Severity Level';
+            $history->previous = "Null";
+            $history->current = $request->severity_level2;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Incident_Category)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Incident Category';
             $history->previous = "Null";
-            $history->current = $data->Incident_Category;
+            $history->current = $request->Incident_Category;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -241,12 +289,26 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->Invocation_Type)) {
+        if (!empty($request->Incident_Category_others)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Others';
+            $history->previous = "Null";
+            $history->current = $request->Incident_Category_others;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Invocation_Type)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Invocation Type';
             $history->previous = "Null";
-            $history->current = $data->Invocation_Type;
+            $history->current = $request->Invocation_Type;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -255,258 +317,7 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->Incident_Details)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Incident Details';
-            $history->previous = "Null";
-            $history->current = $data->Incident_Details;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Document_Details)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Document Details';
-            $history->previous = "Null";
-            $history->current = $data->Document_Details;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Instrument_Details)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Instrument Details';
-            $history->previous = "Null";
-            $history->current = $data->Instrument_Details;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Involved_Personnel)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Involved Personnel';
-            $history->previous = "Null";
-            $history->current = $data->Involved_Personnel;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Product_Details)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Product Details,If Any';
-            $history->previous = "Null";
-            $history->current = $data->Product_Details;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Supervisor_Review_Comments)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Supervisor Review Comments';
-            $history->previous = "Null";
-            $history->current = $data->Supervisor_Review_Comments;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Cancelation_Remarks)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Cancelation Remarks';
-            $history->previous = "Null";
-            $history->current = $data->Cancelation_Remarks;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Investigation_Details)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Investigation Details';
-            $history->previous = "Null";
-            $history->current = $data->Investigation_Details;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Action_Taken)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Action Taken';
-            $history->previous = "Null";
-            $history->current = $data->Action_Taken;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Root_Cause)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Root Cause';
-            $history->previous = "Null";
-            $history->current = $data->Root_Cause;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Currective_Action)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Currective Action';
-            $history->previous = "Null";
-            $history->current = $data->Currective_Action;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Preventive_Action)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Preventive Action';
-            $history->previous = "Null";
-            $history->current = $data->Preventive_Action;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Corrective_Preventive_Action)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Preventive Action';
-            $history->previous = "Null";
-            $history->current = $data->Corrective_Preventive_Action;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->QA_Review_Comments)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Review Comments';
-            $history->previous = "Null";
-            $history->current = $data->QA_Review_Comments;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->QA_Head)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Head/Designee Comments';
-            $history->previous = "Null";
-            $history->current = $data->QA_Head;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Effectiveness_Check)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Effectiveness Check required?';
-            $history->previous = "Null";
-            $history->current = $data->Effectiveness_Check;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Incident_Type)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Incident Type';
-            $history->previous = "Null";
-            $history->current = $data->Incident_Type;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-        if (!empty($data->Conclusion)) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Conclusion';
-            $history->previous = "Null";
-            $history->current = $data->Conclusion;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
-
-        if (!empty($data->Initial_Attachment)) {
+        if (!empty($request->Initial_Attachment)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'Initial Attachment';
@@ -520,10 +331,95 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->Attachments)) {
+        /******** Incident Detail *********/
+        if (!empty($request->Incident_Details)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Attachment';
+            $history->activity_type = 'Incident Details';
+            $history->previous = "Null";
+            $history->current = $request->Incident_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Document_Details)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Document Details';
+            $history->previous = "Null";
+            $history->current = $request->Document_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Instrument_Details)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Instrument Details';
+            $history->previous = "Null";
+            $history->current = $request->Instrument_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Involved_Personnel)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Involved Personnel';
+            $history->previous = "Null";
+            $history->current = $request->Involved_Personnel;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Product_Details)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Product Details,If Any';
+            $history->previous = "Null";
+            $history->current = $request->Product_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Supervisor_Review_Comments)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Supervisor Review Comments';
+            $history->previous = "Null";
+            $history->current = $request->Supervisor_Review_Comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Attachments)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Incident Attachments';
             $history->previous = "Null";
             $history->current = $data->Attachments;
             $history->comment = "NA";
@@ -534,10 +430,53 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->Inv_Attachment)) {
+        /********** Investigation Detail ***********/
+        if (!empty($request->Investigation_Details)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'Investigation Details';
+            $history->previous = "Null";
+            $history->current = $request->Investigation_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Action_Taken)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Action Taken';
+            $history->previous = "Null";
+            $history->current = $request->Action_Taken;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Root_Cause)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Root Cause';
+            $history->previous = "Null";
+            $history->current = $request->Root_Cause;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Inv_Attachment)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Investigation Attachment';
             $history->previous = "Null";
             $history->current = $data->Inv_Attachment;
             $history->comment = "NA";
@@ -548,7 +487,50 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->CAPA_Attachment)) {
+        /********* CAPA Detail **********/
+        if (!empty($request->Currective_Action)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Currective Action';
+            $history->previous = "Null";
+            $history->current = $request->Currective_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Preventive_Action)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = "Null";
+            $history->current = $request->Preventive_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Corrective_Preventive_Action)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = "Null";
+            $history->current = $request->Corrective_Preventive_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->CAPA_Attachment)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
             $history->activity_type = 'CAPA Attachment';
@@ -562,10 +544,25 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->QA_Head_Attachment)) {
+        /********* QA Review *********/
+        if (!empty($request->QA_Review_Comments)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Head Attachment';
+            $history->activity_type = 'QA Review Comments';
+            $history->previous = "Null";
+            $history->current = $request->QA_Review_Comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->QA_Head_Attachment)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'QA Attachment';
             $history->previous = "Null";
             $history->current = $data->QA_Head_Attachment;
             $history->comment = "NA";
@@ -576,12 +573,13 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->effect_check_date)) {
+        /******** QA Head Designee *********/
+        if (!empty($request->QA_Head)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Head Attachment';
+            $history->activity_type = 'QA Head/Designee Comments';
             $history->previous = "Null";
-            $history->current = $data->effect_check_date;
+            $history->current = $request->QA_Head;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -590,12 +588,40 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if (!empty($data->occurance_date)) {
+        if (!empty($request->Incident_Type)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Head Attachment';
+            $history->activity_type = 'Incident Type';
             $history->previous = "Null";
-            $history->current = $data->occurance_date;
+            $history->current = $request->Incident_Type;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->Conclusion)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Conclusion';
+            $history->previous = "Null";
+            $history->current = $request->Conclusion;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->due_date_extension)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Due Date Extension Justification';
+            $history->previous = "Null";
+            $history->current = $request->due_date_extension;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -613,7 +639,6 @@ class LabIncidentController extends Controller
     }
     public function updateLabIncident(request $request, $id)
     {
-        // return $request;
         if (!$request->short_desc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -667,6 +692,7 @@ class LabIncidentController extends Controller
             }
             $data->Initial_Attachment = json_encode($files);
         }
+
         if (!empty($request->Attachments)) {
             $files = [];
             if ($request->hasfile('Attachments')) {
@@ -714,13 +740,12 @@ class LabIncidentController extends Controller
 
         $data->update();
 
-        if ($lastDocument->short_desc != $data->short_desc || !empty($request->short_desc_comment)) {
-
+        if ($lastDocument->short_desc != $request->short_desc) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Short Description';
             $history->previous = $lastDocument->short_desc;
-            $history->current = $data->short_desc;
+            $history->current = $request->short_desc;
             $history->comment = $request->short_desc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -728,252 +753,112 @@ class LabIncidentController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Initiator_Group != $data->Initiator_Group || !empty($request->Initiator_Group_comment)) {
 
+        if ($lastDocument->Initiator_Group != $request->Initiator_Group) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->Initiator_Group;
-            $history->current = $data->Initiator_Group;
-            $history->comment = $request->Initiator_Group_comment;
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($request->Initiator_Group);
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Other_Ref != $data->Other_Ref || !empty($request->Other_Ref_comment)) {
 
+        if ($lastDocument->initiator_group_code != $request->initiator_group_code) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Other Ref.Doc.No';
-            $history->previous = $lastDocument->Other_Ref;
-            $history->current = $data->Other_Ref;
-            $history->comment = $request->Other_Ref_comment;
+            $history->activity_type = 'Initiator Group Code';
+            $history->previous = $lastDocument->initiator_group_code;
+            $history->current = $request->initiator_group_code;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
 
+        if ($lastDocument->due_date != $request->due_date) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $data->due_date;
-            $history->comment = $request->due_date_comment;
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($request->due_date);
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
-
+        
+        if ($lastDocument->assign_to != $request->assign_to) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $data->assign_to;
-            $history->comment = $request->assign_to_comment;
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+            $history->current = Helpers::getInitiatorName($request->assign_to);
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Incident_Category != $data->Incident_Category || !empty($request->Incident_Category_comment)) {
 
+        if ($lastDocument->severity_level2 != $request->severity_level2) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Severity Level';
+            $history->previous = $lastDocument->severity_level2;
+            $history->current = $request->severity_level2;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Incident_Category != $request->Incident_Category) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Incident Category';
             $history->previous = $lastDocument->Incident_Category;
-            $history->current = $data->Incident_Category;
-            $history->comment = $request->Incident_Category_comment;
+            $history->current = $request->Incident_Category;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Invocation_Type != $data->Invocation_Type || !empty($request->Invocation_Type_comment)) {
 
+        if ($lastDocument->Incident_Category_others != $request->Incident_Category_others) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Others';
+            $history->previous = $lastDocument->Incident_Category_others;
+            $history->current = $request->Incident_Category_others;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Invocation_Type != $request->Invocation_Type) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Invocation Type';
             $history->previous = $lastDocument->Invocation_Type;
-            $history->current = $data->Invocation_Type;
-            $history->comment = $request->Invocation_Type_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Incident_Details != $data->Incident_Details || !empty($request->Incident_Details_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Incident Details';
-            $history->previous = $lastDocument->Incident_Details;
-            $history->current = $data->Incident_Details;
-            $history->comment = $request->Incident_Details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Document_Details != $data->Document_Details || !empty($request->Document_Details_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Document Details';
-            $history->previous = $lastDocument->Document_Details;
-            $history->current = $data->Document_Details;
-            $history->comment = $request->Document_Details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Instrument_Details != $data->Instrument_Details || !empty($request->Instrument_Details_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Instrument Details';
-            $history->previous = $lastDocument->Instrument_Details;
-            $history->current = $data->Instrument_Details;
-            $history->comment = $request->Instrument_Details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Involved_Personnel != $data->Involved_Personnel || !empty($request->Involved_Personnel_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Involved Personnel';
-            $history->previous = $lastDocument->Involved_Personnel;
-            $history->current = $data->Involved_Personnel;
-            $history->comment = $request->Involved_Personnel_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Product_Details != $data->Product_Details || !empty($request->Product_Details_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Product Details,If Any';
-            $history->previous = $lastDocument->Product_Details;
-            $history->current = $data->Product_Details;
-            $history->comment = $request->Product_Details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Supervisor_Review_Comments != $data->Supervisor_Review_Comments || !empty($request->Supervisor_Review_Comments_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Supervisor Review Comments';
-            $history->previous = $lastDocument->Supervisor_Review_Comments;
-            $history->current = $data->Supervisor_Review_Comments;
-            $history->comment = $request->Supervisor_Review_Comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Cancelation_Remarks != $data->Cancelation_Remarks || !empty($request->Cancelation_Remarks_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Cancelation Remarks';
-            $history->previous = $lastDocument->Cancelation_Remarks;
-            $history->current = $data->Cancelation_Remarks;
-            $history->comment = $request->Cancelation_Remarks_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Investigation_Details != $data->Investigation_Details || !empty($request->Investigation_Details_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Investigation Details';
-            $history->previous = $lastDocument->Investigation_Details;
-            $history->current = $data->Investigation_Details;
-            $history->comment = $request->Investigation_Details_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Action_Taken != $data->Action_Taken || !empty($request->Action_Taken_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Action Taken';
-            $history->previous = $lastDocument->Action_Taken;
-            $history->current = $data->Action_Taken;
-            $history->comment = $request->Action_Taken_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Root_Cause != $data->Root_Cause || !empty($request->Root_Cause_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Root Cause';
-            $history->previous = $lastDocument->Root_Cause;
-            $history->current = $data->Root_Cause;
-            $history->comment = $request->Root_Cause_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Currective_Action != $data->Currective_Action || !empty($request->Currective_Action_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Currective Action';
-            $history->previous = $lastDocument->Currective_Action;
-            $history->current = $data->Currective_Action;
-            $history->comment = $request->Currective_Action_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Preventive_Action != $data->Preventive_Action || !empty($request->Preventive_Action_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Preventive Action';
-            $history->previous = $lastDocument->Preventive_Action;
-            $history->current = $data->Preventive_Action;
-            $history->comment = $request->Preventive_Action_comment;
+            $history->current = $request->Invocation_Type;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -981,196 +866,336 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Corrective_Preventive_Action != $data->Corrective_Preventive_Action || !empty($request->Corrective_Preventive_Action_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Preventive Action';
-            $history->previous = $lastDocument->Corrective_Preventive_Action;
-            $history->current = $data->Corrective_Preventive_Action;
-            $history->comment = $request->Corrective_Preventive_Action_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-
-        if ($lastDocument->QA_Review_Comments != $data->QA_Review_Comments || !empty($request->QA_Review_Comments_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Review Comments';
-            $history->previous = $lastDocument->QA_Review_Comments;
-            $history->current = $data->QA_Review_Comments;
-            $history->comment = $request->QA_Review_Comments_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->QA_Head != $data->QA_Head || !empty($request->QA_Head_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Head/Designee Comments';
-            $history->previous = $lastDocument->QA_Head;
-            $history->current = $data->QA_Head;
-            $history->comment = $request->QA_Head_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Effectiveness_Check != $data->Effectiveness_Check || !empty($request->Effectiveness_Check_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Effectiveness Check required?';
-            $history->previous = $lastDocument->Effectiveness_Check;
-            $history->current = $data->Effectiveness_Check;
-            $history->comment = $request->Effectiveness_Check_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Incident_Type != $data->Incident_Type || !empty($request->Incident_Type_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Incident Type';
-            $history->previous = $lastDocument->Incident_Type;
-            $history->current = $data->Incident_Type;
-            $history->comment = $request->Incident_Type_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Conclusion != $data->Conclusion || !empty($request->Conclusion_comment)) {
-
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Conclusion';
-            $history->previous = $lastDocument->Conclusion;
-            $history->current = $data->Conclusion;
-            $history->comment = $request->Conclusion_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->Initial_Attachment != $data->Initial_Attachment || !empty($request->Initial_Attachment_comment)) {
-
+        if ($lastDocument->Initial_Attachment != $data->Initial_Attachment) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
             $history->activity_type = 'Initial Attachment';
             $history->previous = $lastDocument->Initial_Attachment;
             $history->current = $data->Initial_Attachment;
-            $history->comment = $request->Initial_Attachment_comment;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Attachments != $data->Attachments || !empty($request->Attachments_comment)) {
 
+        /*********** Incident Detail ***********/
+        if ($lastDocument->Incident_Details != $request->Incident_Details) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Attachment';
+            $history->activity_type = 'Incident Details';
+            $history->previous = $lastDocument->Incident_Details;
+            $history->current = $request->Incident_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Document_Details != $request->Document_Details) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Document Details';
+            $history->previous = $lastDocument->Document_Details;
+            $history->current = $data->Document_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Instrument_Details != $request->Instrument_Details) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Instrument Details';
+            $history->previous = $lastDocument->Instrument_Details;
+            $history->current = $request->Instrument_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Involved_Personnel != $request->Involved_Personnel) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Involved Personnel';
+            $history->previous = $lastDocument->Involved_Personnel;
+            $history->current = $request->Involved_Personnel;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Product_Details != $request->Product_Details) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Product Details,If Any';
+            $history->previous = $lastDocument->Product_Details;
+            $history->current = $request->Product_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Supervisor_Review_Comments != $request->Supervisor_Review_Comments) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Supervisor Review Comments';
+            $history->previous = $lastDocument->Supervisor_Review_Comments;
+            $history->current = $request->Supervisor_Review_Comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Attachments != $data->Attachments) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Incident Attachments';
             $history->previous = $lastDocument->Attachments;
             $history->current = $data->Attachments;
-            $history->comment = $request->Attachments_comment;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->Inv_Attachment != $data->Inv_Attachment || !empty($request->Inv_Attachment_comment)) {
 
+        if ($lastDocument->Cancelation_Remarks != $request->Cancelation_Remarks) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Inv Attachment';
+            $history->activity_type = 'Cancelation Remarks';
+            $history->previous = $lastDocument->Cancelation_Remarks;
+            $history->current = $request->Cancelation_Remarks;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        /*********** Investigation Detail ***********/
+        if ($lastDocument->Investigation_Details != $request->Investigation_Details) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Investigation Details';
+            $history->previous = $lastDocument->Investigation_Details;
+            $history->current = $request->Investigation_Details;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Action_Taken != $request->Action_Taken) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Action Taken';
+            $history->previous = $lastDocument->Action_Taken;
+            $history->current = $request->Action_Taken;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Root_Cause != $request->Root_Cause) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Root Cause';
+            $history->previous = $lastDocument->Root_Cause;
+            $history->current = $request->Root_Cause;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Inv_Attachment != $data->Inv_Attachment) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Root Cause';
             $history->previous = $lastDocument->Inv_Attachment;
             $history->current = $data->Inv_Attachment;
-            $history->comment = $request->Inv_Attachment_comment;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->CAPA_Attachment != $data->CAPA_Attachment || !empty($request->CAPA_Attachment_comment)) {
 
+        /********* CAPA Details *********/
+        if ($lastDocument->Currective_Action != $request->Currective_Action) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'CAPA Attachment';
+            $history->activity_type = 'Currective Action';
+            $history->previous = $lastDocument->Currective_Action;
+            $history->current = $request->Currective_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Preventive_Action != $request->Preventive_Action) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = $lastDocument->Preventive_Action;
+            $history->current = $request->Preventive_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->Corrective_Preventive_Action != $request->Corrective_Preventive_Action) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Preventive Action';
+            $history->previous = $lastDocument->Corrective_Preventive_Action;
+            $history->current = $request->Corrective_Preventive_Action;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->CAPA_Attachment != $data->CAPA_Attachment) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Capa Attachment';
             $history->previous = $lastDocument->CAPA_Attachment;
             $history->current = $data->CAPA_Attachment;
-            $history->comment = $request->CAPA_Attachment_comment;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment || !empty($request->QA_Head_Attachment_comment)) {
 
+        /******* QA Review *******/
+        if ($lastDocument->QA_Review_Comments != $request->QA_Review_Comments) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Head Attachment';
+            $history->activity_type = 'QA Review Comments';
+            $history->previous = $lastDocument->QA_Review_Comments;
+            $history->current = $request->QA_Review_Comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'QA Attachment';
             $history->previous = $lastDocument->QA_Head_Attachment;
             $history->current = $data->QA_Head_Attachment;
-            $history->comment = $request->QA_Head_Attachment_comment;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->effect_check_date != $data->effect_check_date || !empty($request->effect_check_date_comment)) {
 
+         /******* QA Head/Designee *******/
+        if ($lastDocument->QA_Head != $request->QA_Head) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Head Attachment';
-            $history->previous = $lastDocument->effect_check_date;
-            $history->current = $data->effect_check_date;
-            $history->comment = $request->effect_check_date_comment;
+            $history->activity_type = 'QA Head/Designee Comments';
+            $history->previous = $lastDocument->QA_Head;
+            $history->current = $request->QA_Head;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->occurance_date != $data->occurance_date || !empty($request->occurance_date_comment)) {
 
+        if ($lastDocument->Incident_Type != $request->Incident_Type) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Head Attachment';
-            $history->previous = $lastDocument->occurance_date;
-            $history->current = $data->occurance_date;
-            $history->comment = $request->occurance_date_comment;
+            $history->activity_type = 'Incident Type';
+            $history->previous = $lastDocument->Incident_Type;
+            $history->current = $request->Incident_Type;
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-    
+
+        if ($lastDocument->Conclusion != $request->Conclusion) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Conclusion';
+            $history->previous = $lastDocument->Conclusion;
+            $history->current = $request->Conclusion;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->due_date_extension != $request->due_date_extension) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Due Date Extension Justification';
+            $history->previous = $lastDocument->due_date_extension;
+            $history->current = $request->due_date_extension;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
         DocumentService::update_qms_numbers();
-
         toastr()->success('Record is updated Successfully');
-
-        return back();
-    
+        return back();    
     }
 
     public function LabIncidentShow($id)
@@ -1530,7 +1555,7 @@ class LabIncidentController extends Controller
 
     public function LabIncidentAuditTrial($id)
     {
-        $audit = LabIncidentAuditTrial::where('LabIncident_id', $id)->orderByDESC('id')->get()->unique('activity_type');
+        $audit = LabIncidentAuditTrial::where('LabIncident_id', $id)->orderByDESC('id')->get();
         $today = Carbon::now()->format('d-m-y');
         $document = LabIncident::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');
