@@ -202,7 +202,10 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Initiator_Group){{$data->Initiator_Group}} @else Not Applicable @endif</td>
+                        <td class="w-30">
+    {{ $data->Initiator_Group ? Helpers::getInitiatorGroupFullName($data->Initiator_Group) : 'Not Applicable' }}
+</td>
+
                     </tr>
                     <tr>
                         
