@@ -102,7 +102,7 @@
                                     <div class="group-input">
                                         <label for="Initiator">Initiator</label>
                                         {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                        <input disabled type="text" name="division_code"
+                                        <input disabled type="text" name="initiator_id"
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
@@ -114,7 +114,6 @@
                                         {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                     </div>
                                 </div>
-
 
                                  {{-- <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">

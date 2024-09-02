@@ -229,31 +229,32 @@
                         <th class="w-20">Approver</th>
                         <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>                  
                     </tr>
-                    <div class="block-head">
-                        Extention Attachments
-                    </div>
-                      <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">File </th>
+                   
+                </table>
+            </div>
+            <div class="block-head">
+                Extention Attachments
+            </div>
+              <div class="border-table">
+                <table>
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-60">File </th>
+                    </tr>
+                        @if($data->extention_attachment)
+                        @foreach(json_decode($data->extention_attachment) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
                             </tr>
-                                @if($data->extention_attachment)
-                                @foreach(json_decode($data->extention_attachment) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                                @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
+                        @endforeach
+                        @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                    @endif
 
-                        </table>
-                    </div>
                 </table>
             </div>
             <div class="inner-block">
