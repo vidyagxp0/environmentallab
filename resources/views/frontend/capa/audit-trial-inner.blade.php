@@ -9,7 +9,7 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                                Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                Record - {{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div class="info-list">
 
@@ -98,7 +98,7 @@
                                 {{ $temp->previous }}
                                 @endif
                                </div>
-                            
+
                             @else
                             @if($temp->activity_type == "Activity Log" )
                             @else
@@ -115,12 +115,12 @@
                                       <div class="head">{{$temp->stage}} By</div>
                                       <div>:</div>
                                       <div> {{$temp->current}}</div>
-                                      </div>  
+                                      </div>
                                       <div class="list-item">
                                       <div class="head">{{$temp->stage}} On</div>
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
+                                     </div>
                             @else
                             <div class="list-item">
                                 <div class="head">Changed To</div>

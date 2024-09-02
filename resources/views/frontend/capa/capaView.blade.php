@@ -96,7 +96,7 @@
                             </button>
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button> --}}  
+                            </button> --}}
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
                                <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                               QA More Info Required
@@ -373,14 +373,14 @@
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+
+                                                <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->short_description }}"/>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
-        
+
                                         </div>
-        
-                                        
+
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -463,7 +463,7 @@
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Team">CAPA Team</label>
-                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} 
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     multiple id="Audit" placeholder="Select..." name="capa_team[]">
                                                     @foreach ($users as $value)
                                                         <!-- <option {{ $data->capa_team == $value->id ? 'selected' : '' }}  value="{{ $value->id }}">{{ $value->name }}</option> -->
@@ -484,7 +484,7 @@
                                                     id="">
                                                     @foreach ($old_record as $new)
                                                         <option value="{{ $new->id }}" {{ in_array($new->id, explode(',', $data->capa_related_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record)}}/{{$new->short_description}}  
+                                                            {{ Helpers::getDivisionName($new->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($new->record)}}/{{$new->short_description}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -496,8 +496,8 @@
                                             <select multiple id="capa_related_record" name="rca_related_record[]" id="">
                                             <option value="">--Select---</option>
                                                     @foreach ($rca_old_record as $new1)
-                                                        <option value="{{ $new1->id }}" {{ in_array($new->id, explode(',', $data->rca_related_record)) ? 'selected' : '' }}>
-                                                            {{ Helpers::getDivisionName($new1->division_id) }}/Root Cause Analysis/{{ date('Y') }}/{{ Helpers::recordFormat($new1->record)}}/{{$new->short_description}}  
+                                                        <option value="{{ $new1->id }}" {{ in_array($new1->id, explode(',', $data->rca_related_record)) ? 'selected' : '' }}>
+                                                            {{ Helpers::getDivisionName($new1->division_id) }}/Root Cause Analysis/{{ date('Y') }}/{{ Helpers::recordFormat($new1->record)}}/{{$new->short_description}}
                                                         </option>
                                                     @endforeach
                                                 </select>
@@ -535,7 +535,7 @@
                                                 <textarea name="containment_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->containment_comments }}</textarea>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA Attachments">CAPA Attachment</label>
@@ -544,7 +544,7 @@
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}> --}}
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="capa_attachment">
-                                                        
+
                                                         {{-- @if (is_array($data->capa_attachment)) --}}
                                                         @if ($data->capa_attachment)
                                                             @foreach (json_decode($data->capa_attachment) as $file)
@@ -583,7 +583,7 @@
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                                        <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -618,7 +618,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        
+
                                                     </tbody>
                                                         @if ($data1->product_name)
                                                         @foreach (unserialize($data1->product_name) as $key => $temps)
@@ -701,28 +701,28 @@
                                                                 <div class="input-date "><div
                                                                  class="calenderauditee">
                                                                 <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" />
-                                                                <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input" 
+                                                                <input type="date" name="material_mfg_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}" class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`)" /></div></div></div></td> -->
- 
+
                                                                 <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                               <div class="calenderauditee">
                                                                 <input type="text"   id="material_mfg_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}"/>
                                                                 <input type="date"  id="material_mfg_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_mfg_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_mfg_date)[$key]) }}
-                                                                "class="hide-input" 
+                                                                "class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
-                                                                
+
                                                                 <!-- <td><div class="group-input new-date-data-field mb-0">
                                                                     <div class="input-date "><div
                                                                      class="calenderauditee">
                                                                     <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}  value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
-                                                                    <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input" 
+                                                                    <input type="date" name="material_expiry_date[]" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" class="hide-input"
                                                                     oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`)" /></div></div></div></td> -->
                                                                     <td><div class="group-input new-date-data-field mb-0">
                                                                 <div class="input-date ">
                                                                     <div class="calenderauditee">
                                                                 <input type="text"   id="material_expiry_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}" />
-                                                                <input type="date" id="material_expiry_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_expiry_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}"class="hide-input" 
+                                                                <input type="date" id="material_expiry_date{{$key}}_checkdate" value="{{unserialize($data2->material_mfg_date)[$key]}}"  name="material_expiry_date[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($data2->material_expiry_date)[$key]) }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_expiry_date{{$key}}`);checkDate('material_mfg_date{{$key}}_checkdate','material_expiry_date{{$key}}_checkdate')"  /></div></div></div></td>
 
                                                             <td><input type="text" name="material_batch_desposition[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
@@ -734,18 +734,18 @@
                                                              <!-- <td><input type="text" id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}">
                                                             </td>  -->
-                                                            <!-- <td> 
+                                                            <!-- <td>
                                                                <select id="batch_status"
                                                                    name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                   
+
                                                                <option value="">-- Select value --</option>
                                                                   <option value="Hold">Hold</option>
                                                                   <option value="Release">Release</option>
                                                                 <option value="quarantine">Quarantine</option>
                                                                 value="{{ unserialize($data2->material_batch_status)[$key] ? unserialize($data2->material_batch_status)[$key] : '' }}" >
-                                                            </select>   
+                                                            </select>
                                                         </td> -->
-                                                        <td> 
+                                                        <td>
                                                             <select id="batch_status" name="material_batch_status[]"{{ $data->stage == 0 || $data->stage == 6 ? ' disabled' : '' }}>
                                                                 <option value="">-- Select value --</option>
                                                                 <option value="Hold"{{ isset(unserialize($data2->material_batch_status)[$key]) && unserialize($data2->material_batch_status)[$key] == 'Hold' ? ' selected' : '' }}>Hold</option>
@@ -827,8 +827,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -836,7 +836,7 @@
                             </div>
 
                             <!-- Project Study content -->
-                            <div id="CCForm3" class="inner-block cctabcontent">
+                            {{-- <div id="CCForm3" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="row">
                                         <div class="col-lg-6">
@@ -856,7 +856,7 @@
                                             </div>
                                         </div>
 
-                                        {{-- <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Protocol/Study Number">Initiator Group</label>
                                                 <select name="initiator_group"
@@ -900,7 +900,7 @@
                                                     </option>
                                                 </select>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Site Number">Site Number</label>
@@ -949,8 +949,8 @@
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
-                            </div>
-                              <div id="CCForm8" class="inner-block cctabcontent">
+                            </div> --}}
+                              {{-- <div id="CCForm8" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
                                     <div class="sub-head">
                                         CFT Information
@@ -981,7 +981,7 @@
                                                 </select>
 
                                             </div>
-                                        </div> 
+                                        </div>
 
 
                                      </div>
@@ -1085,10 +1085,10 @@
                                                 <label for="Additional Attachments">Additional Attachments</label>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="additional_attachments">
-                                                        {{-- @if (is_array($data->additional_attachments)) --}}
+                                                        @if (is_array($data->additional_attachments))
                                                         @if ($data->additional_attachments)
-                                                           @foreach(json_decode($data->additional_attachments) as $file) 
-                                                          <h6 type="button" class="file-container text-dark" 
+                                                           @foreach(json_decode($data->additional_attachments) as $file)
+                                                          <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
                                                                     <a href="{{ asset('upload/' . $file) }}"
@@ -1100,9 +1100,9 @@
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
-                                                         @endforeach 
+                                                         @endforeach
                                                              @endif
-                                                        </div> 
+                                                        </div>
                                                      <div class="add-btn">
                                                         <div>Add</div>
                                                         <input type="file" id="myfile"
@@ -1112,7 +1112,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>  
+                                        </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
@@ -1120,10 +1120,10 @@
                                             onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     </div>
-                                </div>  
-                            </div> 
+                                </div>
+                            </div> --}}
                                <!-- Group Commentes-->
-                             <div id="CCForm7" class="inner-block cctabcontent">
+                             {{-- <div id="CCForm7" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
 
                                     <div class="sub-head">
@@ -1142,9 +1142,9 @@
                                                 <label for="comments">CFT Attachment</label>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="cft_attchament_new">
-                                                        {{-- @if (is_array($data->cft_attchament_new)) --}}
+                                                        @if (is_array($data->cft_attchament_new))
                                                                  @if ($data->cft_attchament_new)
-                                                                     @foreach (json_decode($data->cft_attchament_new) as $file) 
+                                                                     @foreach (json_decode($data->cft_attchament_new) as $file)
                                                                   <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file }}</b>
@@ -1156,8 +1156,8 @@
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
-                                                                </h6> 
-                                                             @endforeach 
+                                                                </h6>
+                                                             @endforeach
                                                                  @endif
                                                     </div>
                                                     <div class="add-btn">
@@ -1168,8 +1168,8 @@
                                                     </div>
                                                 </div>
 
-                                            </div> 
-                                        </div> 
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="sub-head">
@@ -1225,17 +1225,17 @@
                                                 <textarea name="Group_comments_new"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->Group_comments_new}}</textarea>
                                             </div>
                                         </div>
-                                       
+
                                          <div class="col-12">
-                                    
+
                                             <div class="group-input">
                                                 <label for="group-attachments">Group Attachments</label>
                                                 <div class="file-attachment-field">
                                                     <div class="file-attachment-list" id="group_attachments_new">
-                                                       
-                                                        {{-- @if (is_array($data->group_attachments_new)) --}}
+
+                                                        @if (is_array($data->group_attachments_new))
                                                         @if ($data->group_attachments_new)
-                                                             @foreach (json_decode($data->group_attachments_new) as $file) 
+                                                             @foreach (json_decode($data->group_attachments_new) as $file)
                                                                 <h6 type="button" class="file-container text-dark"
                                                                     style="background-color: rgb(243, 242, 240);">
                                                                     <b>{{ $file}}</b>
@@ -1248,8 +1248,8 @@
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
-                                                             @endforeach 
-                                                       
+                                                             @endforeach
+
                                                         @endif
                                                     </div>
                                                     <div class="add-btn">
@@ -1261,7 +1261,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
@@ -1270,7 +1270,7 @@
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <!-- CAPA Details content -->
                             <div id="CCForm4" class="inner-block cctabcontent">
                                 <div class="inner-block-content">
@@ -1315,8 +1315,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1390,8 +1390,8 @@
                                                 <label for="Effect.Check Creation Date">Effect.Check Creation
                                                     Date</label>
                                                 <input type="date" name="effect_check_date"
-                                                    value="{{ $data->effect_check_date }}"> 
-                                                    <div class="calenderauditee">                                     
+                                                    value="{{ $data->effect_check_date }}">
+                                                    <div class="calenderauditee">
                                                         <input type="text"  value="{{ $data->effect_check_date }}" id="effect_check_date"  readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" name="effect_check_date" value=""
                                                         class="hide-input"
@@ -1445,8 +1445,8 @@
                                     </div>
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                        <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
@@ -1559,16 +1559,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    
+
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
-                                        {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button> --}}
+                                        <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="submit"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Submit</button>
                                         <button type="button"> <a class="text-white"href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
-                             
+
                         </div>
                     </form>
 
@@ -1640,7 +1640,7 @@
                                             Extension
                                         </label> -->
                                     @endif
-                                    
+
                                     @if ($data->stage == 6)
                                         <label for="major">
                                             <input type="radio" name="child_type" value="effectiveness_check">
@@ -1985,12 +1985,12 @@
                  <script>
                     document.addEventListener('DOMContentLoaded', function () {
                         const removeButtons = document.querySelectorAll('.remove-file');
-        
+
                         removeButtons.forEach(button => {
                             button.addEventListener('click', function () {
                                 const fileName = this.getAttribute('data-file-name');
                                 const fileContainer = this.closest('.file-container');
-        
+
                                 // Hide the file container
                                 if (fileContainer) {
                                     fileContainer.style.display = 'none';
@@ -1998,12 +1998,12 @@
                             });
                         });
                     });
-                </script> 
+                </script>
                 <script>
                     var maxLength = 255;
                     $('#docname').keyup(function() {
                         var textlen = maxLength - $(this).val().length;
                         $('#rchars').text(textlen);});
                 </script>
-                
+
         @endsection
