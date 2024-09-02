@@ -511,19 +511,19 @@
                     </tr>
 
                     <tr>
-                        <th class="w-20">Not Effective Approval Complete By
+                        <th class="w-20">Not Effective Approval Completed By
                         </th>
                         <td class="w-80">{{ $data->not_effective_approval_complete_by }}</td>
                         <th class="w-20">
-                            Not Effective Approval Complete On</th>
+                            Not Effective Approval Completed On</th>
                         <td class="w-80">{{ $data->not_effective_approval_complete_on }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Effective Approval Complete By
+                        <th class="w-20">Effective Approval Completed By
                         </th>
                         <td class="w-80">{{ $data->effective_approval_complete_by }}</td>
                         <th class="w-20">
-                            Effective Approval Complete On</th>
+                            Effective Approval Completed On</th>
                         <td class="w-80">{{ $data->effective_approval_complete_on }}</td>
                     </tr>
 
