@@ -367,7 +367,7 @@
                                                                 {{ $temp->root_document ? $temp->root_document->document_name : '' }}
                                                             </td>
                                                             <td>{{ $temp->root_document->due_dateDoc }}</td>
-                                                            <td>{{ $temp->status }}</td>
+                                                            <td>{{ $temp->document_status }}</td>
                                                             <td>{{ $temp->root_document->effective_date }}</td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
@@ -391,7 +391,7 @@
                                                                 {{ $temp->root_document ? $temp->root_document->document_name : '' }}
                                                             </td>
                                                             <td>{{ $temp->root_document->due_dateDoc }}</td>
-                                                            <td>{{ $temp->root_document->status }}</td>
+                                                            <td>{{ $temp->root_document->document_status }}</td>
                                                             <td>{{ $temp->root_document->effective_date ? $temp->root_document->effective_date : '-'  }}</td>
                                                             <td>{{ $temp->originator }}</td>
                                                         </tr>
