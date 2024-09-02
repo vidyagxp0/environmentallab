@@ -353,7 +353,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="agenda">
-                                            Agenda<button type="button" name="agenda"   onclick="addAgendaManRev('agenda')">+</button>
+                                            Agenda<button type="button" name="agenda"   onclick="addAgendaManRev('agenda')"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>+</button>
                                         </label>
                                         <table class="table table-bordered" id="agenda">
                                             <thead>
@@ -409,7 +409,7 @@
                                     <label for="management_review_participants">
                                         Management Review Participants
                                         <button type="button"
-                                             onclick="addManagementReviewParticipants('management_review_participants')">+</button>
+                                             onclick="addManagementReviewParticipants('management_review_participants')"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>+</button>
                                     </label>
                                     <div class="instruction">
                                         <small class="text-primary">
@@ -584,7 +584,7 @@
                             <div class="group-input">
                                 <label for="performance_evaluation">
                                     Performance Evaluation
-                                    <button type="button" name="performance_evaluation"  onclick="addPerformanceEvoluation('performance_evaluation')">+</button>
+                                    <button type="button" name="performance_evaluation"  onclick="addPerformanceEvoluation('performance_evaluation')"{{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>+</button>
                                     <span class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#management-review-performance_evaluation-instruction-modal"
                                         style="font-size: 0.8rem; font-weight: 400; cursor:pointer;">
@@ -717,7 +717,7 @@
                         <div class="inner-block-content">
                             <div class="group-input">
                                 <label for="action_item_details">
-                                    Action Item Details<button type="button" name="action_item_details"  onclick="addActionItemDetails('action_item_details')" id="action_item">+</button>
+                                    Action Item Details<button type="button" name="action_item_details"  onclick="addActionItemDetails('action_item_details')" id="action_item"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>+</button>
                                 </label>
                                 <table class="table table-bordered" id="action_item_details">
                                     <thead>
@@ -788,7 +788,7 @@
                             </div>
                             <div class="group-input">
                                 <label for="capa-details">
-                                    CAPA Details<button  type="button" name="capa-details" id="capa_detail">+</button>
+                                    CAPA Details<button  type="button" name="capa-details" id="capa_detail"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>+</button>
                                 </label>
                                 <table class="table table-bordered" id="capa_detail_details">
                                     <thead>
@@ -839,7 +839,7 @@
                                                                 </select>
                                                             </td> --}}
                                                             <td>
-                                                                <select id="select-state" placeholder="Select..." name="capa_type[]" >
+                                                                <select id="select-state" placeholder="Select..." name="capa_type[]"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} >
                                                                     <option value="">Select a value</option>
                                                                     <option value="corrective" {{ (unserialize($capa_detail_details->capa_type)[$key] == "corrective")?"selected":""}}>Corrective Action</option>
                                                                     <option value="preventive" {{ (unserialize($capa_detail_details->capa_type)[$key] == "preventive")?"selected":""}}>Preventive Action</option>
@@ -951,14 +951,14 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed By">Completed By</label>
+                                        <label for="Completed By">All Actions Completed By</label>
                                          <div class="static">{{ $data->completed_by }}</div> 
                                     </div>
                                 </div>
-                           
+                        `   
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed On">Completed On</label>
+                                        <label for="Completed On">All Actions Completed On</label>
                                          <div class="static">{{ $data->completed_on}}</div> 
                                     </div>
                                 </div>
