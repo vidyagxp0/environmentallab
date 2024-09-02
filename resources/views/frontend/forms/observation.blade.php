@@ -53,7 +53,7 @@
                 <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Signatures</button>
             </div>
 
-            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">\
+            <form action="{{ route('observationstore') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div id="step-form">
 

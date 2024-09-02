@@ -269,7 +269,8 @@ $users = DB::table('users')
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_code"
-                                            value="{{ $data->division_code }} ">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
@@ -343,7 +344,7 @@ $users = DB::table('users')
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         
-                                        <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                        <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->short_description }}">
                                     </div>
                                           {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
                              </div>
@@ -1022,14 +1023,26 @@ $users = DB::table('users')
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed_By">Completed By</label>
+                                        <label for="Completed_By">Report Issued By</label>
                                         <div class="static">{{ $data->Completed_By }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed_On">Completed On</label>
+                                        <label for="Completed_On">Report Issued On</label>
                                         <div class="static">{{ $data->completed_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_By">Complete By</label>
+                                        <div class="static">{{ $data->QA_Approved_By }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_On">Complete On</label>
+                                        <div class="static">{{ $data->QA_Approved_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

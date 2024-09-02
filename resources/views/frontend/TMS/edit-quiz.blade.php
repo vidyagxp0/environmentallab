@@ -30,8 +30,8 @@
                 <div class="inner-block-content">
                     <div class="row">
                         <div class="col-12">
-                            <div class="group-input">
-                                <label for="title">Title</label>
+                            <div class="group-input" >
+                                <label for="title">Title <span class="text-danger">*</span> </label>
                                 <input type="text" id="quize-title" value="{{ $quize->title }}" name="title" >
                             </div>
                             <p id="quizecheck"
@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-lg-6">
                             <div class="group-input">
-                                <label for="pass-percent">Passing Percentage</label>
+                                <label for="pass-percent">Passing Percentage <span class="text-danger">*</span> </label>
                                 <input type="number" id="passing-percentage" value="{{ $quize->passing }}" name="passing">
                             </div>
                             <p id="passingcheck"
