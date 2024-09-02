@@ -2270,9 +2270,9 @@
                     <table>
 
                     <tr>
-                        <th class="w-20">Completed By</th>
+                        <th class="w-20">All Actions Completed By</th>
                         <td class="w-30">{{ $managementReview->completed_by }}</td>
-                        <th class="w-20">Completed On</th>
+                        <th class="w-20">All Actions Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
                     </tr>
                     <tr>

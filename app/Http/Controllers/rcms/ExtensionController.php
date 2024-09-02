@@ -136,19 +136,132 @@ class ExtensionController extends Controller
             $appro->save();
         }
 
+        if (!empty($request->short_description)) {
 
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Short Description';
+            $history->previous = "Null";
+            $history->current = $openState->short_description;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+            }
+        // if (!empty($request->initiator_id)) {
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
-        $history->activity_type = 'Approver';
+        $history->activity_type  = 'Initiator';
         $history->previous = "Null";
-        $history->current = $openState->approver1;
+        $history->current = Helpers::getInitiatorName($openState->initiator_id);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
+        // }
+        if (!empty($request->intiation_date)) {
+
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Date Of Initiation';
+        $history->previous = "Null";
+        $history->current = $openState->intiation_date;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+        }
+        if (!empty($request->due_date)) {
+
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Current Parent Due Date';
+        $history->previous = "Null";
+        $history->current = $openState->due_date;
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+        }
+            if (!empty($request->revised_date)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Revised Due Date';
+            $history->previous = "Null";
+            $history->current = $openState->revised_date;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+            }
+        if (!empty($request->justification)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Justification of Extention';
+            $history->previous = "Null";
+            $history->current = $openState->justification;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+        }
+        if (!empty($request->justification)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Justification of Extention';
+            $history->previous = "Null";
+            $history->current = $openState->justification;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+         }
+        if (!empty($request->division_id)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Division Code';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName($openState->division_id);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+         }
+        if (!empty($request->approver1)) {
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Approver';
+            $history->previous = "Null";
+            $history->current = $openState->approver1;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+        }
+        if (!empty($request->approver_comments)) {
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
@@ -161,19 +274,9 @@ class ExtensionController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-
-        $history = new ExtensionAuditTrail();
-        $history->extension_id = $openState->id;
-        $history->activity_type = 'Short Description';
-        $history->previous = "Null";
-        $history->current = $openState->short_description;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
-
+        }
+       
+        if (!empty($request->justification)) {
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
         $history->activity_type = 'Justification of Extention';
@@ -185,6 +288,9 @@ class ExtensionController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
+        }
+
+        if (!empty($request->initiated_through)) {
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
@@ -197,6 +303,22 @@ class ExtensionController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
+        }
+        if (!empty($request->approver_comments)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $openState->id;
+            $history->activity_type = 'Approver Comments';
+            $history->previous = "Null";
+            $history->current = $openState->approver_comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+            }
+        if (!empty($request->initiated_if_other)) {
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
@@ -209,6 +331,9 @@ class ExtensionController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
+        }
+        
+        if (!empty($request->extention_attachment)) {
 
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
@@ -221,7 +346,9 @@ class ExtensionController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        
+        }
+        if (!empty($request->closure_attachments)) {
+
         $history = new ExtensionAuditTrail();
         $history->extension_id = $openState->id;
         $history->activity_type = 'Closure Attachments';
@@ -233,7 +360,7 @@ class ExtensionController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-
+        }
         DocumentService::update_qms_numbers();
 
         toastr()->success('Document created');
@@ -316,6 +443,35 @@ class ExtensionController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        if ($lastDocument->due_date != $openState->due_date || !empty($request->due_date_comment)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Current Parent Due Date';
+            $history->previous = $lastDocument->due_date;
+            $history->current = Helpers::getdateFormat($openState->due_date);
+            $history->comment = $request->approver1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+        if ($lastDocument->revised_date != $openState->revised_date || !empty($request->revised_date_comment)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Revised Due Date';
+            $history->previous = $lastDocument->revised_date;
+            $history->current = Helpers::getdateFormat($openState->revised_date);
+            $history->comment = $request->approver1_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
         if ($lastDocument->approver_comments != $openState->approver_comments || !empty($request->approver_comment)) {
 
             $history = new ExtensionAuditTrail();
@@ -373,6 +529,21 @@ class ExtensionController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        if ($lastDocument->approver_comments != $openState->approver_comments || !empty($request->approver_comments_comment)) {
+
+            $history = new ExtensionAuditTrail();
+            $history->extension_id = $id;
+            $history->activity_type = 'Approver Comments';
+            $history->previous = $lastDocument->approver_comments;
+            $history->current = $openState->approver_comments;
+            $history->comment = $request->approver_comments_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
 
         if ($lastDocument->initiated_if_other != $openState->initiated_if_other || !empty($request->initiated_if_other_comment)) {
 

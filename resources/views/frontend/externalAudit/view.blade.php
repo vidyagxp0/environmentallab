@@ -155,7 +155,14 @@ function addMultipleFiles(input, block_id) {
             cell6.innerHTML = "<input type='time' name='scheduled_end_time[]' >";
 
             var cell7 = newRow.insertCell(6);
-            var userHtml = "<input type='text' name='auditor'> ";
+            // var userHtml = "<input type='text' name='auditor'> ";
+            var userHtml = '<select name="auditor[]"><option value="">-- Select --</option>';
+                    for (var i = 0; i < users.length; i++) {
+                        userHtml += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
+                    }
+                    userHtml +='</select>';
+            
+                    cell7.innerHTML = userHtml;
             
                     // cell7.innerHTML = userHtml;
 
@@ -439,6 +446,7 @@ function addMultipleFiles(input, block_id) {
                                                     name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                             </div>
                                         </div>
+                                        
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
@@ -823,9 +831,9 @@ function addMultipleFiles(input, block_id) {
                                                                     value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
                                                             </td>
                                                             <td> 
-                                                                <input type="text" name="auditor"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                    value="{{ $grid_data->auditor }}">
-                                                                {{-- <select id="select-state" placeholder="Select..."
+                                                                {{-- <input type="text" name="auditor"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    value="{{ $grid_data->auditor }}"> --}}
+                                                                <select id="select-state" placeholder="Select..."
                                                                 name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)
@@ -835,9 +843,9 @@ function addMultipleFiles(input, block_id) {
                                                                         {{ $value->name }}
                                                                     </option>
                                                                 @endforeach
-                                                            </select> --}}
+                                                            </select>
                                                         </td>
-                                                            <td> <select multiple id="auditee" placeholder="Select..."
+                                                            <td> <select  id="select-state" placeholder="Select..."
                                                                 name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                 <option value="">-Select-</option>
                                                                 @foreach ($users as $value)

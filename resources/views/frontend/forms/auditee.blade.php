@@ -228,7 +228,7 @@
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
-                                            value="{{ Helpers::getDivisionName(session()->get('division')) }}/EA/{{ date('Y') }}/{{ $record_number }}">
+                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}/EA/{{ date('Y') }}/{{ $record_number }}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
@@ -319,9 +319,9 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
                                         </div>
                                     </div>
                                 </div>
@@ -647,16 +647,16 @@
 
                                                 <td><input type="time" name="scheduled_end_time[]"></td>
                                                 
-                                                <td> <input type="text" name="auditor"> 
-                                                    {{-- <select id="select-state" placeholder="Select..." name="auditor[]">
+                                                <td>  
+                                                    <select id="select-state" placeholder="Select..." name="auditor[]">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
                                                             </option>
                                                         @endforeach
-                                                    </select> --}}
+                                                    </select>
                                                 </td>
-                                                <td><select multiple id="auditee" placeholder="Select..." name="auditee[]">
+                                                <td><select  id="select-state" placeholder="Select..." name="auditee[]">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $data)
                                                             <option value="{{ $data->id }}">{{ $data->name }}
