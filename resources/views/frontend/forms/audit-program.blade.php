@@ -496,14 +496,14 @@
                                                         <div class="input-date "><div class="calenderauditee">
                                                         <input type="text" id="start_date" readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" id="start_date_checkdate" name="start_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"   class="hide-input" 
-                                                        oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
+                                                        oninput="handleDateInput(this, 'start_date'); checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
                                                     {{-- <td><input type="date" name="end_date[]"></td> --}}
                                                     <td><div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date "><div
                                                          class="calenderauditee">
                                                         <input type="text" id="end_date" readonly placeholder="DD-MMM-YYYY" />
                                                         <input type="date" id="end_date_checkdate"  name="end_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
-                                                        oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
+                                                        oninput="handleDateInput(this, 'end_date'); checkDate('start_date_checkdate','end_date_checkdate')" /></div></div></div></td>
                                                     <td> <select id="select-state" placeholder="Select..."
                                                             name="lead_investigator[]">
                                                             <option value="">Select a value</option>

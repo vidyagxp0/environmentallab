@@ -306,8 +306,8 @@
                         @if ($AuditProgramGrid)
                         @foreach (unserialize($AuditProgramGrid->auditor) as $key => $temps)
                         <tr>
-                            <td class="w-15"><input disabled type="text" name="serial_number[]" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                            value="{{ $key + 1 }}" ></td>
+                            <td class="w-15">
+                            {{ $key + 1 }}</td>
                             <td class="w-15"> <select id="select-state" placeholder="Select..."
                                                                     name="Auditees[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
                                                                     <option value="">-Select-</option>
