@@ -335,7 +335,7 @@
                                                     <label for="rls">Record Number</label>
                                                     <div class="static">
                                                         <input disabled type="text"
-                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '001' }}">
+                                                            value=" {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -634,6 +634,14 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            @if ($data->in_attachment)
+                                                @foreach (json_decode($data->in_attachment) as $file)
+                                                    <input id="2-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files_initial[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="others">Initial attachment</label>
@@ -650,6 +658,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                         data-remove-id="2-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -818,6 +827,15 @@
                                                     </select>
                                                 </div>
                                             </div>
+
+
+                                            @if ($review->qa_head)
+                                                @foreach (json_decode($review->qa_head) as $file)
+                                                    <input id="3-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files_qa_head[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="qa head">QA Attachments</label>
@@ -833,6 +851,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                        data-remove-id="3-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -858,6 +877,13 @@
                                     </div>
                                 </div>
 
+                                @if ($evaluation->qa_eval_attach)
+                                    @foreach (json_decode($evaluation->qa_eval_attach) as $file)
+                                        <input id="4-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files_eval[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div id="CCForm4" class="inner-block cctabcontent">
                                     <div class="inner-block-content">
                                         <div class="sub-head">
@@ -879,6 +905,7 @@
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
+                                                                data-remove-id="4-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -1107,6 +1134,14 @@
                                                     <textarea name="cft_comments">{{ $comments->cft_comments }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($comments->cft_attchament)
+                                                @foreach (json_decode($comments->cft_attchament) as $file)
+                                                    <input id="5-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files_cftAttach[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-lg-12">
                                                 <div class="group-input">
                                                     <label for="comments">Attachment</label>
@@ -1122,6 +1157,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                        data-remove-id="5-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1192,6 +1228,14 @@
                                                     <textarea name="Group_comments">{{ $comments->Group_comments }}</textarea>
                                                 </div>
                                             </div>
+
+                                            @if ($comments->group_attachments)
+                                                @foreach (json_decode($comments->group_attachments) as $file)
+                                                    <input id="6-{{ $loop->index }}" type="hidden"
+                                                    name="existing_attach_files_group_attachments[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                                @endforeach
+                                            @endif
                                             <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="group-attachments">Attachments</label>
@@ -1207,6 +1251,7 @@
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                                         <a type="button" class="remove-file"
+                                                                        data-remove-id="6-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
                                                                                 style="color:red; font-size:20px;"></i></a>
@@ -1342,6 +1387,14 @@
                                             <label for="feedback">Training Feedback</label>
                                             <textarea name="feedback">{{ $approcomments->feedback }}</textarea>
                                         </div>
+
+                                        @if ($approcomments->tran_attach)
+                                            @foreach (json_decode($approcomments->tran_attach) as $file)
+                                                <input id="7-{{ $loop->index }}" type="hidden"
+                                                name="existing_attach_files_training[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="group-input">
                                             <label for="tran-attach">Training Attachments</label>
                                             <div class="file-attachment-field">
@@ -1355,6 +1408,7 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
+                                                                data-remove-id="7-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -1457,10 +1511,18 @@
                                             <label for="qa-closure-comments">QA Closure Comments</label>
                                             <textarea name="qa_closure_comments">{{ $closure->qa_closure_comments }}</textarea>
                                         </div>
+
+                                        @if ($closure->attach_list)
+                                            @foreach (json_decode($closure->attach_list) as $file)
+                                                <input id="8-{{ $loop->index }}" type="hidden"
+                                                name="existing_attach_files_attach_list[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="group-input">
                                             <label for="attach-list">List Of Attachments</label>
                                             <div class="file-attachment-field">
-                                                <div class="file-attachment-list" id="tran_attach">
+                                                <div class="file-attachment-list" id="attach_list">
                                                     @if ($closure->attach_list)
                                                         @foreach (json_decode($closure->attach_list) as $file)
                                                             <h6 type="button" class="file-container text-dark"
@@ -1470,6 +1532,7 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
+                                                                data-remove-id="8-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
@@ -1594,6 +1657,7 @@
                                                     </div>
                                                 </div>
                                             @endif
+
                                             @if ($data->stage == 0)
                                                 <div class="col-lg-6">
                                                     <div class="group-input">
@@ -1626,6 +1690,8 @@
                                                     </div>
                                                 </div>
                                             @endif
+
+
                                             {{-- <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">More Information Required By</label>
@@ -1719,38 +1785,6 @@
                                                 </div>
                                             </div>
 
-                                            {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT Reviewed By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 5)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">CFT Reviewed On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 5)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
-
-
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">CFT/SME/QA Review Not required By</label>
@@ -1814,37 +1848,6 @@
                                                 </div>
                                             </div>
 
-
-                                            {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Change Implemented By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 8)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Change Implemented On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 8)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">Implemented By</label>
@@ -2384,6 +2387,17 @@
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
+    </script>
+
     <script>
         function calculateRiskAnalysis(selectElement) {
             // Get the row containing the changed select element

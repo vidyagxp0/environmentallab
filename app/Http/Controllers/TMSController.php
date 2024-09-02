@@ -176,7 +176,9 @@ class TMSController extends Controller
         if(Helpers::checkRoles(6) || Helpers::checkRoles(3)){
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
-            $due = DocumentTraining::where('trainer', Auth::user()->id)->whereIn('status', ["Past-due", 'Assigned', 'Complete'])->get();
+            $due = DocumentTraining::where('document_trainings.trainer', Auth::user()->id)->whereIn('document_trainings.status', ["Past-due", 'Assigned', 'Complete'])
+            ->leftjoin('documents', 'documents.id', 'document_trainings.document_id')->get(['document_trainings.*', 'documents.status as document_status']);
+            // dd($due);
             $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
 
             foreach($due as $temp){

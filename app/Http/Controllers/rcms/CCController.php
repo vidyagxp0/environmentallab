@@ -50,9 +50,10 @@ class CCController extends Controller
 
         if ($division) {
             $last_cc = CC::where('division_id', $division->id)->latest()->first();
+            dd($last_cc);
 
             if ($last_cc) {
-                $record_number = $last_cc->record_number ? str_pad($last_cc->record_number->record_number + 1, 4, '0', STR_PAD_LEFT) : '0001';
+                $record_number = $last_cc->record_number ? str_pad($last_cc->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
             } else {
                 $record_number = '0001';
             }
@@ -1362,9 +1363,15 @@ class CCController extends Controller
 
         $openState->due_date_extension = $request->due_date_extension;
 
-
+        $files = is_array($request->existing_attach_files_initial) ? $request->existing_attach_files_initial : null;
         if (!empty($request->in_attachment)) {
-            $files = [];
+            if ($openState->in_attachment) {
+                $existingFiles = json_decode($openState->in_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('in_attachment')) {
                 foreach ($request->file('in_attachment') as $file) {
                     $name = "CC" . '-in_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1372,8 +1379,9 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-            $openState->in_attachment = json_encode($files);
         }
+        $openState->in_attachment = !empty($files) ? json_encode(array_values($files)) : null;
+
         $openState->update();
 
         $lastdocdetail = Docdetail::where('cc_id', $id)->first();
@@ -1408,8 +1416,16 @@ class CCController extends Controller
         if ($request->related_records) {
             $review->related_records = implode(',', $request->related_records);
         }
+
+        $files = is_array($request->existing_attach_files_qa_head) ? $request->existing_attach_files_qa_head : null;
         if (!empty($request->qa_head)) {
-            $files = [];
+            if ($review->qa_head) {
+                $existingFiles = json_decode($review->qa_head, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('qa_head')) {
                 foreach ($request->file('qa_head') as $file) {
                     $name = "CC" . '-qa_head' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1417,8 +1433,8 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-            $review->qa_head = json_encode($files);
         }
+        $review->qa_head = !empty($files) ? json_encode(array_values($files)) : null;
         $review->update();
 
         $lastevaluation = Evaluation::where('cc_id', $id)->first();
@@ -1431,8 +1447,15 @@ class CCController extends Controller
             $evaluation->training_required = $request->training_required;
         }
 
+        $files = is_array($request->existing_attach_files_eval) ? $request->existing_attach_files_eval : null;
         if (!empty($request->qa_eval_attach)) {
-            $files = [];
+            if ($evaluation->qa_eval_attach) {
+                $existingFiles = json_decode($evaluation->qa_eval_attach, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('qa_eval_attach')) {
                 foreach ($request->file('qa_eval_attach') as $file) {
                     $name = "CC" . '-qa_eval_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1440,8 +1463,8 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-            $evaluation->qa_eval_attach = json_encode($files);
         }
+        $evaluation->qa_eval_attach = !empty($files) ? json_encode(array_values($files)) : null;
         $evaluation->update();
 
         $lastinfo = AdditionalInformation::where('cc_id', $id)->first();
@@ -1492,8 +1515,16 @@ class CCController extends Controller
         $comments->Group_comments = $request->Group_comments;
         $comments->cft_comments = $request->cft_comments;
 
+
+        $files = is_array($request->existing_attach_files_group_attachments) ? $request->existing_attach_files_group_attachments : null;
         if (!empty($request->group_attachments)) {
-            $files = [];
+            if ($comments->group_attachments) {
+                $existingFiles = json_decode($comments->group_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('group_attachments')) {
                 foreach ($request->file('group_attachments') as $file) {
                     $name = "CC" . '-group_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1501,10 +1532,18 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-            $comments->group_attachments = json_encode($files);
         }
+        $comments->group_attachments = !empty($files) ? json_encode(array_values($files)) : null;
+
+        $files = is_array($request->existing_attach_files_cftAttach) ? $request->existing_attach_files_cftAttach : null;
         if (!empty($request->cft_attchament)) {
-            $files = [];
+            if ($comments->cft_attchament) {
+                $existingFiles = json_decode($comments->cft_attchament, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('cft_attchament')) {
                 foreach ($request->file('cft_attchament') as $file) {
                     $name = "CC" . '-cft_attchament' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1512,8 +1551,8 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-            $comments->cft_attchament = json_encode($files);
         }
+        $comments->cft_attchament = !empty($files) ? json_encode(array_values($files)) : null;
         $comments->update();
 
         $lastassessment = RiskAssessment::where('cc_id', $id)->first();
@@ -1534,8 +1573,16 @@ class CCController extends Controller
         $approcomments->qa_appro_comments = $request->qa_appro_comments;
         $approcomments->feedback = $request->feedback;
 
+
+        $files = is_array($request->existing_attach_files_training) ? $request->existing_attach_files_training : null;
         if (!empty($request->tran_attach)) {
-            $files = [];
+            if ($approcomments->tran_attach) {
+                $existingFiles = json_decode($approcomments->tran_attach, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('tran_attach')) {
                 foreach ($request->file('tran_attach') as $file) {
                     $name = "CC" . '-tran_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1543,9 +1590,8 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-            $approcomments->tran_attach = json_encode($files);
         }
-
+        $approcomments->tran_attach = !empty($files) ? json_encode(array_values($files)) : null;
         $approcomments->update();
 
         $lastclosure = ChangeClosure::where('cc_id', $id)->first();
@@ -1583,8 +1629,15 @@ class CCController extends Controller
         $closure->effective_check = $request->effective_check;
         $closure->effective_check_date = $request->effective_check_date;
 
+        $files = is_array($request->existing_attach_files_attach_list) ? $request->existing_attach_files_attach_list : null;
         if (!empty($request->attach_list)) {
-            $files = [];
+            if ($closure->attach_list) {
+                $existingFiles = json_decode($closure->attach_list, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('attach_list')) {
                 foreach ($request->file('attach_list') as $file) {
                     $name = "CC" . '-attach_list' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1592,9 +1645,8 @@ class CCController extends Controller
                     $files[] = $name;
                 }
             }
-            $closure->attach_list = json_encode($files);
         }
-
+        $closure->attach_list = !empty($files) ? json_encode(array_values($files)) : null;
         $closure->update();
 
         if ($lastDocument->short_description != $request->short_description) {
@@ -2389,18 +2441,19 @@ class CCController extends Controller
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
                     $changeControl->status = "Under Supervisor Review";
-                            $history = new RcmDocHistory;
-                            $history->cc_id = $id;
-                            $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = Auth::user()->name;
-                            $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastDocument->status;
-                            $history->stage = 'Submit';
-                            $history->save();
+                    
+                    $history = new RcmDocHistory;
+                    $history->cc_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = "";
+                    $history->current = Auth::user()->name;
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Submit';
+                    $history->save();
             //  $list = Helpers::getHodUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
