@@ -274,7 +274,7 @@ class CapaController extends Controller
         if (!empty($capa->division_code)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Site/Location Code';
             $history->previous = "Null";
             $history->current = $capa->division_code;
             $history->comment = "NA";
@@ -914,19 +914,19 @@ class CapaController extends Controller
 
 
 
-        if ($lastDocument->division_code != $capa->division_code || !empty($request->division_codec_comment)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'Division Code';
-            $history->previous = $lastDocument->division_code;
-            $history->current = $capa->division_code;
-            $history->comment = $request->division_code_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastDocument->division_code != $capa->division_code || !empty($request->division_codec_comment)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $id;
+        //     $history->activity_type = 'Division Code';
+        //     $history->previous = $lastDocument->division_code;
+        //     $history->current = $capa->division_code;
+        //     $history->comment = $request->division_code_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         if ($lastDocument->general_initiator_group != $capa->general_initiator_group || !empty($request->general_initiator_group_comment)) {
 

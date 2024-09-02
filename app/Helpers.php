@@ -54,7 +54,7 @@ class Helpers
 
     public static function isRevised($data)
     {   
-        if($data  >= 8){
+        if($data  >= 5){
             return 'disabled';
         }else{
             return  '';

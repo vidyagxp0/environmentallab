@@ -39,12 +39,12 @@
                         '"></td>' +
                         '<td><input type="text" name="material_name[]"></td>' +
                         '<td><input type="text" name="material_batch_no[]"></td>' +
-                       
+
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_mfg_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_mfg_date[]" id="material_mfg_date' + serialNumber +'_checkdate"  class="hide-input" oninput="handleDateInput(this, `material_mfg_date' + serialNumber +'`);checkDate(`material_mfg_date1' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
-                        
+
                         '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="material_expiry_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="material_expiry_date[]" id="material_expiry_date'+ serialNumber +'_checkdate" class="hide-input" oninput="handleDateInput(this, `material_expiry_date' + serialNumber +'`);checkDate(`material_mfg_date' + serialNumber +'_checkdate`,`material_expiry_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
-                        
+
                         '<td><input type="text" name="material_batch_desposition[]"></td>' +
                         '<td><input type="text" name="material_remark[]"></td>' +
                         '<td><select name="material_batch_status[]">' +
@@ -55,8 +55,8 @@
                     }
 
                     html += '</select></td>' +
-                      
-                     
+
+
                         '</tr>';
 
                     return html;
@@ -84,7 +84,7 @@
     {{-- ======================================
                     DATA FIELDS
     ======================================= --}}
-  
+
     <div id="change-control-fields">
         <div class="container-fluid">
 
@@ -137,6 +137,11 @@
                                             value="{{ Auth::user()->name }}">
                                     </div>
                                 </div>
+
+
+
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due">Date of Initiation</label>
@@ -144,6 +149,8 @@
                                         <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
                                     </div>
                                 </div>
+
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
@@ -173,7 +180,25 @@
                                         </div>
                                     </div>
                                 </div> -->
+
+
+
                                 <div class="col-lg-6 new-date-data-field">
+                                    <div class="group-input input-date">
+                                        <label for="Date Due">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                        </div>
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {{-- old due date --}}
+                                {{-- <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due"> Due Date</label>
                                          <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
@@ -184,7 +209,12 @@
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
+
+
+
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group">Initiator Group</label>
@@ -251,7 +281,7 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -377,7 +407,7 @@
                                     <option value="">--Select---</option>
                                             @foreach ($rca_old_record as $new1)
                                                 <option value="{{ $new1->id }}">
-                                                    {{ Helpers::getDivisionName($new1->division_id) }}/Root Cause Analysis/{{ date('Y') }}/{{ Helpers::recordFormat($new1->record)}}/{{$new1->short_description}} 
+                                                    {{ Helpers::getDivisionName($new1->division_id) }}/Root Cause Analysis/{{ date('Y') }}/{{ Helpers::recordFormat($new1->record)}}/{{$new1->short_description}}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -408,7 +438,7 @@
                                         <textarea name="containment_comments" id="containment_comments"></textarea>
                                     </div>
                                 </div>
-                              
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
@@ -434,7 +464,7 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
-                                {{-- <button type="button" id="ChangeNextButton" class="nextButton">Next</button> --}}
+                                <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
 
                             </div>
@@ -508,18 +538,18 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                                  oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
@@ -602,24 +632,24 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_mfg_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
+                                                                <input type="date"   id="material_mfg_date_checkdate" name="material_mfg_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input"
                                                                 oninput="handleDateInput(this, `material_mfg_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td>
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
                                                                 <input type="text"  class="test" id="material_expiry_date" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
+                                                                <input type="date" id="material_expiry_date_checkdate"name="material_expiry_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                                  oninput="handleDateInput(this, `material_expiry_date`);checkDate('material_mfg_date_checkdate','material_expiry_date_checkdate')" />
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </td>
-                                                
+
                                                 <td><input type="text" name="material_batch_desposition[]"></td>
                                                 <td><input type="text" name="material_remark[]"></td>
                                                 <td>
@@ -652,16 +682,16 @@
                                                     <th>Equipment/Instruments Comments</th>
                                                 </tr>
                                             </thead>
-                                            
 
-                                            
+
+
                                          <tbody>
                                                 <td><input disabled type="text" name="serial_number[]" value="1">
                                                 </td>
                                                 <td><input type="text" name="equipment[]"></td>
                                                 <td><input type="text" name="equipment_instruments[]"></td>
                                                 <td><input type="text" name="equipment_comments[]"></td>
-                                            </tbody> 
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -683,20 +713,20 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
 
                     <!-- Project Study content****************************** -->
-                    <div id="CCForm3" class="inner-block cctabcontent">
+                    {{-- <div id="CCForm3" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Project Datails Application">Project Datails Application</label>
+                                        <label for="Project Datails Application">Project Details Application</label>
                                         <select name="project_details_application">
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="yes">Yes</option>
@@ -744,16 +774,16 @@
                                         <label for="General Deviation">General Deviation</label>
                                         <textarea name="general_deviation"></textarea>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- CAPA Details content ****************************-->
                     <div id="CCForm4" class="inner-block cctabcontent">
@@ -797,13 +827,13 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
                     </div>
-                      <div id="CCForm5" class="inner-block cctabcontent">
+                      {{-- <div id="CCForm5" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Information
@@ -929,15 +959,15 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                {{-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> --}}
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
                                         Exit </a> </button>
 
                             </div>
                         </div>
-                    </div> 
-                    <div id="CCForm6" class="inner-block cctabcontent">
+                    </div> --}}
+                    {{-- <div id="CCForm6" class="inner-block cctabcontent">
                         <div class="inner-block-content">
                             <div class="sub-head">
                                 CFT Feedback
@@ -957,7 +987,7 @@
                                                 documents</small></div>
                                         <div class="file-attachment-field">
                                             <div class="file-attachment-list" id="cft_attchament_new"> </div>
-                                                                                        
+
                                             <div class="add-btn">
                                                 <div>Add</div>
                                                 <input type="file" id="myfile" name="cft_attchament_new[]"
@@ -1043,7 +1073,7 @@
                                         Exit </a> </button>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                     <!-- CAPA Closure content -->
                     <div id="CCForm7" class="inner-block cctabcontent">
                         <div class="inner-block-content">
@@ -1127,8 +1157,8 @@
                             </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
-                                <!-- <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="button" class="nextButton" onclick="nextStep()">Next</button> -->
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                             </div>
                         </div>
@@ -1239,8 +1269,8 @@
                                 </div>
                             </div>
                             <div class="button-block">
-                                <!-- <button type="submit" class="saveButton">Save</button>
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button> -->
+                                <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit">Submit</button>
                                 <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white" href="#"> Exit </a> </button>
                             </div>
@@ -1371,7 +1401,7 @@
             var selectedValue = this.value;
             document.getElementById('initiator_group_code').value = selectedValue;
         });
-        
+
         function setCurrentDate(item){
             if(item == 'yes'){
                 $('#effect_check_date').val('{{ date('d-M-Y')}}');

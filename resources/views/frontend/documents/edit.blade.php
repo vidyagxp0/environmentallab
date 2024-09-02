@@ -175,7 +175,7 @@
                            
                             <div class="col-md-12">
                                 <div class="group-input">
-                                    <label for="short-desc">Short Description*    </label>
+                                    <label for="short-desc">Short Description*  </label>
                                     <span id="editrchars">255</span>
                                 characters remaining
                                     <input type="text" name="short_desc" id="short_desc" maxlength="255"
@@ -1232,7 +1232,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
-                                    <select   @if($document->stage != 1 && !Helpers::userIsQA() ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
+                                    <select   @if($document->stage != 1 && !Helpers::userIsQA() || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
@@ -1294,7 +1294,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
-                                    <select   @if($document->stage != 1 && !Helpers::userIsQA()) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
+                                    <select   @if($document->stage != 1 && !Helpers::userIsQA()  || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
@@ -1843,7 +1843,7 @@
                                                         <textarea name="responsibility[]" class="myclassname"></textarea>
                                                     </div>
                                                     <div class="col-sm-1">
-                                                        <button class="btn btn-dark subResponsibilityAdd">+</button>
+                                                        <button class="btn btn-dark subResponsibilityAdd" {{Helpers::isRevised($document->stage)}}>+</button>
                                                     </div>
                                                     <div class="col-sm-1">
                                                         <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
@@ -1889,7 +1889,7 @@
                                 <div class="group-input">
                                     <label for="abbreviation" id="abbreviation">
                                         Abbreviation<button type="button" id="abbreviationbtnadd"
-                                            name="button" {{Helpers::isRevised($document->stage)}} >+</button>
+                                            name="button" {{Helpers::isRevised($document->stage)  }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                     
@@ -1912,7 +1912,7 @@
                                                                 <textarea name="abbreviation[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-dark subAbbreviationAdd">+</button>
+                                                                <button class="btn btn-dark subAbbreviationAdd" {{Helpers::isRevised($document->stage)}} >+</button>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-danger removeAllBlocks">Remove</button>
@@ -1983,7 +1983,7 @@
                                                                 <textarea name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                                             </div>
                                                             <div class="col-sm-1">
-                                                                <button class="btn btn-dark subDefinitionAdd">+</button>
+                                                                <button class="btn btn-dark subDefinitionAdd" {{Helpers::isRevised($document->stage)}}>+</button>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <button class="btn btn-danger removeAllBlocks">Remove</button>
@@ -3293,6 +3293,8 @@
             videoUploadURL: "{{ route('api.upload.file') }}",
             videoMaxSize: 500 * 1024 * 1024,
         });
+
+        
     </script>
     <script>
         VirtualSelect.init({
