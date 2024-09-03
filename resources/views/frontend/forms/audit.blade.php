@@ -80,7 +80,6 @@
     <script>
         $(document).ready(function() {
             $('#internalaudit-table').click(function(e) {
-
                 function generateTableRow(serialNumber) {
                     var users = @json($users);
 
@@ -89,25 +88,37 @@
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="audit[]"></td>' +
-                        // '<td><input type="date" name="scheduled_start_date[]"></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' +
+                        '<td>' +
+                        '<div class="group-input new-date-data-field mb-0">' +
+                        '<div class="input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" id="scheduled_start_date' + serialNumber +
+                        '" readonly placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="scheduled_start_date[]" id="scheduled_start_date' +
                         serialNumber +
-                        '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' +
+                        '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, \'scheduled_start_date' +
                         serialNumber +
-                        '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' +
-                    serialNumber + '`);checkDate(`scheduled_start_date' + serialNumber +
-                    '_checkdate`,`scheduled_end_date' + serialNumber +
-                    '_checkdate`)" /></div></div></div></td>' +
+                        '\');checkDate(\'scheduled_start_date' + serialNumber +
+                        '_checkdate\',\'scheduled_end_date' + serialNumber +
+                        '_checkdate\')" />' +
+                        '</div></div></div>' +
+                        '</td>' +
                         '<td><input type="time" name="scheduled_start_time[]"></td>' +
-                        // '<td><input type="date" name="scheduled_end_date[]"></td>'
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' +
+                        '<td>' +
+                        '<div class="group-input new-date-data-field mb-0">' +
+                        '<div class="input-date">' +
+                        '<div class="calenderauditee">' +
+                        '<input type="text" id="scheduled_end_date' + serialNumber +
+                        '" readonly placeholder="DD-MM-YYYY" />' +
+                        '<input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
                         serialNumber +
-                        '" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date' +
+                        '_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, \'scheduled_end_date' +
                         serialNumber +
-                        '_checkdate"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' +
-                    serialNumber + '`);checkDate(`scheduled_start_date' + serialNumber +
-                    '_checkdate`,`scheduled_end_date' + serialNumber +
-                    '_checkdate`)" /></div></div></div></td>' +
+                        '\');checkDate(\'scheduled_start_date' + serialNumber +
+                        '_checkdate\',\'scheduled_end_date' + serialNumber +
+                        '_checkdate\')" />' +
+                        '</div></div></div>' +
+                        '</td>' +
                         '<td><input type="time" name="scheduled_end_time[]"></td>' +
                         '<td><select name="auditor[]">' +
                         '<option value="">Select a value</option>';
@@ -137,6 +148,8 @@
             });
         });
     </script>
+
+
     <script>
         $(document).ready(function() {
             $('#ObservationAdd').click(function(e) {
@@ -623,65 +636,68 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <td><input disabled type="text" name="serial_number[]" value="1">
-                                                </td>
-                                                <td><input type="text" name="audit[]"></td>
-                                                {{-- <td><input type="date" name="scheduled_start_date[]"></td> --}}
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text" class="test"
-                                                                    id="scheduled_start_date1" readonly
-                                                                    placeholder="DD-MM-YYYY" />
-                                                                <input type="date" id="scheduled_start_date1_checkdate"
-                                                                    name="scheduled_start_date[]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
-                                                                    oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                                <tr>
+                                                    <td><input disabled type="text" name="serial_number[]"
+                                                            value="1"></td>
+                                                    <td><input type="text" name="audit[]"></td>
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" class="test"
+                                                                        id="scheduled_start_date1" readonly
+                                                                        placeholder="DD-MM-YYYY" />
+                                                                    <input type="date"
+                                                                        id="scheduled_start_date1_checkdate"
+                                                                        name="scheduled_start_date[]"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td><input type="time" name="scheduled_start_time[]"></td>
-                                                {{-- <td><input type="date" name="scheduled_end_date[]"></td> --}}
-                                                <td>
-                                                    <div class="group-input new-date-data-field mb-0">
-                                                        <div class="input-date ">
-                                                            <div class="calenderauditee">
-                                                                <input type="text" class="test"
-                                                                    id="scheduled_end_date1" readonly
-                                                                    placeholder="DD-MM-YYYY" />
-                                                                <input type="date" id="scheduled_end_date1_checkdate"
-                                                                    name="scheduled_end_date[]"
-                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                    class="hide-input"
-                                                                    oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                                    </td>
+                                                    <td><input type="time" name="scheduled_start_time[]"></td>
+                                                    <td>
+                                                        <div class="group-input new-date-data-field mb-0">
+                                                            <div class="input-date">
+                                                                <div class="calenderauditee">
+                                                                    <input type="text" class="test"
+                                                                        id="scheduled_end_date1" readonly
+                                                                        placeholder="DD-MM-YYYY" />
+                                                                    <input type="date"
+                                                                        id="scheduled_end_date1_checkdate"
+                                                                        name="scheduled_end_date[]"
+                                                                        min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                                        class="hide-input"
+                                                                        oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-
-                                                <td><input type="time" name="scheduled_end_time[]"></td>
-                                                <td><input type="text" name="auditor">
-                                                    {{-- <select id="select-state" placeholder="Select..." name="auditor[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select> --}}
-                                                </td>
-                                                <td><select multiple id="auditee" placeholder="Select..."
-                                                        name="auditee[]">
-                                                        <option value="">Select a value</option>
-                                                        @foreach ($users as $data)
-                                                            <option value="{{ $data->id }}">{{ $data->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select></td>
-                                                <td><input type="text" name="remarks[]"></td>
+                                                    </td>
+                                                    <td><input type="time" name="scheduled_end_time[]"></td>
+                                                    <td>
+                                                        <select id="auditor" name="auditor[]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select id="auditee" name="auditee[]">
+                                                            <option value="">Select a value</option>
+                                                            @foreach ($users as $data)
+                                                                <option value="{{ $data->id }}">{{ $data->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" name="remarks[]"></td>
+                                                </tr>
                                             </tbody>
+
                                         </table>
                                     </div>
                                 </div>
@@ -714,7 +730,7 @@
                                         </select>
                                     </div> --}}
                                 </div>
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Product/Material Name">Product/Material Name</label>
                                         <input type="text" name="material_name">
@@ -820,7 +836,7 @@
                                         </div>
                                     </div> --}}
 
-                                <div class="col-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Audit Team">Audit Team</label>
                                         <input type="text" name="Audit_team">
@@ -832,7 +848,7 @@
                                         </select> --}}
                                     </div>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Auditee">Auditee</label>
                                         <select multiple name="Auditee[]" placeholder="Select Auditee"
@@ -1062,7 +1078,7 @@
                                         <textarea name="Remarks"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record (Internal Audit)</label>
                                         <select multiple id="reference_record" name="refrence_record[]" id="">
@@ -1074,8 +1090,25 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (Internal Audit)</label>
+                                        <select multiple id="reference_record" name="refrence_record[]" id="">
+
+                                            @foreach ($old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record (CAPA)</label>
                                         <select multiple id="reference_record" name="capa_refrence_record[]"
@@ -1088,8 +1121,26 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (CAPA)</label>
+                                        <select multiple id="reference_record" name="capa_refrence_record[]"
+                                            id="">
+
+                                            @foreach ($capa_old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record (Change Control)</label>
                                         <select multiple id="reference_record" name="cc_refrence_record[]"
@@ -1103,8 +1154,27 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (Change Control)</label>
+                                        <select multiple id="reference_record" name="cc_refrence_record[]"
+                                            id="">
+
+                                            @foreach ($cc_old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/Change Control/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/Change Control/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record (Root Cause Analysis)</label>
                                         <select multiple id="reference_record" name="rca_refrence_record[]"
@@ -1117,8 +1187,27 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
+
                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (Root Cause Analysis)</label>
+                                        <select multiple id="reference_record" name="rca_refrence_record[]"
+                                            id="">
+
+                                            @foreach ($rca_old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record (Action Item)</label>
                                         <select multiple id="reference_record" name="ai_refrence_record[]"
@@ -1132,7 +1221,27 @@
                                             @endforeach
                                         </select>
                                     </div>
+                                </div> --}}
+
+                                <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Recores">Reference Record (Action Item)</label>
+                                        <select multiple id="reference_record" name="ai_refrence_record[]"
+                                            id="">
+
+                                            @foreach ($action_items_old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/Action Item/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/Action Item/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+
+
+
+
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Report Attachments">Report Attachments</label>
@@ -1201,13 +1310,13 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule By</label>
+                                        <label for="Audit Schedule On">Schedule Audit By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Schedule On">Audit Schedule On</label>
+                                        <label for="Audit Schedule On">Schedule Audit On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -1352,7 +1461,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #auditee'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record'
         });
 
         function openCity(evt, cityName) {

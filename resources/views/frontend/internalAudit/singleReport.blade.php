@@ -142,7 +142,7 @@
         padding-bottom: 5px;
         border-bottom: 2px solid #4274da;
         margin-bottom: 10px;
-        /* color: #4274da; */
+        color: #4274da;
     }
 
     .inner-block th,
@@ -439,72 +439,115 @@
                     </div>
                 </div>
 
-                {{-- <div class="block-head">
-                    <table>
-                        <div class="block">
-                            <div class="block-head">
-                                Audit Agenda
-                            </div>
-                            <div class="border-table">
-                                <table>
-                                    <tr class="table_bg">
-                                        <th>Row #</th>
-                                        <th>Area of Audit</th>
-                                        <th>Scheduled Start Date</th>
-                                        <th>Scheduled Start Time</th>
-                                        <th>Scheduled End Date</th>
-                                        <th>Scheduled End Time</th>
-                                        <th>Auditor</th>
-                                        <th>Auditee</th>
-                                        <th>Remarks</th>
-
-                                    </tr>
-                                    </thead>
-                                    <tbody id="audit-agenda-grid">
-                                        @if ($grid_data && $grid_data->internal_audit)
-                                            @foreach (unserialize($grid_data->internal_audit) as $key => $tempData)
-                                                <tr>
-                                                    <td>{{ $key + 1 }}</td>
-                                                    <td>{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}
-                                                    </td>
-                                                    <td>{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
-                                                    </td>
-                                                    <td>{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}
-                                                    </td>
-                                                    <td>{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}
-                                                    </td>
-                                                    <td>{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}
-                                                    </td>
-
-                                                    <td>{{ $grid_data->auditor }}</td>
-                                                    <td>{{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                    </td>
-
-                                                    <td>{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}
-                                                    </td>
-
-                                                </tr>
-                                            @endforeach
-                                        @else
-                                            <tr>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                                <td>Not Applicable</td>
-                                            </tr>
-                                        @endif
-
-
-                                </table>
-                            </div>
+                <div class="block-head">
+                    <div class="block">
+                        <div class="block-head">
+                            Audit Agenda
                         </div>
-                    </table>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th>Row #</th>
+                                    <th>Area of Audit</th>
+                                    <th>Scheduled Start Date</th>
+                                    <th>Scheduled Start Time</th>
+                                    <th>Scheduled End Date</th>
+                                </tr>
+                                <tbody id="audit-agenda-grid-part1">
+                                    @if ($grid_data && $grid_data->area_of_audit)
+                                        @foreach (unserialize($grid_data->area_of_audit) as $key => $tempData)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ $tempData }}</td>
+                                                <td>{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
+                                                </td>
+                                                <td>{{ unserialize($grid_data->start_time)[$key] }}</td>
+                                                <td>{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="5">Not Applicable</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th>Scheduled End Time</th>
+                                <th>Auditor</th>
+                                <th>Auditee</th>
+                                <th>Remarks</th>
+                            </tr>
+                            <tbody id="audit-agenda-grid-part2">
+                                @if ($grid_data && $grid_data->area_of_audit)
+                                    @foreach (unserialize($grid_data->area_of_audit) as $key => $tempData)
+                                        <tr>
+                                            <td>{{ $key + 1 }}</td>
+                                            <td>{{ unserialize($grid_data->end_time)[$key] }}</td>
+                                            <td>{{ Helpers::getInitiatorName(unserialize($grid_data->auditor)[$key]) }}
+                                            </td>
+                                            <td>{{ Helpers::getInitiatorName(unserialize($grid_data->auditee)[$key]) }}
+                                            </td>
+                                            <td>{{ unserialize($grid_data->remark)[$key] }}</td>
+                                        </tr>
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="5">Not Applicable</td>
+                                    </tr>
+                                @endif
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+
+                {{-- <div class="block-head">
+                    <div class="block">
+                        <div class="block-head">
+                            Audit Agenda - Part 2
+                        </div>
+                        <div class="border-table">
+                            <table>
+                                <tr class="table_bg">
+                                    <th>Row #</th>
+                                    <th>Scheduled End Time</th>
+                                    <th>Auditor</th>
+                                    <th>Auditee</th>
+                                    <th>Remarks</th>
+                                </tr>
+                                <tbody id="audit-agenda-grid-part2">
+                                    @if ($grid_data && $grid_data->area_of_audit)
+                                        @foreach (unserialize($grid_data->area_of_audit) as $key => $tempData)
+                                            <tr>
+                                                <td>{{ $key + 1 }}</td>
+                                                <td>{{ unserialize($grid_data->end_time)[$key] }}</td>
+                                                <td>{{ Helpers::getInitiatorName(unserialize($grid_data->auditor)[$key]) }}
+                                                </td>
+                                                <td>{{ Helpers::getInitiatorName(unserialize($grid_data->auditee)[$key]) }}
+                                                </td>
+                                                <td>{{ unserialize($grid_data->remark)[$key] }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td colspan="5">Not Applicable</td>
+                                        </tr>
+                                    @endif
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div> --}}
+
 
 
                 <div class="block">
@@ -837,7 +880,7 @@
                             </tr>
                         </table>
 
-                        {{-- <table>
+                        <table>
 
                             <tr>
                                 <th class="w-20">Reference Record (Internal Audit)</th>
@@ -850,12 +893,13 @@
                                         @endif
                                 </td>
                             </tr>
+
                             <tr>
                                 <th class="w-20">Reference Record (CAPA)</th>
                                 <td class="w-80">
                                     <div>
                                         @if ($data->capa_refrence_record)
-                                            {{ Helpers::getDivisionName($data->capa_refrence_record) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}
+                                            {{ $data->capa_refrence_record }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -866,7 +910,7 @@
                                 <td class="w-80">
                                     <div>
                                         @if ($data->cc_refrence_record)
-                                            {{ Helpers::getDivisionName($data->cc_refrence_record) }}/CC/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}
+                                            {{ $data->cc_refrence_record }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -877,7 +921,7 @@
                                 <td class="w-80">
                                     <div>
                                         @if ($data->rca_refrence_record)
-                                            {{ Helpers::getDivisionName($data->rca_refrence_record) }}/RCA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}
+                                            {{ $data->rca_refrence_record }}
                                         @else
                                             Not Applicable
                                         @endif
@@ -888,13 +932,13 @@
                                 <td class="w-80">
                                     <div>
                                         @if ($data->ai_refrence_record)
-                                            {{ Helpers::getDivisionName($data->ai_refrence_record) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}
+                                            {{ $data->ai_refrence_record }}
                                         @else
                                             Not Applicable
                                         @endif
                                 </td>
                             </tr>
-                        </table> --}}
+                        </table>
 
                         <table>
                             <tr>

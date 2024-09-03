@@ -29,7 +29,7 @@
                     </div>
 
                 </div>
-                @foreach($detail_data as $temp)
+                @foreach ($detail_data as $temp)
                     <div class="inner-block audit-main">
                         <div class="info-list">
                             <div class="list-item">
@@ -47,83 +47,91 @@
                                 <div>:</div>
                                 <div>{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                             </div>
-                            @if($temp->comment)
-                            <div class="list-item">
-                                <div class="head">Comment</div>
-                                <div>:</div>
-                                <div>{{ $temp->comment }}</div>
-                            </div>
+                            @if ($temp->comment)
+                                <div class="list-item">
+                                    <div class="head">Comment</div>
+                                    <div>:</div>
+                                    <div>{{ $temp->comment }}</div>
+                                </div>
                             @endif
 
-                            @if($temp->activity_type == "Responsibility" ||$temp->activity_type == "Abbreviation" ||$temp->activity_type == "Defination" ||$temp->activity_type == "Materials and Equipments" ||$temp->activity_type == "Reporting" )
-                            @if(!empty($temp->previous))
-                            <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                @foreach (unserialize($temp->previous) as $data)
-                                @if($data)
-                                <div>{{ $data }}</div>
+                            @if (
+                                $temp->activity_type == 'Responsibility' ||
+                                    $temp->activity_type == 'Abbreviation' ||
+                                    $temp->activity_type == 'Defination' ||
+                                    $temp->activity_type == 'Materials and Equipments' ||
+                                    $temp->activity_type == 'Reporting')
+                                @if (!empty($temp->previous))
+                                    <div class="list-item">
+                                        <div class="head">Changed From</div>
+                                        <div>:</div>
+                                        @foreach (unserialize($temp->previous) as $data)
+                                            @if ($data)
+                                                <div>{{ $data }}</div>
+                                            @else
+                                                <div>NULL</div>
+                                            @endif
+                                        @endforeach
+
+                                    </div>
                                 @else
-                                <div>NULL</div>
+                                    <div class="list-item">
+                                        <div class="head">Changed From</div>
+                                        <div>:</div>
+                                        <div>NULL</div>
+                                    </div>
                                 @endif
-                                @endforeach
+                                @if ($temp->current != $temp->previous)
+                                    <div class="list-item">
+                                        <div class="head">Changed To</div>
+                                        <div>:</div>
+                                        @foreach (unserialize($temp->current) as $data)
+                                            <div>{{ $data }}</div>
+                                        @endforeach
 
-                            </div>
+                                    </div>
+                                @endif
                             @else
-                            <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>NULL</div>
-                            </div>
-                            @endif
-                            @if($temp->current != $temp->previous)
-                            <div class="list-item">
-                                <div class="head">Changed To</div>
-                                <div>:</div>
-                                @foreach (unserialize($temp->current) as $data)
-                                <div>{{ $data }}</div>
-                                @endforeach
-
-                            </div>
-                            @endif
-                            @else
-                            @if(!empty($temp->previous))
-                            <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>{{  $temp->activity_type == "Assigned To" &&  $temp->previous != 'Null' ?  Helpers::getInitiatorName($temp->previous ) : $temp->previous   }}</div>
-                            </div>
-                            @else
-                            @if($temp->activity_type == "Activity Log" )
-                            @else
-                            <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>NULL</div>
-                            </div>
-                            @endif
-                            @endif
-                            @if($temp->current != $temp->previous)
-
-                            @if($temp->activity_type == "Activity Log" )
-                            <div class="list-item">
-                                      <div class="head">{{$temp->step}} By</div>
-                                      <div>:</div>
-                                      <div> {{$temp->current}}</div>
-                                      </div>  
-                                      <div class="list-item">
-                                      <div class="head">{{$temp->step}} On</div>
-                                      <div>:</div>
-                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                            @else
-                            <div class="list-item">
-                                <div class="head">Changed To</div>
-                                <div>:</div>
-                                <div>{{ $temp->activity_type == "Assigned To" ?  Helpers::getInitiatorName($temp->current  ) : $temp->current   }}</div>
-                            </div>
-                            @endif
-                            @endif
+                                @if (!empty($temp->previous))
+                                    <div class="list-item">
+                                        <div class="head">Changed From</div>
+                                        <div>:</div>
+                                        <div>
+                                            {{ $temp->activity_type == 'Assigned To' && $temp->previous != 'Null' ? Helpers::getInitiatorName($temp->previous) : $temp->previous }}
+                                        </div>
+                                    </div>
+                                @else
+                                    @if ($temp->activity_type == 'Activity Log')
+                                    @else
+                                        <div class="list-item">
+                                            <div class="head">Changed From</div>
+                                            <div>:</div>
+                                            <div>NULL</div>
+                                        </div>
+                                    @endif
+                                @endif
+                                @if ($temp->current != $temp->previous)
+                                    @if ($temp->activity_type == 'Activity Log')
+                                        <div class="list-item">
+                                            <div class="head">{{ $temp->step }} By</div>
+                                            <div>:</div>
+                                            <div> {{ $temp->user_name }}</div>
+                                        </div>
+                                        <div class="list-item">
+                                            <div class="head">{{ $temp->step }} On</div>
+                                            <div>:</div>
+                                            <div> {{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                        </div>
+                                    @else
+                                        <div class="list-item">
+                                            <div class="head">Changed To</div>
+                                            <div>:</div>
+                                            <div>
+                                                {{ $temp->activity_type == 'Assigned To' ? Helpers::getInitiatorName($temp->current) : $temp->current }}
+                                            </div>
+                                        </div>
+                                    @endif
+                                @endif
                             @endif
 
                             <div class="list-item">

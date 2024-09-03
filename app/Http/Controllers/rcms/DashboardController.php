@@ -713,7 +713,7 @@ class DashboardController extends Controller
             $division_name = $division->name;
         } elseif ($type == "Observation") {
             $data = Observation::find($id);
-            $single = "#";
+            $single = "observationsingle_pdf/" .$data->id;
             $audit = "ObservationAuditTrialShow/" .$data->id;
             $division = QMSDivision::find($data->division_id);
             $division_name = $division->name;
