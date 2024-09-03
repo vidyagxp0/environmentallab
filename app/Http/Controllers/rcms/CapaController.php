@@ -1223,7 +1223,7 @@ class CapaController extends Controller
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'CAPA Related Records';
+            $history->activity_type = 'Reference Records (CAPA)';
             $history->previous = $lastDocument->capa_related_record;
             $history->current = $capa->capa_related_record;
             $history->comment = $request->capa_related_record_comment;
@@ -1279,7 +1279,7 @@ class CapaController extends Controller
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
-            $history->activity_type = 'Interim Containnment';
+            $history->activity_type = 'Interim Containment';
             $history->previous = $lastDocument->interim_containnment;
             $history->current = $capa->interim_containnment;
             $history->comment = $request->interim_containnment_comment;
