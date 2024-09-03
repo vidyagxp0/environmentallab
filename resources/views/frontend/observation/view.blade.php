@@ -615,7 +615,7 @@ $users = DB::table('users')
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="date_due"> Due Date</label>
+                                        <label for="date_due">CAPA Due Date</label>
                                         <div class="calenderauditee">                                     
                                             <input type="text" name="capa_date_due11"  id="date_due"  readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->capa_date_due) }}" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} />
                                             <input type="date" id="date_due_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ $data->capa_date_due }}" class="hide-input"

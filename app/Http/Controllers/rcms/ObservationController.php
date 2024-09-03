@@ -235,6 +235,18 @@ class ObservationController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->save();
+
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Initiator';
+        $history->previous ="Null";
+        $history->current = Helpers::getInitiatorName($data->initiator_id);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->save();
         // }
         if (!empty($request->due_date)) {
 
