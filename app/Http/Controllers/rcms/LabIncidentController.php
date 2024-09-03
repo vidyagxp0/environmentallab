@@ -519,7 +519,7 @@ class LabIncidentController extends Controller
         if (!empty($request->Corrective_Preventive_Action)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Preventive Action';
+            $history->activity_type = 'Corrective & Preventive Action';
             $history->previous = "Null";
             $history->current = $request->Corrective_Preventive_Action;
             $history->comment = "NA";
@@ -562,7 +562,7 @@ class LabIncidentController extends Controller
         if (!empty($request->QA_Head_Attachment)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'QA Attachment';
+            $history->activity_type = 'QA Review Attachment';
             $history->previous = "Null";
             $history->current = $data->QA_Head_Attachment;
             $history->comment = "NA";
@@ -639,6 +639,7 @@ class LabIncidentController extends Controller
     }
     public function updateLabIncident(request $request, $id)
     {
+
         if (!$request->short_desc) {
             toastr()->info("Short Description is required");
             return redirect()->back()->withInput();
@@ -782,19 +783,19 @@ class LabIncidentController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->due_date != $request->due_date) {
-            $history = new LabIncidentAuditTrial();
-            $history->LabIncident_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
-            $history->current = Helpers::getdateFormat($request->due_date);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastDocument->due_date != $request->due_date) {
+        //     $history = new LabIncidentAuditTrial();
+        //     $history->LabIncident_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastDocument->due_date;
+        //     $history->current = Helpers::getdateFormat($request->due_date);
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         
         if ($lastDocument->assign_to != $request->assign_to) {
             $history = new LabIncidentAuditTrial();
@@ -1039,7 +1040,7 @@ class LabIncidentController extends Controller
         if ($lastDocument->Inv_Attachment != $data->Inv_Attachment) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Root Cause';
+            $history->activity_type = 'Investigation Attachment';
             $history->previous = $lastDocument->Inv_Attachment;
             $history->current = $data->Inv_Attachment;
             $history->comment = "NA";
@@ -1082,7 +1083,7 @@ class LabIncidentController extends Controller
         if ($lastDocument->Corrective_Preventive_Action != $request->Corrective_Preventive_Action) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Preventive Action';
+            $history->activity_type = 'Corrective & Preventive Action';
             $history->previous = $lastDocument->Corrective_Preventive_Action;
             $history->current = $request->Corrective_Preventive_Action;
             $history->comment = "NA";
@@ -1125,7 +1126,7 @@ class LabIncidentController extends Controller
         if ($lastDocument->QA_Head_Attachment != $data->QA_Head_Attachment) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'QA Attachment';
+            $history->activity_type = 'QA Review Attachment';
             $history->previous = $lastDocument->QA_Head_Attachment;
             $history->current = $data->QA_Head_Attachment;
             $history->comment = "NA";
@@ -1246,17 +1247,18 @@ class LabIncidentController extends Controller
                 $changeControl->submitted_by = Auth::user()->name;
                 $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
                 $changeControl->status = "Pending Incident Review";
+
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->submitted_by;
-                $history->current = $changeControl->submitted_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending Incident Review";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
+                $history->stage = 'Submited';
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
@@ -1286,17 +1288,18 @@ class LabIncidentController extends Controller
                 $changeControl->status = "Pending Investigation";
                 $changeControl->incident_review_completed_by = Auth::user()->name;
                 $changeControl->incident_review_completed_on = Carbon::now()->format('d-M-Y');
+
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->incident_review_completed_by;
-                $history->current = $changeControl->incident_review_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending Investigation";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Incident Review completed';
+                $history->stage = 'Incident Review completed';
                 $history->save();
                 $list = Helpers::getQCHeadUserList();
                     foreach ($list as $u) {
@@ -1325,17 +1328,18 @@ class LabIncidentController extends Controller
                 $changeControl->status = "Pending Activity Completion";
                 $changeControl->investigation_completed_by = Auth::user()->name;
                 $changeControl->investigation_completed_on = Carbon::now()->format('d-M-Y');
+
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->investigation_completed_by;
-                $history->current = $changeControl->investigation_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending Activity Completion";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Investigation Completed';
+                $history->stage = 'Investigation Completed';
                 $history->save();
                 $list = Helpers::getHodUserList();
                     foreach ($list as $u) {
@@ -1363,17 +1367,18 @@ class LabIncidentController extends Controller
                 $changeControl->status = "Pending CAPA";
                 $changeControl->all_activities_completed_by = Auth::user()->name;
                 $changeControl->all_activities_completed_on = Carbon::now()->format('d-M-Y');
+
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->all_activities_completed_by;
-                $history->current = $changeControl->all_activities_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending CAPA";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='All Activities Completed';
+                $history->stage = 'All Activities Completed';
                 $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1384,11 +1389,12 @@ class LabIncidentController extends Controller
                 $changeControl->status = "Pending QA Review";
                 $changeControl->review_completed_by = Auth::user()->name;
                 $changeControl->review_completed_on = Carbon::now()->format('d-M-Y'); 
+
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->review_completed_by;
-                $history->current = $changeControl->review_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending QA Review";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1422,11 +1428,12 @@ class LabIncidentController extends Controller
                 $changeControl->status = "Pending QA Head Approval";
                 $changeControl->qA_review_completed_by = Auth::user()->name;
                 $changeControl->qA_review_completed_on = Carbon::now()->format('d-M-Y');
+
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->qA_review_completed_by;
-                $history->current = $changeControl->qA_review_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending QA Head Approval";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1444,11 +1451,12 @@ class LabIncidentController extends Controller
                 $changeControl->status = "Closed - Done";
                 $changeControl->qA_head_approval_completed_by = Auth::user()->name;
                 $changeControl->qA_head_approval_completed_on = Carbon::now()->format('d-M-Y');
+
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->qA_review_completed_by;
-                $history->current = $changeControl->qA_review_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed - Done";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;

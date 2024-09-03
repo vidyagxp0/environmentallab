@@ -359,7 +359,7 @@
                                                 <div class="group-input">
                                                     <label for="date_initiation">Date of Initiation</label>
                                                     <div class="static"><input disabled type="text"
-                                                            value="{{ date('d-M-Y') }}"></div>
+                                                            value="{{ Helpers::getdateFormat($data->intiation_date) }}"></div>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -386,8 +386,8 @@
                                                     <label for="Microbiology">CFT Reviewer</label>
                                                     <select name="Microbiology">
                                                         <option value="">-- Select --</option>
-                                                        <option value="yes" selected>Yes</option>
-                                                        <option value="no">No</option>
+                                                        <option value="yes" @if($data->Microbiology == "yes") selected @endif>Yes</option>
+                                                        <option value="no" @if($data->Microbiology == "no") selected @endif>No</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -512,7 +512,7 @@
                                                             class="text-danger">*</span></label><span id="rchars"  class="text-primary">255 </span><span class="text-primary"> characters remaining</span>
                                                     
                                                     
-                                                    <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                    <input name="short_description" value="{{ $data->short_description }}" id="docname" type="text" maxlength="255" required {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
             
@@ -591,7 +591,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="nature-change">Nature Of Change</label>
-                                                    <select name="naturechange">
+                                                    <select name="doc_change">
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->doc_change == 'Temporary' ? 'selected' : '' }}
                                                             value="Temporary">Temporary
@@ -605,13 +605,13 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="others">If Others</label>
-                                                    <textarea name="others">{{ $data->If_Others }}</textarea>
+                                                    <textarea name="If_Others">{{ $data->If_Others }}</textarea>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="group-input">
-                                                    <label for="div_code">Division Code</label>
-                                                    <select name="div_code">
+                                                    <label for="Division_Code">Division Code</label>
+                                                    <select name="Division_Code">
                                                         <option value="">-- Select --</option>
                                                         <option {{ $data->Division_Code == 'Instrumental Lab' ? 'selected' : '' }}
                                                             value="Instrumental Lab">Instrumental Lab</option>
@@ -811,11 +811,44 @@
                                                     <textarea name="qa_review_comments">{{ $review->qa_comments }}</textarea>
                                                 </div>
                                             </div>
-                                            <div class="col-12">
+
+
+
+
+
+
+                                            <div class="col-lg-6">
+                                                <div class="group-input">
+                                                    <label for="Related Records">Related Records</label>
+                                                    <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records"
+                                                        name="related_records[]" placeholder="Select Reference Records">
+
+                                                        @if (!empty($pre))
+                                                            @foreach ($pre as $new)
+                                                                @php
+                                                                    $recordValue =
+                                                                        Helpers::getDivisionName($new->division_id) .
+                                                                        '/Change-Control/' .
+                                                                        date('Y') .
+                                                                        '/' .
+                                                                        Helpers::recordFormat($new->record);
+                                                                    $selected = in_array($recordValue, explode(',', $data->related_records)) ? 'selected' : '';
+                                                                @endphp
+                                                                <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                    {{ $recordValue }}
+                                                                </option>
+                                                            @endforeach
+                                                        @endif
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+
+
+                                            <!-- <div class="col-12">
                                                 <div class="group-input">
                                                     <label for="related_records">Related Records</label>
-                                                    {{--  <input type="text" name="related_records"
-                                                        value="{{ $review->related_records }}">  --}}
                                                     <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
                                                         placeholder="Select Reference Records" data-search="false"
                                                         data-silent-initial-value-set="true" id="related_records">
@@ -826,7 +859,7 @@
                                                         @endforeach
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
 
                                             @if ($review->qa_head)

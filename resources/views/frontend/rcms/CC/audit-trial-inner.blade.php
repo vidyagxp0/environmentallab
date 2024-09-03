@@ -108,7 +108,7 @@
                             <div class="list-item">
                                 <div class="head">{{$temp->stage}} By</div>
                                 <div>:</div>
-                                <div> {{$temp->current}}</div>
+                                <div> {{$temp->user_name}}</div>
                                 </div>  
                                 <div class="list-item">
                                 <div class="head">{{$temp->stage}} On</div>

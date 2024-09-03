@@ -127,9 +127,9 @@ class CCController extends Controller
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-        $openState->doc_change = $request->natureChange;
-        $openState->If_Others = $request->others;
-        $openState->Division_Code = $request->div_code;
+        $openState->doc_change = $request->doc_change;
+        $openState->If_Others = $request->If_Others;
+        $openState->Division_Code = $request->Division_Code;
         $openState->severity_level1 = $request->severity_level1;
         $openState->initiated_through = $request->initiated_through;
         $openState->initiated_through_req = $request->initiated_through_req;
@@ -301,10 +301,7 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-         if ($request->Microbiology == "yes") {
-             $info->Microbiology = $request->Microbiology;
-            
-         }
+        $info->Microbiology = $request->Microbiology;
          if ($request->Microbiology_Person) {
              $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
          } else {
@@ -330,7 +327,7 @@ class CCController extends Controller
 
         $comments = new GroupComments();
         $comments->cc_id = $openState->id;
-        $comments->qa_comments = $request->qa_comments;
+        // $comments->qa_comments = $request->qa_comments;
         $comments->qa_commentss = $request->qa_commentss;
         $comments->designee_comments = $request->designee_comments;
         $comments->Warehouse_comments = $request->Warehouse_comments;
@@ -459,7 +456,7 @@ class CCController extends Controller
         $history->cc_id = $openState->id;
         $history->activity_type = 'Initiator';
         $history->previous = "Null";
-        $history->current = Helpers::getInitiatorName($request->initiator_id);
+        $history->current = Auth::user()->name;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -519,7 +516,7 @@ class CCController extends Controller
             $history->save();
         }
         
-        if(!empty($request->assignt_to)){
+        if(!empty($openState->initiator_id)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Assigned To';
@@ -645,12 +642,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->naturechange)){
+        if(!empty($request->doc_change)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Nature Of Change';
             $history->previous = "Null";
-            $history->current = $request->naturechange;
+            $history->current = $request->doc_change;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -659,12 +656,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->others)){
+        if(!empty($request->If_Others)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'If Others';
             $history->previous = "Null";
-            $history->current = $request->others;
+            $history->current = $request->If_Others;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -673,12 +670,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->div_code)){
+        if(!empty($request->Division_Code)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Division Code';
             $history->previous = "Null";
-            $history->current = $request->div_code;
+            $history->current = $request->Division_Code;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -759,7 +756,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->proposed_change)){            
+        if(!empty($request->supervisor_comment)){            
             $history = new RcmDocHistory;
             $history->cc_id = $docdetail->id;
             $history->activity_type = 'Supervisor Comments';
@@ -1064,7 +1061,19 @@ class CCController extends Controller
             $history->cc_id = $assessment->id;
             $history->activity_type = 'Severity';
             $history->previous = "Null";
-            $history->current = $assessment->severity;
+
+            if($request->severity == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity == 2){
+                $history->current = "Minor";
+            } elseif($request->severity == 3){
+                $history->current = "Moderate";
+            } elseif($request->severity == 4){
+                $history->current = "Major";
+            } elseif($request->severity == 5){
+                $history->current = "Fatel";
+            }
+
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1078,7 +1087,19 @@ class CCController extends Controller
             $history->cc_id = $assessment->id;
             $history->activity_type = 'Occurance';
             $history->previous = "Null";
-            $history->current = $assessment->Occurance;
+           
+            if($request->Occurance == 1){
+                $history->current = "Very Likely";
+            } elseif($request->Occurance == 2){
+                $history->current = "Likely";
+            } elseif($request->Occurance == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Occurance == 4){
+                $history->current = "Rare";
+            } elseif($request->Occurance == 5){
+                $history->current = "Extremely Unlikely";
+            }
+
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1092,7 +1113,17 @@ class CCController extends Controller
             $history->cc_id = $assessment->id;
             $history->activity_type = 'Detection';
             $history->previous = "Null";
-            $history->current = $assessment->Detection;
+            
+            if($request->Detection == 2){
+                $history->current = "Likely";
+            } elseif($request->Detection == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Detection == 4){
+                $history->current = "Rare";
+            } elseif($request->Detection == 5){
+                $history->current = "Impossible";
+            }
+
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1289,9 +1320,9 @@ class CCController extends Controller
         $openState->short_description = $request->short_description;
         $openState->assign_to = $request->assign_to;
         // $openState->due_date = $request->due_date;
-        $openState->doc_change = $request->naturechange;
-        $openState->If_Others = $request->others;
-        $openState->Division_Code = $request->div_code;
+        $openState->doc_change = $request->doc_change;
+        $openState->If_Others = $request->If_Others;
+        $openState->Division_Code = $request->Division_Code;
         $openState->severity_level1 = $request->severity_level1;
         $openState->initiated_through = $request->initiated_through;
         $openState->initiated_through_req = $request->initiated_through_req;
@@ -1302,7 +1333,7 @@ class CCController extends Controller
         $openState->reason_change = $request->reason_change;
         $openState->other_comment = $request->other_comment; 
         $openState->supervisor_comment = $request->supervisor_comment;
-        $openState->type_chnage = $request->type_chnage;
+        // $openState->type_chnage = $request->type_chnage;
         $openState->qa_comments = $request->qa_comments;
        // $openState->related_records = $request->related_records;
         $openState->related_records = implode(',', $request->related_records);
@@ -1330,9 +1361,9 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        $openState->cft_comments = $request->cft_comments; 
-        $openState->cft_attchament = json_encode($request->cft_attchament);
-        $openState->qa_commentss = $request->qa_commentss;
+        // $openState->cft_comments = $request->cft_comments; 
+        // $openState->cft_attchament = json_encode($request->cft_attchament);
+        // $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
         $openState->Warehouse_comments = $request->Warehouse_comments;
         $openState->Engineering_comments = $request->Engineering_comments;
@@ -1475,10 +1506,8 @@ class CCController extends Controller
         $info->Production_Person = $request->Production_Person;
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
-         if ($request->Microbiology == "yes") {
-             $info->Microbiology = $request->Microbiology;
-           
-         }
+        $info->Microbiology = $request->Microbiology;
+        
          if ($request->Microbiology_Person) {
              $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
          } else {
@@ -1705,19 +1734,19 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->due_date != $request->due_date) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
-            $history->current = Helpers::getdateFormat($request->due_date);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        // if ($lastDocument->due_date != $request->due_date) {
+        //     $history = new RcmDocHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+        //     $history->current = Helpers::getdateFormat($request->due_date);
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         if ($lastDocument->severity_level1 != $request->severity_level1) {
             $history = new RcmDocHistory;
@@ -1789,12 +1818,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->naturechange != $request->naturechange) {
+        if ($lastDocument->doc_change != $request->doc_change) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Nature Of Change';
-            $history->previous = $lastDocument->naturechange;
-            $history->current = $request->naturechange;
+            $history->previous = $lastDocument->doc_change;
+            $history->current = $request->doc_change;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1803,12 +1832,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->others != $request->others) {
+        if ($lastDocument->If_Others != $request->If_Others) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'If Others';
-            $history->previous = $lastDocument->others;
-            $history->current = $request->others;
+            $history->previous = $lastDocument->If_Others;
+            $history->current = $request->If_Others;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1817,12 +1846,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->Division_Code != $request->div_code) {
+        if ($lastDocument->Division_Code != $request->Division_Code) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Division Code';
             $history->previous = $lastDocument->Division_Code;
-            $history->current = $request->div_code;
+            $history->current = $request->Division_Code;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1900,7 +1929,7 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastreview->type_chnage != $review->type_chnage || !empty($request->type_chnage_comment)) {
+        if ($lastreview->type_chnage != $review->type_chnage) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Type of Change';
@@ -2141,12 +2170,12 @@ class CCController extends Controller
         // }
 
         // ----------------------Group Comments History------------------------
-        if ($lastcomments->qa_comments != $comments->qa_comments || !empty($request->qa_comments_comment)) {
+        if ($lastcomments->qa_commentss != $comments->qa_commentss) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'QA Comments';
-            $history->previous = $lastcomments->qa_comments;
-            $history->current = $comments->qa_comments;
+            $history->previous = $lastcomments->qa_commentss;
+            $history->current = $comments->qa_commentss;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2154,6 +2183,21 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        if ($lastcomments->cft_attchament != $comments->cft_attchament) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Attachment';
+            $history->previous = $lastcomments->cft_attchament;
+            $history->current = $comments->cft_attchament;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
         if ($lastcomments->designee_comments != $comments->designee_comments || !empty($request->designee_comments_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
@@ -2278,8 +2322,31 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Severity';
-            $history->previous = $lastassessment->severity;
-            $history->current = $assessment->severity;
+            
+            if($lastassessment->severity == 1){
+                $history->previous = "Negligible";
+            } elseif($lastassessment->severity == 2){
+                $history->previous = "Minor";
+            } elseif($lastassessment->severity == 3){
+                $history->previous = "Moderate";
+            } elseif($lastassessment->severity == 4){
+                $history->previous = "Major";
+            } elseif($lastassessment->severity == 5){
+                $history->previous = "Fatel";
+            }
+
+            if($request->severity == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity == 2){
+                $history->current = "Minor";
+            } elseif($request->severity == 3){
+                $history->current = "Moderate";
+            } elseif($request->severity == 4){
+                $history->current = "Major";
+            } elseif($request->severity == 5){
+                $history->current = "Fatel";
+            }
+
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2291,8 +2358,32 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Occurance';
-            $history->previous = $lastassessment->Occurance;
-            $history->current = $assessment->Occurance;
+            
+            if($lastassessment->Occurance == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastassessment->Occurance == 2){
+                $history->previous = "Likely";
+            } elseif($lastassessment->Occurance == 3){
+                $history->previous = "Unlikely";
+            } elseif($lastassessment->Occurance == 4){
+                $history->previous = "Rare";
+            } elseif($lastassessment->Occurance == 5){
+                $history->previous = "Extremely Unlikely";
+            }
+
+
+            if($request->Occurance == 1){
+                $history->current = "Very Likely";
+            } elseif($request->Occurance == 2){
+                $history->current = "Likely";
+            } elseif($request->Occurance == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Occurance == 4){
+                $history->current = "Rare";
+            } elseif($request->Occurance == 5){
+                $history->current = "Extremely Unlikely";
+            }
+
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2304,8 +2395,28 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Detection';
-            $history->previous = $lastassessment->Detection;
-            $history->current = $assessment->Detection;
+
+            if($lastassessment->Detection == 2){
+                $history->previous = "Likely";
+            } elseif($lastassessment->Detection == 3){
+                $history->previous = "Unlikely";
+            } elseif($lastassessment->Detection == 4){
+                $history->previous = "Rare";
+            } elseif($lastassessment->Detection == 5){
+                $history->previous = "Impossible";
+            }
+
+
+            if($request->Detection == 2){
+                $history->current = "Likely";
+            } elseif($request->Detection == 3){
+                $history->current = "Unlikely";
+            } elseif($request->Detection == 4){
+                $history->current = "Rare";
+            } elseif($request->Detection == 5){
+                $history->current = "Impossible";
+            }
+
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

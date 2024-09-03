@@ -176,7 +176,7 @@
                     <strong>Change Control No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -197,14 +197,14 @@
                         <td class="w-30">{{ $data->originator }}</td>
 
                         <th class="w-20">Date Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->initiation_date) }}</td>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->intiation_date) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">@if($data->Initiator_Group){{ Helpers::getInitiatorGroupFullName($data->Initiator_Group) }} @else Not Applicable @endif</td>
 
                         <th class="w-20">Due Date</th>
-                        <td class="w-30" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
+                        <td class="w-30" colspan="3"> @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
@@ -215,7 +215,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">CFT</th>
-                        <td class="w-30">{{ $info->Microbiology }}</td>
+                        <td class="w-30">{{ $data->Microbiology }}</td>
 
                         <th class="w-20">CFT Person</th>
                         <td class="w-30">{{ $userNames }}</td>
