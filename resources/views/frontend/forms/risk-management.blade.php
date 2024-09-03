@@ -71,6 +71,55 @@
                 }
             }
         </script>
+         <style>
+            .w-5 {
+                width: 5%;
+            }
+            .w-10 {
+                width: 10%;
+            }
+        
+            .w-20 {
+                width: 20%;
+            }
+        
+            .w-25 {
+                width: 25%;
+            }
+        
+            .w-30 {
+                width: 30%;
+            }
+        
+            .w-40 {
+                width: 40%;
+            }
+        
+            .w-50 {
+                width: 50%;
+            }
+        
+            .w-60 {
+                width: 60%;
+            }
+        
+            .w-70 {
+                width: 70%;
+            }
+        
+            .w-80 {
+                width: 80%;
+            }
+        
+            .w-90 {
+                width: 90%;
+            }
+        
+            .w-100 {
+                width: 100%;
+            }
+        
+        </style>
         <script>
             function addWhyField(con_class, name) {
                 let mainBlock = document.querySelector('.why-why-chart')
@@ -231,7 +280,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 new-date-data-field">
+                                    {{-- <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Date Due">Date Due</label>
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
@@ -243,6 +292,19 @@
                                                     oninput="handleDateInput(this, 'due_date')" />
                                             </div>
                                         </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Date Due">Due Date</label>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                            </div>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="due_date" readonly
+                                                    placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                    oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -251,7 +313,7 @@
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
                                                 <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                                <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                                <option value="CQC" @if(old('Initiator_Group') =="CQC") selected @endif>Central Quality Control</option>
                                                 <option value="MANU" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
                                                 <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
                                                 <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
@@ -829,7 +891,7 @@
                                             <table class="table table-bordered" id="action_plan_details">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
+                                                        <th class="w-5">Row #</th>
                                                         <th>Action</th>
                                                         <th>Responsible Person</th>
                                                         <th>Deadline</th>

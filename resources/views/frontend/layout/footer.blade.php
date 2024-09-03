@@ -1384,31 +1384,7 @@
         //     tableBody.append(newRow);
         // });
 
-        $('#action_plan2').click(function(e) {
-            function generateTableRow(serialNumber) {
-                var html =
-                    '<tr>' +
-                    '<td><input type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
-                    '<td><input type="text" name="mitigation_steps[]"></td>' +
-                    '<td><input type="text" name="deadline2[]"></td>' +
-                    '<td><select name="responsible_person[]">' +
-                        '<option value="">Select a value</option>';
 
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-                    '<td><input type="text" name="status[]"></td>' +
-                    '<td><input type="text" name="remark[]"></td>' +
-                    '</tr>';
-                return html;
-            }
-            var tableBody = $('#action_plan_details2 tbody');
-            var rowCount = tableBody.children('tr').length;
-            var newRow = generateTableRow(rowCount + 1);
-            tableBody.append(newRow);
-        });
         // ---------------------------------------------------
     });
 </script>

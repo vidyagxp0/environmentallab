@@ -72,6 +72,55 @@
             }
         }
     </script>
+     <style>
+        .w-5 {
+            width: 5%;
+        }
+        .w-10 {
+            width: 10%;
+        }
+    
+        .w-20 {
+            width: 20%;
+        }
+    
+        .w-25 {
+            width: 25%;
+        }
+    
+        .w-30 {
+            width: 30%;
+        }
+    
+        .w-40 {
+            width: 40%;
+        }
+    
+        .w-50 {
+            width: 50%;
+        }
+    
+        .w-60 {
+            width: 60%;
+        }
+    
+        .w-70 {
+            width: 70%;
+        }
+    
+        .w-80 {
+            width: 80%;
+        }
+    
+        .w-90 {
+            width: 90%;
+        }
+    
+        .w-100 {
+            width: 100%;
+        }
+    
+    </style>
     <script>
         function addWhyField(con_class, name) {
             let mainBlock = document.querySelector('.why-why-chart')
@@ -403,6 +452,7 @@
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                     <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -480,10 +530,21 @@
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
                                                 
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 7 ? "disabled" : "" }} value="{{ $data->short_description }}">
                                             </div>
-                                                  {{-- <p id="docnameError" style="color:red">**Short Description is required</p> --}}
+                                                  <p id="docnameError" style="color:red">**Short Description is required</p>
                                      </div>
+                                     {{-- <div class="col-12">
+                                        <div class="group-input">
+                                            <label for="Short Description">Short Description<span
+                                                    class="text-danger">*</span></label><span id="rchars">255</span>
+                                            characters remaining
+                                            
+                                            <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} value="{{ $data->short_description }}">
+                                        </div>
+                                        <p id="docnameError" style="color:red">**Short Description is required</p>
+    
+                                    </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="severity-level">Severity Level</label>
@@ -1225,7 +1286,7 @@
                                                 <table class="table table-bordered" id="action_plan_details">
                                                     <thead>
                                                         <tr>
-                                                            <th>Row #</th>
+                                                            <th class="w-5">Row #</th>
                                                             <th>Action</th>
                                                             <th>Responsible</th>
                                                             <th>Deadline</th>
@@ -1519,7 +1580,7 @@
                                                                                 value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
                                                                                 name="materials[]"></div>
                                                                         <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}}"
+                                                                                value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
                                                                                 name="methods[]"></div>
                                                                     @endforeach
                                                                 @endif
@@ -1537,7 +1598,7 @@
                                                                                 value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
                                                                                 name="manpower[]"></div>
                                                                         <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}}"
+                                                                                value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
                                                                                 name="machine[]"></div>
                                                                     @endforeach
                                                                 @endif
@@ -2210,6 +2271,18 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
+                                                <label for="Action Plan Complete">Action Plan Completed By</label>
+                                                <div class="static">{{ $data->actions_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Action Plan Complete">Action Plan Completed On</label>
+                                                <div class="static">{{ $data->actions_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
                                                 <label for="Plan Approved By">Plan Approved By</label>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
@@ -2220,18 +2293,18 @@
                                                 <div class="static">{{ $data->plan_approved_on }}</div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-lg-6">
+                                        <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Action Plan Complete">Action Plan Completed By</label>
-                                                <div class="static">{{ $data->action_plan_completed_by }}</div>
+                                                <div class="static">{{ $data->all_actions_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Action Plan Complete">Action Plan Completed On</label>
-                                                <div class="static">{{ $data->action_plan_completed_on }}</div>
+                                                <div class="static">{{ $data->all_actions_completed_on }}</div>
                                             </div>
-                                        </div> -->
+                                        </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
@@ -2458,6 +2531,7 @@
                         var newRow = generateTableRow(rowCount + 1);
                         tableBody.append(newRow);
                     });
+
                     $('#action_plan2').click(function(e) {
                         function generateTableRow(serialNumber) {
                             var users = @json($users);
@@ -2466,9 +2540,11 @@
                             '<tr>' +
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="mitigation_steps[]"></td>' +
-                                // '<td><input type="date" name="deadline2[]"></td>' +
+                                // '<td><input type="date" name="deadline2[]"></td>' 
                                 '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline2' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline2[]" class="hide-input" oninput="handleDateInput(this, `deadline2' + serialNumber +'`)" /></div></div></div></td>'
-                                  +
+                                
+                                
+                                +
                                 '<td><select name="responsible_person[]">' +
                                     '<option value="">Select a value</option>';
 
