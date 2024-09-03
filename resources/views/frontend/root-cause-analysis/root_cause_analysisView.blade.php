@@ -399,17 +399,15 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 new-date-data-field">
-                                    <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date</label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                       
-                                            <input type="text" id="due_date" name="due_date" 
-                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->due_date) }}"min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" />
-                                            <!-- <input type="date" name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}} min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" -->
- 
-                                    </div>  
-                                 </div>                                  <!-- <div class="col-lg-6">
+                                    <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" 
+                                                    name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                            </div>
+                                        </div>                                 <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -525,16 +523,16 @@
                                             <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
                                                 <option value="0">-- Select --</option>
                                                 <option {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="0">-- Select --</option>
-                                                <option @if ($data->Type =='1') selected @endif value="1">Facillties</option>
-                                                <option @if ($data->Type =='2') selected @endif value="2">Other</option>
-                                                <option @if ($data->Type =='3') selected @endif value="3">Stabillity</option>
-                                                <option @if ($data->Type =='4') selected @endif value="4">Raw Material</option>
-                                                <option @if ($data->Type =='5') selected @endif value="5">Clinical Production</option>
-                                                <option @if ($data->Type =='6') selected @endif value="6">Commercial Production</option>
-                                                <option  @if ($data->Type =='7') selected @endif  value="7">Labellling</option>
-                                                <option @if ($data->Type =='8') selected @endif value="8">laboratory</option>
-                                                <option @if ($data->Type =='9') selected @endif value="9">Utillities</option>
-                                                <option  @if ($data->Type =='10') selected @endif value="10">Validation</option>
+                                                <option @if ($data->Type =='Facillties') selected @endif value="Facillties">Facillties</option>
+                                                <option @if ($data->Type =='Other') selected @endif value="Other">Other</option>
+                                                <option @if ($data->Type =='Stabillity') selected @endif value="Stabillity">Stabillity</option>
+                                                <option @if ($data->Type =='Raw Material') selected @endif value="Raw Material">Raw Material</option>
+                                                <option @if ($data->Type =='Clinical Production') selected @endif value="Clinical Production">Clinical Production</option>
+                                                <option @if ($data->Type =='Commercial Production') selected @endif value="Commercial Production">Commercial Production</option>
+                                                <option  @if ($data->Type =='Labellling') selected @endif  value="Labellling">Labellling</option>
+                                                <option @if ($data->Type =='laboratory') selected @endif value="laboratory">laboratory</option>
+                                                <option @if ($data->Type =='Utillities') selected @endif value="Utillities">Utillities</option>
+                                                <option  @if ($data->Type =='Validation') selected @endif value="Validation">Validation</option>
                                             </select>
                                         </div>
                                     </div>
@@ -578,13 +576,26 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="department">Department(s)</label>
-                                            <select name="department" placeholder="Select Department(s)"
+                                            <select name="department" placeholder="Select Department(s)" multiple
                                              name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
                                                 data-search="false" data-silent-initial-value-set="true" id="department">
-                                                <option @if ($data->department== '1') selected @endif  value="1">Work Instruction</option>
-                                                <option @if ($data->department== '2') selected @endif value="2">Quality Assurance</option>
-                                                <option @if ($data->department== '3') selected @endif value="3">Specifications</option>
-                                                <option @if ($data->department== '4') selected @endif value="4">Production</option>
+                                                <option value="0">-- Select --</option>
+                                                <option value="Work Instruction"
+                                                    {{ in_array('Work Instruction', explode(',', $data->department)) ? 'selected' : '' }}>
+                                                    Work Instruction</option>
+                                                <option value="Quality Assurance"
+                                                    {{ in_array('Quality Assurance', explode(',', $data->department)) ? 'selected' : '' }}>
+                                                    Quality Assurance</option> 
+                                                <option value="Specifications"
+                                                    {{ in_array('Specifications', explode(',', $data->department)) ? 'selected' : '' }}>
+                                                    Specifications</option>  
+                                                <option value="Production"
+                                                    {{ in_array('Production', explode(',', $data->department)) ? 'selected' : '' }}>
+                                                    Production</option>    
+                                                <!-- <option @if ($data->department== 'Work Instruction') selected @endif  value="Work Instruction">Work Instruction</option>
+                                                <option @if ($data->department== 'Quality Assurance') selected @endif value="Quality Assurance">Quality Assurance</option>
+                                                <option @if ($data->department== 'Specifications') selected @endif value="Specifications">Specifications</option>
+                                                <option @if ($data->department== 'Production') selected @endif value="Production">Production</option> -->
                                             </select>
                                         </div>
                                     </div>
@@ -681,21 +692,21 @@
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="root-cause-methodology">Root Cause Methodology</label>
-                                            <select name="root_cause_methodology[]"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            <select name="root_cause_methodology[]"  multiple {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                 placeholder="-- Select --" data-search="false"
                                                 data-silent-initial-value-set="true" id="root-cause-methodology">
                                                 <option value="0">-- Select --</option>
-                                                <option value="1"
-                                                    {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                <option value="Why-Why Chart"
+                                                    {{ in_array('Why-Why Chart', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Why-Why Chart</option>
-                                                <option value="2"
-                                                    {{ in_array('2', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                <option value="Failure Mode and Efect Analysis"
+                                                    {{ in_array('Failure Mode and Efect Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Failure Mode and Efect Analysis</option>
-                                                <option value="3"
-                                                    {{ in_array('3', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                <option value="Fishbone or Ishikawa Diagram"
+                                                    {{ in_array('Fishbone or Ishikawa Diagram', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Fishbone or Ishikawa Diagram</option>
-                                                <option value="4"
-                                                    {{ in_array('4', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
+                                                <option value="Is/Is Not Analysis"
+                                                    {{ in_array('Is/Is Not Analysis', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                     Is/Is Not Analysis</option>
 
 
@@ -1601,7 +1612,7 @@ function add4Input_case(tableId) {
             </script>
         <script>
             VirtualSelect.init({
-                ele: '#investigators'
+                ele: '#investigators, #root-cause-methodology, #department'
             });
 
             function openCity(evt, cityName) {

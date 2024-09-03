@@ -227,16 +227,16 @@
                                         <label for="Type">Type</label>
                                         <select name="Type">
                                             <option value="0">-- Select --</option>
-                                            <option value="1">Facillties</option>
-                                            <option value="2">Other</option>
-                                            <option value="3">Stabillity</option>
-                                            <option value="4">Raw Material</option>
-                                            <option value="5">Clinical Production</option>
-                                            <option value="6">Commercial Production</option>
-                                            <option value="7">Labellling</option>
-                                            <option value="8">laboratory</option>
-                                            <option value="9">Utillities</option>
-                                            <option value="10">Validation</option>
+                                            <option value="Facillties">Facillties</option>
+                                            <option value="Other">Other</option>
+                                            <option value="Stabillity">Stabillity</option>
+                                            <option value="Raw Material">Raw Material</option>
+                                            <option value="Clinical Production">Clinical Production</option>
+                                            <option value="Commercial Production">Commercial Production</option>
+                                            <option value="Labellling">Labellling</option>
+                                            <option value="laboratory">laboratory</option>
+                                            <option value="Utillities">Utillities</option>
+                                            <option value="Validation">Validation</option>
                                         </select>
                                     </div>
                                 </div>
@@ -272,10 +272,10 @@
                                         <label for="department">Department(s)</label>
                                         <select multiple name="department" placeholder="Select Department(s)"
                                             data-search="false" data-silent-initial-value-set="true" id="department">
-                                            <option value="1">Work Instruction</option>
-                                            <option value="2">Quality Assurance</option>
-                                            <option value="3">Specifications</option>
-                                            <option value="4">Production</option>
+                                            <option value="Work Instruction">Work Instruction</option>
+                                            <option value="Quality Assurance">Quality Assurance</option>
+                                            <option value="Specifications">Specifications</option>
+                                            <option value="Production">Production</option>
                                         </select>
                                     </div>
                                 </div>
@@ -348,10 +348,10 @@
                                         <select name="root_cause_methodology[]" multiple placeholder="-- Select --"
                                             data-search="false" data-silent-initial-value-set="true"
                                             id="root-cause-methodology">
-                                            <option value="1">Why-Why Chart</option>
-                                            <option value="2">Failure Mode and Efect Analysis</option>
-                                            <option value="3">Fishbone or Ishikawa Diagram</option>
-                                            <option value="4">Is/Is Not Analysis</option>
+                                            <option value="Why-Why Chart">Why-Why Chart</option>
+                                            <option value="Failure Mode and Efect Analysis">Failure Mode and Efect Analysis</option>
+                                            <option value="Fishbone or Ishikawa Diagram">Fishbone or Ishikawa Diagram</option>
+                                            <option value="Is/Is Not Analysis">Is/Is Not Analysis</option>
                                         </select>
                                     </div>
                                 </div>

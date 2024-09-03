@@ -221,9 +221,11 @@
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
+                    </tr> 
+                    <tr>
                         <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
-                    </tr>                     
+                        <td class="w-30" colspan="3">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
+                    </tr>                    
                         <tr>
                          <th class="w-20">Quarter</th>
                          <td class="w-30">@if($data->Quarter){{ $data->Quarter }}@else Not Applicable @endif</td>
@@ -231,19 +233,21 @@
                          <td class="w-30">@if($data->year){{ $data->year }}@else Not Applicable @endif</td>
                          </tr>                    
                         <tr>
-                          <th class="w-20">URl's description</th>
+                          <th class="w-20">URl's Description</th>
                           <td class="w-30">@if($data->url_description){{ $data->url_description }}@else Not Applicable @endif</td>
                           <th class="w-20">Severity Level</th>
                           <td class="w-30">@if($data->severity1_level){{ $data->severity1_level }}@else Not Applicable @endif</td>
-                        </tr>   
-                        <tr>  
+                        </tr>  
+                        <tr>
                             <th class="w-20">Comments</th>
-                            <td class="w-80">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                            <td class="w-80" colspan="3">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                        </tr> 
+                        <tr>  
                             <th class="w-20">Others</th>
-                            <td class="w-30">@if($data->initiated_through_req){{ $data->initiated_through_req }} @else Not Applicable @endif</td>
+                            <td class="w-30" colspan="3">@if($data->initiated_through_req){{ $data->initiated_through_req }} @else Not Applicable @endif</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Related URl </th>
+                            <th class="w-20">Related URL </th>
                             <td class="w-80">@if($data->related_url){{ $data->related_url }}@else Not Applicable @endif</td>
                             <th class="w-20">Initiated Through</th>
                             <td class="w-30">@if($data->initiated_through){{ $data->initiated_through }} @else Not Applicable @endif</td>

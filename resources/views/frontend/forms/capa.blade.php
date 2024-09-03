@@ -387,7 +387,28 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <div class="col-lg-12">
+
+
+
+
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Reference Records">Reference Records (CAPA)</label>
+                                    <select multiple id="capa_related_record" name="capa_related_record[]"
+                                        placeholder="Select Reference Records">
+
+                                        @foreach ($old_record as $new)
+                                            <option
+                                                value="{{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                {{ Helpers::getDivisionName($new->division_id) . '/CAPA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records (CAPA)</label>
                                <select multiple id="capa_related_record" name="capa_related_record[]" id="">
@@ -399,8 +420,27 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
+
+
                                 <div class="col-lg-12">
+                                    <div class="group-input">
+                                        <label for="Reference Records">Reference Records (Root Cause Analysis)</label>
+                                        <select multiple id="rca_related_record" name="rca_related_record[]"
+                                            placeholder="Select Reference Records">
+
+                                            @foreach ($rca_old_record as $new1)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new1->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new1->record) }}/{{$new1->short_description}}">
+                                                    {{ Helpers::getDivisionName($new1->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new1->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Records">Reference Records (Root Cause Analysis)</label>
                                     <select multiple id="capa_related_record" name="rca_related_record[]" id="">
@@ -412,7 +452,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Initial Observation">Initial Observation</label>
@@ -421,7 +461,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Interim Containnment">Interim Containnment</label>
+                                        <label for="Interim Containnment">Interim Containment</label>
                                         <select name="interim_containnment"
                                             onchange="otherController(this.value, 'required', 'containment_comments')">
                                             <option value="">Enter Your Selection Here</option>
@@ -586,7 +626,7 @@
                                                     <th>Batch No./Lot No./AR No.</th>
                                                     <th>Manufacturing Date</th>
                                                     <th>Date Of Expiry</th>
-                                                    <th>Batch Disposition Decision</th>
+                                                    <th>Batch Disposition </th>
                                                     <th>Remark</th>
                                                     <th>Batch Status</th>
                                                 </tr>
@@ -1253,6 +1293,24 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="all actions completed By">All Actions Completed By</label>
+                                        <input type="hidden" name="completed_by">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="all actions completed On">All Actions Completed On</label>
+                                        <input type="hidden" name="completed_on">
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Rejected By">Rejected By</label>
@@ -1310,7 +1368,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee , #capa_related_record,#cft_reviewer'
+            ele: '#Facility,#rca_related_record, #Group, #Audit, #Auditee , #capa_related_record,#cft_reviewer'
         });
 
         function openCity(evt, cityName) {
