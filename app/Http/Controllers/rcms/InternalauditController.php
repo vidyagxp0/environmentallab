@@ -106,6 +106,10 @@ class InternalauditController extends Controller
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team =  $request->Audit_team;
         $internalAudit->Auditee =  implode(',', $request->Auditee);
+        $auditeeIdsArray = explode(',', $internalAudit->Auditee);
+        $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
+        $auditeeNamesString = implode(', ', $auditeeNames);
+
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
@@ -656,7 +660,7 @@ class InternalauditController extends Controller
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Auditee';
             $history->previous = "Null";
-            $history->current =  implode(',', $request->Auditee);
+            $history->current =  $auditeeNamesString;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1085,6 +1089,12 @@ class InternalauditController extends Controller
         $lastDocument = InternalAudit::find($id);
         $internalAudit = InternalAudit::find($id);
 
+        $getId = $lastDocument->Auditee;
+        $lastauditeeIdsArray = explode(',', $getId);
+        $lastauditeeNames = User::whereIn('id', $lastauditeeIdsArray)->pluck('name')->toArray();
+        $lastAuditeeName = implode(', ', $lastauditeeNames);
+
+
         $internalAudit->parent_id = $request->parent_id;
         $internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
@@ -1122,7 +1132,14 @@ class InternalauditController extends Controller
         $internalAudit->if_comments = $request->if_comments;
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team =  $request->Audit_team;
+
         $internalAudit->Auditee =  implode(',', $request->Auditee);
+        $auditeeIdsArray = explode(',', $internalAudit->Auditee);
+        $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
+        $auditeeNamesString = implode(', ', $auditeeNames);
+
+
+
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
@@ -1141,8 +1158,30 @@ class InternalauditController extends Controller
         $internalAudit->audit_start_date= $request->audit_start_date;
         $internalAudit->audit_end_date = $request->audit_end_date;
 
+        // if (!empty($request->inv_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->inv_attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_inv_attachment_files) ? $request->existing_inv_attachment_files : null;
+
         if (!empty($request->inv_attachment)) {
-            $files = [];
+            if ($internalAudit->inv_attachment) {
+                $existingFiles = json_decode($internalAudit->inv_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
                     $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1150,10 +1189,10 @@ class InternalauditController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->inv_attachment = json_encode($files);
         }
+
+        $internalAudit->inv_attachment = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
 
 
         if (!empty($request->file_attachment)) {
@@ -1630,13 +1669,15 @@ class InternalauditController extends Controller
             $history->save();
         }
 
+
         if ($lastDocument->Auditee != $internalAudit->Auditee || !empty($request->Auditee_comment)) {
+
 
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $id;
             $history->activity_type = 'Auditee';
-            $history->previous = $lastDocument->Auditee;
-            $history->current = $internalAudit->Auditee;
+            $history->previous = $lastAuditeeName;
+            $history->current = $auditeeNamesString;
             $history->comment = $request->Auditee_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2582,13 +2623,17 @@ class InternalauditController extends Controller
     {
         $data = InternalAudit::find($id);
         if (!empty($data)) {
+            $auditeeIdsArray = explode(',', $data->Auditee);
+            $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
+            $auditeeNamesString = implode(', ', $auditeeNames);
+
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "internal_audit")->first();
             $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field")->first();
 
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','grid_data','grid_data1'))
+            $pdf = PDF::loadview('frontend.internalAudit.singleReport', compact('data','grid_data','grid_data1','auditeeNamesString'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

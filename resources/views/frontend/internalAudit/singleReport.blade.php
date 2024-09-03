@@ -165,8 +165,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo" style="position: relative; height: 60px; width: 150px;">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt=""
-                            style="width: 60px; position: absolute; left: 40%;">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -185,6 +184,22 @@
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                <strong>Page :</strong> 1 of 1
+            </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -581,9 +596,7 @@
                             <th class="w-20">Auditee</th>
                             <td class="w-80">
                                 @if ($data->Auditee)
-                                    @foreach (explode(',', $data->Auditee) as $Key => $value)
-                                        <li>{{ Helpers::getInitiatorName($value) }}</li>
-                                    @endforeach
+                                    {{ $auditeeNamesString }}
                                 @else
                                     Not Applicable
                                 @endif
@@ -1108,24 +1121,6 @@
         </div>
 
 
-
-
-
-        <footer>
-            <table>
-                <tr>
-                    <td class="w-30">
-                        <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                    </td>
-                    <td class="w-40">
-                        <strong>Printed By :</strong> {{ Auth::user()->name }}
-                    </td>
-                    {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-                </tr>
-            </table>
-        </footer>
 
 </body>
 
