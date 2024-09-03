@@ -98,7 +98,7 @@
                                 Child
                             </button> --}}
                         @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
-                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
+                               <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                               QA More Info Required
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
@@ -296,6 +296,7 @@
                                                 <label for="Initiator Group">Initiator Group</label>
                                                 <select name="initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                            <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -476,7 +477,41 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-lg-12">
+
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Reference Records">Reference Records (CAPA)</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple
+                                                    id="capa_related_record" name="capa_related_record[]"
+                                                    placeholder="Select Reference Records">
+                                                    @if (!empty($old_record))
+                                                        @foreach ($old_record as $new)
+                                                            @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName($new->division_id) .
+                                                                    '/CAPA/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($new->record);
+                                                                $selected = in_array(
+                                                                    $recordValue,
+                                                                    explode(',', $data->capa_related_record),
+                                                                )
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                {{ $recordValue }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+
+                                        </div>
+
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records (CAPA)</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -489,8 +524,44 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                        </div> --}}
+
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Reference Records">Reference Records (Root Cause Analysis)</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple
+                                                    id="rca_related_record" name="rca_related_record[]"
+                                                    placeholder="Select Reference Records">
+                                                    @if (!empty($rca_old_record))
+                                                        @foreach ($rca_old_record as $new)
+                                                            @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName($new->division_id) .
+                                                                    '/RCA/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($new->record);
+                                                                $selected = in_array(
+                                                                    $recordValue,
+                                                                    explode(',', $data->rca_related_record),
+                                                                )
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                {{ $recordValue }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
+
                                         </div>
-                                        <div class="col-lg-12">
+
+
+
+                                        {{-- <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Records">Reference Records (Root Cause Analysis)</label>
                                             <select multiple id="capa_related_record" name="rca_related_record[]" id="">
@@ -502,7 +573,7 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Initial Observation">Initial Observation</label>
@@ -513,7 +584,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Interim Containnment">Interim Containnment</label>
+                                                <label for="Interim Containnment">Interim Containment</label>
                                                 <select name="interim_containnment"
                                                     onchange="otherController(this.value, 'required', 'containment_comments')"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
@@ -535,6 +606,7 @@
                                                 <textarea name="containment_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->containment_comments }}</textarea>
                                             </div>
                                         </div>
+
 
                                         <div class="col-12">
                                             <div class="group-input">
@@ -560,19 +632,21 @@
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
                                                             @endforeach
-                                                        {{-- @endif --}}
                                                         @endif
+                                                        {{-- @endif --}}
                                                     </div>
                                                     <div class="add-btn">
                                                         <div>Add</div>
                                                         <input
                                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                            type="file" id="myfile" name="capa_attachment[]"
+                                                            type="file" id="myfile" name="capa_attachment[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                             oninput="addMultipleFiles(this, 'capa_attachment')" multiple>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
+
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="CAPA QA Comments">CAPA QA Comments</label>
@@ -671,7 +745,7 @@
                                                             <th>Batch No./Lot No./AR No.</th>
                                                             <th>Manufacturing Date</th>
                                                             <th>Date Of Expiry</th>
-                                                            <th>Batch Disposition Decision</th>
+                                                            <th>Batch Disposition </th>
                                                             <th>Remark</th>
                                                             <th>Batch Status</th>
                                                         </tr>
@@ -680,7 +754,7 @@
                                                         @if ($data2->material_name)
                                                         @foreach (unserialize($data2->material_name) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                            <td><input type="number" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ $key + 1 }}"></td>
                                                             <!-- {{-- <td><input type="text" name="product_name[]"
                                                                     value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
@@ -785,7 +859,7 @@
                                                         @if ($data3->equipment)
                                                         @foreach (unserialize($data3->equipment) as $key => $temps)
                                                         <tr>
-                                                            <td><input type="text" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
+                                                            <td><input type="number" name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                                     value="{{ $key + 1 }}"></td>
 
                                                             <td><input type="text" name="equipment[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
@@ -1435,6 +1509,9 @@
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div> -->
+                                        <div class="col-12 sub-head">
+                                            Extension Justification
+                                        </div>
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="due_date_extension">Due Date Extension Justification</label>
@@ -1544,6 +1621,22 @@
                                                 <div class="static">{{ $data->approved_on }}</div>
                                             </div>
                                         </div>
+{{-- all_actions_completed --}}
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="all actions completed By">All Actions Completed By</label>
+                                                <input type="hidden" name="completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="all actions completed On">All Actions Completed On</label>
+                                                <input type="hidden" name="completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <div class="static">{{ $data->completed_on }}</div>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Rejected By">Rejected By</label>
@@ -1806,16 +1899,16 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
+                                    <label for="comment">Comment </label>
+                                    <input type="comment" name="comment" >
                                 </div>
                             </div>
 
@@ -1850,18 +1943,19 @@
                                     and password for this task. You are performing an electronic signature,
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
-                                <div class="group-input">
-                                    <label for="username">Username</label>
+                               <div class="group-input">
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment</label>
-                                    <input type="comment" name="comment">
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
+                                    <input type="comment" name="comment" required>
                                 </div>
+
                             </div>
 
                             <!-- Modal footer -->
@@ -1890,7 +1984,7 @@
 
             <script>
                 VirtualSelect.init({
-                    ele: '#Facility, #Group, #Audit, #Auditee ,#capa_related_record'
+                    ele: '#Facility, #rca_related_record, #Group, #Audit, #Auditee ,#capa_related_record'
                 });
 
                 function openCity(evt, cityName) {
