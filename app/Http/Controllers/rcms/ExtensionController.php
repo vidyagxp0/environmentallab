@@ -184,7 +184,7 @@ class ExtensionController extends Controller
         $history->extension_id = $openState->id;
         $history->activity_type = 'Current Parent Due Date';
         $history->previous = "Null";
-        $history->current = $openState->due_date;
+        $history->current = Helpers::getdateFormat($openState->due_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -198,7 +198,7 @@ class ExtensionController extends Controller
             $history->extension_id = $openState->id;
             $history->activity_type = 'Revised Due Date';
             $history->previous = "Null";
-            $history->current = $openState->revised_date;
+            $history->current = Helpers::getdateFormat($openState->revised_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -407,7 +407,7 @@ class ExtensionController extends Controller
             $history = new ExtensionAuditTrail();
             $history->extension_id = $id;
             $history->activity_type = 'Current Parent Due Date';
-            $history->previous = $lastDocument->due_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
             $history->current = Helpers::getdateFormat($openState->due_date);
             $history->comment = $request->approver1_comment;
             $history->user_id = Auth::user()->id;
@@ -421,7 +421,7 @@ class ExtensionController extends Controller
             $history = new ExtensionAuditTrail();
             $history->extension_id = $id;
             $history->activity_type = 'Revised Due Date';
-            $history->previous = $lastDocument->revised_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->revised_date);
             $history->current = Helpers::getdateFormat($openState->revised_date);
             $history->comment = $request->approver1_comment;
             $history->user_id = Auth::user()->id;
@@ -609,6 +609,15 @@ class ExtensionController extends Controller
                             $history->save();
                    
                     $changeControl->update();
+                    $changeControl->update();
+                    $history = new CCStageHistory();
+                    $history->type = "Extension";
+                    $history->doc_id = $id;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->stage_id = $changeControl->stage;
+                    $history->status = $changeControl->status;
+                    $history->save();
                     // $list = Helpers::getApproverUserList();
                     // foreach ($list as $u) {
                     //     if($u->q_m_s_divisions_id == $openState->division_id){
@@ -798,6 +807,15 @@ class ExtensionController extends Controller
                         $history->stage = 'Rejected';
                         $history->save();
                 $changeControl->update();
+                
+                $history = new CCStageHistory();
+                $history->type = "Extension";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
                 // $list = Helpers::getInitiatorUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $openState->division_id){

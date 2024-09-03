@@ -31,7 +31,7 @@
     <div class="form-field-head">
 
         <div class="division-bar">
-            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/Observation
+            <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($parent_division_id) }}/Observation
         </div>
     </div>
 
@@ -66,14 +66,14 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
-                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
+                                        <input disabled type="text" name="record_number" value="{{ Helpers::getDivisionName($parent_division_id) }}/OBS/{{ date('Y') }}/{{ $record_number }}">
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
-                                        <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName(session()->get('division')) }}">
+                                        <input type="hidden" name="division_id" value="{{ $parent_division_id }}">
+                                        <input readonly type="text" name="division_code" value="{{ Helpers::getDivisionName($parent_division_id) }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
@@ -443,9 +443,9 @@
                                             {{-- @foreach ($users as $data)
                                             <option value="{{ $data->id }}">{{ $data->name }}</option>
                                         @endforeach --}}
-                                        </select>
+                                        {{-- </select>
                                     </div>
-                                </div> --}}
+                                </div>  --}}
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action-plan-grid">

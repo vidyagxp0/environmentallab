@@ -47,7 +47,7 @@ $users = DB::table('users')
 
 <div class="form-field-head">
     <div class="division-bar">
-        <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName(session()->get('division')) }}/Observation
+        <strong>Site Division/Project</strong> : {{ Helpers::getDivisionName($data->division_id) }}/Observation
     </div>
 </div>
 
@@ -269,8 +269,8 @@ $users = DB::table('users')
                                     <div class="group-input">
                                         <label for="Division Code"><b>Site/Location Code</b></label>
                                         <input readonly type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                    <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
+                                        value="{{ Helpers::getDivisionName($data->division_id) }}">
+                                    <input type="hidden" name="division_id" value="{{ $data->division_id }}">
                                         {{-- <div class="static">QMS-North America</div> --}}
                                     </div>
                                 </div>
@@ -714,7 +714,7 @@ $users = DB::table('users')
                                                     <td> <select id="select-state" placeholder="Select..."
                                                         name="responsible[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} >
                                                         
-                                                        <option value="">-Select-</option>
+                                                        <option value="">Select a Value</option>
                                                         @foreach ($users as $value)
                                                             <option
                                                                 @if($griddata && unserialize($griddata->responsible)[$key])

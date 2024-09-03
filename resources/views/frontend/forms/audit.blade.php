@@ -1346,40 +1346,53 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd By</label>
+                                        <label for="Issue Report By">Issue Report By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd On</label>
+                                        <label for="Issue Report On">Issue Report On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Observation Submitted By">Audit Observation Submitted By</label>
+                                        <label for="CAPA Plan Proposed By">CAPA Plan Proposed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Observation Submitted On">Audit Observation Submitted On</label>
+                                        <label for="CAPA Plan Proposed On">CAPA Plan Proposed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd By</label>
+                                        <label for="All CAPA Closed By">All CAPA Closed By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd On</label>
+                                        <label for="All CAPA Closed On">All CAPA Closed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="No CAPAs Required By">No CAPAs Required By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="No CAPAs Required On">No CAPAs Required On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Audit Response Completed By">Audit Response Completed By</label>
@@ -1394,13 +1407,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Response Feedback Verified By">Response Feedback Verified By</label>
+                                        <label for="Reject By">Reject By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Response Feedback Verified On">Response Feedback Verified On</label>
+                                        <label for="Reject On">Reject On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>

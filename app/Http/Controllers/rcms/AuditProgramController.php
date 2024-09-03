@@ -183,7 +183,7 @@ class AuditProgramController extends Controller
             $history->AuditProgram_id = $data->id;
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
-            $history->current = $data->intiation_date;
+            $history->current = Helpers::getdateFormat($data->intiation_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -225,7 +225,7 @@ class AuditProgramController extends Controller
             $history->AuditProgram_id = $data->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $data->due_date;
+            $history->current = Helpers::getdateFormat($data->due_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -248,12 +248,26 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
-        if (!empty($data->assign_to)) {
+        // if (!empty($data->assign_to)) {
+        //     $history = new AuditProgramAuditTrial();
+        //     $history->AuditProgram_id = $data->id;
+        //     $history->activity_type = 'Assigned to';
+        //     $history->previous = "Null";
+        //     $history->current = Helpers::getInitiatorName($data->assign_to);
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->save();
+        // }
+
+        if (!empty($request->assign_to)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Assigned to';
+            $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $data->assign_to;
+            $history->current =  Helpers::getInitiatorName($request->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -406,7 +420,7 @@ class AuditProgramController extends Controller
         if (!empty($data->related_url)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'Related URl,s';
+            $history->activity_type = 'Related URL';
             $history->previous = "Null";
             $history->current = $data->related_url;
             $history->comment = "NA";
@@ -435,7 +449,7 @@ class AuditProgramController extends Controller
             $history->AuditProgram_id = $data->id;
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
-            $history->current = $data->Initiator_Group;
+            $history->current = Helpers::getInitiatorGroupFullName($data->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -539,8 +553,8 @@ class AuditProgramController extends Controller
         $data->repeat_nature = $request->repeat_nature;
         $data->due_date_extension = $request->due_date_extension;
 
-        // $data->assign_to = $request->assign_to;
-        $data->assign_to = is_array($request->assign_to) ? implode(',', $request->assign_to) : $request->assign_to;
+        $data->assign_to = $request->assign_to;
+        // $data->assign_to = is_array($request->assign_to) ? implode(',', $request->assign_to) : $request->assign_to;
 
         $data->due_date = $request->due_date;
         $data->Initiator_Group = $request->Initiator_Group;
@@ -685,13 +699,27 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
+        // if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
 
+        //     $history = new AuditProgramAuditTrial();
+        //     $history->AuditProgram_id = $id;
+        //     $history->activity_type = 'Assigned to';
+        //     $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+        //     $history->current = Helpers::getInitiatorName($request->assign_to);
+        //     $history->comment = $request->assign_to_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+
+        if ($lastDocument->assign_to != $data->assign_to || !empty($request->assign_to_comment)) {
             $history = new AuditProgramAuditTrial();
-            $history->AuditProgram_id = $id;
-            $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $data->assign_to;
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Assigned To';
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+            $history->current = Helpers::getInitiatorName($data->assign_to);
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -775,7 +803,7 @@ class AuditProgramController extends Controller
 
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $id;
-            $history->activity_type = 'Related URl,s';
+            $history->activity_type = 'Related URL';
             $history->previous = $lastDocument->related_url;
             $history->current = $data->related_url;
             $history->comment = $request->related_url_comment;
@@ -804,8 +832,8 @@ class AuditProgramController extends Controller
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->Initiator_Group;
-            $history->current = $data->Initiator_Group;
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($data->Initiator_Group);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

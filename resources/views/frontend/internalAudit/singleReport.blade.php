@@ -1054,9 +1054,9 @@
                     </div>
                     <table>
                         <tr>
-                            <th class="w-20">Audit Schedule By</th>
+                            <th class="w-20">Schedule Audit By</th>
                             <td class="w-30">{{ $data->audit_schedule_by }}</td>
-                            <th class="w-20">Audit Schedule On</th>
+                            <th class="w-20">Schedule Audit On</th>
                             <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
                         </tr>
                         <tr>
@@ -1072,45 +1072,54 @@
                             <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <th class="w-20">Audit preparation completed by</th>
                             <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
                             <th class="w-20">Audit preparation completed On</th>
                             <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}
                             </td>
-                        </tr>
+                        </tr> --}}
                         <tr>
-                            <th class="w-20">More Information Required By</th>
+                            <th class="w-20">Issue Report By</th>
                             <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
-                            <th class="w-20">More Information Required On</th>
+                            <th class="w-20">Issue Report On</th>
                             <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Audit Observation Submitted By</th>
+                            <th class="w-20">CAPA Plan Proposed By</th>
                             <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                            <th class="w-20">Supervisor Reviewed On(QA)</th>
+                            <th class="w-20">CAPA Plan Proposed</th>
                             <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}
                             </td>
                         </tr>
                         <tr>
-                            <th class="w-20">Audit Lead More Info Reqd By
+                            <th class="w-20">All CAPA Closed By
                             </th>
                             <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
-                            <th class="w-20">More Information Req. On</th>
+                            <th class="w-20">All CAPA Closed On</th>
                             <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Audit Response Completed By</th>
+                            <th class="w-20">No CAPAs Required By</th>
                             <td class="w-30">{{ $data->audit_response_completed_by }}</td>
-                            <th class="w-20">QA Review Completed On</th>
+                            <th class="w-20">No CAPAs Required On</th>
                             <td class="w-30">{{ Helpers::getdateFormat($data->audit_response_completed_on) }}</td>
                         </tr>
                         <tr>
-                            <th class="w-20">Response Feedback Verified By</th>
+                            <th class="w-20">Reject By</th>
                             <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
                             <th class="w-20">
-                                Response Feedback Verified On</th>
+                                Reject On</th>
                             <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th class="w-20">Rejected By</th>
+                            <td class="w-30">{{ $data->rejected_by }}</td>
+                            <th class="w-20">
+                                Rejected On</th>
+                            <td class="w-30">{{ Helpers::getdateFormat($data->rejected_on) }}
                             </td>
                         </tr>
 

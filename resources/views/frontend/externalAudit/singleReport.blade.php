@@ -176,7 +176,7 @@
                     <strong>External Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -192,6 +192,9 @@
                     General Information
                 </div>
                 <table>
+                    <th class="w-20">Record Number</th>
+                    <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
+
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                     <th class="w-20">Initiator</th>
                         <td class="w-30">{{ Helpers::getInitiatorName($data->initiator_id) }}</td>
@@ -266,10 +269,10 @@
                         
                     </tr>
                    
-                    {{-- <tr>
+                    <tr>
                         <th class="w-20">Audit type</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                    </tr> --}}
+                    </tr>
         
 
                 </table>
@@ -310,9 +313,9 @@
                     <table>
                         <tr>
                             <th class="w-30">Audit Schedule Start Date</th>
-                            <td class="w-20">@if($data->start_date){{ $data->start_date }}@else Not Applicable @endif</td>
+                            <td class="w-20">@if($data->start_date){{ Helpers::getdateFormat($data->start_date) }}@else Not Applicable @endif</td>
                             <th class="w-30">Audit Schedule End Date</th>
-                            <td class="w-20">@if($data->end_date){{ $data->end_date }}@else Not Applicable @endif</td>
+                            <td class="w-20">@if($data->end_date){{Helpers::getdateFormat ($data->end_date) }}@else Not Applicable @endif</td>
 
                         </tr>
                         <tr>
@@ -372,11 +375,11 @@
                         <th class="w-20">Guideline Attachment</th>
                         <td class="w-30">@if($data->file_attachment_guideline){{ $data->file_attachment_guideline }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th class="w-20">Audit Category</th>
                         <td class="w-30">@if($data->Audit_Category){{ $data->Audit_Category }}@else Not Applicable @endif</td>
                         
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Supplier/Vendor/Manufacturer Site</th>
                         <td class="w-30">@if($data->Supplier_Site){{$data->Supplier_Site }}@else Not Applicable @endif</td>
@@ -473,13 +476,13 @@
                             <th class="w-20">Audit Start Date</th>
                             <td class="w-30">
                                 <div>
-                                    @if($data->audit_start_date){{ $data->audit_start_date }}@else Not Applicable @endif
+                                    @if($data->audit_start_date){{ Helpers::getdateFormat ($data->audit_start_date) }}@else Not Applicable @endif
                                 </div>
                             </td>
                             <th class="w-20">Audit End Date</th>
                             <td class="w-30">
                                 <div>
-                                    @if($data->audit_end_date){{ $data->audit_end_date }}@else Not Applicable @endif
+                                    @if($data->audit_end_date){{  Helpers::getdateFormat($data->audit_end_date) }}@else Not Applicable @endif
                                 </div>
                             </td>
                         </tr>
@@ -558,12 +561,16 @@
                                             <tr style="color: black; font-weight: normal;">
                                                 <td>{{ $key + 1 }}</td>
                                                 <td>{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}</td>
-                                                <td>{{ unserialize($grid_data->start_date)[$key] }}</td>
-                                                <td>{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}</td>
+                                                <td>{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}</td>
                                                 <td>{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}</td>
+                                                <td>{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}</td>
                                                 <td>{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}</td>
-                                                <td>{{ $grid_data->auditor }}</td>
-                                                <td>{{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}</td>
+                                                {{-- <td>{{ $grid_data->auditor }}</td> --}}
+                                                <td>{{ isset(unserialize($grid_data->auditor)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditor)[$key]) : '' }}</td>
+                                                <td>{{ isset(unserialize($grid_data->auditee)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditee)[$key]) : '' }}</td>
+
+                                                {{-- <td>{{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}</td> --}}
+                                                {{-- <td>{{ unserialize($grid_data->auditee)[$key] ? unserialize($grid_data->auditee)[$key] : '' }}</td> --}}
                                                 <td>{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}</td>
                 
                                             </tr>
@@ -621,7 +628,7 @@
 
                         <tr>
                         <th class="w-20">Reference Record</th>
-                        <td class="w-30">@if($data->refrence_record){{ $data->refrence_record }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Reference_Recores1){{ $data->Reference_Recores1 }}@else Not Applicable @endif</td>
                         <th class="w-20">Due Date Extension Justification</th>
                         <td class="w-30">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
                     </tr>
@@ -702,10 +709,10 @@
                 </div>
                 <table>
                     <tr>
-                        <th class="w-20">Audit Schedule By</th>
+                        <th class="w-20">Schedule Audit By</th>
                         <td class="w-30">{{ $data->audit_schedule_by }}</td>
-                        <th class="w-20">Audit Schedule On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                        <th class="w-20">Schedule Audit On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_schedule_on) }}</td>
                     </tr>
                     <tr>
                         <th class="w-20">Cancelled By</th>
@@ -714,42 +721,43 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->cancelled_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit preparation completed by</th>
+                        <th class="w-20">Complete Audit Preparation by</th>
                         <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>
-                        <th class="w-20">Audit preparation completed On</th>
+                        <th class="w-20">Complete Audit Preparation On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_preparation_completed_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">More Information Required By</th>
+                        <th class="w-20">Issue Report  By</th>
                         <td class="w-30">{{ $data->audit_mgr_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Required On</th>
+                        <th class="w-20">Issue Report  On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_mgr_more_info_reqd_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Audit Observation Submitted By</th>
+                        <th class="w-20">CAPA Plan Proposed By</th>
                         <td class="w-30">{{ $data->audit_observation_submitted_by }}</td>
-                        <th class="w-20">Supervisor Reviewed On(QA)</th>
+                        <th class="w-20">CAPA Plan Proposed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_observation_submitted_on) }}</td>
                     </tr>
+                    
                     <tr>
-                        <th class="w-20">Audit Lead More Info Reqd By
-                        </th>
-                        <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
-                        <th class="w-20">More Information Req. On</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
-                    </tr>
-                    <tr>
-                        <th class="w-20">Audit Response Completed By</th>
+                        <th class="w-20">No CAPAs Required By</th>
                         <td class="w-30">{{ $data->audit_response_completed_by }}</td>
-                        <th class="w-20">QA Review Completed On</th>
+                        <th class="w-20">No CAPAs Required On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->audit_response_completed_on) }}</td>
                     </tr>
                     <tr>
+                        <th class="w-20">All CAPA Closed  By
+                        </th>
+                        <td class="w-30">{{ $data->audit_lead_more_info_reqd_by }}</td>
+                        <th class="w-20">All CAPA Closed  On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->audit_lead_more_info_reqd_on) }}</td>
+                    </tr>
+                    {{-- <tr>
                         <th class="w-20">Response Feedback Verified By</th>
                         <td class="w-30">{{ $data->response_feedback_verified_by }}</td>
                         <th class="w-20">Response Feedback Verified On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->response_feedback_verified_on) }}</td>
-                    </tr>
+                    </tr> --}}
                     <tr>
                         <th class="w-20">Rejected By</th>
                         <td class="w-30">{{ $data->rejected_by }}</td>

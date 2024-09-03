@@ -306,7 +306,7 @@
                                                             <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);" >
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}" style="@if ($data->stage == 0 || $data->stage == 3 || $data->stage == 4) pointer-events: none; @endif">><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                        @endforeach
                                                             @endif
@@ -337,6 +337,7 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
@@ -368,14 +369,14 @@
                                                             <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                                 <b>{{ $file }}</b>
                                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                                <a type="button" class="remove-file" data-file-name="{{ $file }}"  style="@if ($data->stage == 0 || $data->stage == 3 || $data->stage == 4) pointer-events: none; @endif"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                             </h6>
                                                        @endforeach
                                                             @endif
                                                         </div>
                                                         <div class="add-btn">
                                                             <div>Add</div>
-                                                            <input {{ $data->stage == 0 || $data->stage == 3  || $data->stage == 4 ? "disabled" : "" }} type="file" id="myfile" name="closure_attachments[]"
+                                                            <input {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} type="file" id="myfile" name="closure_attachments[]"
                                                                 oninput="addMultipleFiles(this, 'closure_attachments')" multiple>
                                                         </div>
                                                     </div>
@@ -386,6 +387,7 @@
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
@@ -461,7 +463,8 @@
                                     <div class="button-block">
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                        <button type="submit">Submit</button>
+                                        <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
+                                        {{-- <button type="submit">Submit</button> --}}
                                     </div>
                                 </div>
                             </div>

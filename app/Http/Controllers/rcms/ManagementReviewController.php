@@ -701,25 +701,25 @@ class ManagementReviewController extends Controller
                   $history->origin_state = $management->status;
                     $history->save();
                 }
-                if (!empty($management->division_code)) {
-                    $history = new ManagementAuditTrial();
-                    $history->ManagementReview_id = $management->id;
-                    $history->activity_type = 'Site/Location Code';
-                    $history->previous = "Null";
-                    $history->current = $management->division_code;
-                    $history->comment = "NA";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                      $history->origin_state = $management->status;
-                        $history->save();
-                    }
+                // if (!empty($management->division_code)) {
+                //     $history = new ManagementAuditTrial();
+                //     $history->ManagementReview_id = $management->id;
+                //     $history->activity_type = 'Site/Location Code';
+                //     $history->previous = "Null";
+                //     $history->current = $management->division_code;
+                //     $history->comment = "NA";
+                //     $history->user_id = Auth::user()->id;
+                //     $history->user_name = Auth::user()->name;
+                //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //       $history->origin_state = $management->status;
+                //         $history->save();
+                //     }
                     if (!empty($management->initiator_id)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
                         $history->activity_type = 'Initiator';
                         $history->previous = "Null";
-                        $history->current = $management->initiator_id;
+                        $history->current = Helpers::getInitiatorName($management->initiator_id);
                         $history->comment = "NA";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -727,19 +727,19 @@ class ManagementReviewController extends Controller
                           $history->origin_state = $management->status;
                             $history->save();
                         }
-                    if (!empty($management->division_code)) {
-                        $history = new ManagementAuditTrial();
-                        $history->ManagementReview_id = $management->id;
-                        $history->activity_type = 'Site/Location Code';
-                        $history->previous = "Null";
-                        $history->current = $management->division_code;
-                        $history->comment = "NA";
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                          $history->origin_state = $management->status;
-                            $history->save();
-                 }
+                //     if (!empty($management->division_code)) {
+                //         $history = new ManagementAuditTrial();
+                //         $history->ManagementReview_id = $management->id;
+                //         $history->activity_type = 'Site/Location Code';
+                //         $history->previous = "Null";
+                //         $history->current = $management->division_code;
+                //         $history->comment = "NA";
+                //         $history->user_id = Auth::user()->id;
+                //         $history->user_name = Auth::user()->name;
+                //         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //           $history->origin_state = $management->status;
+                //             $history->save();
+                //  }
         if (!empty($management->short_description)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -756,7 +756,7 @@ class ManagementReviewController extends Controller
             if (!empty($management->intiation_date)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Date of Initiator';
+                $history->activity_type = 'Date of Initiation';
                 $history->previous = "Null";
                 $history->current =  Helpers::getdateFormat($management->intiation_date);
                 $history->comment = "NA";
@@ -771,7 +771,7 @@ class ManagementReviewController extends Controller
             $history->ManagementReview_id = $management->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $management->assign_to;
+            $history->current = Helpers::getInitiatorName ($management->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -794,12 +794,12 @@ class ManagementReviewController extends Controller
             $history->origin_state = $management->status;
             $history->save();
             }
-            if (!empty($management->short_description)) {
+            if (!empty($management->initiator_Group)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
                 $history->activity_type = 'Initiator Group';
                 $history->previous = "Null";
-                $history->current = $management->short_description;
+                $history->current = Helpers::getInitiatorGroupFullName($management->initiator_Group);
                 $history->comment = "NA";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -854,7 +854,7 @@ class ManagementReviewController extends Controller
             $history->ManagementReview_id = $management->id;
             $history->activity_type = 'Scheduled Start Date';
             $history->previous = "Null";
-            $history->current = $management->start_date;
+            $history->current =Helpers::getdateFormat ($management->start_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -869,7 +869,7 @@ class ManagementReviewController extends Controller
             $history->ManagementReview_id = $management->id;
             $history->activity_type = 'Scheduled end date';
             $history->previous = "Null";
-            $history->current = $management->end_date;
+            $history->current = Helpers::getdateFormat($management->end_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1286,7 +1286,7 @@ class ManagementReviewController extends Controller
                 if (!empty($management->control_nonconforming_outputs)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Control of Non';
+                $history->activity_type = 'Control of Non-conforming Outputs';
                 $history->previous = "Null";
                 $history->current = $management->control_nonconforming_outputs;
                 $history->comment = "Not Applicable";
@@ -1339,6 +1339,7 @@ class ManagementReviewController extends Controller
                 $history->save();
             }
     
+
             if (!empty($management->budget_estimates)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1452,7 +1453,7 @@ class ManagementReviewController extends Controller
             if (!empty($management->summary_recommendation)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Summary Recommendation';
+                $history->activity_type = 'Summary & Recommendation';
                 $history->previous = "Null";
                 $history->current = $management->summary_recommendation;
                 $history->comment = "Not Applicable";
@@ -1626,14 +1627,28 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+        if ($lastDocument->description != $management->description || !empty($request->description_comment)) {
+
+            $history = new ManagementAuditTrial();
+            $history->ManagementReview_id = $id;
+            $history->activity_type = ' Description';
+            $history->previous = $lastDocument->description;
+            $history->current = $management->description;
+            $history->comment = $request->short_desc_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
 
         if ($lastDocument->assign_to != $management->assign_to || !empty($request->assign_to_comment)) {
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $management->assign_to;
+            $history->previous = Helpers::getInitiatorName ($lastDocument->assign_to);
+            $history->current = Helpers::getInitiatorName ($management->assign_to);
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1641,27 +1656,27 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->due_date != $management->due_date || !empty($request->due_date_comment)) {
+        // if ($lastDocument->due_date != $management->due_date || !empty($request->due_date_comment)) {
 
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $management->due_date;
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new ManagementAuditTrial();
+        //     $history->ManagementReview_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastDocument->due_date;
+        //     $history->current = $management->due_date;
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->initiator_Group != $management->initiator_Group || !empty($request->initiator_Group_comment)) {
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->initiator_Group;
-            $history->current = $management->initiator_Group;
+            $history->previous =Helpers::getInitiatorGroupFullName ($lastDocument->initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($management->initiator_Group);
             $history->comment = $request->short_desc_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1716,8 +1731,8 @@ class ManagementReviewController extends Controller
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Scheduled Start Date';
-            $history->previous = $lastDocument->start_date;
-            $history->current = $management->start_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->start_date);
+            $history->current = Helpers::getdateFormat($management->start_date);
             $history->comment = $request->start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1730,8 +1745,8 @@ class ManagementReviewController extends Controller
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
             $history->activity_type = 'Scheduled end date';
-            $history->previous = $lastDocument->end_date;
-            $history->current = $management->end_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->end_date);
+            $history->current = Helpers::getdateFormat($management->end_date);
             $history->comment = $request->end_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1951,25 +1966,25 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->control_nonconforming_outputs != $management->control_nonconforming_outputs || !empty($request->control_nonconforming_outputs_comment)) {
+        // if ($lastDocument->control_nonconforming_outputs != $management->control_nonconforming_outputs || !empty($request->control_nonconforming_outputs_comment)) {
 
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Control of Non-conforming Outputs';
-            $history->previous = $lastDocument->control_nonconforming_outputs;
-            $history->current = $management->control_nonconforming_outputs;
-            $history->comment = $request->control_nonconforming_outputs_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new ManagementAuditTrial();
+        //     $history->ManagementReview_id = $id;
+        //     $history->activity_type = 'Control of Non-conforming Outputs';
+        //     $history->previous = $lastDocument->control_nonconforming_outputs;
+        //     $history->current = $management->control_nonconforming_outputs;
+        //     $history->comment = $request->control_nonconforming_outputs_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->risk_opportunities != $management->risk_opportunities || !empty($request->risk_opportunities_comment)) {
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Risk & Opportunities';
+            $history->activity_type = 'Risk Opportunities';
             $history->previous = $lastDocument->risk_opportunities;
             $history->current = $management->risk_opportunities;
             $history->comment = $request->risk_opportunities_comment;
@@ -2334,7 +2349,7 @@ class ManagementReviewController extends Controller
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->Submited_by;
+                // $history->previous = $lastDocument->Submited_by;
                 $history->current = $changeControl->Submited_by;    
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;

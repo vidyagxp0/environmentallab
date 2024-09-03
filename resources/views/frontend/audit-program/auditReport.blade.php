@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Audit Program Audit Trial Report
+                   Audit Program Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -177,7 +177,7 @@
 
     <div class="inner-block">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head">Audit Trail Histroy Configuration Report</div>
 
         <div class="division">
         {{ Helpers::getDivisionName(session()->get('division')) }}/AP/{{ date('Y') }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -426,7 +426,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Internal Audit Trail Report
+                   Audit Program Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -438,10 +438,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Internal Audit No.</strong>
+                    <strong>Audit Program No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/AP/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -450,12 +450,25 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head">Audit Trail Histroy Configuration Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/AP/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         <div class="first-table">
@@ -516,11 +529,12 @@
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if (!empty($datas->previous))
-                                Modify
-                            @else
-                                New
-                            @endif
+                        @if (empty($datas->previous) || $datas->previous == 'Null')
+                            New
+                        @else
+                            Modify
+                        @endif
+
                         </td>
                     </tr>
                 @endforeach
@@ -529,21 +543,7 @@
 
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+    
 
 </body>
 

@@ -15,7 +15,7 @@
                         </div>
 
                         <div class="btn-group">
-                            <a href="{{ url('rcms/capaAuditReport',$document->id)}}"> <button type="button">Print</button></a>
+                            <a href="{{ url('rcms/extensionAuditReport',$document->id)}}"> <button type="button">Print</button></a>
                         </div>
                     </div>
                     <div class="info-list">

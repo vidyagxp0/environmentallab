@@ -1701,7 +1701,31 @@ class ObservationController extends Controller
 
         return view('frontend.observation.audit-trial', compact('audit', 'document', 'today'));
     }
-
+    public static function auditReport($id)
+    {
+        $doc = Observation::find($id);
+        if (!empty($doc)) {
+            $doc->originator = User::where('id', $doc->initiator_id)->value('name');
+            $data = AuditTrialObservation::where('Observation_id', $id)->get();
+            $pdf = App::make('dompdf.wrapper');
+            $time = Carbon::now();
+            $pdf = PDF::loadview('frontend.observation.Obs_audittrail_PDF', compact('data', 'doc'))
+                ->setOptions([
+                    'defaultFont' => 'sans-serif',
+                    'isHtml5ParserEnabled' => true,
+                    'isRemoteEnabled' => true,
+                    'isPhpEnabled' => true,
+                ]);
+            $pdf->setPaper('A4');
+            $pdf->render();
+            $canvas = $pdf->getDomPDF()->getCanvas();
+            $height = $canvas->get_height();
+            $width = $canvas->get_width();
+            $canvas->page_script('$pdf->set_opacity(0.1,"Multiply");');
+            $canvas->page_text($width / 4, $height / 2, $doc->status, null, 25, [0, 0, 0], 2, 6, -20);
+            return $pdf->stream('Observation-Audit' . $id . '.pdf');
+        }
+    }
     public function ObservationAuditTrialDetails($id)
     {
         $detail = AuditTrialObservation::find($id);

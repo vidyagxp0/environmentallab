@@ -94,7 +94,7 @@ class ActionItemController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-         $openState->Reference_Recores1 = implode(',', $request->related_records);
+        $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
        // $openState->hod_preson = json_encode($request->hod_preson);
@@ -102,6 +102,7 @@ class ActionItemController extends Controller
         $openState->dept = $request->dept;
         $openState->description = $request->description;
         $openState->departments = $request->departments;
+        // dd($request->departments);
         $openState->initiatorGroup = $request->initiatorGroup;
         $openState->action_taken = $request->action_taken;
         $openState->start_date = $request->start_date;
@@ -143,6 +144,34 @@ class ActionItemController extends Controller
         $recordNumber = str_pad($counter, 5, '0', STR_PAD_LEFT);
         $newCounter = $counter + 1;
         DB::table('record_numbers')->update(['counter' => $newCounter]);
+         
+        if (!empty($openState->division_id)) {
+        $history = new ActionItemHistory();
+        $history->cc_id = $openState->id;
+        $history->activity_type = 'Division Code';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName(session()->get('division'));
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+        }
+
+        if (!empty($openState->initiator_id)) {
+            $history = new ActionItemHistory();
+            $history->cc_id = $openState->id;
+            $history->activity_type = 'Initiator';
+            $history->previous = "Null";
+            $history->current = Helpers::getInitiatorName($openState->initiator_id);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+            }
  
         if (!empty($openState->title)) {
         $history = new ActionItemHistory();
@@ -156,7 +185,7 @@ class ActionItemController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        }
+        }   
 
         if (!empty($openState->dept)) {
         $history = new ActionItemHistory();
@@ -174,7 +203,7 @@ class ActionItemController extends Controller
         
         if (!empty($openState->Reference_Recores1)) {
         $history = new ActionItemHistory();
-        $history->cc_id =   $openState->id;
+        $history->cc_id =  $openState->id;
         $history->activity_type = 'Action Item Related Records';
         $history->previous = "Null";
         $history->current =  $openState->Reference_Recores1;

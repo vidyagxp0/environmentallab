@@ -71,6 +71,55 @@
                 }
             }
         </script>
+         <style>
+            .w-5 {
+                width: 5%;
+            }
+            .w-10 {
+                width: 10%;
+            }
+        
+            .w-20 {
+                width: 20%;
+            }
+        
+            .w-25 {
+                width: 25%;
+            }
+        
+            .w-30 {
+                width: 30%;
+            }
+        
+            .w-40 {
+                width: 40%;
+            }
+        
+            .w-50 {
+                width: 50%;
+            }
+        
+            .w-60 {
+                width: 60%;
+            }
+        
+            .w-70 {
+                width: 70%;
+            }
+        
+            .w-80 {
+                width: 80%;
+            }
+        
+            .w-90 {
+                width: 90%;
+            }
+        
+            .w-100 {
+                width: 100%;
+            }
+        
+        </style>
         <script>
             function addWhyField(con_class, name) {
                 let mainBlock = document.querySelector('.why-why-chart')
@@ -231,7 +280,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-lg-6 new-date-data-field">
+                                    {{-- <div class="col-lg-6 new-date-data-field">
                                         <div class="group-input input-date">
                                             <label for="Date Due">Date Due</label>
                                             <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
@@ -243,6 +292,19 @@
                                                     oninput="handleDateInput(this, 'due_date')" />
                                             </div>
                                         </div>
+                                    </div> --}}
+                                    <div class="col-lg-6 new-date-data-field">
+                                        <div class="group-input input-date">
+                                            <label for="Date Due">Due Date</label>
+                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                            </div>
+                                            <div class="calenderauditee">
+                                                <input type="text" id="due_date" readonly
+                                                    placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                                <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                    oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
@@ -251,7 +313,7 @@
                                                 <option value="">-- Select --</option>
                                                 <option value="CQA" @if(old('Initiator_Group') =="CQA") selected @endif>Corporate Quality Assurance</option>
                                                 <option value="QAB" @if(old('Initiator_Group') =="QAB") selected @endif>Quality Assurance Biopharma</option>
-                                                <option value="CQC" @if(old('Initiator_Group') =="CQA") selected @endif>Central Quality Control</option>
+                                                <option value="CQC" @if(old('Initiator_Group') =="CQC") selected @endif>Central Quality Control</option>
                                                 <option value="MANU" @if(old('Initiator_Group') =="MANU") selected @endif>Manufacturing</option>
                                                 <option value="PSG" @if(old('Initiator_Group') =="PSG") selected @endif>Plasma Sourcing Group</option>
                                                 <option value="CS"  @if(old('Initiator_Group') == "CS") selected @endif>Central Stores</option>
@@ -495,15 +557,15 @@
                                             <label for="Site Name">Site Name</label>
                                             <select name="site_name" id="site_name">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">City MFR A</option>
-                                                <option value="2">City MFR B</option>
-                                                <option value="3">City MFR C</option>
-                                                <option value="4">Complex A</option>
-                                                <option value="5">Complex B</option>
-                                                <option value="6">Maerketing A</option>
-                                                <option value="7">Maerketing B</option>
-                                                <option value="8">Maerketing C</option>
-                                                <option value="9">Oceanside</option>
+                                                <option value="City MFR A">City MFR A</option>
+                                                <option value="City MFR B">City MFR B</option>
+                                                <option value="City MFR C">City MFR C</option>
+                                                <option value="Complex A">Complex A</option>
+                                                <option value="Complex B">Complex B</option>
+                                                <option value="Maerketing A">Maerketing A</option>
+                                                <option value="Maerketing B">Maerketing B</option>
+                                                <option value="Maerketing C">Maerketing C</option>
+                                                <option value="Oceanside">Oceanside</option>
                                             </select>
                                         </div>
                                     </div>
@@ -565,13 +627,13 @@
                                             <label for="Duration">Duration</label>
                                             <select name="duration" id="duration">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">2 hours</option>
-                                                <option value="2">4 hours</option>
-                                                <option value="3">8 hours</option>
-                                                <option value="4">16 hours</option>
-                                                <option value="5">24 hours</option>
-                                                <option value="6">36 hours</option>
-                                                <option value="7">72 hours</option>
+                                                <option value="2 hours">2 hours</option>
+                                                <option value="4 hours">4 hours</option>
+                                                <option value="8 hours">8 hours</option>
+                                                <option value="16 hours">16 hours</option>
+                                                <option value="24 hours">24 hours</option>
+                                                <option value="36 hours">36 hours</option>
+                                                <option value="72 hours">72 hours</option>
                                             </select>
                                         </div>
                                     </div>
@@ -580,16 +642,16 @@
                                             <label for="Hazard">Hazard</label>
                                             <select name="hazard" id="hazard">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Confined Space</option>
-                                                <option value="2">Electrical</option>
-                                                <option value="3">Energy use</option>
-                                                <option value="4">Ergonomics</option>
-                                                <option value="5">Machine Guarding</option>
-                                                <option value="6">Material Storage</option>
-                                                <option value="7">Material use</option>
-                                                <option value="8">Pressure</option>
-                                                <option value="9">Thermal</option>
-                                                <option value="10">Water use</option>
+                                                <option value="Confined Space">Confined Space</option>
+                                                <option value="Electrical">Electrical</option>
+                                                <option value="Energy use">Energy use</option>
+                                                <option value="Ergonomics">Ergonomics</option>
+                                                <option value="Machine Guarding">Machine Guarding</option>
+                                                <option value="Material Storage">Material Storage</option>
+                                                <option value="Material use">Material use</option>
+                                                <option value="Pressure">Pressure</option>
+                                                <option value="Thermal">Thermal</option>
+                                                <option value="Water use">Water use</option>
                                             </select>
                                         </div>
                                     </div>
@@ -598,45 +660,45 @@
                                             <label for="Room">Room</label>
                                             <select name="room2" id="room2">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Automation</option>
-                                                <option value="2">Biochemistry</option>
-                                                <option value="3">Blood Collection</option>
-                                                <option value="4">Enter Yo</option>
-                                                <option value="5">Buffer Preparation</option>
-                                                <option value="6">Bulk Fill</option>
-                                                <option value="7">Calibration</option>
-                                                <option value="8">Component Manufacturing</option>
-                                                <option value="9">Computer</option>
-                                                <option value="10">Computer / Automated Systems</option>
-                                                <option value="11">Despensing Donor Suitability</option>
-                                                <option value="12">Filling</option>
-                                                <option value="13">Filtration</option>
-                                                <option value="14">Formulation</option>
-                                                <option value="15">Incoming QA</option>
-                                                <option value="16">Hazard</option>
-                                                <option value="17">Laboratory</option>
-                                                <option value="18">Laboratory Support Facility</option>
-                                                <option value="19">Enter Your</option>
-                                                <option value="20">Lot Release</option>
-                                                <option value="21">Manufacturing</option>
-                                                <option value="22">Materials Management</option>
-                                                <option value="23">Room</option>
-                                                <option value="24">Operations</option>
-                                                <option value="25">Packaging</option>
-                                                <option value="26">Plant Engineering</option>
-                                                <option value="27">Enter Your Sele</option>
-                                                <option value="29">Njown</option>
-                                                <option value="30">Powder Filling</option>
-                                                <option value="31">Process Development</option>
-                                                <option value="32">Product Distribution</option>
-                                                <option value="33">Product Testing</option>
-                                                <option value="34">Production Purification</option>
-                                                <option value="35">QA</option>
-                                                <option value="36">QA Laboratory Quality Control</option>
-                                                <option value="37">Quality Control / Assurance</option>
-                                                <option value="38">Sanitization</option>
-                                                <option value="39">Shipping/Distribution Storage/Distribution</option>
-                                                <option value="40">Storage and Distribution</option>
+                                                <option value="Automation">Automation</option>
+                                                <option value="Biochemistry">Biochemistry</option>
+                                                <option value="Blood Collection">Blood Collection</option>
+                                                <option value="Enter Yo">Enter Yo</option>
+                                                <option value="Buffer Preparation">Buffer Preparation</option>
+                                                <option value="Bulk Fill">Bulk Fill</option>
+                                                <option value="Calibration">Calibration</option>
+                                                <option value="Component Manufacturing">Component Manufacturing</option>
+                                                <option value="Computer">Computer</option>
+                                                <option value="Computer / Automated Systems">Computer / Automated Systems</option>
+                                                <option value="Despensing Donor Suitability">Despensing Donor Suitability</option>
+                                                <option value="Filling">Filling</option>
+                                                <option value="Filtration">Filtration</option>
+                                                <option value="Formulation">Formulation</option>
+                                                <option value="Incoming QA">Incoming QA</option>
+                                                <option value="Hazard">Hazard</option>
+                                                <option value="Laboratory">Laboratory</option>
+                                                <option value="Laboratory Support Facility">Laboratory Support Facility</option>
+                                                <option value="Enter Your">Enter Your</option>
+                                                <option value="Lot Release">Lot Release</option>
+                                                <option value="Manufacturing">Manufacturing</option>
+                                                <option value="Materials Management">Materials Management</option>
+                                                <option value="Room">Room</option>
+                                                <option value="Operations">Operations</option>
+                                                <option value="Packaging">Packaging</option>
+                                                <option value="Plant Engineering">Plant Engineering</option>
+                                                <option value="Enter Your Sele">Enter Your Sele</option>
+                                                <option value="Njown">Njown</option>
+                                                <option value="Powder Filling">Powder Filling</option>
+                                                <option value="Process Development">Process Development</option>
+                                                <option value="Product Distribution">Product Distribution</option>
+                                                <option value="Product Testing">Product Testing</option>
+                                                <option value="Production Purification">Production Purification</option>
+                                                <option value="QA">QA</option>
+                                                <option value="QA Laboratory Quality Control">QA Laboratory Quality Control</option>
+                                                <option value="Quality Control / Assurance">Quality Control / Assurance</option>
+                                                <option value="Sanitization">Sanitization</option>
+                                                <option value="Shipping/Distribution Storage/Distribution">Shipping/Distribution Storage/Distribution</option>
+                                                <option value="Storage and Distribution">Storage and Distribution</option>
                                             </select>
                                         </div>
                                     </div>
@@ -645,28 +707,18 @@
                                             <label for="Regulatory Climate">Regulatory Climate</label>
                                             <select name="regulatory_climate" id="regulatory_climate">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">0. No significant regulatory issues affecting operation
+                                                <option value="0. No significant regulatory issues affecting operation">0. No significant regulatory issues affecting operation
                                                 </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
-                                                    affecting
-                                                    operation are
-                                                    anticipated </option>
-                                                <option value="3">2. A few regulatory or enforcement changes affect
-                                                    operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
+                                                <option value="1. Some regulatory or enforcement changes potentially affecting operation are anticipated">1. Some regulatory or enforcement changes potentially affecting operation are anticipated </option>
+                                                <option value="2. A few regulatory or enforcement changes affect operations">2. A few regulatory or enforcement changes affect operations</option>
+                                                <option value="3. Regulatory and enforcement changes affect operation">3. Regulatory and enforcement changes affect operation</option>
+                                                <option value="4. Significant programatic regulatory and enforcement changes affect operation">4. Significant programatic regulatory and enforcement changes affect operation
                                                 </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
-                                                    changes affect
-                                                    operation
+                                                <option value="1. Some regulatory or enforcement changes potentially affecting operation are anticipated">1. Some regulatory or enforcement changes potentially affecting operation are anticipated </option>
+                                                <option value="2. A few regulatory or enforcement changes affect operations">2. A few regulatory or enforcement changes affect operations</option>
+                                                <option value="3. Regulatory and enforcement changes affect operation">3. Regulatory and enforcement changes affect operation
                                                 </option>
-                                                <option value="2">1. Some regulatory or enforcement changes potentially
-                                                    affecting operation are anticipated </option>
-                                                <option value="3">2. A few regulatory or enforcement changes affect
-                                                    operations</option>
-                                                <option value="4">3. Regulatory and enforcement changes affect operation
-                                                </option>
-                                                <option value="5">4. Significant programatic regulatory and enforcement
-                                                    changes affect operation</option>
+                                                <option value="4. Significant programatic regulatory and enforcement changes affect operation">4. Significant programatic regulatory and enforcement changes affect operation</option>
                                             </select>
                                         </div>
                                     </div>
@@ -675,13 +727,13 @@
                                             <label for="Number of Employees">Number of Employees</label>
                                             <select name="Number_of_employees" id="Number_of_employees">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">0-50</option>
-                                                <option value="2">50-100</option>
-                                                <option value="3">100-200</option>
-                                                <option value="4">200-300</option>
-                                                <option value="5">300-500</option>
-                                                <option value="6">500-1000</option>
-                                                <option value="7">1000+</option>
+                                                <option value="0-50">0-50</option>
+                                                <option value="50-100">50-100</option>
+                                                <option value="100-200">100-200</option>
+                                                <option value="200-300">200-300</option>
+                                                <option value="300-500">300-500</option>
+                                                <option value="500-1000">500-1000</option>
+                                                <option value="1000+">1000+</option>
                                             </select>
                                         </div>
                                     </div>
@@ -690,10 +742,10 @@
                                             <label for="Risk Management Strategy">Risk Management Strategy</label>
                                             <select name="risk_management_strategy" id="risk_management_strategy">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">Accept</option>
-                                                <option value="2">Avoid the Risk</option>
-                                                <option value="3">Mitigate</option>
-                                                <option value="4">Transfer</option>
+                                                <option value="Accept">Accept</option>
+                                                <option value="Avoid the Risk">Avoid the Risk</option>
+                                                <option value="Mitigate">Mitigate</option>
+                                                <option value="Transfer">Transfer</option>
                                             </select>
                                         </div>
                                     </div>
@@ -759,24 +811,24 @@
                                             <label for="Currency">Currency</label>
                                             <select name="currency" id="currency">
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">ARS-Argentine Peso</option>
-                                                <option value="2">AUD-Australian Dollar</option>
-                                                <option value="3">BRL-Brazilian Real CAD-Canadian Dollar</option>
-                                                <option value="4">CHF-Swiss Franc</option>
-                                                <option value="5">CNY-Chinese Yuan</option>
-                                                <option value="6">EUR-Euro</option>
-                                                <option value="7">HKD-Hong Kong Dollar ILS-Israeli New Sheqel</option>
-                                                <option value="8">INR-Indian Rupee JPY-Japanese Yen</option>
-                                                <option value="9">KRW-South Korean Won</option>
-                                                <option value="10">MXN-Mexican Peso</option>
-                                                <option value="11">RUB-Russian Rouble</option>
-                                                <option value="12">SAR-Saudi Riyal</option>
-                                                <option value="13">TRY-Turkish Lira</option>
-                                                <option value="14">USD-US Dollar</option>
-                                                <option value="15">XAG-Silver</option>
-                                                <option value="16">XAU-Gold</option>
-                                                <option value="17">XPD-Palladium</option>
-                                                <option value="18">XPT-Platinum</option>
+                                                <option value="ARS-Argentine Peso">ARS-Argentine Peso</option>
+                                                <option value="AUD-Australian Dollar">AUD-Australian Dollar</option>
+                                                <option value="BRL-Brazilian Real CAD-Canadian Dollar">BRL-Brazilian Real CAD-Canadian Dollar</option>
+                                                <option value="CHF-Swiss Franc">CHF-Swiss Franc</option>
+                                                <option value="CNY-Chinese Yuan">CNY-Chinese Yuan</option>
+                                                <option value="EUR-Euro">EUR-Euro</option>
+                                                <option value="HKD-Hong Kong Dollar ILS-Israeli New Sheqel">HKD-Hong Kong Dollar ILS-Israeli New Sheqel</option>
+                                                <option value="INR-Indian Rupee JPY-Japanese Yen">INR-Indian Rupee JPY-Japanese Yen</option>
+                                                <option value="KRW-South Korean Won">KRW-South Korean Won</option>
+                                                <option value="MXN-Mexican Peso">MXN-Mexican Peso</option>
+                                                <option value="RUB-Russian Rouble">RUB-Russian Rouble</option>
+                                                <option value="SAR-Saudi Riyal">SAR-Saudi Riyal</option>
+                                                <option value="TRY-Turkish Lira">TRY-Turkish Lira</option>
+                                                <option value="USD-US Dollar">USD-US Dollar</option>
+                                                <option value="XAG-Silver">XAG-Silver</option>
+                                                <option value="XAU-Gold">XAU-Gold</option>
+                                                <option value="XPD-Palladium">XPD-Palladium</option>
+                                                <option value="XPT-Platinum">XPT-Platinum</option>
                                             </select>
                                         </div>
                                     </div>
@@ -829,7 +881,7 @@
                                             <table class="table table-bordered" id="action_plan_details">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
+                                                        <th class="w-5">Row #</th>
                                                         <th>Action</th>
                                                         <th>Responsible Person</th>
                                                         <th>Deadline</th>
