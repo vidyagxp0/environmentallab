@@ -114,13 +114,13 @@
                                         </div>
                                     @endif
                                 @endif
-                                @if ($temp->current != $temp->previous)
+                                {{-- @if ($temp->current != $temp->previous)
                                     <div class="list-item">
                                         <div class="head">Changed To</div>
                                         <div>:</div>
                                         <div>{{ $temp->current }}</div>
                                     </div>
-                                @endif
+                                @endif --}}
                                 @if ($temp->current != $temp->previous)
                                     @if ($temp->activity_type == 'Activity Log')
                                         <div class="list-item">
