@@ -550,7 +550,7 @@
 
                             <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="related_url">URl's description</label>
+                                        <label for="related_url">URl's Description</label>
                                         <input type="text" name="url_description" id="url_description" />
                                     </div>
                                 </div>
