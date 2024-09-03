@@ -500,8 +500,9 @@
 
                             </div>
                             <div class="button-block">
-                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                 <button type="submit" class="saveButton">Save</button>
+                                <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                <button type="submit" class="saveButton">Submit</button>
                                 <button type="button"> <a class="text-white"
                                         href="{{ url('rcms/qms-dashboard') }}">Exit
                                     </a> </button>

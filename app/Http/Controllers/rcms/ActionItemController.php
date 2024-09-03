@@ -94,6 +94,10 @@ class ActionItemController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
+        
+        // $json_decode = json_encode($request->related_records);
+        // $openState->Reference_Recores1 = implode(',', $request->related_records);
+        
         $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
@@ -337,7 +341,7 @@ class ActionItemController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-   }
+        }
         if (!empty($openState->qa_comments)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -350,7 +354,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->save();
-        }
+         }
 
         if (!empty($openState->due_date_extension)) {
             $history = new ActionItemHistory();
@@ -364,7 +368,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->save();
-        }
+         }
 
         if (!empty($openState->file_attach)) {
             $history = new ActionItemHistory();
@@ -378,7 +382,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
             $history->save();
-        }
+         }
         if (!empty($openState->Support_doc)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
