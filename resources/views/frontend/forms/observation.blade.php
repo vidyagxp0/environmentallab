@@ -382,7 +382,7 @@
                                 </div>
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="date_due"> Due Date</label>
+                                        <label for="date_due">CAPA Due Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" name="capa_date_due" id="date_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
