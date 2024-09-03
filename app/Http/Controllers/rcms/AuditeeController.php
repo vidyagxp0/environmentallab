@@ -109,6 +109,9 @@ class AuditeeController extends Controller
         // $internalAudit->external_auditor_name =  $request->external_auditor_name;
         // $internalAudit->area_of_auditing =  $request->area_of_auditing;
         $internalAudit->Auditee =  implode(',', $request->Auditee);
+        $auditeeIdsArray = explode(',', $internalAudit->Auditee);
+        $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
+        $auditeeNamesString = implode(', ', $auditeeNames);
         $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
@@ -671,7 +674,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Auditee';
             $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName($internalAudit->Auditee);
+            $history->current =  $auditeeNamesString;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1103,7 +1106,9 @@ class AuditeeController extends Controller
         $internalAudit->lead_auditor = $request->lead_auditor;
         $internalAudit->Audit_team =  $request->Audit_team;
         $internalAudit->Auditee =  implode(',', $request->Auditee);
-        $internalAudit->Auditor_Details = $request->Auditor_Details;
+        $auditeeIdsArray = explode(',', $internalAudit->Auditee);
+        $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
+        $auditeeNamesString = implode(', ', $auditeeNames);        $internalAudit->Auditor_Details = $request->Auditor_Details;
         $internalAudit->Audit_Category = $request->Audit_Category;
         $internalAudit->External_Auditing_Agency = $request->External_Auditing_Agency;
         $internalAudit->Relevant_Guidelines = $request->Relevant_Guidelines;
@@ -2437,8 +2442,10 @@ class AuditeeController extends Controller
             $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
+            // $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
+            // $auditeeNamesString = implode(', ', $auditeeNames);
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_data','grid_data1'))
+            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_data','grid_data1',))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

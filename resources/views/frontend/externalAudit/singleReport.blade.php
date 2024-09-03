@@ -176,7 +176,7 @@
                     <strong>External Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -269,10 +269,10 @@
                         
                     </tr>
                    
-                    {{-- <tr>
+                    <tr>
                         <th class="w-20">Audit type</th>
                         <td class="w-30">@if($data->audit_type){{ $data->audit_type }}@else Not Applicable @endif</td>
-                    </tr> --}}
+                    </tr>
         
 
                 </table>

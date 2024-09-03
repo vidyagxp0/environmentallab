@@ -1852,11 +1852,11 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-80">{{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                         <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($managementReview->division_code){{ $managementReview->division_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($managementReview->division_id){{ Helpers::divisionNameForQMS($managementReview->division_id) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">  @if($managementReview->Initiator_Group){{ \Helpers::getInitiatorGroupFullName($managementReview->Initiator_Group) }} @else Not Applicable @endif</td>
+                        <td class="w-30">  @if($managementReview->initiator_Group){{ \Helpers::getInitiatorGroupFullName($managementReview->initiator_Group) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
                         <td class="w-30">@if($managementReview->initiator_group_code){{ $managementReview->initiator_group_code }} @else Not Applicable @endif</td>
                     </tr>
@@ -1874,10 +1874,11 @@
                         <td class="w-30">
                             @if($managementReview->priority_level){{ $managementReview->priority_level }}@else Not Applicable @endif
                         </td>
-                        <th class="w-20">Due Date</th>
-                        <td class="w-30"> @if($managementReview->due_date){{ $managementReview->due_date }} @else Not Applicable @endif</td>
+                       
                     </tr>
                     <tr>
+                        <th class="w-20">Due Date</th>
+                        <td class="w-30"> @if($managementReview->due_date){{ Helpers::getdateFormat($managementReview->due_date )}} @else Not Applicable @endif</td>
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($managementReview->type){{ $managementReview->type }}@else Not Applicable @endif</td>
                         
@@ -1886,15 +1887,16 @@
                         <th class="w-20">Description</th>
                         <td class="w-30">@if($managementReview->description){{ $managementReview->description }}@else Not Applicable @endif</td>
                             <th class="w-30"> Schedule Start Date</th>
-                        <td class="w-20">@if($managementReview->start_date){{ $managementReview->start_date }}@else Not Applicable @endif</td>
-                        <th class="w-30"> Schedule End Date</th>
-                        <td class="w-20">@if($managementReview->end_date){{ $managementReview->end_date }}@else Not Applicable @endif</td>
+                        <td class="w-20">@if($managementReview->start_date){{Helpers::getdateFormat($managementReview->start_date) }}@else Not Applicable @endif</td>
+                      
 
                     </tr>
                     <tr>
                         
                         <th class="w-20">Attendess</th>
                         <td class="w-30">@if($managementReview->attendees){{ $managementReview->attendees }}@else Not Applicable @endif</td>
+                        <th class="w-30"> Schedule End Date</th>
+                        <td class="w-20">@if($managementReview->end_date){{ Helpers::getdateFormat($managementReview->end_date) }}@else Not Applicable @endif</td>
                         
 
                     </tr>
@@ -2174,7 +2176,7 @@
                             </th>
                             <td class="w-80">
                                 <div>
-                                    @if($managementReview->next_managment_review_date){{ $managementReview->next_managment_review_date }}@else Not Applicable @endif
+                                    @if($managementReview->next_managment_review_date){{ Helpers::getdateFormat($managementReview->next_managment_review_date) }}@else Not Applicable @endif
                                 </div>
                             </td>
                             <th class="w-20">Summary & Recommendation</th>

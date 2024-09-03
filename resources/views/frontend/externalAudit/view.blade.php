@@ -1143,13 +1143,13 @@ function addMultipleFiles(input, block_id) {
                                                 <select name="Audit_Category" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="0">-- Select --</option>
                                                     <option @if ($data->Audit_Category == '1') selected @endif
-                                                         value="1">Internal Audit/Self Inspection</option>
+                                                         value="Internal Audit/Self Inspection">Internal Audit/Self Inspection</option>
                                                     <option  @if ($data->Audit_Category == '2') selected @endif
-                                                         value="2">Supplier Audit</option>
+                                                         value="Supplier Audit">Supplier Audit</option>
                                                     <option @if ($data->Audit_Category == '3') selected @endif
-                                                         value="3">Regulatory Audit</option>
+                                                         value="Regulatory Audit">Regulatory Audit</option>
                                                     <option @if ($data->Audit_Category == '4') selected @endif
-                                                         value="4">Consultant Audit</option>
+                                                         value="Consultant Audit">Consultant Audit</option>
                                                 </select>
                                             </div>
                                         </div>
