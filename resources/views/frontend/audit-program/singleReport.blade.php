@@ -176,7 +176,7 @@
                     <strong>Audit Program No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/AP/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -202,7 +202,7 @@
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">@if($data->Initiator_Group){{$data->Initiator_Group}} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->Initiator_Group){{ Helpers::getInitiatorGroupFullName($data->Initiator_Group)}} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         
@@ -214,7 +214,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80" > @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>\
+                        <td class="w-80" > @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>\
                         <th class="w-20">Short Description</th>
                         <td class="w-80" > @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                     </tr>

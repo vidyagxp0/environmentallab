@@ -356,7 +356,7 @@
                                                             class="text-danger">*</span></label><span id="rchars">255</span>
                                                     characters remaining
                                                     
-                                                    <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                    <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->short_description }}"></input>
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
             
@@ -600,7 +600,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="sub-head">Investigatiom details</div>
+                                        <div class="sub-head">Investigation details</div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
@@ -1386,13 +1386,13 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_By">Submited By</label>
+                                            <label for="Submit_By">Submitted By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submited On</label>
+                                            <label for="Submit_On">Submitted On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>

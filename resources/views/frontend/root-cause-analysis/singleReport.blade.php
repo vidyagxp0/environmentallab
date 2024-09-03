@@ -224,10 +224,13 @@
                         <th class="w-20">Due Date</th>
                         <td class="w-80" colspan="3"> @if($data->due_date){{ $data->due_date }} @else Not Applicable @endif</td>
                         <th class="w-20">Assigned To</th>
-                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>r>
+                        <td class="w-30">@if($data->assign_to){{ Helpers::getInitiatorName($data->assign_to) }} @else Not Applicable @endif</td>
+                   </tr>
+                   <tr>
+                   <th class="w-20">Others</th>
+                   <td class="w-30" colspan="3">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
+                   </tr>
                     <tr>
-                        <th class="w-20">Others</th>
-                        <td class="w-30">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
                         <th class="w-20">Priority Level</th>
                         <td class="w-30">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
                     </tr>
@@ -237,11 +240,16 @@
                         <th class="w-20">Department(s)</th>
                         <td class="w-30">@if($data->department){{ $data->department }}@else Not Applicable @endif</td>
                     </tr>
+                    <div class="block-head">
+                    Investigation Details
+                   </div>
                     <tr>
                         <th class="w-20">Description</th>
-                        <td class="w-30">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                        <td class="w-30" colspan="3">@if($data->description){{ $data->description }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Comments</th>
-                        <td class="w-30">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
+                        <td class="w-30" colspan="3">@if($data->comments){{ $data->comments }}@else Not Applicable @endif</td>
                     </tr>                       
                     <tr>
                         <th class="w-20">Initiated Through

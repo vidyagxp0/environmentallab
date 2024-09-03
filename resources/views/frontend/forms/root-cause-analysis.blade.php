@@ -182,19 +182,15 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Due Date"> Due Date </label>
-                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                        <div class="calenderauditee">
-                                        <input type="text"  id="due_date"  readonly placeholder="DD-MMM-YYYY" />
-                                        <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" 
-                                        class="hide-input"
-                                        oninput="handleDateInput(this, 'due_date')"/>
+                                        <label for="Date Due">Due Date</label>
+                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
-
-                                        {{-- <input type="hidden" value="{{ $due_date }}" name="due_date">
-                                        <input disabled type="text" value="{{ Helpers::getdateFormat($due_date) }}"> --}}
-                                        {{-- <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                            value="" name="due_date"> --}}
+                                        <div class="calenderauditee">
+                                            <input type="text" id="due_date" readonly
+                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                            <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -280,7 +276,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="sub-head">Investigatiom details</div>
+                                    <div class="sub-head">Investigation details</div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -881,13 +877,13 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_By">Submit By</label>
+                                            <label for="Submit_By">Submitted By</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submit On</label>
+                                            <label for="Submit_On">Submitted On</label>
                                             <div class="Date"></div>
                                         </div>
                                     </div>
