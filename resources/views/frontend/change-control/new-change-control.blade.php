@@ -145,7 +145,7 @@
                                     <div class="group-input">
                                         <label for="Microbiology">CFT Reviewer</label>
                                         <select name="Microbiology">
-                                            <option value="0" selected>-- Select --</option>
+                                            <option value="" selected>-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -156,7 +156,7 @@
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                            {{-- <option value="0">-- Select --</option>  --}}
+                                            {{-- <option value="">-- Select --</option>  --}}
                                             @foreach ($cft as $data)
                                             @if(Helpers::checkUserRolesMicrobiology_Person($data))
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -272,7 +272,7 @@
                                         <label for="severity-level">Severity Level</label>
                                         <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                         <select name="severity_level1">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
                                             <option value="critical">Critical</option>
@@ -328,7 +328,7 @@
                                     <div class="group-input">
                                         <label for="risk_level">Risk Level</label>
                                         <select name="risk_level" id="risk_level" class="mb-0">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="critical">Critical</option>
                                             <option value="minor">Minor</option>
                                             <option value="major">Major</option>
@@ -341,7 +341,7 @@
                                     <div class="group-input">
                                         <label for="nature-change">Nature Of Change</label>
                                         <select name="natureChange">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="Temporary">Temporary</option>
                                             <option value="Permanent">Permanent</option>
                                         </select>
@@ -355,9 +355,9 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="div_code">Division Code</label>
-                                        <select name="div_code">
-                                            <option value="0">-- Select --</option>
+                                        <label for="Division_Code">Division Code</label>
+                                        <select name="Division_Code">
+                                            <option value="">-- Select --</option>
                                             <option value="Instrumental Lab">Instrumental Lab</option>
                                             <option value="Microbiology Lab">Microbiology Lab</option>
                                             <option value="Molecular lab">Molecular lab</option>
@@ -497,7 +497,7 @@
                                             </span>
                                         </label>
                                         <select name="type_chnage">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="major">Major</option>
                                             <option value="minor">Minor</option>
                                             <option value="critical">Critical</option>
@@ -511,7 +511,29 @@
                                         <textarea name="qa_comments"></textarea>
                                     </div>
                                 </div>
-                                <div class="col-12">
+
+
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Related Records">Related Records</label>
+                                        <select multiple id="related_records" name="related_records[]"
+                                            placeholder="Select Reference Records">
+                                            @foreach ($pre as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/Change-Control/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/Change-Control/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
+
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="related_records">Related Records</label>
 
@@ -525,7 +547,7 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                </div>
+                                </div> -->
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="qa head">QA Attachments</label>
@@ -585,7 +607,7 @@
                             <div class="group-input">
                                 <label for="nature-change">Training Required</label>
                                 <select name="training_required">
-                                    <option value="0">-- Select --</option>
+                                    <option value="">-- Select --</option>
                                     <option value="no">No</option>
                                     <option value="yes">Yes</option>
                                 </select>
@@ -616,7 +638,7 @@
                                     <div class="group-input">
                                         <label for="Microbiology">CFT Reviewer</label>
                                         <select name="Microbiology">
-                                            <option value="0" selected>-- Select --</option>
+                                            <option value="" selected>-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -627,7 +649,7 @@
                                         <label for="Microbiology-Person">CFT Reviewer Person</label>
                                         <select multiple name="Microbiology_Person[]" placeholder="Select CFT Reviewers"
                                             data-search="false" data-silent-initial-value-set="true" id="cft_reviewer">
-                                            <option value="0">-- Select --</option> 
+                                            <option value="">-- Select --</option> 
                                             @foreach ($cft as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -645,7 +667,7 @@
                                     <div class="group-input">
                                         <label for="group_review">Is Concerned Group Review Required?</label>
                                         <select name="goup_review">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -655,7 +677,7 @@
                                     <div class="group-input">
                                         <label for="Production">Production</label>
                                         <select name="Production">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -665,7 +687,7 @@
                                     <div class="group-input">
                                         <label for="Production-Person">Production Person</label>
                                         <select name="Production_Person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -676,7 +698,7 @@
                                     <div class="group-input">
                                         <label for="Quality-Approver">Quality Approver</label>
                                         <select name="Quality_Approver">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -686,7 +708,7 @@
                                     <div class="group-input">
                                         <label for="Quality-Approver-Person">Quality Approver Person</label>
                                         <select name="Quality_Approver_Person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -698,7 +720,7 @@
                                     <div class="group-input">
                                         <label for="bd_domestic">Others</label>
                                         <select name="bd_domestic">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>
@@ -708,7 +730,7 @@
                                     <div class="group-input">
                                         <label for="bd_domestic-Person">Others Person</label>
                                         <select name="Bd_Person">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -1044,7 +1066,7 @@
                                     <div class="group-input">
                                         <label for="effective-check">Effectivess Check Required?</label>
                                         <select name="effective_check">
-                                            <option value="0">-- Select --</option>
+                                            <option value="">-- Select --</option>
                                             <option value="yes">Yes</option>
                                             <option value="no">No</option>
                                         </select>

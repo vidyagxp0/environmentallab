@@ -97,10 +97,11 @@ class Helpers
         
     //     return $QAHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'9'])->get();
     // }
-    // public static function getQCHeadUserList(){
-        
-    //     return $QCHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'10'])->get();
-    // }
+
+    public static function getQCHeadUserList(){        
+        return $QCHeadUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'10'])->get();
+    }
+    
     // public static function getLeadAuditeeUserList(){
         
     //     return $LeadAuditeeUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'11'])->get();
