@@ -403,14 +403,14 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                <div class="group-input">
-                                                                                                                                                                                                                    <label for="Date Due">Date of Initiation</label>
-                                                                                                                                                                                                                    <input readonly type="text"
-                                                                                                                                                                                                                        value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                                                                                                                                                                                        name="intiation_date">
+                                                                                                                                                                                                                        <div class="group-input">
+                                                                                                                                                                                                                            <label for="Date Due">Date of Initiation</label>
+                                                                                                                                                                                                                            <input readonly type="text"
+                                                                                                                                                                                                                                value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                                                                                                                                                                                                                name="intiation_date">
 
-                                                                                                                                                                                                                </div>
-                                                                                                                                                                                                            </div> -->
+                                                                                                                                                                                                                        </div>
+                                                                                                                                                                                                                    </div> -->
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -2008,46 +2008,62 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Audit Mgr.more Info Reqd By">Audit Mgr.more Info Reqd
+                                            <label for="Issue Report By">Issue Report
                                                 By</label>
                                             <div class="static">{{ $data->audit_mgr_more_info_reqd_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Audit Mgr.more Info Reqd On">Audit Mgr.more Info Reqd
+                                            <label for="Issue Report On">Issue Report
                                                 On</label>
                                             <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Audit Observation Submitted By">Audit Observation Submitted
+                                            <label for="CAPA Plan Proposed By">CAPA Plan Proposed
                                                 By</label>
                                             <div class="static">{{ $data->audit_observation_submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Audit Observation Submitted On">Audit Observation Submitted
+                                            <label for="CAPA Plan Proposed On">CAPA Plan Proposed
                                                 On</label>
                                             <div class="static">{{ $data->audit_observation_submitted_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Audit Lead More Info Reqd By">Audit Lead More Info Reqd
+                                            <label for="All CAPA Closed By">All CAPA Closed
                                                 By</label>
                                             <div class="static">{{ $data->audit_lead_more_info_reqd_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Audit Lead More Info Reqd On">Audit Lead More Info Reqd
+                                            <label for="All CAPA Closed On">All CAPA Closed
                                                 On</label>
                                             <div class="static">{{ $data->audit_lead_more_info_reqd_on }}</div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="No CAPAs Required By">No CAPAs Required
+                                                By</label>
+                                            <div class="static">{{ $data->audit_response_completed_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="No CAPAs Required On">No CAPAs Required
+                                                On</label>
+                                            <div class="static">{{ $data->audit_response_completed_on }}</div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Audit Response Completed By">Audit Response Completed
@@ -2064,28 +2080,26 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Response Feedback Verified By">Response Feedback Verified
-                                                By</label>
+                                            <label for="Reject By">Reject By</label>
                                             <div class="static">{{ $data->response_feedback_verified_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Response Feedback Verified On">Response Feedback Verified
-                                                On</label>
+                                            <label for="Reject On">Reject On</label>
                                             <div class="static">{{ $data->response_feedback_verified_on }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Response Feedback Verified By"> Rejected By
+                                            <label for="Rejected By"> Rejected By
                                             </label>
                                             <div class="static">{{ $data->rejected_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Response Feedback Verified On"> Rejected On
+                                            <label for="Rejected On"> Rejected On
                                             </label>
                                             <div class="static">{{ $data->rejected_on }}</div>
                                         </div>
@@ -2182,9 +2196,9 @@
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
 
-                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                    <button>Close</button>
-                                                                                                                                                                                                </div>-->
+                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                            <button>Close</button>
+                                                                                                                                                                                                        </div>-->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>

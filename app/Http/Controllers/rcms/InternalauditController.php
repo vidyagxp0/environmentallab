@@ -2305,7 +2305,7 @@ class InternalauditController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = "Audit Mgr More Info Reqd";
+                            $history->stage = "Issue Report";
                             $history->save();
                         //     $list = Helpers::getLeadAuditeeUserList();
                         //     foreach ($list as $u) {
@@ -2344,7 +2344,7 @@ class InternalauditController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = "Audit Observation Submitted";
+                            $history->stage = "CAPA Plan Proposed";
                             $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2356,10 +2356,7 @@ class InternalauditController extends Controller
                 $changeControl->status = "Closed - Done";
                 $changeControl->audit_lead_more_info_reqd_by = Auth::user()->name;
                 $changeControl->audit_lead_more_info_reqd_on = Carbon::now()->format('d-M-Y');
-                $changeControl->audit_response_completed_by = Auth::user()->name;
-                $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->response_feedback_verified_by = Auth::user()->name;
-                $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
+
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
@@ -2369,7 +2366,7 @@ class InternalauditController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = "Audit Lead More Info Reqd";
+                            $history->stage = "All CAPA Closed";
                             $history->save();
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2393,6 +2390,21 @@ class InternalauditController extends Controller
             if ($changeControl->stage == 4) {
                 $changeControl->stage = "6";
                 $changeControl->status = "Closed - Done";
+                $changeControl->audit_response_completed_by = Auth::user()->name;
+                $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
+
+                $history = new InternalAuditTrial();
+                            $history->InternalAudit_id = $id;
+                            $history->activity_type = 'Activity Log';
+                            $history->current = $changeControl->audit_response_completed_by;
+                            $history->comment = $request->comment;
+                            $history->user_id = Auth::user()->id;
+                            $history->user_name = Auth::user()->name;
+                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $history->origin_state = $lastDocument->status;
+                            $history->stage = "No CAPAs Required";
+                            $history->save();
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -2454,6 +2466,21 @@ class InternalauditController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $changeControl->response_feedback_verified_by = Auth::user()->name;
+                $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
+
+                $history = new InternalAuditTrial();
+                $history->InternalAudit_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->current = $changeControl->response_feedback_verified_by;
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Reject";
+                $history->save();
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";

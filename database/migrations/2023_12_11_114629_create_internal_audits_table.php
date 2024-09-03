@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('external_agencies')->nullable();
             $table->string('severity_level_form')->nullable();
              $table->integer('assign_to')->nullable();
- 
+
              $table->integer('record')->nullable();
             $table->integer('parent_id')->nullable();
             $table->string('parent_type')->nullable();
@@ -58,7 +58,7 @@ return new class extends Migration
             //$table->text('Group')->nullable();
             $table->text('material_name')->nullable();
             $table->text('if_comments')->nullable();
-            $table->string('lead_auditor')->nullable();
+            $table->longText('lead_auditor')->nullable();
             // -------------------------
             $table->longText('file_attachment')->nullable();
             $table->text('Audit_team')->nullable();
@@ -73,7 +73,7 @@ return new class extends Migration
             $table->text('Supplier_Site')->nullable();
             $table->text('refrence_record')->nullable();
 
-            
+
             $table->text('Comments')->nullable();
             $table->longText('Audit_file')->nullable();
             $table->text('Audit_Comments1')->nullable();
