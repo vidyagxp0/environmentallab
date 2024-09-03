@@ -403,14 +403,14 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">
-                                                                                                                                                                                                    <div class="group-input">
-                                                                                                                                                                                                        <label for="Date Due">Date of Initiation</label>
-                                                                                                                                                                                                        <input readonly type="text"
-                                                                                                                                                                                                            value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                                                                                                                                                                            name="intiation_date">
+                                                                                                                                                                                                                <div class="group-input">
+                                                                                                                                                                                                                    <label for="Date Due">Date of Initiation</label>
+                                                                                                                                                                                                                    <input readonly type="text"
+                                                                                                                                                                                                                        value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                                                                                                                                                                                                        name="intiation_date">
 
-                                                                                                                                                                                                    </div>
-                                                                                                                                                                                                </div> -->
+                                                                                                                                                                                                                </div>
+                                                                                                                                                                                                            </div> -->
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -426,9 +426,9 @@
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Assigned to">Assigned to
-                                                    @if ($data->user)
+                                                    {{-- @if ($data->user)
                                                         {{ $data->user->name }}
-                                                    @endif
+                                                    @endif --}}
 
                                                 </label>
 
@@ -736,6 +736,13 @@
                                             </div>
                                         </div>
 
+                                        @if ($data->inv_attachment)
+                                            @foreach (json_decode($data->inv_attachment) as $file)
+                                                <input id="INATFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_inv_attachment_files[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Inv Attachments">Initial Attachment</label>
@@ -752,7 +759,9 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                        data-remove-id="INATFile-{{ $loop->index }}"
+                                                                        data-file-name="{{ $file }}"
+                                                                        style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -2173,9 +2182,9 @@
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
 
-                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                        <button>Close</button>
-                                                                                                                                                                                    </div>-->
+                                                                                                                                                                                                    <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                    <button>Close</button>
+                                                                                                                                                                                                </div>-->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
@@ -2440,6 +2449,16 @@
                     });
                 });
             });
+        </script>
+
+        <script>
+            $(document).ready(function() {
+                $('.remove-file').click(function() {
+                    const removeId = $(this).data('remove-id')
+                    console.log('removeId', removeId);
+                    $('#' + removeId).remove();
+                })
+            })
         </script>
         <script>
             var maxLength = 255;
