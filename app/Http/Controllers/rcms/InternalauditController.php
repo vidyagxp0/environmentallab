@@ -223,6 +223,7 @@ class InternalauditController extends Controller
         $data3 = new InternalAuditGrid();
         $data3->audit_id = $internalAudit->id;
         $data3->type = "internal_audit";
+
         if (!empty($request->audit)) {
             $data3->area_of_audit = serialize($request->audit);
         }
@@ -245,9 +246,10 @@ class InternalauditController extends Controller
             $data3->auditee = serialize($request->auditee);
         }
         if (!empty($request->remarks)) {
-            $data3->remark = serialize($request->remarks);
+            $data3->remark = serialize($request->remarks);  // Ensure that 'remark' matches the field name in your database
         }
         $data3->save();
+
 
 
         $data4 = new InternalAuditGrid();
@@ -1242,7 +1244,8 @@ class InternalauditController extends Controller
             $data3->end_time = serialize($request->scheduled_end_time);
         }
         if (!empty($request->auditor)) {
-            $data3->auditor = $request->auditor;
+            // $data3->auditor = $request->auditor;
+            $data3->auditor = serialize($request->auditor);
         }
         if (!empty($request->auditee)) {
             $data3->auditee = serialize($request->auditee);
@@ -2178,7 +2181,7 @@ class InternalauditController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = "Audit Schedule";
+                            $history->stage = "Schedule Audit";
                             $history->save();
                 //        $list = Helpers::getLeadAuditorUserList();
                 //     foreach ($list as $u) {
@@ -2224,7 +2227,7 @@ class InternalauditController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = "Audit Preparation Completed";
+                            $history->stage = "Complete Audit Preparation";
                             $history->save();
                 //             $list = Helpers::getAuditManagerUserList();
                 //     foreach ($list as $u) {
