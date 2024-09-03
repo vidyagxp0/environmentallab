@@ -295,7 +295,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachments</label>
+                                        <label for="Attachments">Incident Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Attachments"> --}}
                                         <div class="file-attachment-field">
@@ -342,7 +342,7 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Inv Attachment</label>
+                                        <label for="Inv Attachments">Investigation Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Inv_Attachment"> --}}
                                         <div class="file-attachment-field">
@@ -442,7 +442,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Head Attachments">QA Head Attachment</label>
+                                        <label for="QA Head Attachments">QA Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="QA_Head_Attachment"> --}}
                                         <div class="file-attachment-field">
@@ -516,9 +516,9 @@
                                         </label>
                                         <select name="Incident_Type">
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="1">Type A</option>
-                                            <option value="2">Type B</option>
-                                            <option value="3">Type C</option>
+                                            <option value="Type A">Type A</option>
+                                            <option value="Type B">Type B</option>
+                                            <option value="Type C">Type C</option>
                                         </select>
                                     </div>
                                 </div>

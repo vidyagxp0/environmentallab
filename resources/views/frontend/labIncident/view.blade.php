@@ -309,7 +309,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator Group Code">Initiator Group Code</label>
-                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" value="{{$data->Initiator_Group}}" readonly>
+                                        <input type="text" id="initiator_group_code"  name="initiator_group_code" value="{{$data->initiator_group_code}}" readonly>
                                     </div>
                                 </div>
                                
@@ -319,7 +319,7 @@
                                                 class="text-danger">*</span></label><span id="rchars">255</span>
                                         characters remaining
                                         
-                                        <textarea name="short_desc"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->short_desc }}</textarea>
+                                        <input name="short_desc" value="{{ $data->short_desc }}" id="docname" type="text" maxlength="255" required  {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }} >
                                     </div>
                                     <p id="docnameError" style="color:red">**Short Description is required</p>
 
@@ -488,7 +488,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Attachments">Attachments</label>
+                                        <label for="Attachments">Incident Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Attachments" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                             value="{{ $data->Attachments }}"> --}}
@@ -552,7 +552,7 @@
                                 </div> --}}
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Inv Attachments">Inv Attachment</label>
+                                        <label for="Inv Attachments">Investigation Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="Inv_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                             value="{{ $data->Inv_Attachment }}"> --}}
@@ -686,7 +686,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="QA Head Attachments">QA Head Attachment</label>
+                                        <label for="QA Head Attachments">QA Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
                                         {{-- <input type="file" id="myfile" name="QA_Head_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                             value="{{ $data->QA_Head_Attachment }}"> --}}
@@ -781,13 +781,13 @@
                                         </label>
                                         <select name="Incident_Type" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>
                                             <option value="">Enter Your Selection Here</option>
-                                            <option value="1" @if ($data->Incident_Type == '1') selected @endif>Type
+                                            <option value="Type A" @if ($data->Incident_Type == 'Type A') selected @endif>Type
                                                 A
                                             </option>
-                                            <option value="2" @if ($data->Incident_Type == '2') selected @endif>Type
+                                            <option value="Type B" @if ($data->Incident_Type == 'Type B') selected @endif>Type
                                                 B
                                             </option>
-                                            <option value="3" @if ($data->Incident_Type == '3') selected @endif>Type
+                                            <option value="Type C" @if ($data->Incident_Type == 'Type C') selected @endif>Type
                                                 c
                                             </option>
                                         </select>
@@ -890,6 +890,20 @@
                                         <div class="Date">{{ $data->investigation_completed_on }}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed By">Review Completed By</label>
+                                        <div class="static">{{$data->review_completed_by}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed On">Review Completed On</label>
+                                        <div class="Date">{{$data->review_completed_on}}</div>
+                                    </div>
+                                </div> 
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
@@ -902,6 +916,7 @@
                                         <div class="Date">{{ $data->qA_review_completed_on }}</div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA Head Approval Completed By">QA Head Approval Completed By</label>
@@ -914,31 +929,7 @@
                                         <div class="Date">{{ $data->qA_head_approval_completed_on }}</div>
                                     </div>
                                 </div>
-                               
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="All Activities Completed By">All Activities Completed By</label>
-                                        <div class="static">{{ $data->all_activities_completed_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="All Activities Completed On">All Activities Completed On</label>
-                                        <div class="Date">{{ $data->all_activities_completed_on }}</div>
-                                    </div>
-                                </div>
-                                 <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Review Completed By">Review Completed By</label>
-                                        <div class="static">{{$data->review_completed_by}}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Review Completed On">Review Completed On</label>
-                                        <div class="Date">{{$data->review_completed_on}}</div>
-                                    </div>
-                                </div> 
+                                
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
