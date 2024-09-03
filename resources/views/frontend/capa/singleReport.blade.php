@@ -161,11 +161,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Capa Single Report
+                   CAPA Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 60px;">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" style="width: 80px; margin-left:50px;">
                     </div>
                 </td>
             </tr>
@@ -173,10 +173,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Capa No.</strong>
+                    <strong>CAPA No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -184,6 +184,23 @@
             </tr>
         </table>
     </header>
+
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -201,7 +218,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record_number){{  str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->record){{  str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
                     </tr>
@@ -251,20 +268,24 @@
                         <th class="w-20">CAPA Team</th>
                         <td class="w-80">@if($data->capa_team){{  Helpers::getInitiatorName($data->capa_team) }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>
+                    {{-- <tr>
                             <th class="w-20">Reference Records (CAPA)</th>
                             <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
 
-                        </tr>
-                        <tr>
+                        </tr> --}}
+
+
+                        {{-- <tr>
                             <th class="w-20">Reference Records (Root Cause Analysis)</th>
                             <td class="w-80">@if($data->capa_related_record){{ Helpers::getDivisionName($data->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($data->record) }}@else Not Applicable @endif</td>
 
-                        </tr>
+                        </tr> --}}
+
+
                     <tr>
                         <th class="w-20">Initial Observation</th>
                         <td class="w-80">@if($data->initial_observation){{ $data->initial_observation}}@else Not Applicable @endif</td>
-                        <th class="w-20">Interim Containnment</th>
+                        <th class="w-20">Interim Containment</th>
                         <td class="w-80">@if($data->interim_containnment){{ $data->interim_containnment }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
@@ -276,8 +297,33 @@
                         <th class="w-20">CAPA QA Comments</th>
                         <td class="w-80">@if($data->capa_qa_comments){{ $data->capa_qa_comments }}@else Not Applicable @endif</td>
                     </tr>
+                </table>
+                <table>
+                    <tr>
+                        <th class="w-20">Reference Records (CAPA)</th>
+                        <td class="w-80">
+                            @if ($data->capa_related_record)
+                                {{ $data->capa_related_record }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th class="w-20">Reference Records (RCA)</th>
+                        <td class="w-80">
+                            @if ($data->rca_related_record)
+                                {{ $data->rca_related_record }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                    </tr>
+                </table>
                 <div class="block-head">
-                       Capa Attachement
+                       CAPA Attachement
                     </div>
                       <div class="border-table">
                         <table>
@@ -300,6 +346,7 @@
                             @endif
 
                         </table>
+
                       </div>
                 </table>
             </div>
@@ -421,10 +468,10 @@
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
-                        <th class="w-20">SR no.</th>
+                        <th class="w-20">Sr no.</th>
                             <th class="w-20">Material Name</th>
-                            <th class="w-20">Batch Number</th>
-                            <th class="w-20">Date Of Manufacturing</th>
+                            <th class="w-20">Batch Number./Lot No./AR No.</th>
+                            <th class="w-20">Manufacturing Date</th>
                             <th class="w-20">Date Of Expiry</th>
                             <th class="w-20">Batch Disposition</th>
                             <th class="w-20">Remark</th>
@@ -534,7 +581,6 @@
                             <td class="w-80">@if($data->general_deviation){{ $data->general_deviation }}@else Not Applicable @endif</td>
                         </tr> -->
                     </table>
-                </div>
 
             <div class="block">
                 <div class="block-head">
@@ -550,6 +596,14 @@
                             </th>
                             <td class="w-80">@if($data->capa_qa_comments2){{ $data->capa_qa_comments2 }}@else Not Applicable @endif</td>
                         </tr>
+        </table>
+    </div>
+
+            <div class="block">
+                        <div class="block-head">
+                            CAPA Details
+                          </div>
+                          <table>
                 <tr>
                         <th class="w-20">CAPA Type</th>
                         <td class="w-80">@if($data->capa_type){{ $data->capa_type }}@else Not Applicable @endif</td>
@@ -568,17 +622,24 @@
                         </th>
                         <td class="w-80">@if($data->supervisor_review_comments){{ $data->supervisor_review_comments }}@else Not Applicable @endif</td>
                     </tr>
+                          </table>
+            </div>
 
+
+                    <div class="block">
                     <div class="block-head">
                        CAPA Closure
                     </div>
                     <table>
                      <tr>
                         <th class="w-20">QA Review & Closure</th>
-                        <td class="w-80">@if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif</td>
-                        <th class="w-20">Due Date Extension Justification</th>
-                        <td class="w-80">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="3">@if($data->qa_review){{ $data->qa_review }}@else Not Applicable @endif</td>
                    </tr>
+
+                   <tr>
+                        <th class="w-20">Due Date Extension Justification</th>
+                        <td class="w-80" colspan="3">@if($data->due_date_extension){{ $data->due_date_extension }}@else Not Applicable @endif</td>
+                    </tr>
                     {{-- <tr>
                         <th class="w-20">Closure Attachment</th>
                         <td class="w-80">@if($data->closure_attachment)<a href="{{asset('upload/document/',$data->closure_attachment)}}">{{ $data->closure_attachment }}</a>@else Not Applicable @endif</td>
@@ -610,7 +671,8 @@
 
                      </table>
                    </div>
-            </div>
+        </div>
+
                     </table>
                     </div>
                     </div>
@@ -669,6 +731,13 @@
                     </tr>
 
                     <tr>
+                        <th class="w-20">All Actions Completed By</th>
+                        <td class="w-30">{{ $data->completed_by }}</td>
+                        <th class="w-20">All Actions Completed On</th>
+                        <td class="w-30">{{ $data->completed_on }}</td>
+                    </tr>
+
+                    <tr>
                         <th class="w-20">Rejected By</th>
                         <td class="w-30">{{ $data->rejected_by }}</td>
                         <th class="w-20">Rejected On</th>
@@ -679,22 +748,9 @@
             </div>
         </div>
     </div>
+</div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                {{-- <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td> --}}
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 
