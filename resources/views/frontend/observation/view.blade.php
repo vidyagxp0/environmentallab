@@ -283,8 +283,8 @@ $users = DB::table('users')
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="date_opened">Date of Initiation<span class="text-danger"></span></label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input  type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}" name="intiation_date">
+                                        <input  type="hidden" value="{{ Helpers::getdateFormat($data->intiation_date) }}" name="intiation_date">
                                     </div>
                                 </div>
                                 
@@ -1024,25 +1024,25 @@ $users = DB::table('users')
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed_By">Report Issued By</label>
-                                        <div class="static">{{ $data->Completed_By }}</div>
+                                        <div class="static">{{ $data->report_issued_by }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed_On">Report Issued On</label>
-                                        <div class="static">{{ $data->completed_on }}</div>
+                                        <div class="static">{{ $data->report_issued_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed_By">Complete By</label>
-                                        <div class="static">{{ $data->QA_Approved_By }}</div>
+                                        <div class="static">{{ $data->Completed_By }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed_On">Complete On</label>
-                                        <div class="static">{{ $data->QA_Approved_on }}</div>
+                                        <div class="static">{{ $data->completed_on }}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -1059,6 +1059,18 @@ $users = DB::table('users')
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="QA_Approved_By">All CAPA Closed By</label>
+                                        <div class="static">{{ $data->all_capa_closed_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="QA_Approved_On">All CAPA Closed On</label>      
+                                        <div class="static">{{ $data->all_capa_closed_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Final_Approval_By">Final Approval By</label>
                                         <div class="static">{{ $data->Final_Approval_By }}</div>
                                     </div>
@@ -1069,11 +1081,36 @@ $users = DB::table('users')
                                         <div class="static">{{ $data->Final_Approval_on }}</div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_By">QA Approval Without CAPA By</label>
+                                        <div class="static">{{ $data->qa_approvel_without_capa_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">QA Approval Without CAPA On</label>
+                                        <div class="static">{{ $data->qa_approvel_without_capa_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_By">Reject CAPA Plan By</label>
+                                        <div class="static">{{ $data->reject_capa_plan_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">Reject CAPA Plan On</label>
+                                        <div class="static">{{ $data->reject_capa_plan_on }}</div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Save</button>
+                                {{-- /<button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Save</button> --}}
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Submit</button>
+                                {{-- <button type="submit" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Submit</button> --}}
                                 <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                                 </button>
                             </div>

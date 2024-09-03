@@ -261,8 +261,7 @@
                     <th class="w-20">Short Description</th>
                     <td class="w-80">{{ $data->short_description }}</td>
 
-                    <th class="w-20">Attached Files</th>
-                    <td class="w-80">{{ str_replace(',', ', ', $data->attach_files_gi) }}</td>
+                 
 
                 </tr>
                 <tr>
@@ -279,9 +278,34 @@
                     <td class="w-80">{{ $data->non_compliance }}</td> --}}
 
                 </tr>
+                <tr>
+                    <th class="w-20">Non Compliance</th>
+                    <td class="w-80">
+                        @if ($data->non_compliance)
+                            {{ $data->non_compliance }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
+
+                    {{-- <th class="w-20">Non Compliance</th>
+                    <td class="w-80">{{ $data->non_compliance }}</td> --}}
+
+                </tr>
+               <tr>
+                <th class="w-20">Recommended Action</th>
+                <td class="w-80">
+                    @if ($data->recommend_action)
+                        {!! $data->recommend_action !!}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+               </tr>
+
                 </table>
 
-                <h5>Non Compliance</h5>
+                {{-- <h5>Non Compliance</h5>
                 <div style="font-size: 12px;">
                     {{ $data->non_compliance }}
                 </div>
@@ -289,19 +313,61 @@
                 <h5>Recommended Action</h5>
                 <div style="font-size: 12px;">
                     {{ str_replace(',', ', ', $data->recommend_action) }}
+                </div> --}}
+                
+                <div class="block-head">
+                    Attached Files
                 </div>
-
-                    {{-- <th class="w-20">Recommended Action</th>
-                    <td class="w-30">
-                        @if ($data->recommend_action)
-                            {!! $data->recommend_action !!}
-                        @else
-                            Not Applicable
-                        @endif
-                    </td> --}}
-
-
+                <div class="border-table">
                 <table>
+
+                    <tr class="table_bg">
+                        <th class="w-20">S.N.</th>
+                        <th class="w-60">File</th>
+                    </tr>
+                        @if($data->attach_files1)
+                        @foreach(json_decode($data->attach_files1) as $key => $file)
+                            <tr>
+                                <td class="w-20">{{ $key + 1 }}</td>
+                                <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                            </tr>
+                        @endforeach
+                        @else
+                    <tr>
+                        <td class="w-20">1</td>
+                        <td class="w-20">Not Applicable</td>
+                    </tr>
+                    @endif
+
+                </table>
+            </div>
+                    <div class="block-head">
+                        Related Obsevations
+                    </div>
+                    <div class="border-table">
+                    <table>
+
+                        <tr class="table_bg">
+                            <th class="w-20">S.N.</th>
+                            <th class="w-60">File</th>
+                        </tr>
+                            @if($data->related_observations)
+                            @foreach(json_decode($data->related_observations) as $key => $file)
+                                <tr>
+                                    <td class="w-20">{{ $key + 1 }}</td>
+                                    <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                                </tr>
+                            @endforeach
+                            @else
+                        <tr>
+                            <td class="w-20">1</td>
+                            <td class="w-20">Not Applicable</td>
+                        </tr>
+                        @endif
+
+                    </table>
+                </div>
+                {{-- <table>
                     <tr>
                     <th class="w-20">Related Obsevations</th>
                     <td class="w-80">
@@ -313,7 +379,7 @@
                     </td>
 
                 </tr>
-            </table>
+            </table> --}}
 
             {{-- <div class="block"> --}}
             {{-- <div class="block-head"> --}}
@@ -369,11 +435,19 @@
                 </td> --}}
             </tr>
         </table>
-
-        <h5>Commnets</h5>
-        <div style="font-size: 12px;">
-            {{ $data->comments }}
-        </div>
+       
+      <table>
+        <tr>
+            <th class="w-20">Commnets</th>
+            <td class="w-80">
+                @if ($data->comments)
+                    {{ $data->comments }}
+                @else
+                    Not Applicable
+                @endif
+            </td>
+        </tr>
+      </table>
 
     </div>
 
@@ -437,7 +511,7 @@
                     @endif
                 </td>
 
-                {{-- <th class="w-20">Impact Analysis
+                 <th class="w-20">Impact Analysis
                 </th>
                 <td class="w-80">
                     @if ($data->impact_analysis)
@@ -445,14 +519,14 @@
                     @else
                         Not Applicable
                     @endif
-                </td> --}}
+                </td> 
             </tr>
             </table>
 
-            <h5>Impact Analysis</h5>
+            {{-- <h5>Impact Analysis</h5>
             <div style="font-size: 12px;">
                 {{ $data->impact_analysis }}
-            </div>
+            </div> --}}
 
             <table>
             <tr>
@@ -541,7 +615,7 @@
                 <th class="w-20">Actual Start Date</th>
                 <td class="w-80">
                     @if ($data->actual_start_date)
-                        {!! $data->actual_start_date !!}
+                       {{ Helpers::getdateFormat($data->actual_start_date)}}
                     @else
                         Not Applicable
                     @endif
@@ -550,7 +624,17 @@
                 <th class="w-20">Actual End Date</th>
                 <td class="w-80">
                     @if ($data->actual_end_date)
-                        {{ $data->actual_end_date }}
+                        {{ Helpers::getdateFormat($data->actual_end_date) }}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+            </tr>
+            <tr>
+                <th class="w-20">Action Taken</th>
+                <td class="w-80">
+                    @if ($data->action_taken)
+                        {{ $data->action_taken }}
                     @else
                         Not Applicable
                     @endif
@@ -559,10 +643,7 @@
         </table>
 
 
-        <h5>Action Taken</h5>
-        <div style="font-size: 12px;">
-            {{ $data->action_taken }}
-        </div>
+        
 
             <table>
 
@@ -576,14 +657,7 @@
                     @endif
                 </td> --}}
 
-                <th class="w-20">Attached Files</th>
-                <td class="w-80">
-                    @if ($data->attach_files2)
-                        {{ str_replace(',', ', ', $data->attach_files2) }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
+               
             </tr>
             <tr>
                 <th class="w-20">Related URL</th>
@@ -606,13 +680,47 @@
             </tr>
 
         </table>
-
-
-        <h5>Response Summary</h5>
-        <div style="font-size: 12px;">
-            {{ $data->response_summary }}
+        
+        <div class="block-head">
+            Related Obsevations
         </div>
+        <div class="border-table">
+        <table>
 
+            <tr class="table_bg">
+                <th class="w-20">S.N.</th>
+                <th class="w-60">File</th>
+            </tr>
+                @if($data->attach_files2)
+                @foreach(json_decode($data->attach_files2) as $key => $file)
+                    <tr>
+                        <td class="w-20">{{ $key + 1 }}</td>
+                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}" target="_blank"><b>{{ $file }}</b></a> </td>
+                    </tr>
+                @endforeach
+                @else
+            <tr>
+                <td class="w-20">1</td>
+                <td class="w-20">Not Applicable</td>
+            </tr>
+            @endif
+
+        </table>
+    </div>
+
+       
+<table>
+    <tr>
+        <th class="w-20">Response Summary</th>
+        <td class="w-80">
+            @if ($data->response_summary)
+                {{ $data->response_summary }}
+            @else
+                Not Applicable
+            @endif
+        </td>
+    </tr>
+</table>
 
     </div>
 
@@ -642,7 +750,7 @@
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->report_issued_comment)
@@ -651,26 +759,26 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
             <tr>
                 <th class="w-20">Cancel By</th>
                 <td class="w-80">
-                    @if ($data->cancel_by)
-                        {{ $data->cancel_by }}
+                    @if ($data->final_approvel_by)
+                        {{ $data->final_approvel_by }}
                     @else
                         Not Applicable
                     @endif
                 </td>
                 <th class="w-20">Cancel On</th>
                 <td class="w-80">
-                    @if ($data->cancel_on)
-                        {{ $data->cancel_on }}
+                    @if ($data->final_approvel_on)
+                        {{ $data->final_approvel_on }}
                     @else
                         Not Applicable
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->cancel_comment)
@@ -679,14 +787,14 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
 
 
             <tr>
                 <th class="w-20">Complete By</th>
                 <td class="w-80">
-                    @if ($data->complete_By)
-                        {{ $data->complete_By }}
+                    @if ($data->Completed_By)
+                        {{ $data->Completed_By }}
                     @else
                         Not Applicable
                     @endif
@@ -694,14 +802,14 @@
 
                 <th class="w-20">Complete On</th>
                 <td class="w-80">
-                    @if ($data->complete_on)
-                        {{ $data->complete_on }}
+                    @if ($data->completed_on)
+                        {{ $data->completed_on }}
                     @else
                         Not Applicable
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->complete_comment)
@@ -710,9 +818,9 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
 
-            <tr>
+            {{-- <tr>
                 <th class="w-20">More Info Required By</th>
                 <td class="w-80">
                     @if ($data->more_info_required_by)
@@ -730,8 +838,8 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
-            <tr>
+            </tr> --}}
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->more_info_required_comment)
@@ -740,7 +848,7 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
 
             <tr>
                 <th class="w-20">Reject CAPA Plan By</th>
@@ -761,7 +869,7 @@
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->reject_capa_plan_comment)
@@ -770,13 +878,13 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
 
             <tr>
                 <th class="w-20">QA Approval Without CAPA By</th>
                 <td class="w-80">
-                    @if ($data->qa_approval_without_capa_by)
-                        {{ $data->qa_approval_without_capa_by }}
+                    @if ($data->qa_approvel_without_capa_by)
+                        {{ $data->qa_approvel_without_capa_by }}
                     @else
                         Not Applicable
                     @endif
@@ -784,14 +892,14 @@
 
                 <th class="w-20">QA Approval Without CAPA On</th>
                 <td class="w-80">
-                    @if ($data->qa_approval_without_capa_on)
-                        {{ $data->qa_approval_without_capa_on }}
+                    @if ($data->qa_approvel_without_capa_on)
+                        {{ $data->qa_approvel_without_capa_on }}
                     @else
                         Not Applicable
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->qa_approval_without_capa_comment)
@@ -800,13 +908,13 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
 
             <tr>
                 <th class="w-20">QA Approval By</th>
                 <td class="w-80">
-                    @if ($data->qa_appproval_by)
-                        {{ $data->qa_appproval_by }}
+                    @if ($data->QA_Approved_By)
+                        {{ $data->QA_Approved_By }}
                     @else
                         Not Applicable
                     @endif
@@ -814,14 +922,14 @@
 
                 <th class="w-20">QA Approval On</th>
                 <td class="w-80">
-                    @if ($data->qa_appproval_on)
-                        {{ $data->qa_appproval_on }}
+                    @if ($data->QA_Approved_on)
+                        {{ $data->QA_Approved_on }}
                     @else
                         Not Applicable
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->qa_appproval_comment)
@@ -830,7 +938,7 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
             <tr>
                 <th class="w-20">All CAPA closed By</th>
                 <td class="w-80">
@@ -850,7 +958,7 @@
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->all_capa_closed_comment)
@@ -859,7 +967,7 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
 
             <tr>
                 <th class="w-20">Final Approval By</th>
@@ -880,7 +988,7 @@
                     @endif
                 </td>
             </tr>
-            <tr>
+            {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
                     @if ($data->Final_Approval_comment)
@@ -889,7 +997,7 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr>
+            </tr> --}}
 
         </table>
     </div>

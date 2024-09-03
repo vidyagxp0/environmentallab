@@ -704,13 +704,25 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed_By">Completed By</label>
+                                        <label for="Completed_By">Report Issued By</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed_On">Completed On</label>
+                                        <label for="Completed_On">Report Issued On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_By">Complete By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_On">Complete On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -728,6 +740,18 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="QA_Approved_By">All CAPA Closed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="QA_Approved_On">All CAPA Closed On</label>      
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Final_Approval_By">Final Approval By</label>
                                         <div class="static"></div>
                                     </div>
@@ -738,12 +762,37 @@
                                         <div class="static"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_By">QA Approval Without CAPA By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">QA Approval Without CAPA On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_By">Reject CAPA Plan By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">Reject CAPA Plan On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="button-block">
-                                <button type="submit" class="saveButton">Save</button>
+                                {{-- /<button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Save</button> --}}
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                                <button type="submit">Submit</button>
-                                <button type="button"> <a class="text-white" href="{{ url('dashboard') }}"> Exit </a>
+                                {{-- <button type="submit" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>Submit</button> --}}
+                                <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                                 </button>
                             </div>
                         </div>
