@@ -533,7 +533,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Reference Records">Reference Records (Root Cause Analysis)</label>
+                                                <label for="Reference Records">Reference Records (RCA)</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple
                                                     id="rca_related_record" name="rca_related_record[]"
                                                     placeholder="Select Reference Records">
