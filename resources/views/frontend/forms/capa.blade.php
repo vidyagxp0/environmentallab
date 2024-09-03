@@ -431,7 +431,7 @@
 
                                             @foreach ($rca_old_record as $new1)
                                                 <option
-                                                    value="{{ Helpers::getDivisionName($new1->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new1->record) }}/{{$new1->short_description}}">
+                                                    value="{{ Helpers::getDivisionName($new1->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new1->record) }}">
                                                     {{ Helpers::getDivisionName($new1->division_id) . '/RCA/' . date('Y') . '/' . Helpers::recordFormat($new1->record) }}
                                                 </option>
                                             @endforeach

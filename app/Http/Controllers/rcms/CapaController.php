@@ -115,7 +115,8 @@ class CapaController extends Controller
        $capa->Production_Person= $request->Production_Person;
     //    $capa->additional_attachments= json_encode($request->additional_attachments);
          $capa->capa_related_record= implode(',', $request->capa_related_record);
-         $capa->rca_related_record= implode(',', $request->rca_related_record);
+         $capa->rca_related_record = implode(',', $request->rca_related_record);
+        //  dd($capa->rca_related_record);
 
         $capa->initial_observation = $request->initial_observation;
         $capa->interim_containnment = $request->interim_containnment;
@@ -290,7 +291,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
-            $history->current = $capa->intiation_date;
+            $history->current =Helpers::getdateFormat($capa->intiation_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1350,7 +1351,7 @@ class CapaController extends Controller
             $history->capa_id = $id;
             $history->activity_type = 'Details';
             $history->previous = $lastDocument->details_new;
-            $history->current = $capa->details;
+            $history->current = $capa->details_new;
             $history->comment = $request->details_new_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

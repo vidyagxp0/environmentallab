@@ -525,6 +525,10 @@
                                                 </select>
                                             </div>
                                         </div> --}}
+                                        {{-- @php
+                                        dd($recordValue);
+
+                                        @endphp --}}
 
 
                                         <div class="col-lg-6">
@@ -544,7 +548,7 @@
                                                                     Helpers::recordFormat($new->record);
                                                                 $selected = in_array(
                                                                     $recordValue,
-                                                                    explode(',', $data->rca_related_record),
+                                                                    explode(',', $data->rca_related_record)
                                                                 )
                                                                     ? 'selected'
                                                                     : '';
@@ -558,7 +562,6 @@
                                             </div>
 
                                         </div>
-
 
 
                                         {{-- <div class="col-lg-12">
