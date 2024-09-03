@@ -50,7 +50,7 @@ class CCController extends Controller
 
         if ($division) {
             $last_cc = CC::where('division_id', $division->id)->latest()->first();
-            dd($last_cc);
+            // dd($last_cc);
 
             if ($last_cc) {
                 $record_number = $last_cc->record_number ? str_pad($last_cc->record + 1, 4, '0', STR_PAD_LEFT) : '0001';
@@ -155,6 +155,10 @@ class CCController extends Controller
        $openState->Microbiology = $request->Microbiology;
        if ($request->Microbiology_Person) {
            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+           $cftReviewerIds = explode(',', $openState->Microbiology_Person);
+           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+           $cftReviewerNames = implode(', ', $cftReviewers);
+
        } else {
            toastr()->warning('CFT reviewers can not be empty');
            return back();
@@ -304,6 +308,10 @@ class CCController extends Controller
         $info->Microbiology = $request->Microbiology;
          if ($request->Microbiology_Person) {
              $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+
+            $cftReviewerIds = explode(',', $info->Microbiology_Person);
+           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+           $cftReviewerNames = implode(', ', $cftReviewers);
          } else {
              toastr()->warning('CFT reviewers can not be empty');
              return back();
@@ -466,7 +474,7 @@ class CCController extends Controller
 
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
-        $history->activity_type = 'Initiation Date';
+        $history->activity_type = 'Date of Initiation';
         $history->previous = "Null";
         $history->current = Helpers::getdateFormat($request->intiation_date);
         $history->comment = "NA";
@@ -558,12 +566,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty(implode(',',$request->Microbiology_Person))){
+        if(!empty($request->Microbiology_Person)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'CFT Reviewer Person';
             $history->previous = "Null";
-            $history->current = implode(',',$request->Microbiology_Person);
+            $history->current = $cftReviewerNames;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -673,7 +681,7 @@ class CCController extends Controller
         if(!empty($request->Division_Code)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Division';
             $history->previous = "Null";
             $history->current = $request->Division_Code;
             $history->comment = "NA";
@@ -818,7 +826,7 @@ class CCController extends Controller
         if(!empty($request->qa_head)){
             $history = new RcmDocHistory;
             $history->cc_id = $review->id;
-            $history->activity_type = 'QA Review Attachment';
+            $history->activity_type = 'QA Attachment';
             $history->previous = "Null";
             $history->current = $review->qa_head;
             $history->comment = "NA";
@@ -1192,7 +1200,7 @@ class CCController extends Controller
         if(!empty($request->feedback)){
             $history = new RcmDocHistory;
             $history->cc_id = $approcomments->id;
-            $history->activity_type = 'Feedback';
+            $history->activity_type = 'Training Feedback';
             $history->previous = "Null";
             $history->current = $approcomments->feedback;
             $history->comment = "NA";
@@ -1250,7 +1258,7 @@ class CCController extends Controller
         if(!empty($request->due_date_extension)){
             $history = new RcmDocHistory;
             $history->cc_id = $closure->id;
-            $history->activity_type = 'Due Date Extension';
+            $history->activity_type = 'Due Date Extension Justification';
             $history->previous = "Null";
             $history->current = $closure->due_date_extension;
             $history->comment = "NA";
@@ -1314,6 +1322,13 @@ class CCController extends Controller
    
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
+
+        $getId = $lastDocument->Microbiology_Person;
+        $lastcftReviewerIds = explode(',', $getId);
+        $lastcftReviewers = User::whereIn('id', $lastcftReviewerIds)->pluck('name')->toArray();
+        $lastcftReviewerNames = implode(', ', $lastcftReviewers);
+
+
         $openState->initiator_id = Auth::user()->id;
         $openState->Initiator_Group = $request->Initiator_Group;
         $openState->initiator_group_code = $request->initiator_group_code;
@@ -1348,6 +1363,10 @@ class CCController extends Controller
         
          if ($request->Microbiology_Person) {
              $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+
+             $cftReviewerIds = explode(',', $openState->Microbiology_Person);
+           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+           $cftReviewerNames = implode(', ', $cftReviewers);
          } else {
              toastr()->warning('CFT reviewers can not be empty');
              return back();
@@ -1510,6 +1529,9 @@ class CCController extends Controller
         
          if ($request->Microbiology_Person) {
              $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+             $cftReviewerIds = explode(',', $info->Microbiology_Person);
+           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+           $cftReviewerNames = implode(', ', $cftReviewers);
          } else {
              toastr()->warning('CFT reviewers can not be empty');
              return back();
@@ -1849,7 +1871,7 @@ class CCController extends Controller
         if ($lastDocument->Division_Code != $request->Division_Code) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Division Code';
+            $history->activity_type = 'Division';
             $history->previous = $lastDocument->Division_Code;
             $history->current = $request->Division_Code;
             $history->comment = "NA";
@@ -1943,7 +1965,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastreview->qa_head != $review->qa_head || !empty($request->qa_head_comment)) {
+        if ($lastreview->qa_head != $review->qa_head) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'QA Attachments';
@@ -2115,12 +2137,12 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastinfo->Microbiology_Person != $info->Microbiology_Person || !empty($request->Microbiology_Person_comment)) {
+        if ($lastinfo->Microbiology_Person != $request->Microbiology_Person) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'CFT Reviewer Person';
-            $history->previous = $lastinfo->Microbiology_Person;
-            $history->current = $info->Microbiology_Person;
+            $history->previous = $lastcftReviewerNames;
+            $history->current = $cftReviewerNames;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2522,7 +2544,7 @@ class CCController extends Controller
         if ($lastDocument->due_date_extension != $request->due_date_extension) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Due Date Extension';
+            $history->activity_type = 'Due Date Extension Justification';
             $history->previous = $lastDocument->due_date_extension;
             $history->current = $request->due_date_extension;
             $history->comment = "NA";
@@ -2551,7 +2573,7 @@ class CCController extends Controller
             $evaluation = Evaluation::where('cc_id', $id)->first();
             if ($changeControl->stage == 1) {
                     $changeControl->stage = "2";
-                    $changeControl->status = "Under Supervisor Review";
+                    $changeControl->status = "HOD Review";
                     
                     $history = new RcmDocHistory;
                     $history->cc_id = $id;
@@ -2606,7 +2628,7 @@ class CCController extends Controller
             }
             if ($changeControl->stage == 2) {
                     $changeControl->stage = "3";
-                    $changeControl->status = "QA Review";
+                    $changeControl->status = "Pending CFT/SME/QA Review";
                                 $history = new RcmDocHistory;
                                 $history->cc_id = $id;
                                 $history->activity_type = 'Activity Log';
@@ -2651,7 +2673,7 @@ class CCController extends Controller
             if ($changeControl->stage == 3) {
 
                     $changeControl->stage = "4";
-                    $changeControl->status = "Pending CFT Review";
+                    $changeControl->status = "CFT/SME/QA Review";
                         $history = new RcmDocHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -2697,7 +2719,7 @@ class CCController extends Controller
             if ($changeControl->stage == 4) {
                 if ($evaluation->training_required == "yes") {
                     $changeControl->stage = "6";
-                    $changeControl->status = "Pending Training Completion";
+                    $changeControl->status = "Pending Change Implementation";
                 //     $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
                 //         if($u->q_m_s_divisions_id == $changeControl->division_id){

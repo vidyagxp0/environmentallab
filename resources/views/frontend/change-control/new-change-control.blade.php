@@ -340,7 +340,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="nature-change">Nature Of Change</label>
-                                        <select name="natureChange">
+                                        <select name="doc_change">
                                             <option value="">-- Select --</option>
                                             <option value="Temporary">Temporary</option>
                                             <option value="Permanent">Permanent</option>
@@ -349,13 +349,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="others">If Others</label>
-                                        <textarea name="others"></textarea>
+                                        <label for="If_Others">If Others</label>
+                                        <textarea name="If_Others"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="Division_Code">Division Code</label>
+                                        <label for="Division_Code">Division</label>
                                         <select name="Division_Code">
                                             <option value="">-- Select --</option>
                                             <option value="Instrumental Lab">Instrumental Lab</option>
@@ -847,7 +847,7 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="group-attachments">Attachments</label>
+                                        <label for="group-attachments">Group Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting
                                                 documents</small></div>
                                         <div class="file-attachment-field">
@@ -1026,12 +1026,7 @@
                                             </td>
                                             {{-- <td><input type="date" name="implementation_date[]">
                                             </td> --}}
-                                            <td><div class="group-input new-date-data-field mb-0">
-                                                <div class="input-date "><div
-                                                 class="calenderauditee">
-                                                <input type="text" id="implementation_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                <input type="date" name="implementation_date[]" class="hide-input" 
-                                                oninput="handleDateInput(this, `implementation_date' + serialNumber +'`)" /></div></div></div></td>
+                                            <td><input type="text" name="implementation_date[]"></td>
                                             <td><input type="text" name="new_document_no[]">
                                             </td>
                                             <td><input type="text" name="new_version_no[]">
