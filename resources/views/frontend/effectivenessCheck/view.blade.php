@@ -223,8 +223,8 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="originator">Date of Initiation</label>
-                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
-                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
+                                        <input disabled type="text" value="{{ Helpers::getdateFormat($data->intiation_date) }}" name="intiation_date">
+                                        <input type="hidden" value="{{ Helpers::getdateFormat($data->intiation_date) }}" name="intiation_date">
                                         {{--  <div class="static">{{ $data->created_at }}</div>  --}}
                                     </div>
                                 </div>
@@ -337,9 +337,9 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}" style="@if ($data->stage == 4 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
-                                                                style="color:red; font-size:20px;"></i></a>
+                                                                style="color:red; font-size:20px;" ></i></a>
                                                     </h6>
                                                 @endforeach
                                             @endif
@@ -420,7 +420,7 @@
                                                         <b>{{ $file }}</b>
                                                         <a href="{{ asset('upload/' . $file) }}" target="_blank"><i
                                                                 class="fa fa-eye text-primary"
-                                                                style="font-size:20px; margin-right:-10px;"></i></a>
+                                                                style="font-size:20px; margin-right:-10px;" style="@if ($data->stage == 4 || $data->stage == 6) pointer-events: none; @endif"></i></a>
                                                         <a type="button" class="remove-file"
                                                             data-file-name="{{ $file }}"><i
                                                                 class="fa-solid fa-circle-xmark"
@@ -475,7 +475,7 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}" style="@if ($data->stage == 4 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -541,7 +541,7 @@
                                                                 class="fa fa-eye text-primary"
                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
                                                         <a type="button" class="remove-file"
-                                                            data-file-name="{{ $file }}"><i
+                                                            data-file-name="{{ $file }}" style="@if ($data->stage == 4 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                 class="fa-solid fa-circle-xmark"
                                                                 style="color:red; font-size:20px;"></i></a>
                                                     </h6>
@@ -583,7 +583,7 @@
                                                             class="fa fa-eye text-primary"
                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                     <a type="button" class="remove-file"
-                                                        data-file-name="{{ $file }}"><i
+                                                        data-file-name="{{ $file }}" style="@if ($data->stage == 4 || $data->stage == 6) pointer-events: none; @endif"><i
                                                             class="fa-solid fa-circle-xmark"
                                                             style="color:red; font-size:20px;"></i></a>
                                                 </h6>

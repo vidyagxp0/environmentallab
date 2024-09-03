@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                             <div class="group-input">
-                                <label for="Attachments">Attachment</label>
+                                <label for="Attachments">Attachments</label>
                                 <div><small class="text-primary">Please Attach all relevant or supporting
                                         documents</small></div>
                                 <div class="file-attachment-field">
