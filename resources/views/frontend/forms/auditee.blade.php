@@ -81,10 +81,10 @@
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber +
                         '"></td>' +
                         '<td><input type="text" name="audit[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_start_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_start_date[]" id="scheduled_start_date' + serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  class="hide-input" oninput="handleDateInput(this, `scheduled_start_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
 
                         '<td><input type="time" name="scheduled_start_time[]"></td>' +
-                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"> <input type="text" id="scheduled_end_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="scheduled_end_date[]" id="scheduled_end_date'+ serialNumber +'_checkdate" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `scheduled_end_date' + serialNumber +'`);checkDate(`scheduled_start_date' + serialNumber +'_checkdate`,`scheduled_end_date' + serialNumber +'_checkdate`)" /></div></div></div></td>' +
                         '<td><input type="time" name="scheduled_end_time[]"></td>' +
 
 
@@ -127,7 +127,7 @@
                         '<td><input disabled type="text" name="serial[]" value="' + serialNumber +'"></td>' +
                         '<td><input type="text" name="observation_id[]"></td>' +
                         
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
+                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
                         // '<td><select name="auditorG[]">' +
                          '<option value="">Select a value</option>';
 
@@ -153,7 +153,7 @@
                         // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
                         // '<td><input type="text" name="qa_comment[]"></td>' +
                         // '<td><input type="text" name="capa_details[]"></td>' +
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
+                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
                         // '<td><select name="capa_owner[]">' +
                          '<option value="">Select a value</option>';
 
@@ -164,7 +164,7 @@
                     html += '</select></td>' + 
                     // '<td><input type="text" name="action_taken[]"></td>' +
                         //'<td><input type="date" name="capa_completion_date[]"></td>'
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
+                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
                         
                         // +
                         // '<td><input type="text" name="status_Observation[]"></td>' +
@@ -288,7 +288,7 @@
                                         <label for="search">
                                             Assigned To <span class="text-danger"></span>
                                         </label>
-                                        <select multiple id="assign_toe" placeholder="Select..." name="multiple_assignee_to[]">
+                                        <select  id="assign_toe" placeholder="Select..." name="multiple_assignee_to[]">
                                             <option value="">Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
@@ -306,7 +306,7 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" name="due_date" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" />
                                         </div>
@@ -319,7 +319,7 @@
                                         </div>
                                         <div class="calenderauditee">
                                             <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                                placeholder="DD-MM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                 oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
                                         </div>
@@ -478,13 +478,13 @@
                                         <select name="external_agencies" 
                                         onchange="otherController(this.value, 'others', 'external_agencies_req')">
                                             <option value="">-- Select --</option>
-                                            <option value="jordan_fda">Jordan FDA</option>
-                                            <option value="us_fda">USFDA</option>
+                                            <option value="jordan fda">Jordan FDA</option>
+                                            <option value="us fda">USFDA</option>
                                             <option value="mhra">MHRA</option>
                                             <option value="anvisa">ANVISA</option>
                                             <option value="iso">ISO</option>
                                             <option value="who">WHO</option>
-                                            <option value="local_fda">Local FDA</option>
+                                            <option value="local fda">Local FDA</option>
                                             <option value="tga">TGA</option>
                                             <option value="others">Others</option>
                                         </select>
@@ -554,7 +554,7 @@
                                         <label for="due-date">Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">Please mention expected date of completion</small></div>
                                         <div class="calenderauditee">
-                                        <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MMM-YYYY" />
+                                        <input type="text" name="due_date" id="due_date"  readonly placeholder="DD-MM-YYYY" />
                                         <input type="date" class="hide-input"
                                         oninput="handleDateInput(this, 'due_date')"
                                         />
@@ -576,7 +576,7 @@
                                         <label for="Audit Schedule Start Date">Audit Schedule Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="start_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date" id="start_date_checkdate" name="start_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
@@ -588,7 +588,7 @@
                                         <label for="Audit Schedule End Date">Audit Schedule End Date</label>
                                         <div class="calenderauditee">
                                             <input type="text" id="end_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date" id="end_date_checkdate" name="end_date" class="hide-input" 
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
@@ -624,7 +624,7 @@
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
-                                                                <input type="text"  class="test" id="scheduled_start_date1" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="text"  class="test" id="scheduled_start_date1" readonly placeholder="DD-MM-YYYY" />
                                                                 <input type="date"   id="scheduled_start_date1_checkdate" name="scheduled_start_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"class="hide-input" 
                                                                 oninput="handleDateInput(this, `scheduled_start_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                                             </div>
@@ -636,7 +636,7 @@
                                                     <div class="group-input new-date-data-field mb-0">
                                                         <div class="input-date ">
                                                             <div  class="calenderauditee">
-                                                                <input type="text"  class="test" id="scheduled_end_date1" readonly placeholder="DD-MMM-YYYY" />
+                                                                <input type="text"  class="test" id="scheduled_end_date1" readonly placeholder="DD-MM-YYYY" />
                                                                 <input type="date" id="scheduled_end_date1_checkdate"name="scheduled_end_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" 
                                                                  oninput="handleDateInput(this, `scheduled_end_date1`);checkDate('scheduled_start_date1_checkdate','scheduled_end_date1_checkdate')" />
                                                             </div>
@@ -877,7 +877,7 @@
                                         <label for="audit_start_date Date">Audit Start Date</label>
                                         <div class="calenderauditee">
                                             <input type="text"  id="audit_start_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date" id="audit_start_date_checkdate" name="audit_start_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_start_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
@@ -889,7 +889,7 @@
                                             <label for="Audit End Date">Audit End Date</label>
                                             <div class="calenderauditee">
                                             <input type="text" id="audit_end_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                                placeholder="DD-MM-YYYY" />
                                             <input type="date" id="audit_end_date_checkdate" name="audit_end_date"  class="hide-input"
                                                 oninput="handleDateInput(this, 'audit_end_date');checkDate('audit_start_date_checkdate','audit_end_date_checkdate')" />
                                         </div>
@@ -991,7 +991,7 @@
                                 {{-- <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Reference Recores">Reference Record</label>
-                                        <select multiple id="reference_record" name="refrence_record[]" id="">
+                                        <select multiple id="reference_record" name="Reference_Recores1[]" id="">
                                             <option value="">--Select---</option>
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
@@ -1001,10 +1001,11 @@
                                         </select>
                                     </div>
                                 </div> --}}
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Related Records">Reference Record</label>
-                                        <select multiple id="reference_record" name="refrence_record[]"
+                                        <label for="Related Records">Action Item Related Records</label>
+                                        <select multiple id="Reference_Recores1" name="Reference_Recores1[]"
                                             placeholder="Select Reference Records">
 
                                             @foreach ($old_record as $new)
@@ -1016,6 +1017,23 @@
                                         </select>
                                     </div>
                                 </div>
+
+
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Related Records">Reference Record</label>
+                                        <select multiple id="reference_record" name="Reference_Recores1[]"
+                                            placeholder="Select Reference Records">
+
+                                            @foreach ($old_record as $new)
+                                                <option
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div> --}}
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Report Attachments">Report Attachments</label>
@@ -1247,7 +1265,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #assign_toe, #auditee'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #assign_toe, #auditee, #Reference_Recores1'
         });
 
         function openCity(evt, cityName) {

@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   ExternamlAudit Single Report11
+                   ExternamlAudit Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -173,7 +173,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>External Audit No.</strong>
+                    <strong>External Audit Noss.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
