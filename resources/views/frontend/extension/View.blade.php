@@ -216,7 +216,7 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="group-input">
-                                                <label for="Justification of Extention">Justification of Extention</label>
+                                                <label for="Justification of Extention">Justification of Extension</label>
                                                 <textarea name="justification"  {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->justification }}</textarea>
                                             </div>
                                         </div>
@@ -298,7 +298,7 @@
                                 </div> --}}
                                         <div class="col-lg-12">
                                             <div class="group-input">
-                                                <label for="File Attachments">Extention Attachments</label>
+                                                <label for="File Attachments">Extension Attachments</label>
                                                     <div class="file-attachment-field">
                                                         <div class="file-attachment-list" id="extention_attachment" >
                                                             @if ($data->extention_attachment)
@@ -1097,7 +1097,7 @@
                             </label>
                             <label for="minor">
                                 <input type="radio" name="revision" id="minor">
-                                Extention
+                                Extension
                             </label>
 
                             <label for="minor">

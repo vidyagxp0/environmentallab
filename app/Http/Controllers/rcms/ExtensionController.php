@@ -210,7 +210,7 @@ class ExtensionController extends Controller
 
             $history = new ExtensionAuditTrail();
             $history->extension_id = $openState->id;
-            $history->activity_type = 'Justification of Extention';
+            $history->activity_type = 'Justification of Extension';
             $history->previous = "Null";
             $history->current = $openState->justification;
             $history->comment = "NA";
@@ -449,7 +449,7 @@ class ExtensionController extends Controller
 
             $history = new ExtensionAuditTrail();
             $history->extension_id = $id;
-            $history->activity_type = 'Justification of Extention';
+            $history->activity_type = 'Justification of Extension';
             $history->previous = $lastDocument->justification;
             $history->current = $openState->justification;
             $history->comment = $request->justification_comment;
