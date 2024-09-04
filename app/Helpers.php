@@ -360,7 +360,7 @@ public static function getInitiatorGroupFullName($shortName)
     { 
 
         switch ($shortName) {
-            case 'Corporate Quality Assurance':
+            case 'CQA':
                 return 'Corporate Quality Assurance';
                 break;
             case 'QAB':
