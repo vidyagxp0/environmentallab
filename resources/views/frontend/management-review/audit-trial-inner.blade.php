@@ -88,88 +88,60 @@
                             @else
                             @if(!empty($temp->previous))
                             <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>{{ $temp->previous }}</div>
-                            </div>
+                            <div class="head">Changed From</div>
+                            <div>:</div>
+                            @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
+                            @foreach(explode(',',$temp->previous) as $prev)
+                            {{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }},
+                            @endforeach
                             @else
+                            {{ $temp->previous }}
+                            @endif
+                           </div>
+                        
+                        @else
+                        @if($temp->activity_type == "Activity Log" )
+                        @else
+                        <div class="list-item">
+                            <div class="head">Changed From</div>
+                            <div>:</div>
+                            <div>NULL</div>
+                        </div>
+                        @endif
+                        @endif
+                        @if($temp->current != $temp->previous)
+                        @if($temp->activity_type == "Activity Log" )
+
                             <div class="list-item">
-                                <div class="head">Changed From</div>
-                                <div>:</div>
-                                <div>NULL</div>
-                            </div>
-                            @endif
-                            @if($temp->current != $temp->previous)
+                            <div class="head">{{$temp->stage}} By</div>
+                            <div>:</div>
+                            <div> {{$temp->current}}</div>
+                            </div>  
                             <div class="list-item">
-                                <div class="head">Changed To</div>
-                                <div>:</div>
-                                <div>{{ $temp->current }}</div>
-                            </div>
-                            @endif
-                            @endif
-                            @if($temp->current != $temp->previous)
-                            @if($temp->activity_type == "Activity Log" )
-
-                          
-                                     <div class="list-item">
-                                      <div class="head">{{$temp->stage}} By</div>
-                                      <div>:</div>
-                                      <div> {{$temp->current}}</div>
-                                      </div>  
-                                      <div class="list-item">
-                                      <div class="head">{{$temp->stage}} On</div>
-                                      <div>:</div>
-                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                                     {{-- @elseif($temp->origin_state =="In Progress") 
-                                     
-                                      <div class="list-item">
-                                      <div class="head">{{$temp->stage}} By</div>
-                                      <div>:</div>
-                                      <div> {{$temp->current}}</div>
-                                      </div>  
-                                      <div class="list-item">
-                                      <div class="head">Submited On</div>
-                                      <div>:</div>
-                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                                     @elseif($temp->origin_state =="Pending HOD Approval") 
-                                      <div class="list-item">
-                                      <div class="head">Plan Approved By</div>
-                                      <div>:</div>
-                                      <div> {{$temp->current}}</div>
-                                      </div>  
-                                      <div class="list-item">
-                                      <div class="head">Plan Approved On</div>
-                                      <div>:</div>
-                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                                     @elseif($temp->origin_state =="Residual Risk Evaluation") 
-                                      <div class="list-item">
-                                      <div class="head">Risk Analysis Completed By</div>
-                                      <div>:</div>
-                                      <div> {{$temp->current}}</div>
-                                      </div>  
-                                      <div class="list-item">
-                                      <div class="head">Risk Analysis Completed By</div>
-                                      <div>:</div>
-                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                                     </div> 
-                                    
-
-                                     @endif --}}
-
-
+                            <div class="head">{{$temp->stage}} On</div>
+                            <div>:</div>
+                            <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                           </div> 
+                        @else
+                        <div class="list-item">
+                            <div class="head">Changed To</div>
+                            <div>:</div>
+                            @if($temp->activity_type == "Assigned To" || $temp->activity_type == "CAPA Team" )
+                            @foreach(explode(',',$temp->current) as $curr)
+                            {{ Helpers::getInitiatorName($curr) }} ,
+                            @endforeach
                             @else
-
-
+                            {{ $temp->current }}
+                            @endif
+                        </div>
+                        @endif
+                        @endif
+                        @endif
                             <div class="list-item">
                                 <div class="head">Origin state</div>
                                 <div>:</div>
                                 <div>{{ $temp->origin_state }}</div>
                             </div>
-                            @endif
-                            @endif
                         </div>
                         {{-- <a href="{{ url('documents/viewpdf/' . $temp->id) }}#toolbar=0" class="view-pdf">
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF

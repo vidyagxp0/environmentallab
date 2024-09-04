@@ -1430,7 +1430,7 @@ function addMultipleFiles(input, block_id) {
                                                             @php
                                                                 $recordValue =
                                                                     Helpers::getDivisionName($new->division_id) .
-                                                                    '/IA/' .
+                                                                    '/EA/' .
                                                                     date('Y') .
                                                                     '/' .
                                                                     Helpers::recordFormat($new->record);

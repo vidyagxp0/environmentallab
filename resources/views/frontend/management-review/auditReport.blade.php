@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Management Review Audit Trial Report
+                    Management Review Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -166,7 +166,7 @@
                     <strong>Audit Program Audit No.</strong>
                 </td>
                 <td class="w-40">
-                 {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
+                 {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
@@ -180,7 +180,7 @@
         <div class="head">Management Review Audit Trial Report</div>
 
         <div class="division">
-          {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
+          {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         {{-- <div class="first-table">

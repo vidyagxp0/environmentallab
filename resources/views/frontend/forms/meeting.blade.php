@@ -163,7 +163,7 @@
                                     <div class="group-input">
                                         <label for="Initiator Group Code"><b>Initiator Group Code</b></label>
                                         <input type="text" name="initiator_group_code" id="initiator_group_code"
-                                            value="" disabled>
+                                            value="" readonly>
                                     </div>
                                 </div>
                                 {{-- <div class="col-12">

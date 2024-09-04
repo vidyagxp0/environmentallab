@@ -2019,7 +2019,7 @@
                         @if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif
                     </p>
                 </div>
-                <div>
+                {{-- <div>
                     <h3>Audit team</h3>
                     <p>
                         @if($managementReview->Audit_team)
@@ -2030,7 +2030,7 @@
                             Not Applicable
                         @endif
                     </p>
-                </div>
+                </div> --}}
             </div>
              <div class="border-table">
                 {{-- <div class="block-head">
@@ -2072,6 +2072,8 @@
                                     @if($managementReview->risk_opportunities){{ $managementReview->risk_opportunities }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
                             <th class="w-20">External Supplier Performance</th>
                             <td class="w-30">
                                 <div>
@@ -2087,6 +2089,8 @@
                                     @if($managementReview->customer_satisfaction_level){{ $managementReview->customer_satisfaction_level }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
                             <th class="w-20">Budget Estimatesn</th>
                             <td class="w-30">
                                     <div>
@@ -2101,6 +2105,8 @@
                                     @if($managementReview->completion_of_previous_tasks){{ $managementReview->completion_of_previous_tasks }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>
                             <th class="w-20">Production
                             </th>
                             <td class="w-30">
@@ -2118,12 +2124,16 @@
                                     @if($managementReview->plans_new){{ $managementReview->plans_new }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+                        <tr>  
                             <th class="w-20">Forecast</th>
                             <td class="w-30">
                                     <div>
                                         @if($managementReview->forecast_new){{ $managementReview->forecast_new }}@else Not Applicable @endif
                                     </div>
                                 </td>
+                        </tr>
+                        <tr>
                                 <th class="w-20">Any Additional Support Required
                                 </th>
                             <td class="w-30">
@@ -2258,16 +2268,17 @@
                         @endif
                          </table>
                 </div> --}}
-            </div>
-
-
-
             
-            <div class="block">
-                <div class="head">
-                    <div class="block-head">
-                     Activity log
-                    </div>
+
+
+                     
+                        &nbsp;
+                    
+            
+            <div class="border-table">
+                <div class="block-head">
+                    Activity Log
+                 </div>
                     <table>
 
                     <tr>

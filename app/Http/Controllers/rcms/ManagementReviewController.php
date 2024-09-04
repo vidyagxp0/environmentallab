@@ -1220,7 +1220,7 @@ class ManagementReviewController extends Controller
              if(!empty($management->control_externally_provide_services)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Requirements for Products';
+                $history->activity_type = 'Requirements for Products and Services';
                 $history->previous = "Null";
                 $history->current = $management->control_externally_provide_services;
                 $history->comment = "Not Applicable";
@@ -1422,19 +1422,7 @@ class ManagementReviewController extends Controller
                 $history->save();
             }
     
-            if (!empty($management->file_attchment_if_any)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'file attach';
-                $history->previous = "Null";
-                $history->current = $management->file_attchment_if_any;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
+
     
             if (!empty($management->next_managment_review_date)) {
                 $history = new ManagementAuditTrial();
@@ -1556,6 +1544,7 @@ class ManagementReviewController extends Controller
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
         $management->assign_to = $request->assign_to;
         $management->initiator_group_code= $request->initiator_group_code;
+
         $management->Operations= $request->Operations;
         $management->initiator_Group= $request->initiator_Group;
         $management->requirement_products_services = $request->requirement_products_services;
@@ -1578,8 +1567,27 @@ class ManagementReviewController extends Controller
          $management->summary_recommendation = $request->summary_recommendation;
          $management->due_date_extension= $request->due_date_extension;
 
-         if (!empty($request->inv_attachment)) {
-            $files = [];
+        //  if (!empty($request->inv_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('inv_attachment')) {
+        //         foreach ($request->file('inv_attachment') as $file) {
+        //             $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->inv_attachment = json_encode($files);
+        // }
+        $files = is_array($request->existing_inv_attachment_files) ? $request->existing_inv_attachment_files : null;
+
+        if (!empty($request->inv_attachment)) {
+            if ($management->inv_attachment) {
+                $existingFiles = json_decode($management->inv_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('inv_attachment')) {
                 foreach ($request->file('inv_attachment') as $file) {
                     $name = $request->name . 'inv_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1587,10 +1595,42 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            $management->inv_attachment = json_encode($files);
         }
+
+        $management->inv_attachment = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+        // if (!empty($request->file_attchment_if_any)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attchment_if_any')) {
+        //         foreach ($request->file('file_attchment_if_any') as $file) {
+        //             $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->file_attchment_if_any = json_encode($files);
+        // }
+        // if (!empty($request->closure_attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('closure_attachments')) {
+        //         foreach ($request->file('closure_attachments') as $file) {
+        //             $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $management->closure_attachments = json_encode($files);
+        // } 
+        $files = is_array($request->existing_file_attchment_if_any_files) ? $request->existing_file_attchment_if_any_files : null;
+
         if (!empty($request->file_attchment_if_any)) {
-            $files = [];
+            if ($management->file_attchment_if_any) {
+                $existingFiles = json_decode($management->file_attchment_if_any, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('file_attchment_if_any')) {
                 foreach ($request->file('file_attchment_if_any') as $file) {
                     $name = $request->name . 'file_attchment_if_any' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1598,10 +1638,20 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            $management->file_attchment_if_any = json_encode($files);
         }
+
+        $management->file_attchment_if_any = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again befor
+
+        $files = is_array($request->existing_closure_attachments_files) ? $request->existing_closure_attachments_files : null;
+
         if (!empty($request->closure_attachments)) {
-            $files = [];
+            if ($management->closure_attachments) {
+                $existingFiles = json_decode($management->closure_attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('closure_attachments')) {
                 foreach ($request->file('closure_attachments') as $file) {
                     $name = $request->name . 'closure_attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1609,8 +1659,9 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            $management->closure_attachments = json_encode($files);
-        } 
+        }
+
+        $management->closure_attachments = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again befor
 
         $management->update();
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
@@ -2394,7 +2445,7 @@ class ManagementReviewController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Completed';
+                $history->stage='All Actions Completed ';
                 $history->save();
                 $changeControl->update();
                 // $list = Helpers::getInitiatorUserList();
