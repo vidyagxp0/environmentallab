@@ -492,44 +492,115 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->severity_rate)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Severity Rate ';
-        $history->previous = "Null";
-        $history->current = $data->severity_rate;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->save();
+        // if (!empty($request->severity_rate)) {
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Severity Rate ';
+        // $history->previous = "Null";
+        // $history->current = $data->severity_rate;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->save();
+        // }
+        if (!empty($data->severity_rate)) {
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $data->id;
+            $history->activity_type = 'Severity Rate';
+            $history->previous = "Null";
+            // $history->current = $data->severity_rate;
+            if($request->severity_rate == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity_rate == 2){
+                $history->current = "Moderate";
+            } elseif($request->severity_rate == 3){
+                $history->current = "Major";
+            }else{
+                $history->current = "Fatal";
+            }
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+        
+            $history->save();
         }
-        if (!empty($request->occurrence)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Occurrence ';
-        $history->previous = "Null";
-        $history->current = $data->occurrence;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->save();
+        // if (!empty($request->occurrence)) {
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Occurrence ';
+        // $history->previous = "Null";
+        // $history->current = $data->occurrence;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->save();
+        // }
+
+        if (!empty($data->occurrence)) {
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $data->id;
+            $history->activity_type = 'Occurrence';
+            $history->previous = "Null";
+            // $history->current = $data->occurrence;
+            if($request->occurrence == 1){
+                $history->current = "Very Likely";
+            } elseif($request->occurrence == 2){
+                $history->current = "Likely";
+            } elseif($request->occurrence == 3){
+                $history->current = "Unlikely";
+            }elseif($request->occurrence == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Extremely Unlikely";
+            }
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
         }
-        if (!empty($request->detection)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Detection ';
-        $history->previous = "Null";
-        $history->current = $data->detection;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->save();
+        // if (!empty($request->detection)) {
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Detection ';
+        // $history->previous = "Null";
+        // $history->current = $data->detection;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->save();
+        // }
+        if (!empty($data->detection)) {
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $data->id;
+            $history->activity_type = 'Detection';
+            $history->previous = "Null";
+            if($request->detection == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection == 2){
+                $history->current = "Likely";
+            } elseif($request->detection == 3){
+                $history->current = "Unlikely";
+            }elseif($request->detection == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Impossible";
+            }
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
         }
         if (!empty($request->analysisRPN)) {
         $history = new AuditTrialObservation();
@@ -697,8 +768,29 @@ class ObservationController extends Controller
         //     $data->attach_files1 = $image_name;
         // }
 
+        // if (!empty($request->attach_files1)) {
+        //     $files = [];
+        //     if ($request->hasfile('attach_files1')) {
+        //         foreach ($request->file('attach_files1') as $file) {
+        //             $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $data->attach_files1 = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_attach_files1_files) ? $request->existing_attach_files1_files : null;
+
         if (!empty($request->attach_files1)) {
-            $files = [];
+            if ($data->attach_files1) {
+                $existingFiles = json_decode($data->attach_files1, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('attach_files1')) {
                 foreach ($request->file('attach_files1') as $file) {
                     $name = $request->name . 'attach_files1' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -706,9 +798,10 @@ class ObservationController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $data->attach_files1 = json_encode($files);
         }
+
+        $data->attach_files1 = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
@@ -741,8 +834,18 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->related_observations = $image_name;
         // }
+ 
+
+        $files = is_array($request->existing_related_observations_files) ? $request->existing_related_observations_files : null;
+
         if (!empty($request->related_observations)) {
-            $files = [];
+            if ($data->related_observations) {
+                $existingFiles = json_decode($data->related_observations, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('related_observations')) {
                 foreach ($request->file('related_observations') as $file) {
                     $name = $request->name . 'related_observations' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -750,9 +853,10 @@ class ObservationController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $data->related_observations = json_encode($files);
         }
+
+        $data->related_observations = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
         // if ($request->hasfile('attach_files2')) {
         //     $image = $request->file('attach_files2');
         //     $ext = $image->getClientOriginalExtension();
@@ -760,8 +864,17 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->attach_files2 = $image_name;
         // }
+       
+        $files = is_array($request->existing_attach_files2_files) ? $request->existing_attach_files2_files : null;
+
         if (!empty($request->attach_files2)) {
-            $files = [];
+            if ($data->attach_files2) {
+                $existingFiles = json_decode($data->attach_files2, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('attach_files2')) {
                 foreach ($request->file('attach_files2') as $file) {
                     $name = $request->name . 'attach_files2' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -769,10 +882,11 @@ class ObservationController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $data->attach_files2 = json_encode($files);
         }
-        
+
+        $data->attach_files2 = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
         $data->status = 'Opened';
         $data->stage = 1;
         $data->update();
@@ -1087,13 +1201,47 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
+        // if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
 
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Severity Rate ';
+        //     $history->previous = $lastDocument->severity_rate;
+        //     $history->current = $data->severity_rate;
+        //     $history->comment = $request->severity_rate_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
+            
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Severity Rate ';
-            $history->previous = $lastDocument->severity_rate;
-            $history->current = $data->severity_rate;
+            $history->activity_type = 'Severity Rate';
+       
+            if($lastDocument->severity_rate == 1){
+                $history->previous = "Negligible";
+            } elseif($lastDocument->severity_rate == 2){
+                $history->previous = "Moderate";
+            } elseif($lastDocument->severity_rate == 3){
+                $history->previous = "Major";
+            } elseif($lastDocument->severity_rate == 4){
+                $history->previous = "Fatal";
+            } else{
+                $history->previous = "Null";
+            }
+    
+            if($request->severity_rate == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity_rate == 2){
+                $history->current = "Moderate";
+            } elseif($request->severity_rate == 3){
+                $history->current = "Major";
+            }else{
+                $history->current = "Fatal";
+            }
             $history->comment = $request->severity_rate_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1101,13 +1249,52 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
 
+        // if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
+
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Occurrence ';
+        //     $history->previous = $lastDocument->occurrence;
+        //     $history->current = $data->occurrence;
+        //     $history->comment = $request->occurrence_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        if ($lastDocument->occurrence != $data->occurrence || !empty($request->occurrence_comment)) {
+       
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Occurrence ';
-            $history->previous = $lastDocument->occurrence;
-            $history->current = $data->occurrence;
+            $history->activity_type = 'Occurrence';
+            // $history->previous = $lastDocument->occurrence;
+            if($lastDocument->occurrence == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastDocument->occurrence == 2){
+                $history->previous = "Likely";
+            } elseif($lastDocument->occurrence == 3){
+                $history->previous = "Unlikely";
+            } elseif($lastDocument->occurrence == 4){
+                $history->previous = "Rare";
+            } elseif($lastDocument->occurrence == 5){
+                $history->previous = "Extremely Unlikely";
+            } else{
+                $history->previous = "Null";
+            }
+            // $history->current = $data->occurrence;
+            if($request->occurrence == 1){
+                $history->current = "Very Likely";
+            } elseif($request->occurrence == 2){
+                $history->current = "Likely";
+            } elseif($request->occurrence == 3){
+                $history->current = "Unlikely";
+            }elseif($request->occurrence == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Extremely Unlikely";
+            }
             $history->comment = $request->occurrence_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1115,13 +1302,50 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
+        // if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
 
+        //     $history = new AuditTrialObservation();
+        //     $history->Observation_id = $id;
+        //     $history->activity_type = 'Detection ';
+        //     $history->previous = $lastDocument->detection;
+        //     $history->current = $data->detection;
+        //     $history->comment = $request->detection_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+        if ($lastDocument->detection != $data->detection || !empty($request->detection_comment)) {
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Detection ';
-            $history->previous = $lastDocument->detection;
-            $history->current = $data->detection;
+            $history->activity_type = 'Detection';
+            // $history->previous = $lastDocument->detection;
+            if($lastDocument->detection == 1){
+                $history->previous = "Very Likely";
+            } elseif($lastDocument->detection == 2){
+                $history->previous = "Likely";
+            } elseif($lastDocument->detection == 3){
+                $history->previous = "Unlikely";
+            } elseif($lastDocument->detection == 4){
+                $history->previous = "Rare";
+            } elseif($lastDocument->detection == 5){
+                $history->previous = "Impossible";
+            } else{
+                $history->previous = "Null";
+            }
+            // $history->current = $data->detection;
+            if($request->detection == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection == 2){
+                $history->current = "Likely";
+            } elseif($request->detection == 3){
+                $history->current = "Unlikely";
+            }elseif($request->detection == 4){
+                $history->current = "Rare";
+            }else{
+                $history->current = "Impossible";
+            }
             $history->comment = $request->detection_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1129,6 +1353,7 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
         if ($lastDocument->analysisRPN != $data->analysisRPN || !empty($request->analysisRPN_comment)) {
 
             $history = new AuditTrialObservation();

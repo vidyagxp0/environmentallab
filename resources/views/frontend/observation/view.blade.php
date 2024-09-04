@@ -480,6 +480,13 @@ $users = DB::table('users')
                                         <input type="file" name="attach_files1" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{ $data->attach_files1 }}"/>
                                     </div>
                                 </div> --}}
+                                @if ($data->attach_files1)
+                                @foreach (json_decode($data->attach_files1) as $file)
+                                    <input id="ATFile-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files1_files[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                @endforeach
+                            @endif
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="attach_files1">Attached Files</label>
@@ -491,7 +498,10 @@ $users = DB::table('users')
                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    <a  type="button" class="remove-file"
+                                                     data-file-name="{{ $file }}"
+                                                     data-remove-id="ATFile-{{ $loop->index }}"
+                                                     ><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                 </h6>
                                            @endforeach
                                                 @endif
@@ -546,6 +556,13 @@ $users = DB::table('users')
                                     </div>
                                 </div> --}}
                             </div>
+                            @if ($data->related_observations)
+                            @foreach (json_decode($data->related_observations) as $file)
+                                <input id="ROFile-{{ $loop->index }}" type="hidden"
+                                    name="existing_related_observations_files[{{ $loop->index }}]"
+                                    value="{{ $file }}">
+                            @endforeach
+                        @endif
                             <div class="col-12">
                                 <div class="group-input">
                                     <label for="related_observations">Related Obsevations</label>
@@ -557,7 +574,10 @@ $users = DB::table('users')
                                             <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                 <b>{{ $file }}</b>
                                                 <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                <a  type="button" class="remove-file"
+                                                 data-file-name="{{ $file }}"
+                                                 data-remove-id="ROFile-{{ $loop->index }}"
+                                                 ><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                             </h6>
                                        @endforeach
                                             @endif
@@ -971,6 +991,13 @@ $users = DB::table('users')
                                         <input type="file" name="attach_files2" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->attach_files2 }}">
                                     </div>
                                 </div> --}}
+                                @if ($data->attach_files2)
+                                @foreach (json_decode($data->attach_files2) as $file)
+                                    <input id="INATFile-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files2_files[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                @endforeach
+                            @endif
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="attach_files2">Attached Files</label>
@@ -982,7 +1009,10 @@ $users = DB::table('users')
                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+                                                    <a  type="button" class="remove-file" 
+                                                    data-remove-id="INATFile-{{ $loop->index }}"
+                                                    data-file-name="{{ $file }}"
+                                                    ><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
                                                 </h6>
                                            @endforeach
                                                 @endif
@@ -1451,6 +1481,15 @@ $users = DB::table('users')
                 });
             });
         });
+    </script>
+     <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
     </script>
      <script>
         var maxLength = 255;
