@@ -2496,9 +2496,11 @@ class AuditeeController extends Controller
         $parent_type = "Observations";
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        $parent_division_id = Auditee::where('id', $id)->value('division_id');
+
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number', 'due_date', 'parent_id', 'parent_type'));
+        return view('frontend.forms.observation', compact('record_number','parent_division_id', 'due_date', 'parent_id', 'parent_type'));
     }
 }
