@@ -379,6 +379,7 @@
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                     <option value="">-- Select a value</Option>
                                                     <option value="Corporate Quality Assurance"
                                                         @if ($data->Initiator_Group== 'Corporate
                                                         Quality Assurance') selected @endif>Corporate
