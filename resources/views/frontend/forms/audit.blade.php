@@ -1393,7 +1393,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-lg-6">
+                                {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Audit Response Completed By">Audit Response Completed By</label>
                                         <div class="static"></div>
@@ -1404,7 +1404,7 @@
                                         <label for="Audit Response Completed On">Audit Response Completed On</label>
                                         <div class="static"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Reject By">Reject By</label>

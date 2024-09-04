@@ -655,7 +655,7 @@ class InternalauditController extends Controller
             $history->save();
         }
 
-        if (!empty($request->Auditee)) {
+        if (!empty($internalAudit->Auditee)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Auditee';
