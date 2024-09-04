@@ -206,17 +206,29 @@ class ActionItemController extends Controller
         }
         
         if (!empty($openState->Reference_Recores1)) {
-        $history = new ActionItemHistory();
-        $history->cc_id =  $openState->id;
-        $history->activity_type = 'Action Item Related Records';
-        $history->previous = "Null";
-        $history->current =  $openState->Reference_Recores1;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $openState->status;
-        $history->save();
+            $recordIds = explode(',', $openState->Reference_Recores1);
+            $recordValues = [];
+        
+            foreach ($recordIds as $id) {
+                // Assuming $new->id corresponds to $id
+                $newRecord = ActionItem::find($id); // Replace `YourModel` with your actual model name
+                if ($newRecord) {
+                    $value = Helpers::getDivisionName($newRecord->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($newRecord->record);
+                    $recordValues[] = $value;
+                }
+            }
+        
+            $history = new ActionItemHistory();
+            $history->cc_id =  $openState->id;
+            $history->activity_type = 'Action Item Related Records';
+            $history->previous = "Null";
+            $history->current = implode(', ', $recordValues); // Combine the values into a string
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
         }
         
           
@@ -278,18 +290,29 @@ class ActionItemController extends Controller
                 }
             
                 if (!empty($openState->hod_preson)) {
+                    // Convert the stored IDs to an array
+                    $hodPersonIds = explode(',', $openState->hod_preson);
+                    
+                    // Fetch the names corresponding to the IDs
+                    $hodPersonNames = User::whereIn('id', $hodPersonIds)->pluck('name')->toArray();
+                    
+                    // Convert the names array to a comma-separated string
+                    $hodPersonNamesString = implode(', ', $hodPersonNames);
+                
                     $history = new ActionItemHistory();
-                    $history->cc_id =   $openState->id;
+                    $history->cc_id = $openState->id;
                     $history->activity_type = 'HOD Persons';
                     $history->previous = "Null";
-                    $history->current =  $openState->hod_preson;
+                    $history->current = $hodPersonNamesString; // Store names instead of IDs
                     $history->comment = "NA";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $openState->status;
                     $history->save();
-                    }
+                }
+                
+                    
                  if (!empty($openState->action_taken)) {
                     $history = new ActionItemHistory();
                     $history->cc_id =   $openState->id;
@@ -308,7 +331,7 @@ class ActionItemController extends Controller
                 $history->cc_id =   $openState->id;
                 $history->activity_type = 'Actual Start Date';
                 $history->previous = "Null";
-                $history->current =  $openState->start_date;
+                $history->current = Helpers::getdateFormat($openState->start_date);
                 $history->comment = "NA";
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -321,7 +344,7 @@ class ActionItemController extends Controller
             $history->cc_id =   $openState->id;
             $history->activity_type = 'Actual End Date';
             $history->previous = "Null";
-            $history->current =  $openState->end_date;
+            $history->current = Helpers::getdateFormat($openState->end_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -548,19 +571,19 @@ class ActionItemController extends Controller
 
 
         
-        if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = $lastopenState->due_date;
-            $history->current = $openState->due_date;
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->save();
-        } 
+        // if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastopenState->due_date;
+        //     $history->current = $openState->due_date;
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->save();
+        // } 
 
         if ($lastopenState->departments != $openState->departments || !empty($request->departments_comment)) {
             $history = new ActionItemHistory;
@@ -620,11 +643,31 @@ class ActionItemController extends Controller
         }  
           
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
+            // Function to convert Reference_Recores1 IDs to formatted values
+            function getFormattedRecords($referenceRecores) {
+                $recordIds = explode(',', $referenceRecores);
+                $recordValues = [];
+        
+                foreach ($recordIds as $id) {
+                    // Assuming you have a model that corresponds to $id
+                    $newRecord = ActionItem::find($id); // Replace `YourModel` with your actual model name
+                    if ($newRecord) {
+                        $value = Helpers::getDivisionName($newRecord->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($newRecord->record);
+                        $recordValues[] = $value;
+                    }
+                }
+                return implode(', ', $recordValues);
+            }
+        
+            // Get formatted previous and current records
+            $formattedPrevious = getFormattedRecords($lastopenState->Reference_Recores1);
+            $formattedCurrent = getFormattedRecords($openState->Reference_Recores1);
+        
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Action Item Related Records';
-            $history->previous = $lastopenState->Reference_Recores1;
-            $history->current = $openState->Reference_Recores1;
+            $history->previous = $formattedPrevious;
+            $history->current = $formattedCurrent;
             $history->comment = $request->Reference_Recores1_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -632,6 +675,7 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
+        
 
         if ($lastopenState->short_description != $openState->short_description || !empty($request->short_description_comment)) {
             $history = new ActionItemHistory;
@@ -660,11 +704,23 @@ class ActionItemController extends Controller
             $history->save();
         }
         if ($lastopenState->hod_preson != $openState->hod_preson || !empty($request->hod_preson_comment)) {
+            // Convert the stored IDs to an array for both previous and current states
+            $lastHodPersonIds = explode(',', $lastopenState->hod_preson);
+            $currentHodPersonIds = explode(',', $openState->hod_preson);
+        
+            // Fetch the names corresponding to the IDs for both previous and current states
+            $previousHodPersonNames = User::whereIn('id', $lastHodPersonIds)->pluck('name')->toArray();
+            $currentHodPersonNames = User::whereIn('id', $currentHodPersonIds)->pluck('name')->toArray();
+        
+            // Convert the names arrays to comma-separated strings
+            $previousHodPersonNamesString = implode(', ', $previousHodPersonNames);
+            $currentHodPersonNamesString = implode(', ', $currentHodPersonNames);
+        
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'HOD Persons';
-            $history->previous = $lastopenState->hod_preson;
-            $history->current = $openState->hod_preson;
+            $history->previous = $previousHodPersonNamesString; // Store previous names
+            $history->current = $currentHodPersonNamesString; // Store current names
             $history->comment = $request->hod_preson_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -672,6 +728,7 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
+        
         if ($lastopenState->initiatorGroup != $openState->initiatorGroup || !empty($request->initiatorGroup_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -703,8 +760,8 @@ class ActionItemController extends Controller
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Actual Start Date';
-            $history->previous = $lastopenState->start_date;
-            $history->current = $openState->start_date;
+            $history->previous = Helpers::getdateFormat($lastopenState->start_date);
+            $history->current = Helpers::getdateFormat($openState->start_date);
             $history->comment = $request->start_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -716,8 +773,8 @@ class ActionItemController extends Controller
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Actual End Date';
-            $history->previous = $lastopenState->end_date;
-            $history->current = $openState->end_date;
+            $history->previous = Helpers::getdateFormat($lastopenState->end_date);
+            $history->current = Helpers::getdateFormat($openState->end_date);
             $history->comment = $request->end_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -751,19 +808,19 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
-        if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA Review Comments';
-            $history->previous = $lastopenState->due_date_extension;
-            $history->current = $openState->due_date_extension;
-            $history->comment = $request->due_date_extension_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->save();
-        }
+        // if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Due Date Extension Justification';
+        //     $history->previous = $lastopenState->due_date_extension;
+        //     $history->current = $openState->due_date_extension;
+        //     $history->comment = $request->due_date_extension_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->save();
+        // }
         if ($lastopenState->file_attach != $openState->file_attach || !empty($request->file_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
