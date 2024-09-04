@@ -1195,8 +1195,30 @@ class InternalauditController extends Controller
 
 
 
+        // if (!empty($request->file_attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attachment')) {
+        //         foreach ($request->file('file_attachment') as $file) {
+        //             $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->file_attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_file_attachment_files) ? $request->existing_file_attachment_files : null;
+
         if (!empty($request->file_attachment)) {
-            $files = [];
+            if ($internalAudit->file_attachment) {
+                $existingFiles = json_decode($internalAudit->file_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('file_attachment')) {
                 foreach ($request->file('file_attachment') as $file) {
                     $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1204,12 +1226,36 @@ class InternalauditController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->file_attachment = json_encode($files);
         }
+
+        $internalAudit->file_attachment = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+
+        // if (!empty($request->file_attachment_guideline)) {
+        //     $files = [];
+        //     if ($request->hasfile('file_attachment_guideline')) {
+        //         foreach ($request->file('file_attachment_guideline') as $file) {
+        //             $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->file_attachment_guideline= json_encode($files);
+        // }
+
+        $files = is_array($request->existing_file_attachment_guideline_files) ? $request->existing_file_attachment_guideline_files : null;
+
         if (!empty($request->file_attachment_guideline)) {
-            $files = [];
+            if ($internalAudit->file_attachment_guideline) {
+                $existingFiles = json_decode($internalAudit->file_attachment_guideline, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('file_attachment_guideline')) {
                 foreach ($request->file('file_attachment_guideline') as $file) {
                     $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1217,14 +1263,36 @@ class InternalauditController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->file_attachment_guideline= json_encode($files);
         }
 
+        $internalAudit->file_attachment_guideline = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+
+        // if (!empty($request->Audit_file)) {
+        //     $files = [];
+        //     if ($request->hasfile('Audit_file')) {
+        //         foreach ($request->file('Audit_file') as $file) {
+        //             $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->Audit_file = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_Audit_file_files) ? $request->existing_Audit_file_files : null;
 
         if (!empty($request->Audit_file)) {
-            $files = [];
+            if ($internalAudit->Audit_file) {
+                $existingFiles = json_decode($internalAudit->Audit_file, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('Audit_file')) {
                 foreach ($request->file('Audit_file') as $file) {
                     $name = $request->name . 'Audit_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1232,13 +1300,35 @@ class InternalauditController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->Audit_file = json_encode($files);
         }
 
+        $internalAudit->Audit_file = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+        // if (!empty($request->report_file)) {
+        //     $files = [];
+        //     if ($request->hasfile('report_file')) {
+        //         foreach ($request->file('report_file') as $file) {
+        //             $name = $request->name . 'report_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->report_file = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_report_file_files) ? $request->existing_report_file_files : null;
+
         if (!empty($request->report_file)) {
-            $files = [];
+            if ($internalAudit->report_file) {
+                $existingFiles = json_decode($internalAudit->report_file, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('report_file')) {
                 foreach ($request->file('report_file') as $file) {
                     $name = $request->name . 'report_file' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1246,12 +1336,35 @@ class InternalauditController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->report_file = json_encode($files);
         }
+
+        $internalAudit->report_file = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+        // if (!empty($request->myfile)) {
+        //     $files = [];
+        //     if ($request->hasfile('myfile')) {
+        //         foreach ($request->file('myfile') as $file) {
+        //             $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+
+        //     $internalAudit->myfile = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_myfile_files) ? $request->existing_myfile_files : null;
+
         if (!empty($request->myfile)) {
-            $files = [];
+            if ($internalAudit->myfile) {
+                $existingFiles = json_decode($internalAudit->myfile, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('myfile')) {
                 foreach ($request->file('myfile') as $file) {
                     $name = $request->name . 'myfile' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1259,10 +1372,10 @@ class InternalauditController extends Controller
                     $files[] = $name;
                 }
             }
-
-
-            $internalAudit->myfile = json_encode($files);
         }
+
+        $internalAudit->myfile = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
 
         $internalAudit->update();
 
