@@ -218,7 +218,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                        <th class="w-20">Site/Location Code</th>
+                        <th class="w-20">Division Code</th>
                         <td class="w-80">
                             @if ($data->division_id)
                                 {{ Helpers::getDivisionName($data->division_id) }}
@@ -287,7 +287,7 @@
                                                 $referenceValues[] =
                                                     "{$divisionName}/AI/" . date('Y') . "/{$formattedRecord}";
                                             } else {
-                                                $referenceValues[] = 'Unknown Record'; // Handle case if record is not found
+                                                $referenceValues[] = 'Not Applicable'; // Handle case if record is not found
                                             }
                                         }
                                     @endphp
@@ -339,12 +339,10 @@
                         </td>
 
                     </tr>
+                </table>
 
-
-
-                    <div class="block-head">
-                        File Attachments
-                    </div>
+                <div class="block">
+                    <div class="block-head">File Attachments</div>
                     <div class="border-table">
                         <table>
                             <tr class="table_bg">
@@ -355,20 +353,21 @@
                                 @foreach (json_decode($data->file_attach) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                        <td class="w-60"><a href="{{ asset('upload/' . $file) }}"
                                                 target="_blank"><b>{{ $file }}</b></a> </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
                                     <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
+                                    <td class="w-60">Not Applicable</td>
                                 </tr>
                             @endif
 
                         </table>
                     </div>
-                </table>
+                </div>
+
             </div>
 
             <div class="block-head">

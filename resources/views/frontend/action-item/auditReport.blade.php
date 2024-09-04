@@ -166,7 +166,7 @@
                     <strong>ActionItem Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -180,7 +180,7 @@
         <div class="head">Action Item Audit Trial Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         
@@ -199,7 +199,7 @@
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
-                                @if($datas->activity_type == "Assigned To" || $datas->activity_type == "HOD Persons" )
+                                @if($datas->activity_type == "Assigned To")
                                 @foreach(explode(',',$datas->previous) as $prev)
                                 <div>{{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }}</div>
                                 @endforeach
@@ -212,6 +212,17 @@
                                 @else
                                 <div>Null</div>
                                 @endif
+
+                                @elseif($datas->activity_type == "HOD Persons")
+                                
+                                <div>{{   @foreach (explode(',', $data->hod_preson) as $hod)
+                                    {{ Helpers::getInitiatorName($hod) }} ,
+                                @endforeach }}</div>
+                                @else
+                                <div>Null</div>
+                                @endif
+
+
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
