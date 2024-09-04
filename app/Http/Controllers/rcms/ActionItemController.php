@@ -571,19 +571,19 @@ class ActionItemController extends Controller
 
 
         
-        if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = $lastopenState->due_date;
-            $history->current = $openState->due_date;
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->save();
-        } 
+        // if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = $lastopenState->due_date;
+        //     $history->current = $openState->due_date;
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->save();
+        // } 
 
         if ($lastopenState->departments != $openState->departments || !empty($request->departments_comment)) {
             $history = new ActionItemHistory;
@@ -808,19 +808,19 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
-        if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'QA Review Comments';
-            $history->previous = $lastopenState->due_date_extension;
-            $history->current = $openState->due_date_extension;
-            $history->comment = $request->due_date_extension_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->save();
-        }
+        // if ($lastopenState->due_date_extension != $openState->due_date_extension || !empty($request->due_date_extension_comment)) {
+        //     $history = new ActionItemHistory;
+        //     $history->cc_id = $id;
+        //     $history->activity_type = 'Due Date Extension Justification';
+        //     $history->previous = $lastopenState->due_date_extension;
+        //     $history->current = $openState->due_date_extension;
+        //     $history->comment = $request->due_date_extension_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastopenState->status;
+        //     $history->save();
+        // }
         if ($lastopenState->file_attach != $openState->file_attach || !empty($request->file_attach_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;

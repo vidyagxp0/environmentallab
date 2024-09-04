@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                Action Item Audit Trial Report
+                    Action Item Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -163,10 +163,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>ActionItem Audit No.</strong>
+                    <strong>Action Item Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -174,86 +174,6 @@
             </tr>
         </table>
     </header>
-
-    <div class="inner-block">
-
-        <div class="head">Action Item Audit Trial Report</div>
-
-        <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
-        </div>
-
-        
-        <div class="second-table">
-            <table>
-                <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
-                </tr>
-                @foreach ($data as $datas)
-                    <tr>
-                        <td>
-                            <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                @if($datas->activity_type == "Assigned To")
-                                @foreach(explode(',',$datas->previous) as $prev)
-                                <div>{{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }}</div>
-                                @endforeach
-                                @else
-                                <div>{{ $datas->previous }}</div>
-                                @endif
-                                @elseif($datas->activity_type == "Action Item Related Records")
-                                
-                                <div>{{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
-                                @else
-                                <div>Null</div>
-                                @endif
-
-                                @elseif($datas->activity_type == "HOD Persons")
-                                
-                                <div>{{   @foreach (explode(',', $data->hod_preson) as $hod)
-                                    {{ Helpers::getInitiatorName($hod) }} ,
-                                @endforeach }}</div>
-                                @else
-                                <div>Null</div>
-                                @endif
-
-
-                            </div>
-                            <div>
-                                <div><strong>Changed To :</strong></div>
-                                @if($datas->activity_type == "Assigned To" || $datas->activity_type == "HOD Persons" )
-                                @foreach(explode(',',$datas->current) as $curr)
-                                <div>{{ Helpers::getInitiatorName($curr) }}</div>
-                                @endforeach
-                                @elseif($datas->activity_type == "Action Item Related Records")
-                                <div>{{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
-                                @else
-                                <div>{{ $datas->current }}</div>
-                                @endif
-                            </div>
-                        </td>
-                        <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
-                        <td>{{ $datas->user_name }}</td>
-                        <td>
-                            @if(($datas->previous == 'Null') && ($datas->current !='Null'))
-                                New
-                            @elseif(($datas->previous != $datas->current))
-                                Modify
-                            @else 
-                               New
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
-
-    </div>
 
     <footer>
         <table>
@@ -270,6 +190,81 @@
             </tr>
         </table>
     </footer>
+
+    <div class="inner-block">
+
+        <div class="head">Action Item Audit Trial Report</div>
+
+        <div class="division">
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+        </div>
+
+
+        <div class="second-table">
+            <table>
+                <tr class="table_bg">
+                    <th>Field History</th>
+                    <th>Date Performed</th>
+                    <th>Person Responsible</th>
+                    <th>Change Type</th>
+                </tr>
+                @foreach ($data as $datas)
+                    <tr>
+                        <td>
+                            <div>{{ $datas->activity_type }}</div>
+                            <div>
+                                <div><strong>Changed From :</strong></div>
+                                 @if (!empty($datas->previous))
+                                    @if ($datas->activity_type == 'Assigned To')
+                                        @foreach (explode(',', $datas->previous) as $prev)
+                                            <div>{{ $prev != 'Null' ? Helpers::getInitiatorName($prev) : $prev }}
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div>{{ $datas->previous }}</div>
+                                    @endif
+                                 @elseif($datas->activity_type == 'Action Item Related Records')
+                                    <div>
+                                        {{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}
+                                    </div>
+                                @else
+                                    <div>Null</div>
+                                @endif 
+                            </div>
+                            <div>
+                                <div><strong>Changed To :</strong></div>
+                                @if ($datas->activity_type == 'Assigned To')
+                                    @foreach (explode(',', $datas->current) as $curr)
+                                        <div>{{ Helpers::getInitiatorName($curr) }}</div>
+                                    @endforeach
+                                 @elseif($datas->activity_type == 'Action Item Related Records')
+                                    <div>
+                                        {{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}
+                                    </div>
+                                @else 
+                                    <div>{{ $datas->current }}</div>
+                                @endif
+                            </div>
+                        </td>
+                        <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
+                        <td>{{ $datas->user_name }}</td>
+                        <td>
+                            @if ($datas->previous == 'Null' && $datas->current != 'Null')
+                                New
+                            @elseif($datas->previous != $datas->current)
+                                Modify
+                            @else
+                                New
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+
+    </div>
+
+   
 
 </body>
 

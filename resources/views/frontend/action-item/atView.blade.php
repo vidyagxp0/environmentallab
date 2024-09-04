@@ -859,9 +859,9 @@
     </style>
 
     <script>
-        VirtualSelect.init({
+       VirtualSelect.init({
             ele: '#related_records, #hod'
-        });
+        }); 
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;
