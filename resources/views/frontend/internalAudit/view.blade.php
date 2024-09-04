@@ -403,14 +403,14 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                        <div class="group-input">
-                                                                                                                                                                                                                            <label for="Date Due">Date of Initiation</label>
-                                                                                                                                                                                                                            <input readonly type="text"
-                                                                                                                                                                                                                                value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                                                                                                                                                                                                name="intiation_date">
+                                                                                                                                                                                                                            <div class="group-input">
+                                                                                                                                                                                                                                <label for="Date Due">Date of Initiation</label>
+                                                                                                                                                                                                                                <input readonly type="text"
+                                                                                                                                                                                                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                                                                                                                                                                                                                    name="intiation_date">
 
-                                                                                                                                                                                                                        </div>
-                                                                                                                                                                                                                    </div> -->
+                                                                                                                                                                                                                            </div>
+                                                                                                                                                                                                                        </div> -->
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -2064,7 +2064,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-6">
+                                    {{-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Audit Response Completed By">Audit Response Completed
                                                 By</label>
@@ -2077,7 +2077,7 @@
                                                 On</label>
                                             <div class="static">{{ $data->audit_response_completed_on }}</div>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Reject By">Reject By</label>
@@ -2196,9 +2196,9 @@
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
 
-                                                                                                                                                                                                            <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                            <button>Close</button>
-                                                                                                                                                                                                        </div>-->
+                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                <button>Close</button>
+                                                                                                                                                                                                            </div>-->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>
