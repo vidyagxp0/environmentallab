@@ -65,10 +65,10 @@ class Helpers
         
         return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
     }
-    // public static function getQAUserList(){
+    public static function getQAUserList(){
         
-    //     return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
-    // }
+        return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
+    }
     // public static function getInitiatorUserList(){
         
     //     return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
