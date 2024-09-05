@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Action Item Audit Trial Report
+                    Action Item Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -193,7 +193,7 @@
 
     <div class="inner-block">
 
-        <div class="head">Action Item Audit Trial Report</div>
+        <div class="head">Action Item Audit Trail Report</div>
 
         <div class="division">
             {{ Helpers::divisionNameForQMS($doc->division_id) }}/AI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -229,7 +229,7 @@
                                     </div>
                                 @else
                                     <div>Null</div>
-                                @endif 
+                                @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
@@ -241,7 +241,7 @@
                                     <div>
                                         {{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}
                                     </div>
-                                @else 
+                                @else
                                     <div>{{ $datas->current }}</div>
                                 @endif
                             </div>
@@ -264,7 +264,7 @@
 
     </div>
 
-   
+
 
 </body>
 

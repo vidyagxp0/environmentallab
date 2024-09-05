@@ -1811,11 +1811,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Management Review  Single Report
+                    Management Review Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" style="width: 60px;">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" style="width: 200px;">
                     </div>
                 </td>
             </tr>
@@ -1823,7 +1823,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Management Audit No.</strong>
+                    <strong>Management Review No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
@@ -1863,7 +1863,7 @@
                     <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">@if($managementReview->assign_to){{ Helpers::getInitiatorName($managementReview->assign_to) }} @else Not Applicable @endif</td>
-                        
+
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -1874,30 +1874,37 @@
                         <td class="w-30">
                             @if($managementReview->priority_level){{ $managementReview->priority_level }}@else Not Applicable @endif
                         </td>
-                       
+
                     </tr>
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-30"> @if($managementReview->due_date){{ Helpers::getdateFormat($managementReview->due_date )}} @else Not Applicable @endif</td>
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($managementReview->type){{ $managementReview->type }}@else Not Applicable @endif</td>
-                        
-                    </tr>
-                    <tr>
-                        <th class="w-20">Description</th>
-                        <td class="w-30">@if($managementReview->description){{ $managementReview->description }}@else Not Applicable @endif</td>
-                            <th class="w-30"> Schedule Start Date</th>
-                        <td class="w-20">@if($managementReview->start_date){{Helpers::getdateFormat($managementReview->start_date) }}@else Not Applicable @endif</td>
-                      
 
                     </tr>
-                    <tr>
-                        
-                        <th class="w-20">Attendess</th>
-                        <td class="w-30">@if($managementReview->attendees){{ $managementReview->attendees }}@else Not Applicable @endif</td>
+                </table>
+
+                <table>
+                  <tr>
+                        <th class="w-30"> Schedule Start Date</th>
+                        <td class="w-20">@if($managementReview->start_date){{Helpers::getdateFormat($managementReview->start_date) }}@else Not Applicable @endif</td>
+
                         <th class="w-30"> Schedule End Date</th>
                         <td class="w-20">@if($managementReview->end_date){{ Helpers::getdateFormat($managementReview->end_date) }}@else Not Applicable @endif</td>
-                        
+
+                    </tr>
+                </table>
+
+                <table>
+                    <tr>
+                        <th class="w-20">Description</th>
+                        <td class="w-80">@if($managementReview->description){{ $managementReview->description }}@else Not Applicable @endif</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Attendess</th>
+                        <td class="w-80">@if($managementReview->attendees){{ $managementReview->attendees }}@else Not Applicable @endif</td>
 
                     </tr>
 
@@ -1934,7 +1941,7 @@
             {{-- <div class="block">
                 {{-- <div class="head">
                     <div class="block-head">
-                       
+
                     </div>
                     <table>
                         <tr>
@@ -1978,55 +1985,55 @@
                     Operational planning and control
                 </div>
                 <div>
-                    <h3>Operations</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Operations</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->Operations){{ $managementReview->Operations }}@else Not Applicable @endif
                     </p>
                 </div>
                 <div>
-                    <h3>Requirements for Products and Services</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Requirements for Products and Services</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->requirement_products_services){{ $managementReview->requirement_products_services }}@else Not Applicable @endif
                     </p>
                 </div>
                 <div>
-                    <h3>Design and Development of Products and Services</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Design and Development of Products and Services</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->design_development_product_services){{($managementReview->design_development_product_services)}} @else Not Applicable @endif
                     </p>
                 </div>
                 <div>
-                    <h3>Control of Externally Provided Processes, Products and Services</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Control of Externally Provided Processes, Products and Services</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->control_externally_provide_services){{ $managementReview->control_externally_provide_services }}@else Not Applicable @endif
                     </p>
                 </div>
                 <div>
-                    <h3>Production and Service Provision</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Production and Service Provision</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->production_service_provision){{ $managementReview->production_service_provision }}@else Not Applicable @endif
                     </p>
                 </div>
                 <div>
-                    <h3>Release of Products and Services</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Release of Products and Services</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->release_product_services){{ $managementReview->release_product_services }}@else Not Applicable @endif
                     </p>
                 </div>
                 <div>
-                    <h3>Control of Non-conforming Outputs</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Control of Non-conforming Outputs</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif
                     </p>
                 </div>
                 <div>
-                    <h3>Audit team</h3>
-                    <p>
+                    <h3 style="font-size: 15px">Audit team</h3>
+                    <p style="font-size: 13px">
                         @if($managementReview->Audit_team)
                             @foreach (explode(',', $managementReview->Audit_team) as $Key => $value)
                                 <li>{{ Helpers::getInitiatorName($value) }}</li>
                             @endforeach
-                        @else 
+                        @else
                             Not Applicable
                         @endif
                     </p>
@@ -2064,21 +2071,25 @@
                         Meetings and summary
                     </div>
                     <table>
-                   
+
                         <tr>
                             <th class="w-20">Risk & Opportunities</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if($managementReview->risk_opportunities){{ $managementReview->risk_opportunities }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+
+                        <tr>
                             <th class="w-20">External Supplier Performance</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if($managementReview->external_supplier_performance){{ $managementReview->external_supplier_performance }}@else Not Applicable @endif
                                 </div>
                             </td>
                         </tr>
+
                         <tr>
                             <th class="w-20">Customer Satisfaction Level
                             </th>
@@ -2087,8 +2098,11 @@
                                     @if($managementReview->customer_satisfaction_level){{ $managementReview->customer_satisfaction_level }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+
+                        <tr>
                             <th class="w-20">Budget Estimatesn</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                     <div>
                                         @if($managementReview->budget_estimates){{ $managementReview->budget_estimates }}@else Not Applicable @endif
                                     </div>
@@ -2096,19 +2110,23 @@
                         </tr>
                         <tr>
                             <th class="w-20">Completion of Previous Tasks</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if($managementReview->completion_of_previous_tasks){{ $managementReview->completion_of_previous_tasks }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+
+                        <tr>
                             <th class="w-20">Production
                             </th>
-                            <td class="w-30">
+                            <td class="w-80">
                                 <div>
                                     @if($managementReview->production_new){{ $managementReview->production_new }}@else Not Applicable @endif
                                 </div>
                             </td>
                         </tr>
+
                         <tr>
                             <th class="w-20">Plans
 
@@ -2118,15 +2136,21 @@
                                     @if($managementReview->plans_new){{ $managementReview->plans_new }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+
+                        <tr>
                             <th class="w-20">Forecast</th>
-                            <td class="w-30">
+                            <td class="w-80">
                                     <div>
                                         @if($managementReview->forecast_new){{ $managementReview->forecast_new }}@else Not Applicable @endif
                                     </div>
                                 </td>
+                        </tr>
+
+                        <tr>
                                 <th class="w-20">Any Additional Support Required
                                 </th>
-                            <td class="w-30">
+                            <td class="w-80">
                                     <div>
                                         @if($managementReview->additional_suport_required){{ $managementReview->additional_suport_required }}@else Not Applicable @endif
                                     </div>
@@ -2179,6 +2203,10 @@
                                     @if($managementReview->next_managment_review_date){{ Helpers::getdateFormat($managementReview->next_managment_review_date) }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+
+
+                        <tr>
                             <th class="w-20">Summary & Recommendation</th>
                             <td class="w-30">
                                     <div>
@@ -2186,6 +2214,7 @@
                                     </div>
                                 </td>
                         </tr>
+
                         <tr>
                             <th class="w-20">Conclusion
                             </th>
@@ -2194,6 +2223,10 @@
                                     @if($managementReview->conclusion_new){{ $managementReview->conclusion_new }}@else Not Applicable @endif
                                 </div>
                             </td>
+                        </tr>
+
+
+                        <tr>
                             <th class="w-20">Due Date Extension Justification</th>
                             <td class="w-30">
                                     <div>
@@ -2205,8 +2238,8 @@
             </div>
         </div>
     </div>
-    
-                
+
+
                 <div class="border-table">
                     <div class="block-head">
                         Closure Attachments
@@ -2233,6 +2266,69 @@
 
                     </table>
                 </div>
+
+{{--new code grid--}}
+                {{--<div class="block">
+                    <div class="block-head">
+                        Material Details
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">Sr no.</th>
+                                <th class="w-20">Date</th>
+                                <th class="w-20">Topic</th>
+                                <th class="w-20">Responsible</th>
+                                <th class="w-20">Time Start</th>
+                                <th class="w-20">Time End</th>
+                                <th class="w-20">Comment</th>
+                            </tr>
+                            @if ($data->agenda->material_name)
+                                @foreach (unserialize($data->agenda->material_name) as $key => $dataDemo)
+                                    <tr>
+                                        <td class="w-15">{{ $dataDemo ? $key + 1 : 'Not Applicable' }}</td>
+                                        <td class="w-15">
+                                            {{ unserialize($data->agenda->topic)[$key] ? unserialize($data->agenda->material_name)[$key] : 'Not Applicable' }}
+                                        </td>
+                                        <td class="w-15">
+                                            {{ unserialize($data->agenda->material_batch_no)[$key] ? unserialize($data->agenda->material_batch_no)[$key] : 'Not Applicable' }}
+                                        </td>
+                                        <td class="w-5">
+                                            {{ unserialize($data->agenda->material_mfg_date)[$key] ? Helpers::getdateFormat(unserialize($data->agenda->material_mfg_date)[$key]) : 'Not Applicable' }}
+                                        </td>
+                                        <td class="w-15">
+                                            {{ unserialize($data->agenda->material_expiry_date)[$key] ? Helpers::getdateFormat(unserialize($data->agenda->material_expiry_date)[$key]) : 'Not Applicable' }}
+                                        </td>
+                                        <td class="w-15">
+                                            {{ unserialize($data->agenda->material_batch_desposition)[$key] ? unserialize($data->agenda->material_batch_desposition)[$key] : 'Not Applicable' }}
+                                        </td>
+                                        <td class="w-15">
+                                            {{ unserialize($data->agenda->material_remark)[$key] ? unserialize($data->agenda->material_remark)[$key] : 'Not Applicable' }}
+                                        </td>
+                                        <td class="w-15">
+                                            {{ unserialize($data->agenda->material_batch_status)[$key] ? unserialize($data->agenda->material_batch_status)[$key] : 'Not Applicable' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>--}}
+       {{--new code grid--}}
+
+
+
                 {{-- <div class="border-table">
                     <div class="block-head">
                         Audit Attachments
@@ -2262,7 +2358,7 @@
 
 
 
-            
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -2271,15 +2367,15 @@
                     <table>
 
                     <tr>
-                        <th class="w-20">All Actions Completed By</th>
+                        <th class="w-10">All Actions Completed By</th>
                         <td class="w-30">{{ $managementReview->completed_by }}</td>
-                        <th class="w-20">All Actions Completed On</th>
+                        <th class="w-10">All Actions Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Submited By</th>
+                        <th class="w-10">Submited By</th>
                         <td class="w-30">{{ $managementReview->Submited_by }}</td>
-                        <th class="w-20">Submited On</th>
+                        <th class="w-10">Submited On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
                     </tr>
                     {{-- <tr>

@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Management Review Audit Trial Report
+                    Management Review Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -163,10 +163,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Audit Program Audit No.</strong>
+                    <strong>Management Review No.</strong>
                 </td>
                 <td class="w-40">
-                 {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
+                 {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
@@ -175,12 +175,28 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{--<td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td>--}}
+            </tr>
+        </table>
+    </footer>
+
     <div class="inner-block">
 
-        <div class="head">Management Review Audit Trial Report</div>
+        <div class="head">Management Review Audit Trail Report</div>
 
         <div class="division">
-          {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
+          {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         {{-- <div class="first-table">
@@ -245,7 +261,7 @@
                                 New
                             @elseif(($datas->previous != $datas->current))
                                 Modify
-                            @else 
+                            @else
                                New
                             @endif
                         </td>
@@ -256,21 +272,7 @@
 
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 
