@@ -151,7 +151,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                  Lab Incident Audit Trial Report
+                    Lab Incident Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -163,10 +163,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>  Lab Incident No.</strong>
+                    <strong> Lab Incident No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::getDivisionName($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::getDivisionName($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -175,42 +175,29 @@
         </table>
     </header>
 
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{--<td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td>--}}
+            </tr>
+        </table>
+    </footer>
+
+
     <div class="inner-block">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head">Audit Trail Histroy Configuration Report</div>
 
         <div class="division">
             {{ Helpers::getDivisionName($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
-        </div>
-
-        <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ $doc->created_at }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($doc->stage >= 9)
-                            {{ $doc->updated_at }}
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">&nbsp;</td>
-                    <td class="w-50">
-                        <strong>Person Responsible : {{ $doc->originator }}</strong>
-                    </td>
-                </tr>
-            </table>
         </div>
 
         <div class="second-table">
@@ -227,10 +214,10 @@
                             <div>{{ $datas->activity_type }}</div>
                             <div>
                                 <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
+                                @if (!empty($datas->previous))
+                                    <div>{{ $datas->previous }}</div>
                                 @else
-                                <div>Null</div>
+                                    <div>Null</div>
                                 @endif
                             </div>
                             <div>
@@ -238,10 +225,12 @@
                                 <div>{{ $datas->current }}</div>
                             </div>
                         </td>
-                        <td>{{ $datas->created_at }}</td>
+                        <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if ($datas->previous == "NULL")
+                            @if ($datas->previous == 'Null' && $datas->current != 'Null')
+                                New
+                            @elseif($datas->previous != $datas->current)
                                 Modify
                             @else
                                 New
@@ -254,22 +243,7 @@
 
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>
-            </tr>
-        </table>
-    </footer>
-
+   
 </body>
 
 </html>

@@ -70,15 +70,13 @@
         font-size: 0.9rem;
     }
 
-    table {
-        width: 100%;
-    }
 
     th,
     td {
         padding: 10px;
         text-align: left;
     }
+
 
     header .head {
         font-weight: bold;
@@ -109,7 +107,17 @@
 
     .inner-block {
         padding: 10px;
+        overflow-x: auto;
+
     }
+
+
+    table {
+        table-layout: fixed;
+        width: 100%;
+        word-wrap: break-word;
+    }
+
 
     .inner-block .head {
         font-weight: bold;
@@ -130,10 +138,11 @@
     .first-table table th,
     .first-table table {
         border: 0;
+
     }
 
     .second-table td:nth-child(1)>div {
-        margin-bottom: 10px;
+        margin-bottom: 3.5px;
     }
 
     .second-table td:nth-child(1)>div:nth-last-child(1) {
@@ -141,6 +150,7 @@
     }
 
     .table_bg {
+        width: 30%;
         background: #4274da57;
     }
 </style>
@@ -151,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                Effectiveness Check Audit Trial Report
+                    Effectiveness Check Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -166,7 +176,7 @@
                     <strong> Effectiveness Check Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/EC/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/EC/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -174,66 +184,6 @@
             </tr>
         </table>
     </header>
-
-    <div class="inner-block">
-
-        <div class="head"> Effectiveness Check Audit Trial Report</div>
-
-        <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
-        </div>
-
-        
-        <div class="second-table">
-            <table>
-                <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
-                </tr>
-                @foreach ($data as $datas)
-                    <tr>
-                        <td>
-                            <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                @if($datas->activity_type == "Assigned To" )
-                                <div>{{ $datas->previous != 'Null' ?  Helpers::getInitiatorName($datas->previous ) : $datas->previous  }}</div>
-                                @else
-                                <div>{{ $datas->previous }}</div>
-                                @endif
-                                @else
-                                <div>Null</div>
-                                @endif
-                            </div>
-                            <div>
-                                <div><strong>Changed To :</strong></div>
-                                @if($datas->activity_type == "Assigned To" )
-                                <div>{{ Helpers::getInitiatorName($datas->current) }}</div>
-                                @else
-                                <div>{{ $datas->current }}</div>
-                                @endif
-                            </div>
-                        </td>
-                        <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
-                        <td>{{ $datas->user_name }}</td>
-                        <td>
-                            @if(($datas->previous == 'Null') && ($datas->current !='Null'))
-                                New
-                            @elseif(($datas->previous != $datas->current))
-                                Modify
-                            @else 
-                               New
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
-
-    </div>
 
     <footer>
         <table>
@@ -250,6 +200,70 @@
             </tr>
         </table>
     </footer>
+
+    <div class="inner-block">
+
+        <div class="head"> Effectiveness Check Audit Trail Report</div>
+
+        <div class="division">
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/EC/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+        </div>
+
+
+        <div class="second-table">
+            <table>
+                <tr class="table_bg">
+                    <th>Field History</th>
+                    <th>Date Performed</th>
+                    <th>Person Responsible</th>
+                    <th>Change Type</th>
+                </tr>
+                @foreach ($data as $datas)
+                    <tr>
+                        <td>
+                            <div>{{ $datas->activity_type }}</div>
+                            <div>
+                                <div><strong>Changed From :</strong></div>
+                                @if (!empty($datas->previous))
+                                    @if ($datas->activity_type == 'Assigned To')
+                                        <div>
+                                            {{ $datas->previous != 'Null' ? Helpers::getInitiatorName($datas->previous) : $datas->previous }}
+                                        </div>
+                                    @else
+                                        <div>{{ $datas->previous }}</div>
+                                    @endif
+                                @else
+                                    <div>Null</div>
+                                @endif
+                            </div>
+                            <div>
+                                <div><strong>Changed To :</strong></div>
+                                @if ($datas->activity_type == 'Assigned To')
+                                    <div>{{ Helpers::getInitiatorName($datas->current) }}</div>
+                                @else
+                                    <div>{{ $datas->current }}</div>
+                                @endif
+                            </div>
+                        </td>
+                        <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
+                        <td>{{ $datas->user_name }}</td>
+                        <td>
+                            @if ($datas->previous == 'Null' && $datas->current != 'Null')
+                                New
+                            @elseif($datas->previous != $datas->current)
+                                Modify
+                            @else
+                                New
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+
+    </div>
+
+
 
 </body>
 

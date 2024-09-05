@@ -1018,7 +1018,7 @@
                             @endif
 
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
-                            <button type="submit">Submit</button>
+                            <button type="submit" {{ $data->stage == 0 || $data->stage == 6 || $data->stage == 4 ? 'disabled' : '' }}>Submit</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit
                                 </a> </button>
                         </div>

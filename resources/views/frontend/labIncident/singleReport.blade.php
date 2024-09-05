@@ -193,14 +193,16 @@
                     General Information
                 </div>
                 <table>
-                    <tr> {{ $data->created_at }} added by {{ $data->originator }}
-                        <th class="w-20">Initiator</th>
-                        <td class="w-30">{{ $data->originator }}</td>
-
-                        <th class="w-20">Date Initiation</th>
-                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
-                    </tr>
                     <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-30">
+                            @if ($data->record)
+                                {{ Helpers::getDivisionName($data->division_id) }}/LI/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
                         <th class="w-20">Site/Location Code</th>
                         <td class="w-30">
                             @if ($data->division_id)
@@ -209,11 +211,29 @@
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr> {{ $data->created_at }} added by {{ $data->originator }}
+                        <th class="w-20">Initiator</th>
+                        <td class="w-30">{{ $data->originator }}</td>
 
+                        <th class="w-20">Date of Initiation</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
+                    </tr>
+                   
+                    <tr>
                         <th class="w-20">Assigned To</th>
                         <td class="w-30">
                             @if ($data->assign_to)
                                 {{ Helpers::getInitiatorName($data->assign_to) }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+
+                        <th class="w-20">Due Date</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->due_date)
+                                {{Helpers::getdateFormat($data->due_date) }}
                             @else
                                 Not Applicable
                             @endif
@@ -233,17 +253,6 @@
                         <td class="w-30">
                             @if ($data->initiator_group_code)
                                 {{ $data->initiator_group_code }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <th class="w-20">Due Date</th>
-                        <td class="w-80" colspan="3">
-                            @if ($data->due_date)
-                                {{ $data->due_date }}
                             @else
                                 Not Applicable
                             @endif
@@ -307,28 +316,28 @@
                     <!-- <tr>
                         <th class="w-20">Other Ref.Doc.No</th>
                         <td class="w-30">
-@if ($data->Other_Ref)
-{{ $data->Other_Ref }}
-@else
-Not Applicable
-@endif
-</td>
+                            @if ($data->Other_Ref)
+                            {{ $data->Other_Ref }}
+                            @else
+                            Not Applicable
+                            @endif
+                            </td>
                         <th class="w-20">Incident Category</th>
                         <td class="w-30">
-@if ($data->Incident_Category)
-{{ $data->Incident_Category }}
-@else
-Not Applicable
-@endif
-</td>
+                            @if ($data->Incident_Category)
+                            {{ $data->Incident_Category }}
+                            @else
+                            Not Applicable
+                            @endif
+                            </td>
                         <th class="w-20">Others</th>
                         <td class="w-30">
-@if ($data->Incident_Category_others)
-{{ $data->Incident_Category_others }}
-@else
-Not Applicable
-@endif
-</td>
+                            @if ($data->Incident_Category_others)
+                            {{ $data->Incident_Category_others }}
+                            @else
+                            Not Applicable
+                            @endif
+                            </td>
                     </tr> -->
                 </table>
 
@@ -565,7 +574,7 @@ Not Applicable
                             {{ $data->Corrective_Preventive_Action }}
                         @else
                             Not Applicable
-                         @endif
+                        @endif
                     </td>
                 </tr>
             </table>
@@ -691,7 +700,7 @@ Not Applicable
                 </tr>
             </table>
         </div>
-   
+
         <div class="block">
             <div class="block-head">
                 Activity Log
@@ -735,11 +744,11 @@ Not Applicable
                     <td class="w-30">{{ $data->all_activities_completed_on }}</td>
                 </tr>
                 <tr>
-                        <th class="w-20">Review Completed By</th>
-                        <td class="w-30">{{ $data->incident_review_completed_by }}</td>
-                        <th class="w-20">Review Completed On</th>
-                        <td class="w-30">{{ $data->incident_review_completed_on }}</td>
-                    </tr>
+                    <th class="w-20">Review Completed By</th>
+                    <td class="w-30">{{ $data->incident_review_completed_by }}</td>
+                    <th class="w-20">Review Completed On</th>
+                    <td class="w-30">{{ $data->incident_review_completed_on }}</td>
+                </tr>
                 <tr>
                     <th class="w-20">Cancelled By</th>
                     <td class="w-30">{{ $data->cancelled_by }}</td>

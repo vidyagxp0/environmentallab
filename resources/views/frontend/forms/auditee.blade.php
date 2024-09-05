@@ -830,7 +830,7 @@
                                         <label for="Audit Category">Audit Category</label>
                                         <select name="Audit_Category">
                                             <option value="0">-- Select --</option>
-                                            <option value="Internal Audit//Self Inspection">Internal Audit/Self Inspection</option>
+                                            <option value="Internal Audit/Self Inspection">Internal Audit/Self Inspection</option>
                                             <option value="Supplier Audit">Supplier Audit</option>
                                             <option value="Regulatory Audit">Regulatory Audit</option>
                                             <option value="Consultant Audit">Consultant Audit</option>

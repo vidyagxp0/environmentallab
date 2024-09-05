@@ -193,7 +193,7 @@
                 </div>
                 <table>
                     <th class="w-20">Record Number</th>
-                    <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
+                    <td class="w-30">{{ Helpers::divisionNameForQMS($data->division_id) }}/EA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}</td>
 
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                     <th class="w-20">Initiator</th>
