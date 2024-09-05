@@ -346,7 +346,7 @@
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Division Code"><b>Division Code</b></label>
-                                                    <input disabled type="text" name="division_code"
+                                                    <input disabled type="text" name="division_id"
                                                         value=" {{ Helpers::getDivisionName($data->division_id) }}">
 
                                                 </div>
@@ -712,7 +712,9 @@
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
+                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -744,7 +746,7 @@
                                                                 @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
                                                                     <tr>
                                                                         <td><input type="text" name="serial_number[]"
-                                                                                value="{{ $key ? $key + 1 : '1' }}"></td>
+                                                                                value="{{ $key ? $key + 1 : '1' }}" readonly></td>
                                                                         <td><input type="text"
                                                                                 name="current_doc_number[]"
                                                                                 value="{{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }}">
@@ -813,6 +815,7 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -946,6 +949,7 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1018,6 +1022,7 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1191,6 +1196,7 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div> --}}
@@ -1350,6 +1356,7 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1504,6 +1511,7 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1533,7 +1541,7 @@
                                                         @foreach (unserialize($closure->affected_document) as $key => $datas)
                                                             <tr>
                                                                 <td><input type="text" name="serial_number[]"
-                                                                        value="{{ $key ? $key + 1 : '1' }}"></td>
+                                                                        value="{{ $key ? $key + 1 : '1' }}" readonly></td>
                                                                 <td><input type="text" name="affected_documents[]"
                                                                         value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : '' }}">
                                                                 </td>
@@ -1683,6 +1691,7 @@
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                        <button> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
@@ -1698,7 +1707,6 @@
                                         Electronic Signatures
                                     </div>
                                     <div class="row">
-                                        @if ($data->stage >= 2)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">Submitted By</label>
@@ -1725,13 +1733,11 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
                                             </div>
-                                        @endif
 
-                                        @if ($data->stage == 0)
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="submitted">Cancelled By</label>
@@ -1758,43 +1764,10 @@
                                                             ->get();
                                                     @endphp
                                                     @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
+                                                        <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                                     @endforeach
                                                 </div>
-                                            </div>
-                                        @endif
-
-
-                                        {{-- <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">More Information Required By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('status', 'More-info Required')
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">More Information Required On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('status', 'More-info Required')
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->created_at }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div> --}}
+                                            </div>                                        
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1822,7 +1795,7 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ $temp->created_at }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1853,7 +1826,7 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ $temp->created_at }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1884,7 +1857,7 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ $temp->created_at }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1916,7 +1889,7 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ $temp->created_at }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1947,7 +1920,7 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ $temp->created_at }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1957,6 +1930,7 @@
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="submit">Submit</button>
+                                        <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>

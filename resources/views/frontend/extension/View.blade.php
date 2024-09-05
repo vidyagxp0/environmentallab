@@ -177,24 +177,29 @@
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Current Parent Due Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="due_date" readonly 
-                                                        placeholder="DD-MMM-YYYY"  value="{{ Helpers::getdateFormat($data->due_date) }}" />
-                                                    <input type="date" name="due_date" value="{{ $data->due_date }}"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'due_date')" {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} />
+                                                    <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY"  
+                                                        value="{{ Helpers::getdateFormat($data->due_date) }}" />
+                                                    <input type="date" name="due_date" value="{{ $data->due_date }}" class="hide-input" 
+                                                        oninput="handleDateInput(this, 'due_date'); checkDate('due_date', 'revised_date_checkdate')" 
+                                                        {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} />
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="Date Due">Revised Due Date</label>
                                                 <div class="calenderauditee">
-                                                    <input type="text" id="revised_date" readonly
-                                                        placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->revised_date) }}" />
-                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" value="{{ $data->revised_date }}"  class="hide-input"
-                                                        oninput="handleDateInput(this, 'revised_date')" {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} />
+                                                    <input type="text" id="revised_date" readonly placeholder="DD-MMM-YYYY" 
+                                                        value="{{ Helpers::getdateFormat($data->revised_date) }}" />
+                                                    <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" 
+                                                        value="{{ $data->revised_date }}" class="hide-input" 
+                                                        oninput="handleDateInput(this, 'revised_date'); checkDate('due_date', 'revised_date_checkdate')" 
+                                                        id="revised_date_checkdate" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} />
                                                 </div>
                                             </div>
                                         </div>
+                                        
                                         
                                         {{-- <div class="col-12">
                                             <div class="group-input">
@@ -697,11 +702,11 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
@@ -743,15 +748,15 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment<span class="text-danger">*</span></label>
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
@@ -790,15 +795,15 @@
                                     which is legally binding equivalent of a hand written signature.
                                 </div>
                                 <div class="group-input">
-                                    <label for="username">Username</label>
+                                    <label for="username">Username <span class="text-danger">*</span></label>
                                     <input type="text" name="username" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="password">Password</label>
+                                    <label for="password">Password <span class="text-danger">*</span></label>
                                     <input type="password" name="password" required>
                                 </div>
                                 <div class="group-input">
-                                    <label for="comment">Comment<span class="text-danger">*</span></label>
+                                    <label for="comment">Comment <span class="text-danger">*</span></label>
                                     <input type="comment" name="comment" required>
                                 </div>
                             </div>
@@ -1174,5 +1179,37 @@
             $('#docname').keyup(function() {
                 var textlen = maxLength - $(this).val().length;
                 $('#rchars').text(textlen);});
+        </script>
+
+        <script>
+            // Function to handle date input and format it for display
+            function handleDateInput(dateInput, displayFieldId) {
+                var dateValue = dateInput.value;
+
+                if (dateValue) {
+                    var dateObj = new Date(dateValue);
+                    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+                    var formattedDate = dateObj.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                    document.getElementById(displayFieldId).value = formattedDate;
+                }
+            }
+
+            // Function to check if the Revised Due Date is greater than or equal to the Current Parent Due Date
+            function checkDate(dueDateFieldId, revisedDateFieldId) {
+                var dueDate = document.getElementById(dueDateFieldId).value;
+                var revisedDate = document.getElementById(revisedDateFieldId).value;
+
+                if (dueDate && revisedDate) {
+                    var dueDateObj = new Date(dueDate);
+                    var revisedDateObj = new Date(revisedDate);
+
+                    // Check if Revised Due Date is less than Current Parent Due Date
+                    if (revisedDateObj < dueDateObj) {
+                        alert("Revised Due Date cannot be less than Current Parent Due Date.");
+                        document.getElementById(revisedDateFieldId).value = ""; // Clear invalid revised date
+                        document.getElementById('revised_date').value = ""; // Clear the display as well
+                    }
+                }
+            }
         </script>
 @endsection

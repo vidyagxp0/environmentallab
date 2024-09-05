@@ -158,7 +158,6 @@ class CCController extends Controller
            $cftReviewerIds = explode(',', $openState->Microbiology_Person);
            $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
            $cftReviewerNames = implode(', ', $cftReviewers);
-
        } else {
            toastr()->warning('CFT reviewers can not be empty');
            return back();
@@ -306,16 +305,16 @@ class CCController extends Controller
         $info->Quality_Approver = $request->Quality_Approver;
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
         $info->Microbiology = $request->Microbiology;
-         if ($request->Microbiology_Person) {
-             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        //  if ($request->Microbiology_Person) {
+        //      $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
 
-            $cftReviewerIds = explode(',', $info->Microbiology_Person);
-           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
-           $cftReviewerNames = implode(', ', $cftReviewers);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
+        //     $cftReviewerIds = explode(',', $info->Microbiology_Person);
+        //    $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+        //    $cftReviewerNames = implode(', ', $cftReviewers);
+        //  } else {
+        //      toastr()->warning('CFT reviewers can not be empty');
+        //      return back();
+        //  }
         
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
@@ -450,7 +449,7 @@ class CCController extends Controller
 
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
-        $history->activity_type = 'Division';
+        $history->activity_type = 'Division Code';
         $history->previous = "Null";
         $history->current = Helpers::getDivisionName($request->division_id);
         $history->comment = "NA";
@@ -1362,11 +1361,11 @@ class CCController extends Controller
         $openState->Microbiology = $request->Microbiology;
         
          if ($request->Microbiology_Person) {
-             $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
 
-             $cftReviewerIds = explode(',', $openState->Microbiology_Person);
-           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
-           $cftReviewerNames = implode(', ', $cftReviewers);
+            $cftReviewerIds = explode(',', $openState->Microbiology_Person);
+            $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+            $cftReviewerNames = implode(', ', $cftReviewers);
          } else {
              toastr()->warning('CFT reviewers can not be empty');
              return back();
@@ -1390,7 +1389,7 @@ class CCController extends Controller
         $openState->Validation_comments = $request->Validation_comments;
         $openState->Others_comments = $request->Others_comments;
         $openState->Group_comments = $request->Group_comments;
-        $openState->group_attachments = json_encode($request->group_attachments);
+        // $openState->group_attachments = json_encode($request->group_attachments);
 
         $openState->risk_identification = $request->risk_identification;
         $openState->severity = $request->severity;
@@ -1405,7 +1404,7 @@ class CCController extends Controller
         $openState->tran_attach = json_encode($request->tran_attach);
 
         $openState->qa_closure_comments = $request->qa_closure_comments;
-        $openState->attach_list = json_encode($request->attach_list);
+        // $openState->attach_list = json_encode($request->attach_list);
         $openState->effective_check = $request->effective_check;
         $openState->effective_check_date = $request->effective_check_date;
         $openState->Effectiveness_checker = $request->Effectiveness_checker;
@@ -1882,6 +1881,20 @@ class CCController extends Controller
             $history->save();
         }
 
+        if ($lastDocument->in_attachment != $openState->in_attachment) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Initial Attachment';
+            $history->previous = $lastDocument->in_attachment;
+            $history->current = $openState->in_attachment;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
         //<!---------------Change Details History---------------->
 
         if ($lastdocdetail->current_practice != $docdetail->current_practice || !empty($request->current_practice_comment)) {
@@ -2311,10 +2324,10 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastcomments->group_attachments != $comments->group_attachments || !empty($request->group_attachments_comment)) {
+        if ($lastcomments->group_attachments != $comments->group_attachments) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Attachments';
+            $history->activity_type = 'Group Attachments';
             $history->previous = $lastcomments->group_attachments;
             $history->current = $comments->group_attachments;
             $history->comment = "NA";
@@ -2533,6 +2546,20 @@ class CCController extends Controller
             $history->activity_type = 'QA Closure Comments';
             $history->previous = $lastclosure->qa_closure_comments;
             $history->current = $closure->qa_closure_comments;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastclosure->attach_list != $closure->attach_list) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Change Closure Attachment';
+            $history->previous = $lastclosure->attach_list;
+            $history->current = $closure->attach_list;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

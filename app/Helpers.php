@@ -49,7 +49,7 @@ class Helpers
     }
     public static function getdateFormat1($date)
     {
-        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y');
+        return Carbon::createFromFormat('Y-m-d H:i:s', $date)->format('d-M-Y H:i:s');
     }
 
     public static function isRevised($data)

@@ -176,7 +176,7 @@
                     <strong>Risk Assesment No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($data->division_id) }}/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -304,9 +304,9 @@
                 <table>
                     <tr>
                         <th class="w-20">Scheduled Start Date</th>
-                        <td class="w-30">@if($data->schedule_start_date1){{ $data->schedule_start_date1 }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->schedule_start_date1){{ Helpers::getdateFormat($data->schedule_start_date1) }}@else Not Applicable @endif</td>
                         <th class="w-20">Scheduled End Date</th>
-                        <td class="w-30">@if($data->schedule_end_date1){{ $data->schedule_end_date1 }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->schedule_end_date1){{ Helpers::getdateFormat($data->schedule_end_date1) }}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-50">Estimated Man-Hours</th>
@@ -807,21 +807,37 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Evaluated By</th>
+                        <th class="w-20">Evaluation Complete By</th>
                         <td class="w-30">{{ $data->evaluated_by }}</td>
-                        <th class="w-20">Evaluated On</th>
+                        <th class="w-20">Evaluation Complete On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">Plan Approved By</th>
+                        <th class="w-20">Action Plan Completed By</th>
+                        <td class="w-30">{{ $data->actions_completed_by }}</td>
+                        <th class="w-20">Action Plan Completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->actions_completed_on) }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Action Plan Approved By</th>
                         <td class="w-30">{{ $data->plan_approved_by }}</td>
-                        <th class="w-20">Plan Approved On</th>
+                        <th class="w-20">Action Plan Approved On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->plan_approved_on) }}</td>
                     </tr>
+
                     <tr>
-                        <th class="w-20">Risk Analysis Completed By</th>
+                        <th class="w-20">All Actions Completed By</th>
+                        <td class="w-30">{{ $data->all_actions_completed_by }}</td>
+                        <th class="w-20">All Actions Completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->all_actions_completed_on) }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-20">Residual Risk Evaluation By</th>
                         <td class="w-30">{{ $data->risk_analysis_completed_by }}</td>
-                        <th class="w-20">Risk Analysis Completed On</th>
+                        <th class="w-20">Residual Risk Evaluation On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->risk_analysis_completed_on) }}</td>
                     </tr>
                     <tr>

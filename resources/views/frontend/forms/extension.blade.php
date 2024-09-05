@@ -160,21 +160,21 @@
                                     <div class="group-input input-date">
                                         <label for="Date Due">Current Parent Due Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="due_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
+                                            <input type="text" id="due_date" readonly placeholder="DD-MMM-YYYY" />
                                             <input type="date" name="due_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'due_date')" />
+                                                oninput="handleDateInput(this, 'due_date'); checkDate('due_date', 'revised_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="Date Due">Revised Due Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" id="revised_date" readonly
-                                                placeholder="DD-MMM-YYYY" />
-                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="revised_date" class="hide-input"
-                                                oninput="handleDateInput(this, 'revised_date')" />
+                                            <input type="text" id="revised_date" readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="revised_date_checkdate" name="revised_date"
+                                                class="hide-input"
+                                                oninput="handleDateInput(this, 'revised_date'); checkDate('due_date', 'revised_date_checkdate')" />
                                         </div>
                                     </div>
                                 </div>
@@ -500,4 +500,35 @@
              ele: '#reference_record'
         });
        </script>
+       <script>
+            // Function to handle date input and format it for display
+            function handleDateInput(dateInput, displayFieldId) {
+                var dateValue = dateInput.value;
+
+                if (dateValue) {
+                    var dateObj = new Date(dateValue);
+                    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+                    var formattedDate = dateObj.toLocaleDateString('en-GB', options).replace(/ /g, '-');
+                    document.getElementById(displayFieldId).value = formattedDate;
+                }
+            }
+
+            // Function to check if the Revised Due Date is greater than or equal to the Current Parent Due Date
+            function checkDate(dueDateFieldId, revisedDateFieldId) {
+                var dueDate = document.getElementById(dueDateFieldId).value;
+                var revisedDate = document.getElementById(revisedDateFieldId).value;
+
+                if (dueDate && revisedDate) {
+                    var dueDateObj = new Date(dueDate);
+                    var revisedDateObj = new Date(revisedDate);
+
+                    // Check if Revised Due Date is less than Current Parent Due Date
+                    if (revisedDateObj < dueDateObj) {
+                        alert("Revised Due Date cannot be less than Current Parent Due Date.");
+                        document.getElementById(revisedDateFieldId).value = ""; // Clear invalid revised date
+                        document.getElementById('revised_date').value = ""; // Clear the display as well
+                    }
+                }
+            }
+        </script>
 @endsection

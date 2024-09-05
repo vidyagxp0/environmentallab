@@ -56,12 +56,12 @@ class ActionItemController extends Controller
     }
     public function index()
     {
-       
+
         $document = ActionItem::all();
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        
+
         foreach ($document as $data) {
             $cc = CC::find($data->cc_id);
             $data->originator = User::where('id', $cc->initiator_id)->value('name');
@@ -94,10 +94,10 @@ class ActionItemController extends Controller
         $openState->intiation_date = $request->intiation_date;
         $openState->assign_to = $request->assign_to;
         $openState->due_date = $request->due_date;
-        
+
         // $json_decode = json_encode($request->related_records);
         // $openState->Reference_Recores1 = implode(',', $request->related_records);
-        
+
         $openState->Reference_Recores1 = implode(',', $request->related_records);
         $openState->short_description = $request->short_description;
         $openState->title = $request->title;
@@ -121,12 +121,12 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                      
+
                     $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             }
             $openState->file_attach = json_encode($files);
         }
@@ -134,12 +134,12 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    
+
                     $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
-            
+
             $openState->Support_doc = json_encode($files);
             }
         }
@@ -148,7 +148,21 @@ class ActionItemController extends Controller
         $recordNumber = str_pad($counter, 5, '0', STR_PAD_LEFT);
         $newCounter = $counter + 1;
         DB::table('record_numbers')->update(['counter' => $newCounter]);
-         
+
+       //if (!empty($openState->record_number)) {
+        $history = new ActionItemHistory();
+        $history->cc_id = $openState->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($openState->division_id) . '/AI/' . Helpers::year($openState->created_at) . '/' . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+        //}
+
         if (!empty($openState->division_id)) {
         $history = new ActionItemHistory();
         $history->cc_id = $openState->id;
@@ -163,6 +177,7 @@ class ActionItemController extends Controller
         $history->save();
         }
 
+
         if (!empty($openState->initiator_id)) {
             $history = new ActionItemHistory();
             $history->cc_id = $openState->id;
@@ -176,7 +191,7 @@ class ActionItemController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
             }
- 
+
         if (!empty($openState->title)) {
         $history = new ActionItemHistory();
         $history->cc_id = $openState->id;
@@ -189,7 +204,7 @@ class ActionItemController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $openState->status;
         $history->save();
-        }   
+        }
 
         if (!empty($openState->dept)) {
         $history = new ActionItemHistory();
@@ -204,11 +219,11 @@ class ActionItemController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
         }
-        
+
         if (!empty($openState->Reference_Recores1)) {
             $recordIds = explode(',', $openState->Reference_Recores1);
             $recordValues = [];
-        
+
             foreach ($recordIds as $id) {
                 // Assuming $new->id corresponds to $id
                 $newRecord = ActionItem::find($id); // Replace `YourModel` with your actual model name
@@ -217,7 +232,7 @@ class ActionItemController extends Controller
                     $recordValues[] = $value;
                 }
             }
-        
+
             $history = new ActionItemHistory();
             $history->cc_id =  $openState->id;
             $history->activity_type = 'Action Item Related Records';
@@ -230,8 +245,8 @@ class ActionItemController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
         }
-        
-          
+
+
         if (!empty($openState->short_description)) {
         $history = new ActionItemHistory();
         $history->cc_id =   $openState->id;
@@ -245,7 +260,7 @@ class ActionItemController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
         }
-        
+
         if (!empty($openState->initiatorGroup)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -259,8 +274,8 @@ class ActionItemController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
             }
-            
-          
+
+
         if (!empty($openState->assign_to)) {
             $history = new ActionItemHistory();
             $history->cc_id =   $openState->id;
@@ -274,7 +289,7 @@ class ActionItemController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
             }
-        
+
             if (!empty($openState->description)) {
                 $history = new ActionItemHistory();
                 $history->cc_id =   $openState->id;
@@ -288,17 +303,17 @@ class ActionItemController extends Controller
                 $history->origin_state = $openState->status;
                 $history->save();
                 }
-            
+
                 if (!empty($openState->hod_preson)) {
                     // Convert the stored IDs to an array
                     $hodPersonIds = explode(',', $openState->hod_preson);
-                    
+
                     // Fetch the names corresponding to the IDs
                     $hodPersonNames = User::whereIn('id', $hodPersonIds)->pluck('name')->toArray();
-                    
+
                     // Convert the names array to a comma-separated string
                     $hodPersonNamesString = implode(', ', $hodPersonNames);
-                
+
                     $history = new ActionItemHistory();
                     $history->cc_id = $openState->id;
                     $history->activity_type = 'HOD Persons';
@@ -311,8 +326,8 @@ class ActionItemController extends Controller
                     $history->origin_state = $openState->status;
                     $history->save();
                 }
-                
-                    
+
+
                  if (!empty($openState->action_taken)) {
                     $history = new ActionItemHistory();
                     $history->cc_id =   $openState->id;
@@ -460,8 +475,8 @@ class ActionItemController extends Controller
             $history->origin_state = $openState->status;
             $history->save();
         }
-   
-   
+
+
         DocumentService::update_qms_numbers();
 
         toastr()->success('Document created');
@@ -525,7 +540,7 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('file_attach')) {
                 foreach ($request->file('file_attach') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {
                     $name = $request->name . 'file_attach' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -539,7 +554,7 @@ class ActionItemController extends Controller
             $files = [];
             if ($request->hasfile('Support_doc')) {
                 foreach ($request->file('Support_doc') as $file) {
-                    if ($file instanceof \Illuminate\Http\UploadedFile) {  
+                    if ($file instanceof \Illuminate\Http\UploadedFile) {
                     $name = $request->name . 'Support_doc' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
@@ -549,7 +564,7 @@ class ActionItemController extends Controller
             $openState->Support_doc = json_encode($files);
         }
 
-        
+
         $openState->update();
 
 
@@ -570,7 +585,7 @@ class ActionItemController extends Controller
         }
 
 
-        
+
         // if ($lastopenState->due_date != $openState->due_date || !empty($request->due_date_comment)) {
         //     $history = new ActionItemHistory;
         //     $history->cc_id = $id;
@@ -583,7 +598,7 @@ class ActionItemController extends Controller
         //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         //     $history->origin_state = $lastopenState->status;
         //     $history->save();
-        // } 
+        // }
 
         if ($lastopenState->departments != $openState->departments || !empty($request->departments_comment)) {
             $history = new ActionItemHistory;
@@ -612,8 +627,8 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
-        
-        
+
+
 
         if ($lastopenState->dept != $openState->dept || !empty($request->dept_comment)) {
             $history = new ActionItemHistory;
@@ -627,7 +642,7 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->save();
-        }  
+        }
         if ($lastopenState->assign_to != $openState->assign_to || !empty($request->assign_to_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -640,14 +655,14 @@ class ActionItemController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastopenState->status;
             $history->save();
-        }  
-          
+        }
+
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
             // Function to convert Reference_Recores1 IDs to formatted values
             function getFormattedRecords($referenceRecores) {
                 $recordIds = explode(',', $referenceRecores);
                 $recordValues = [];
-        
+
                 foreach ($recordIds as $id) {
                     // Assuming you have a model that corresponds to $id
                     $newRecord = ActionItem::find($id); // Replace `YourModel` with your actual model name
@@ -658,11 +673,11 @@ class ActionItemController extends Controller
                 }
                 return implode(', ', $recordValues);
             }
-        
+
             // Get formatted previous and current records
             $formattedPrevious = getFormattedRecords($lastopenState->Reference_Recores1);
             $formattedCurrent = getFormattedRecords($openState->Reference_Recores1);
-        
+
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Action Item Related Records';
@@ -675,7 +690,7 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
-        
+
 
         if ($lastopenState->short_description != $openState->short_description || !empty($request->short_description_comment)) {
             $history = new ActionItemHistory;
@@ -707,15 +722,15 @@ class ActionItemController extends Controller
             // Convert the stored IDs to an array for both previous and current states
             $lastHodPersonIds = explode(',', $lastopenState->hod_preson);
             $currentHodPersonIds = explode(',', $openState->hod_preson);
-        
+
             // Fetch the names corresponding to the IDs for both previous and current states
             $previousHodPersonNames = User::whereIn('id', $lastHodPersonIds)->pluck('name')->toArray();
             $currentHodPersonNames = User::whereIn('id', $currentHodPersonIds)->pluck('name')->toArray();
-        
+
             // Convert the names arrays to comma-separated strings
             $previousHodPersonNamesString = implode(', ', $previousHodPersonNames);
             $currentHodPersonNamesString = implode(', ', $currentHodPersonNames);
-        
+
             $history = new ActionItemHistory;
             $history->cc_id = $id;
             $history->activity_type = 'HOD Persons';
@@ -728,7 +743,7 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
-        
+
         if ($lastopenState->initiatorGroup != $openState->initiatorGroup || !empty($request->initiatorGroup_comment)) {
             $history = new ActionItemHistory;
             $history->cc_id = $id;
@@ -849,7 +864,7 @@ class ActionItemController extends Controller
         }
 
         DocumentService::update_qms_numbers();
-        
+
         toastr()->success('Document update');
 
         return back();
@@ -896,12 +911,12 @@ class ActionItemController extends Controller
                 //         toastr()->success('Document Sent');
 
                 //         return back();
-                    
+
                 // } else {
                     $changeControl->stage = '2';
                     $changeControl->status = 'Work In Progress';
                     $changeControl->submitted_by = Auth::user()->name;
-                    $changeControl->submitted_on = Carbon::now()->format('d-M-Y');;
+                    $changeControl->submitted_on = Carbon::now()->format('d-M-Y');
                         $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
@@ -927,7 +942,7 @@ class ActionItemController extends Controller
                 //         if($u->q_m_s_divisions_id == $openState->division_id){
                 //             $email = Helpers::getInitiatorEmail($u->user_id);
                 //              if ($email !== null) {
-                          
+
                 //               Mail::send(
                 //                   'mail.view-mail',
                 //                    ['data' => $openState],
@@ -937,13 +952,13 @@ class ActionItemController extends Controller
                 //                 }
                 //               );
                 //             }
-                //      } 
+                //      }
                 //   }
                     toastr()->success('Document Sent');
 
                     return back();
                 }
-            
+
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '3';
                 $changeControl->status = 'Closed-Done';
@@ -975,7 +990,7 @@ class ActionItemController extends Controller
             //         if($u->q_m_s_divisions_id == $openState->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
             //              if ($email !== null) {
-                      
+
             //               Mail::send(
             //                   'mail.view-mail',
             //                    ['data' => $openState],
@@ -985,7 +1000,7 @@ class ActionItemController extends Controller
             //                 }
             //               );
             //             }
-            //      } 
+            //      }
             //   }
                 toastr()->success('Document Sent');
 
@@ -1061,7 +1076,7 @@ public function actionStageCancel(Request $request, $id)
             //             if($u->q_m_s_divisions_id == $openState->division_id){
             //                 $email = Helpers::getInitiatorEmail($u->user_id);
             //                  if ($email !== null) {
-                          
+
             //                   Mail::send(
             //                       'mail.view-mail',
             //                        ['data' => $openState],
@@ -1071,7 +1086,7 @@ public function actionStageCancel(Request $request, $id)
             //                     }
             //                   );
             //                 }
-            //          } 
+            //          }
             //       }
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);
@@ -1107,7 +1122,7 @@ public function actionStageCancel(Request $request, $id)
         //         if($u->q_m_s_divisions_id == $openState->division_id){
         //             $email = Helpers::getInitiatorEmail($u->user_id);
         //              if ($email !== null) {
-                  
+
         //               Mail::send(
         //                   'mail.view-mail',
         //                    ['data' => $openState],
@@ -1117,7 +1132,7 @@ public function actionStageCancel(Request $request, $id)
         //                 }
         //               );
         //             }
-        //      } 
+        //      }
         //   }
             toastr()->success('Document Sent');
             return redirect('rcms/actionItem/'.$id);

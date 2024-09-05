@@ -152,7 +152,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     Audit Trial Report
+                     Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -180,7 +180,7 @@
 
     <div class="inner-block ">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head">Audit Trail Histroy Configuration Report</div>
 
 
 
@@ -205,7 +205,7 @@
                         @endif
                     </td>
                 </tr>
-               
+
             </table>
         </div>
 

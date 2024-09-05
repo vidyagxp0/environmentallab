@@ -229,7 +229,7 @@
                                     </div>
                                 @else
                                     <div>Null</div>
-                                @endif 
+                                @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
@@ -241,7 +241,7 @@
                                     <div>
                                         {{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}
                                     </div>
-                                @else 
+                                @else
                                     <div>{{ $datas->current }}</div>
                                 @endif
                             </div>
@@ -264,7 +264,7 @@
 
     </div>
 
-   
+
 
 </body>
 
