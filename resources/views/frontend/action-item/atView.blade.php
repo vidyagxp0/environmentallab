@@ -248,7 +248,7 @@
                                                         value="{{ $new->id }}"{{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
                                                         {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                     </option>
-                                                    {{-- <option value="{{ Helpers::getDivisionName($new->id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}"
+                                                   {{-- <option value="{{ Helpers::getDivisionName($new->id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}"
                                                             {{ in_array($new->id, explode(',', $data->Reference_Recores1)) ? 'selected' : '' }}>
                                                             {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                         </option> --}}
@@ -859,9 +859,9 @@
     </style>
 
     <script>
-        VirtualSelect.init({
+       VirtualSelect.init({
             ele: '#related_records, #hod'
-        });
+        }); 
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;

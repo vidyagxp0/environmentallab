@@ -179,7 +179,7 @@
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/Extension/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
-                    <strong>Record No.</strong> {{ str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+                    <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
@@ -194,7 +194,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Record Number</th>
-                        <td class="w-30">@if($data->record){{ str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->record){{ Helpers::divisionNameForQMS($data->division_id) }}/Extension/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }} @else Not Applicable @endif</td>
                         <th class="w-20">Division Code</th>
                         <td class="w-30">@if($data->division_id){{   Helpers::getDivisionName($data->division_id) }} @else Not Applicable @endif</td>
                     </tr>
@@ -219,15 +219,19 @@
                     </tr>
                     <tr>
                         <th class="w-20">Justification of Extention</th>
-                        <td class="w-80">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="3">@if($data->justification){{ $data->justification }}@else Not Applicable @endif</td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Initiated Through</th>
                         <td class="w-80">@if($data->initiated_through){{ $data->initiated_through }}@else Not Applicable @endif</td>
                     </tr>
-                    <tr>                    
-                        <th class="w-20">Reference Record</th>
-                        <td class="w-80"> @if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td>    
+                    <tr>                       
                         <th class="w-20">Approver</th>
                         <td class="w-30">@if($data->approver1){{ Helpers::getInitiatorName($data->approver1) }} @else Not Applicable @endif</td>                  
+                    </tr>
+                    <tr>
+                        <th class="w-20">Reference Record</th>
+                        <td class="w-80" colspan="3"> @if($data->initiated_if_other){{ $data->initiated_if_other }} @else Not Applicable @endif</td> 
                     </tr>
                    
                 </table>

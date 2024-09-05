@@ -164,6 +164,19 @@ class ExtensionController extends Controller
         $history->origin_state = $openState->status;
         $history->save();
         // }
+
+        $history = new ExtensionAuditTrail();
+        $history->extension_id = $openState->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($openState->division_id) . '/Extension/' . Helpers::year($openState->created_at) . '/' . str_pad($openState->record, 4, '0', STR_PAD_LEFT); 
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+
         if (!empty($request->intiation_date)) {
 
         $history = new ExtensionAuditTrail();

@@ -179,16 +179,15 @@
                                         <label for="Related Records">Action Item Related Records</label>
                                         <select multiple id="related_records" name="related_records[]"
                                             placeholder="Select Reference Records">
-                                            <option value="">--select record--</option>
-                                            <!-- @if (!empty($old_record))
-    -->
+                                            {{--<option value="">--select record--</option>--}}
+                                             @if (!empty($old_record))
+    
                                             @foreach ($old_record as $new)
                                                 <option value="{{ $new->id }}">
                                                     {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
-                                            <!--
-    @endif -->
+                                            @endif 
                                         </select>
                                     </div>
                                 </div>

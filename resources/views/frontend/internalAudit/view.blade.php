@@ -403,14 +403,14 @@
                                             </div>
                                         </div>
                                         <!-- <div class="col-lg-6">
-                                                                                                                                                                                                                            <div class="group-input">
-                                                                                                                                                                                                                                <label for="Date Due">Date of Initiation</label>
-                                                                                                                                                                                                                                <input readonly type="text"
-                                                                                                                                                                                                                                    value="{{ Helpers::getdateFormat($data->intiation_date) }}"
-                                                                                                                                                                                                                                    name="intiation_date">
+                                                                                                                                                                                                                                    <div class="group-input">
+                                                                                                                                                                                                                                        <label for="Date Due">Date of Initiation</label>
+                                                                                                                                                                                                                                        <input readonly type="text"
+                                                                                                                                                                                                                                            value="{{ Helpers::getdateFormat($data->intiation_date) }}"
+                                                                                                                                                                                                                                            name="intiation_date">
 
-                                                                                                                                                                                                                            </div>
-                                                                                                                                                                                                                        </div> -->
+                                                                                                                                                                                                                                    </div>
+                                                                                                                                                                                                                                </div> -->
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1071,6 +1071,13 @@
                                                 </select> --}}
                                             </div>
                                         </div>
+                                        @if ($data->file_attachment)
+                                            @foreach (json_decode($data->file_attachment) as $file)
+                                                <input id="FIATFile-{{ $loop->index }}" type="hidden"
+                                                    name="existing_file_attachment_files[{{ $loop->index }}]"
+                                                    value="{{ $file }}">
+                                            @endforeach
+                                        @endif
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="File Attachments">File Attachment</label>
@@ -1090,7 +1097,9 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
-                                                                        data-file-name="{{ $file }}"><i
+                                                                        data-remove-id="FIATFile-{{ $loop->index }}"
+                                                                        data-file-name="{{ $file }}"
+                                                                        style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
                                                                 </h6>
@@ -1270,6 +1279,13 @@
                                             <textarea name="QA_Comments"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->QA_Comments }}</textarea>
                                         </div>
                                     </div>
+                                    @if ($data->file_attachment_guideline)
+                                        @foreach (json_decode($data->file_attachment_guideline) as $file)
+                                            <input id="GUIATFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_file_attachment_guideline_files[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Guideline Attachment">Guideline Attachment</label>
@@ -1286,7 +1302,9 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-remove-id="GUIATFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
@@ -1547,6 +1565,14 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    @if ($data->Audit_file)
+                                        @foreach (json_decode($data->Audit_file) as $file)
+                                            <input id="AUINATFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_Audit_file_files[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Audit Attachments">Audit Attachments</label>
@@ -1566,7 +1592,9 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-remove-id="AUINATFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
@@ -1864,7 +1892,13 @@
 
                                     </div>
 
-
+                                    @if ($data->report_file)
+                                        @foreach (json_decode($data->report_file) as $file)
+                                            <input id="REATFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_report_file_files[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
 
                                     <div class="col-lg-12">
                                         <div class="group-input">
@@ -1884,7 +1918,9 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-remove-id="REATFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
@@ -1900,7 +1936,13 @@
                                             </div>
                                         </div>
                                     </div>
-
+                                    @if ($data->myfile)
+                                        @foreach (json_decode($data->myfile) as $file)
+                                            <input id="INAUATFile-{{ $loop->index }}" type="hidden"
+                                                name="existing_myfile_files[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
                                     <div class="col-12">
                                         <div class="group-input">
                                             <label for="Audit Attachments">Audit Attachments.</label>
@@ -1920,7 +1962,9 @@
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
                                                                 <a type="button" class="remove-file"
-                                                                    data-file-name="{{ $file }}"><i
+                                                                    data-remove-id="INAUATFile-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"
+                                                                    style="@if ($data->stage == 0 || $data->stage == 6) pointer-events: none; @endif"><i
                                                                         class="fa-solid fa-circle-xmark"
                                                                         style="color:red; font-size:20px;"></i></a>
                                                             </h6>
@@ -2196,9 +2240,9 @@
                         <!-- Modal footer -->
                         <!-- <div class="modal-footer">
 
-                                                                                                                                                                                                                <button type="submit" data-bs-dismiss="modal">Submit</button>
-                                                                                                                                                                                                                <button>Close</button>
-                                                                                                                                                                                                            </div>-->
+                                                                                                                                                                                                                        <button type="submit" data-bs-dismiss="modal">Submit</button>
+                                                                                                                                                                                                                        <button>Close</button>
+                                                                                                                                                                                                                    </div>-->
                         <div class="modal-footer">
                             <button type="submit">Submit</button>
                             <button type="button" data-bs-dismiss="modal">Close</button>

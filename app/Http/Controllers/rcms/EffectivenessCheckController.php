@@ -468,8 +468,29 @@ class EffectivenessCheckController extends Controller
      //   $openState->Cancellation_Category = $request->Cancellation_Category;
         //$openState->Effectiveness_check_Attachment = $request->Effectiveness_check_Attachment;
 
+        // if (!empty($request->Effectiveness_check_Attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('Effectiveness_check_Attachment')) {
+        //         foreach ($request->file('Effectiveness_check_Attachment') as $file) {
+        //             $name = $request->name . 'Effectiveness_check_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $openState->Effectiveness_check_Attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_Effectiveness_check_Attachment_files) ? $request->existing_Effectiveness_check_Attachment_files : null;
+
         if (!empty($request->Effectiveness_check_Attachment)) {
-            $files = [];
+            if ($openState->Effectiveness_check_Attachment) {
+                $existingFiles = json_decode($openState->Effectiveness_check_Attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('Effectiveness_check_Attachment')) {
                 foreach ($request->file('Effectiveness_check_Attachment') as $file) {
                     $name = $request->name . 'Effectiveness_check_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -477,13 +498,37 @@ class EffectivenessCheckController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $openState->Effectiveness_check_Attachment = json_encode($files);
         }
 
+        $openState->Effectiveness_check_Attachment = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
        // $openState->Addendum_Attachment = $request->Addendum_Attachment;
+
+
+        // if (!empty($request->Addendum_Attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('Addendum_Attachment')) {
+        //         foreach ($request->file('Addendum_Attachment') as $file) {
+        //             $name = $request->name . 'Addendum_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $openState->Addendum_Attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_Addendum_Attachment_files) ? $request->existing_Addendum_Attachment_files : null;
+
         if (!empty($request->Addendum_Attachment)) {
-            $files = [];
+            if ($openState->Addendum_Attachment) {
+                $existingFiles = json_decode($openState->Addendum_Attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('Addendum_Attachment')) {
                 foreach ($request->file('Addendum_Attachment') as $file) {
                     $name = $request->name . 'Addendum_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -491,12 +536,38 @@ class EffectivenessCheckController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $openState->Addendum_Attachment = json_encode($files);
         }
+
+        $openState->Addendum_Attachment = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+
+
      //   $openState->Attachment = $request->Attachment;
+
+        // if (!empty($request->Attachment)) {
+        //     $files = [];
+        //     if ($request->hasfile('Attachment')) {
+        //         foreach ($request->file('Attachment') as $file) {
+        //             $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $openState->Attachment = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_Attachment_files) ? $request->existing_Attachment_files : null;
+
         if (!empty($request->Attachment)) {
-            $files = [];
+            if ($openState->Attachment) {
+                $existingFiles = json_decode($openState->Attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('Attachment')) {
                 foreach ($request->file('Attachment') as $file) {
                     $name = $request->name . 'Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -504,11 +575,35 @@ class EffectivenessCheckController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $openState->Attachment = json_encode($files);
         }
+
+        $openState->Attachment = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+
+        // if (!empty($request->Attachments)) {
+        //     $files = [];
+        //     if ($request->hasfile('Attachments')) {
+        //         foreach ($request->file('Attachments') as $file) {
+        //             $name = $request->name . 'Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $openState->Attachments = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_Attachments_files) ? $request->existing_Attachments_files : null;
+
         if (!empty($request->Attachments)) {
-            $files = [];
+            if ($openState->Attachments) {
+                $existingFiles = json_decode($openState->Attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('Attachments')) {
                 foreach ($request->file('Attachments') as $file) {
                     $name = $request->name . 'Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -516,11 +611,35 @@ class EffectivenessCheckController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $openState->Attachments = json_encode($files);
         }
+
+        $openState->Attachments = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+
+        // if (!empty($request->refer_record)) {
+        //     $files = [];
+        //     if ($request->hasfile('refer_record')) {
+        //         foreach ($request->file('refer_record') as $file) {
+        //             $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+
+        //     $openState->refer_record = json_encode($files);
+        // }
+
+        $files = is_array($request->existing_refer_record_files) ? $request->existing_refer_record_files : null;
+
         if (!empty($request->refer_record)) {
-            $files = [];
+            if ($openState->refer_record) {
+                $existingFiles = json_decode($openState->refer_record, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles); // Re-index the array to ensure it's a proper array
+                }
+            }
+
             if ($request->hasfile('refer_record')) {
                 foreach ($request->file('refer_record') as $file) {
                     $name = $request->name . 'refer_record' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -528,9 +647,12 @@ class EffectivenessCheckController extends Controller
                     $files[] = $name;
                 }
             }
-
-            $openState->refer_record = json_encode($files);
         }
+
+        $openState->refer_record = !empty($files) ? json_encode(array_values($files)) : null; // Re-index again before encoding
+
+
+
         $openState->Comments = $request->Comments;
         $openState->update();
 

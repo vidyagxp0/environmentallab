@@ -617,6 +617,30 @@
                                         <div class="Date"></div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Investigation Completed By">All Activities Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="All Activities Completed On">All Activities Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed By">Review Completed By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Review Completed On">Review Completed On</label>
+                                        <div class="Date"></div>
+                                    </div>
+                                </div>  
                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA Review Completed By">QA Review Completed By</label>
@@ -638,32 +662,6 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA Head Approval Completed On">QA Head Approval Completed On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>  
-                               
-                              
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="All Activities Completed By">All Activities Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="All Activities Completed On">All Activities Completed On</label>
-                                        <div class="Date"></div>
-                                    </div>
-                                </div>
-                                 <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Review Completed By">Review Completed By</label>
-                                        <div class="static"></div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Review Completed On">Review Completed On</label>
                                         <div class="Date"></div>
                                     </div>
                                 </div>  

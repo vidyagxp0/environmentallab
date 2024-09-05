@@ -145,9 +145,9 @@
                                 <div class="">Pending QA Review</div>
                             @endif
                             @if ($data->stage >= 7)
-                                <div class="active">Pending QA Head Approval Complete</div>
+                                <div class="active">Pending QA Head Approval </div>
                             @else
-                                <div class="">Pending QA Head Approval Complete</div>
+                                <div class="">Pending QA Head Approval</div>
                             @endif
                             @if ($data->stage >= 8)
                                 <div class="bg-danger">Closed - Done</div>
@@ -251,6 +251,7 @@
                                         <label for="Initiator Group"><b>Initiator Group</b></label>
                                         <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
                                              id="initiator_group">
+                                             <option value="">-- Select --</option>
                                             <option value="Corporate Quality Assurance"
                                                 @if ($data->Initiator_Group== 'Corporate Quality Assurance') selected @endif>Corporate
                                                 Quality Assurance</option>
@@ -841,8 +842,6 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <span id="rchar">240</span>
-                                        characters remaining
                                         <textarea name="due_date_extension" id="duedoc" type="text"    maxlength="240"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
@@ -923,6 +922,18 @@
                                     <div class="group-input">
                                         <label for="Investigation Completed On">Investigation Completed On</label>
                                         <div class="Date">{{ $data->investigation_completed_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Investigation Completed By">All Activities Completed By</label>
+                                        <div class="static">{{ $data->all_activities_completed_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Investigation Completed On">All Activities Completed On</label>
+                                        <div class="Date">{{ $data->all_activities_completed_on }}</div>
                                     </div>
                                 </div>
 

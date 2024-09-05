@@ -80,7 +80,15 @@ class CapaController extends Controller
         $capa->problem_description = $request->problem_description;
         $capa->due_date= $request->due_date;
         $capa->assign_to = $request->assign_to;
-       $capa->capa_team = implode(',', $request->capa_team);
+    //    $capa->capa_team = implode(',', $request->capa_team);
+
+       $capa->capa_team =  implode(',', $request->capa_team);
+        $capa_teamIdsArray = explode(',', $capa->capa_team);
+        $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+        $capa_teamNamesString = implode(', ', $capa_teamNames);
+        // dd($capa_teamNamesString);
+
+
         $capa->capa_type = $request->capa_type;
         $capa->severity_level_form= $request->severity_level_form;
         $capa->initiated_through = $request->initiated_through;
@@ -291,7 +299,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Date of Initiation';
             $history->previous = "Null";
-            $history->current =Helpers::getdateFormat($capa->intiation_date);
+            $history->current = Helpers::getdateFormat($capa->intiation_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -445,7 +453,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Due Date';
             $history->previous = "Null";
-            $history->current = $capa->due_date;
+            $history->current = Helpers::getdateFormat($capa->due_date);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -473,7 +481,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'CAPA Team';
             $history->previous = "Null";
-            $history->current = $capa->capa_team;
+            $history->current = $capa_teamNamesString;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -482,10 +490,11 @@ class CapaController extends Controller
             $history->save();
         }
 
+
         if (!empty($capa->capa_related_record)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'CAPA Related Records';
+            $history->activity_type = 'Reference Records (CAPA)';
             $history->previous = "Null";
             $history->current = $capa->capa_related_record;
             $history->comment = "NA";
@@ -498,7 +507,7 @@ class CapaController extends Controller
         if (!empty($capa->rca_related_record)) {
             $history = new CapaAuditTrial();
             $history->capa_id = $capa->id;
-            $history->activity_type = 'RCA Related Records';
+            $history->activity_type = 'Reference Records (RCA)';
             $history->previous = "Null";
             $history->current = $capa->rca_related_record;
             $history->comment = "NA";
@@ -844,6 +853,13 @@ class CapaController extends Controller
         }
         $lastDocument = Capa::find($id);
         $capa = Capa::find($id);
+
+        $getId = $lastDocument->capa_team;
+        $lastcapa_teamIdsArray = explode(',', $getId);
+        $lastcapa_teamNames = User::whereIn('id', $lastcapa_teamIdsArray)->pluck('name')->toArray();
+        $lastcapa_teamName = implode(', ', $lastcapa_teamNames);
+
+
         $capa->parent_id = $request->parent_id;
         $capa->parent_type = $request->parent_type;
         // $capa->division_code = $request->division_code;
@@ -854,7 +870,14 @@ class CapaController extends Controller
         $capa->due_date= $request->due_date;
         $capa->assign_to = $request->assign_to;
       //  $capa->capa_team = $request->capa_team;
-        $capa->capa_team = implode(',', $request->capa_team);
+        // $capa->capa_team = implode(',', $request->capa_team);
+
+        $capa->capa_team =  implode(',', $request->capa_team);
+        $capa_teamIdsArray = explode(',', $capa->capa_team);
+        $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+        $capa_teamNamesString = implode(', ', $capa_teamNames);
+
+
         $capa->capa_type = $request->capa_type;
         $capa->details_new = $request->details_new;
         $capa->initiated_through = $request->initiated_through;
@@ -1055,7 +1078,7 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->short_description != $capa->divishort_descriptionsion_code || !empty($request->short_description_comment)) {
+        if ($lastDocument->short_description != $capa->short_description || !empty($request->short_description_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1145,7 +1168,7 @@ class CapaController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->initiated_through_req != $capa->initiated_through || !empty($request->initiated_through_req_comment)) {
+        if ($lastDocument->initiated_through_req != $capa->initiated_through_req || !empty($request->initiated_through_req_comment)) {
 
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
@@ -1195,8 +1218,8 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'CAPA Team';
-            $history->previous = $lastDocument->capa_team;
-            $history->current = $capa->capa_team;
+            $history->previous = $lastcapa_teamName;
+            $history->current = $capa_teamNamesString;
             $history->comment = $request->capa_team_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2063,13 +2086,18 @@ class CapaController extends Controller
     {
         $data = Capa::find($id);
         if (!empty($data)) {
+
+            $capa_teamIdsArray = explode(',', $data->capa_team);
+            $capa_teamNames = User::whereIn('id', $capa_teamIdsArray)->pluck('name')->toArray();
+            $capa_teamNamesString = implode(', ', $capa_teamNames);
+
             $data->Product_Details = CapaGrid::where('capa_id', $id)->where('type', "Product_Details")->first();
             $data->Instruments_Details = CapaGrid::where('capa_id', $id)->where('type', "Instruments_Details")->first();
             $data->Material_Details = CapaGrid::where('capa_id', $id)->where('type', "Material_Details")->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
             $pdf = App::make('dompdf.wrapper');
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.capa.singleReport', compact('data'))
+            $pdf = PDF::loadview('frontend.capa.singleReport', compact('data', 'capa_teamNamesString'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,
