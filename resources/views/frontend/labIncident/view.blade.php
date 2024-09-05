@@ -405,12 +405,18 @@
                                     </div>
                                 </div>
                              
+
+                                @if ($data->Initial_Attachment)
+                                    @foreach (json_decode($data->Initial_Attachment) as $file)
+                                        <input id="1-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files_initial[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="col-lg-12">
                                     <div class="group-input">
                                         <label for="Initial Attachments">Initial Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Initial_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->Initial_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="Initial_Attachment">
                                                     @if ($data->Initial_Attachment)
@@ -422,7 +428,8 @@
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                             <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
+                                                                    data-remove-id="1-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
                                                         </h6>
@@ -486,12 +493,18 @@
                                         <textarea name="Supervisor_Review_Comments" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Supervisor_Review_Comments }}</textarea>
                                     </div>
                                 </div>
+
+                                @if ($data->Attachments)
+                                    @foreach (json_decode($data->Attachments) as $file)
+                                        <input id="2-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files_incident[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Attachments">Incident Attachments</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Attachments" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->Attachments }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="Attachments">
                                                     @if ($data->Attachments)
@@ -503,7 +516,8 @@
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                             <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
+                                                                    data-remove-id="2-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
                                                         </h6>
@@ -550,12 +564,18 @@
                                         <div class="static">Question datafield</div>
                                     </div>
                                 </div> --}}
+
+                                @if ($data->Inv_Attachment)
+                                    @foreach (json_decode($data->Inv_Attachment) as $file)
+                                        <input id="3-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files_investigation[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Inv Attachments">Investigation Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="Inv_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->Inv_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="Inv_Attachment">
                                                     @if ($data->Inv_Attachment)
@@ -566,8 +586,9 @@
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
+                                                            <a type="button" class="remove-file"                                                                    
+                                                                    data-remove-id="3-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
                                                         </h6>
@@ -632,12 +653,18 @@
                                         <textarea name="Corrective_Preventive_Action" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->Corrective_Preventive_Action }}</textarea>
                                     </div>
                                 </div>
+
+                                @if ($data->CAPA_Attachment)
+                                    @foreach (json_decode($data->CAPA_Attachment) as $file)
+                                        <input id="4-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files_capa[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="CAPA Attachments">CAPA Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="CAPA_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->CAPA_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="CAPA_Attachment">
                                                     @if ($data->CAPA_Attachment)
@@ -648,8 +675,9 @@
                                                             <a href="{{ asset('upload/' . $file) }}"
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
-                                                            <a type="button" class="remove-file"
-                                                                data-file-name="{{ $file }}"><i
+                                                            <a type="button" class="remove-file"                                                                    
+                                                                    data-remove-id="4-{{ $loop->index }}"
+                                                                    data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
                                                         </h6>
@@ -684,12 +712,18 @@
                                         <textarea name="QA_Review_Comments" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{ $data->QA_Review_Comments }}</textarea>
                                     </div>
                                 </div>
+
+                                @if ($data->QA_Head_Attachment)
+                                    @foreach (json_decode($data->QA_Head_Attachment) as $file)
+                                        <input id="5-{{ $loop->index }}" type="hidden"
+                                        name="existing_attach_files_QA[{{ $loop->index }}]"
+                                        value="{{ $file }}">
+                                    @endforeach
+                                @endif
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="QA Head Attachments">QA Review Attachment</label>
                                         <div><small class="text-primary">Please Attach all relevant or supporting documents</small></div>
-                                        {{-- <input type="file" id="myfile" name="QA_Head_Attachment" {{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}
-                                            value="{{ $data->QA_Head_Attachment }}"> --}}
                                             <div class="file-attachment-field">
                                                 <div class="file-attachment-list" id="QA_Head_Attachment">
                                                     @if ($data->QA_Head_Attachment)
@@ -701,6 +735,7 @@
                                                                 target="_blank"><i class="fa fa-eye text-primary"
                                                                     style="font-size:20px; margin-right:-10px;"></i></a>
                                                             <a type="button" class="remove-file"
+                                                                data-remove-id="5-{{ $loop->index }}"
                                                                 data-file-name="{{ $file }}"><i
                                                                     class="fa-solid fa-circle-xmark"
                                                                     style="color:red; font-size:20px;"></i></a>
@@ -1306,30 +1341,40 @@
         });
     </script>
      <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const removeButtons = document.querySelectorAll('.remove-file');
+        document.addEventListener('DOMContentLoaded', function() {
+            const removeButtons = document.querySelectorAll('.remove-file');
 
-                removeButtons.forEach(button => {
-                    button.addEventListener('click', function () {
-                        const fileName = this.getAttribute('data-file-name');
-                        const fileContainer = this.closest('.file-container');
+            removeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const fileName = this.getAttribute('data-file-name');
+                    const fileContainer = this.closest('.file-container');
 
-                        // Hide the file container
-                        if (fileContainer) {
-                            fileContainer.style.display = 'none';
-                        }
-                    });
+                    // Hide the file container
+                    if (fileContainer) {
+                        fileContainer.style.display = 'none';
+                    }
                 });
             });
-        </script>
-        <script>
-            var maxLength = 255;
-            $('#docname').keyup(function() {
-                var textlen = maxLength - $(this).val().length;
-                $('#rchars').text(textlen);
-            });
-        </script>
-        <script>
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.remove-file').click(function() {
+                const removeId = $(this).data('remove-id')
+                console.log('removeId', removeId);
+                $('#' + removeId).remove();
+            })
+        })
+    </script>
+    <script>
+        var maxLength = 255;
+        $('#docname').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#rchars').text(textlen);
+        });
+    </script>
+    <script>
         var maxLength = 240;
         $('#duedoc').keyup(function() {
             var textlen = maxLength - $(this).val().length;

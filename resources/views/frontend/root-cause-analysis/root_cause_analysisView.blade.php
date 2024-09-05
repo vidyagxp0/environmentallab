@@ -261,14 +261,12 @@
                                     <input readonly type="text" name="division_code"
                                         value="{{ Helpers::getDivisionName(session()->get('division')) }}">
                                     <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                    {{-- <div class="static">QMS-North America</div> --}}
                                       </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Initiator"><b>Initiator</b></label>
                                         <input type="hidden" name="initiator_id">
-                                        {{-- <div class="static">{{ $data->initiator_name }} </div> --}}
                                         <input disabled type="text" value="{{ $data->initiator_name }} ">
                                     </div>
                                 </div>
@@ -285,6 +283,7 @@
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiator_Group"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}
                                                  id="initiator_group">
+                                                <option value="">-- Select --</option>
                                                
                                                 <option value="CQA"
                                                     @if ($data->initiator_Group== 'CQA') selected @endif>Corporate
@@ -356,7 +355,7 @@
                                                             class="text-danger">*</span></label><span id="rchars">255</span>
                                                     characters remaining
                                                     
-                                                    <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->short_description }}"></input>
+                                                    <input name="short_description" id="docname" type="text" maxlength="255" required  {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{ $data->short_description }}">
                                                 </div>
                                                 <p id="docnameError" style="color:red">**Short Description is required</p>
             
@@ -403,9 +402,7 @@
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                <input readonly type="text"
-                                                    value="{{ Helpers::getdateFormat($data->due_date) }}" 
-                                                    name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
+                                                <input readonly type="text" value="{{ Helpers::getdateFormat($data->due_date) }}">
                                             </div>
                                         </div>                                 <!-- <div class="col-lg-6">
                                         <div class="group-input">
@@ -600,7 +597,7 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <div class="sub-head">Investigation details</div>
+                                        <div class="sub-head">Investigation Details</div>
                                     </div>
                                     <div class="col-12">
                                         <div class="group-input">
@@ -1386,13 +1383,13 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_By">Submitted By</label>
+                                            <label for="Submit_By">Submit By</label>
                                             <div class="static">{{ $data->submitted_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submitted On</label>
+                                            <label for="Submit_On">Submit On</label>
                                             <div class="static">{{ $data->submitted_on }}</div>
                                         </div>
                                     </div>

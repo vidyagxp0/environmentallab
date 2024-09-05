@@ -682,63 +682,103 @@ class LabIncidentController extends Controller
         $data->severity_level2= $request->severity_level2;
 
 
+
+        $files = is_array($request->existing_attach_files_initial) ? $request->existing_attach_files_initial : null;
         if (!empty($request->Initial_Attachment)) {
-            $files = [];
+            if ($data->Initial_Attachment) {
+                $existingFiles = json_decode($data->Initial_Attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('Initial_Attachment')) {
                 foreach ($request->file('Initial_Attachment') as $file) {
-                    $name = $request->name . 'Initial_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "LI" . '-Initial_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $data->Initial_Attachment = json_encode($files);
         }
+        $data->Initial_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
 
+
+        $files = is_array($request->existing_attach_files_incident) ? $request->existing_attach_files_incident : null;
         if (!empty($request->Attachments)) {
-            $files = [];
+            if ($data->Attachments) {
+                $existingFiles = json_decode($data->Attachments, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('Attachments')) {
                 foreach ($request->file('Attachments') as $file) {
-                    $name = $request->name . 'Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "LI" . '-Attachments' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $data->Attachments = json_encode($files);
         }
+        $data->Attachments = !empty($files) ? json_encode(array_values($files)) : null;
+
+        $files = is_array($request->existing_attach_files_investigation) ? $request->existing_attach_files_investigation : null;
         if (!empty($request->Inv_Attachment)) {
-            $files = [];
+            if ($data->Inv_Attachment) {
+                $existingFiles = json_decode($data->Inv_Attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('Inv_Attachment')) {
                 foreach ($request->file('Inv_Attachment') as $file) {
-                    $name = $request->name . 'Inv_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "LI" . '-Inv_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $data->Inv_Attachment = json_encode($files);
         }
+        $data->Inv_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
+  
+        
+        $files = is_array($request->existing_attach_files_capa) ? $request->existing_attach_files_capa : null;
         if (!empty($request->CAPA_Attachment)) {
-            $files = [];
+            if ($data->CAPA_Attachment) {
+                $existingFiles = json_decode($data->CAPA_Attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('CAPA_Attachment')) {
                 foreach ($request->file('CAPA_Attachment') as $file) {
-                    $name = $request->name . 'CAPA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "LI" . '-CAPA_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $data->CAPA_Attachment = json_encode($files);
         }
+        $data->CAPA_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
+        
+        $files = is_array($request->existing_attach_files_QA) ? $request->existing_attach_files_QA : null;
         if (!empty($request->QA_Head_Attachment)) {
-            $files = [];
+            if ($data->QA_Head_Attachment) {
+                $existingFiles = json_decode($data->QA_Head_Attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('QA_Head_Attachment')) {
                 foreach ($request->file('QA_Head_Attachment') as $file) {
-                    $name = $request->name . 'QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+                    $name = "LI" . '-QA_Head_Attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
                     $files[] = $name;
                 }
             }
-            $data->QA_Head_Attachment = json_encode($files);
         }
-
+        $data->QA_Head_Attachment = !empty($files) ? json_encode(array_values($files)) : null;
         $data->update();
 
         if ($lastDocument->short_desc != $request->short_desc) {

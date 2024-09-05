@@ -7,7 +7,7 @@
             <div class="inner-block">
                 <div class="main-head">
                     <div class="default-name">{{ Helpers::getDivisionName($document->division_id) }}/CC/{{ date('Y') }}
-                        /<a href="{{ route('CC.show', $document->id) }}">{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}</div>
+                        /<a href="{{ route('CC.show', $document->id) }}">{{ str_pad($document->record_number->record_number, 4, '0', STR_PAD_LEFT) }}</div>
 
                     <div class="btn-group">
                         <button onclick="window.print();return false;" type="button">Print</button>
@@ -44,7 +44,7 @@
                                     <td class="viewdetails"><a
                                             href="{{ url('rcms/audit-detail', $audits->id) }}">{{ $audits->activity_type }}</a>
                                     </td>
-                                    <td>{{ $audits->created_at }}</td>
+                                    <td>{{ Helpers::getdateFormat1($audits->created_at) }}</td>
                                     <td>{{ $audits->user_name }}</td>
                                     {{-- <td>{{ $audits->user_role }}</td> --}}
                                     <td>{{ $audits->origin_state }}</td>

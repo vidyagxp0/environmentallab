@@ -236,7 +236,6 @@
                                             <label for="RLS Record Number"><b>Record Number</b></label>
                                             <input readonly type="text" name="record_number"
                                                 value="{{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ $record_number }}">
-                                            {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
@@ -250,8 +249,7 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator"><b>Initiator</b></label>
-                                            {{-- <div class="static">{{ Auth::user()->name }}</div> --}}
-                                            <input disabled type="text" name="division_code"
+                                            <input disabled type="text"
                                                 value="{{ Auth::user()->name }}">
                                         </div>
                                     </div>
@@ -260,8 +258,6 @@
                                             <label for="Date Due"><b>Date of Initiation</b></label>
                                             <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
                                             <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date">
-
-                                            {{-- <div class="static">{{ date('d-M-Y') }}</div> --}}
                                         </div>
                                     </div>
                                     <div class="col-md-6">

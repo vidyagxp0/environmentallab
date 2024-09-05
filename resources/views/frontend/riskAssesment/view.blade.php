@@ -387,7 +387,7 @@
                                             <div class="group-input">
                                                 <label for="RLS Record Number"><b>Record Number</b></label>
                                                 <input disabled type="text" name="record_number"
-                                                    value=" {{ Helpers::getDivisionName($data->division_id) }}/RA/{{ Helpers::year($data->created_at) }}/{{ $data->record }}">
+                                                    value=" {{ Helpers::getDivisionName($data->division_id) }}/RA/{{ date('Y') }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '001' }}">
                                                 {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                             </div>
                                         </div>
@@ -1487,7 +1487,7 @@
                                                                     </td>
                                                                     <td>
                                                                         {{-- <input name="initial_rpn[]" type="text"  class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" > --}}
-                                                                        <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" >
+                                                                        <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" readonly>
 
                                                                     </td>
                                                                     <td>
@@ -1525,7 +1525,7 @@
                                                                         </select>
                                                                     </td>
                                                                     <td>
-                                                                         <input name="residual_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}" >
+                                                                         <input name="residual_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->residual_rpn)[$key] ?? null }}" readonly>
                                                                     </td>
                                                                     <td>
                                                                         <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
@@ -2259,13 +2259,13 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Evaluated By">Evaluated By</label>
+                                                <label for="Evaluated By">Evaluation Complete By</label>
                                                 <div class="static">{{ $data->evaluated_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Evaluated On">Evaluated On</label>
+                                                <label for="Evaluated On">Evaluation Complete On</label>
                                                 <div class="static">{{ $data->evaluated_on }}</div>
                                             </div>
                                         </div>
@@ -2283,37 +2283,37 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Plan Approved By">Plan Approved By</label>
+                                                <label for="Plan Approved By">Action Plan Approved By</label>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Plan Approved On">Plan Approved On</label>
+                                                <label for="Plan Approved On">Action Plan Approved On</label>
                                                 <div class="static">{{ $data->plan_approved_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Action Plan Complete">Action Plan Completed By</label>
+                                                <label for="Action Plan Complete">All Actions Completed By</label>
                                                 <div class="static">{{ $data->all_actions_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Action Plan Complete">Action Plan Completed On</label>
+                                                <label for="Action Plan Complete">All Actions Completed On</label>
                                                 <div class="static">{{ $data->all_actions_completed_on }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Risk Analysis Completed By">Risk Analysis Completed By</label>
+                                                <label for="Risk Analysis Completed By">Residual Risk Evaluation By</label>
                                                 <div class="static">{{ $data->risk_analysis_completed_by }}</div>
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Risk Analysis Completed On">Risk Analysis Completed On</label>
+                                                <label for="Risk Analysis Completed On">Residual Risk Evaluation On</label>
                                                 <div class="static">{{ $data->risk_analysis_completed_on }}</div>
                                             </div>
                                         </div>

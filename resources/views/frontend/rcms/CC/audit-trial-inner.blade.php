@@ -44,7 +44,7 @@
                         <div class="list-item">
                             <div class="head">Modified On</div>
                             <div>:</div>
-                            <div>{{ $temp->created_at }}</div>
+                            <div>{{ Helpers::getdateFormat1($temp->created_at) }}</div>
                         </div>
                         @if($temp->comment)
                         <div class="list-item">

@@ -176,7 +176,7 @@
                     <strong>Change Control No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -214,10 +214,10 @@
                         <td class="w-30" colspan="3"> @if($data->initiator_group_code){{ $data-> initiator_group_code}} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
-                        <th class="w-20">CFT</th>
+                        <th class="w-20">CFT Reviewer</th>
                         <td class="w-30">{{ $data->Microbiology }}</td>
 
-                        <th class="w-20">CFT Person</th>
+                        <th class="w-20">CFT Reviewer Person</th>
                         <td class="w-30">{{ $userNames }}</td>
                     </tr>
                     <tr>
@@ -243,7 +243,7 @@
                         <th class="w-20">Repeat</th>
                         <td class="w-30"> @if($data->repeat){{ $data-> repeat}} @else Not Applicable @endif</td>
 
-                        <th class="w-20">Division Code</th>
+                        <th class="w-20">Division</th>
                         <td class="w-30"> @if($data->Division_Code){{ $data->Division_Code }} @else Not Applicable @endif</td>
                     </tr>
 
@@ -427,7 +427,12 @@
                                 </div>
                             </td>
                         </tr>
+                    </table>
 
+                    <table>
+                        <div class="block-head">
+                            Training Information
+                        </div>
                         <tr>
                             <th class="w-20">Training Required</th>
                             <td class="w-80"> {{ $evaluation->training_required }}</td>
@@ -477,11 +482,22 @@
                     <div class="block-head">
                       Comments
                     </div>
+                    <div class="block-head">
+                      Feedback
+                    </div>
                     <table>
-                    <tr>
-                        <th class="w-20">Comments</th>
-                        <td class="w-80" colspan="3">{{ $data->cft_comments }}</td>
-                    </tr>
+                        <tr>
+                            <th class="w-20">Comments</th>
+                            <td class="w-80" colspan="3">{{ $comments->cft_comments }}</td>
+                        </tr>
+                    </table>
+                    <div class="block-head">
+                      Concerned Feedback
+                    </div>
+                    <table>
+
+                    
+                    
                         <tr>
                             <th class="w-20">QA Comments</th>
                             <td class="w-80" colspan="3">
@@ -764,6 +780,10 @@
                 </div>
 
                 <div class="border-table">
+                <div class="block-head">
+                    Affected Documents
+                </div>
+
                     <table>
                         <tr class="table_bg">
                             <th class="w-25">Affected Documents</th>
