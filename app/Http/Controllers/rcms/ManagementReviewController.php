@@ -43,7 +43,7 @@ class ManagementReviewController extends Controller
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('Y-m-d');
-        
+
         $division = QMSDivision::where('name', Helpers::getDivisionName(session()->get('division')))->first();
 
         if ($division) {
@@ -75,7 +75,7 @@ class ManagementReviewController extends Controller
          $management->assign_to= $request->assign_to;
          $management->Operations= $request->Operations;
          $management->requirement_products_services = $request->requirement_products_services;
-         $management->design_development_product_services = $request->design_development_product_services; 
+         $management->design_development_product_services = $request->design_development_product_services;
          $management->control_externally_provide_services = $request->control_externally_provide_services;
          $management->production_service_provision= $request->production_service_provision;
          $management->release_product_services = $request->release_product_services;
@@ -93,7 +93,7 @@ class ManagementReviewController extends Controller
         //$management->comment = json_encode($request->comment);
         //$management->end_time = json_encode($request->end_time);
        // $management->topic = json_encode($request->topic);
-        
+
       // $management = new ManagementReview();
         $management->form_type = "Management Review";
         $management->division_id = $request->division_id;
@@ -106,7 +106,7 @@ class ManagementReviewController extends Controller
         $management->assigned_to = $request->assigned_to;
         $management->due_date = $request->due_date;
         $management->type = $request->type;
-       
+
         $management->start_date = $request->start_date;
         $management->end_date = $request->end_date;
         $management->attendees = $request->attendees;
@@ -132,7 +132,7 @@ class ManagementReviewController extends Controller
         $management->updated_at = $request->updated_at;
         $management->status = 'Opened';
         $management->stage = 1;
-       
+
         if (!empty($request->inv_attachment)) {
             $files = [];
             if ($request->hasfile('inv_attachment')) {
@@ -142,7 +142,7 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->inv_attachment= json_encode($files);
         }
         if (!empty($request->file_attchment_if_any)) {
@@ -154,7 +154,7 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->file_attchment_if_any= json_encode($files);
         }
         if (!empty($request->closure_attachments)) {
@@ -166,10 +166,10 @@ class ManagementReviewController extends Controller
                     $files[] = $name;
                 }
             }
-            
+
             $management->closure_attachments= json_encode($files);
         }
-        
+
         $management->save();
         $record = RecordNumber::first();
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
@@ -177,12 +177,12 @@ class ManagementReviewController extends Controller
 
 
         //  $request->dd();
-        
+
         // $management = new MeetingSummary();
         $management->risk_opportunities = $request->risk_opportunities;
         $management->external_supplier_performance = $request->external_supplier_performance;
         $management->customer_satisfaction_level = $request->customer_satisfaction_level;
-        $management->budget_estimates = $request->budget_estimates; 
+        $management->budget_estimates = $request->budget_estimates;
         $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
         $management->production_new = $request->production_new;
         $management->plans_new = $request->plans_new;
@@ -193,11 +193,11 @@ class ManagementReviewController extends Controller
         $management->summary_recommendation = $request->summary_recommendation;
         $management->additional_suport_required = $request->additional_suport_required;
         // $management->file_attchment_if_any = json_encode($request->file_attchment_if_any);
-       
+
         $management->save();
 
 
-       
+
 
 
         // --------------agenda--------------
@@ -240,7 +240,7 @@ class ManagementReviewController extends Controller
             $data2->evaluation = serialize($request->evaluation);
         }
         $data2->save();
-          
+
         $data3 = new ManagementReviewDocDetails();
         $data3->review_id = $management->id;
         $data3->type = "management_review_participants";
@@ -270,7 +270,7 @@ class ManagementReviewController extends Controller
         $data4 = new ManagementReviewDocDetails();
         $data4->review_id = $management->id;
         $data4->type = "action_item_details";
-        
+
         if (!empty($request->short_desc)) {
             $data4->short_desc = serialize($request->short_desc);
         }
@@ -297,7 +297,7 @@ class ManagementReviewController extends Controller
         $data5 = new ManagementReviewDocDetails();
         $data5->review_id = $management->id;
         $data5->type = "capa_detail_details";
-        
+
         if (!empty($request->Details)) {
             $data5->Details = serialize($request->Details);
         }
@@ -423,7 +423,7 @@ class ManagementReviewController extends Controller
         // $history->origin_state = $management->status;
         // $history->save();
 
-        
+
         // $history = new ManagementAuditTrial();
         // $history->ManagementReview_id = $management->id;
         // $history->activity_type = 'Performance Evaluation';
@@ -510,7 +510,7 @@ class ManagementReviewController extends Controller
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         // $history->origin_state = $management->status;
         // $history->save();
-         
+
         // $history = new ManagementAuditTrial();
         // $history->ManagementReview_id = $management->id;
         // $history->activity_type = 'File Attachment';
@@ -522,7 +522,7 @@ class ManagementReviewController extends Controller
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         // $history->origin_state = $management->status;
         // $history->save();
-         
+
         // $history = new ManagementAuditTrial();
         // $history->ManagementReview_id = $management->id;
         // $history->activity_type = 'File Attachment';
@@ -680,7 +680,7 @@ class ManagementReviewController extends Controller
             $history->ManagementReview_id = $management->id;
             $history->activity_type = 'Record Number';
             $history->previous = "Null";
-            $history->current = Helpers::getDivisionName(session()->get('division')) . "/EA/" . Helpers::year($management->created_at) . "/" . str_pad($management->record, 4, '0', STR_PAD_LEFT);
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/MR/" . Helpers::year($management->created_at) . "/" . str_pad($management->record, 4, '0', STR_PAD_LEFT);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -779,8 +779,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->due_date)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -833,7 +833,7 @@ class ManagementReviewController extends Controller
                           $history->origin_state = $management->status;
                             $history->save();
                         }
-    
+
             if (!empty($management->type)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -847,8 +847,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->start_date)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -862,8 +862,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->end_date)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -877,8 +877,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->attendees)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -892,8 +892,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->Agenda)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -907,8 +907,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-            
+
+
             if (!empty($management->performance_evaluation)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -922,7 +922,7 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->management_review_participants)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -936,7 +936,7 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->action_item_details)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -950,7 +950,7 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->capa_detail_details)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -964,8 +964,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->description)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -979,8 +979,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->attachment)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -994,8 +994,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->inv_attachment)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1009,7 +1009,7 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-             
+
             if (!empty($management->file_attchment_if_any)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1023,7 +1023,7 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-             
+
             if (!empty($management->closure_attachments)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1037,7 +1037,7 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->actual_start_date)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1051,7 +1051,7 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->actual_end_date)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1065,8 +1065,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->meeting_minute)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1080,8 +1080,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->decision)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1095,8 +1095,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->zone)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1113,7 +1113,7 @@ class ManagementReviewController extends Controller
             $history->save();
             $history->save();
             }
-    
+
             if (!empty($management->country)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1130,7 +1130,7 @@ class ManagementReviewController extends Controller
             $history->save();
             $history->save();
             }
-    
+
             if (!empty($management->city)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1144,8 +1144,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->site_name)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1159,8 +1159,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->building)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1174,8 +1174,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->floor)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1189,8 +1189,8 @@ class ManagementReviewController extends Controller
               $history->origin_state = $management->status;
                 $history->save();
             }
-    
-    
+
+
             if (!empty($management->room)) {
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $management->id;
@@ -1256,7 +1256,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->production_service_provision)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1296,7 +1296,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->risk_opportunities)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1310,7 +1310,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->external_supplier_performance)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1324,7 +1324,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->customer_satisfaction_level)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1338,7 +1338,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
 
             if (!empty($management->budget_estimates)) {
                 $history = new ManagementAuditTrial();
@@ -1353,7 +1353,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->completion_of_previous_tasks)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1393,7 +1393,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->forecast_new)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1407,7 +1407,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->additional_suport_required)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1421,7 +1421,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->file_attchment_if_any)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1435,7 +1435,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->next_managment_review_date)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1449,7 +1449,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->summary_recommendation)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1489,7 +1489,7 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
+
             if (!empty($management->due_date_extension)) {
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $management->id;
@@ -1503,16 +1503,16 @@ class ManagementReviewController extends Controller
                $history->origin_state = $management->status;
                 $history->save();
             }
-    
-        
+
+
 
          DocumentService::update_qms_numbers();
 
         toastr()->success("Record is created Successfully");
         return redirect(url('rcms/qms-dashboard'));
-        
+
     }
-    
+
     public function manageUpdate(Request $request, $id)
     {
 
@@ -1559,14 +1559,14 @@ class ManagementReviewController extends Controller
         $management->Operations= $request->Operations;
         $management->initiator_Group= $request->initiator_Group;
         $management->requirement_products_services = $request->requirement_products_services;
-        $management->design_development_product_services = $request->design_development_product_services; 
+        $management->design_development_product_services = $request->design_development_product_services;
         $management->control_externally_provide_services = $request->control_externally_provide_services;
         $management->production_service_provision= $request->production_service_provision;
         $management->release_product_services = $request->release_product_services;
         $management->control_nonconforming_outputs = $request->control_nonconforming_outputs;
          $management->external_supplier_performance = $request->external_supplier_performance;
          $management->customer_satisfaction_level = $request->customer_satisfaction_level;
-         $management->budget_estimates = $request->budget_estimates; 
+         $management->budget_estimates = $request->budget_estimates;
          $management->completion_of_previous_tasks = $request->completion_of_previous_tasks;
          $management->production_new = $request->production_new;
          $management->plans_new = $request->plans_new;
@@ -1610,7 +1610,7 @@ class ManagementReviewController extends Controller
                 }
             }
             $management->closure_attachments = json_encode($files);
-        } 
+        }
 
         $management->update();
         if ($lastDocument->short_description != $management->short_description || !empty($request->short_desc_comment)) {
@@ -1881,7 +1881,7 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastDocument->file_attchment_if_any != $management->file_attchment_if_any || !empty($request->file_attchment_if_any_comment)) {
 
             $history = new ManagementAuditTrial();
@@ -2248,7 +2248,7 @@ class ManagementReviewController extends Controller
         if (!empty($request->current_status)) {
             $data4->current_status = serialize($request->current_status);
         }
-        
+
         if (!empty($request->date_closed)) {
             $data4->date_closed = serialize($request->date_closed);
         }
@@ -2256,11 +2256,11 @@ class ManagementReviewController extends Controller
             $data4->remark = serialize($request->remark);
         }
         $data4->update();
-        
+
         $data5 = ManagementReviewDocDetails::where('review_id',$id)->where('type',"capa_detail_details")->first();
         $data5->review_id = $management->id;
         $data5->type = "capa_detail_details";
-      
+
         if (!empty($request->Details)) {
             $data5->Details = serialize($request->Details);
         }
@@ -2284,24 +2284,24 @@ class ManagementReviewController extends Controller
             $data5->remark2 = serialize($request->remark2);
         }
         $data5->update();
-    
+
         DocumentService::update_qms_numbers();
-        
+
         toastr()->success("Record is updated Successfully");
         return back();
-    
+
     }
 
     public function ManagementReviewAuditTrial($id)
     {
-        
+
         $audit = ManagementAuditTrial::where('ManagementReview_id', $id)->orderByDESC('id')->get()->unique('activity_type');
         $today = Carbon::now()->format('d-m-y');
         $document = ManagementReview::where('id', $id)->first();
         $document->originator = User::where('id', $document->initiator_id)->value('name');
 
         return view('frontend.management-review.audit-trial', compact('audit', 'document', 'today'));
-    
+
     }
 
 
@@ -2327,7 +2327,7 @@ class ManagementReviewController extends Controller
         $action_item_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"action_item_details")->first();
         //dd(unserialize($action_item_details->date_due));
         $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$data->id)->where('type',"capa_detail_details")->first();
-        
+
         return view('frontend.management-review.management_review', compact( 'data','agenda','management_review_participants','performance_evaluation','action_item_details','capa_detail_details' ));
     }
 
@@ -2350,7 +2350,7 @@ class ManagementReviewController extends Controller
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
                 // $history->previous = $lastDocument->Submited_by;
-                $history->current = $changeControl->Submited_by;    
+                $history->current = $changeControl->Submited_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2358,7 +2358,7 @@ class ManagementReviewController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Submited';
                 $history->save();
-                
+
                 // $list = Helpers::getResponsibleUserList();
                 // foreach ($list as $u) {
                 //     if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -2373,7 +2373,7 @@ class ManagementReviewController extends Controller
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2388,7 +2388,7 @@ class ManagementReviewController extends Controller
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
                 // $history->previous = $lastDocument->completed_by;
-                $history->current = $changeControl->completed_by;    
+                $history->current = $changeControl->completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2411,7 +2411,7 @@ class ManagementReviewController extends Controller
                 //             }
                 //         );
                 //       }
-                //     } 
+                //     }
                 // }
                 toastr()->success('Document Sent');
                 return back();
@@ -2422,7 +2422,7 @@ class ManagementReviewController extends Controller
         }
     }
 
- 
+
 
     public function managementReport($id)
     {
@@ -2477,7 +2477,7 @@ class ManagementReviewController extends Controller
     public static function managementReviewReport($id)
     {
         $managementReview = ManagementReview::find($id);
-        
+
         if (!empty($managementReview)) {
             $managementReview->originator = User::where('id', $managementReview->initiator_id)->value('name');
             $data = ManagementAuditTrial::where('ManagementReview_id', $id)->get();
@@ -2500,5 +2500,5 @@ class ManagementReviewController extends Controller
             return $pdf->stream('Management-Review' . $id . '.pdf');
         }
     }
-    
+
 }

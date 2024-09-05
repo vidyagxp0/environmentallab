@@ -11,9 +11,10 @@
                             <div class="main-head">
                                 <!-- Record - 00000{{ $detail->Observation_id }} -->
                                 Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                                {{--{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}</div>--}}
                             </div>
-                            <div class="info-list">
 
+                            <div class="info-list">
                                 <div class="list-item">
                                     <div class="head">Document Stage</div>
                                     <div>:</div>
@@ -25,6 +26,19 @@
                                     <div>{{ $doc->origiator_name->name }}</div>
                                 </div>
                             </div>
+
+                            {{--<div class="info-list">
+                                <div class="list-item">
+                                    <div class="head">Document Stage</div>
+                                    <div>:</div>
+                                    <div>{{ $doc->status }}</div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="head">Originator</div>
+                                    <div>:</div>
+                                    <div>{{ $doc->origiator_name->name }}</div>
+                                </div>
+                            </div>--}}
                         </div>
                     </div>
 
@@ -97,7 +111,7 @@
                                 {{ $temp->previous }}
                                 @endif
                                </div>
-                            
+
                             @else
                             @if($temp->activity_type == "Activity Log" )
                             @else
@@ -110,17 +124,17 @@
                             @endif
                             @if($temp->current != $temp->previous)
                             @if($temp->activity_type == "Activity Log" )
-                          
+
                                 <div class="list-item">
                                 <div class="head">{{$temp->stage}} By</div>
                                 <div>:</div>
                                 <div> {{$temp->current}}</div>
-                                </div>  
+                                </div>
                                 <div class="list-item">
                                 <div class="head">{{$temp->stage}} On</div>
                                 <div>:</div>
                                 <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
-                               </div> 
+                               </div>
                              @else
                                         <div class="list-item">
                                             <div class="head">Changed To</div>
@@ -136,7 +150,7 @@
                                         @endif
                                         @endif
                                         @endif
-    
+
                             <div class="list-item">
                                 <div class="head">Origin state</div>
                                 <div>:</div>
