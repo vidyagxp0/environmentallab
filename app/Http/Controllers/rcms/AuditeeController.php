@@ -73,7 +73,7 @@ class AuditeeController extends Controller
         $internalAudit->area_of_auditing =  $request->area_of_auditing;
         $internalAudit->division_code = $request->division_code;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assign_to = $request->assign_to;
+        $internalAudit->multiple_assignee_to = $request->multiple_assignee_to;
         $internalAudit->multiple_assignee_to =  implode(',', $request->multiple_assignee_to);
         $internalAudit->due_date = $request->due_date;
         $internalAudit->Initiator_Group = $request->Initiator_Group;
@@ -207,7 +207,7 @@ class AuditeeController extends Controller
             $internalAudit->myfile = json_encode($files);
         }
 
-     
+
         //return $internalAudit;
         $internalAudit->save();
 
@@ -215,7 +215,7 @@ class AuditeeController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        // -----------------grid---- Audit Agenda 
+        // -----------------grid---- Audit Agenda
         $data3 = new InternalAuditGrid();
       //  $request->dd();
         $data3->audit_id = $internalAudit->id;
@@ -335,15 +335,16 @@ class AuditeeController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
 
-         
+
             $history->save();
         }
-        if (!empty($internalAudit->assign_to)) {
+        if (!empty($internalAudit->multiple_assignee_to)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $internalAudit->assign_to;
+            $history->current = $internalAudit->multiple_assignee_to;
+            // $history->current = Helpers::getInitiatorName($internalAudit->multiple_assignee_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -390,7 +391,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->Audit_Category)) {
@@ -404,7 +405,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->severity_level)) {
@@ -418,7 +419,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->external_auditor_name)) {
@@ -432,7 +433,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->area_of_auditing)) {
@@ -446,7 +447,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
 
@@ -529,6 +530,20 @@ class AuditeeController extends Controller
             $history->origin_state = $internalAudit->status;
             $history->save();
         }
+        if (!empty($internalAudit->initiated_if_other)) {
+            $history = new AuditTrialExternal();
+            $history->ExternalAudit_id = $internalAudit->id;
+            $history->activity_type = 'Others.';
+            $history->previous = "Null";
+            $history->current = $internalAudit->initiated_if_other;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $internalAudit->status;
+            $history->save();
+        }
+
         // if (!empty($internalAudit->initial_comments)) {
         //     $history = new AuditTrialExternal();
         //     $history->ExternalAudit_id = $internalAudit->id;
@@ -855,7 +870,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-      
+
             $history->save();
         }
         if (!empty($internalAudit->Reference_Recores2)) {
@@ -980,14 +995,14 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-            
-         
+
+
             $history->save();
         }
         if(!empty($internalAudit->division_code))
         {
-          
-    
+
+
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Site/Location Code';
@@ -998,8 +1013,8 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-                    
-         
+
+
             $history->save();
         }
 
@@ -1049,12 +1064,12 @@ class AuditeeController extends Controller
 
         toastr()->success("Record is Create Successfully");
         return redirect(url('rcms/qms-dashboard'));
-    
+
     }
 
     public function show($id)
     {
-       
+
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
         $data = Auditee::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -1074,7 +1089,7 @@ class AuditeeController extends Controller
         //$internalAudit->parent_id = $request->parent_id;
         //$internalAudit->parent_type = $request->parent_type;
         $internalAudit->intiation_date = $request->intiation_date;
-        $internalAudit->assign_to = $request->assign_to;
+        $internalAudit->multiple_assignee_to = $request->multiple_assignee_to;
         $internalAudit->multiple_assignee_to =  implode(',', $request->multiple_assignee_to);
         $internalAudit->due_date = $request->due_date;
         $internalAudit->Initiator_Group = $request->Initiator_Group;
@@ -1096,7 +1111,7 @@ class AuditeeController extends Controller
 
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->start_date = $request->start_date;
-        
+
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -1122,7 +1137,7 @@ class AuditeeController extends Controller
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
-                
+
                 foreach ($request->file('file_attachment_guideline') as $file) {
                     $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1133,7 +1148,7 @@ class AuditeeController extends Controller
 
             $internalAudit->file_attachment_guideline = json_encode($files);
         }
- 
+
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
@@ -1158,7 +1173,7 @@ class AuditeeController extends Controller
         if (!empty($request->file_attachment)) {
             $files = [];
             if ($request->hasfile('file_attachment')) {
-                
+
                 foreach ($request->file('file_attachment') as $file) {
                     $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1314,13 +1329,13 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assign_to != $internalAudit->assign_to || !empty($request->assign_to_comment)) {
+        if ($lastDocument->multiple_assignee_to != $internalAudit->multiple_assignee_to || !empty($request->assign_to_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $internalAudit->assign_to;
+            $history->previous = $lastDocument->multiple_assignee_to;
+            $history->current = $internalAudit->multiple_assignee_to;
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1357,20 +1372,6 @@ class AuditeeController extends Controller
             $history->save();
         }
 
-        if (!empty($internalAudit->initiated_if_other)) {
-            $history = new AuditTrialExternal();
-            $history->ExternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Others';
-            $history->previous = "Null";
-            $history->current = $internalAudit->initiated_if_other;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $internalAudit->status;
-      
-            $history->save();
-        }
         if ($lastDocument->severity_level != $internalAudit->severity_level || !empty($request->severity_level_comment)) {
 
             $history = new AuditTrialExternal();
@@ -1433,7 +1434,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = 'Others';
+            $history->activity_type = 'Others.';
             $history->previous = $lastDocument->initiated_if_other;
             $history->current = $internalAudit->initiated_if_other;
             $history->comment = $request->date_comment;
@@ -2064,15 +2065,15 @@ class AuditeeController extends Controller
                         // dd($history->current);
                         $history->save();
                     //     $list = Helpers::getLeadAuditorUserList();
-                        
+
 
                     //     foreach ($list as $u) {
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
-                                
+
                     //              if ($email !== null) {
-                                   
-                              
+
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2082,7 +2083,7 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2109,7 +2110,7 @@ class AuditeeController extends Controller
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2119,7 +2120,7 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2146,7 +2147,7 @@ class AuditeeController extends Controller
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2156,7 +2157,7 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -2269,7 +2270,7 @@ class AuditeeController extends Controller
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2279,7 +2280,7 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
                 $changeControl->update();
                 $history = new AuditeeHistory();
