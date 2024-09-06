@@ -900,6 +900,18 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">More Information Required By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Information Required On</label>
+                                            <div class="Date"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Cancelled By">Cancelled By</label>
                                         <div class="static"></div>

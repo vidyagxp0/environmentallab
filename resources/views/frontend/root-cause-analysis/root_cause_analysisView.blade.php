@@ -662,7 +662,7 @@
                      </div>
 
                                                 <div class="button-block">
-                                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                                    <button type="submit" id="ChangesaveButton" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                                 </div>
@@ -888,8 +888,8 @@
                                             <label for="fishbone">
                                                 Fishbone or Ishikawa Diagram
                                                 <button type="button" name="agenda"
-                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
-                                                <button type="button" name="agenda" class="fishbone-del-btn"
+                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                <button type="button" name="agenda" class="fishbone-del-btn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
@@ -976,37 +976,35 @@
                                                     <tbody>
                                                         <tr style="background: #f4bb22">
                                                             <th style="width:150px;">Problem Statement</th>
-                                                              <td>
-                                                            <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
-                                                        </td>
-                                                            
+                                                            <td>
+                                                                <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
+                                                            </td>
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 1 <span
-                                                                    onclick="addWhyField('why_1_block', 'why_1[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_1_block\', \'why_1[]\')' }}">+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_1_block"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <div class="why_1_block">
                                                                     @if (!empty($data->why_1))
                                                                         @foreach (unserialize($data->why_1) as $key => $measure)
-                                                                            <textarea name="why_1[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_1[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
-
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 2 <span
-                                                                    onclick="addWhyField('why_2_block', 'why_2[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_2_block\', \'why_2[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_2_block">
                                                                     @if (!empty($data->why_2))
                                                                         @foreach (unserialize($data->why_2) as $key => $measure)
-                                                                            <textarea name="why_2[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_2[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1015,13 +1013,13 @@
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 3 <span
-                                                                    onclick="addWhyField('why_3_block', 'why_3[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_3_block\', \'why_3[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_3_block">
                                                                     @if (!empty($data->why_3))
                                                                         @foreach (unserialize($data->why_3) as $key => $measure)
-                                                                            <textarea name="why_3[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_3[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1030,13 +1028,13 @@
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 4 <span
-                                                                    onclick="addWhyField('why_4_block', 'why_4[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_4_block\', \'why_4[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_4_block">
                                                                     @if (!empty($data->why_4))
                                                                         @foreach (unserialize($data->why_4) as $key => $measure)
-                                                                            <textarea name="why_4[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_4[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1045,13 +1043,13 @@
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 5 <span
-                                                                    onclick="addWhyField('why_5_block', 'why_5[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_5_block\', \'why_5[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_5_block">
                                                                     @if (!empty($data->why_5))
                                                                         @foreach (unserialize($data->why_5) as $key => $measure)
-                                                                            <textarea name="why_5[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_5[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1060,7 +1058,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="why_root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
+                                                                <textarea name="why_root_cause" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1068,6 +1066,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-12 sub-head"></div>
                                     {{-- <div class="col-12">
                                         <div class="group-input">
@@ -1356,7 +1355,7 @@
                                 </div>
                             
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1406,6 +1405,18 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">More Information Required By</label>
+                                            <div class="static">{{ $data->more_info_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Information Required On</label>
+                                            <div class="static">{{ $data->more_info_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
@@ -1417,6 +1428,7 @@
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
+
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"
