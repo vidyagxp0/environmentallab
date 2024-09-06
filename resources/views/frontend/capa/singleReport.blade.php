@@ -219,7 +219,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
-                                {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            {{ Helpers::divisionNameForQMS($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
                             @else
                                 Not Applicable
                             @endif
@@ -238,7 +238,7 @@
                         <th class="w-20">Initiator Group</th>
                         <td class="w-30">
                             @if ($data->initiator_Group)
-                                {{ $data->initiator_Group }}
+                                {{ Helpers::getInitiatorGroupFullName($data->initiator_Group) }}
                             @else
                                 Not Applicable
                             @endif
