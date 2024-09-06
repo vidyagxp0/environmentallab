@@ -646,24 +646,24 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="external_agencies">External Agencies</label>
                                                 <select  onchange="otherController(this.value, 'others', 'if_external')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="external_agencies">
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data->external_agencies == 'jordan fda') selected @endif
-                                                         value="jordan fda">Jordan FDA</option>
-                                                    <option @if ($data->external_agencies == 'us fda') selected @endif 
-                                                         value="us fda">USFDA</option>
-                                                    <option @if ($data->external_agencies == 'mhra') selected @endif
-                                                         value="mhra">MHRA</option>
-                                                    <option @if ($data->external_agencies == 'anvisa') selected @endif
-                                                         value="anvisa">ANVISA</option>
-                                                    <option @if ($data->external_agencies == 'iso') selected @endif
-                                                         value="iso">ISO</option>
-                                                    <option @if ($data->external_agencies == 'who') selected @endif
-                                                         value="who">WHO</option>
-                                                    <option @if ($data->external_agencies == 'local fda') selected @endif
-                                                         value="local fda">Local FDA</option>
-                                                    <option @if ($data->external_agencies == 'tga') selected @endif
-                                                         value="tga">TGA</option>
-                                                    <option value="others"
-                                                     @if ($data->external_agencies == 'others') selected @endif>Others
+                                                    <option @if ($data->external_agencies == 'Jordan FDA') selected @endif
+                                                         value="Jordan FDA">Jordan FDA</option>
+                                                    <option @if ($data->external_agencies == 'USFDA') selected @endif 
+                                                         value="USFDA">USFDA</option>
+                                                    <option @if ($data->external_agencies == 'MHRA') selected @endif
+                                                         value="MHRA">MHRA</option>
+                                                    <option @if ($data->external_agencies == 'ANVISA') selected @endif
+                                                         value="ANVISA">ANVISA</option>
+                                                    <option @if ($data->external_agencies == 'ISO') selected @endif
+                                                         value="ISO">ISO</option>
+                                                    <option @if ($data->external_agencies == 'WHO') selected @endif
+                                                         value="WHO">WHO</option>
+                                                    <option @if ($data->external_agencies == 'Local FDA') selected @endif
+                                                         value="Local FDA">Local FDA</option>
+                                                    <option @if ($data->external_agencies == 'TGA') selected @endif
+                                                         value="TGA">TGA</option>
+                                                    <option value="Others"
+                                                     @if ($data->external_agencies == 'Others') selected @endif>Others
                                                     </option>
                                                 </select>
                                             </div>
