@@ -419,9 +419,9 @@
                                             quality standards and mitigate critical risks.</span>
                                         <select name="severity_level">
                                             <option value="0">-- Select --</option>
-                                            <option value="minor">Minor</option>
-                                            <option value="major">Major</option>
-                                            <option value="critical">Critical</option>
+                                            <option value="Minor">Minor</option>
+                                            <option value="Major">Major</option>
+                                            <option value="Critical">Critical</option>
                                         </select>
                                     </div>
                                 </div>
@@ -1036,7 +1036,7 @@
 
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Related Records">Action Item Related Records</label>
+                                        <label for="Related Records">Reference Records</label>
                                         <select multiple id="Reference_Recores1" name="Reference_Recores1[]"
                                             placeholder="Select Reference Records">
 

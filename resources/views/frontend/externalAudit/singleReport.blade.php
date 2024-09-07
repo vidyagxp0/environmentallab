@@ -379,8 +379,8 @@
 
                     </tr>
 
-                    <tr>
-                        <th class="w-20">Audit type</th>
+                    {{-- <tr>
+                        <th class="w-20">Audit Type</th>
                         <td class="w-30">
                             @if ($data->audit_type)
                                 {{ $data->audit_type }}
@@ -388,7 +388,7 @@
                                 Not Applicable
                             @endif
                         </td>
-                    </tr>
+                    </tr> --}}
 
 
                 </table>
@@ -459,7 +459,7 @@
                         </tr>
                         <tr>
                             <th class="w-20">Product/Material Name</th>
-                            <td class="w-30">
+                            <td class="w-30" colspan="3">
                                 @if ($data->material_name)
                                     {{ $data->material_name }}
                                 @else
@@ -472,7 +472,7 @@
                 </div>
             </div>
 
-            <div class="block-head">
+            {{-- <div class="block-head">
                 <table>
                     <div class="block">
                         <div class="block-head">
@@ -506,14 +506,14 @@
                                             <td>{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}
                                             </td>
                                             {{-- <td>{{ $grid_data->auditor }}</td> --}}
-                                            <td>{{ isset(unserialize($grid_data->auditor)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditor)[$key]) : '' }}
+            {{-- <td>{{ isset(unserialize($grid_data->auditor)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditor)[$key]) : '' }}
                                             </td>
                                             <td>{{ isset(unserialize($grid_data->auditee)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditee)[$key]) : '' }}
-                                            </td>
+                                            </td> --}}
 
-                                            {{-- <td>{{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}</td> --}}
-                                            {{-- <td>{{ unserialize($grid_data->auditee)[$key] ? unserialize($grid_data->auditee)[$key] : '' }}</td> --}}
-                                            <td>{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}
+            {{-- <td>{{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}</td> --}}
+            {{-- <td>{{ unserialize($grid_data->auditee)[$key] ? unserialize($grid_data->auditee)[$key] : '' }}</td> --}}
+            {{-- <td>{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}
                                             </td>
 
                                         </tr>
@@ -531,8 +531,84 @@
                             </table>
                         </div>
                     </div>
-                </table>
+                </table> --}}
+            {{-- </div> --}}
+
+            <div class="block-head">
+                <div class="block">
+                    <div class="block-head">
+                        Audit Agenda - Part 1
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th>Area of Audit</th>
+                                <th>Scheduled Start Date</th>
+                                <th>Scheduled Start Time</th>
+                            </tr>
+                            @if ($grid_data->start_date)
+                                @foreach (unserialize($grid_data->start_date) as $key => $temps)
+                                    <tr style="color: black; font-weight: normal;">
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}
+                                        </td>
+                                        <td>{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
+                                        </td>
+                                        <td>{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="4">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
+
+                <div class="block">
+                    <div class="block-head">
+                        Audit Agenda - Part 2
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th>Row #</th>
+                                <th>Scheduled End Date</th>
+                                <th>Scheduled End Time</th>
+                                <th>Auditor</th>
+                                <th>Auditee</th>
+                                <th>Remarks</th>
+                            </tr>
+                            @if ($grid_data->start_date)
+                                @foreach (unserialize($grid_data->start_date) as $key => $temps)
+                                    <tr style="color: black; font-weight: normal;">
+                                        <td>{{ $key + 1 }}</td>
+                                        <td>{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}</td>
+                                        <td>{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}
+                                        </td>
+                                        <td>{{ isset(unserialize($grid_data->auditor)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditor)[$key]) : '' }}
+                                        </td>
+                                        <td>{{ isset(unserialize($grid_data->auditee)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditee)[$key]) : '' }}
+                                        </td>
+                                        <td>{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="6">Not Applicable</td>
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
             </div>
+
+
+
 
             <div class="block">
                 <div class="head">
@@ -542,7 +618,7 @@
                     <table>
                         <tr>
                             <th class="w-20">Lead Auditor</th>
-                            <td class="w-30">
+                            <td class="w-30" colspan="3">
                                 @if ($data->lead_auditor)
                                     {{ $data->lead_auditor }}
                                 @else
@@ -636,8 +712,8 @@
 
                         </tr>
                         <tr>
-                            <th class="w-20">Audit team</th>
-                            <td class="w-30">
+                            <th class="w-20">Audit Team</th>
+                            <td class="w-30" colspan="3">
                                 @if ($data->Audit_team)
                                     {{ $data->Audit_team }}
                                 @else
@@ -670,7 +746,7 @@
                                 @endif
                             </td>
                         </tr>
-                        <tr>
+                        {{-- <tr>
                             <th class="w-20">Audit Comments</th>
                             <td class="w-30" colspan="3">
                                 @if ($data->Audit_Comments1)
@@ -679,7 +755,7 @@
                                     Not Applicable
                                 @endif
                             </td>
-                        </tr>
+                        </tr> --}}
                     </table>
                 </div>
 
@@ -826,7 +902,7 @@
                             </div>
                         </table>
                     </div>
-                   
+
 
                     <div class="border-table">
                         <div class="block-head">
@@ -838,8 +914,8 @@
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">File</th>
                             </tr>
-                            @if ($data->myfile)
-                                @foreach (json_decode($data->myfile) as $key => $file)
+                            @if ($data->Audit_file)
+                                @foreach (json_decode($data->Audit_file) as $key => $file)
                                     <tr>
                                         <td class="w-20">{{ $key + 1 }}</td>
                                         <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -922,8 +998,8 @@
                         <th class="w-20">S.N.</th>
                         <th class="w-60">File </th>
                     </tr>
-                    @if ($data->Audit_file)
-                        @foreach (json_decode($data->Audit_file) as $key => $file)
+                    @if ($data->myfile)
+                        @foreach (json_decode($data->myfile) as $key => $file)
                             <tr>
                                 <td class="w-20">{{ $key + 1 }}</td>
                                 <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
@@ -1036,18 +1112,7 @@
         </div>
     </div>
 
-
-
-
-
-
-
-
-
-
-
-
-    <footer>
+ <footer>
         <table>
             <tr>
                 <td class="w-30">
