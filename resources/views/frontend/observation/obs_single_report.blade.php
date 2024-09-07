@@ -161,11 +161,13 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Observations Single Report
+                    Observation Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+
+                        {{--<img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">--}}
                     </div>
                 </td>
             </tr>
@@ -254,14 +256,14 @@
                     @endif
 
                     <th class="w-20">Date Due</th>
-                    <td class="w-80">{{ $data->due_date }}</td>
+                    <td class="w-80">{{ Helpers::getdateFormat($data->due_date) }}</td>
 
                 </tr>
                 <tr>
                     <th class="w-20">Short Description</th>
                     <td class="w-80">{{ $data->short_description }}</td>
 
-                 
+
 
                 </tr>
                 <tr>
@@ -314,7 +316,7 @@
                 <div style="font-size: 12px;">
                     {{ str_replace(',', ', ', $data->recommend_action) }}
                 </div> --}}
-                
+
                 <div class="block-head">
                     Attached Files
                 </div>
@@ -341,6 +343,8 @@
 
                 </table>
             </div>
+
+            <br>
                     <div class="block-head">
                         Related Obsevations
                     </div>
@@ -435,7 +439,7 @@
                 </td> --}}
             </tr>
         </table>
-       
+
       <table>
         <tr>
             <th class="w-20">Commnets</th>
@@ -519,7 +523,7 @@
                     @else
                         Not Applicable
                     @endif
-                </td> 
+                </td>
             </tr>
             </table>
 
@@ -608,7 +612,7 @@
 
     <div class="block">
         <div class="block-head">
-            Summary
+            Response Summary
         </div>
         <table>
             <tr>
@@ -643,7 +647,7 @@
         </table>
 
 
-        
+
 
             <table>
 
@@ -657,7 +661,7 @@
                     @endif
                 </td> --}}
 
-               
+
             </tr>
             <tr>
                 <th class="w-20">Related URL</th>
@@ -680,9 +684,9 @@
             </tr>
 
         </table>
-        
+
         <div class="block-head">
-            Related Obsevations
+            Attached Files
         </div>
         <div class="border-table">
         <table>
@@ -708,7 +712,7 @@
         </table>
     </div>
 
-       
+
 <table>
     <tr>
         <th class="w-20">Response Summary</th>
@@ -820,7 +824,7 @@
                 </td>
             </tr> --}}
 
-            {{-- <tr>
+            <tr>
                 <th class="w-20">More Info Required By</th>
                 <td class="w-80">
                     @if ($data->more_info_required_by)
@@ -838,7 +842,7 @@
                         Not Applicable
                     @endif
                 </td>
-            </tr> --}}
+            </tr>
             {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
@@ -851,19 +855,19 @@
             </tr> --}}
 
             <tr>
-                <th class="w-20">Reject CAPA Plan By</th>
+                <th class="w-20">QA Approval By</th>
                 <td class="w-80">
-                    @if ($data->reject_capa_plan_by)
-                        {{ $data->reject_capa_plan_by }}
+                    @if ($data->QA_Approved_By)
+                        {{ $data->QA_Approved_By }}
                     @else
                         Not Applicable
                     @endif
                 </td>
 
-                <th class="w-20">Reject CAPA plan On</th>
+                <th class="w-20">QA Approval On</th>
                 <td class="w-80">
-                    @if ($data->reject_capa_plan_on)
-                        {{ $data->reject_capa_plan_on }}
+                    @if ($data->QA_Approved_on)
+                        {{ $data->QA_Approved_on }}
                     @else
                         Not Applicable
                     @endif
@@ -872,8 +876,8 @@
             {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
-                    @if ($data->reject_capa_plan_comment)
-                        {{ $data->reject_capa_plan_comment }}
+                    @if ($data->qa_appproval_comment)
+                        {{ $data->qa_appproval_comment }}
                     @else
                         Not Applicable
                     @endif
@@ -911,19 +915,19 @@
             </tr> --}}
 
             <tr>
-                <th class="w-20">QA Approval By</th>
+                <th class="w-20">Reject CAPA Plan By</th>
                 <td class="w-80">
-                    @if ($data->QA_Approved_By)
-                        {{ $data->QA_Approved_By }}
+                    @if ($data->reject_capa_plan_by)
+                        {{ $data->reject_capa_plan_by }}
                     @else
                         Not Applicable
                     @endif
                 </td>
 
-                <th class="w-20">QA Approval On</th>
+                <th class="w-20">Reject CAPA plan On</th>
                 <td class="w-80">
-                    @if ($data->QA_Approved_on)
-                        {{ $data->QA_Approved_on }}
+                    @if ($data->reject_capa_plan_on)
+                        {{ $data->reject_capa_plan_on }}
                     @else
                         Not Applicable
                     @endif
@@ -932,13 +936,17 @@
             {{-- <tr>
                 <th class="w-20">Comment</th>
                 <td class="w-80">
-                    @if ($data->qa_appproval_comment)
-                        {{ $data->qa_appproval_comment }}
+                    @if ($data->reject_capa_plan_comment)
+                        {{ $data->reject_capa_plan_comment }}
                     @else
                         Not Applicable
                     @endif
                 </td>
             </tr> --}}
+
+
+
+
             <tr>
                 <th class="w-20">All CAPA closed By</th>
                 <td class="w-80">
