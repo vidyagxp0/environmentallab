@@ -22,6 +22,14 @@
         width: 10%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-20 {
         width: 20%;
     }
@@ -143,6 +151,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -230,12 +243,13 @@
         </div> --}}
 
         <div class="second-table">
-            <table>
+
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
+                    <th class='w-10'>Date Performed</th>
+                    <th class='w-10'>Person Responsible</th>
+                    <th class='w-10'>Change Type</th>
                 </tr>
                 @foreach ($data as $datas)
                     <tr>
@@ -244,25 +258,26 @@
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
+                                <div style="word-break: break-all;">{{ $datas->previous }}</div>
                                 @else
                                 <div>Null</div>
                                 @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
+                                <div style="word-break: break-all;">{{ $datas->current }}</div>
                             </div>
                         </td>
                         <td>{{ $datas->created_at }}</td>
                         <td>{{ $datas->user_name }}</td>
+
                         <td>
-                            @if(($datas->previous == 'Null') && ($datas->current !='Null'))
+                            @if(($datas->previous == 'Null') && ($datas->current != 'Null'))
                                 New
                             @elseif(($datas->previous != $datas->current))
                                 Modify
                             @else
-                               New
+                                New
                             @endif
                         </td>
                     </tr>
@@ -271,7 +286,11 @@
         </div>
 
     </div>
-
+    {{--@if ($datas->previous == "Null")
+    New
+ @else
+    Modify
+ @endif--}}
 
 
 </body>
