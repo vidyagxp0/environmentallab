@@ -1909,6 +1909,103 @@
                     </tr>
 
                 </table>
+
+
+                {{--new code grid--}}
+                <div class="block">
+                    <div class="block-head">
+                    Agenda
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-20">Sr no.</th>
+                                <th class="w-20">Date</th>
+                                <th class="w-20">Topic</th>
+                                <th class="w-20">Responsible</th>
+                                <th class="w-20">Time Start</th>
+                                <th class="w-20">Time End</th>
+                                <th class="w-20">Comment</th>
+                            </tr>
+
+                                @if (!empty($agendaGrid->type))
+                                    @foreach (unserialize($agendaGrid->date) as $key => $temps)
+                                    <tr>
+                                    <td class="w-10">{{ $key + 1 }}</td>
+                                    <td class="w-30">{{ unserialize($agendaGrid->date)[$key] ? Helpers::getdateFormat(unserialize($agendaGrid->date)[$key]) : '' }}</td>
+                                    <td class="w-30">{{ unserialize($agendaGrid->topic)[$key] ? unserialize($agendaGrid->topic)[$key] : '' }}</td>
+                                    <td class="w-30">{{ unserialize($agendaGrid->responsible)[$key] ? unserialize($agendaGrid->responsible)[$key] : '' }}</td>
+                                    <td class="w-30">{{ unserialize($agendaGrid->start_time)[$key] ? unserialize($agendaGrid->start_time)[$key] : '' }}</td>
+                                    <td class="w-30">{{ unserialize($agendaGrid->end_time)[$key] ? unserialize($agendaGrid->end_time)[$key] : '' }}</td>
+                                    <td class="w-30">{{ unserialize($agendaGrid->comment)[$key] ? unserialize($agendaGrid->comment)[$key] : '' }}</td>
+                                    </tr>
+                                    @endforeach
+
+                                @else
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
+
+
+                {{--new code 2nd grid--}}
+                <div class="block">
+                    <div class="block-head">
+                        Management Review Participants
+                    </div>
+                    <div class="border-table">
+                        <table>
+                            <tr class="table_bg">
+                                <th class="w-10">Sr no.</th>
+                                <th class="w-20">Invited Person</th>
+                                <th class="w-20">Designee</th>
+                                <th class="w-20">Department</th>
+                                <th class="w-20">Meeting Attended</th>
+                                <th class="w-20">Designee Name</th>
+                                <th class="w-20">Designee Department</th>
+                                <th class="w-20">Remarks</th>
+                            </tr>
+
+                                @if (!empty($management_review_participants->type))
+                                    @foreach (unserialize($management_review_participants->invited_Person) as $key => $temps)
+                                    <tr>
+                                        <td class="w-5">{{ $key + 1 }}</td>
+                                        <td class="w-20">{{ unserialize($management_review_participants->invited_Person)[$key] ? unserialize($management_review_participants->invited_Person)[$key] : '' }}</td>
+                                        <td class="w-20">{{ unserialize($management_review_participants->designee)[$key] ? unserialize($management_review_participants->designee)[$key] : '' }}</td>
+                                        <td class="w-20">{{ unserialize($management_review_participants->department)[$key] ? unserialize($management_review_participants->department)[$key] : '' }}</td>
+                                        <td class="w-20">{{ unserialize($management_review_participants->meeting_Attended)[$key] ? unserialize($management_review_participants->meeting_Attended)[$key] : '' }}</td>
+                                        <td class="w-20">{{ unserialize($management_review_participants->designee_Name)[$key] ? unserialize($management_review_participants->designee_Name)[$key] : '' }}</td>
+                                        <td class="w-20">{{ unserialize($management_review_participants->designee_Department)[$key] ? unserialize($management_review_participants->designee_Department)[$key] : '' }}</td>
+                                        <td class="w-20">{{ unserialize($management_review_participants->remarks)[$key] ? unserialize($management_review_participants->remarks)[$key] : '' }}</td>
+                                    </tr>
+                                    @endforeach
+
+                                @else
+                                <tr>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+                                    <td>Not Applicable</td>
+
+                                </tr>
+                            @endif
+                        </table>
+                    </div>
+                </div>
+              {{--grid end--}}
+
+
                 <div class="border-table">
                     <div class="block-head">
                         File Attachment
@@ -2026,7 +2123,7 @@
                         @if($managementReview->control_nonconforming_outputs){{ $managementReview->control_nonconforming_outputs }}@else Not Applicable @endif
                     </p>
                 </div>
-                <div>
+                {{--<div>
                     <h3 style="font-size: 15px">Audit team</h3>
                     <p style="font-size: 13px">
                         @if($managementReview->Audit_team)
@@ -2037,8 +2134,52 @@
                             Not Applicable
                         @endif
                     </p>
+                </div>--}}
+            </div>
+
+
+            {{--new code 3rd grid--}}
+            <div class="block">
+                <div class="block-head">
+                    Performance Evaluation
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-10">Sr no.</th>
+                            <th class="w-10">Monitoring</th>
+                            <th class="w-10">Measurement</th>
+                            <th class="w-10">Analysis</th>
+                            <th class="w-10">Evalutaion</th>
+                        </tr>
+
+                            @if (!empty($performance_evaluation->type))
+                                @foreach (unserialize($performance_evaluation->monitoring) as $key => $temps)
+                                <tr>
+                                    <td class="w-5">{{ $key + 1 }}</td>
+                                    <td class="w-20">{{ unserialize($performance_evaluation->monitoring)[$key] ? unserialize($performance_evaluation->monitoring)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($performance_evaluation->measurement)[$key] ? unserialize($performance_evaluation->measurement)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($performance_evaluation->analysis)[$key] ? unserialize($performance_evaluation->analysis)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($performance_evaluation->evaluation)[$key] ? unserialize($performance_evaluation->evaluation)[$key] : '' }}</td>
+                                </tr>
+                                @endforeach
+
+                            @else
+                            <tr>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
                 </div>
             </div>
+            {{--grid end--}}
+
+
+
+
              <div class="border-table">
                 {{-- <div class="block-head">
                     File Attachment
@@ -2064,7 +2205,8 @@
                     @endif
 
              </table>
-            </div> -
+            </div>
+
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -2101,7 +2243,7 @@
                         </tr>
 
                         <tr>
-                            <th class="w-20">Budget Estimatesn</th>
+                            <th class="w-20">Budget Estimates</th>
                             <td class="w-80">
                                     <div>
                                         @if($managementReview->budget_estimates){{ $managementReview->budget_estimates }}@else Not Applicable @endif
@@ -2189,6 +2331,99 @@
                 </div>
 
 
+            {{--new code 4 grid--}}
+            <div class="block">
+                <div class="block-head">
+                    Action Item Details
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-10">Sr no.</th>
+                            <th class="w-20">Short Description</th>
+                            <th class="w-20">Due Date</th>
+                            <th class="w-20">Site/Division</th>
+                            <th class="w-20">Person Responsible</th>
+                            <th class="w-20">Current Status</th>
+                            <th class="w-20">Date Closed</th>
+                            <th class="w-20">Remarks</th>
+                        </tr>
+
+                            @if (!empty($action_item_details->type))
+                                @foreach (unserialize($action_item_details->short_desc) as $key => $temps)
+                                <tr>
+                                    <td class="w-5">{{ $key + 1 }}</td>
+                                    <td class="w-20">{{ unserialize($action_item_details->short_desc)[$key] ? unserialize($action_item_details->short_desc)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($action_item_details->date_due)[$key] ? Helpers::getdateFormat(unserialize($action_item_details->date_due)[$key]) : '' }}</td>
+                                    <td class="w-20">{{ unserialize($action_item_details->site)[$key] ? unserialize($action_item_details->site)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($action_item_details->responsible_person)[$key] ? Helpers::getInitiatorName(unserialize($action_item_details->responsible_person)[$key]) : '' }}</td>
+                                    <td class="w-20">{{ unserialize($action_item_details->current_status)[$key] ? unserialize($action_item_details->current_status)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($action_item_details->date_closed)[$key] ? Helpers::getdateFormat(unserialize($action_item_details->date_closed)[$key]) : '' }}</td>
+                                    <td class="w-20">{{ unserialize($action_item_details->remark)[$key] ? unserialize($action_item_details->remark)[$key] : '' }}</td>
+                                </tr>
+                                @endforeach
+
+                            @else
+                            <tr>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+            {{--grid end--}}
+
+
+
+            {{-- new code 5 grid --}}
+            <div class="block">
+                <div class="block-head">
+                    CAPA Details
+                </div>
+                <div class="border-table">
+                    <table>
+                        <tr class="table_bg">
+                            <th class="w-10">Sr no.</th>
+                            <th class="w-20">CAPA Details</th>
+                            <th class="w-20">CAPA Type</th>
+                            <th class="w-20">Site/Division</th>
+                            <th class="w-20">Person Responsible</th>
+                            <th class="w-20">Current Status</th>
+                            <th class="w-20">Date Closed</th>
+                            <th class="w-20">Remark</th>
+                        </tr>
+
+                            @if (!empty($capa_detail_details->type))
+                                @foreach (unserialize($capa_detail_details->Details) as $key => $temps)
+                                <tr>
+                                    <td class="w-5">{{ $key + 1 }}</td>
+                                    <td class="w-20">{{ unserialize($capa_detail_details->Details)[$key] ? unserialize($capa_detail_details->Details)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($capa_detail_details->capa_type)[$key] ? unserialize($capa_detail_details->capa_type)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($capa_detail_details->site2)[$key] ? unserialize($capa_detail_details->site2)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($capa_detail_details->responsible_person2)[$key] ? Helpers::getInitiatorName(unserialize($capa_detail_details->responsible_person2)[$key]) : '' }}</td>
+                                    <td class="w-20">{{ unserialize($capa_detail_details->current_status2)[$key] ? unserialize($capa_detail_details->current_status2)[$key] : '' }}</td>
+                                    <td class="w-20">{{ unserialize($capa_detail_details->date_closed2)[$key] ? Helpers::getdateFormat(unserialize($capa_detail_details->date_closed2)[$key]) : '' }}</td>
+                                    <td class="w-20">{{ unserialize($capa_detail_details->remark2)[$key] ? unserialize($capa_detail_details->remark2)[$key] : '' }}</td>
+                                </tr>
+                                @endforeach
+
+                            @else
+                            <tr>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                                <td>Not Applicable</td>
+                            </tr>
+                        @endif
+                    </table>
+                </div>
+            </div>
+            {{--grid end--}}
+
+
 
                 <div class="block">
                     <div class="block-head">
@@ -2229,10 +2464,10 @@
                         <tr>
                             <th class="w-20">Due Date Extension Justification</th>
                             <td class="w-30">
-                                    <div>
-                                        @if($managementReview->due_date_extension){{ $managementReview->due_date_extension }}@else Not Applicable @endif
-                                    </div>
-                                </td>
+                                <div>
+                                    @if($managementReview->due_date_extension){{ $managementReview->due_date_extension }}@else Not Applicable @endif
+                                </div>
+                            </td>
                         </tr>
                    </table>
             </div>
@@ -2267,66 +2502,6 @@
                     </table>
                 </div>
 
-{{--new code grid--}}
-                {{--<div class="block">
-                    <div class="block-head">
-                        Material Details
-                    </div>
-                    <div class="border-table">
-                        <table>
-                            <tr class="table_bg">
-                                <th class="w-20">Sr no.</th>
-                                <th class="w-20">Date</th>
-                                <th class="w-20">Topic</th>
-                                <th class="w-20">Responsible</th>
-                                <th class="w-20">Time Start</th>
-                                <th class="w-20">Time End</th>
-                                <th class="w-20">Comment</th>
-                            </tr>
-                            @if ($data->agenda->material_name)
-                                @foreach (unserialize($data->agenda->material_name) as $key => $dataDemo)
-                                    <tr>
-                                        <td class="w-15">{{ $dataDemo ? $key + 1 : 'Not Applicable' }}</td>
-                                        <td class="w-15">
-                                            {{ unserialize($data->agenda->topic)[$key] ? unserialize($data->agenda->material_name)[$key] : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($data->agenda->material_batch_no)[$key] ? unserialize($data->agenda->material_batch_no)[$key] : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-5">
-                                            {{ unserialize($data->agenda->material_mfg_date)[$key] ? Helpers::getdateFormat(unserialize($data->agenda->material_mfg_date)[$key]) : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($data->agenda->material_expiry_date)[$key] ? Helpers::getdateFormat(unserialize($data->agenda->material_expiry_date)[$key]) : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($data->agenda->material_batch_desposition)[$key] ? unserialize($data->agenda->material_batch_desposition)[$key] : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($data->agenda->material_remark)[$key] ? unserialize($data->agenda->material_remark)[$key] : 'Not Applicable' }}
-                                        </td>
-                                        <td class="w-15">
-                                            {{ unserialize($data->agenda->material_batch_status)[$key] ? unserialize($data->agenda->material_batch_status)[$key] : 'Not Applicable' }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                    <td>Not Applicable</td>
-                                </tr>
-                            @endif
-                        </table>
-                    </div>
-                </div>--}}
-       {{--new code grid--}}
-
 
 
                 {{-- <div class="border-table">
@@ -2354,16 +2529,39 @@
                         @endif
                          </table>
                 </div> --}}
+<br>
+
+                <div class="block">
+                <div class="block-head">
+                    Activity Log
+                </div>
+                <table>
+
+                    <tr>
+                        <th class="w-10">Submited By</th>
+                        <td class="w-30">{{ $managementReview->Submited_by }}</td>
+                        <th class="w-10">Submited On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
+                    </tr>
+
+                    <tr>
+                        <th class="w-10">All Actions Completed By</th>
+                        <td class="w-30">{{ $managementReview->completed_by }}</td>
+                        <th class="w-10">All Actions Completed On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($managementReview->completed_on) }}</td>
+                    </tr>
+
+                </table>
             </div>
+        </div>
 
 
-
-
-            <div class="block">
+            {{--<div class="block">
                 <div class="head">
                     <div class="block-head">
                      Activity log
                     </div>
+
                     <table>
 
                     <tr>
@@ -2377,7 +2575,7 @@
                         <td class="w-30">{{ $managementReview->Submited_by }}</td>
                         <th class="w-10">Submited On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($managementReview->Submited_on) }}</td>
-                    </tr>
+                    </tr>--}}
                     {{-- <tr>
                         <th class="w-20">Audit preparation completed by</th>
                         <td class="w-30">{{ $managementReview->audit_preparation_completed_by }}</td>
@@ -2424,11 +2622,11 @@
                     </tr> --}}
 
 
-                </table>
+                {{--</table>
             </div>
         </div>
     </div>
-</div>
+</div>--}}
 
 
 

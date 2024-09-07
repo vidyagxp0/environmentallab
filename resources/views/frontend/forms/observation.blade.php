@@ -479,12 +479,12 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]" class="hide-input" 
+                                                                <input type="date"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]" class="hide-input"
                                                                 oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </td> 
+                                                </td>
                                                 <td><input type="text" name="item_status[]"></td>
                                             </tbody>
                                         </table>
@@ -517,10 +517,10 @@
                                         <label for="impact">Impact</label>
                                         <select name="impact">
                                             <option value="">-- Select --</option>
-                                            <option value="1">High</option>
-                                            <option value="2">Medium</option>
-                                            <option value="3">Low</option>
-                                            <option value="4">None</option>
+                                            <option value="High">High</option>
+                                            <option value="Medium">Medium</option>
+                                            <option value="Low">Low</option>
+                                            <option value="None">None</option>
                                         </select>
                                     </div>
                                 </div>
@@ -615,15 +615,15 @@
                                     <div class="group-input input-date">
                                         <label for="actual_end_date">Actual End Date</lable>
                                         <div class="calenderauditee">
-                                        <input type="text" id="actual_end_date"                             
+                                        <input type="text" id="actual_end_date"
                                                 placeholder="DD-MMM-YYYY" />
                                              <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="actual_end_date_checkdate" name="actual_end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'actual_end_date');checkDate('actual_start_date_checkdate','actual_end_date_checkdate')" />
                                         </div>
-                                   
-                                        
+
+
                                     </div>
-                                </div> 
+                                </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="action_taken">Action Taken</label>
@@ -746,7 +746,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="QA_Approved_On">All CAPA Closed On</label>      
+                                        <label for="QA_Approved_On">All CAPA Closed On</label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -935,7 +935,7 @@
                         var rowCount = tableBody.children('tr').length;
                         var newRow = generateTableRow(rowCount + 1);
                         tableBody.append(newRow);
-                    });                    
+                    });
                 });
       </script>
              <script>
@@ -944,5 +944,5 @@
                     var textlen = maxLength - $(this).val().length;
                     $('#rchars').text(textlen);});
             </script>
-    
+
 @endsection
