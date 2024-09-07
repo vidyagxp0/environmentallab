@@ -151,11 +151,18 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                     Audit Trial Report
+                     Observation Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
+<<<<<<< Updated upstream
                         <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-40">
+=======
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+
+                        {{--<img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">--}}
+
+>>>>>>> Stashed changes
                     </div>
                 </td>
             </tr>
@@ -166,7 +173,7 @@
                     <strong>Observation No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::getDivisionName(session()->get('division'))}}/OBS/{{ Helpers::year($doc->created_at)}}/ {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::getDivisionName(session()->get('division'))}}/OBS/{{ Helpers::year($doc->created_at)}}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -177,7 +184,7 @@
 
     <div class="inner-block">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head">Audit Trail Histroy Configuration Report</div>
 
 
 

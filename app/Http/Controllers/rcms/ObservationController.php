@@ -276,8 +276,8 @@ class ObservationController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->save();
-        if (!empty($request->assign_to)) {
 
+        if (!empty($request->assign_to)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Assign To1';
@@ -433,7 +433,7 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Assign To';
         $history->previous = "Null";
-        $history->current =Helpers::getInitiatorName($data->assign_to2);
+        $history->current = Helpers::getInitiatorName($data->assign_to2);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -494,6 +494,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+<<<<<<< Updated upstream
         if (!empty($request->severity_rate)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -506,6 +507,43 @@ class ObservationController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->save();
+=======
+        // if (!empty($request->severity_rate)) {
+        // $history = new AuditTrialObservation();
+        // $history->Observation_id = $data->id;
+        // $history->activity_type = 'Severity Rate ';
+        // $history->previous = "Null";
+        // $history->current = $data->severity_rate;
+        // $history->comment = "NA";
+        // $history->user_id = Auth::user()->id;
+        // $history->user_name = Auth::user()->name;
+        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        // $history->origin_state = $data->status;
+        // $history->save();
+        // }
+        if (!empty($data->severity_rate)) {
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $data->id;
+            $history->activity_type = 'Severity Rate';
+            $history->previous = "Null";
+            // $history->current = $data->severity_rate;
+            if($request->severity_rate == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity_rate == 2){
+                $history->current = "Moderate";
+            } elseif($request->severity_rate == 3){
+                $history->current = "Major";
+            }else{
+                $history->current = "Fatal";
+            }
+            $history->comment = "Not Applicable";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+
+            $history->save();
+>>>>>>> Stashed changes
         }
         if (!empty($request->occurrence)) {
         $history = new AuditTrialObservation();
@@ -572,6 +610,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->action_taken)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -585,17 +624,21 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        // $history = new AuditTrialObservation();
-        // $history->Observation_id = $data->id;
-        // $history->activity_type = 'Date Response Due1 ';
-        // $history->previous = "Null";
-        // $history->current = $data->date_response_due1;
-        // $history->comment = "NA";
-        // $history->user_id = Auth::user()->id;
-        // $history->user_name = Auth::user()->name;
-        // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        // $history->origin_state = $data->status;
-        // $history->save();
+
+        if(!empty($request->date_response_due1)){
+            $history = new AuditTrialObservation();
+            $history->Observation_id = $data->id;
+            $history->activity_type = 'Date Response Due';
+            $history->previous = "Null";
+            $history->current = $data->date_response_due1;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($request->response_date)) {
 
         $history = new AuditTrialObservation();
@@ -743,6 +786,13 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->related_observations = $image_name;
         // }
+<<<<<<< Updated upstream
+=======
+
+
+        $files = is_array($request->existing_related_observations_files) ? $request->existing_related_observations_files : null;
+
+>>>>>>> Stashed changes
         if (!empty($request->related_observations)) {
             $files = [];
             if ($request->hasfile('related_observations')) {
@@ -762,6 +812,12 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->attach_files2 = $image_name;
         // }
+<<<<<<< Updated upstream
+=======
+
+        $files = is_array($request->existing_attach_files2_files) ? $request->existing_attach_files2_files : null;
+
+>>>>>>> Stashed changes
         if (!empty($request->attach_files2)) {
             $files = [];
             if ($request->hasfile('attach_files2')) {
@@ -870,8 +926,8 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Assign To1';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $data->assign_to;
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+            $history->current = Helpers::getInitiatorName($data->assign_to);
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1039,8 +1095,8 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Assign To2';
-            $history->previous = $lastDocument->assign_to2;
-            $history->current = $data->assign_to2;
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to2);
+            $history->current = Helpers::getInitiatorName($data->assign_to2);
             $history->comment = $request->assign_to2_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1108,9 +1164,35 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
+<<<<<<< Updated upstream
             $history->activity_type = 'Severity Rate ';
             $history->previous = $lastDocument->severity_rate;
             $history->current = $data->severity_rate;
+=======
+            $history->activity_type = 'Severity Rate';
+
+            if($lastDocument->severity_rate == 1){
+                $history->previous = "Negligible";
+            } elseif($lastDocument->severity_rate == 2){
+                $history->previous = "Moderate";
+            } elseif($lastDocument->severity_rate == 3){
+                $history->previous = "Major";
+            } elseif($lastDocument->severity_rate == 4){
+                $history->previous = "Fatal";
+            } else{
+                $history->previous = "Null";
+            }
+
+            if($request->severity_rate == 1){
+                $history->current = "Negligible";
+            } elseif($request->severity_rate == 2){
+                $history->current = "Moderate";
+            } elseif($request->severity_rate == 3){
+                $history->current = "Major";
+            }else{
+                $history->current = "Fatal";
+            }
+>>>>>>> Stashed changes
             $history->comment = $request->severity_rate_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1206,7 +1288,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Date Response Due1 ';
+            $history->activity_type = 'Date Response Due ';
             $history->previous = $lastDocument->date_response_due1;
             $history->current = $data->date_response_due1;
             $history->comment = $request->date_response_due1_comment;

@@ -794,17 +794,17 @@ $users = DB::table('users')
                                         <label for="impact">Impact</label>
                                         <select name="impact" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
-                                            <option value="1" {{ $data->impact == '1' ? 'selected' : '' }}>High</option>
-                                            <option value="2" {{ $data->impact == '2' ? 'selected' : '' }}>Medium</option>
-                                            <option value="3" {{ $data->impact == '3' ? 'selected' : '' }}>Low</option>
-                                            <option value="4" {{ $data->impact == '4' ? 'selected' : '' }}>None</option>
+                                            <option value="Hign" {{ $data->impact == 'High' ? 'selected' : '' }}>High</option>
+                                            <option value="Medium" {{ $data->impact == 'Medium' ? 'selected' : '' }}>Medium</option>
+                                            <option value="Low" {{ $data->impact == 'Low' ? 'selected' : '' }}>Low</option>
+                                            <option value="None" {{ $data->impact == 'None' ? 'selected' : '' }}>None</option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="impact_analysis">Impact Analysis</label>
-                                        <textarea type  name="impact_analysis" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->impact_analysis }}</textarea>
+                                        <textarea type name="impact_analysis" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>{{ $data->impact_analysis }}</textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -982,7 +982,14 @@ $users = DB::table('users')
                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
+<<<<<<< Updated upstream
                                                     <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+=======
+                                                    <a  type="button" class="remove-file"
+                                                    data-remove-id="INATFile-{{ $loop->index }}"
+                                                    data-file-name="{{ $file }}"
+                                                    ><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
+>>>>>>> Stashed changes
                                                 </h6>
                                            @endforeach
                                                 @endif
@@ -1033,6 +1040,21 @@ $users = DB::table('users')
                                         <div class="static">{{ $data->report_issued_on }}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_By">Cancel By</label>
+                                        <div class="static">{{ $data->final_approvel_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_On">Cancel On</label>
+                                        <div class="static">{{ $data->final_approvel_on }}</div>
+                                    </div>
+                                </div>
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed_By">Cancel By</label>
@@ -1057,6 +1079,20 @@ $users = DB::table('users')
                                         <div class="static">{{ $data->completed_on }}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_By">More Info Required By</label>
+                                        <div class="static">{{ $data->more_info_required_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed_On">More Info Required On</label>
+                                        <div class="static">{{ $data->more_info_required_on }}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA_Approved_By">QA Approved By</label>
@@ -1069,12 +1105,40 @@ $users = DB::table('users')
                                         <div class="static">{{ $data->QA_Approved_on }}</div>
                                     </div>
                                 </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_By">QA Approval Without CAPA By</label>
+                                        <div class="static">{{ $data->qa_approvel_without_capa_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">QA Approval Without CAPA On</label>
+                                        <div class="static">{{ $data->qa_approvel_without_capa_on }}</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_By">Reject CAPA Plan By</label>
+                                        <div class="static">{{ $data->reject_capa_plan_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">Reject CAPA Plan On</label>
+                                        <div class="static">{{ $data->reject_capa_plan_on }}</div>
+                                    </div>
+                                </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA_Approved_By">All CAPA Closed By</label>
                                         <div class="static">{{ $data->all_capa_closed_by }}</div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="QA_Approved_On">All CAPA Closed On</label>
@@ -1093,30 +1157,8 @@ $users = DB::table('users')
                                         <div class="static">{{ $data->Final_Approval_on }}</div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Final_Approval_By">QA Approval Without CAPA By</label>
-                                        <div class="static">{{ $data->qa_approvel_without_capa_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Final_Approval_On">QA Approval Without CAPA On</label>
-                                        <div class="static">{{ $data->qa_approvel_without_capa_on }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Final_Approval_By">Reject CAPA Plan By</label>
-                                        <div class="static">{{ $data->reject_capa_plan_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Final_Approval_On">Reject CAPA Plan On</label>
-                                        <div class="static">{{ $data->reject_capa_plan_on }}</div>
-                                    </div>
-                                </div>
+
+
 
                             </div>
                             <div class="button-block">
