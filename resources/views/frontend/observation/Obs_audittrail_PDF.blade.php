@@ -155,14 +155,10 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-<<<<<<< Updated upstream
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-40">
-=======
                         <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
 
                         {{--<img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">--}}
 
->>>>>>> Stashed changes
                     </div>
                 </td>
             </tr>

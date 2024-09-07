@@ -494,20 +494,6 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-<<<<<<< Updated upstream
-        if (!empty($request->severity_rate)) {
-        $history = new AuditTrialObservation();
-        $history->Observation_id = $data->id;
-        $history->activity_type = 'Severity Rate ';
-        $history->previous = "Null";
-        $history->current = $data->severity_rate;
-        $history->comment = "NA";
-        $history->user_id = Auth::user()->id;
-        $history->user_name = Auth::user()->name;
-        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        $history->origin_state = $data->status;
-        $history->save();
-=======
         // if (!empty($request->severity_rate)) {
         // $history = new AuditTrialObservation();
         // $history->Observation_id = $data->id;
@@ -543,7 +529,6 @@ class ObservationController extends Controller
             $history->origin_state = $data->status;
 
             $history->save();
->>>>>>> Stashed changes
         }
         if (!empty($request->occurrence)) {
         $history = new AuditTrialObservation();
@@ -786,13 +771,10 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->related_observations = $image_name;
         // }
-<<<<<<< Updated upstream
-=======
 
 
         $files = is_array($request->existing_related_observations_files) ? $request->existing_related_observations_files : null;
 
->>>>>>> Stashed changes
         if (!empty($request->related_observations)) {
             $files = [];
             if ($request->hasfile('related_observations')) {
@@ -812,12 +794,9 @@ class ObservationController extends Controller
         //     $image->move('upload/document/', $image_name);
         //     $data->attach_files2 = $image_name;
         // }
-<<<<<<< Updated upstream
-=======
 
         $files = is_array($request->existing_attach_files2_files) ? $request->existing_attach_files2_files : null;
 
->>>>>>> Stashed changes
         if (!empty($request->attach_files2)) {
             $files = [];
             if ($request->hasfile('attach_files2')) {
@@ -1164,11 +1143,6 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-<<<<<<< Updated upstream
-            $history->activity_type = 'Severity Rate ';
-            $history->previous = $lastDocument->severity_rate;
-            $history->current = $data->severity_rate;
-=======
             $history->activity_type = 'Severity Rate';
 
             if($lastDocument->severity_rate == 1){
@@ -1192,7 +1166,6 @@ class ObservationController extends Controller
             }else{
                 $history->current = "Fatal";
             }
->>>>>>> Stashed changes
             $history->comment = $request->severity_rate_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

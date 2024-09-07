@@ -982,14 +982,10 @@ $users = DB::table('users')
                                                 <h6 type="button" class="file-container text-dark" style="background-color: rgb(243, 242, 240);">
                                                     <b>{{ $file }}</b>
                                                     <a href="{{ asset('upload/' . $file) }}" target="_blank"><i class="fa fa-eye text-primary" style="font-size:20px; margin-right:-10px;"></i></a>
-<<<<<<< Updated upstream
-                                                    <a  type="button" class="remove-file" data-file-name="{{ $file }}"><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
-=======
                                                     <a  type="button" class="remove-file"
                                                     data-remove-id="INATFile-{{ $loop->index }}"
                                                     data-file-name="{{ $file }}"
                                                     ><i class="fa-solid fa-circle-xmark" style="color:red; font-size:20px;"></i></a>
->>>>>>> Stashed changes
                                                 </h6>
                                            @endforeach
                                                 @endif
