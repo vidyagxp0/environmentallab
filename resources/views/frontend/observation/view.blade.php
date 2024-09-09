@@ -602,13 +602,16 @@ $users = DB::table('users')
                                         </div>
                                     </div>
                                 </div> --}}
+{{--@php
+dd($data->date_Response_due2);
+@endphp--}}
                                 <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
                                         <label for="date_Response_due1">Date Response Due </label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="date_Response_due22" id="date_Response_due" readonly
-                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_response_due1) }}"  />
-                                            <input type="date" id="date_Response_due_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  value="{{ $data->date_response_due1 }}"  class="hide-input"
+                                            <input type="text" name="date_Response_due2" id="date_Response_due" readonly
+                                                placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->date_Response_due2) }}"  />
+                                            <input type="date" id="date_Response_due_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}  value="{{ $data->date_Response_due2 }}"  class="hide-input"
                                                 oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
                                         </div>
                                     </div>
@@ -794,7 +797,7 @@ $users = DB::table('users')
                                         <label for="impact">Impact</label>
                                         <select name="impact" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}>
                                             <option value="">-- Select --</option>
-                                            <option value="Hign" {{ $data->impact == 'High' ? 'selected' : '' }}>High</option>
+                                            <option value="High" {{ $data->impact == 'High' ? 'selected' : '' }}>High</option>
                                             <option value="Medium" {{ $data->impact == 'Medium' ? 'selected' : '' }}>Medium</option>
                                             <option value="Low" {{ $data->impact == 'Low' ? 'selected' : '' }}>Low</option>
                                             <option value="None" {{ $data->impact == 'None' ? 'selected' : '' }}>None</option>
@@ -1036,20 +1039,6 @@ $users = DB::table('users')
                                         <div class="static">{{ $data->report_issued_on }}</div>
                                     </div>
                                 </div>
-
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Completed_By">Cancel By</label>
-                                        <div class="static">{{ $data->final_approvel_by }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Completed_On">Cancel On</label>
-                                        <div class="static">{{ $data->final_approvel_on }}</div>
-                                    </div>
-                                </div>
-
 
                                 <div class="col-lg-6">
                                     <div class="group-input">

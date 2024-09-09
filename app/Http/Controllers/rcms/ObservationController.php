@@ -76,7 +76,7 @@ class ObservationController extends Controller
         $data->category_observation = $request->category_observation;
         $data->reference_guideline = $request->reference_guideline;
         $data->description = $request->description;
-        $data->date_response_due1 = $request->date_Response_due22;
+        $data->date_response_due2 = $request->date_Response_due2;
 
         // if ($request->hasfile('attach_files1')) {
         //     $image = $request->file('attach_files1');
@@ -402,12 +402,12 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->date_Response_due22)) {
+        if (!empty($request->date_Response_due2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Date Response Due2';
         $history->previous = "Null";
-        $history->current = $data->date_Response_due22;
+        $history->current = $data->date_Response_due2;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -742,7 +742,7 @@ class ObservationController extends Controller
         $data->recomendation_capa_date_due = $request->recomendation_capa_date_due;
         $data->non_compliance = $request->non_compliance;
         $data->recommend_action = $request->recommend_action;
-        $data->date_Response_due22 = $request->date_Response_due22;
+        $data->date_Response_due2 = $request->date_Response_due2;
         $data->capa_date_due = $request->capa_date_due11;
         $data->assign_to2 = $request->assign_to2;
         $data->cro_vendor = $request->cro_vendor;
@@ -757,7 +757,7 @@ class ObservationController extends Controller
         $data->actual_end_date = $request->actual_end_date;
         $data->action_taken = $request->action_taken;
 
-         $data->date_Response_due22 = $request->date_Response_due22;
+        // $data->date_Response_due22 = $request->date_Response_due22;
         // $data->date_response_due1 = $request->date_response_due1;
         $data->response_date = $request->response_date;
         // $data->attach_files2 = $request->attach_files2;
@@ -915,14 +915,14 @@ class ObservationController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->date_Response_due22 != $data->date_Response_due22 || !empty($request->date_Response_due22_comment)) {
+        if ($lastDocument->date_Response_due2 != $data->date_Response_due2 || !empty($request->date_Response_due2_comment)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Date Response Due';
-            $history->previous = $lastDocument->date_Response_due22;
-            $history->current = $data->date_Response_due22;
-            $history->comment = $request->date_Response_due22_comment;
+            $history->previous = $lastDocument->date_Response_due2;
+            $history->current = $data->date_Response_due2;
+            $history->comment = $request->date_Response_due2_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
