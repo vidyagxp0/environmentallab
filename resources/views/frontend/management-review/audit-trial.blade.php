@@ -10,7 +10,9 @@
                 <div class="inner-block">
                     <div class="main-head">
                          <div class="default-name">
-             {{ Helpers::getDivisionName(session()->get('division')) }}/MR/{{ date('Y') }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+                            {{ Helpers::divisionNameForQMS($document->division_id) }}/MR/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
+
+                          {{--{{ Helpers::getDivisionName(session()->get('division')) }}/MR/{{ date('Y') }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}--}}
                          </div>
 
                         <div class="btn-group">

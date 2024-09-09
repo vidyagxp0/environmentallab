@@ -914,7 +914,7 @@ class AuditProgramController extends Controller
 
         DocumentService::update_qms_numbers();
 
-        toastr()->success('Record is created Successfully');
+        toastr()->success('Record is updated Successfully');
 
         return back();
     }

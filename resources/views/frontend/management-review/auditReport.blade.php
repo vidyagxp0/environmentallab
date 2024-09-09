@@ -268,13 +268,13 @@
                                 <div style="word-break: break-all;">{{ $datas->current }}</div>
                             </div>
                         </td>
-                        <td>{{ $datas->created_at }}</td>
+                        <td>{{ Helpers::getdateFormat1($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
 
                         <td>
                             @if(($datas->previous == 'Null') && ($datas->current != 'Null'))
                                 New
-                            @elseif(($datas->previous != $datas->current))
+                            @elseif($datas->previous != $datas->current)
                                 Modify
                             @else
                                 New
@@ -286,11 +286,7 @@
         </div>
 
     </div>
-    {{--@if ($datas->previous == "Null")
-    New
- @else
-    Modify
- @endif--}}
+
 
 
 </body>

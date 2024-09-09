@@ -884,6 +884,12 @@
                         <th class="w-20">QA Review Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->qA_review_complete_on) }}</td>
                     </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->more_info_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_on) }}</td>
+                    </tr>
                     {{-- <tr>
                         <th class="w-20">Audit preparation completed by</th>
                         <td class="w-30">{{ $data->audit_preparation_completed_by }}</td>

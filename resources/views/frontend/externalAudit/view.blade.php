@@ -541,12 +541,12 @@ function addMultipleFiles(input, block_id) {
                                                 <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                                 <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="severity_level">
                                                     <option value="0">-- Select --</option>
-                                                    <option @if ($data->severity_level == 'minor') selected @endif
-                                                     value="minor">Minor</option>
-                                                    <option  @if ($data->severity_level == 'major') selected @endif 
-                                                    value="major">Major</option>
-                                                    <option @if ($data->severity_level == 'critical') selected @endif
-                                                    value="critical">Critical</option>
+                                                    <option @if ($data->severity_level == 'Minor') selected @endif
+                                                     value="Minor">Minor</option>
+                                                    <option  @if ($data->severity_level == 'Major') selected @endif 
+                                                    value="Major">Major</option>
+                                                    <option @if ($data->severity_level == 'Critical') selected @endif
+                                                    value="Critical">Critical</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -646,24 +646,24 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="external_agencies">External Agencies</label>
                                                 <select  onchange="otherController(this.value, 'others', 'if_external')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="external_agencies">
                                                     <option value="">-- Select --</option>
-                                                    <option @if ($data->external_agencies == 'jordan fda') selected @endif
-                                                         value="jordan fda">Jordan FDA</option>
-                                                    <option @if ($data->external_agencies == 'us fda') selected @endif 
-                                                         value="us fda">USFDA</option>
-                                                    <option @if ($data->external_agencies == 'mhra') selected @endif
-                                                         value="mhra">MHRA</option>
-                                                    <option @if ($data->external_agencies == 'anvisa') selected @endif
-                                                         value="anvisa">ANVISA</option>
-                                                    <option @if ($data->external_agencies == 'iso') selected @endif
-                                                         value="iso">ISO</option>
-                                                    <option @if ($data->external_agencies == 'who') selected @endif
-                                                         value="who">WHO</option>
-                                                    <option @if ($data->external_agencies == 'local fda') selected @endif
-                                                         value="local fda">Local FDA</option>
-                                                    <option @if ($data->external_agencies == 'tga') selected @endif
-                                                         value="tga">TGA</option>
-                                                    <option value="others"
-                                                     @if ($data->external_agencies == 'others') selected @endif>Others
+                                                    <option @if ($data->external_agencies == 'Jordan FDA') selected @endif
+                                                         value="Jordan FDA">Jordan FDA</option>
+                                                    <option @if ($data->external_agencies == 'USFDA') selected @endif 
+                                                         value="USFDA">USFDA</option>
+                                                    <option @if ($data->external_agencies == 'MHRA') selected @endif
+                                                         value="MHRA">MHRA</option>
+                                                    <option @if ($data->external_agencies == 'ANVISA') selected @endif
+                                                         value="ANVISA">ANVISA</option>
+                                                    <option @if ($data->external_agencies == 'ISO') selected @endif
+                                                         value="ISO">ISO</option>
+                                                    <option @if ($data->external_agencies == 'WHO') selected @endif
+                                                         value="WHO">WHO</option>
+                                                    <option @if ($data->external_agencies == 'Local FDA') selected @endif
+                                                         value="Local FDA">Local FDA</option>
+                                                    <option @if ($data->external_agencies == 'TGA') selected @endif
+                                                         value="TGA">TGA</option>
+                                                    <option value="Others"
+                                                     @if ($data->external_agencies == 'Others') selected @endif>Others
                                                     </option>
                                                 </select>
                                             </div>
@@ -1430,7 +1430,7 @@ function addMultipleFiles(input, block_id) {
                                                             @php
                                                                 $recordValue =
                                                                     Helpers::getDivisionName($new->division_id) .
-                                                                    '/IA/' .
+                                                                    '/EA/' .
                                                                     date('Y') .
                                                                     '/' .
                                                                     Helpers::recordFormat($new->record);
@@ -1582,8 +1582,7 @@ function addMultipleFiles(input, block_id) {
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Issue Report On">Issue Report On
-                                                    On</label>
+                                                <label for="Issue Report On">Issue Report On</label>
                                                 <div class="static">{{ $data->audit_mgr_more_info_reqd_on }}</div>
                                             </div>
                                         </div>

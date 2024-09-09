@@ -807,6 +807,7 @@ class ManagementReviewController extends Controller
                         $history->origin_state = $management->status;
                         $history->save();
                     }
+
                 if (!empty($management->initiator_group_code)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
@@ -1441,7 +1442,7 @@ class ManagementReviewController extends Controller
                         $history->ManagementReview_id = $management->id;
                         $history->activity_type = 'Next Management Review Date';
                         $history->previous = "Null";
-                        $history->current = $management->next_managment_review_date;
+                        $history->current = Helpers::getdateFormat($management->next_managment_review_date);
                         $history->comment = "Not Applicable";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -1952,20 +1953,20 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->production_service_provision != $management->production_service_provision || !empty($request->production_service_provision_comment)) {
+        //if ($lastDocument->production_service_provision != $management->production_service_provision || !empty($request->production_service_provision_comment)) {
 
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production and Service Provision';
-            $history->previous = $lastDocument->production_service_provision;
-            $history->current = $management->production_service_provision;
-            $history->comment = $request->production_service_provision_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //    $history = new ManagementAuditTrial();
+        //    $history->ManagementReview_id = $id;
+        //    $history->activity_type = 'Production and Service Provision';
+        //    $history->previous = $lastDocument->production_service_provision;
+        //    $history->current = $management->production_service_provision;
+        //    $history->comment = $request->production_service_provision_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
         // if ($lastDocument->control_nonconforming_outputs != $management->control_nonconforming_outputs || !empty($request->control_nonconforming_outputs_comment)) {
 
         //     $history = new ManagementAuditTrial();

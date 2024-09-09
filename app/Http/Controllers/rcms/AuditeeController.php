@@ -338,12 +338,12 @@ class AuditeeController extends Controller
          
             $history->save();
         }
-        if (!empty($internalAudit->assign_to)) {
+        if (!empty($internalAudit->multiple_assignee_to)) {
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Assigned to';
             $history->previous = "Null";
-            $history->current = $internalAudit->assign_to;
+            $history->current = Helpers::getInitiatorName($internalAudit->multiple_assignee_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1314,13 +1314,13 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->assign_to != $internalAudit->assign_to || !empty($request->assign_to_comment)) {
+        if ($lastDocument->multiple_assignee_to != $internalAudit->multiple_assignee_to || !empty($request->multiple_assignee_to_comment)) {
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Assigned to';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $internalAudit->assign_to;
+            $history->previous = Helpers::getInitiatorName($lastDocument->multiple_assignee_to);
+            $history->current = Helpers::getInitiatorName($internalAudit->multiple_assignee_to);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1545,7 +1545,7 @@ class AuditeeController extends Controller
 
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
-            $history->activity_type = ' Reason For Audit';
+            $history->activity_type = 'Reason For Audit';
             $history->previous = $lastDocument->reason_for_audit;
             $history->current = $internalAudit->reason_for_audit;
             $history->comment = $request->date_comment;

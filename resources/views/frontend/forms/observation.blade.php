@@ -373,7 +373,7 @@
                                     <div class="group-input input-date ">
                                         <label for="date_Response_due1">Date Response Due</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="date_response_due1" id="date_Response_due" readonly
+                                            <input type="text" name="date_response_due2" id="date_Response_due" readonly
                                                 placeholder="DD-MMM-YYYY" />
                                             <input type="date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="date_Response_due_checkdate" class="hide-input"
                                                 oninput="handleDateInput(this, 'date_Response_due');checkDate('date_Response_due_checkdate','date_due_checkdate')" />
