@@ -38,6 +38,15 @@
         width: 50%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
+
     .w-60 {
         width: 60%;
     }
@@ -143,6 +152,13 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
+
 </style>
 
 <body>
@@ -165,7 +181,7 @@
                     <strong>Internal Audit No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/IA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -178,36 +194,37 @@
 
         <div class="head">Audit Trial Histroy Configuration Report</div>
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/IA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
         </div>
 
-        <div class="second-table">
-            <table>
-                <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
-                </tr>
-                @foreach ($data as $datas)
-                    <tr>
-                        <td>
-                            <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if (!empty($datas->previous))
-                                    <div>{{ $datas->previous }}</div>
-                                @else
-                                    <div>Null</div>
-                                @endif
-                            </div>
+    </div>
+    <div class="second-table">
+        <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
+            <tr class="table_bg">
+                <th class='w-30' style="word-break: break-all;">Field History</th>
+                <th class='w-10'>Date Performed</th>
+                <th class='w-10'>Person Responsible</th>
+                <th class='w-10'>Change Type</th>
+
+            </tr>
+            @foreach ($data as $datas)
+                <tr>
+                    <td>
+                        <div>{{ $datas->activity_type }}</div>
+                        <div>
+                            <div><strong>Changed From :</strong></div>
+                            @if (!empty($datas->previous))
+                                <div style="word-break: break-all;">{{ $datas->previous }}</div>
+                            @else
+                                <div>Null</div>
+                            @endif
 
                             <div>
                                 <div><strong>Changed To :</strong></div>
                                 @if ($datas->activity_type == 'Assigned To')
                                     <div>{{ Helpers::getInitiatorName($datas->current) }}</div>
                                 @else
-                                    <div>{{ $datas->current }}</div>
+                                    <div style="word-break: break-all;">{{ $datas->current }}</div>
                                 @endif
                             </div>
                             {{-- <div>
@@ -224,7 +241,9 @@
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if ($datas->previous != null)
+                            @if ($datas->previous == 'Null' && $datas->current != 'Null')
+                                New
+                            @elseif($datas->previous != $datas->current)
                                 Modify
                             @else
                                 New
@@ -246,9 +265,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                {{-- <td class="w-30">
+                <td class="w-30">
                     <strong>Page :</strong> 1 of 1
-                </td> --}}
+                </td>
             </tr>
         </table>
     </footer>
