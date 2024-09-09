@@ -398,13 +398,29 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
+                                    {{-- <div class="col-md-6">
                                             <div class="group-input">
                                                 <label for="due-date">Due Date <span class="text-danger"></span></label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                                 <input readonly type="text" value="{{ Helpers::getdateFormat($data->due_date) }}">
                                             </div>
-                                        </div>                                 <!-- <div class="col-lg-6">
+                                        </div>           --}}
+
+                                        <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="due_date">Due Date</label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                                </div>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="due_date" readonly
+                                                        placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                        oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                         <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -787,14 +803,19 @@
                                                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
                                                             <tr>
                                                                 <td>{{ $key + 1 }}</td>
-                                                                <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" ></td>
-                                                                <td><input name="risk_element[]" type="text" value="{{ unserialize($data->risk_element)[$key] ?? null }}" >
+                                                                <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    ></td>
+                                                                <td><input name="risk_element[]" type="text" value="{{ unserialize($data->risk_element)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
-                                                                <td> <input name="problem_cause[]" type="text" value="{{ unserialize($data->problem_cause)[$key] ?? null }}" >
+                                                                <td> <input name="problem_cause[]" type="text" value="{{ unserialize($data->problem_cause)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
-                                                                <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($data->existing_risk_control)[$key] ?? null }}" >
+                                                                <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($data->existing_risk_control)[$key] ?? null }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
-                                                                <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]">
+                                                                <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -802,7 +823,8 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -810,7 +832,8 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -818,22 +841,25 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input name="initial_rpn[]" class='initial-rpn'  disabled="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" >
+                                                                    <input name="initial_rpn[]" class='initial-rpn'  disabled="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
                                                                 <td>
                                                                     {{-- <input name="risk_acceptance[]" class="fieldR"  value="{{ unserialize($data->risk_acceptance)[$key] ?? null }}" > --}}
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="Y" {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
                                                                         <option value="N"  {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
                                                                      </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input name="risk_control_measure[]" type="text" value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}" >
+                                                                    <input name="risk_control_measure[]" type="text" value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                      
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -842,7 +868,8 @@
                                                                     
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -852,7 +879,8 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -862,17 +890,20 @@
                                                                
 
                                                                 <td>
-                                                                    <input name="residual_rpn[]" class='residual-rpn'  disabled ="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
+                                                                    <input name="residual_rpn[]" class='residual-rpn'  disabled ="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                </td>
                                                                <td>
-                                                                <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
+                                                                <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                   >
                                                                     <option value="">-- Select --</option>
                                                                     <option value="Y" {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
                                                                     <option value="N"  {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
                                                                  </select>
                                                             </td>
                                                                 <td>
-                                                                    <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
+                                                                    <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
                                                             </tr>    
                                                             @endforeach
@@ -953,7 +984,7 @@
                                                         Problem Statement 
                                                     </div>
                                                     <div class="field">
-                                                          <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_statement }}</textarea>
+                                                          <textarea name="problem_statement">{{ $data->problem_statement }} {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
                                                       
                                                     </div>
                                                 </div>
@@ -977,7 +1008,7 @@
                                                         <tr style="background: #f4bb22">
                                                             <th style="width:150px;">Problem Statement</th>
                                                             <td>
-                                                                <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
+                                                                <textarea name="why_problem_statement"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_problem_statement }}</textarea>
                                                             </td>
                                                         </tr>
                                                         <tr class="why-row">

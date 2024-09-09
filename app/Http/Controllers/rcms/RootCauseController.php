@@ -658,6 +658,7 @@ use Illuminate\Support\Facades\Hash;
         $lastDocument =  RootCauseAnalysis::find($id);
         $root =  RootCauseAnalysis::find($id);
         $root->initiator_Group = $request->initiator_Group;
+        $root->initiator_group_code = $request->initiator_group_code;
         $root->initiated_through = $request->initiated_through;
         $root->initiated_if_other = ($request->initiated_if_other);
         $root->short_description = $request->short_description;
@@ -1271,20 +1272,20 @@ use Illuminate\Support\Facades\Hash;
         //     $history->origin_state = $lastDocument->status;
         //     $history->save();
         // }
-        if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
+        // if ($lastDocument->due_date != $root->due_date || !empty($request->due_date_comment)) {
 
-            $history = new RootAuditTrial();
-            $history->root_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
-            $history->current = Helpers::getdateFormat($root->due_date);
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new RootAuditTrial();
+        //     $history->root_id = $id;
+        //     $history->activity_type = 'Due Date';
+        //     $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+        //     $history->current = Helpers::getdateFormat($root->due_date);
+        //     $history->comment = $request->due_date_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
 
         if ($lastDocument->investigation_summary != $root->investigation_summary || !empty($request->investigation_summary_comments)) {
 

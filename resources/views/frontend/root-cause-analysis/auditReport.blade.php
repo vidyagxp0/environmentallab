@@ -164,11 +164,11 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Root Cause Analysis Audit Trail Report
+                   Root Cause Analysis Audit Trial Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -276,9 +276,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                <td class="w-30">
+                {{-- <td class="w-30">
                     <strong>Page :</strong> 1 of 1
-                </td>
+                </td> --}}
             </tr>
         </table>
     </footer>
