@@ -610,6 +610,18 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Approved_By">Rejected By</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Approved_On">Rejected On</label>
+                                        <div class="static"></div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Audit_Completed_By">Audit Completed By</label>
                                         <div class="static"></div>
                                     </div>

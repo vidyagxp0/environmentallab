@@ -1523,6 +1523,8 @@ use Illuminate\Support\Facades\Hash;
             if ($capa->stage == 3) {
                 $capa->stage = "2";
                 $capa->status = "Investigation in Progress";
+                $capa->more_info_by = Auth::user()->name;
+                $capa->more_info_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
 
                 toastr()->success('Document Sent');
