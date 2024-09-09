@@ -293,6 +293,21 @@ class CapaController extends Controller
             $history->origin_state = $capa->status;
             $history->save();
         }
+        //{{ Helpers::divisionNameForQMS($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+
+        //if (!empty($capa->record_number)) {
+            $history = new CapaAuditTrial();
+            $history->capa_id = $capa->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . Helpers::year($capa->created_at) . "/" . str_pad($capa->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $capa->status;
+            $history->save();
+        //}
 
         if (!empty($capa->intiation_date)) {
             $history = new CapaAuditTrial();
@@ -313,7 +328,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
-            $history->current = $capa->initiator_Group;
+            $history->current = Helpers::getInitiatorGroupFullName($capa->initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -467,7 +482,7 @@ class CapaController extends Controller
             $history->capa_id = $capa->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current = $capa->assign_to;
+            $history->current = Helpers::getInitiatorName($capa->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1069,8 +1084,8 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->initiator_Group;
-            $history->current = $capa->initiator_Group;
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->initiator_Group);
+            $history->current = Helpers::getInitiatorGroupFullName($capa->initiator_Group);
             $history->comment = $request->initiator_Group_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1112,8 +1127,8 @@ class CapaController extends Controller
             $history = new CapaAuditTrial();
             $history->capa_id = $id;
             $history->activity_type = 'Assigned To';
-            $history->previous = $lastDocument->assign_to;
-            $history->current = $capa->assign_to;
+            $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
+            $history->current = Helpers::getInitiatorName($capa->assign_to);
             $history->comment = $request->assign_to_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

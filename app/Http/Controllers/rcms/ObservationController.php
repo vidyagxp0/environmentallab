@@ -179,6 +179,19 @@ class ObservationController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
+        $history = new AuditTrialObservation();
+        $history->Observation_id = $data->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($data->division_id) . '/OBS/' . Helpers::year($data->created_at) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "NA";
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->save();
+
         if (!empty($request->parent_id)) {
 
         $history = new AuditTrialObservation();
@@ -250,8 +263,8 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         // }
-        if (!empty($request->due_date)) {
 
+        if (!empty($request->due_date)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Due Date';
@@ -263,8 +276,8 @@ class ObservationController extends Controller
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         $history->origin_state = $data->status;
         $history->save();
-
         }
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Short Description';
@@ -877,8 +890,8 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Due Date';
-            $history->previous = $lastDocument->due_date;
-            $history->current = $data->due_date;
+            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+            $history->current = Helpers::getdateFormat($data->due_date);
             $history->comment = $request->due_date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

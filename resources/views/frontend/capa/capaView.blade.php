@@ -786,7 +786,7 @@
                                                             @foreach (unserialize($data2->material_name) as $key => $temps)
                                                                 <tr>
                                                                     <td><input type="number"
-                                                                            name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                            disabled name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
                                                                     <!-- {{-- <td><input type="text" name="product_name[]"
                                                                     value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
@@ -927,7 +927,7 @@
                                                         @if ($data3->equipment)
                                                             @foreach (unserialize($data3->equipment) as $key => $temps)
                                                                 <tr>
-                                                                    <td><input type="number"
+                                                                    <td><input type="number" disabled
                                                                             name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
 
