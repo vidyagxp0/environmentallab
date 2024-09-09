@@ -214,7 +214,7 @@
                                                 <label for="Short Description">Short Description<span
                                                         class="text-danger">*</span></label><span id="rchars">255</span>
                                                 characters remaining
-                                                <textarea name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }}>{{ $data->short_description }}</textarea>
+                                                <input name="short_description"   id="docname" type="text"    maxlength="255" required  {{ $data->stage == 0 || $data->stage == 3 || $data->stage == 4 ? "disabled" : "" }} value="{{ $data->short_description }}"></input>
                                             </div>
                                             <p id="docnameError" style="color:red">**Short Description is required</p>
         

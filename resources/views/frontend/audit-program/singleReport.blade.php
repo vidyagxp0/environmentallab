@@ -215,6 +215,8 @@
                     <tr>
                         <th class="w-20">Due Date</th>
                         <td class="w-80" > @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>\
+                    </tr>
+                    <tr>
                         <th class="w-20">Short Description</th>
                         <td class="w-80" > @if($data->short_description){{ $data->short_description }}@else Not Applicable @endif</td>
                     </tr>
@@ -282,8 +284,6 @@
                 </div>
             </div>
                 </div>
-            </div>
-        </div>
               
              
         <!-- ------------------------------- audit program grid--------------------------------------- -->
@@ -294,9 +294,9 @@
 
     @endphp
             <div class="block">
-                <div class="block-head">
-                Audit Program
-                </div>
+                    <div class="block-head">
+                        Audit Program
+                    </div>
                 <div class="border-table">
                     <table>
                         <tr class="table_bg">
@@ -312,22 +312,8 @@
                         <tr>
                             <td class="w-15">
                             {{ $key + 1 }}</td>
-                            <td class="w-15"> <select id="select-state" placeholder="Select..."
-                                                                    name="Auditees[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                                    <option value="">-Select-</option>
-                                                                    @foreach ($users as $value)
-                                                                        <option
-                                                                            {{ unserialize($AuditProgramGrid->auditor)[$key] ? (unserialize($AuditProgramGrid->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                            value="{{ $value->id }}">
-                                                                            {{ $value->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select></td>
-                            <td class="w-15"><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div class="calenderauditee">
-                                                                         <input  type="text"   id="start_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}"/>
-                                                                                <input class="hide-input" type="date"  id="start_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->start_date)[$key]}}"  name="start_date[]"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) }}
-                                                                                   oninput="handleDateInput(this, `start_date' + serialNumber +'`)" /></div></div></div></td>
+                            <td class="w-15">{{ unserialize($AuditProgramGrid->auditor)[$key] ? unserialize($AuditProgramGrid->auditor)[$key] : '' }}</td>
+                            <td class="w-15">{{ unserialize($AuditProgramGrid->start_date)[$key] ? Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) : '' }}</td>
                             <!-- <td class="w-5"><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
                                                                          class="calenderauditee">
@@ -355,9 +341,6 @@
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
                         </tr>
                         @endif
                     </table>
@@ -369,7 +352,7 @@
 
             <div class="block">
                 <div class="block-head">
-                Audit Program
+                  Audit Program
                 </div>
                 <div class="border-table">
                     <table>
@@ -386,33 +369,14 @@
                             value="{{ $key + 1 }}" ></td> -->
 
 
-                            <td class="w-5"><div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date "><div
-                                                                         class="calenderauditee">
-                                                                         <input type="text"   id="end_date{{$key}}" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}"/>
-                                                                <input class="hide-input" type="date"  id="end_date{{$key}}_checkdate" value="{{unserialize($AuditProgramGrid->end_date)[$key]}}"  name="end_date[]"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }} value="{{ Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) }}
-                                                                  oninput="handleDateInput(this, `end_date' + serialNumber +'`)" /></div></div></div></td>
-                            <td class="w-15"> <select id="select-state" placeholder="Select..."
-                                                                    name="lead_investigator[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>
-                                                                    <option value="">-Select-</option>
-                                                                    @foreach ($users as $value)
-                                                                        <option
-                                                                            {{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? (unserialize($AuditProgramGrid->lead_investigator)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                            value="{{ $value->id }}">
-                                                                            {{ $value->name }}
-                                                                        </option>
-                                                                    @endforeach
-                                                                </select></td>
-                            <td class="w-15"><input type="text" name="comment[]"  {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}
-                            value="{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}"></td>  
+                            <td class="w-5">{{ unserialize($AuditProgramGrid->end_date)[$key] ? Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) : '' }}</td>
+                            <td class="w-15">{{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? unserialize($AuditProgramGrid->lead_investigator)[$key] : '' }}</td>
+                            <td class="w-15">{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}</td>  
                             
                         </tr>
                         @endforeach
                         @else
                         <tr>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
-                            <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
                             <td>Not Applicable</td>
@@ -481,9 +445,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                <td class="w-30">
+                <!-- <td class="w-30">
                     <strong>Page :</strong> 1 of 1
-                </td>
+                </td> -->
             </tr>
         </table>
     </footer>
