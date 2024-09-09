@@ -1291,8 +1291,8 @@ class LabIncidentController extends Controller
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->status;
-                $history->current = "Pending Incident Review";
+                $history->previous = "";
+                $history->current = $changeControl->submitted_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1332,8 +1332,8 @@ class LabIncidentController extends Controller
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->status;
-                $history->current = "Pending Investigation";
+                $history->previous = "";
+                $history->current = $changeControl->incident_review_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1372,8 +1372,8 @@ class LabIncidentController extends Controller
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->status;
-                $history->current = "Pending Activity Completion";
+                $history->previous = "";
+                $history->current =  $changeControl->investigation_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1411,8 +1411,8 @@ class LabIncidentController extends Controller
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->status;
-                $history->current = "Pending CAPA";
+                $history->previous = "";
+                $history->current = $changeControl->all_activities_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1433,8 +1433,8 @@ class LabIncidentController extends Controller
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->status;
-                $history->current = "Pending QA Review";
+                $history->previous = "";
+                $history->current = $changeControl->review_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1472,8 +1472,8 @@ class LabIncidentController extends Controller
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->status;
-                $history->current = "Pending QA Head Approval";
+                $history->previous = "";
+                $history->current = $changeControl->qA_review_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1495,8 +1495,8 @@ class LabIncidentController extends Controller
                 $history = new LabIncidentAuditTrial();
                 $history->LabIncident_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->status;
-                $history->current = "Closed - Done";
+                $history->previous = "";
+                $history->current = $changeControl->qA_head_approval_completed_by;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1603,7 +1603,7 @@ class LabIncidentController extends Controller
 
     public function LabIncidentAuditTrial($id)
     {
-        $audit = LabIncidentAuditTrial::where('LabIncident_id', $id)->orderByDESC('id')->get();
+        $audit = LabIncidentAuditTrial::where('LabIncident_id', $id)->orderByDESC('id')->get()->unique('activity_type');
         $today = Carbon::now()->format('d-m-y');
         $document = LabIncident::where('id', $id)->first();
         $document->initiator = User::where('id', $document->initiator_id)->value('name');

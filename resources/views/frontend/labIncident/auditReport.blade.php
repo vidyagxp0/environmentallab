@@ -34,6 +34,14 @@
         width: 40%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-50 {
         width: 50%;
     }
@@ -143,6 +151,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -155,7 +168,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-40">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -163,10 +176,10 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Lab Incident No.</strong>
+                    <strong>Lab Incident Audit No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
+                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -184,45 +197,66 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                {{--<td class="w-30">
+                {{-- <td class="w-30">
                     <strong>Page :</strong> 1 of 1
-                </td>--}}
+                </td> --}}
             </tr>
         </table>
     </footer>
 
-
     <div class="inner-block">
 
-        <div class="head">Audit Trail Histroy Configuration Report</div>
+        <div class="head">Lab Incident Audit Trail Report</div>
 
         <div class="division">
-            {{ Helpers::getDivisionName($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->id, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/LI/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
         </div>
 
+
         <div class="second-table">
-            <table>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;">
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
+                    <th class='w-10'>Date Performed</th>
+                    <th class='w-10'>Person Responsible</th>
+                    <th class='w-10'>Change Type</th>
                 </tr>
                 @foreach ($data as $datas)
                     <tr>
                         <td>
                             <div>{{ $datas->activity_type }}</div>
                             <div>
-                                <div><strong>Changed From :</strong></div>
+                                <div style="word-break: break-all;"><strong>Changed From :</strong></div>
                                 @if (!empty($datas->previous))
-                                    <div>{{ $datas->previous }}</div>
+                                    @if ($datas->activity_type == '')
+                                        @foreach (explode(',', $datas->previous) as $prev)
+                                            <div>{{ $prev != 'Null' ? Helpers::getInitiatorName($prev) : $prev }}
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <div>{{ $datas->previous }}</div>
+                                    @endif
+                                @elseif($datas->activity_type == '')
+                                    <div>
+                                        {{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}
+                                    </div>
                                 @else
                                     <div>Null</div>
                                 @endif
                             </div>
                             <div>
-                                <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
+                                <div style="word-break: break-all;"><strong>Changed To :</strong></div>
+                                @if ($datas->activity_type == '')
+                                    @foreach (explode(',', $datas->current) as $curr)
+                                        <div>{{ Helpers::getInitiatorName($curr) }}</div>
+                                    @endforeach
+                                @elseif($datas->activity_type == '')
+                                    <div>
+                                        {{ Helpers::getDivisionName($doc->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}
+                                    </div>
+                                @else
+                                    <div>{{ $datas->current }}</div>
+                                @endif
                             </div>
                         </td>
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
@@ -243,7 +277,8 @@
 
     </div>
 
-   
+
+
 </body>
 
 </html>
