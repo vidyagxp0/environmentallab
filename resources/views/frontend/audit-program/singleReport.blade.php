@@ -312,7 +312,7 @@
                         <tr>
                             <td class="w-15">
                             {{ $key + 1 }}</td>
-                            <td class="w-15">{{ unserialize($AuditProgramGrid->auditor)[$key] ? unserialize($AuditProgramGrid->auditor)[$key] : '' }}</td>
+                            <td class="w-15">{{ unserialize($AuditProgramGrid->auditor)[$key] ? Helpers::getInitiatorName(unserialize($AuditProgramGrid->auditor)[$key]) : '' }}</td>
                             <td class="w-15">{{ unserialize($AuditProgramGrid->start_date)[$key] ? Helpers::getdateFormat(unserialize($AuditProgramGrid->start_date)[$key]) : '' }}</td>
                             <!-- <td class="w-5"><div class="group-input new-date-data-field mb-0">
                                                                         <div class="input-date "><div
@@ -370,7 +370,7 @@
 
 
                             <td class="w-5">{{ unserialize($AuditProgramGrid->end_date)[$key] ? Helpers::getdateFormat(unserialize($AuditProgramGrid->end_date)[$key]) : '' }}</td>
-                            <td class="w-15">{{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? unserialize($AuditProgramGrid->lead_investigator)[$key] : '' }}</td>
+                            <td class="w-15">{{ unserialize($AuditProgramGrid->lead_investigator)[$key] ? Helpers::getInitiatorName(unserialize($AuditProgramGrid->lead_investigator)[$key]) : '' }}</td>
                             <td class="w-15">{{ unserialize($AuditProgramGrid->comment)[$key] ? unserialize($AuditProgramGrid->comment)[$key] : '' }}</td>  
                             
                         </tr>
