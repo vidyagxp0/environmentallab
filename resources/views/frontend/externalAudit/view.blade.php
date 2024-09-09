@@ -452,6 +452,7 @@ function addMultipleFiles(input, block_id) {
                                                 <label for="Initiator Group"><b>Initiator Group</b></label>
                                                 <select name="Initiator_Group" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                      id="initiator_group">
+                                                    <option value="">-- Select --</option>
                                                     <option value="CQA"
                                                         @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                         Quality Assurance</option>
@@ -608,7 +609,7 @@ function addMultipleFiles(input, block_id) {
                                                 <select name="audit_type"
                                                     onchange="otherController(this.value, 'others', 'if_other')"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    <option value="0">Enter Your Selection Here</option>
+                                                    <option value="">Enter Your Selection Here</option>
 
                                                     <option value="R&D"
                                                         @if ($data->audit_type == 'R&D') selected @endif>R&D
