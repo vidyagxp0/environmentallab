@@ -746,8 +746,8 @@
                             <tr>
                                 <th class="w-20">Audit Comments</th>
                                 <td class="w-80">
-                                    @if ($data->Audit_Comments2)
-                                        {{ $data->Audit_Comments2 }}
+                                    @if ($data->Audit_Comments1)
+                                        {{ $data->Audit_Comments1 }}
                                     @else
                                         Not Applicable
                                     @endif

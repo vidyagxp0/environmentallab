@@ -419,10 +419,10 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="group-input" id="initiated_through_req">
+                                    <div class="group-input" id="type_other">
                                         <label for="type">Type(Others)<span
                                                 class="text-danger d-none">*</span></label>
-                                        <textarea name="initiated_through_req"></textarea>
+                                        <textarea name="type_other"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">

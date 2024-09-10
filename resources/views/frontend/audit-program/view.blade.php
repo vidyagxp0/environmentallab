@@ -464,6 +464,15 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input" id="type_other">
+                                                <label for="type">Type(Others)<span
+                                                        class="text-danger d-none">*</span></label>
+                                                <textarea name="type_other" {{ $data->stage == 0 || $data->stage == 4 ? 'disabled' : '' }}>{{ $data->type_other }}</textarea>
+                                            </div>
+                                        </div>
+
                                         <div class="col-lg-4">
                                             <div class="group-input">
                                                 <label for="Year">Year</label>

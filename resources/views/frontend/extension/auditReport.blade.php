@@ -200,7 +200,7 @@
         <div class="second-table">
             <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
                 <tr class="table_bg">
-                    <th class='w-30' style="word-break: break-all;">Field History>Field History</th>
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
                     <th class='w-10'>Date Performed</th>
                     <th class='w-10'>Person Responsible</th>
                     <th class='w-10'>Change Type</th>

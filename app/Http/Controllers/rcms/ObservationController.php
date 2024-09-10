@@ -364,7 +364,7 @@ class ObservationController extends Controller
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Attach Files1';
+        $history->activity_type = 'Attached Files1';
         $history->previous = "Null";
         $history->current = $data->attach_files1;
         $history->comment = "NA";
@@ -378,7 +378,7 @@ class ObservationController extends Controller
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Recomendation Capa Date Due';
+        $history->activity_type = 'Recomendation Due Date for CAPA';
         $history->previous = "Null";
         $history->current = Helpers::getdateFormat($data->recomendation_capa_date_due);
         $history->comment = "NA";
@@ -418,9 +418,9 @@ class ObservationController extends Controller
         if (!empty($request->date_Response_due2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Date Response Due2';
+        $history->activity_type = 'Date Response Due';
         $history->previous = "Null";
-        $history->current = $data->date_Response_due2;
+        $history->current = Helpers::getdateFormat($data->date_Response_due2);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -548,7 +548,19 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Occurrence ';
         $history->previous = "Null";
-        $history->current = $data->occurrence;
+
+        if($request->occurrence == 1){
+            $history->current = "Very Likely";
+        } elseif($request->occurrence == 2){
+            $history->current = "Likely";
+        } elseif($request->occurrence == 3){
+            $history->current = "Unlikely";
+        } elseif($request->occurrence == 4){
+            $history->current = "Rare";
+        } elseif($request->occurrence == 5){
+            $history->current = "Extremely Unlikely";
+        }
+        //$history->current = $data->occurrence;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -561,7 +573,20 @@ class ObservationController extends Controller
         $history->Observation_id = $data->id;
         $history->activity_type = 'Detection ';
         $history->previous = "Null";
-        $history->current = $data->detection;
+
+        if($request->detection == 1){
+            $history->current = "Very Likely";
+        } elseif($request->detection == 2){
+            $history->current = "Likely";
+        }elseif($request->detection == 3){
+            $history->current = "Unlikely";
+        } elseif($request->detection == 4){
+            $history->current = "Rare";
+        } elseif($request->detection == 5){
+            $history->current = "Impossible";
+        }
+
+        //$history->current = $data->detection;
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -572,7 +597,7 @@ class ObservationController extends Controller
         if (!empty($request->analysisRPN)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'AnalysisRPN ';
+        $history->activity_type = 'RPN ';
         $history->previous = "Null";
         $history->current = $data->analysisRPN;
         $history->comment = "NA";
@@ -623,19 +648,19 @@ class ObservationController extends Controller
         $history->save();
         }
 
-        if(!empty($request->date_response_due1)){
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $data->id;
-            $history->activity_type = 'Date Response Due';
-            $history->previous = "Null";
-            $history->current = $data->date_response_due1;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $data->status;
-            $history->save();
-        }
+        //if(!empty($request->date_response_due1)){
+        //    $history = new AuditTrialObservation();
+        //    $history->Observation_id = $data->id;
+        //    $history->activity_type = 'Response Summary';
+        //    $history->previous = "Null";
+        //    $history->current = $data->date_response_due1;
+        //    $history->comment = "NA";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $data->status;
+        //    $history->save();
+        //}
 
         if (!empty($request->response_date)) {
 
@@ -654,7 +679,7 @@ class ObservationController extends Controller
         if (!empty($request->attach_files2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Attach Files2 ';
+        $history->activity_type = 'Attached Files2';
         $history->previous = "Null";
         $history->current = $data->attach_files2;
         $history->comment = "NA";
@@ -690,11 +715,11 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->attach_files2)) {
 
+        if (!empty($request->related_observations)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Attachm Files ';
+        $history->activity_type = 'Related Obsevations';
         $history->previous = "Null";
         $history->current = $data->attach_files2;
         $history->comment = "NA";
@@ -704,6 +729,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         DocumentService::update_qms_numbers();
 
 
@@ -871,19 +897,19 @@ class ObservationController extends Controller
             $history->save();
         }
 
-        if (!empty($lastDocument->short_description)) {
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $lastDocument->id;
-            $history->activity_type = 'Short Description';
-            $history->previous = "Null";
-            $history->current = $lastDocument->short_description;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //if (!empty($lastDocument->short_description)) {
+        //    $history = new AuditTrialObservation();
+        //    $history->Observation_id = $lastDocument->id;
+        //    $history->activity_type = 'Short Description';
+        //    $history->previous = "Null";
+        //    $history->current = $lastDocument->short_description;
+        //    $history->comment = "NA";
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
 
         if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
 
@@ -933,8 +959,8 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Date Response Due';
-            $history->previous = $lastDocument->date_Response_due2;
-            $history->current = $data->date_Response_due2;
+            $history->previous = Helpers::getdateFormat($lastDocument->date_Response_due2);
+            $history->current = Helpers::getdateFormat($data->date_Response_due2);
             $history->comment = $request->date_Response_due2_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1002,7 +1028,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Attach Files1';
+            $history->activity_type = 'Attached Files1';
             $history->previous = $lastDocument->attach_files1;
             $history->current = $data->attach_files1;
             $history->comment = $request->attach_files1_comment;
@@ -1016,7 +1042,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Recomendation Capa Date Due';
+            $history->activity_type = 'Recomendation Due Date for CAPA';
             $history->previous = $lastDocument->recomendation_capa_date_due;
             $history->current = $data->recomendation_capa_date_due;
             $history->comment = $request->recomendation_capa_date_due_comment;
@@ -1054,20 +1080,20 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->date_Response_due2 != $data->date_Response_due2 || !empty($request->date_Response_due2_comment)) {
+        //if ($lastDocument->date_Response_due2 != $data->date_Response_due2 || !empty($request->date_Response_due2_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Date Response Due2';
-            $history->previous = $lastDocument->date_Response_due2;
-            $history->current = $data->date_Response_due2;
-            $history->comment = $request->date_Response_due2_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //    $history = new AuditTrialObservation();
+        //    $history->Observation_id = $id;
+        //    $history->activity_type = 'Date Response Due2';
+        //    $history->previous = $lastDocument->date_Response_due2;
+        //    $history->current = $data->date_Response_due2;
+        //    $history->comment = $request->date_Response_due2_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
         if ($lastDocument->capa_date_due != $data->capa_date_due || !empty($request->capa_date_due_comment)) {
 
             $history = new AuditTrialObservation();
@@ -1190,9 +1216,33 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
+
             $history->activity_type = 'Occurrence ';
-            $history->previous = $lastDocument->occurrence;
-            $history->current = $data->occurrence;
+            if($request->occurrence == 1){
+                $history->previous = "Very Likely";
+            } elseif($request->occurrence == 2){
+                $history->previous = "Likely";
+            } elseif($request->occurrence == 3){
+                $history->previous = "Unlikely";
+            } elseif($request->occurrence == 4){
+                $history->previous = "Rare";
+            } elseif($request->occurrence == 5){
+                $history->previous = "Extremely Unlikely";
+            }
+
+            if($request->occurrence == 1){
+                $history->current = "Very Likely";
+            } elseif($request->occurrence == 2){
+                $history->current = "Likely";
+            } elseif($request->occurrence == 3){
+                $history->current = "Unlikely";
+            } elseif($request->occurrence == 4){
+                $history->current = "Rare";
+            } elseif($request->occurrence == 5){
+                $history->current = "Extremely Unlikely";
+            }
+            //$history->previous = $lastDocument->occurrence;
+            //$history->current = $data->occurrence;
             $history->comment = $request->occurrence_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1205,8 +1255,31 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Detection ';
-            $history->previous = $lastDocument->detection;
-            $history->current = $data->detection;
+            if($request->detection == 1){
+                $history->previous = "Very Likely";
+            } elseif($request->detection == 2){
+                $history->previous = "Likely";
+            }elseif($request->detection == 3){
+                $history->previous = "Unlikely";
+            } elseif($request->detection == 4){
+                $history->previous = "Rare";
+            } elseif($request->detection == 5){
+                $history->previous = "Impossible";
+            }
+
+            if($request->detection == 1){
+                $history->current = "Very Likely";
+            } elseif($request->detection == 2){
+                $history->current = "Likely";
+            }elseif($request->detection == 3){
+                $history->current = "Unlikely";
+            } elseif($request->detection == 4){
+                $history->current = "Rare";
+            } elseif($request->detection == 5){
+                $history->current = "Impossible";
+            }
+            //$history->previous = $lastDocument->detection;
+            //$history->current = $data->detection;
             $history->comment = $request->detection_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1218,7 +1291,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'AnalysisRPN ';
+            $history->activity_type = 'RPN ';
             $history->previous = $lastDocument->analysisRPN;
             $history->current = $data->analysisRPN;
             $history->comment = $request->analysisRPN_comment;
@@ -1270,20 +1343,20 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->date_response_due1 != $data->date_response_due1 || !empty($request->date_response_due1_comment)) {
+        //if ($lastDocument->date_response_due1 != $data->date_response_due1 || !empty($request->date_response_due1_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Date Response Due ';
-            $history->previous = $lastDocument->date_response_due1;
-            $history->current = $data->date_response_due1;
-            $history->comment = $request->date_response_due1_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //    $history = new AuditTrialObservation();
+        //    $history->Observation_id = $id;
+        //    $history->activity_type = 'Response Summary';
+        //    $history->previous = $lastDocument->date_response_due1;
+        //    $history->current = $data->date_response_due1;
+        //    $history->comment = $request->date_response_due1_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
         if ($lastDocument->response_date != $data->response_date || !empty($request->response_date_comment)) {
 
             $history = new AuditTrialObservation();
@@ -1302,7 +1375,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Attach Files2 ';
+            $history->activity_type = 'Attached Files2 ';
             $history->previous = $lastDocument->attach_files2;
             $history->current = $data->attach_files2;
             $history->comment = $request->attach_files2_comment;
@@ -1340,27 +1413,27 @@ class ObservationController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->response_summary != $data->response_summary || !empty($request->response_summary_comment)) {
+        //if ($lastDocument->response_summary != $data->response_summary || !empty($request->response_summary_comment)) {
+
+        //    $history = new AuditTrialObservation();
+        //    $history->Observation_id = $id;
+        //    $history->activity_type = 'Response Summary ';
+        //    $history->previous = $lastDocument->response_summary;
+        //    $history->current = $data->response_summary;
+        //    $history->comment = $request->response_summary_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
+        if ($lastDocument->related_observations != $data->related_observations || !empty($request->attach_files2_comment)) {
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Parent ';
-            $history->previous = $lastDocument->response_summary;
-            $history->current = $data->response_summary;
-            $history->comment = $request->response_summary_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
-        if ($lastDocument->attach_files2 != $data->attach_files2 || !empty($request->attach_files2_comment)) {
-
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Attachm Files2 ';
-            $history->previous = $lastDocument->attach_files2;
-            $history->current = $data->attach_files2;
+            $history->activity_type = 'Related Obsevations';
+            $history->previous = $lastDocument->related_observations;
+            $history->current = $data->related_observations;
             $history->comment = $request->attach_files2_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
