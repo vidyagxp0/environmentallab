@@ -168,7 +168,9 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" width="60px">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+
+                        {{--<img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" width="60px">--}}
                     </div>
                 </td>
             </tr>

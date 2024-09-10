@@ -88,7 +88,9 @@
                                 More Information Required
                             </button>
                         @endif
-                        <button> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                        <button class="button_theme1"> <a class="text-white"
+                            href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                        {{--<button> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>--}}
                     </div>
 
                 </div>

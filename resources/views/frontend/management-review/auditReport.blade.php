@@ -176,7 +176,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Management Review No.</strong>
+                    <strong>Management Review Audit No.</strong>
                 </td>
                 <td class="w-40">
                  {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}

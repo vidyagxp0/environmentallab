@@ -166,7 +166,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Observation No.</strong>
+                    <strong>Observation Audit No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::getDivisionName(session()->get('division'))}}/OBS/{{ Helpers::year($doc->created_at)}}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}

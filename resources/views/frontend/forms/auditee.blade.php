@@ -1042,8 +1042,8 @@
 
                                             @foreach ($old_record as $new)
                                                 <option
-                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) . '/IA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/EA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/EA/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>
