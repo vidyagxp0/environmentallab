@@ -758,7 +758,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Lead Auditor">Lead Auditor</label>
-                                        <input type="text" name="lead_auditor">
+                                        <input type="text" name="lead_auditor" maxlength="255" >
                                         {{-- <select name="lead_auditor">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)

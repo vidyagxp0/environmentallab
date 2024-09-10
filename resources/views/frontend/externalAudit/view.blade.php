@@ -906,7 +906,7 @@ function addMultipleFiles(input, block_id) {
                                         <div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Lead Auditor">Lead Auditor</label>
-                                                <input type="text" name="lead_auditor" value="{{ $data->lead_auditor}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                <input type="text" name="lead_auditor" maxlength="255" value="{{ $data->lead_auditor}}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 {{-- <select name="lead_auditor"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>

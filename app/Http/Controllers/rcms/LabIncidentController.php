@@ -1265,6 +1265,7 @@ class LabIncidentController extends Controller
         $parent_id = $id;
         $parent_type = "Capa";
         $old_record = Capa::select('id', 'division_id', 'record')->get();
+        $rca_old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -1272,7 +1273,7 @@ class LabIncidentController extends Controller
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
          if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_record','cft'));
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_record','cft', 'rca_old_record'));
     }
 
     public function lab_incident_root_child(Request $request, $id)
