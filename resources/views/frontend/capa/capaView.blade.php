@@ -687,6 +687,7 @@
                                     <div class="button-block">
                                         <button type="submit" id="ChangesaveButton" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
+                                            
                                         <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                         <button type="button"> <a class="text-white"
                                                 href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
@@ -786,7 +787,7 @@
                                                             @foreach (unserialize($data2->material_name) as $key => $temps)
                                                                 <tr>
                                                                     <td><input type="number"
-                                                                            name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                            disabled name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
                                                                     <!-- {{-- <td><input type="text" name="product_name[]"
                                                                     value="{{ unserialize($data2->material_name)[$key] ? unserialize($data2->material_name)[$key] : '' }}">
@@ -927,7 +928,7 @@
                                                         @if ($data3->equipment)
                                                             @foreach (unserialize($data3->equipment) as $key => $temps)
                                                                 <tr>
-                                                                    <td><input type="number"
+                                                                    <td><input type="number" disabled
                                                                             name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ $key + 1 }}"></td>
 
@@ -1604,7 +1605,7 @@
                                     </div>
                                 </div>
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white"
@@ -1641,6 +1642,7 @@
                                             <div class="static">{{ $data->plan_approved_by }}</div>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Plan Approved On">Plan Approved On</label>
@@ -1649,6 +1651,25 @@
                                             <div class="static">{{ $data->Plan_approved_on }}</div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Plan Approved By">More Information Required By</label>
+                                            <input type="hidden"
+                                                name="plan_approved_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <div class="static">{{ $data->more_info_req_by}}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Plan Approved On">More Information Required On</label>
+                                            <input type="hidden"
+                                                name="plan_approved_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <div class="static">{{ $data->more_info_req_on }}</div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA More Info Required By">QA More Info Required

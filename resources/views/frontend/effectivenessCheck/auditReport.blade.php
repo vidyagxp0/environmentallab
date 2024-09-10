@@ -22,6 +22,14 @@
         width: 10%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-20 {
         width: 20%;
     }
@@ -153,6 +161,12 @@
         width: 30%;
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
 </style>
 
 <body>
@@ -211,19 +225,19 @@
 
 
         <div class="second-table">
-            <table>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
+                    <th class='w-10'>Date Performed</th>
+                    <th class='w-10'>Person Responsible</th>
+                    <th class='w-10'>Change Type</th>
                 </tr>
                 @foreach ($data as $datas)
                     <tr>
                         <td>
                             <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
+                             <div>
+                                <div style="word-break: break-all;"><strong>Changed From :</strong></div>
                                 @if (!empty($datas->previous))
                                     @if ($datas->activity_type == 'Assigned To')
                                         <div>
@@ -237,7 +251,7 @@
                                 @endif
                             </div>
                             <div>
-                                <div><strong>Changed To :</strong></div>
+                                <div style="word-break: break-all;"><strong>Changed To :</strong></div>
                                 @if ($datas->activity_type == 'Assigned To')
                                     <div>{{ Helpers::getInitiatorName($datas->current) }}</div>
                                 @else

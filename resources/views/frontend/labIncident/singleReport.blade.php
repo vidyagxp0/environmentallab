@@ -165,8 +165,8 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt=""
-                            style="width: 60px;">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt=""
+                            style="width: 200px;">
                     </div>
                 </td>
             </tr>
@@ -185,6 +185,22 @@
             </tr>
         </table>
     </header>
+
+    <footer>
+        <table>
+            <tr>
+                <td class="w-30">
+                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
+                </td>
+                <td class="w-40">
+                    <strong>Printed By :</strong> {{ Auth::user()->name }}
+                </td>
+                {{-- <td class="w-30">
+                    <strong>Page :</strong> 1 of 1
+                </td> --}}
+            </tr>
+        </table>
+    </footer>
 
     <div class="inner-block">
         <div class="content-table">
@@ -612,7 +628,7 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">QA Review Comment</th>
+                    <th class="w-20">QA Review Comments</th>
                     <td class="w-80" colspan="3">
                         @if ($data->QA_Review_Comments)
                             {{ $data->QA_Review_Comments }}
@@ -763,21 +779,7 @@
     </div>
     </div>
 
-    <footer>
-        <table>
-            <tr>
-                <td class="w-30">
-                    <strong>Printed On :</strong> {{ date('d-M-Y') }}
-                </td>
-                <td class="w-40">
-                    <strong>Printed By :</strong> {{ Auth::user()->name }}
-                </td>
-                <td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>
-            </tr>
-        </table>
-    </footer>
+
 
 </body>
 

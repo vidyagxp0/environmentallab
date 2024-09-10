@@ -22,6 +22,14 @@
         width: 10%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-20 {
         width: 20%;
     }
@@ -143,6 +151,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -155,7 +168,7 @@
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" class="w-30">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
                     </div>
                 </td>
             </tr>
@@ -214,12 +227,12 @@
         </div> --}}
 
         <div class="second-table">
-            <table>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
+                    <th class='w-10'>Date Performed</th>
+                    <th class='w-10'>Person Responsible</th>
+                    <th class='w-10'>Change Type</th>
                 </tr>
                 @foreach ($data as $datas)
                     <tr>
@@ -228,20 +241,22 @@
                             <div>
                                 <div><strong>Changed From :</strong></div>
                                 @if(!empty($datas->previous))
-                                <div>{{ $datas->previous }}</div>
+                                <div style="word-break: break-all;">{{ $datas->previous }}</div>
                                 @else
                                 <div>Null</div>
                                 @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
-                                <div>{{ $datas->current }}</div>
+                                <div style="word-break: break-all;">{{ $datas->current }}</div>
                             </div>
                         </td>
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if ($datas->previous == "NULL")
+                            @if ($datas->previous == 'Null' && $datas->current != 'Null')
+                                New
+                            @elseif($datas->previous != $datas->current)
                                 Modify
                             @else
                                 New
@@ -263,9 +278,9 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                <td class="w-30">
+                {{-- <td class="w-30">
                     <strong>Page :</strong> 1 of 1
-                </td>
+                </td> --}}
             </tr>
         </table>
     </footer>

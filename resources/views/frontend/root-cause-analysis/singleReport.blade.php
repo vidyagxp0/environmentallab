@@ -233,6 +233,12 @@
                    <th class="w-20">Others</th>
                    <td class="w-80" colspan="3">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
                    </tr>
+
+                   <tr>
+                    <th class="w-20">Type</th>
+                    <td class="w-80" colspan="3">@if($data->Type){{ $data->Type }}@else Not Applicable @endif</td>
+                    </tr>
+
                     <tr>
                         <th class="w-20">Priority Level</th>
                         <td class="w-80">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>
@@ -883,6 +889,12 @@
                         <td class="w-30">{{ $data->qA_review_complete_by }}</td>
                         <th class="w-20">QA Review Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->qA_review_complete_on) }}</td>
+                    </tr>
+                    <tr>
+                        <th class="w-20">More Information Required By</th>
+                        <td class="w-30">{{ $data->more_info_by }}</td>
+                        <th class="w-20">More Information Required On</th>
+                        <td class="w-30">{{ Helpers::getdateFormat($data->more_info_on) }}</td>
                     </tr>
                     {{-- <tr>
                         <th class="w-20">Audit preparation completed by</th>

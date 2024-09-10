@@ -2293,7 +2293,7 @@ class InternalauditController extends Controller
 
         DocumentService::update_qms_numbers();
 
-        toastr()->success('Record is Update Successfully');
+        toastr()->success('Record is Updated Successfully');
 
         return back();
     }

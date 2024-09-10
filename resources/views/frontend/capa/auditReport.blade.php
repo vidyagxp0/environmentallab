@@ -22,6 +22,14 @@
         width: 10%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-20 {
         width: 20%;
     }
@@ -143,6 +151,11 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
 </style>
 
 <body>
@@ -151,11 +164,13 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   CAPA Audit Trial Report
+                   CAPA Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" width="60px">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+
+                        {{--<img src="https://dms.mydemosoftware.com/user/images/logo1.png" alt="" width="60px">--}}
                     </div>
                 </td>
             </tr>
@@ -166,7 +181,7 @@
                     <strong>CAPA Audit No.</strong>
                 </td>
                 <td class="w-40">
-                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+                   {{ Helpers::divisionNameForQMS($doc->division_id) }}/CAPA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -177,10 +192,10 @@
 
     <div class="inner-block">
 
-        <div class="head">Audit Trial Histroy Configuration Report</div>
+        <div class="head">Audit Trail Histroy Configuration Report</div>
 
         <div class="division">
-            {{ Helpers::divisionNameForQMS($doc->division_id) }}/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+            {{ Helpers::divisionNameForQMS($doc->division_id) }}/CAPA/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
         </div>
 
         <!-- <div class="first-table">
@@ -214,12 +229,13 @@
         </div> -->
 
         <div class="second-table">
-            <table>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
+                    <th class='w-10'>Date Performed</th>
+                    <th class='w-10'>Person Responsible</th>
+                    <th class='w-10'>Change Type</th>
+
                 </tr>
                 @foreach ($data as $datas)
                     <tr>
@@ -230,28 +246,28 @@
                                 @if(!empty($datas->previous))
                                 @if($datas->activity_type == "Assigned To" || $datas->activity_type == "CAPA Team" )
                                 @foreach(explode(',',$datas->previous) as $prev)
-                                <div>{{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }}</div>
+                                <div style="word-break: break-all;">{{ $prev != 'Null' ?  Helpers::getInitiatorName($prev ) : $prev  }}</div>
                                 @endforeach
                                 @else
-                                <div>{{ $datas->previous }}</div>
+                                <div style="word-break: break-all;">{{ $datas->previous }}</div>
                                 @endif
                                 @elseif($datas->activity_type == "CAPA Related Records")
 
                                 <div>{{ Helpers::getDivisionName($doc->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
                                 @else
-                                <div>Null</                                div>
+                                <div>Null</div>
                                 @endif
                             </div>
                             <div>
                                 <div><strong>Changed To :</strong></div>
                                 @if($datas->activity_type == "Assigned To" || $datas->activity_type == "CAPA Team" )
                                 @foreach(explode(',',$datas->current) as $curr)
-                                <div>{{ Helpers::getInitiatorName($curr) }}</div>
+                                <div style="word-break: break-all;">{{ Helpers::getInitiatorName($curr) }}</div>
                                 @endforeach
                                 @elseif($datas->activity_type == "CAPA Related Records")
-                                <div>{{ Helpers::getDivisionName($doc->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
+                                <div style="word-break: break-all;">{{ Helpers::getDivisionName($doc->division_id) }}/CAPA/{{ date('Y') }}/{{ Helpers::recordFormat($doc->record) }}</div>
                                 @else
-                                <div>{{ $datas->current }}</div>
+                                <div style="word-break: break-all;">{{ $datas->current }}</div>
                                 @endif
                             </div>
                         </td>

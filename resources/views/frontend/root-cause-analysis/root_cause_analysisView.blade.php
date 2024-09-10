@@ -398,13 +398,38 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                <input readonly type="text" value="{{ Helpers::getdateFormat($data->due_date) }}">
+                                  
+
+                                        {{-- <div class="col-lg-6 new-date-data-field">
+                                            <div class="group-input input-date">
+                                                <label for="due_date">Due Date</label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
+                                                </div>
+                                                <div class="calenderauditee">
+                                                    <input type="text" id="due_date" readonly
+                                                        placeholder="DD-MMM-YYYY"  value="{{ Helpers::getDueDatemonthly(null, false, 'd-M-Y') }}"  />
+                                                    <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
+                                                        oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
+                                                </div>
                                             </div>
-                                        </div>                                 <!-- <div class="col-lg-6">
+                                        </div> --}}
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due_date">Due Date <span class="text-danger"></span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention
+                                                        revision reason in "Due Date Extension Justification" data
+                                                        field.</small></div>
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
+
+                                            </div>
+                                        </div>
+
+                                         <!-- <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Initiator Group"><b>Initiator Group</b></label>
                                             <select name="initiatorGroup" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
@@ -518,7 +543,7 @@
                                         <div class="group-input">
                                             <label for="Type">Type</label>
                                             <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
-                                                <option value="0">-- Select --</option>
+                                                {{-- <option value="0">-- Select --</option> --}}
                                                 <option {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="0">-- Select --</option>
                                                 <option @if ($data->Type =='Facillties') selected @endif value="Facillties">Facillties</option>
                                                 <option @if ($data->Type =='Other') selected @endif value="Other">Other</option>
@@ -576,7 +601,7 @@
                                             <select name="department" placeholder="Select Department(s)" multiple
                                              name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
                                                 data-search="false" data-silent-initial-value-set="true" id="department">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option value="Work Instruction"
                                                     {{ in_array('Work Instruction', explode(',', $data->department)) ? 'selected' : '' }}>
                                                     Work Instruction</option>
@@ -662,7 +687,7 @@
                      </div>
 
                                                 <div class="button-block">
-                                                    <button type="submit" id="ChangesaveButton" class="saveButton">Save</button>
+                                                    <button type="submit" id="ChangesaveButton" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                                     <button type="button" id="ChangeNextButton" class="nextButton">Next</button>
                                                     <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a> </button>
                                                 </div>
@@ -787,14 +812,19 @@
                                                             @foreach (unserialize($data->risk_factor) as $key => $riskFactor)
                                                             <tr>
                                                                 <td>{{ $key + 1 }}</td>
-                                                                <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" ></td>
-                                                                <td><input name="risk_element[]" type="text" value="{{ unserialize($data->risk_element)[$key] ?? null }}" >
+                                                                <td><input name="risk_factor[]" type="text" value="{{ $riskFactor }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    ></td>
+                                                                <td><input name="risk_element[]" type="text" value="{{ unserialize($data->risk_element)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
-                                                                <td> <input name="problem_cause[]" type="text" value="{{ unserialize($data->problem_cause)[$key] ?? null }}" >
+                                                                <td> <input name="problem_cause[]" type="text" value="{{ unserialize($data->problem_cause)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
-                                                                <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($data->existing_risk_control)[$key] ?? null }}" >
+                                                                <td><input name="existing_risk_control[]" type="text" value="{{ unserialize($data->existing_risk_control)[$key] ?? null }}"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
-                                                                <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]">
+                                                                <td><select onchange="calculateInitialResult(this)" class="fieldR" name="initial_severity[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -802,7 +832,8 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldP" name="initial_detectability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -810,7 +841,8 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldN" name="initial_probability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->initial_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->initial_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -818,22 +850,25 @@
                                                                     </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input name="initial_rpn[]" class='initial-rpn'  disabled="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" >
+                                                                    <input name="initial_rpn[]" class='initial-rpn'  disabled="text" value="{{ unserialize($data->initial_rpn)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
                                                                 <td>
                                                                     {{-- <input name="risk_acceptance[]" class="fieldR"  value="{{ unserialize($data->risk_acceptance)[$key] ?? null }}" > --}}
-                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance[]">
+                                                                    <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="Y" {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
                                                                         <option value="N"  {{ (unserialize($data->risk_acceptance)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
                                                                      </select>
                                                                 </td>
                                                                 <td>
-                                                                    <input name="risk_control_measure[]" type="text" value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}" >
+                                                                    <input name="risk_control_measure[]" type="text" value="{{ unserialize($data->risk_control_measure)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                      
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldR" name="residual_severity[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_severity)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_severity)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -842,7 +877,8 @@
                                                                     
                                                                 </td>
                                                                 <td>
-                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldP" name="residual_probability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_probability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_probability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -852,7 +888,8 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]">
+                                                                    <select onchange="calculateResidualResult(this)" class="residual-fieldN" name="residual_detectability[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                        >
                                                                         <option value="">-- Select --</option>
                                                                         <option value="1" {{ (unserialize($data->residual_detectability)[$key] ?? null)== 1 ? 'selected' :''}}>1</option>
                                                                         <option value="2"  {{ (unserialize($data->residual_detectability)[$key] ?? null)== 2 ? 'selected' :''}}>2</option>
@@ -862,17 +899,20 @@
                                                                
 
                                                                 <td>
-                                                                    <input name="residual_rpn[]" class='residual-rpn'  disabled ="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" >
+                                                                    <input name="residual_rpn[]" class='residual-rpn'  disabled ="text" value="{{ unserialize($data->residual_rpn)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                </td>
                                                                <td>
-                                                                <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]">
+                                                                <select onchange="calculateInitialResult(this)" class="fieldR" name="risk_acceptance2[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                   >
                                                                     <option value="">-- Select --</option>
                                                                     <option value="Y" {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'Y' ? 'selected' :''}}>Y</option>
                                                                     <option value="N"  {{ (unserialize($data->risk_acceptance2)[$key] ?? null)== 'N' ? 'selected' :''}}>N</option>
                                                                  </select>
                                                             </td>
                                                                 <td>
-                                                                    <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" >
+                                                                    <input name="mitigation_proposal[]" type="text" value="{{ unserialize($data->mitigation_proposal)[$key] ?? null }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                                    >
                                                                 </td>
                                                             </tr>    
                                                             @endforeach
@@ -888,8 +928,8 @@
                                             <label for="fishbone">
                                                 Fishbone or Ishikawa Diagram
                                                 <button type="button" name="agenda"
-                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
-                                                <button type="button" name="agenda" class="fishbone-del-btn"
+                                                    onclick="addFishBone('.top-field-group', '.bottom-field-group')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
+                                                <button type="button" name="agenda" class="fishbone-del-btn" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                     onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </button>
@@ -953,7 +993,7 @@
                                                         Problem Statement 
                                                     </div>
                                                     <div class="field">
-                                                          <textarea name="problem_statement"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->problem_statement }}</textarea>
+                                                          <textarea name="problem_statement">{{ $data->problem_statement }} {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}</textarea>
                                                       
                                                     </div>
                                                 </div>
@@ -975,38 +1015,36 @@
                                                 <table class="table table-bordered">
                                                     <tbody>
                                                         <tr style="background: #f4bb22">
-                                                            <th style="width:150px;">Problem Statement</th>
-                                                              <td>
-                                                            <textarea name="why_problem_statement">{{ $data->why_problem_statement }}</textarea>
-                                                        </td>
-                                                            
+                                                            <th style="width:150px;">Problem Statement </th>
+                                                            <td>
+                                                                <textarea name="why_problem_statement"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_problem_statement }}</textarea>
+                                                            </td>
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 1 <span
-                                                                    onclick="addWhyField('why_1_block', 'why_1[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_1_block\', \'why_1[]\')' }}">+</span>
                                                             </th>
                                                             <td>
-                                                                <div class="why_1_block"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                                <div class="why_1_block">
                                                                     @if (!empty($data->why_1))
                                                                         @foreach (unserialize($data->why_1) as $key => $measure)
-                                                                            <textarea name="why_1[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_1[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
-
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 2 <span
-                                                                    onclick="addWhyField('why_2_block', 'why_2[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : ''}}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_2_block\', \'why_2[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_2_block">
                                                                     @if (!empty($data->why_2))
                                                                         @foreach (unserialize($data->why_2) as $key => $measure)
-                                                                            <textarea name="why_2[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_2[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1015,13 +1053,13 @@
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 3 <span
-                                                                    onclick="addWhyField('why_3_block', 'why_3[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_3_block\', \'why_3[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_3_block">
                                                                     @if (!empty($data->why_3))
                                                                         @foreach (unserialize($data->why_3) as $key => $measure)
-                                                                            <textarea name="why_3[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_3[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1030,13 +1068,13 @@
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 4 <span
-                                                                    onclick="addWhyField('why_4_block', 'why_4[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_4_block\', \'why_4[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_4_block">
                                                                     @if (!empty($data->why_4))
                                                                         @foreach (unserialize($data->why_4) as $key => $measure)
-                                                                            <textarea name="why_4[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_4[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1045,13 +1083,13 @@
                                                         <tr class="why-row">
                                                             <th style="width:150px; color: #393cd4;">
                                                                 Why 5 <span
-                                                                    onclick="addWhyField('why_5_block', 'why_5[]')"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</span>
+                                                                    onclick="{{ $data->stage == 0 || $data->stage == 6 ? 'return false;' : 'addWhyField(\'why_5_block\', \'why_5[]\')' }}">+</span>
                                                             </th>
                                                             <td>
                                                                 <div class="why_5_block">
                                                                     @if (!empty($data->why_5))
                                                                         @foreach (unserialize($data->why_5) as $key => $measure)
-                                                                            <textarea name="why_5[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
+                                                                            <textarea name="why_5[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $measure }}</textarea>
                                                                         @endforeach
                                                                     @endif
                                                                 </div>
@@ -1060,7 +1098,7 @@
                                                         <tr style="background: #0080006b;">
                                                             <th style="width:150px;">Root Cause :</th>
                                                             <td>
-                                                                <textarea name="why_root_cause"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
+                                                                <textarea name="why_root_cause" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_root_cause }}</textarea>
                                                             </td>
                                                         </tr>
                                                     </tbody>
@@ -1068,6 +1106,7 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="col-12 sub-head"></div>
                                     {{-- <div class="col-12">
                                         <div class="group-input">
@@ -1356,7 +1395,7 @@
                                 </div>
                             
                                 <div class="button-block">
-                                    <button type="submit" class="saveButton">Save</button>
+                                    <button type="submit" class="saveButton" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>Save</button>
                                     <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                     <button type="button" class="nextButton" onclick="nextStep()">Next</button>
                                     <button type="button"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}">
@@ -1406,6 +1445,18 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">More Information Required By</label>
+                                            <div class="static">{{ $data->more_info_by }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Information Required On</label>
+                                            <div class="static">{{ $data->more_info_on }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancelled By">Cancelled By</label>
                                                 <div class="static">{{ $data->cancelled_by }}</div>
@@ -1417,6 +1468,7 @@
                                                 <div class="static">{{ $data->cancelled_on }}</div>
                                             </div>
                                         </div>
+
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton"

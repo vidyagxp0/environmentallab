@@ -44,10 +44,10 @@ class QuestionController extends Controller
 
              if($request->type != "Exact Match Questions"){
                 $this->validate($request,[
-                   'type' =>'required',
-                   'question'=>'required|max:255',
-                   'options'=>'required',
-                   'answers'=>'required',
+                    'type' => 'required',
+                    'question' => 'required',
+                    'options' => 'required_if:type,Single Selection Questions,Multi Selection Questions',
+                    'answers' => 'required_if:type,Single Selection Questions,Multi Selection Questions',
                  ]);
              }
              else{

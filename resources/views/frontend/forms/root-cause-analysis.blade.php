@@ -182,7 +182,7 @@
                                 </div>
                                 <div class="col-lg-6 new-date-data-field">
                                     <div class="group-input input-date">
-                                        <label for="Date Due">Due Date</label>
+                                        <label for="due_date">Due Date</label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
                                         </div>
                                         <div class="calenderauditee">
@@ -877,13 +877,13 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_By">Submitted By</label>
+                                            <label for="Submit_By">Submit By</label>
                                             <div class="static"></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submitted On</label>
+                                            <label for="Submit_On">Submit On</label>
                                             <div class="Date"></div>
                                         </div>
                                     </div>
@@ -896,6 +896,18 @@
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA_Review_Complete_On">QA Review Complete On</label>
+                                            <div class="Date"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_By">More Information Required By</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="QA_Review_Complete_On">More Information Required On</label>
                                             <div class="Date"></div>
                                         </div>
                                     </div>

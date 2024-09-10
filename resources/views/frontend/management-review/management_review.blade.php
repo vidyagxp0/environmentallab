@@ -289,6 +289,7 @@
                                     <div class="group-input">
                                         <label for="Priority Level">Priority Level</label>
                                         <select  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} name="priority_level">
+                                            <option value="">Select Priority Level</option>
                                             <option @if ($data->priority_level=='High') selected @endif value="High">High</option>
                                             <option @if ($data->priority_level=='Medium') selected @endif value="Medium">Medium</option>
                                             <option @if ($data->priority_level=='Low') selected @endif value="Low">Low</option>
@@ -326,7 +327,8 @@
                                             <div class="calenderauditee">
                                                 <input type="text"  id="start_date" readonly placeholder="DD-MM-YYYY"  value="{{ Helpers::getdateFormat($data->start_date) }}"
                                                  />
-                                                <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date"  value="{{ $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                                <input type="date" id="start_date_checkdate"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="start_date" value="{{ $data->start_date ? \Carbon\Carbon::parse($data->start_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                                 class="hide-input"
                                                 oninput="handleDateInput(this, 'start_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                             </div>
@@ -338,7 +340,8 @@
                                             <div class="calenderauditee">
                                             <input type="text"  id="end_date"  readonly placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->end_date) }}"
                                              />
-                                            <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date"  value="{{ $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
+                                            <input type="date" id="end_date_checkdate" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="end_date" value="{{ $data->end_date ? \Carbon\Carbon::parse($data->end_date)->format('Y-m-d') : \Carbon\Carbon::now()->format('Y-m-d') }}"
+
                                             class="hide-input"
                                             oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')"/>
                                             </div>
@@ -725,7 +728,7 @@
                                             <th>Row #</th>
                                             <th>Short Description</th>
                                             <th>Due Date</th>
-                                            <th>Site / Division</th>
+                                            <th>Site/Division</th>
                                             <th>Person Responsible</th>
                                             <th>Current Status</th>
                                             <th>Date Closed</th>
@@ -951,6 +954,21 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Completed On">Submitted By</label>
+                                         <div class="static">{{ $data->Submited_by}}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed By">Submitted On</label>
+                                         <div class="static">{{ $data->Submited_on }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Completed By">All Actions Completed By</label>
                                          <div class="static">{{ $data->completed_by }}</div>
                                     </div>
@@ -962,20 +980,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Completed On">Submited By</label>
-                                             <div class="static">{{ $data->Submited_by}}</div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="group-input">
-                                            <label for="Completed By">Submited On</label>
-                                             <div class="static">{{ $data->Submited_on }}</div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
 
 

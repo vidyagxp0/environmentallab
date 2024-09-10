@@ -1261,6 +1261,22 @@
                                     <div class="static"></div>
                                 </div>
                             </div>
+
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Plan Approved By">More Information Required By</label>
+                                    <input type="hidden" name="Plan_approved_by">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="group-input">
+                                    <label for="Plan Approved On">More Information Required On</label>
+                                    <input type="hidden" name="Plan_approved_on">
+                                    <div class="static"></div>
+                                </div>
+                            </div>
+
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="QA More Info Required By">QA More Info Required By</label>

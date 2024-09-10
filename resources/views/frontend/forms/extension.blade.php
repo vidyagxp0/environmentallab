@@ -227,8 +227,8 @@
                                             <option value="Risk Assessment">Risk Assessment</option>
                                             <option value="Root Cause Analysis">Root Cause Analysis</option>
                                             <option value="Change Control">Change Control</option>
-                                            <option value="Management">Management Review</option>
-                                            <option value="New Documen">New Document</option>
+                                            <option value="Management Review">Management Review</option>
+                                            <option value="New Document">New Document</option>
                                             <option value="Action Item">Action Item</option>
                                             <option value="Effectivness Check">Effectivness Check</option>
                                             <option value="others">Others</option>

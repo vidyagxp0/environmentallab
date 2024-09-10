@@ -675,32 +675,32 @@ class ManagementReviewController extends Controller
         // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
         // $history->origin_state = $management->status;
         // $history->save();
-        if (!empty($management->record)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Record Number';
-            $history->previous = "Null";
-            $history->current = Helpers::getDivisionName(session()->get('division')) . "/MR/" . Helpers::year($management->created_at) . "/" . str_pad($management->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-            if (!empty($management->division_code)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Site/Location Code';
-                $history->previous = "Null";
-                $history->current = $management->division_code;
-                $history->comment = "NA";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                  $history->origin_state = $management->status;
-                    $history->save();
-                }
+                if (!empty($management->record)) {
+                    $history = new ManagementAuditTrial();
+                    $history->ManagementReview_id = $management->id;
+                    $history->activity_type = 'Record Number';
+                    $history->previous = "Null";
+                    $history->current = Helpers::getDivisionName(session()->get('division')) . "/MR/" . Helpers::year($management->created_at) . "/" . str_pad($management->record, 4, '0', STR_PAD_LEFT);
+                    $history->comment = "NA";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                if (!empty($management->division_code)) {
+                    $history = new ManagementAuditTrial();
+                    $history->ManagementReview_id = $management->id;
+                    $history->activity_type = 'Site/Location Code';
+                    $history->previous = "Null";
+                    $history->current = $management->division_code;
+                    $history->comment = "NA";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $management->status;
+                        $history->save();
+                    }
                 // if (!empty($management->division_code)) {
                 //     $history = new ManagementAuditTrial();
                 //     $history->ManagementReview_id = $management->id;
@@ -724,8 +724,8 @@ class ManagementReviewController extends Controller
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                          $history->origin_state = $management->status;
-                            $history->save();
+                        $history->origin_state = $management->status;
+                        $history->save();
                         }
                 //     if (!empty($management->division_code)) {
                 //         $history = new ManagementAuditTrial();
@@ -740,87 +740,88 @@ class ManagementReviewController extends Controller
                 //           $history->origin_state = $management->status;
                 //             $history->save();
                 //  }
-        if (!empty($management->short_description)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Short Description';
-            $history->previous = "Null";
-            $history->current = $management->short_description;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-            if (!empty($management->intiation_date)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Date of Initiation';
-                $history->previous = "Null";
-                $history->current =  Helpers::getdateFormat($management->intiation_date);
-                $history->comment = "NA";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                  $history->origin_state = $management->status;
-                    $history->save();
-                }
-            if (!empty($management->assign_to)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Assigned To';
-            $history->previous = "Null";
-            $history->current = Helpers::getInitiatorName ($management->assign_to);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-
-
-            if (!empty($management->due_date)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Due Date';
-            $history->previous = "Null";
-            $history->current = Helpers::getdateFormat($management->due_date);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $management->status;
-            $history->save();
-            }
-            if (!empty($management->initiator_Group)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Initiator Group';
-                $history->previous = "Null";
-                $history->current = Helpers::getInitiatorGroupFullName($management->initiator_Group);
-                $history->comment = "NA";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                  $history->origin_state = $management->status;
-                    $history->save();
-                }
-                if (!empty($management->initiator_group_code)) {
+                if (!empty($management->short_description)) {
                     $history = new ManagementAuditTrial();
                     $history->ManagementReview_id = $management->id;
-                    $history->activity_type = 'Initiator Group Code';
+                    $history->activity_type = 'Short Description';
                     $history->previous = "Null";
-                    $history->current = $management->initiator_group_code;
+                    $history->current = $management->short_description;
                     $history->comment = "NA";
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                      $history->origin_state = $management->status;
+                    $history->origin_state = $management->status;
                         $history->save();
                     }
-                    if (!empty($management->priority_level)) {
+                if (!empty($management->intiation_date)) {
+                    $history = new ManagementAuditTrial();
+                    $history->ManagementReview_id = $management->id;
+                    $history->activity_type = 'Date of Initiation';
+                    $history->previous = "Null";
+                    $history->current =  Helpers::getdateFormat($management->intiation_date);
+                    $history->comment = "NA";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $management->status;
+                    $history->save();
+                }
+                if (!empty($management->assign_to)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Assigned To';
+                        $history->previous = "Null";
+                        $history->current = Helpers::getInitiatorName($management->assign_to);
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                }
+
+
+                if (!empty($management->due_date)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Due Date';
+                        $history->previous = "Null";
+                        $history->current = Helpers::getdateFormat($management->due_date);
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                }
+                if (!empty($management->initiator_Group)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Initiator Group';
+                        $history->previous = "Null";
+                        $history->current = Helpers::getInitiatorGroupFullName($management->initiator_Group);
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                if (!empty($management->initiator_group_code)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Initiator Group Code';
+                        $history->previous = "Null";
+                        $history->current = $management->initiator_group_code;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                if (!empty($management->priority_level)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
                         $history->activity_type = 'Priority Level';
@@ -830,686 +831,686 @@ class ManagementReviewController extends Controller
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                          $history->origin_state = $management->status;
-                            $history->save();
+                        $history->origin_state = $management->status;
+                        $history->save();
                         }
 
-            if (!empty($management->type)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Type';
-            $history->previous = "Null";
-            $history->current = $management->type;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->type)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Type';
+                        $history->previous = "Null";
+                        $history->current = $management->type;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->start_date)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Scheduled Start Date';
-            $history->previous = "Null";
-            $history->current =Helpers::getdateFormat ($management->start_date);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->start_date)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Scheduled Start Date';
+                        $history->previous = "Null";
+                        $history->current =Helpers::getdateFormat ($management->start_date);
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->end_date)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Scheduled end date';
-            $history->previous = "Null";
-            $history->current = Helpers::getdateFormat($management->end_date);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->end_date)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Scheduled end date';
+                        $history->previous = "Null";
+                        $history->current = Helpers::getdateFormat($management->end_date);
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->attendees)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Attendess';
-            $history->previous = "Null";
-            $history->current = $management->attendees;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->attendees)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Attendess';
+                        $history->previous = "Null";
+                        $history->current = $management->attendees;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->Agenda)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Agenda';
-            $history->previous = "Null";
-            $history->current = $management->agenda;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->Agenda)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Agenda';
+                        $history->previous = "Null";
+                        $history->current = $management->agenda;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->performance_evaluation)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Performance Evaluation';
-            $history->previous = "Null";
-            $history->current = $management->performance_evaluation;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->performance_evaluation)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Performance Evaluation';
+                        $history->previous = "Null";
+                        $history->current = $management->performance_evaluation;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-            if (!empty($management->management_review_participants)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Management Review Participants';
-            $history->previous = "Null";
-            $history->current = $management->management_review_participants;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->management_review_participants)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Management Review Participants';
+                        $history->previous = "Null";
+                        $history->current = $management->management_review_participants;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-            if (!empty($management->action_item_details)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Action Item Details';
-            $history->previous = "Null";
-            $history->current = $management->action_item_details;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->action_item_details)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Action Item Details';
+                        $history->previous = "Null";
+                        $history->current = $management->action_item_details;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-            if (!empty($management->capa_detail_details)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'CAPA Details';
-            $history->previous = "Null";
-            $history->current = $management->capa_detail_details;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-
-
-            if (!empty($management->description)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Description';
-            $history->previous = "Null";
-            $history->current = $management->description;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->capa_detail_details)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'CAPA Details';
+                        $history->previous = "Null";
+                        $history->current = $management->capa_detail_details;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->attachment)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Attached Files';
-            $history->previous = "Null";
-            $history->current = $management->attachment;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->description)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Description';
+                        $history->previous = "Null";
+                        $history->current = $management->description;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->inv_attachment)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'File Attachment';
-            $history->previous = "Null";
-            $history->current = $management->inv_attachment;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->file_attchment_if_any)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'File Attachment, if any';
-            $history->previous = "Null";
-            $history->current = $management->file_attchment_if_any;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->closure_attachments)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'File Attachment';
-            $history->previous = "Null";
-            $history->current = $management->closure_attachments;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->actual_start_date)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Actual Start Date';
-            $history->previous = "Null";
-            $history->current = $management->actual_start_date;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->actual_end_date)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Actual End Date';
-            $history->previous = "Null";
-            $history->current = $management->actual_end_date;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->attachment)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Attached Files';
+                        $history->previous = "Null";
+                        $history->current = $management->attachment;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->meeting_minute)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Meeting minutes';
-            $history->previous = "Null";
-            $history->current = $management->meeting_minute;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->inv_attachment)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'File Attachment';
+                        $history->previous = "Null";
+                        $history->current = $management->inv_attachment;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->file_attchment_if_any)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'File Attachment, if any';
+                        $history->previous = "Null";
+                        $history->current = $management->file_attchment_if_any;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->closure_attachments)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Closure Attachments';
+                        $history->previous = "Null";
+                        $history->current = $management->closure_attachments;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->actual_start_date)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Actual Start Date';
+                        $history->previous = "Null";
+                        $history->current = $management->actual_start_date;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->actual_end_date)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Actual End Date';
+                        $history->previous = "Null";
+                        $history->current = $management->actual_end_date;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->decision)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Decisions';
-            $history->previous = "Null";
-            $history->current = $management->decision;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->meeting_minute)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Meeting minutes';
+                        $history->previous = "Null";
+                        $history->current = $management->meeting_minute;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->zone)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Zone';
-            $history->previous = "Null";
-            $history->current = $management->zone;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-            $history->save();
-            }
-
-            if (!empty($management->country)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Country';
-            $history->previous = "Null";
-            $history->current = $management->country;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->change_to= "Opened";
-            $history->change_from= "Initiation";
-            $history->action_name="Create";
-            $history->save();
-            $history->save();
-            }
-
-            if (!empty($management->city)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'City';
-            $history->previous = "Null";
-            $history->current = $management->city;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->decision)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Decisions';
+                        $history->previous = "Null";
+                        $history->current = $management->decision;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->site_name)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Site Name';
-            $history->previous = "Null";
-            $history->current = $management->site_name;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->zone)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Zone';
+                        $history->previous = "Null";
+                        $history->current = $management->zone;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->change_to= "Opened";
+                        $history->change_from= "Initiation";
+                        $history->action_name="Create";
+                        $history->save();
+                        $history->save();
+                    }
+
+                    if (!empty($management->country)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Country';
+                        $history->previous = "Null";
+                        $history->current = $management->country;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->change_to= "Opened";
+                        $history->change_from= "Initiation";
+                        $history->action_name="Create";
+                        $history->save();
+                        $history->save();
+                    }
+
+                    if (!empty($management->city)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'City';
+                        $history->previous = "Null";
+                        $history->current = $management->city;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->building)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Building';
-            $history->previous = "Null";
-            $history->current = $management->building;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->site_name)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Site Name';
+                        $history->previous = "Null";
+                        $history->current = $management->site_name;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->floor)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Floor';
-            $history->previous = "Null";
-            $history->current = $management->floor;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->building)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Building';
+                        $history->previous = "Null";
+                        $history->current = $management->building;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->room)) {
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $management->id;
-            $history->activity_type = 'Room';
-            $history->previous = "Null";
-            $history->current = $management->room;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-              $history->origin_state = $management->status;
-                $history->save();
-            }
-             if (!empty($management->Operations)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Operations';
-                $history->previous = "Null";
-                $history->current = $management->Operations;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-             if(!empty($management->control_externally_provide_services)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Requirements for Products';
-                $history->previous = "Null";
-                $history->current = $management->control_externally_provide_services;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-              if (!empty($management->production_service_provision)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Design and Development';
-                $history->previous = "Null";
-                $history->current = $management->production_service_provision;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-              if(!empty($management->release_product_services)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Control of Externally';
-                $history->previous = "Null";
-                $history->current = $management->release_product_services;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->production_service_provision)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Production and Service';
-                $history->previous = "Null";
-                $history->current = $management->production_service_provision;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-             if (!empty($management->release_product_services)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Release of Products';
-                $history->previous = "Null";
-                $history->current = $management->release_product_services;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-                if (!empty($management->control_nonconforming_outputs)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Control of Non-conforming Outputs';
-                $history->previous = "Null";
-                $history->current = $management->control_nonconforming_outputs;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->risk_opportunities)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Risk Opportunities';
-                $history->previous = "Null";
-                $history->current = $management->risk_opportunities;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->external_supplier_performance)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'External Supplier Performance';
-                $history->previous = "Null";
-                $history->current = $management->external_supplier_performance;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->customer_satisfaction_level)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Customer Satisfactio Level';
-                $history->previous = "Null";
-                $history->current = $management->customer_satisfaction_level;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->floor)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Floor';
+                        $history->previous = "Null";
+                        $history->current = $management->floor;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
-            if (!empty($management->budget_estimates)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Budget Estimates';
-                $history->previous = "Null";
-                $history->current = $management->budget_estimates;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->room)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Room';
+                        $history->previous = "Null";
+                        $history->current = $management->room;
+                        $history->comment = "NA";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if (!empty($management->Operations)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Operations';
+                        $history->previous = "Null";
+                        $history->current = $management->Operations;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if(!empty($management->control_externally_provide_services)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Requirements for Products';
+                        $history->previous = "Null";
+                        $history->current = $management->control_externally_provide_services;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if (!empty($management->production_service_provision)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Design and Development';
+                        $history->previous = "Null";
+                        $history->current = $management->production_service_provision;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if(!empty($management->release_product_services)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Control of Externally';
+                        $history->previous = "Null";
+                        $history->current = $management->release_product_services;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-            if (!empty($management->completion_of_previous_tasks)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Completion of Previous Tasks';
-                $history->previous = "Null";
-                $history->current = $management->completion_of_previous_tasks;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-              if(!empty($management->production_new)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Production';
-                $history->previous = "Null";
-                $history->current = $management->production_new;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-             if (!empty($management->plans_new)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Plans';
-                $history->previous = "Null";
-                $history->current = $management->plans_new;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->production_service_provision)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Production and Service';
+                        $history->previous = "Null";
+                        $history->current = $management->production_service_provision;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if (!empty($management->release_product_services)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Release of Products';
+                        $history->previous = "Null";
+                        $history->current = $management->release_product_services;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                        if (!empty($management->control_nonconforming_outputs)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Control of Non-conforming Outputs';
+                        $history->previous = "Null";
+                        $history->current = $management->control_nonconforming_outputs;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-            if (!empty($management->forecast_new)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Forecast';
-                $history->previous = "Null";
-                $history->current = $management->forecast_new;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->risk_opportunities)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Risk Opportunities';
+                        $history->previous = "Null";
+                        $history->current = $management->risk_opportunities;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-            if (!empty($management->additional_suport_required)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Any Additional Support Required';
-                $history->previous = "Null";
-                $history->current = $management->additional_suport_required;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->external_supplier_performance)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'External Supplier Performance';
+                        $history->previous = "Null";
+                        $history->current = $management->external_supplier_performance;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-            if (!empty($management->file_attchment_if_any)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'file attach';
-                $history->previous = "Null";
-                $history->current = $management->file_attchment_if_any;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->next_managment_review_date)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Next Management Review Date';
-                $history->previous = "Null";
-                $history->current = $management->next_managment_review_date;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->summary_recommendation)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Summary & Recommendation';
-                $history->previous = "Null";
-                $history->current = $management->summary_recommendation;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-              if(!empty($management->conclusion_new)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Conclusion';
-                $history->previous = "Null";
-                $history->current = $management->conclusion_new;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-             if (!empty($management->closure_attachments)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Closure Attachments';
-                $history->previous = "Null";
-                $history->current = $management->closure_attachments;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
-
-            if (!empty($management->due_date_extension)) {
-                $history = new ManagementAuditTrial();
-                $history->ManagementReview_id = $management->id;
-                $history->activity_type = 'Due_Date_Extension_Justification';
-                $history->previous = "Null";
-                $history->current = $management->due_date_extension;
-                $history->comment = "Not Applicable";
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-               $history->origin_state = $management->status;
-                $history->save();
-            }
+                    if (!empty($management->customer_satisfaction_level)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Customer Satisfactio Level';
+                        $history->previous = "Null";
+                        $history->current = $management->customer_satisfaction_level;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
 
+                    if (!empty($management->budget_estimates)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Budget Estimates';
+                        $history->previous = "Null";
+                        $history->current = $management->budget_estimates;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-         DocumentService::update_qms_numbers();
+                    if (!empty($management->completion_of_previous_tasks)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Completion of Previous Tasks';
+                        $history->previous = "Null";
+                        $history->current = $management->completion_of_previous_tasks;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if(!empty($management->production_new)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Production';
+                        $history->previous = "Null";
+                        $history->current = $management->production_new;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if (!empty($management->plans_new)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Plans';
+                        $history->previous = "Null";
+                        $history->current = $management->plans_new;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
 
-        toastr()->success("Record is created Successfully");
-        return redirect(url('rcms/qms-dashboard'));
+                    if (!empty($management->forecast_new)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Forecast';
+                        $history->previous = "Null";
+                        $history->current = $management->forecast_new;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->additional_suport_required)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Any Additional Support Required';
+                        $history->previous = "Null";
+                        $history->current = $management->additional_suport_required;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->file_attchment_if_any)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'file attach';
+                        $history->previous = "Null";
+                        $history->current = $management->file_attchment_if_any;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->next_managment_review_date)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Next Management Review Date';
+                        $history->previous = "Null";
+                        $history->current = Helpers::getdateFormat($management->next_managment_review_date);
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->summary_recommendation)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Summary & Recommendation';
+                        $history->previous = "Null";
+                        $history->current = $management->summary_recommendation;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if(!empty($management->conclusion_new)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Conclusion';
+                        $history->previous = "Null";
+                        $history->current = $management->conclusion_new;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+                    if (!empty($management->closure_attachments)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Closure Attachments';
+                        $history->previous = "Null";
+                        $history->current = $management->closure_attachments;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+                    if (!empty($management->due_date_extension)) {
+                        $history = new ManagementAuditTrial();
+                        $history->ManagementReview_id = $management->id;
+                        $history->activity_type = 'Due_Date_Extension_Justification';
+                        $history->previous = "Null";
+                        $history->current = $management->due_date_extension;
+                        $history->comment = "Not Applicable";
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $management->status;
+                        $history->save();
+                    }
+
+
+
+                DocumentService::update_qms_numbers();
+
+                toastr()->success("Record is created Successfully");
+                return redirect(url('rcms/qms-dashboard'));
 
     }
 
@@ -1871,7 +1872,7 @@ class ManagementReviewController extends Controller
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'File  Attachment';
+            $history->activity_type = 'File Attachment';
             $history->previous = $lastDocument->inv_attachment;
             $history->current = $management->inv_attachment;
             $history->comment = $request->inv_attachment_comment;
@@ -1886,7 +1887,7 @@ class ManagementReviewController extends Controller
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'File Attachment';
+            $history->activity_type = 'File Attachment, if any';
             $history->previous = $lastDocument->file_attchment_if_any;
             $history->current = $management->file_attchment_if_any;
             $history->comment = $request->file_attchment_if_any_comment;
@@ -1900,7 +1901,7 @@ class ManagementReviewController extends Controller
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Closure Attachment';
+            $history->activity_type = 'Closure Attachments';
             $history->previous = $lastDocument->closure_attachments;
             $history->current = $management->closure_attachments;
             $history->comment = $request->closure_attachments_comment;
@@ -1952,20 +1953,20 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->production_service_provision != $management->production_service_provision || !empty($request->production_service_provision_comment)) {
+        //if ($lastDocument->production_service_provision != $management->production_service_provision || !empty($request->production_service_provision_comment)) {
 
-            $history = new ManagementAuditTrial();
-            $history->ManagementReview_id = $id;
-            $history->activity_type = 'Production and Service Provision';
-            $history->previous = $lastDocument->production_service_provision;
-            $history->current = $management->production_service_provision;
-            $history->comment = $request->production_service_provision_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //    $history = new ManagementAuditTrial();
+        //    $history->ManagementReview_id = $id;
+        //    $history->activity_type = 'Production and Service Provision';
+        //    $history->previous = $lastDocument->production_service_provision;
+        //    $history->current = $management->production_service_provision;
+        //    $history->comment = $request->production_service_provision_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
         // if ($lastDocument->control_nonconforming_outputs != $management->control_nonconforming_outputs || !empty($request->control_nonconforming_outputs_comment)) {
 
         //     $history = new ManagementAuditTrial();
@@ -2106,6 +2107,7 @@ class ManagementReviewController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
         if ($lastDocument->due_date_extension != $management->due_date_extension || !empty($request->due_date_extension_comment)) {
 
             $history = new ManagementAuditTrial();
@@ -2356,7 +2358,7 @@ class ManagementReviewController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
+                $history->stage='Submitted';
                 $history->save();
 
                 // $list = Helpers::getResponsibleUserList();
@@ -2394,7 +2396,7 @@ class ManagementReviewController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Completed';
+                $history->stage = 'All Actions Completed';
                 $history->save();
                 $changeControl->update();
                 // $list = Helpers::getInitiatorUserList();
@@ -2437,7 +2439,16 @@ class ManagementReviewController extends Controller
         $managementReview->changeControl = CC::all();
         $managementReview->actionItem = ActionItem::all();
         $managementReview->effectiveNess = EffectivenessCheck::all();
-        $pdf = PDF::loadview('frontend.management-review.report', compact('managementReview'))
+
+        $agendaGrid = ManagementReviewDocDetails::where('review_id',$managementReview->id)->where('type',"agenda")->first();
+        $management_review_participants = ManagementReviewDocDetails::where('review_id',$managementReview->id)->where('type',"management_review_participants")->first();
+        $performance_evaluation = ManagementReviewDocDetails::where('review_id',$managementReview->id)->where('type',"performance_evaluation")->first();
+        $action_item_details=  ManagementReviewDocDetails::where('review_id',$managementReview->id)->where('type',"action_item_details")->first();
+        //dd(unserialize($action_item_details->date_due));
+        $capa_detail_details=  ManagementReviewDocDetails::where('review_id',$managementReview->id)->where('type',"capa_detail_details")->first();
+        //dd($capa_detail_details);
+
+        $pdf = PDF::loadview('frontend.management-review.report', compact('managementReview','agendaGrid','management_review_participants','performance_evaluation','action_item_details','capa_detail_details'))
         ->setOptions([
             'defaultFont' => 'sans-serif',
             'isHtml5ParserEnabled' => true,
