@@ -328,7 +328,7 @@ $users = DB::table('users')
                                 </div> --}}
                                 <div class="col-md-6">
                                     <div class="group-input">
-                                        <label for="due-date"> Date Due <span class="text-danger"></span></label>
+                                        <label for="due-date"> Due Date <span class="text-danger"></span></label>
                                         <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
                                         <input readonly type="text"
                                             value="{{ Helpers::getdateFormat($data->due_date) }}"
@@ -519,7 +519,7 @@ $users = DB::table('users')
                                 </div> --}}
                                  <div class="col-md-6 new-date-data-field">
                                     <div class="group-input input-date ">
-                                        <label for="capa_date_due">Recomendation  Due Date  for CAPA</label>
+                                        <label for="capa_date_due">Recomendation  Due Date for CAPA</label>
                                         <div class="calenderauditee">
                                             <input type="text" name="recomendation_capa_date_due" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"  id="recomendation_capa_date_due" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}" />
                                             <input type="date"  class="hide-input" value="{{ Helpers::getdateFormat($data->recomendation_capa_date_due) }}"
@@ -1052,6 +1052,7 @@ dd($data->date_Response_due2);
                                         <div class="static">{{ $data->final_approvel_on }}</div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed_By">Complete By</label>

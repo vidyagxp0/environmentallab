@@ -272,6 +272,16 @@
                         <td>{{ $datas->user_name }}</td>
 
                         <td>
+
+                                {{--@if($datas->previous == 'Null' && !empty($datas->current))
+                                    New
+                                @elseif($datas->previous != $datas->current)
+                                    Modify
+                                @else
+                                    New
+                                @endif--}}
+
+
                             @if(($datas->previous == 'Null') && ($datas->current != 'Null'))
                                 New
                             @elseif($datas->previous != $datas->current)

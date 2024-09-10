@@ -954,13 +954,13 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed On">Submited By</label>
+                                        <label for="Completed On">Submitted By</label>
                                          <div class="static">{{ $data->Submited_by}}</div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Completed By">Submited On</label>
+                                        <label for="Completed By">Submitted On</label>
                                          <div class="static">{{ $data->Submited_on }}</div>
                                     </div>
                                 </div>

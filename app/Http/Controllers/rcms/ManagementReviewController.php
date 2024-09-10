@@ -1028,7 +1028,7 @@ class ManagementReviewController extends Controller
                     if (!empty($management->closure_attachments)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
-                        $history->activity_type = 'File Attachment';
+                        $history->activity_type = 'Closure Attachments';
                         $history->previous = "Null";
                         $history->current = $management->closure_attachments;
                         $history->comment = "NA";
@@ -1872,7 +1872,7 @@ class ManagementReviewController extends Controller
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'File  Attachment';
+            $history->activity_type = 'File Attachment';
             $history->previous = $lastDocument->inv_attachment;
             $history->current = $management->inv_attachment;
             $history->comment = $request->inv_attachment_comment;
@@ -1887,7 +1887,7 @@ class ManagementReviewController extends Controller
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'File Attachment';
+            $history->activity_type = 'File Attachment, if any';
             $history->previous = $lastDocument->file_attchment_if_any;
             $history->current = $management->file_attchment_if_any;
             $history->comment = $request->file_attchment_if_any_comment;
@@ -1901,7 +1901,7 @@ class ManagementReviewController extends Controller
 
             $history = new ManagementAuditTrial();
             $history->ManagementReview_id = $id;
-            $history->activity_type = 'Closure Attachment';
+            $history->activity_type = 'Closure Attachments';
             $history->previous = $lastDocument->closure_attachments;
             $history->current = $management->closure_attachments;
             $history->comment = $request->closure_attachments_comment;
@@ -2358,7 +2358,7 @@ class ManagementReviewController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submited';
+                $history->stage='Submitted';
                 $history->save();
 
                 // $list = Helpers::getResponsibleUserList();
@@ -2396,7 +2396,7 @@ class ManagementReviewController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Completed';
+                $history->stage = 'All Actions Completed';
                 $history->save();
                 $changeControl->update();
                 // $list = Helpers::getInitiatorUserList();
