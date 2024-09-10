@@ -164,9 +164,9 @@
                     External Audit Single Report
                 </td>
                 <td class="w-30">
-                    <div class="logo" style="position: relative; height: 60px; width: 150px;">
-                        <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt=""
-                            style="width: 60px; position: absolute; left: 40%;">
+                    <div class="logo">
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt=""
+                            style="width: 200px;">
                     </div>
                 </td>
             </tr>

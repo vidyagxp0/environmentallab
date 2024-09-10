@@ -2044,7 +2044,7 @@ class AuditeeController extends Controller
 
         DocumentService::update_qms_numbers();
 
-        toastr()->success("Record is Update Successfully");
+        toastr()->success("Record is Updated Successfully");
         return back();
     }
 
@@ -2200,8 +2200,8 @@ class AuditeeController extends Controller
                 $changeControl->audit_lead_more_info_reqd_on = Carbon::now()->format('d-M-Y');
                 // $changeControl->audit_response_completed_by = Auth::user()->name;
                 // $changeControl->audit_response_completed_on = Carbon::now()->format('d-M-Y');
-                $changeControl->response_feedback_verified_by = Auth::user()->name;
-                $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
+                // $changeControl->response_feedback_verified_by = Auth::user()->name;
+                // $changeControl->response_feedback_verified_on = Carbon::now()->format('d-M-Y');
                 $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
