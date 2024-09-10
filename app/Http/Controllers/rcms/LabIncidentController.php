@@ -159,10 +159,21 @@ class LabIncidentController extends Controller
 
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Division Code';
+        $history->activity_type = 'Site/Location Code';
         $history->previous = "Null";
         $history->current = Helpers::getDivisionName($request->division_id);
         $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $data->status;
+        $history->save();
+
+        $history = new LabIncidentAuditTrial();
+        $history->LabIncident_id = $data->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($data->division_id) . '/LI/' . Helpers::year($data->created_at) . '/' . str_pad($data->record, 4, '0', STR_PAD_LEFT);
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -183,7 +194,7 @@ class LabIncidentController extends Controller
 
         $history = new LabIncidentAuditTrial();
         $history->LabIncident_id = $data->id;
-        $history->activity_type = 'Initiation Date';
+        $history->activity_type = 'Date of Initiation';
         $history->previous = "Null";
         $history->current = Helpers::getdateFormat($request->intiation_date);
         $history->comment = "NA";
@@ -491,7 +502,7 @@ class LabIncidentController extends Controller
         if (!empty($request->Currective_Action)) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $data->id;
-            $history->activity_type = 'Currective Action';
+            $history->activity_type = 'Corrective Action';
             $history->previous = "Null";
             $history->current = $request->Currective_Action;
             $history->comment = "NA";
@@ -1095,7 +1106,7 @@ class LabIncidentController extends Controller
         if ($lastDocument->Currective_Action != $request->Currective_Action) {
             $history = new LabIncidentAuditTrial();
             $history->LabIncident_id = $id;
-            $history->activity_type = 'Currective Action';
+            $history->activity_type = 'Corrective Action';
             $history->previous = $lastDocument->Currective_Action;
             $history->current = $request->Currective_Action;
             $history->comment = "NA";
