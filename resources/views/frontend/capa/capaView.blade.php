@@ -1642,6 +1642,7 @@
                                             <div class="static">{{ $data->plan_approved_by }}</div>
                                         </div>
                                     </div>
+                                    
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="Plan Approved On">Plan Approved On</label>
@@ -1650,6 +1651,25 @@
                                             <div class="static">{{ $data->Plan_approved_on }}</div>
                                         </div>
                                     </div>
+
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Plan Approved By">More Information Required By</label>
+                                            <input type="hidden"
+                                                name="plan_approved_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <div class="static">{{ $data->more_info_req_by}}</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Plan Approved On">More Information Required On</label>
+                                            <input type="hidden"
+                                                name="plan_approved_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <div class="static">{{ $data->more_info_req_on }}</div>
+                                        </div>
+                                    </div>
+
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="QA More Info Required By">QA More Info Required

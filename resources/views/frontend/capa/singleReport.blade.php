@@ -698,6 +698,16 @@
                             Plan Approved On</th>
                         <td class="w-30">{{ $data->Plan_approved_on }}</td>
                     </tr>
+
+                    <tr>
+                        <th class="w-20">More Information Required By
+                        </th>
+                        <td class="w-30">{{ $data->plan_approved_by }}</td>
+                        <th class="w-20">
+                            More Information Required By</th>
+                        <td class="w-30">{{ $data->Plan_approved_on }}</td>
+                    </tr>
+
                     <tr>
                         <th class="w-20">QA More Info Required By
                         </th>

@@ -233,6 +233,12 @@
                    <th class="w-20">Others</th>
                    <td class="w-80" colspan="3">@if($data->initiated_if_other){{ $data->initiated_if_other }}@else Not Applicable @endif</td>
                    </tr>
+
+                   <tr>
+                    <th class="w-20">Type</th>
+                    <td class="w-80" colspan="3">@if($data->Type){{ $data->Type }}@else Not Applicable @endif</td>
+                    </tr>
+
                     <tr>
                         <th class="w-20">Priority Level</th>
                         <td class="w-80">@if($data->priority_level){{ $data->priority_level }}@else Not Applicable @endif</td>

@@ -1991,8 +1991,8 @@ class CapaController extends Controller
             if ($capa->stage == 2) {
                 $capa->stage = "1";
                 $capa->status = "Opened";
-                // $capa->rejected_by = Auth::user()->name;
-                // $capa->rejected_on = Carbon::now()->format('d-M-Y');
+                $capa->more_info_req_by = Auth::user()->name;
+                $capa->more_info_req_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";

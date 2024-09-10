@@ -398,15 +398,9 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    {{-- <div class="col-md-6">
-                                            <div class="group-input">
-                                                <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                <input readonly type="text" value="{{ Helpers::getdateFormat($data->due_date) }}">
-                                            </div>
-                                        </div>           --}}
+                                  
 
-                                        <div class="col-lg-6 new-date-data-field">
+                                        {{-- <div class="col-lg-6 new-date-data-field">
                                             <div class="group-input input-date">
                                                 <label for="due_date">Due Date</label>
                                                 <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small>
@@ -417,6 +411,21 @@
                                                     <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                                         oninput="handleDateInput(this, 'due_date')" value="{{ Helpers::getDueDatemonthly(null, false, 'Y-m-d') ?? '' }}" />
                                                 </div>
+                                            </div>
+                                        </div> --}}
+
+                                        <div class="col-md-6">
+                                            <div class="group-input">
+                                                <label for="due_date">Due Date <span class="text-danger"></span></label>
+                                                <div><small class="text-primary">If revising Due Date, kindly mention
+                                                        revision reason in "Due Date Extension Justification" data
+                                                        field.</small></div>
+                                                <input readonly type="text"
+                                                    value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                    name="due_date"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                {{-- <input type="text" value="{{ $data->due_date }}" name="due_date"> --}}
+                                                {{-- <div class="static"> {{ $due_date }}</div> --}}
+
                                             </div>
                                         </div>
 
@@ -534,7 +543,7 @@
                                         <div class="group-input">
                                             <label for="Type">Type</label>
                                             <select  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} name="Type">
-                                                <option value="0">-- Select --</option>
+                                                {{-- <option value="0">-- Select --</option> --}}
                                                 <option {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="0">-- Select --</option>
                                                 <option @if ($data->Type =='Facillties') selected @endif value="Facillties">Facillties</option>
                                                 <option @if ($data->Type =='Other') selected @endif value="Other">Other</option>
@@ -592,7 +601,7 @@
                                             <select name="department" placeholder="Select Department(s)" multiple
                                              name="department"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} placeholder="Select Department(s)"
                                                 data-search="false" data-silent-initial-value-set="true" id="department">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option value="Work Instruction"
                                                     {{ in_array('Work Instruction', explode(',', $data->department)) ? 'selected' : '' }}>
                                                     Work Instruction</option>
@@ -1006,7 +1015,7 @@
                                                 <table class="table table-bordered">
                                                     <tbody>
                                                         <tr style="background: #f4bb22">
-                                                            <th style="width:150px;">Problem Statement</th>
+                                                            <th style="width:150px;">Problem Statement </th>
                                                             <td>
                                                                 <textarea name="why_problem_statement"  {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->why_problem_statement }}</textarea>
                                                             </td>

@@ -164,7 +164,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Root Cause Analysis Audit Trial Report
+                   Root Cause Analysis Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -254,10 +254,12 @@
                         <td>{{ Helpers::getdateFormat($datas->created_at) }}</td>
                         <td>{{ $datas->user_name }}</td>
                         <td>
-                            @if ($datas->previous == "Null")
+                            @if ($datas->previous == 'Null' && $datas->current != 'Null')
                                 New
-                            @else
+                            @elseif($datas->previous != $datas->current)
                                 Modify
+                            @else
+                                New
                             @endif
                         </td>
                     </tr>
