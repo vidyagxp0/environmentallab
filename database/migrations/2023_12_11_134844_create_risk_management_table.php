@@ -140,6 +140,8 @@ return new class extends Migration
             $table->string('submitted_on')->nullable();
             $table->string('evaluated_on')->nullable();
             $table->string('plan_approved_on')->nullable();
+            $table->string('reject_action_plan_by')->nullable();
+            $table->string('reject_action_plan_on')->nullable();
             $table->string('risk_analysis_completed_on')->nullable();
             $table->timestamps();
         });

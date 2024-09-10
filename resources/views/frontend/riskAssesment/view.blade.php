@@ -374,7 +374,14 @@
                         <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
                     </div>
 
-                    <form action="{{ route('riskUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
+                    <script>
+                        $(document).ready(function() {
+                            <?php if ($data->stage == 7) : ?>
+                                $("#target :input").prop("disabled", true);
+                            <?php endif; ?>
+                        });
+                    </script>
+                    <form id="target"  action="{{ route('riskUpdate', $data->id) }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div id="step-form">
 
@@ -1419,7 +1426,7 @@
                                             <div class="group-input">
                                                 <label for="agenda">
                                                     Failure Mode and Effect Analysis<button type="button" name="agenda"
-                                                        onclick="addRiskAssessment('risk-assessment-risk-management')">+</button>
+                                                        onclick="{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"addRiskAssessment('risk-assessment-risk-management')"}}">+</button>
                                                 </label>
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" style="width: 200%"
@@ -1487,7 +1494,7 @@
                                                                     </td>
                                                                     <td>
                                                                         {{-- <input name="initial_rpn[]" type="text"  class='initial-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" > --}}
-                                                                        <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" readonly>
+                                                                        <input name="initial_rpn[]" type="text" class='residual-rpn' value="{{ unserialize($riskEffectAnalysis->initial_rpn)[$key] ?? null }}" disabled readonly>
 
                                                                     </td>
                                                                     <td>
@@ -1545,191 +1552,193 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 sub-head"></div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="fishbone">
-                                                    Fishbone or Ishikawa Diagram
-                                                    <button type="button" name="agenda"
-                                                        onclick="addFishBone('.top-field-group', '.bottom-field-group')">+</button>
-                                                    <button type="button" name="agenda" class="fishbone-del-btn"
-                                                        onclick="deleteFishBone('.top-field-group', '.bottom-field-group')">
-                                                        <i class="fa-solid fa-trash-can"></i>
-                                                    </button>
-                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#fishbone-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400;">
-                                                        (Launch Instruction)
-                                                    </span>
-                                                </label>
-                                                <div class="fishbone-ishikawa-diagram">
-                                                    <div class="left-group">
-                                                        <div class="grid-field field-name">
-                                                            <div>Measurement</div>
-                                                            <div>Materials</div>
-                                                            <div>Methods</div>
-                                                        </div>
-                                                        <div class="top-field-group">
-                                                            <div class="grid-field fields top-field">
-                                                                @if (!empty($fishbone->measurement))
-                                                                    @foreach (unserialize($fishbone->measurement) as $key => $measure)
-                                                                        <div><input type="text"
-                                                                                value="{{ $measure }}"
-                                                                                name="measurement[]"></div>
-                                                                        <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
-                                                                                name="materials[]"></div>
-                                                                        <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
-                                                                                name="methods[]"></div>
-                                                                    @endforeach
-                                                                @endif
-                                                            </div>
-                                                        </div>
-                                                        <div class="mid"></div>
-                                                        <div class="bottom-field-group">
-                                                            <div class="grid-field fields bottom-field">
-                                                                @if (!empty($fishbone->environment))
-                                                                    @foreach (unserialize($fishbone->environment) as $key => $measure)
-                                                                        <div><input type="text"
-                                                                                value="{{ $measure }}"
-                                                                                name="environment[]"></div>
-                                                                        <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
-                                                                                name="manpower[]"></div>
-                                                                        <div><input type="text"
-                                                                                value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
-                                                                                name="machine[]"></div>
-                                                                    @endforeach
-                                                                @endif
+                                    </div>
+                                </div>
 
-                                                            </div>
-                                                        </div>
-                                                        <div class="grid-field field-name">
-                                                            <div>Environment</div>
-                                                            <div>Manpower</div>
-                                                            <div>Machine</div>
-                                                        </div>
+                                <div class="col-12 sub-head"></div>
+                                <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="fishbone">
+                                            Fishbone or Ishikawa Diagram
+                                            <button type="button" name="agenda"
+                                                onclick="{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"addFishBone('.top-field-group', '.bottom-field-group')"}}">+</button>
+                                            <button type="button" name="agenda" class="fishbone-del-btn"
+                                                onclick="{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"deleteFishBone('.top-field-group', '.bottom-field-group')"}}">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </button>
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#fishbone-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="fishbone-ishikawa-diagram">
+                                            <div class="left-group">
+                                                <div class="grid-field field-name">
+                                                    <div>Measurement</div>
+                                                    <div>Materials</div>
+                                                    <div>Methods</div>
+                                                </div>
+                                                <div class="top-field-group">
+                                                    <div class="grid-field fields top-field">
+                                                        @if (!empty($fishbone->measurement))
+                                                            @foreach (unserialize($fishbone->measurement) as $key => $measure)
+                                                                <div><input type="text"
+                                                                        value="{{ $measure }}"
+                                                                        name="measurement[]"></div>
+                                                                <div><input type="text"
+                                                                        value="{{ unserialize($fishbone->materials)[$key] ? unserialize($fishbone->materials)[$key] : '' }}"
+                                                                        name="materials[]"></div>
+                                                                <div><input type="text"
+                                                                        value="{{ unserialize($fishbone->methods)[$key] ? unserialize($fishbone->methods)[$key] : '' }}"
+                                                                        name="methods[]"></div>
+                                                            @endforeach
+                                                        @endif
                                                     </div>
-                                                    <div class="right-group">
-                                                        <div class="field-name">
-                                                            Problem Statement
-                                                        </div>
-                                                        <div class="field">
+                                                </div>
+                                                <div class="mid"></div>
+                                                <div class="bottom-field-group">
+                                                    <div class="grid-field fields bottom-field">
+                                                        @if (!empty($fishbone->environment))
+                                                            @foreach (unserialize($fishbone->environment) as $key => $measure)
+                                                                <div><input type="text"
+                                                                        value="{{ $measure }}"
+                                                                        name="environment[]"></div>
+                                                                <div><input type="text"
+                                                                        value="{{ unserialize($fishbone->manpower)[$key] ? unserialize($fishbone->manpower)[$key] : '' }}"
+                                                                        name="manpower[]"></div>
+                                                                <div><input type="text"
+                                                                        value="{{ unserialize($fishbone->machine)[$key] ? unserialize($fishbone->machine)[$key] : '' }}"
+                                                                        name="machine[]"></div>
+                                                            @endforeach
+                                                        @endif
 
-                                                            <textarea name="problem_statement">{{ $fishbone->problem_statement }}</textarea>
-                                                        </div>
                                                     </div>
+                                                </div>
+                                                <div class="grid-field field-name">
+                                                    <div>Environment</div>
+                                                    <div>Manpower</div>
+                                                    <div>Machine</div>
+                                                </div>
+                                            </div>
+                                            <div class="right-group">
+                                                <div class="field-name">
+                                                    Problem Statement
+                                                </div>
+                                                <div class="field">
+
+                                                    <textarea name="problem_statement">{{ $fishbone->problem_statement }}</textarea>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 sub-head"></div>
-                                        <div class="col-12">
-                                            <div class="group-input">
-                                                <label for="why-why-chart">
-                                                    Why-Why Chart
-                                                    <span class="text-primary" data-bs-toggle="modal"
-                                                        data-bs-target="#why_chart-instruction-modal"
-                                                        style="font-size: 0.8rem; font-weight: 400;">
-                                                        (Launch Instruction)
-                                                    </span>
-                                                </label>
-                                                <div class="why-why-chart">
-                                                    <table class="table table-bordered">
-                                                        <tbody>
-                                                            <tr style="background: #f4bb22">
-                                                                <th style="width:150px;">Problem Statement :</th>
-                                                                <td>
+                                    </div>
+                                </div>
+                            <div class="col-12 sub-head"></div>
+                            <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="why-why-chart">
+                                            Why-Why Chart
+                                            <span class="text-primary" data-bs-toggle="modal"
+                                                data-bs-target="#why_chart-instruction-modal"
+                                                style="font-size: 0.8rem; font-weight: 400;">
+                                                (Launch Instruction)
+                                            </span>
+                                        </label>
+                                        <div class="why-why-chart">
+                                            <table class="table table-bordered">
+                                                <tbody>
+                                                    <tr style="background: #f4bb22">
+                                                        <th style="width:150px;">Problem Statement :</th>
+                                                        <td>
 
-                                                                    <textarea name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="why-row">
-                                                                <th style="width:150px; color: #393cd4;">
-                                                                    Why 1 <span
-                                                                        onclick="addWhyField('why_1_block', 'why_1[]')">+</span>
-                                                                </th>
-                                                                <td>
-                                                                    <div class="why_1_block">
-                                                                        @if (!empty($whyChart->why_1))
-                                                                            @foreach (unserialize($whyChart->why_1) as $key => $measure)
-                                                                                <textarea name="why_1[]">{{ $measure }}</textarea>
-                                                                            @endforeach
-                                                                        @endif
+                                                            <textarea name="why_problem_statement">{{ $whyChart->why_problem_statement }}</textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 1 <span
+                                                                onclick= "{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"addWhyField('why_1_block', 'why_1[]')"}}">+</span>
+                                                                
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_1_block">
+                                                                @if (!empty($whyChart->why_1))
+                                                                    @foreach (unserialize($whyChart->why_1) as $key => $measure)
+                                                                        <textarea name="why_1[]">{{ $measure }}</textarea>
+                                                                    @endforeach
+                                                                @endif
 
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="why-row">
-                                                                <th style="width:150px; color: #393cd4;">
-                                                                    Why 2 <span
-                                                                        onclick="addWhyField('why_2_block', 'why_2[]')">+</span>
-                                                                </th>
-                                                                <td>
-                                                                    <div class="why_2_block">
-                                                                        @if (!empty($whyChart->why_2))
-                                                                            @foreach (unserialize($whyChart->why_2) as $key => $measure)
-                                                                                <textarea name="why_2[]">{{ $measure }}</textarea>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="why-row">
-                                                                <th style="width:150px; color: #393cd4;">
-                                                                    Why 3 <span
-                                                                        onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
-                                                                </th>
-                                                                <td>
-                                                                    <div class="why_3_block">
-                                                                        @if (!empty($whyChart->why_3))
-                                                                            @foreach (unserialize($whyChart->why_3) as $key => $measure)
-                                                                                <textarea name="why_3[]">{{ $measure }}</textarea>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="why-row">
-                                                                <th style="width:150px; color: #393cd4;">
-                                                                    Why 4 <span
-                                                                        onclick="addWhyField('why_4_block', 'why_4[]')">+</span>
-                                                                </th>
-                                                                <td>
-                                                                    <div class="why_4_block">
-                                                                        @if (!empty($whyChart->why_4))
-                                                                            @foreach (unserialize($whyChart->why_4) as $key => $measure)
-                                                                                <textarea name="why_4[]">{{ $measure }}</textarea>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="why-row">
-                                                                <th style="width:150px; color: #393cd4;">
-                                                                    Why 5 <span
-                                                                        onclick="addWhyField('why_5_block', 'why_5[]')">+</span>
-                                                                </th>
-                                                                <td>
-                                                                    <div class="why_5_block">
-                                                                        @if (!empty($whyChart->why_5))
-                                                                            @foreach (unserialize($whyChart->why_5) as $key => $measure)
-                                                                                <textarea name="why_5[]">{{ $measure }}</textarea>
-                                                                            @endforeach
-                                                                        @endif
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="background: #0080006b;">
-                                                                <th style="width:150px;">Root Cause :</th>
-                                                                <td>
-                                                                    <textarea name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                            </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 2 <span
+                                                                onclick="{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"addWhyField('why_2_block', 'why_2[]')"}}">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_2_block">
+                                                                @if (!empty($whyChart->why_2))
+                                                                    @foreach (unserialize($whyChart->why_2) as $key => $measure)
+                                                                        <textarea name="why_2[]">{{ $measure }}</textarea>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 3 <span
+                                                                onclick="addWhyField('why_3_block', 'why_3[]')">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_3_block">
+                                                                @if (!empty($whyChart->why_3))
+                                                                    @foreach (unserialize($whyChart->why_3) as $key => $measure)
+                                                                        <textarea name="why_3[]">{{ $measure }}</textarea>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 4 <span
+                                                                onclick="{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"addWhyField('why_4_block', 'why_4[]')"}}">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_4_block">
+                                                                @if (!empty($whyChart->why_4))
+                                                                    @foreach (unserialize($whyChart->why_4) as $key => $measure)
+                                                                        <textarea name="why_4[]">{{ $measure }}</textarea>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr class="why-row">
+                                                        <th style="width:150px; color: #393cd4;">
+                                                            Why 5 <span
+                                                                onclick="{{$data->stage == 0 || $data->stage == 7 ? 'return false;' :"addWhyField('why_5_block', 'why_5[]')"}}">+</span>
+                                                        </th>
+                                                        <td>
+                                                            <div class="why_5_block">
+                                                                @if (!empty($whyChart->why_5))
+                                                                    @foreach (unserialize($whyChart->why_5) as $key => $measure)
+                                                                        <textarea name="why_5[]">{{ $measure }}</textarea>
+                                                                    @endforeach
+                                                                @endif
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr style="background: #0080006b;">
+                                                        <th style="width:150px;">Root Cause :</th>
+                                                        <td>
+                                                            <textarea name="why_root_cause">{{ $whyChart->why_root_cause }}</textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                         <div class="col-12 sub-head"></div>
                                         <div class="col-12">
@@ -1843,11 +1852,13 @@
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->severity_rate == '1' ? 'selected' : '' }}
-                                                        value="1">1</option>
+                                                        value="1">Negligible</option>
                                                     <option {{ $data->severity_rate == '2' ? 'selected' : '' }}
-                                                        value="2">2</option>
+                                                        value="2">Moderate</option>
                                                     <option {{ $data->severity_rate == '3' ? 'selected' : '' }}
-                                                        value="3">3</option>
+                                                        value="3">Major</option>
+                                                    <option {{ $data->severity_rate == '4' ? 'selected' : '' }}
+                                                        value="4">Fatal</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1858,11 +1869,15 @@
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->occurrence == '1' ? 'selected' : '' }}
-                                                        value="1">1</option>
+                                                        value="1">Very Likely</option>
                                                     <option {{ $data->occurrence == '2' ? 'selected' : '' }}
-                                                        value="2">2</option>
+                                                        value="2">Likely</option>
                                                     <option {{ $data->occurrence == '3' ? 'selected' : '' }}
-                                                        value="3">3</option>
+                                                        value="3">Unlikely</option>
+                                                    <option {{ $data->occurrence == '4' ? 'selected' : '' }}
+                                                        value="4">Rare</option>
+                                                    <option {{ $data->occurrence == '5' ? 'selected' : '' }}
+                                                        value="5">Extremely Unlikely</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1873,11 +1888,15 @@
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
                                                     <option value="">Enter Your Selection Here</option>
                                                     <option {{ $data->detection == '1' ? 'selected' : '' }}
-                                                        value="1">1</option>
+                                                        value="1">Very Likely</option>
                                                     <option {{ $data->detection == '2' ? 'selected' : '' }}
-                                                        value="2">2</option>
+                                                        value="2">Likely</option>
                                                     <option {{ $data->detection == '3' ? 'selected' : '' }}
-                                                        value="3">3</option>
+                                                        value="3">Unlikely</option>
+                                                    <option {{ $data->detection == '4' ? 'selected' : '' }}
+                                                        value="4">Rare</option>
+                                                    <option {{ $data->detection == '5' ? 'selected' : '' }}
+                                                        value="5">Impossible</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -1988,7 +2007,12 @@
                                                 </label> --}}
                                                 <label for="mitigation_plan_details">
                                                     Mitigation Plan Details<button type="button" name="ann"
-                                                        id="action_plan2">+</button>
+                                                        id="action_plan2" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} >+</button>
+
+                                                        
+
+
+
                                                 </label>
                                                 <table class="table table-bordered" id="action_plan_details2">
                                                     <thead>
@@ -2209,7 +2233,7 @@
                                                 </select>
                                             </div>
                                         </div> --}}
-                                        <div class="col-lg-12">
+                                        {{--<div class="col-lg-12">
                                             <div class="group-input">
                                                 <label for="Reference Recores">Reference Record</label>
                                                 <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple id="reference_record" name="refrence_record[]" id="">
@@ -2221,7 +2245,41 @@
                                                     @endforeach
                                                 </select>
                                             </div>
+                                        </div>--}}
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Related Records">Reference Records</label>
+                                                <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} multiple
+                                                    id="reference_record" name="refrence_record[]"
+                                                    placeholder="Select Reference Records">
+                                                    <option value="">--Select---</option>
+        
+                                                    @if (!empty($old_record))
+                                                        @foreach ($old_record as $new)
+                                                            @php
+                                                                $recordValue =
+                                                                    Helpers::getDivisionName($new->division_id) .
+                                                                    '/RA/' .
+                                                                    date('Y') .
+                                                                    '/' .
+                                                                    Helpers::recordFormat($new->record);
+                                                                $selected = in_array(
+                                                                    $recordValue,
+                                                                    explode(',', $data->Reference_Recores1)
+)
+                                                                    ? 'selected'
+                                                                    : '';
+                                                            @endphp
+                                                            <option value="{{ $recordValue }}" {{ $selected }}>
+                                                                {{ $recordValue }}
+                                                            </option>
+                                                        @endforeach
+                                                    @endif
+                                                </select>
+                                            </div>
                                         </div>
+
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div>
@@ -2283,6 +2341,18 @@
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="group-input">
+                                                <label for="Action Plan Complete">Reject Action Plan By</label>
+                                                <div class="static">{{ $data->actions_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Action Plan Complete">Reject Action Plan On</label>
+                                                <div class="static">{{ $data->actions_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
                                                 <label for="Plan Approved By">Action Plan Approved By</label>
                                                 <div class="static">{{ $data->plan_approved_by }}</div>
                                             </div>
@@ -2317,7 +2387,7 @@
                                                 <div class="static">{{ $data->risk_analysis_completed_on }}</div>
                                             </div>
                                         </div>
-                                        <!-- <div class="col-lg-6">
+                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="All Actions Completed">All Actions Completed By</label>
                                                 <div class="static">{{ $data->all_actions_completed_by }}</div>
@@ -2328,7 +2398,71 @@
                                                 <label for="All Actions Completed">All Actions Completed On</label>
                                                 <div class="static">{{ $data->all_actions_completed_on }}</div>
                                             </div>
-                                        </div> -->
+                                        </div> 
+
+
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Info1  Required By">More Information Required By</label>
+                                                <div class="static">{{ $data->submitted_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Info1 Required On">More Information Required On</label>
+                                                <div class="static">{{ $data->submitted_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Info2 Required By">More Information Required By</label>
+                                                <div class="static">{{ $data->evaluated_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Info2  Required by">More Information Required On</label>
+                                                <div class="static">{{ $data->evaluated_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Info3 Required By">More Information Required By</label>
+                                                <div class="static">{{ $data->plan_approved_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Info3 Required On">More Information Required On</label>
+                                                <div class="static">{{ $data->plan_approved_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Actions Needed By">More Actions Needed By</label>
+                                                <div class="static">{{ $data->all_actions_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="More Actions Needed On">More Actions Needed On</label>
+                                                <div class="static">{{ $data->all_actions_completed_on }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Residual Risk Evaluation Completed By">Residual Risk Evaluation Completed By </label>
+                                                <div class="static">{{ $data->all_actions_completed_by }}</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="Residual Risk Evaluation Completed On">Residual Risk Evaluation Completed On</label>
+                                                <div class="static">{{ $data->all_actions_completed_on }}</div>
+                                            </div>
+                                        </div>
+
+
                                         <div class="col-lg-6">
                                             <div class="group-input">
                                                 <label for="Cancel">Cancelled By</label>
@@ -2342,6 +2476,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    
                                     <div class="button-block">
                                         <button type="submit" class="saveButton"
                                             {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>Save</button>

@@ -312,9 +312,9 @@ class Helpers
     }
     public static function getDepartmentWithString($id)
     {
-        $response = [];
+        $response = '';
         if(!empty($id)){
-            $response = explode(',',$id);
+            $response = $id;
         }
         return $response;
     }

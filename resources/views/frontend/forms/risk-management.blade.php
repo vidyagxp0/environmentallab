@@ -222,9 +222,12 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
                 </div>
 
+   
+
                 <form action="{{ route('risk_store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div id="step-form">
+                        
 
                         <!-- Risk Management Tab content -->
                         <div id="CCForm1" class="inner-block cctabcontent">
@@ -1251,10 +1254,10 @@
                                             <select name="severity_rate" id="analysisR"
                                                 onchange='calculateRiskAnalysis(this)'>
                                                 <option value="">Enter Your Selection Here</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                {{-- <option value="4">4</option> --}}
+                                                <option value="1">Negligible</option>
+                                                <option value="2">Moderate</option>
+                                                <option value="3">Major</option>
+                                                <option value="4">Fatal</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1265,9 +1268,11 @@
                                                 <option value="">Enter Your Selection Here</option>
                                                 {{-- <option value="5">5</option>
                                                 <option value="4">4</option> --}}
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
+                                                <option value="1">Very Likely</option>
+                                                <option value="2">Likely</option>
+                                                <option value="3">Unlikely</option>
+                                                <option value="4">Rare</option>
+                                                <option value="5">Extremely Unlikely</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1278,9 +1283,11 @@
                                                 <option value="">Enter Your Selection Here</option>
                                                 {{-- <option value="5">5</option>
                                                 <option value="4">4</option> --}}
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
+                                                <option value="1">Very Likely</option>
+                                                <option value="2">Likely</option>
+                                                <option value="3">Unlikely</option>
+                                                <option value="4">Rare</option>
+                                                <option value="5">Impossible</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1635,6 +1642,67 @@
                                             <div class="static"></div>
                                         </div>
                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Info1 Required By">More Information Required by </label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Info1 Required On">More Information Requirerd On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Info2 Required By">More Information Required by </label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Info2 Required On">More Information Requirerd On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Info3 Required By">More Information Required by </label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Info3 Required On">More Information Requirerd On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed By">More Actions Needed by </label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="More Actions Needed On">More Actions Needed On</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Residual Risk Evaluation Completed By">Residual Risk Evaluation Completed By </label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="group-input">
+                                            <label for="Residual Risk Evaluation Completed On">Residual Risk Evaluation Completed on</label>
+                                            <div class="static"></div>
+                                        </div>
+                                    </div>
+
                                 </div>
                                 <div class="button-block">
                                     <button type="submit" class="saveButton">Save</button>
