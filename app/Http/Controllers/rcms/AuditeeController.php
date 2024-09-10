@@ -2205,7 +2205,7 @@ class AuditeeController extends Controller
                 $history = new AuditTrialExternal();
                         $history->ExternalAudit_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->current =$changeControl->audit_response_completed_by;
+                        $history->current =$changeControl->audit_lead_more_info_reqd_by;
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
