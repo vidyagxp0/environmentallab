@@ -81,6 +81,7 @@ class AuditProgramController extends Controller
 
         $data->initiated_through = $request->initiated_through;
         $data->initiated_through_req = $request->initiated_through_req;
+        $data->type_other = $request->type_other;
         $data->repeat = $request->repeat;
         $data->repeat_nature = $request->repeat_nature;
         $data->due_date_extension = $request->due_date_extension;
@@ -347,6 +348,20 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
+        if (!empty($data->type_other)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $data->id;
+            $history->activity_type = 'Type(Others)';
+            $history->previous = "Null";
+            $history->current = $data->type_other;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
         if (!empty($data->due_date_extension)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
@@ -549,6 +564,7 @@ class AuditProgramController extends Controller
 
         $data->initiated_through = $request->initiated_through;
         $data->initiated_through_req = $request->initiated_through_req;
+        $data->type_other = $request->type_other;
         $data->repeat = $request->repeat;
         $data->repeat_nature = $request->repeat_nature;
         $data->due_date_extension = $request->due_date_extension;
@@ -685,6 +701,20 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
+        if ($lastDocument->type_other != $data->type_other || !empty($request->type_other_comment)) {
+            $history = new AuditProgramAuditTrial();
+            $history->AuditProgram_id = $id;
+            $history->activity_type = 'Type(Others)';
+            $history->previous = $lastDocument->type_other;
+            $history->current = $data->type_other;
+            $history->comment = $request->type_other_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
 
         if ($lastDocument->due_date_extension != $data->due_date_extension || !empty($request->due_date_extension_comment)) {
             $history = new AuditProgramAuditTrial();
@@ -813,20 +843,36 @@ class AuditProgramController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->url_description != $data->url_description || !empty($request->url_description_comment)) {
+
+        if ($lastDocument->url_description != $data->url_description || !empty($request->related_url_comment)) {
 
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $id;
             $history->activity_type = 'URl,s Description';
             $history->previous = $lastDocument->url_description;
             $history->current = $data->url_description;
-            $history->comment = $request->url_description_comment;
+            $history->comment = $request->related_url_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+        // if ($lastDocument->url_description != $data->url_description || !empty($request->url_description_comment)) {
+
+        //     $history = new AuditProgramAuditTrial();
+        //     $history->AuditProgram_id = $id;
+        //     $history->activity_type = 'URl,s Description';
+        //     $history->previous = $lastDocument->url_description;
+        //     $history->current = $data->url_description;
+        //     $history->comment = $request->url_description_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->Initiator_Group != $data->Initiator_Group || !empty($request->Initiator_Group_comment)) {
 
             $history = new AuditProgramAuditTrial();

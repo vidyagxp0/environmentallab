@@ -425,7 +425,7 @@
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
-                                                <label for="Assigned to">Assigned to
+                                                <label for="Assigned to">Assigned To
                                                     {{-- @if ($data->user)
                                                         {{ $data->user->name }}
                                                     @endif --}}

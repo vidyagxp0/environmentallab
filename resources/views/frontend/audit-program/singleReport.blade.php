@@ -195,7 +195,7 @@
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
-                        <th class="w-20">Date Initiation</th>
+                        <th class="w-20">Date of Initiation</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->created_at) }}</td>
                     </tr>
                     <tr>
@@ -213,8 +213,10 @@
                        
                     </tr>
                     <tr>
+                        <th class="w-20">Record Number</th>
+                        <td class="w-80">@if($data->record){{ Helpers::divisionNameForQMS($data->division_id) }}/AP/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }} @else Not Applicable @endif</td>
                         <th class="w-20">Due Date</th>
-                        <td class="w-80" > @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>\
+                        <td class="w-80" > @if($data->due_date){{ Helpers::getdateFormat($data->due_date) }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Short Description</th>
@@ -223,6 +225,10 @@
                     <tr>
                         <th class="w-20">Type</th>
                         <td class="w-30">@if($data->type){{ $data->type }}@else Not Applicable @endif</td>
+                    </tr> 
+                    <tr>
+                        <th class="w-20">Type(Others)</th>
+                        <td class="w-30" colspan="3">@if($data->type_other){{ $data->type_other }}@else Not Applicable @endif</td>
                     </tr> 
                     <tr>
                         <th class="w-20">Due Date Extension Justification</th>
