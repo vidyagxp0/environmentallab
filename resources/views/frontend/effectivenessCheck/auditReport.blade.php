@@ -22,6 +22,14 @@
         width: 10%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-20 {
         width: 20%;
     }
@@ -36,14 +44,6 @@
 
     .w-50 {
         width: 50%;
-    }
-
-    .w-5 {
-        width: 5%;
-    }
-
-    .w-15 {
-        width: 15%;
     }
 
     .w-60 {
@@ -166,6 +166,7 @@
         word-break: break-all;
         word-wrap: break-word;
     }
+
 </style>
 
 <body>
@@ -235,7 +236,7 @@
                     <tr>
                         <td>
                             <div>{{ $datas->activity_type }}</div>
-                            <div>
+                             <div>
                                 <div style="word-break: break-all;"><strong>Changed From :</strong></div>
                                 @if (!empty($datas->previous))
                                     @if ($datas->activity_type == 'Assigned To')

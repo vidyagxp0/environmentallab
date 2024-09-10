@@ -175,6 +175,20 @@ class EffectivenessCheckController extends Controller
         DB::table('record_numbers')->update(['counter' => $newCounter]);
 
 
+            $history = new EffectivenessCheckAuditTrail();
+            $history->effectiveness_id = $openState->id;
+            $history->activity_type = 'Record Number';
+            $history->previous = "Null";
+            $history->current =  Helpers::getDivisionName(session()->get('division')) . "/EC/" . Helpers::year($openState->created_at) . "/" . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
+            $history->comment = "NA";
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+
+
 
         if (!empty($request->division_id)) {
             $history = new EffectivenessCheckAuditTrail();

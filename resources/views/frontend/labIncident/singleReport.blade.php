@@ -628,7 +628,7 @@
             </div>
             <table>
                 <tr>
-                    <th class="w-20">QA Review Comment</th>
+                    <th class="w-20">QA Review Comments</th>
                     <td class="w-80" colspan="3">
                         @if ($data->QA_Review_Comments)
                             {{ $data->QA_Review_Comments }}

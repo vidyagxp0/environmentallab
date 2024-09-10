@@ -255,7 +255,7 @@
                         <td>Not Applicable</td>
                     @endif
 
-                    <th class="w-20">Date Due</th>
+                    <th class="w-20">Due Date</th>
                     <td class="w-80">{{ Helpers::getdateFormat($data->due_date) }}</td>
 
                 </tr>
@@ -407,7 +407,7 @@
                             Not Applicable
                         @endif
                     </td>
-                    <th class="w-20">Due Date</th>
+                    <th class="w-20">CAPA Due Date</th>
                     <td class="w-80">
                         @if ($data->capa_date_due)
                             {!! $data->capa_date_due !!}
@@ -498,22 +498,30 @@
         <table>
             <tr>
 
-                @php
+                {{--@php
                     $datas = [
                         '1' => 'High',
                         '2' => 'Medium',
                         '3' => 'Low',
                         '4' => 'None',
                     ];
-                @endphp
+                @endphp--}}
                 <th class="w-20">Impact</th>
                 <td class="w-80">
+                    @if ($data->impact)
+                        {{ $data->impact}}
+                    @else
+                        Not Applicable
+                    @endif
+                </td>
+
+                {{--<td class="w-80">
                     @if ($data->impact)
                         {{ $datas[$data->impact] ?? '' }}
                     @else
                         Not Applicable
                     @endif
-                </td>
+                </td>--}}
 
                  <th class="w-20">Impact Analysis
                 </th>
