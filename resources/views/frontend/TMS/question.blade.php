@@ -229,16 +229,18 @@
                         </label>
                         <div><small class="text-primary" id="infoQuestion"></small></div>
                         <input type="text" class="answer" id="answer" name="answers[]">
-                        <div id="answersdiv"></div>
+                        <!-- <div id="answersdiv"></div> -->
                     </div>
-                    <p id="answercheck" style="color: red;">
+                    <!-- <p id="answercheck" style="color: red;">
                         **Answer is missing
-                    </p>
+                    </p> -->
                 </div>
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-outline" id="questionsubmitbtn" name="submit" value="save">Save</button>
+                    <!-- <button type="submit" class="btn btn-outline" id="questionsubmitbtn" name="submit" value="save">Save</button> -->
+                    <button type="submit" class="btn btn-outline"  name="submit" value="save">Save</button>
+
                 </div>
             </form>
 
@@ -320,10 +322,11 @@
             multiOptionsGroup.style.display = 'block';
             answerGroup.style.display = 'block';
         } else if (questionType === 'Text Field') {
-         
-            optionsGroup.style.display = 'none';
-            multiOptionsGroup.style.display = 'none';
-            answerGroup.style.display = 'none';
+            optionsContainer.style.display = 'none';
+            answersContainer.style.display = 'none';
+        } else {
+            optionsContainer.style.display = 'block';
+            answersContainer.style.display = 'block';
         }
     }
 
