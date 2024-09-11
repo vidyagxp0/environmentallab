@@ -30,6 +30,10 @@
                                             @php
                                                 $showEdit = true;
                                             @endphp
+                                        @elseif($document->stage ==3)
+                                            @php    
+                                                $showEdit = true;
+                                            @endphp
                                         @endif
                                     @endif
 
@@ -40,7 +44,7 @@
                                                     $showEdit = true;
                                                 @endphp
                                             @endif
-                                        @elseif($document->stage == 4)
+                                        @elseif($document->stage == 4 || $document->stage == 5)
                                             @php
                                                 $showEdit = true;
                                             @endphp    
