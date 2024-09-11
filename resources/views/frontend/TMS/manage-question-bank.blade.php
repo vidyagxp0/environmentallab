@@ -42,7 +42,7 @@
                     </div>
                 </div>
             </div>
-
+               
             <form action="{{ route('question-bank.update', $question->id) }}" method="post">
                 @csrf
                 @method('PUT')

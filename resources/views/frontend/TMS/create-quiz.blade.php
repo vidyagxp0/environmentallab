@@ -80,7 +80,7 @@
                             <div class="group-input">
                                 <label for="question-bank">Choose Question Bank</label>
                                 <select name="question_bank" id="question-bank">
-                                    <option value="">---</option>
+                                <option value="" disabled selected>Question Type Select</option>
                                     @foreach ($questions as $data)
                                     <option data-id="{{ $data->id }}" value="{{ $data->id }}">{{ $data->title }}</option>
                                     @endforeach
@@ -133,7 +133,9 @@
             <div class="foot-btns">
                 <button>Cancel</button>
                 <button id="quize-Submit" type="submit">Save</button>
+                
             </div>
+          
             </form>
 
         </div>

@@ -2908,7 +2908,7 @@ section#pdf-page .watermark {
                 TMS QUESTION
 ===============================================*/
 
-#tms-question {
+/* #tms-question {
     padding: 20px 0px;
     background: #4274da;
     min-height: calc(100vh - 150px);
@@ -3122,7 +3122,251 @@ section#pdf-page .watermark {
     color: white;
     background: #4274da;
     border: 1px solid rgb(202, 202, 202);
+} */
+
+#tms-question {
+    padding: 20px;
+    background: #4274da;
+    min-height: calc(100vh - 150px);
 }
+
+#tms-question .inner-block {
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -4px 8px rgba(255, 255, 255, 0.3);
+    background: #ffffff;
+    border-radius: 8px; 
+}
+
+#tms-question .search-bar form {
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc; 
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    border-radius: 4px; 
+    overflow: hidden;
+}
+
+#tms-question .search-bar form input {
+    border: 0;
+    outline: none;
+    padding: 10px; 
+}
+
+#tms-question .search-bar form label {
+    background: #4274da;
+    color: white;
+    display: grid;
+    place-items: center;
+}
+
+#tms-question .question-table .head {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#tms-question .question-table .head button {
+    font-size: 0.9rem;
+    border-radius: 4px; 
+    padding: 6px 12px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#tms-question .question-table .head button:hover {
+    background: #365d9c; 
+    color: white;
+}
+
+#tms-question .question-table .table-block {
+    border-left: 2px solid #dcdcdc; 
+    border-right: 2px solid #dcdcdc;
+    border-top: 2px solid #dcdcdc;
+    border-radius: 4px; 
+    overflow: hidden; 
+}
+
+#tms-question .question-table thead th {
+    background: #5d87db;
+    color: #ffffff; 
+}
+
+#tms-question .question-table tbody tr {
+    border-bottom: 1px solid #dcdcdc; 
+}
+
+#tms-question .question-table td {
+    vertical-align: middle;
+    font-size: 0.9rem;
+    padding: 10px; 
+}
+
+#tms-question .question-table .question {
+    max-width: 350px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+}
+
+#tms-question .question-table .action-btns {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#tms-question .question-table .action-btns .button {
+    border: 1px solid #dcdcdc;
+    color: #4274da;
+    background: #f9f9f9; 
+    width: 26px;
+    height: 26px;
+    text-align: center;
+    line-height: 24px;
+    border-radius: 4px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#tms-question .question-table .action-btns .button:hover {
+    background: #e0e0e0; 
+    color: #365d9c; 
+}
+
+#tms-question .add-question {
+    text-align: center;
+    background: #4274da;
+    padding: 10px;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 4px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#tms-question .add-question:hover {
+    background: #365d9c; 
+}
+
+#tms-question .filter-block,
+#tms-question .quiz-block {
+    padding: 0;
+    overflow: hidden;
+}
+
+#tms-question .filter-block .head,
+#tms-question .quiz-block .head {
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 10px 20px;
+    background: #4274da;
+    color: white;
+}
+
+#tms-question .filter-block .list,
+#tms-question .quiz-block .list {
+    padding: 20px;
+}
+
+#tms-question .filter-block .list label,
+#tms-question .quiz-block .list .quiz {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#tms-question .quiz-block .list .quiz {
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #dcdcdc; 
+}
+
+#tms-question .quiz-block .list .quiz:last-child {
+    margin-bottom: 0;
+}
+
+#tms-question .quiz-block .list .quiz div:nth-child(1) {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; 
+}
+
+#tms-question .quiz-block .list .quiz button {
+    border: 1px solid #dcdcdc; 
+    color: #4274da;
+    background: #f9f9f9; 
+    border-radius: 4px;
+    padding: 6px 12px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#tms-question .quiz-block .list .quiz button:hover {
+    background: #e0e0e0;
+    color: #365d9c; 
+}
+
+#add-question-modal .group-input label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 8px; 
+}
+
+#add-question-modal .group-input label button {
+    border-radius: 50%;
+    font-size: 0.8rem;
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    color: white;
+    background: #4274da;
+    border: 0;
+    display: inline-grid;
+    place-items: center;
+}
+
+#add-question-modal .group-input input,
+#add-question-modal .group-input select {
+    display: block;
+    width: 100%;
+    border-radius: 4px; 
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc; 
+    padding: 10px; 
+}
+
+#add-question-modal .group-input .option-group {
+    display: grid;
+    grid-template-columns: 1fr 30px;
+    margin-bottom: 20px;
+}
+
+#add-question-modal .group-input .option-group input[type="checkbox"] {
+    margin: auto;
+    width: 15px;
+    height: 15px;
+}
+
+#add-question-modal .modal-footer button {
+    color: white;
+    background: #4274da;
+    border: 1px solid #dcdcdc; 
+    padding: 10px 20px;
+    border-radius: 4px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#add-question-modal .modal-footer button:hover {
+    background: #365d9c; 
+}
+
+
+
+
 
 /*EDIT MODEL*/
 
@@ -3223,7 +3467,7 @@ section#pdf-page .watermark {
                 QUESTION BANK
 ===============================================*/
 
-#tms-question-bank {
+/* #tms-question-bank {
     padding: 20px 0px;
     background: #4274da;
     min-height: calc(100vh - 150px);
@@ -3343,8 +3587,159 @@ section#pdf-page .watermark {
     color: white;
     background: #4274da;
     border: 1px solid rgb(202, 202, 202);
+} */
+
+#tms-question-bank {
+    padding: 20px;
+    background: #4274da;
+    min-height: calc(100vh - 150px);
 }
 
+#tms-question-bank .inner-block {
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -4px 8px rgba(255, 255, 255, 0.3);
+    background: #ffffff;
+    border-radius: 8px; 
+}
+
+#tms-question-bank .search-bar form {
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc; 
+    display: grid;
+    grid-template-columns: 1fr 70px;
+    border-radius: 4px; 
+    overflow: hidden;
+}
+
+#tms-question-bank .search-bar form input {
+    border: 0;
+    outline: none;
+    padding: 10px; 
+}
+
+#tms-question-bank .search-bar form label {
+    background: #f0f0f0;
+    color: #333; 
+    display: grid;
+    place-items: center;
+}
+
+#tms-question-bank .question-table .head-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#tms-question-bank .question-table .head-bar .head {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+#tms-question-bank .question-table .head-bar .add-question-bank {
+    text-align: center;
+    background: #4274da;
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 30px;
+    padding: 8px 20px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#tms-question-bank .question-table .head-bar .add-question-bank:hover {
+    background: #365d9c; 
+}
+
+#tms-question-bank .question-table .table-block {
+    border-left: 2px solid #dcdcdc; 
+    border-right: 2px solid #dcdcdc;
+    border-top: 2px solid #dcdcdc;
+    border-radius: 4px; 
+    overflow: hidden; 
+}
+
+#tms-question-bank .question-table thead th {
+    background: #5d87db;
+    color: #ffffff; 
+}
+
+#tms-question-bank .question-table tbody tr {
+    border-bottom: 1px solid #dcdcdc; 
+}
+
+#tms-question-bank .question-table td {
+    vertical-align: middle;
+    font-size: 0.9rem;
+    padding: 10px; 
+}
+
+#tms-question-bank .question-table .action-btns {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+#tms-question-bank .question-table .action-btns button,
+#tms-question-bank .question-table .action-btns a {
+    border: 1px solid #dcdcdc; 
+    color: #4274da;
+    background: #f9f9f9; 
+    padding: 6px 12px; 
+    border-radius: 4px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#tms-question-bank .question-table .action-btns button:hover,
+#tms-question-bank .question-table .action-btns a:hover {
+    background: #e0e0e0;
+    color: #365d9c; 
+}
+
+#question-bank-modal .group-input label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 8px; 
+}
+
+#question-bank-modal .group-input label button {
+    border-radius: 50%;
+    font-size: 0.8rem;
+    width: 25px;
+    height: 25px;
+    margin-left: 10px;
+    color: white;
+    background: #4274da;
+    border: 0;
+    display: inline-grid;
+    place-items: center;
+}
+
+#question-bank-modal .group-input input,
+#question-bank-modal .group-input select,
+#question-bank-modal .group-input textarea {
+    display: block;
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    border: 1px solid #dcdcdc; 
+    padding: 10px; 
+}
+
+#question-bank-modal .modal-footer button {
+    color: white;
+    background: #4274da;
+    border: 1px solid #dcdcdc; 
+    padding: 10px 20px;
+    border-radius: 4px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#question-bank-modal .modal-footer button:hover {
+    background: #365d9c; 
+}
 
 
 /* =============================================
@@ -4562,16 +4957,17 @@ section#pdf-page .watermark {
                 MANAGE QUIZZES
 ===============================================*/
 #create-quiz {
-    padding: 20px 0px;
+    padding: 20px 0;
     background: #4274da;
     min-height: calc(100vh - 150px);
 }
 
 #create-quiz .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 -4px 8px rgba(255, 255, 255, 0.3);
     background: #ffffff;
     overflow: hidden;
+    border-radius: 8px;
 }
 
 #create-quiz .inner-block .main-head {
@@ -4581,6 +4977,7 @@ section#pdf-page .watermark {
     margin-bottom: 0;
     font-weight: bold;
     font-size: 1.2rem;
+    border-bottom: 1px solid #ffffff;
 }
 
 #create-quiz .inner-block .inner-block-content {
@@ -4591,7 +4988,7 @@ section#pdf-page .watermark {
     display: block;
     font-size: 0.9rem;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px; 
 }
 
 #create-quiz .group-input input,
@@ -4599,9 +4996,11 @@ section#pdf-page .watermark {
 #create-quiz .group-input textarea {
     display: block;
     width: 100%;
-    border-radius: 5px;
+    border-radius: 4px; 
     margin-bottom: 20px;
     font-size: 0.85rem;
+    border: 1px solid #dcdcdc;
+    padding: 10px; 
 }
 
 #create-quiz .checkbox label {
@@ -4626,31 +5025,41 @@ section#pdf-page .watermark {
 
 #create-quiz .question-container .left-block,
 #create-quiz .question-container .right-block {
-    width: 45%;
+    width: 48%; 
 }
 
 #create-quiz .question-container th,
 #create-quiz .question-container td {
-    padding: 10px;
+    padding: 12px; 
     text-align: left;
 }
 
 #create-quiz .question-container thead th {
-    background: #5d87dbba;
+    background: #5d87db;
+    color: #ffffff; 
 }
 
 #create-quiz .question-container th {
-    background-color: #eee;
+    background-color: #f9f9f9; 
 }
 
 #create-quiz .question-container tbody tr:hover {
-    background: #eeeeee;
+    background: #f1f1f1; 
     cursor: pointer;
 }
 
 #create-quiz .question-container .right-table button {
     border: 1px solid #a3a0a0a6;
     color: #355cab;
+    background: #ffffff; 
+    padding: 8px 12px; 
+    border-radius: 4px; 
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#create-quiz .question-container .right-table button:hover {
+    background: #f0f0f0; 
+    color: #2a4d7b; 
 }
 
 #create-quiz .foot-btns {
@@ -4662,13 +5071,20 @@ section#pdf-page .watermark {
 }
 
 #create-quiz .foot-btns button {
-    background: #4274da;
-    color: white;
+    background: #ffffff;
+    color: #4274da;
     font-size: 1.2rem;
-    border: 0;
-    padding: 5px 15px;
+    border: 1px solid #507dd8;
+    padding: 8px 16px; 
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+#create-quiz .foot-btns button:hover {
+    background: #f0f8ff; 
+    color: #365d9c; 
+}
 
 
 /* =============================================
