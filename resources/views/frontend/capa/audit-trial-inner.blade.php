@@ -1,5 +1,5 @@
-@extends('frontend.layout.main')
-@section('container')
+@extends('frontend.rcms.layout.main_rcms')
+@section('rcms_container')
     <div id="audit-inner">
         <div class="container-fluid">
             <div class="audit-inner-container">
@@ -9,7 +9,8 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                                Record - {{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+                                Record - <a
+                                    href="{{ route('CC.show', $doc->id) }}">{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div class="info-list">
 
@@ -29,6 +30,7 @@
 
                 </div>
                 @foreach ($detail_data as $temp)
+                {{ $temp->id }}
                     <div class="inner-block audit-main">
                         <div class="info-list">
                             <div class="list-item">
@@ -37,10 +39,10 @@
                                 <div>{{ $temp->user_name }}</div>
                             </div>
                             {{-- <div class="list-item">
-                                <div class="head">Modifier role</div>
-                                <div>:</div>
-                                <div>{{ $temp->user_role }}</div>
-                            </div> --}}
+                            <div class="head">Modifier role</div>
+                            <div>:</div>
+                            <div>{{ $temp->user_role }}</div>
+                        </div> --}}
                             <div class="list-item">
                                 <div class="head">Modified On</div>
                                 <div>:</div>
@@ -95,11 +97,7 @@
                                     <div class="list-item">
                                         <div class="head">Changed From</div>
                                         <div>:</div>
-                                        @if ($temp->activity_type == 'Assigned To' || $temp->activity_type == 'CAPA Team')
-                                            {{ $temp->previous }}
-                                        @else
-                                            {{ $temp->previous }}
-                                        @endif
+                                        <div>{{ $temp->previous }}</div>
                                     </div>
                                 @else
                                     @if ($temp->activity_type == 'Activity Log')
@@ -113,30 +111,24 @@
                                 @endif
                                 @if ($temp->current != $temp->previous)
                                     @if ($temp->activity_type == 'Activity Log')
+                                    <div class="list-item">
+                                        <div class="head">Changed To</div>
+                                        <div>:</div>
+                                        <div>{{ $temp->current }}</div>
+                                    </div>
                                         <div class="list-item">
                                             <div class="head">{{ $temp->stage }} By</div>
                                             <div>:</div>
-                                            <div> {{ $temp->current }}</div>
+                                            <div> {{ $temp->user_name }}</div>
                                         </div>
                                         <div class="list-item">
                                             <div class="head">{{ $temp->stage }} On</div>
                                             <div>:</div>
                                             <div> {{ Helpers::getdateFormat1($temp->created_at) }}</div>
                                         </div>
-                                    @else
-                                        <div class="list-item">
-                                            <div class="head">Changed To</div>
-                                            <div>:</div>
-                                            @if ($temp->activity_type == 'Assigned To' || $temp->activity_type == 'CAPA Team')
-                                                {{ $temp->current }}
-                                            @else
-                                                {{ $temp->current }}
-                                            @endif
-                                        </div>
                                     @endif
                                 @endif
                             @endif
-
                             <div class="list-item">
                                 <div class="head">Origin state</div>
                                 <div>:</div>
@@ -144,8 +136,8 @@
                             </div>
                         </div>
                         {{-- <a href="{{ url('documents/viewpdf/' . $temp->id) }}#toolbar=0" class="view-pdf">
-                            <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
-                        </a> --}}
+                        <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF
+                    </a> --}}
                     </div>
                 @endforeach
 
