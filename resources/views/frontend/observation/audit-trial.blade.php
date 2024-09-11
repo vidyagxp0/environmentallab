@@ -11,8 +11,8 @@
                     <div class="main-head">
                         <div class="default-name">
                             {{--{{ date('Y') }}/<a href="{{ route('CC.show', $document->id) }}">{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}--}}
-                                {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ $document->record ? str_pad($document->record, 4, '0', STR_PAD_LEFT) : '' }}
-
+                                {{--{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ $document->record ? str_pad($document->record, 4, '0', STR_PAD_LEFT) : '' }}--}}
+                                {{ Helpers::divisionNameForQMS($document->division_id) }}/OBS/{{ Helpers::year($document->created_at) }}/{{ str_pad($document->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                         <div class="btn-group">
                             <button onclick="window.print();return false;" type="button">Print</button>
