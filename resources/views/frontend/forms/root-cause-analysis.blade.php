@@ -883,7 +883,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
-                                            <label for="Submit_On">Submit On</label>
+                                            <label for="Submit_On">Submits On</label>
                                             <div class="Date"></div>
                                         </div>
                                     </div>
