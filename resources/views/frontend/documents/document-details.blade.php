@@ -812,7 +812,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>                
                 <!-- Modal body -->
-                <form action="{{ url('sendforstagechanage') }}" method="POST">
+                <form id="sendstage" action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="document_id" value="{{ $document->id }}">
@@ -862,7 +862,7 @@
 
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                        <button class="on-submit-disable-button" type="submit">Submit</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         {{-- <button>Close</button> --}}
                     </div>
@@ -871,6 +871,14 @@
         </div>
     </div>
 
+    <script>
+    $(document).ready(function() {
+        
+        $('#sendstage').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
     <div class="modal fade" id="signature-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -879,7 +887,7 @@
                     <h4 class="modal-title">E-Signature</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <form action="{{ url('sendforstagechanage') }}" method="POST">
+                <form id="sendstage1" action="{{ url('sendforstagechanage') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <input type="hidden" name="stage_id" value="11" />
@@ -907,7 +915,7 @@
     
                     <!-- Modal footer -->
                     <div class="modal-footer">
-                        <button type="submit">Submit</button>
+                    <button class="on-submit-disable-button" type="submit">Submit</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
@@ -915,6 +923,14 @@
         </div>
     </div>
 
+    <script>
+    $(document).ready(function() {
+        
+        $('#sendstage1').on('submit', function(e) {
+            $('.on-submit-disable-button').prop('disabled', true);
+        });
+    })
+</script>
     <div class="modal fade" id="child-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
