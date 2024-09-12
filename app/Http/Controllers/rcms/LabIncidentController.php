@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\RootCauseAnalysis;
 use App\Models\RecordNumber;
 use App\Models\LabIncidentAuditTrial;
+use App\Models\CCStageHistory;
 use App\Models\RoleGroup;
 use App\Models\User;
 use PDF;
@@ -1548,40 +1549,161 @@ class LabIncidentController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = LabIncident::find($id);
+            $lastDocument = LabIncident::find($id);
+            $data =  LabIncident::find($id);
 
 
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
+                $changeControl->request_more_info_by = Auth::user()->name;
+                $changeControl->request_more_info_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Opened";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = "Request More Info";
+                        $history->save();
                 $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Lab Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+      
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending Incident Review";
+                // $changeControl->update();
+                $changeControl->request_more_information_by = Auth::user()->name;
+                $changeControl->request_more_information_on= Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Pending Incident Review";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = "Request More Info";
+                        $history->save();
                 $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Lab Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "3";
                 $changeControl->status = "Pending Investigation";
+                // $changeControl->update();
+                $changeControl->further_investigation_required_by = Auth::user()->name;
+                $changeControl->further_investigation_required_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Pending Investigation";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = "Further Investigation Required";
+                        $history->save();
                 $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Lab Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 6) {
                 $changeControl->stage = "5";
                 $changeControl->status = "Pending CAPA";
+                // $changeControl->update();
+                $changeControl->return_to_pending_capa_by = Auth::user()->name;
+                $changeControl->return_to_pending_capa_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Pending CAPA";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = "Return To Pending CAPA";
+                        $history->save();
                 $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Lab Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+
                 toastr()->success('Document Sent');
                 return back();
             }
             if ($changeControl->stage == 7) {
                 $changeControl->stage = "6";
                 $changeControl->status = "Pending QA Review";
+                // $changeControl->update();
+                $changeControl->return_to_qa_review_by = Auth::user()->name;
+                $changeControl->return_to_qa_review_on = Carbon::now()->format('d-M-Y');
+                        $history = new LabIncidentAuditTrial();
+                        $history->LabIncident_id = $id;
+                        $history->activity_type = 'Activity Log';
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Pending QA Review";
+                        $history->comment = $request->comment;
+                        $history->user_id = Auth::user()->id;
+                        $history->user_name = Auth::user()->name;
+                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $history->origin_state = $lastDocument->status;
+                        $history->stage = "Return to QA Review";
+                        $history->save();
                 $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Lab Incident";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+
                 toastr()->success('Document Sent');
                 return back();
             }

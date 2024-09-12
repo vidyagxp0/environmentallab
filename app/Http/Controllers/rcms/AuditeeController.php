@@ -1133,7 +1133,7 @@ class AuditeeController extends Controller
         $internalAudit->Comments = $request->Comments;
         $internalAudit->Audit_Comments1 = $request->Audit_Comments1;
         $internalAudit->Remarks = $request->Remarks;
-        $internalAudit->Reference_Recores1 =  implode(',', $request->Reference_Recores1);
+        $internalAudit->Reference_Recores1 = implode(',', $request->Reference_Recores1);
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
