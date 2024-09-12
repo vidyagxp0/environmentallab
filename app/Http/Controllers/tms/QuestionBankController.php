@@ -22,7 +22,12 @@ class QuestionBankController extends Controller
      */
     public function index()
     {
-        $data = QuestionBank::withTrashed()->where('trainer_id',Auth::user()->id)->orderByDesc('id')->paginate('10');
+        // $data = QuestionBank::withTrashed()->where('trainer_id',Auth::user()->id)->orderByDesc('id')->paginate('10');
+        $data = QuestionBank::withTrashed()
+    ->where('trainer_id', Auth::user()->id)
+    ->orderBy('id') 
+    ->paginate(10); 
+
         return view('frontend.TMS.question-bank',compact('data'));
     }
 
