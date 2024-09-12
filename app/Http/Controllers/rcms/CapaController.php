@@ -1474,20 +1474,20 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->initiator_Group != $capa->initiator_group || !empty($request->initiator_Group_comment)) {
+        // if ($lastDocument->initiator_Group != $capa->initiator_group || !empty($request->initiator_Group_comment)) {
 
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->initiator_Group;
-            $history->current = $capa->initiator_Group;
-            $history->comment = $request->initiator_Group_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $id;
+        //     $history->activity_type = 'Initiator Group';
+        //     $history->previous = $lastDocument->initiator_Group;
+        //     $history->current = $capa->initiator_Group;
+        //     $history->comment = $request->initiator_Group_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->site_number != $capa->site_number || !empty($request->site_number_comment)) {
 
             $history = new CapaAuditTrial();
