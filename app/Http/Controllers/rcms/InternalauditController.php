@@ -2329,7 +2329,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_schedule_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Audit Preparation";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2375,7 +2376,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_preparation_completed_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Pending Audit";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2412,7 +2414,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_mgr_more_info_reqd_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Pending Response";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2451,7 +2454,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_observation_submitted_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "CAPA Execution in Progress";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2473,7 +2477,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_lead_more_info_reqd_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed - Done";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2509,7 +2514,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_response_completed_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed - Done";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2538,7 +2544,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->rejected_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Opened";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2585,7 +2592,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                 $history->InternalAudit_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->response_feedback_verified_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Opened";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2625,7 +2633,8 @@ class InternalauditController extends Controller
                                 $history = new InternalAuditTrial();
                                 $history->InternalAudit_id = $id;
                                 $history->activity_type = 'Activity Log';
-                                $history->current = $changeControl->cancelled_by;
+                                $history->previous = $lastDocument->status;
+                                $history->current = "Closed-Cancelled";
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
@@ -2670,7 +2679,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->cancelled_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed-Cancelled";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2698,7 +2708,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->cancelled_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed-Cancelled";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
