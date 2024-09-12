@@ -923,7 +923,7 @@
                                     <div class="group-input">
                                         <label for="Supplier/Vendor/Manufacturer Site">Supplier/Vendor/Manufacturer
                                             Site</label>
-                                        <input type="text" name="Supplier_Site">
+                                        <textarea type="text" name="Supplier_Site"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-12">

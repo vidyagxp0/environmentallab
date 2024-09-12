@@ -361,7 +361,7 @@ class InternalauditController extends Controller
         if (!empty($internalAudit->assign_to)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Assigned to';
+            $history->activity_type = 'Assigned To';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($internalAudit->assign_to);
             $history->comment = "NA";
@@ -1487,7 +1487,7 @@ class InternalauditController extends Controller
 
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $id;
-            $history->activity_type = 'Assigned to';
+            $history->activity_type = 'Assigned To';
             $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
             $history->current = Helpers::getInitiatorName($internalAudit->assign_to);
             $history->comment = $request->dassign_to_comment;

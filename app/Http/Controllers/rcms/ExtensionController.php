@@ -252,7 +252,7 @@ class ExtensionController extends Controller
             $history->extension_id = $openState->id;
             $history->activity_type = 'Approver';
             $history->previous = "Null";
-            $history->current = $openState->approver1;
+            $history->current = Helpers::getInitiatorName($openState->approver1);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -405,8 +405,8 @@ class ExtensionController extends Controller
             $history = new ExtensionAuditTrail();
             $history->extension_id = $id;
             $history->activity_type = 'Approver';
-            $history->previous = $lastDocument->approver1;
-            $history->current = $openState->approver1;
+            $history->previous = Helpers::getInitiatorName($lastDocument->approver1);
+            $history->current = Helpers::getInitiatorName($openState->approver1);
             $history->comment = $request->approver1_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -555,7 +555,7 @@ class ExtensionController extends Controller
 
         DocumentService::update_qms_numbers();
 
-        toastr()->success('Document update');
+        toastr()->success('Record is Updated Successfully');
         return back();
     }
 

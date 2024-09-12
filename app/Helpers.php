@@ -62,14 +62,14 @@ class Helpers
         }
          
     }
-    public static function getHodUserList(){
+    // public static function getHodUserList(){
         
-        return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
-    }
-    public static function getQAUserList(){
+    //     return $hodUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'4'])->get();
+    // }
+    // public static function getQAUserList(){
         
-        return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
-    }
+    //     return $QAUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'7'])->get();
+    // }
     // public static function getInitiatorUserList(){
         
     //     return $InitiatorUserList = DB::table('user_roles')->where(['q_m_s_roles_id' =>'3'])->get();
@@ -914,7 +914,7 @@ public static function getInitiatorGroupFullName($shortName)
         return $email;
     }
 
-    public static function getInitiatorEmail($id)
+    public static function getInitiatorEmail1($id)
     {
         $email = null;
         try {
