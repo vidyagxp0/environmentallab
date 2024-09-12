@@ -29,7 +29,6 @@
     .w-15 {
         width: 15%;
     }
-
     .w-20 {
         width: 20%;
     }
@@ -156,6 +155,7 @@
         word-break: break-all;
         word-wrap: break-word;
     }
+
 </style>
 
 <body>
@@ -164,11 +164,14 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                    Management Review Audit Trail Report
+                     Management Review Audit Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
                         <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="" class="w-100">
+
+                        {{--<img src="https://vidyagxp.com/vidyaGxp_logo.png" alt="" class="w-100">--}}
+
                     </div>
                 </td>
             </tr>
@@ -176,17 +179,119 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Management Review Audit No.</strong>
+                    <strong>Management Review No.</strong>
                 </td>
                 <td class="w-40">
-                 {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
-                </td>
+                    {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}                </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
             </tr>
         </table>
     </header>
+
+    <div class="inner-block">
+
+        <div class="head">Audit Trail Histroy Configuration Report</div>
+
+        <div class="first-table">
+            <table>
+                <tr>
+                    <td class="w-50">
+                        <strong>Config Area :</strong> All - No Filter
+                    </td>
+                    <td class="w-50">
+                        <strong>Start Date (GMT) :</strong> {{ Helpers::getDateFormat($managementReview->created_at) }}
+                    </td>
+                </tr>
+                <tr>
+                    <td class="w-50">
+                        <strong>Config Sub Area :</strong> All - No Filter
+                    </td>
+                    <td class="w-50">
+                        <strong>End Date (GMT) :</strong>
+                        @if ($managementReview->stage >= 9)
+                            {{ Helpers::getDateFormat($managementReview->updated_at) }}
+                        @endif
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="second-table">
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
+                <tr class="table_bg">
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
+                    <th class='w-10'>Date Performed</th>
+                    <th class='w-10'>Person Responsible</th>
+                    <th class='w-10'>Change Type</th>
+                @foreach ($data as $datas)
+                    <tr>
+                        <td>
+                            <div>{{ $datas->activity_type }}</div>
+                            <div>
+                                @if($datas->activity_type == "Activity Log")
+                                    <div style="word-break: break-all;"><strong>Changed From :</strong></div>
+                                    @if(!empty($datas->change_from))
+                                        <div>{!! $datas->change_from !!}</div>
+                                    @else
+                                        <div>Not Applicable</div>
+                                    @endif
+                                @else
+                                    <div style="word-break: break-all;"><strong>Changed From :</strong></div>
+                                    @if(!empty($datas->previous))
+                                        <div>{!! $datas->previous !!}</div>
+                                    @else
+                                        <div>Null</div>
+                                    @endif
+                                @endif
+
+                                <!-- <div><strong>Changed From :</strong></div>
+                                @if(!empty($datas->previous))
+                                    <div>{{ $datas->previous }}</div>
+                                @else
+                                    <div>Null</div>
+                                @endif -->
+                            </div>
+                            <div>
+                                @if($datas->activity_type == "Activity Log")
+                                    <div><strong>Changed To :</strong></div>
+                                    @if(!empty($datas->change_to))
+                                        <div>{!! $datas->change_to !!}</div>
+                                    @else
+                                        <div>Not Applicable</div>
+                                    @endif
+                                @else
+                                    <div><strong>Changed To :</strong></div>
+                                    @if(!empty($datas->current))
+                                        <div>{!! $datas->current !!}</div>
+                                    @else
+                                        <div>Null</div>
+                                    @endif
+                                @endif
+                                <!-- <div><strong>Changed To :</strong></div>
+                                <div>{{ $datas->current }}</div> -->
+                            </div>
+                        </td>
+                        <td>{{ Helpers::getDateFormat($datas->created_at) }}</td>
+                        <td>{{ $datas->user_name }}</td>
+                        <td>
+                            @if(($datas->previous == 'Null') && ($datas->current != 'Null'))
+                                New
+                            @elseif($datas->previous != $datas->current)
+                                Modify
+                            @else
+                                New
+                            @endif
+
+                        </td>
+                    </tr>
+                @endforeach
+            </table>
+        </div>
+
+    </div>
 
     <footer>
         <table>
@@ -197,108 +302,10 @@
                 <td class="w-40">
                     <strong>Printed By :</strong> {{ Auth::user()->name }}
                 </td>
-                {{--<td class="w-30">
-                    <strong>Page :</strong> 1 of 1
-                </td>--}}
+
             </tr>
         </table>
     </footer>
-
-    <div class="inner-block">
-
-        <div class="head">Management Review Audit Trail Report</div>
-
-        <div class="division">
-          {{ Helpers::divisionNameForQMS($managementReview->division_id) }}/MR/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}
-        </div>
-
-        {{-- <div class="first-table">
-            <table>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>Start Date (GMT) :</strong> {{ $managementReview->created_at }}
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">
-                        <strong>Config Sub Area :</strong> All - No Filter
-                    </td>
-                    <td class="w-50">
-                        <strong>End Date (GMT) :</strong>
-                        @if ($managementReview->stage >= 9)
-                            {{ $managementReview->updated_at }}
-                        @endif
-                    </td>
-                </tr>
-                <tr>
-                    <td class="w-50">&nbsp;</td>
-                    <td class="w-50">
-                        <strong>Person Responsible : {{ $managementReview->originator }}</strong>
-                    </td>
-                </tr>
-            </table>
-        </div> --}}
-
-        <div class="second-table">
-
-            <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
-                <tr class="table_bg">
-                    <th class='w-30' style="word-break: break-all;">Field History</th>
-                    <th class='w-10'>Date Performed</th>
-                    <th class='w-10'>Person Responsible</th>
-                    <th class='w-10'>Change Type</th>
-                </tr>
-                @foreach ($data as $datas)
-                    <tr>
-                        <td>
-                            <div>{{ $datas->activity_type }}</div>
-                            <div>
-                                <div><strong>Changed From :</strong></div>
-                                @if(!empty($datas->previous))
-                                <div style="word-break: break-all;">{{ $datas->previous }}</div>
-                                @else
-                                <div>Null</div>
-                                @endif
-                            </div>
-                            <div>
-                                <div><strong>Changed To :</strong></div>
-                                <div style="word-break: break-all;">{{ $datas->current }}</div>
-                            </div>
-                        </td>
-                        <td>{{ Helpers::getdateFormat1($datas->created_at) }}</td>
-                        <td>{{ $datas->user_name }}</td>
-
-                        <td>
-
-                                {{--@if($datas->previous == 'Null' && !empty($datas->current))
-                                    New
-                                @elseif($datas->previous != $datas->current)
-                                    Modify
-                                @else
-                                    New
-                                @endif--}}
-
-
-                            @if(($datas->previous == 'Null') && ($datas->current != 'Null'))
-                                New
-                            @elseif($datas->previous != $datas->current)
-                                Modify
-                            @else
-                                New
-                            @endif
-                        </td>
-                    </tr>
-                @endforeach
-            </table>
-        </div>
-
-    </div>
-
-
-
 </body>
-
 </html>
+
