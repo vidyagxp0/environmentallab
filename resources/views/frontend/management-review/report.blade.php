@@ -1856,9 +1856,9 @@
                     </tr>
                     <tr>
                         <th class="w-20">Initiator Group</th>
-                        <td class="w-30">  @if($managementReview->initiator_Group){{ \Helpers::getInitiatorGroupFullName($managementReview->initiator_Group) }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($managementReview->initiator_Group){{ \Helpers::getInitiatorGroupFullName($managementReview->initiator_Group) }} @else Not Applicable @endif</td>
                         <th class="w-20">Initiator Group Code</th>
-                        <td class="w-30">@if($managementReview->initiator_group_code){{ $managementReview->initiator_group_code }} @else Not Applicable @endif</td>
+                        <td class="w-30">@if($managementReview->initiator_Group) {{ $managementReview->initiator_Group }} @else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Assigned To</th>
