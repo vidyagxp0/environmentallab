@@ -3,6 +3,7 @@
 use App\Models\ActionItem;
 use App\Models\Division;
 use App\Models\QMSDivision;
+use App\Models\QMSProcess;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -871,4 +872,233 @@ public static function getInitiatorGroupFullName($shortName)
             'Pacific/Kiritimati' => '(UTC+14:00) Kiritimati',
         );
     }
+
+    public static function check_roles($division_id, $process_name, $role_id, $user_id = null)
+    {
+
+        $process = QMSProcess::where([
+            'division_id' => $division_id,
+            'process_name' => $process_name
+        ])->first();
+
+        $roleExists = DB::table('user_roles')->where([
+            'user_id' => $user_id ? $user_id : Auth::user()->id,
+            'q_m_s_divisions_id' => $division_id,
+            'q_m_s_processes_id' => $process ? $process->id : 0,
+            'q_m_s_roles_id' => $role_id
+        ])->first();
+
+        return $roleExists ? true : false;
+    }
+
+    //*************** get user role email *************/
+    public static function getApproverEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getReviewerEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getInitiatorEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getHODEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getCFTEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getTrainerEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getQAEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getActionOwnerEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getQAHeadDesigneeEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getQCHeadDesigneeEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getLeadAuditeeEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getLeadAuditorEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getAuditManagerEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getSupervisorEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getResponsiblePersonEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getWorkGroupEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getViewOnlyEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getFPEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+
+    public static function getObsoleteEmail($id)
+    {
+        $email = null;
+        try {
+            $email  = User::find($id)->email;            
+        } catch (\Exception $e) {
+            \Log::error('Failed to retrieve email for user ID ' . $id . ': ' . $e->getMessage());
+        }
+        return $email;
+    }
+    
 }
