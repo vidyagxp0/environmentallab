@@ -226,7 +226,7 @@ class ObservationController extends Controller
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Division Code';
+        $history->activity_type = 'Site/Location Code';
         $history->previous = "Null";
         $history->current = Helpers::getDivisionName($request->division_id);
         $history->comment = "NA";
@@ -237,13 +237,12 @@ class ObservationController extends Controller
         $history->save();
 
         }
-        // if (!empty($request->intiation_date)) {
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Intiation Date';
+        $history->activity_type = 'Initiator';
         $history->previous ="Null";
-        $history->current = Helpers::getdateFormat($data->intiation_date);
+        $history->current = Helpers::getInitiatorName($data->initiator_id);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -251,11 +250,14 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
 
+
+        // if (!empty($request->intiation_date)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Initiator';
+        $history->activity_type = 'Date of Initiation';
         $history->previous ="Null";
-        $history->current = Helpers::getInitiatorName($data->initiator_id);
+        $history->current = Helpers::getdateFormat($data->intiation_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -405,7 +407,7 @@ class ObservationController extends Controller
         if (!empty($request->recommend_action)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Recommend Action';
+        $history->activity_type = 'Recommended Action';
         $history->previous = "Null";
         $history->current = $data->recommend_action;
         $history->comment = "NA";
@@ -433,7 +435,7 @@ class ObservationController extends Controller
         if (!empty($request->capa_date_due)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'CAPA Date Due';
+        $history->activity_type = 'CAPA Due Date';
         $history->previous = "Null";
         $history->current = Helpers::getdateFormat($data->capa_date_due);
         $history->comment = "NA";
@@ -1073,7 +1075,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Recommend Action';
+            $history->activity_type = 'Recommended Action';
             $history->previous = $lastDocument->recommend_action;
             $history->current = $data->recommend_action;
             $history->comment = $request->recommend_action_comment;
@@ -1101,7 +1103,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'capa_date_due';
+            $history->activity_type = 'CAPA Due Date';
             $history->previous = $lastDocument->capa_date_due;
             $history->current = $data->capa_date_due;
             $history->comment = $request->capa_date_due_comment;
@@ -1768,12 +1770,51 @@ class ObservationController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = "1";
+                $changeControl->status = "Opened";
+                $changeControl->more_info_required_by = Auth::user()->name;
+                $changeControl->more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Opened";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "More Info Required";
+                $history->save();
+            //     $list = Helpers::getQAUserList();
+            //     foreach ($list as $u) {
+            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //             $email = Helpers::getInitiatorEmail($u->user_id);
+            //              if ($email !== null) {
+
+            //               Mail::send(
+            //                   'mail.view-mail',
+            //                    ['data' => $changeControl],
+            //                 function ($message) use ($email) {
+            //                     $message->to($email)
+            //                         ->subject("Document sent ".Auth::user()->name);
+            //                 }
+            //               );
+            //             }
+            //      }
+            //   }
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
-
-                $changeControl->reject_capa_plan_by = Auth::user()->name;
-                $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
+                $changeControl->final_reject_capa_plan_by = Auth::user()->name;
+                $changeControl->final_reject_capa_plan_on = Carbon::now()->format('d-M-Y');
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';

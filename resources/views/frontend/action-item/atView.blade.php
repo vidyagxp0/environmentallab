@@ -68,21 +68,21 @@
 
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('rcms/action-item-audittrialshow', $data->id) }}"> Audit Trail </a> </button>
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Action Item', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Action Item', 8))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 More Information Required
                             </button>
-                        @elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))
+                        {{--@elseif($data->stage == 3 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds)))--}}
                         @endif
                         <a class="text-white button_theme1" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
                     </div>
@@ -214,7 +214,7 @@
                                                 value="{{ Helpers::getdateFormat($data->due_date) }}"
                                                 name="due_date"{{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}>
                                             {{-- <input type="date" id="due_date" name="due_date"
-                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}} 
+                                            {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : ''}}
                                             min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input"
                                             value="{{ $data->due_date }}" /> --}}
                                         </div>
@@ -861,7 +861,7 @@
     <script>
        VirtualSelect.init({
             ele: '#related_records, #hod'
-        }); 
+        });
 
         function openCity(evt, cityName) {
             var i, cctabcontent, cctablinks;

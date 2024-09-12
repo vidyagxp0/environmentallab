@@ -183,6 +183,8 @@
                     <strong>Observation Audit No.</strong>
                 </td>
                 <td class="w-40">
+                    {{--{{ Helpers::divisionNameForQMS($managementReview->division_id) }}/OBS/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}                </td>--}}
+
                    {{ Helpers::getDivisionName(session()->get('division'))}}/OBS/{{ Helpers::year($doc->created_at)}}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
@@ -237,8 +239,8 @@
                             <div>
                                 @if($datas->activity_type == "Activity Log")
                                     <div style="word-break: break-all;"><strong>Changed From :</strong></div>
-                                    @if(!empty($datas->change_from))
-                                        <div>{!! $datas->change_from !!}</div>
+                                    @if(!empty($datas->previous))
+                                        <div>{!! $datas->previous !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif
@@ -261,8 +263,8 @@
                             <div>
                                 @if($datas->activity_type == "Activity Log")
                                     <div style="word-break: break-all;"><strong>Changed To :</strong></div>
-                                    @if(!empty($datas->change_to))
-                                        <div>{!! $datas->change_to !!}</div>
+                                    @if(!empty($datas->current))
+                                        <div>{!! $datas->current !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif

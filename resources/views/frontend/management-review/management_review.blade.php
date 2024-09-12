@@ -38,11 +38,11 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('ManagementReviewAuditTrial', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Management Review', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && (in_array(15, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Management Review', 15))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                             All Actions Completed
                             </button>
@@ -888,17 +888,23 @@
                                             </tbody>
                                 </table>
                             </div>
-                             <div class="new-date-data-field">
+
+{{--@php
+dd($data->next_managment_review_date);
+@endphp--}}
+                            <div class="new-date-data-field">
                                 <div class="group-input input-date">
-                                    <label for="next_managment_review_date">Next Management Review Date</label>
+                                    <label for="Next Management Review Date">Next Management Review Date</label>
                                     <div class="calenderauditee">
-                                        <input type="text" id="next_managment_review_date" readonly  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
+                                        <input type="text" id="next_managment_review_date1" readonly {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}
                                             placeholder="DD-MM-YYYY" value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}"/>
-                                        <input type="date" name="next_managment_review_date"   {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ $data->next_managment_review_date }} "
-                                        class="hide-input" oninput="handleDateInput(this, 'next_managment_review_date')" />
+                                        <input type="date" name="next_managment_review_date" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }}  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getdateFormat($data->next_managment_review_date) }}"
+                                        class="hide-input" oninput="handleDateInput(this, 'next_managment_review_date1')" />
                                     </div>
                                 </div>
                             </div>
+
+
                             <div class="group-input">
                                 <label for="summary_recommendation">Summary & Recommendation</label>
                                 <textarea name="summary_recommendation" {{ $data->stage == 0 || $data->stage == 3 ? "disabled" : "" }}>{{ $data->summary_recommendation}}</textarea>

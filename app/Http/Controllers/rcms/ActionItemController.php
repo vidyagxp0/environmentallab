@@ -281,7 +281,7 @@ class ActionItemController extends Controller
             $history->cc_id =   $openState->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current =  $openState->assign_to;
+            $history->current =  Helpers::getInitiatorName($openState->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -643,19 +643,20 @@ class ActionItemController extends Controller
             $history->origin_state = $lastopenState->status;
             $history->save();
         }
-        if ($lastopenState->assign_to != $openState->assign_to || !empty($request->assign_to_comment)) {
-            $history = new ActionItemHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'Assigned To';
-            $history->previous = $lastopenState->assign_to;
-            $history->current = $openState->assign_to;
-            $history->comment = $request->dept_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastopenState->status;
-            $history->save();
-        }
+
+        //if ($lastopenState->assign_to != $openState->assign_to || !empty($request->assign_to_comment)) {
+        //    $history = new ActionItemHistory;
+        //    $history->cc_id = $id;
+        //    $history->activity_type = 'Assigned To';
+        //    $history->previous = $lastopenState->assign_to;
+        //    $history->current = $openState->assign_to;
+        //    $history->comment = $request->dept_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastopenState->status;
+        //    $history->save();
+        //}
 
         if ($lastopenState->Reference_Recores1 != $openState->Reference_Recores1 || !empty($request->Reference_Recores1_comment)) {
             // Function to convert Reference_Recores1 IDs to formatted values
@@ -691,6 +692,19 @@ class ActionItemController extends Controller
             $history->save();
         }
 
+        if ($lastopenState->assign_to != $openState->assign_to || !empty($request->short_description_comment)) {
+            $history = new ActionItemHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Assigned To';
+            $history->previous = Helpers::getInitiatorName($lastopenState->assign_to);
+            $history->current = Helpers::getInitiatorName($openState->assign_to);
+            $history->comment = $request->short_description_comment;
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastopenState->status;
+            $history->save();
+        }
 
         if ($lastopenState->short_description != $openState->short_description || !empty($request->short_description_comment)) {
             $history = new ActionItemHistory;
