@@ -434,7 +434,7 @@ class RiskManagementController extends Controller
         $history->risk_id = $data->id;
         $history->activity_type = 'Initiator';
         $history->previous = "Null";
-        $history->current = Helpers::getInitiatorName($data->initiator_name);
+        $history->current = Helpers::getInitiatorName($data->initiator_id);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -589,12 +589,12 @@ class RiskManagementController extends Controller
             $history->save();
         }
 
-        if (!empty($data->departments)) {
+        if (!empty($request->departments)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
             $history->activity_type = 'Department1';
             $history->previous = "Null";
-            $history->current = Helpers::getDepartmentNameWithString($data->departments);
+            $history->current = Helpers::getDepartmentWithString($data->departments);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -748,7 +748,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Department2';
             $history->previous = "Null";
-            $history->current = Helpers::getDepartmentNameWithString($data->departments2);
+            $history->current = Helpers::getDepartmentWithString($data->departments2);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1062,7 +1062,7 @@ class RiskManagementController extends Controller
         if (!empty($data->reference)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
-            $history->activity_type = 'Reference';
+            $history->activity_type = 'Work Group Attachments';
             $history->previous = "Null";
             $history->current = $data->reference;
             $history->comment = "NA";
@@ -1072,6 +1072,22 @@ class RiskManagementController extends Controller
             $history->origin_state = $data->status;
             $history->save();
         }
+
+        // if (!empty($data->reference)) {
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $data->id;
+        //     $history->activity_type = 'Work Group Attachments';
+        //     $history->previous = "Null";
+        //     $history->current = $data->reference;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $data->status;
+        //     $history->save();
+        // }
+
+
         if (!empty($data->root_cause_description)) {
             $history = new RiskAuditTrail();
             $history->risk_id = $data->id;
@@ -1944,13 +1960,13 @@ class RiskManagementController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->save();
             }
-            if ($lastDocument->initiator_name != $data->initiator_name || !empty($request->initiator_name_comment)) {
+            if ($lastDocument->initiator_id != $data->initiator_id || !empty($request->initiator_name_comment)) {
 
                 $history = new RiskAuditTrial();
                 $history->risk_id = $id;
                 $history->activity_type = 'Initiator';
-                $history->previous = Helpers::getInitiatorName($lastDocument->initiator_name);
-                $history->current = Helpers::getInitiatorName($data->initiator_name);
+                $history->previous = Helpers::getInitiatorName($lastDocument->initiator_id);
+                $history->current = Helpers::getInitiatorName($data->initiator_id);
                 $history->comment = $request->initiator_name_comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2614,7 +2630,7 @@ class RiskManagementController extends Controller
 
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
-            $history->activity_type = 'Reference';
+            $history->activity_type = 'Work Group Attachments';
             $history->previous = $lastDocument->reference;
             $history->current = $data->reference;
             $history->comment = $request->reference_comment;
@@ -2810,7 +2826,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->severity_rate != $data->severity_rate || !empty($request->severity_rate_comment)) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Occurrence';
+            $history->activity_type = 'Severity Rate';
 
             if($lastDocument->severity_rate == 1){
                 $history->previous = "Negligible ";
@@ -2976,34 +2992,100 @@ class RiskManagementController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->residual_risk_impact != $data->residual_risk_impact || !empty($request->residual_risk_impact_comment)) {
+        // if ($lastDocument->residual_risk_impact != $data->residual_risk_impact || !empty($request->residual_risk_impact_comment)) {
 
-            $history = new RiskAuditTrail();
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Residual Risk Impact';
+        //     $history->previous = $lastDocument->residual_risk_impact;
+        //     $history->current = $data->residual_risk_impact;
+        //     $history->comment = $request->residual_risk_impact_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+
+        if ($lastDocument->residual_risk_impact != $data->residual_risk_impact || !empty($request->residual_risk_impact_comment)) {
+            $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Residual Risk Impact';
-            $history->previous = $lastDocument->residual_risk_impact;
-            $history->current = $data->residual_risk_impact;
-            $history->comment = $request->residual_risk_impact_comment;
+            $history->activity_type = 'Residual Risk Impact ';
+
+            if($lastDocument->residual_risk_impact == 1){
+                $history->previous = "High ";
+            } elseif($lastDocument->residual_risk_impact == 2){
+                $history->previous = "Medium";
+            } elseif($lastDocument->residual_risk_impact == 3){
+                $history->previous = "Low";
+            } 
+
+
+            if($request->residual_risk_probability == 1){
+                $history->current = "High ";
+            } elseif($request->residual_risk_probability == 2){
+                $history->current = "Medium";
+            } elseif($request->residual_risk_probability == 3){
+                $history->current = "Low";
+            } 
+
+
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->residual_risk_probability != $data->residual_risk_probability || !empty($request->residual_risk_probability_comment)) {
 
-            $history = new RiskAuditTrail();
+
+        // if ($lastDocument->residual_risk_probability != $data->residual_risk_probability || !empty($request->residual_risk_probability_comment)) {
+
+        //     $history = new RiskAuditTrail();
+        //     $history->risk_id = $id;
+        //     $history->activity_type = 'Residual Risk Probability';
+        //     $history->previous = $lastDocument->residual_risk_probability;
+        //     $history->current = $data->residual_risk_probability;
+        //     $history->comment = $request->residual_risk_probability_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
+
+        if ($lastDocument->residual_risk_probability != $data->residual_risk_probability || !empty($request->residual_risk_probability_comment)) {
+            $history = new RiskAuditTrail;
             $history->risk_id = $id;
             $history->activity_type = 'Residual Risk Probability';
-            $history->previous = $lastDocument->residual_risk_probability;
-            $history->current = $data->residual_risk_probability;
-            $history->comment = $request->residual_risk_probability_comment;
+
+            if($lastDocument->residual_risk_probability == 1){
+                $history->previous = "High ";
+            } elseif($lastDocument->residual_risk_probability == 2){
+                $history->previous = "Medium";
+            } elseif($lastDocument->residual_risk_probability == 3){
+                $history->previous = "Low";
+            } 
+
+
+            if($request->residual_risk_probability == 1){
+                $history->current = "High ";
+            } elseif($request->residual_risk_probability == 2){
+                $history->current = "Medium";
+            } elseif($request->residual_risk_probability == 3){
+                $history->current = "Low";
+            } 
+
+
+            $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
+
+
         // if ($lastDocument->detection2 != $data->detection2 || !empty($request->detection2_comment)) {
 
         //     $history = new RiskAuditTrail();
@@ -3022,7 +3104,7 @@ class RiskManagementController extends Controller
         if ($lastDocument->detection2 != $data->detection2 || !empty($request->detection2_comment)) {
             $history = new RiskAuditTrail;
             $history->risk_id = $id;
-            $history->activity_type = 'Occurrence';
+            $history->activity_type = 'Residual Detection';
 
             if($lastDocument->detection2 == 1){
                 $history->previous = "Very Likely";
@@ -3046,7 +3128,7 @@ class RiskManagementController extends Controller
             } elseif($request->detection2 == 4){
                 $history->current = "Rare";
             }elseif($request->detection2 == 5){
-                $history->current = "Extremely Unlikely";
+                $history->current = "Impossible";
             }
 
 
@@ -3154,8 +3236,9 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->submitted_by;
-                $history->current = $changeControl->submitted_by;
+                $history->current = "Risk Analysis & Work Group Assignment";
+                $history->previous = $lastDocument->status;
+                // $history->current = status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3193,8 +3276,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->evaluated_by;
-                $history->current = $changeControl->evaluated_by;
+                $history->previous = $lastDocument->status;
+                $history->current ='Risk Processing & Action Plan';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3231,8 +3314,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->action_plan_completed_by;
-                $history->current = $changeControl->action_plan_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current ="Pending HOD Approval";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3269,14 +3352,14 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->plan_approved_by;
-                $history->current = $changeControl->plan_approved_by;
+                $history->previous = $lastDocument->status;
+                $history->current ='Actions Items in Progress';
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;       
-               $history->stage='Action Plan Approved';
+                $history->stage='Action Plan Approved';
                 $history->save();
             //     $list = Helpers::getQAHeadUserList();
             //     foreach ($list as $u) {
@@ -3308,8 +3391,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->action_plan_completed_by;
-                $history->current = $changeControl->action_plan_completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current ="Residual Risk Evaluation";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3347,7 +3430,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->risk_analysis_completed_by;
+                $history->current = "Closed - Done";
+                $history->previous = $lastDocument->status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3385,7 +3469,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->cancelled_by;
+                $history->current ="Closed - Cancelled";
+                $history->previous = $lastDocument->status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3406,7 +3491,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->More_info1_by;
+                $history->current = "Opened";
+                $history->previous = $lastDocument->status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3426,7 +3512,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->More_info2_by;
+                $history->current = "Risk Analysis & Work Group Assignment";
+                $history->previous = $lastDocument->status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3446,7 +3533,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->More_info3_by;
+                $history->current ="Risk Processing & Action Plan";
+                $history->previous = $lastDocument->status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3467,7 +3555,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->More_info3_by;
+                $history->current = "Pending HOD Approval";
+                $history->previous = $lastDocument->status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3487,7 +3576,8 @@ class RiskManagementController extends Controller
                 $history = new RiskAuditTrail();
                 $history->risk_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->More_info5_by;
+                $history->current ="Actions Items in Progress";
+                $history->previous = $lastDocument->status;
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -3538,6 +3628,7 @@ class RiskManagementController extends Controller
             
             $riskgrdwhy_chart = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','why_chart')->first();
             $riskgrdwhat_who_where = RiskAssesmentGrid::where('risk_id', $data->id)->where('type','what_who_where')->first();
+            $data->action_plan = RiskAssesmentGrid::where('risk_id', $data->id)->where('type', "action_plan")->first();
 
              //dd($riskgrd);
             $data->originator = User::where('id', $data->initiator_id)->value('name');

@@ -197,11 +197,11 @@
                         <td class="w-40">
                             {{ Helpers::divisionNameForQMS($data->division_id) }}/RA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
                          </td>
+                            <th class="w-20">Site/Location Code</th>
+                            <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
+
                     </tr>
-                    <tr>
-                        <th class="w-20">Site/Location Code</th>
-                        <td class="w-30">@if($data->division_code){{ $data->division_code }} @else Not Applicable @endif</td>
-                    </tr>
+                    
                     <tr>  {{ $data->created_at }} added by {{ $data->originator }}
                         <th class="w-20">Initiator</th>
                         <td class="w-30">{{ $data->originator }}</td>
@@ -297,7 +297,7 @@
                 <table>
                         <tr>
                             <th class="w-20">Department(s)</th>
-                            <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments) }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->departments2){{  Helpers::getDepartmentNameWithString($data->departments2) }}@else Not Applicable @endif</td>
                             <th class="w-20">Source of Risk</th>
                             <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
                         </tr>
@@ -344,7 +344,7 @@
 
            <div class="block">
                 <div class="block-head">
-                    Work Group Assignment
+                    Assignment Details  
                 </div>
                 <table>
                     <tr>
@@ -402,10 +402,55 @@
                             <td class="w-20">Not Applicable</td>
                         </tr>
                         @endif
-
                     </table>
                 </div>
+                 <br>
+
+            <div class="border-table">
+                <div class="block-head">
+                    Action Plan
+                </div>
+                <table>
+
+                    <tr class="table_bg">
+                        <th class="w-20">#Row.</th>
+                        <th class="w-60">Action No</th>
+                        <th class="w-60">Responsible </th>
+                        <th class="w-60">Deadline</th>
+                        <th class="w-60">Item static</th>
+                    </tr>
+                    @if ($data->action_plan->action)
+                    @foreach (unserialize($data->action_plan->action) as $key => $temps)
+                        <tr>
+                            <td class="w-15">{{ $temps ? $key + 1 : 'Not Applicable' }}</td>
+                            <td class="w-15">
+                                {{ unserialize($data->action_plan->action)[$key] ? unserialize($data->action_plan->action)[$key] : 'Not Applicable' }}
+                            </td>
+                            <td class="w-15">
+                                {{ unserialize($data->action_plan->responsible)[$key] ? Helpers::getInitiatorName(unserialize($data->action_plan->responsible)[$key]) : 'Not Applicable' }}
+                            </td>
+                            <td class="w-5">
+                                {{ unserialize($data->action_plan->deadline)[$key] ? Helpers::getdateFormat(unserialize($data->action_plan->deadline)[$key]) : 'Not Applicable' }}
+                            </td>
+                            <td class="w-5">
+                                {{ unserialize($data->action_plan->item_static)[$key] ?unserialize($data->action_plan->item_static)[$key] : 'Not Applicable' }}
+                            </td>
+                        </tr>
+                    @endforeach
+                @else
+                    <tr>
+                        <td>Not Applicable</td>
+                        <td>Not Applicable</td>
+                        <td>Not Applicable</td>
+                        <td>Not Applicable</td>
+                        <td>Not Applicable</td>
+                        
+                    </tr>
+                @endif
+                </table>
             </div>
+        </div>
+      
             <div class="block">
                 <div class="head">
                     <div class="block-head">
@@ -436,9 +481,13 @@
                             <th class="w-20">Investigation Summary</th>
                             <td class="w-30" colspan="3">@if($data->investigation_summary){{ $data->investigation_summary }}@else Not Applicable @endif</td>
                         </tr>
+                        
                         <tr>
-                            {{-- <th class="w-20">Severity Rate</th> --}}
-                            {{-- <td class="w-80">@if($data->severity_rate){{ $data->severity_rate }}@else Not Applicable @endif</td> --}}
+                        </table>
+                            <div class="block-head">
+                                Risk Analysis
+                            </div>
+                            <table>
                             <th class="w-20">Severity Rate </th>
                             <td class="w-30">
                                 @if($data->severity_rate == 1)
@@ -493,7 +542,7 @@
                             <td class="w-80">@if($data->rpn){{ $data->rpn }}@else Not Applicable @endif</td>
                         </tr>
                     </table>
-
+            
                     <div class="block-head">
                         Fishbone or Ishikawa Diagram 
                     </div>
@@ -609,7 +658,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Problem Statement1</th>
-                        <td class="w-80">@if($riskgrdfishbone->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
+                        <td class="w-80" colspan="3">@if($riskgrdfishbone->problem_statement){{ $data->problem_statement }}@else Not Applicable @endif</td>
                       
                     </tr> 
              </table>
@@ -947,7 +996,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Scheduled End Date</th>
-                        <td class="w-30">@if($data->mitigation_due_date){{ $data->mitigation_due_date }}@else Not Applicable @endif</td>
+                        <td class="w-30">@if($data->mitigation_due_date){{ Helpers::getdateFormat($data->mitigation_due_date)}}@else Not Applicable @endif</td>
                     </tr>
                     <tr>
                         <th class="w-20">Status of Mitigation</th>
@@ -959,7 +1008,11 @@
                         <th class="w-20">Mitigation Status Comments</th>
                         <td class="w-30" colspan="3">@if($data->mitigation_status_comments){{ $data->mitigation_status_comments}}@else Not Applicable @endif</td>
                     </tr>
-                    
+                </table>
+                    <div class="block-head">
+                        Overall Assessment  
+                    </div>
+                    <table>
                     <tr>
                         <th class="w-20">Impact</th>
                         <td class="w-30">@if($data->impact){{ $data->impact }}@else Not Applicable @endif</td>
@@ -980,14 +1033,21 @@
                         <th class="w-20">Reference Record</th>
                         <td class="w-30">@if($data->refrence_record){{$data->refrence_record }}@else Not Applicable @endif</td>
                     </tr>
+                </table>
+            </div>
+        </div>
+                    <div class="block-head">
+                        Extension Justification   
+                    </div>
+                    <table>
                     <tr>
-                        <th class="w-20">Due Date Extension Justification</th>
+                        <th class="w-30">Due Date Extension Justification</th>
                         <td class="w-30" colspan="3">@if($data->due_date_extension){{ $data->due_date_extension}}@else Not Applicable @endif</td>
                     </tr>
                   </table>
-                </div>
+                {{-- </div>
             </div>
-        
+         --}}
         <div class="block">
                 <div class="block-head">
                     Activity Log
