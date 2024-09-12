@@ -920,7 +920,8 @@ class ActionItemController extends Controller
                         $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->submitted_by;
+                        $history->previous = $lastopenState->status;
+                        $history->current = "Work In Progress";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -961,14 +962,14 @@ class ActionItemController extends Controller
 
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '3';
-                $changeControl->status = 'Closed-Done';
+                $changeControl->status = 'Closed - Done';
                 $changeControl->completed_by = Auth::user()->name;
                 $changeControl->completed_on = Carbon::now()->format('d-M-Y');
                       $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = $lastopenState->completed_by;
-                        $history->current = $changeControl->completed_by;
+                        $history->previous = $lastopenState->status;
+                        $history->current = "Closed - Done";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -1048,13 +1049,14 @@ public function actionStageCancel(Request $request, $id)
 
         if ($changeControl->stage == 1) {
             $changeControl->stage = "0";
-            $changeControl->status = "Closed-Cancelled";
+            $changeControl->status = "Closed - Cancelled";
             $changeControl->cancelled_by = Auth::user()->name;
             $changeControl->cancelled_on = Carbon::now()->format('d-M-Y');
                         $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->cancelled_by;
+                        $history->previous = $lastopenState->status;
+                        $history->current = "Closed - Cancelled";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -1100,7 +1102,8 @@ public function actionStageCancel(Request $request, $id)
                         $history = new ActionItemHistory;
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->current = $changeControl->more_information_required_by;
+                        $history->previous = $lastopenState->status;
+                        $history->current = "Opened";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;

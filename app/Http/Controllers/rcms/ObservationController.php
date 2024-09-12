@@ -374,8 +374,8 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->recomendation_capa_date_due)) {
 
+        if (!empty($request->recomendation_capa_date_due)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Recomendation Due Date for CAPA';
@@ -415,12 +415,13 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->date_Response_due2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Date Response Due';
         $history->previous = "Null";
-        $history->current = Helpers::getdateFormat($data->date_Response_due2);
+        $history->current = Helpers::getdateFormat($request->date_Response_due2);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -428,6 +429,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->capa_date_due)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -441,6 +443,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->assign_to2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -911,22 +914,22 @@ class ObservationController extends Controller
         //    $history->save();
         //}
 
-        if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
+        //if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
-            $history->current = Helpers::getdateFormat($data->due_date);
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //    $history = new AuditTrialObservation();
+        //    $history->Observation_id = $id;
+        //    $history->activity_type = 'Due Date';
+        //    $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+        //    $history->current = Helpers::getdateFormat($data->due_date);
+        //    $history->comment = $request->due_date_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
+
         if ($lastDocument->short_description != $data->short_description || !empty($request->short_description_comment)) {
-
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Short Description';
@@ -1218,15 +1221,15 @@ class ObservationController extends Controller
             $history->Observation_id = $id;
 
             $history->activity_type = 'Occurrence ';
-            if($request->occurrence == 1){
+            if($lastDocument->occurrence == 1){
                 $history->previous = "Very Likely";
-            } elseif($request->occurrence == 2){
+            } elseif($lastDocument->occurrence == 2){
                 $history->previous = "Likely";
-            } elseif($request->occurrence == 3){
+            } elseif($lastDocument->occurrence == 3){
                 $history->previous = "Unlikely";
-            } elseif($request->occurrence == 4){
+            } elseif($lastDocument->occurrence == 4){
                 $history->previous = "Rare";
-            } elseif($request->occurrence == 5){
+            } elseif($lastDocument->occurrence == 5){
                 $history->previous = "Extremely Unlikely";
             }
 
@@ -1255,15 +1258,15 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Detection ';
-            if($request->detection == 1){
+            if($lastDocument->detection == 1){
                 $history->previous = "Very Likely";
-            } elseif($request->detection == 2){
+            } elseif($lastDocument->detection == 2){
                 $history->previous = "Likely";
-            }elseif($request->detection == 3){
+            }elseif($lastDocument->detection == 3){
                 $history->previous = "Unlikely";
-            } elseif($request->detection == 4){
+            } elseif($lastDocument->detection == 4){
                 $history->previous = "Rare";
-            } elseif($request->detection == 5){
+            } elseif($lastDocument->detection == 5){
                 $history->previous = "Impossible";
             }
 
@@ -1481,7 +1484,7 @@ class ObservationController extends Controller
                                 $history->user_name = Auth::user()->name;
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $lastDocument->status;
-                                $history->stage = "Completed";
+                                $history->stage = " Report Issued";
                                 $history->save();
                             //     $list = Helpers::getLeadAuditeeUserList();
                             //     foreach ($list as $u) {
@@ -1520,7 +1523,7 @@ class ObservationController extends Controller
                                 $history->user_name = Auth::user()->name;
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $lastDocument->status;
-                                $history->stage = "";
+                                $history->stage = "Completed";
                                 $history->save();
             //     $list = Helpers::getQAUserList();
             //     foreach ($list as $u) {
@@ -1596,7 +1599,7 @@ class ObservationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = "QA Approved";
+                            $history->stage = "All CAPA Closed";
                             $history->save();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
@@ -1697,13 +1700,14 @@ class ObservationController extends Controller
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->reject_capa_plan_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending CAPA Plan";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = "Final Approval";
+                $history->stage = "Reject CAPA Plan";
                 $history->save();
                 $changeControl->update();
             //     $list = Helpers::getLeadAuditeeUserList();
@@ -1734,7 +1738,8 @@ class ObservationController extends Controller
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->final_approvel_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed - Cancelled";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1766,6 +1771,21 @@ class ObservationController extends Controller
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
+
+                $changeControl->reject_capa_plan_by = Auth::user()->name;
+                $changeControl->reject_capa_plan_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending CAPA Plan";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Reject CAPA Plan";
+                $history->save();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id == $changeControl->division_id){
@@ -1808,13 +1828,14 @@ class ObservationController extends Controller
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->qa_approvel_without_capa_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed - Done";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = "";
+                $history->stage = "QA Approval Without CAPA";
                 $history->save();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {

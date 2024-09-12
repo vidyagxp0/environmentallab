@@ -611,8 +611,10 @@ class ExtensionController extends Controller
                             $history = new ExtensionAuditTrail();
                             $history->extension_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current =  $changeControl->submitted_by;
+                            // $history->previous = "";
+                            // $history->current =  $changeControl->submitted_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Pending Approval";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -662,8 +664,8 @@ class ExtensionController extends Controller
                         $history = new ExtensionAuditTrail();
                         $history->extension_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current =  $changeControl->ext_approved_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Closed-Done";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -721,8 +723,8 @@ class ExtensionController extends Controller
                             $history = new ExtensionAuditTrail();
                             $history->extension_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current =  $changeControl->cancelled_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed-Cancelled";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -751,8 +753,8 @@ class ExtensionController extends Controller
                                 $history = new ExtensionAuditTrail();
                                 $history->extension_id = $id;
                                 $history->activity_type = 'Activity Log';
-                                $history->previous = "";
-                                $history->current =  $changeControl->more_information_required_by;
+                                $history->previous = $lastDocument->status;
+                                $history->current = "Opened";
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
@@ -810,8 +812,8 @@ class ExtensionController extends Controller
                         $history = new ExtensionAuditTrail();
                         $history->extension_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current =  $changeControl->rejected_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "closed-reject";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;

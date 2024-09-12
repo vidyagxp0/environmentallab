@@ -187,7 +187,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong> Effectiveness Check Audit No.</strong>
+                    <strong> Effectiveness Check No.</strong>
                 </td>
                 <td class="w-40">
                     {{ Helpers::divisionNameForQMS($doc->division_id) }}/EC/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
