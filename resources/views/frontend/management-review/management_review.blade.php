@@ -37,7 +37,7 @@
                             class="new-doc-btn">Print</button> --}}
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ url('ManagementReviewAuditTrial', $data->id) }}"> Audit Trail </a> </button>
-
+{{--{{ dd($data->division_id); }}--}}
                         @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Management Review', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit

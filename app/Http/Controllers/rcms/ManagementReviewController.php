@@ -2405,6 +2405,30 @@ class ManagementReviewController extends Controller
                 //       }
                 //     }
                 // }
+
+                $list = Helpers::getResponsiblePersonUserList($changeControl->division_id);
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Management Review','history' => 'Submit', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2443,6 +2467,30 @@ class ManagementReviewController extends Controller
                 //       }
                 //     }
                 // }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Management Review','history' => ' More Information Required', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Actions Completed Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
+
                 toastr()->success('Document Sent');
                 return back();
             }
