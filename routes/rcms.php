@@ -15,6 +15,7 @@ use App\Http\Controllers\rcms\CapaController;
 use App\Http\Controllers\rcms\FormDivisionController;
 use App\Http\Controllers\rcms\ManagementReviewController;
 use App\Http\Controllers\rcms\RootCauseController;
+use App\Http\Controllers\rcms\NotificationController;
 use App\Http\Controllers\RiskManagementController;
 use App\Models\EffectivenessCheck;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,9 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('audit-detail/{id}', [CCController::class, 'auditDetails']);
             Route::get('summary/{id}', [CCController::class, 'summery_pdf']);
             Route::get('audit/{id}', [CCController::class, 'audit_pdf']);
+
+            
+            Route::get('notification-detail/{slug}/{id}', [NotificationController::class, 'notificationDetail'])->name('notification-detail');
 
             Route::get('ccView/{id}/{type}', [DashboardController::class, 'ccView'])->name('ccView');
             Route::view('summary_pdf', 'frontend.change-control.summary_pdf');
