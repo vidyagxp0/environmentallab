@@ -1311,7 +1311,7 @@ class LabIncidentController extends Controller
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'Submited';
+                $history->stage = 'Submitted';
                 $history->save();
                 // $list = Helpers::getHodUserList();
                 //     foreach ($list as $u) {
@@ -1331,6 +1331,46 @@ class LabIncidentController extends Controller
                 //             }
                 //      } 
                 //   }
+
+                $list = Helpers::getHODUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getHODEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Submitted', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
 
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1372,6 +1412,26 @@ class LabIncidentController extends Controller
                 //      } 
                 //   }
 
+                $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Incident Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Incident Review Completed Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1411,6 +1471,28 @@ class LabIncidentController extends Controller
                 //             }
                 //      } 
                 //   }
+
+                $list = Helpers::getHODUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getHODEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Investigation Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Investigation Completed Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1455,7 +1537,7 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='Review Completed';
                 $history->save();  
-                $list = Helpers::getQAUserList();
+            //  $list = Helpers::getQAUserList();
             //     foreach ($list as $u) {
             //         if($u->q_m_s_divisions_id ==$changeControl->division_id){
             //             $email = Helpers::getInitiatorEmail($u->user_id);
@@ -1471,7 +1553,28 @@ class LabIncidentController extends Controller
             //               );
             //             }
             //      } 
-            //   }          
+            //   } 
+
+            $list = Helpers::getQAUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getQAEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Completed Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+                        
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1494,6 +1597,69 @@ class LabIncidentController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage='QA Review Completed';
                 $history->save();
+
+                $list = Helpers::getHODUserList($changeControl->division_id);
+                foreach ($list as $u) {
+                    $email = Helpers::getHODEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
+
+                 $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'QA Review Completed', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Review Completed Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1570,6 +1736,26 @@ class LabIncidentController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Request More Info";
                         $history->save();
+                        
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Request More Info', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Lab Incident";
@@ -1632,6 +1818,69 @@ class LabIncidentController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Further Investigation Required";
                         $history->save();
+                        
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                        $list = Helpers::getHODUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getHODEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                        $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Further Investigation Required', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Further Investigation Required Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+
+
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Lab Incident";
@@ -1736,6 +1985,48 @@ class LabIncidentController extends Controller
                         $history->origin_state = "Pending Incident Review";
                         $history->stage = "Cancelled";
                         $history->save();
+                        
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+                    $list = Helpers::getQAUserList($changeControl->division_id);
+                        foreach ($list as $u) {
+                            $email = Helpers::getQAEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Lab Incident','history' => 'Cancelled', 'process' => 'Lab Incident', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Lab Incident , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        }
+
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
