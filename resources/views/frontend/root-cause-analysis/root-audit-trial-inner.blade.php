@@ -128,6 +128,9 @@
                                       <div>:</div>
                                       <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
                                      </div> 
+
+
+                                     
                                      {{-- @elseif($temp->origin_state =="Investigation in Progress") 
                                      
                                       <div class="list-item">

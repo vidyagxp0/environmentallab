@@ -120,48 +120,25 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rootAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                                @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Acknowledge
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#cancel-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif ($data->stage == 2 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 5)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Group/ CFT Review
-                                Required
-
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                Group/ CFT Review Not
-                                Required
-
-                            </button>
-                        @elseif($data->stage == 4)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Approve
-
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
-                                More Info Required
-
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Group Feedback
-                            </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif ($data->stage == 3 && Helpers::check_roles($data->division_id, 'Root Cause Analysis', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Information
                                 Required
-                            </button>
+                            </button>                      
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -210,7 +187,7 @@
                             @else
                                 <div class="">Pending QA Review</div>
                             @endif
-                            @if ($data->stage >= 6)
+                            @if ($data->stage >= 4)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>

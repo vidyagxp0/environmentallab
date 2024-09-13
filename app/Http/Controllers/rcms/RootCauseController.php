@@ -550,7 +550,7 @@ use Illuminate\Support\Facades\Hash;
             $history->root_id = $root->id;
             $history->activity_type = 'Initial Attachment';
             $history->previous = "Null";
-            $history->current = empty($root->root_cause_initial_attachment) ? null : $root->cft_attchament_new;
+            $history->current = $root->root_cause_initial_attachment;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1342,6 +1342,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->previous = $lastDocument->status;
                 $history->current = "Investigation in Progress";
                 $history->comment = $request->comment;
+                // dd($request->comment);
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1349,24 +1350,57 @@ use Illuminate\Support\Facades\Hash;
                 $history->stage = 'Acknowledge';
 
                 $history->save();
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $root->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                        
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $root],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+           
+
+            $list = Helpers::getHODUserList($root->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId = $users->pluck('id')->implode(',');
+            if(!empty($users)){
+                try {
+                    $history = new RootAuditTrial();
+                    $history->root_id = $id;
+                    $history->activity_type = "Not Applicable";
+                    $history->action = 'Notification';
+                    $history->comment = "";
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = "Not Applicable";
+                    $history->previous = $lastDocument->status;
+                    $history->current = "Investigation in Progress";
+                    $history->stage = "";
+                    $history->action_name = "";
+                    $history->mailUserId = $userId;
+                    $history->role_name = "Initiator";
+                    $history->save();
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
+
+               foreach ($list as $u) {
+                $email = Helpers::  getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $root,'site'=>'RCA','history' => 'Acknowledge', 'process' => 'RCA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $root) {
+                             $message->to($email)
+                             ->subject("QMS Notification: RCA , Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
+
+
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1495,23 +1529,28 @@ use Illuminate\Support\Facades\Hash;
              $history->origin_state = $lastDocument->status;
             $history->stage='Cancelled ';
             $history->save();
-        //     $list = Helpers::getQAUserList();
-        //     foreach ($list as $u) {
-        //         if($u->q_m_s_divisions_id == $root->division_id){
-        //             $email = Helpers::getInitiatorEmail($u->user_id);
-        //              if ($email !== null) {
-                  
-        //               Mail::send(
-        //                   'mail.view-mail',
-        //                    ['data' => $root],
-        //                 function ($message) use ($email) {
-        //                     $message->to($email)
-        //                         ->subject("Document sent ".Auth::user()->name);
-        //                 }
-        //               );
-        //             }
-        //      } 
-        //   }
+
+
+            $list = Helpers::getQAUserList($root->division_id);
+            foreach ($list as $u) {
+                $email = Helpers::  getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $root,'site'=>'RCA','history' => 'Cancelled', 'process' => 'RCA', 'comment' =>  $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $root) {
+                             $message->to($email)
+                             ->subject("QMS Notification: RCA , Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";

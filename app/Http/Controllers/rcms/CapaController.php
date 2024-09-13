@@ -1714,23 +1714,28 @@ class CapaController extends Controller
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-                //     $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $capa->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+               
+                $list = Helpers::getInitiatorUserList($capa->division_id);
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $capa,'site'=>'CAPA','history' => 'Plan Proposed', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $capa) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Plan Proposed Performed"); }
+                                );
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $capa],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -1761,22 +1766,28 @@ class CapaController extends Controller
                 $history->stage = 'Approve Plan';
                 $history->save();
 
-                // $list = Helpers::getQAUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $capa->division_id){
-                //     $email = Helpers::getInitiatorEmail($u->user_id);
-                //     if ($email !== null) {
-                //         Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $capa],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Plan Approved By ".Auth::user()->name);
-                //             }
-                //         );
-                //     }
-                //   }
-                // }
+                $list = Helpers::getQAUserList($capa->division_id);
+                
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $capa,'site'=>'CAPA','history' => 'Approve Plan', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $capa) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -1828,8 +1839,8 @@ class CapaController extends Controller
             if ($capa->stage == 5) {
                 $capa->stage = "6";
                 $capa->status = "Closed - Done";
-                $capa->completed_by = Auth::user()->name;
-                $capa->completed_on = Carbon::now()->format('d-M-Y');
+                $capa->all_action_completed_by = Auth::user()->name;
+                $capa->all_action_completed_on = Carbon::now()->format('d-M-Y');
 
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
@@ -1861,10 +1872,11 @@ class CapaController extends Controller
             $lastDocument = Capa::find($id);
 
 
-            $capa->stage = "0";
-            $capa->status = "Closed-Cancelled";
-            $capa->cancelled_by = Auth::user()->name;
-            $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+            if($capa->stage == 2){
+                $capa->stage = "0";
+                    $capa->status = "Closed-Cancelled";
+                    $capa->cancelled_by = Auth::user()->name;
+                    $capa->cancelled_on = Carbon::now()->format('d-M-Y');
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
@@ -1877,15 +1889,7 @@ class CapaController extends Controller
                     $history->origin_state =  $capa->status;
                     $history->stage = 'Cancelled';
                     $history->save();
-            $capa->update();
-            $history = new CapaHistory();
-            $history->type = "Capa";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $capa->stage;
-            $history->status = $capa->status;
-            $history->save();
+            }
 
             // $list = Helpers::getInitiatorUserList();
             // foreach ($list as $u) {
@@ -1904,7 +1908,28 @@ class CapaController extends Controller
             //       }
             //     }
             // }
+             
+            $list = Helpers::getInitiatorUserList($capa->division_id);
+            foreach ($list as $u) {
+                $email = Helpers:: getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $capa,'site'=>'CAPA','history' => 'Cancelled', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $capa) {
+                             $message->to($email)
+                             ->subject("QMS Notification: CAPA , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                            );
 
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
+             
+            $capa->update();
             toastr()->success('Document Sent');
             return back();
         } else {
@@ -1940,22 +1965,27 @@ class CapaController extends Controller
             $history->save();
             $capa->update();
             
-            // $list = Helpers::getHodUserList();
-            // foreach ($list as $u) {
-            //     if($u->q_m_s_divisions_id == $capa->division_id){
-            //      $email = Helpers::getInitiatorEmail($u->user_id);
-            //      if ($email !== null) {
-            //          Mail::send(
-            //             'mail.view-mail',
-            //             ['data' => $capa],
-            //             function ($message) use ($email) {
-            //                 $message->to($email)
-            //                     ->subject("Document is Send By ".Auth::user()->name);
-            //             }
-            //         );
-            //       }
-            //     }
-            // }
+            $list = Helpers::getHODUserList($capa->division_id);
+            foreach ($list as $u) {
+                $email = Helpers::  getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $capa,'site'=>'CAPA','history' => 'QA More Info Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $capa) {
+                             $message->to($email)
+                             ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
+
             toastr()->success('Document Sent');
             return back();
           }
@@ -1968,8 +1998,8 @@ class CapaController extends Controller
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = $capa->rejected_by;
+                    $history->previous = $lastDocument->status;
+                    $history->current = "CAPA In Progress";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2022,6 +2052,28 @@ class CapaController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = 'More Information Required';
                 $history->save();
+
+
+                $list = Helpers::getInitiatorUserList($capa->division_id);
+                foreach ($list as $u) {
+                    $email = Helpers::  getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $capa,'site'=>'CAPA','history' => 'More Information Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $capa) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
+                                );
+    
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
 
                 toastr()->success('Document Sent');
                 return back();

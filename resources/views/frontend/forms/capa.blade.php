@@ -1338,14 +1338,14 @@
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="all actions completed By">All Actions Completed By</label>
-                                    <input type="hidden" name="completed_by">
+                                    <input type="hidden" name="all_action_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="group-input">
                                     <label for="all actions completed On">All Actions Completed On</label>
-                                    <input type="hidden" name="completed_on">
+                                    <input type="hidden" name="all_action_completed_by">
                                     <div class="static"></div>
                                 </div>
                             </div>
