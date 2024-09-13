@@ -313,15 +313,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="w-20">Others</th>
-                        <td class="w-80">
-                            @if ($data->initiated_if_other)
-                                {{ $data->initiated_if_other }}
-                            @else
-                                Not Applicable
-                            @endif
-                        </td>
-                        <th class="w-20">Type of Audit</th>
+                    <th class="w-20">Type of Audit</th>
                         <td class="w-80">
                             @if ($data->audit_type)
                                 {{ $data->audit_type }}
@@ -330,16 +322,27 @@
                             @endif
                         </td>
                     </tr>
-
                     <tr>
-                        <th class="w-20">If Other</th>
-                        <td class="w-80">
+                        <th class="w-20">Others</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->initiated_if_other)
+                                {{ $data->initiated_if_other }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                    <th class="w-20">If Other</th>
+                        <td class="w-80" colspan="3">
                             @if ($data->if_other)
                                 {{ $data->if_other }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">External Agencies</th>
                         <td class="w-80">
                             @if ($data->external_agencies)
@@ -351,16 +354,18 @@
 
                     </tr>
                     <tr>
-                        <th class="w-20">Others.</th>
-                        <td class="w-80">
+                    <th class="w-20">Others.</th>
+                        <td class="w-80" colspan="3">
                             @if ($data->Others)
                                 {{ $data->Others }}
                             @else
                                 Not Applicable
                             @endif
                         </td>
+                    </tr>
+                    <tr>
                         <th class="w-20">Description</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             @if ($data->initial_comments)
                                 {{ $data->initial_comments }}
                             @else
