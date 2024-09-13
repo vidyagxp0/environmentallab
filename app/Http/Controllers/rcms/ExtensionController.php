@@ -650,6 +650,28 @@ class ExtensionController extends Controller
                     //     } 
                     // }
 
+                    $list = Helpers::getApproverUserList($changeControl->division_id);
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Submitted', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                     toastr()->success('Document Sent');
 
                     return back();
@@ -698,6 +720,29 @@ class ExtensionController extends Controller
                 //       }
                 //     } 
                 // }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Ext Approved', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Ext Approved Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -787,6 +832,29 @@ class ExtensionController extends Controller
                 //       }
                 //     } 
                 // }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'More-information Required', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More-information Required Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -847,6 +915,29 @@ class ExtensionController extends Controller
                 //       }
                 //     } 
                 // }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Rejected', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 toastr()->success('Document Sent');
                 return back();
             } else {
