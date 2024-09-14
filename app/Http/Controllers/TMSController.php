@@ -380,8 +380,8 @@ class TMSController extends Controller
 
 
     //    }
-
-    }
+    // Quiz Question SHOW 
+    }   
     public function trainingQuestion($id){
         $document = Document::find($id);
         $document_training = DocumentTraining::where('document_id',$id)->first();
@@ -404,12 +404,7 @@ class TMSController extends Controller
                 $question->answers = implode("", $ans);
                 $question->score = 0;
                 $question->status = "";
-                // $json_answer = unserialize($question->answers);
-                // $answers = [];
-                // foreach($json_answer as $key => $value){
-                //     $answers[chr(97 + $key)] = $value;
-                // }
-                // $question->answers = array($answers);
+                
                 array_push($array,$question);
             }
              $data_array = implode(',',$array);

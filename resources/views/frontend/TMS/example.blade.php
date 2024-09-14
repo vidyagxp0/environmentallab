@@ -42,8 +42,9 @@
                                     </div>
 
                                     <div class="option-block-container" id="question-options">
-
+                                          
                                     </div>
+                                     <!-- <input type="text"> -->
                                 </fieldset>
                                 <div class="quiz-buttons">
                                   <button name="next" id="back-btn">Back</button>
@@ -136,33 +137,41 @@ fetch("{{ url('example',$document->id) }}")
     quizData = data;
     loadQuestion();
   })
-  .catch(function(error) {
+  .catch(function(error) {          
     console.log('Error fetching quiz data:', error);
   });
 
 // Function to load question and choices
 function loadQuestion() {
-
-
   var question = quizData[currentQuestion];
-  questionElement.textContent = question.question;
-  idElement.textContent = question.id;
-  choicesElement.innerHTML = '';
+  questionElement.textContent = question.question; // Display the question
+  idElement.textContent = question.id; // Display the question id
+  choicesElement.innerHTML = ''; // Clear previous choices
 
   if (typeof question.answer === 'string') {
+    // Create an input field for text-type questions
     var input = document.createElement('input');
     input.type = 'text';
     input.name = 'answer';
     input.placeholder = 'Type your answer...';
+
+    // Add a label below the question indicating where the user should type the answer
+    var inputLabel = document.createElement('div');
+    inputLabel.textContent = "Enter your answer below:";
+
+    // Append the label and input field to the choicesElement (question options area)
+    choicesElement.appendChild(inputLabel);
     choicesElement.appendChild(input);
+
   } else {
+    // For multiple-choice questions
     for (var i = 0; i < question.choices.length; i++) {
       var li = document.createElement('li');
       var label = document.createElement('label');
       var input = document.createElement('input');
       input.type = question.answer instanceof Array ? 'checkbox' : 'radio';
       input.name = 'answer';
-      input.value = i+1;
+      input.value = i + 1;
       label.appendChild(input);
       label.appendChild(document.createTextNode(question.choices[i]));
       li.appendChild(label);
@@ -170,8 +179,9 @@ function loadQuestion() {
     }
   }
 
-  updateButtons();
+  updateButtons(); // Update the navigation buttons (next/submit)
 }
+
 
 // Function to update navigation buttons
 function updateButtons() {

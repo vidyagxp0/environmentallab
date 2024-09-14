@@ -75,10 +75,12 @@
                             </table>
                         </div>
                     </div>
+                  
 
                 </div>
             </div>
         </div>
+        {{ $data->links() }}
     </div>
 
 

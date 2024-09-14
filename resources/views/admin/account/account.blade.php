@@ -9,7 +9,7 @@
     <div class="fluid-container mb-3">
 
         <a href="{{ route('user_management.create') }}" class="btn btn-primary">
-            New
+            New Account
         </a>
 
     </div>
@@ -20,7 +20,7 @@
 
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Login Accounts</h3>
+                    <h3 class="card-title">Login Account</h3>
                 </div>
 
 

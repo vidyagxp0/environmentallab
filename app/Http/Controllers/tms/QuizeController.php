@@ -29,7 +29,7 @@ class QuizeController extends Controller
      */
     public function create()
     {
-        $questions = QuestionBank::withoutTrashed()->where('trainer_id', Auth::user()->id)->get();
+        $questions = QuestionBank::withoutTrashed()->get();
         return view('frontend.TMS.create-quiz',compact('questions'));
     }
 

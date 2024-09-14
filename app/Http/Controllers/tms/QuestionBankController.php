@@ -20,16 +20,24 @@ class QuestionBankController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        // $data = QuestionBank::withTrashed()->where('trainer_id',Auth::user()->id)->orderByDesc('id')->paginate('10');
-        $data = QuestionBank::withTrashed()
-    ->where('trainer_id', Auth::user()->id)
-    ->orderBy('id') 
-    ->paginate(10); 
+    // public function index()
+    // {
+    //     $data = QuestionBank::withTrashed()
+    // ->where('trainer_id', Auth::user()->id)
+    // ->orderBy('id') 
+    // ->paginate(10  ); 
 
-        return view('frontend.TMS.question-bank',compact('data'));
-    }
+    //     return view('frontend.TMS.question-bank',compact('data'));
+    // }
+    public function index()
+{
+    $data = QuestionBank::withTrashed()
+        ->orderBy('id') 
+        ->paginate(10); 
+
+    return view('frontend.TMS.question-bank', compact('data'));
+}
+
 
     /**
      * Show the form for creating a new resource.
