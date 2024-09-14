@@ -1342,7 +1342,6 @@ use Illuminate\Support\Facades\Hash;
                 $history->previous = $lastDocument->status;
                 $history->current = "Investigation in Progress";
                 $history->comment = $request->comment;
-                // dd($request->comment);
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
@@ -1355,25 +1354,27 @@ use Illuminate\Support\Facades\Hash;
             $list = Helpers::getHODUserList($root->division_id);
             $userIds = collect($list)->pluck('user_id')->toArray();
             $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
-            $userId = $users->pluck('id')->implode(',');
-            if(!empty($users)){
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
                 try {
-                    $history = new RootAuditTrial();
-                    $history->root_id = $id;
-                    $history->activity_type = "Not Applicable";
-                    $history->action = 'Notification';
-                    $history->comment = "";
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = "Not Applicable";
-                    $history->previous = $lastDocument->status;
-                    $history->current = "Investigation in Progress";
-                    $history->stage = "";
-                    $history->action_name = "";
-                    $history->mailUserId = $userId;
-                    $history->role_name = "Initiator";
-                    $history->save();
+                    $notification = new RootAuditTrial();
+                    $notification->root_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = "Investigation in Progress";
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "Initiator";
+                    $notification->save();
+                    // dd($history);
                 } catch (\Throwable $e) {
                     \Log::error('Mail failed to send: ' . $e->getMessage());
                 }
@@ -1381,7 +1382,7 @@ use Illuminate\Support\Facades\Hash;
 
 
                foreach ($list as $u) {
-                $email = Helpers::  getAllUserEmail($u->user_id);
+                $email = Helpers::getAllUserEmail($u->user_id);
                 if (!empty($email)) {
                     try {
                         info('Sending mail to', [$email]);
@@ -1532,6 +1533,34 @@ use Illuminate\Support\Facades\Hash;
 
 
             $list = Helpers::getQAUserList($root->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new RootAuditTrial();
+                    $notification->root_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = "Cancelled";
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "Audit Manager";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
             foreach ($list as $u) {
                 $email = Helpers::  getAllUserEmail($u->user_id);
                 if (!empty($email)) {

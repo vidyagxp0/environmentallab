@@ -83,11 +83,12 @@
                         <button class="button_theme1"> <a class="text-white" href="{{ url('CapaAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                       
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'CAPA', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Propose Plan
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif ($data->stage == 2 && Helpers::check_roles($data->division_id, 'CAPA', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info Required
                             </button>
@@ -100,7 +101,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif ($data->stage == 3 && Helpers::check_roles($data->division_id, 'CAPA', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 QA More Info Required
                             </button>
@@ -114,7 +115,7 @@
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                            @elseif ($data->stage == 4 && Helpers::check_roles($data->division_id, 'CAPA', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Approve
 
@@ -125,12 +126,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#modal1">
                                 Reject
                             </button>
-                        @elseif($data->stage == 5)
+                            @elseif ($data->stage == 5 && Helpers::check_roles($data->division_id, 'CAPA', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All Actions Completed
                             </button>
-                        @elseif($data->stage == 6)
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            @elseif ($data->stage == 6 && Helpers::check_roles($data->division_id, 'CAPA', 7))                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
                         @endif
@@ -1741,16 +1741,16 @@
                                         <div class="group-input">
                                             <label for="all actions completed By">All Actions Completed By</label>
                                             <input type="hidden"
-                                                name="completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                            <div class="static">{{ $data->completed_by }}</div>
+                                                name="all_action_completed_by"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <div class="static">{{ $data->all_action_completed_by }}</div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="group-input">
                                             <label for="all actions completed On">All Actions Completed On</label>
                                             <input type="hidden"
-                                                name="completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                            <div class="static">{{ $data->completed_on }}</div>
+                                                name="all_action_completed_on"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                            <div class="static">{{ $data->all_action_completed_on }}</div>
                                         </div>
                                     </div>
 
