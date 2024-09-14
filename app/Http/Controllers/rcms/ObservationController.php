@@ -22,6 +22,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use PDF;
+use Illuminate\Support\Facades\Mail;
+
 
 class ObservationController extends Controller
 {
@@ -226,7 +228,7 @@ class ObservationController extends Controller
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Division Code';
+        $history->activity_type = 'Site/Location Code';
         $history->previous = "Null";
         $history->current = Helpers::getDivisionName($request->division_id);
         $history->comment = "NA";
@@ -237,13 +239,12 @@ class ObservationController extends Controller
         $history->save();
 
         }
-        // if (!empty($request->intiation_date)) {
 
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Intiation Date';
+        $history->activity_type = 'Initiator';
         $history->previous ="Null";
-        $history->current = Helpers::getdateFormat($data->intiation_date);
+        $history->current = Helpers::getInitiatorName($data->initiator_id);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -251,11 +252,14 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
 
+
+        // if (!empty($request->intiation_date)) {
+
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Initiator';
+        $history->activity_type = 'Date of Initiation';
         $history->previous ="Null";
-        $history->current = Helpers::getInitiatorName($data->initiator_id);
+        $history->current = Helpers::getdateFormat($data->intiation_date);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -374,8 +378,8 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->recomendation_capa_date_due)) {
 
+        if (!empty($request->recomendation_capa_date_due)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Recomendation Due Date for CAPA';
@@ -405,7 +409,7 @@ class ObservationController extends Controller
         if (!empty($request->recommend_action)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'Recommend Action';
+        $history->activity_type = 'Recommended Action';
         $history->previous = "Null";
         $history->current = $data->recommend_action;
         $history->comment = "NA";
@@ -415,12 +419,13 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->date_Response_due2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Date Response Due';
         $history->previous = "Null";
-        $history->current = Helpers::getdateFormat($data->date_Response_due2);
+        $history->current = Helpers::getdateFormat($request->date_Response_due2);
         $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
@@ -428,10 +433,11 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->capa_date_due)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
-        $history->activity_type = 'CAPA Date Due';
+        $history->activity_type = 'CAPA Due Date';
         $history->previous = "Null";
         $history->current = Helpers::getdateFormat($data->capa_date_due);
         $history->comment = "NA";
@@ -441,6 +447,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->assign_to2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -911,22 +918,22 @@ class ObservationController extends Controller
         //    $history->save();
         //}
 
-        if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
+        //if ($lastDocument->due_date != $data->due_date || !empty($request->due_date_comment)) {
 
-            $history = new AuditTrialObservation();
-            $history->Observation_id = $id;
-            $history->activity_type = 'Due Date';
-            $history->previous = Helpers::getdateFormat($lastDocument->due_date);
-            $history->current = Helpers::getdateFormat($data->due_date);
-            $history->comment = $request->due_date_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //    $history = new AuditTrialObservation();
+        //    $history->Observation_id = $id;
+        //    $history->activity_type = 'Due Date';
+        //    $history->previous = Helpers::getdateFormat($lastDocument->due_date);
+        //    $history->current = Helpers::getdateFormat($data->due_date);
+        //    $history->comment = $request->due_date_comment;
+        //    $history->user_id = Auth::user()->id;
+        //    $history->user_name = Auth::user()->name;
+        //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //    $history->origin_state = $lastDocument->status;
+        //    $history->save();
+        //}
+
         if ($lastDocument->short_description != $data->short_description || !empty($request->short_description_comment)) {
-
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Short Description';
@@ -1070,7 +1077,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'Recommend Action';
+            $history->activity_type = 'Recommended Action';
             $history->previous = $lastDocument->recommend_action;
             $history->current = $data->recommend_action;
             $history->comment = $request->recommend_action_comment;
@@ -1098,7 +1105,7 @@ class ObservationController extends Controller
 
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
-            $history->activity_type = 'capa_date_due';
+            $history->activity_type = 'CAPA Due Date';
             $history->previous = $lastDocument->capa_date_due;
             $history->current = $data->capa_date_due;
             $history->comment = $request->capa_date_due_comment;
@@ -1218,15 +1225,15 @@ class ObservationController extends Controller
             $history->Observation_id = $id;
 
             $history->activity_type = 'Occurrence ';
-            if($request->occurrence == 1){
+            if($lastDocument->occurrence == 1){
                 $history->previous = "Very Likely";
-            } elseif($request->occurrence == 2){
+            } elseif($lastDocument->occurrence == 2){
                 $history->previous = "Likely";
-            } elseif($request->occurrence == 3){
+            } elseif($lastDocument->occurrence == 3){
                 $history->previous = "Unlikely";
-            } elseif($request->occurrence == 4){
+            } elseif($lastDocument->occurrence == 4){
                 $history->previous = "Rare";
-            } elseif($request->occurrence == 5){
+            } elseif($lastDocument->occurrence == 5){
                 $history->previous = "Extremely Unlikely";
             }
 
@@ -1255,15 +1262,15 @@ class ObservationController extends Controller
             $history = new AuditTrialObservation();
             $history->Observation_id = $id;
             $history->activity_type = 'Detection ';
-            if($request->detection == 1){
+            if($lastDocument->detection == 1){
                 $history->previous = "Very Likely";
-            } elseif($request->detection == 2){
+            } elseif($lastDocument->detection == 2){
                 $history->previous = "Likely";
-            }elseif($request->detection == 3){
+            }elseif($lastDocument->detection == 3){
                 $history->previous = "Unlikely";
-            } elseif($request->detection == 4){
+            } elseif($lastDocument->detection == 4){
                 $history->previous = "Rare";
-            } elseif($request->detection == 5){
+            } elseif($lastDocument->detection == 5){
                 $history->previous = "Impossible";
             }
 
@@ -1459,9 +1466,10 @@ class ObservationController extends Controller
 
         return view('frontend.observation.view', compact('data','griddata','grid_data'));
     }
+
+
     public function observation_send_stage(Request $request, $id)
     {
-
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
@@ -1481,25 +1489,60 @@ class ObservationController extends Controller
                                 $history->user_name = Auth::user()->name;
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $lastDocument->status;
-                                $history->stage = "Completed";
+                                $history->stage = " Report Issued";
                                 $history->save();
-                            //     $list = Helpers::getLeadAuditeeUserList();
-                            //     foreach ($list as $u) {
-                            //         if($u->q_m_s_divisions_id == $changestage->division_id){
-                            //             $email = Helpers::getInitiatorEmail($u->user_id);
-                            //              if ($email !== null) {
 
-                            //               Mail::send(
-                            //                   'mail.view-mail',
-                            //                    ['data' => $changestage],
-                            //                 function ($message) use ($email) {
-                            //                     $message->to($email)
-                            //                         ->subject("Document sent ".Auth::user()->name);
-                            //                 }
-                            //               );
-                            //             }
-                            //      }
-                            //   }
+                                $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userId1 = $users->pluck('id')->implode(',');
+                                $userId = $users->pluck('name')->implode(',');
+
+                                if($userId){
+                                    $test = new AuditTrialObservation();
+                                    $test->Observation_id = $id;
+                                    $test->activity_type = "Notification";
+                                    $test->action = 'Notification';
+                                    $test->comment = "";
+                                    $test->user_id = Auth::user()->id;
+                                    $test->user_name = Auth::user()->name;
+                                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $test->origin_state = "Not Applicable";
+                                    $test->previous = $lastDocument->status;
+                                    $test->current = "Pending CAPA Plan";
+                                    $test->stage = "";
+                                    $test->action_name = "";
+                                    $test->mailUserId = $userId1;
+                                    $test->role_name = "Lead Auditor";
+                                    //dd($test->mailUserId);
+                                    $test->save();
+                                }
+
+
+
+                                // dd($list);
+                                foreach ($list as $u) {
+                                    $email = Helpers:: getAllUserEmail($u->user_id);
+                                    if (!empty($email)) {
+                                        try {
+                                            info('Sending mail to', [$email]);
+                                            Mail::send(
+                                                'mail.view-mail',
+                                                ['data' => $changestage,'site'=>'Observation','history' => 'Report Issued', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                                function ($message) use ($email, $changestage) {
+                                                 $message->to($email)
+                                                 ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Report Issued Performed"); }
+                                                );
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                        }
+                                    }
+                                    // }
+                                }
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1520,7 +1563,7 @@ class ObservationController extends Controller
                                 $history->user_name = Auth::user()->name;
                                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                                 $history->origin_state = $lastDocument->status;
-                                $history->stage = "";
+                                $history->stage = "Completed";
                                 $history->save();
             //     $list = Helpers::getQAUserList();
             //     foreach ($list as $u) {
@@ -1539,6 +1582,57 @@ class ObservationController extends Controller
             //             }
             //      }
             //   }
+
+            $list = Helpers::getQAUserList($changestage->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId1 = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+
+            if($userId){
+                $test = new AuditTrialObservation();
+                $test->Observation_id = $id;
+                $test->activity_type = "Notification";
+                $test->action = 'Notification';
+                $test->comment = "";
+                $test->user_id = Auth::user()->id;
+                $test->user_name = Auth::user()->name;
+                $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $test->origin_state = "Not Applicable";
+                $test->previous = $lastDocument->status;
+                $test->current = "Pending Approval";
+                $test->stage = "";
+                $test->action_name = "";
+                $test->mailUserId = $userId1;
+                $test->role_name = "Lead Auditee";
+                //dd($test->mailUserId);
+                $test->save();
+            }
+
+
+            // dd($list);
+            foreach ($list as $u) {
+                $email = Helpers:: getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changestage,'site'=>'Observation','history' => 'Complete', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changestage) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
+
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1577,6 +1671,106 @@ class ObservationController extends Controller
                         //             }
                         //      }
                         //   }
+
+                        $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "CAPA Execution in Progress";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
+
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changestage) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Performed"); }
+                                        );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
+                        $list = Helpers::getLeadAuditorUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "CAPA Execution in Progress";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changestage,'site'=>'Observation','history' => ' QA Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changestage) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity:  QA Approval Performed"); }
+                                        );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1596,7 +1790,7 @@ class ObservationController extends Controller
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastDocument->status;
-                            $history->stage = "QA Approved";
+                            $history->stage = "All CAPA Closed";
                             $history->save();
             //     $list = Helpers::getLeadAuditeeUserList();
             //     foreach ($list as $u) {
@@ -1615,6 +1809,105 @@ class ObservationController extends Controller
             //             }
             //      }
             //   }
+
+                    $list = Helpers::getLeadAuditorUserList($changestage->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Pending Final Approval";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
+                    // dd($list);
+                    foreach ($list as $u) {
+                        $email = Helpers:: getAllUserEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                info('Sending mail to', [$email]);
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed"); }
+                                    );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        // }
+                    }
+
+                    $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Pending Final Approval";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
+                    // dd($list);
+                    foreach ($list as $u) {
+                        $email = Helpers:: getAllUserEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                info('Sending mail to', [$email]);
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changestage,'site'=>'Observation','history' => 'All CAPA Closed', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changestage) {
+                                     $message->to($email)
+                                     ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: All CAPA Closed Performed"); }
+                                    );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        // }
+                    }
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1654,6 +1947,105 @@ class ObservationController extends Controller
             //             }
             //      }
             //   }
+
+                        $list = Helpers::getLeadAuditorUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "Closed - Done";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changestage) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed"); }
+                                        );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
+                        $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "Closed - Done";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changestage,'site'=>'Observation','history' => 'Final Approval', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changestage) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Observation, Record #" . str_pad($changestage->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Approval Performed"); }
+                                        );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
+
                 $changestage->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1697,32 +2089,69 @@ class ObservationController extends Controller
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->reject_capa_plan_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending CAPA Plan";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = "Final Approval";
+                $history->stage = "Reject CAPA Plan";
                 $history->save();
                 $changeControl->update();
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
 
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
+
+                $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Pending CAPA Plan";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Observation','history' => 'Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Reject CAPA Plan Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -1734,7 +2163,8 @@ class ObservationController extends Controller
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->final_approvel_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed - Cancelled";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1742,47 +2172,249 @@ class ObservationController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = "Final Approval";
                 $history->save();
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
 
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
+                $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Closed - Cancelled";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
+                $list = Helpers::getQAUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Closed - Cancelled";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Observation','history' => 'Cancel', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
             }
+
+            if ($changeControl->stage == 2) {
+                $changeControl->stage = "1";
+                $changeControl->status = "Opened";
+                $changeControl->more_info_required_by = Auth::user()->name;
+                $changeControl->more_info_required_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Opened";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "More Info Required";
+                $history->save();
+
+
+                $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Opened";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Observation','history' => 'More Info Required', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
+
+                $changeControl->update();
+                toastr()->success('Document Sent');
+                return back();
+            }
+
             if ($changeControl->stage == 5) {
                 $changeControl->stage = "2";
                 $changeControl->status = "Pending CAPA Plan";
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
+                $changeControl->final_reject_capa_plan_by = Auth::user()->name;
+                $changeControl->final_reject_capa_plan_on = Carbon::now()->format('d-M-Y');
+                $history = new AuditTrialObservation();
+                $history->Observation_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending CAPA Plan";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = "Reject CAPA Plan";
+                $history->save();
 
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
+                $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Pending CAPA Plan";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Observation','history' => 'Final Reject CAPA Plan', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Final Reject CAPA Plan Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1808,31 +2440,114 @@ class ObservationController extends Controller
                 $history = new AuditTrialObservation();
                 $history->Observation_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->qa_approvel_without_capa_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed - Done";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = "";
+                $history->stage = "QA Approval Without CAPA";
                 $history->save();
-            //     $list = Helpers::getLeadAuditeeUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
 
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      }
-            //   }
+
+                    $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Closed - Done";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
+                    // dd($list);
+                    foreach ($list as $u) {
+                        $email = Helpers:: getAllUserEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                info('Sending mail to', [$email]);
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed"); }
+                                    );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        // }
+                    }
+
+                    $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Closed - Done";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
+                    // dd($list);
+                    foreach ($list as $u) {
+                        $email = Helpers:: getAllUserEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                info('Sending mail to', [$email]);
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl,'site'=>'Observation','history' => 'QA Approval Without CAPA', 'process' => 'Observation', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                    $message->to($email)
+                                    ->subject("QMS Notification: Observation, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: QA Approval Without CAPA Performed"); }
+                                    );
+
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        // }
+                    }
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();

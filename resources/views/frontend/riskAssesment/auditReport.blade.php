@@ -164,7 +164,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Risk Assesment Trial Report
+                   Risk Assesment Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">

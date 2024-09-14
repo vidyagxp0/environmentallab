@@ -550,7 +550,7 @@ use Illuminate\Support\Facades\Hash;
             $history->root_id = $root->id;
             $history->activity_type = 'Initial Attachment';
             $history->previous = "Null";
-            $history->current = empty($root->root_cause_initial_attachment) ? null : $root->cft_attchament_new;
+            $history->current = $root->root_cause_initial_attachment;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1339,34 +1339,69 @@ use Illuminate\Support\Facades\Hash;
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->acknowledge_by;
-                $history->current = $root->acknowledge_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Investigation in Progress";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Acknowledge';
+                $history->stage = 'Acknowledge';
 
                 $history->save();
-            //     $list = Helpers::getQAUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $root->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                        
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $root],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document sent ".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+           
+
+            $list = Helpers::getHODUserList($root->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new RootAuditTrial();
+                    $notification->root_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = "Investigation in Progress";
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "Initiator";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
+
+               foreach ($list as $u) {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $root,'site'=>'RCA','history' => 'Acknowledge', 'process' => 'RCA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $root) {
+                             $message->to($email)
+                             ->subject("QMS Notification: RCA , Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Acknowledge Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
+
+
                 $root->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1392,8 +1427,8 @@ use Illuminate\Support\Facades\Hash;
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->submitted_by;
-                $history->current = "submitted_by";
+                $history->previous = "Investigation in Progress";
+                $history->current = "Pending QA Review";
                 $history->comment = $request->comment; 
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1430,8 +1465,8 @@ use Illuminate\Support\Facades\Hash;
                 $history = new RootAuditTrial();
                 $history->root_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = $lastDocument->qA_review_complete_by;
-                $history->current = $root->qA_review_complete_by;
+                $history->previous = "Pending QA Review";
+                $history->current = "Closed - Done";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -1459,7 +1494,7 @@ use Illuminate\Support\Facades\Hash;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                // $history->origin_state = $lastDocument->status;
+                $history->origin_state = $lastDocument->status;
                 $history->stage='Completed';
                 $history->save();
                 $root->update();
@@ -1495,23 +1530,56 @@ use Illuminate\Support\Facades\Hash;
              $history->origin_state = $lastDocument->status;
             $history->stage='Cancelled ';
             $history->save();
-        //     $list = Helpers::getQAUserList();
-        //     foreach ($list as $u) {
-        //         if($u->q_m_s_divisions_id == $root->division_id){
-        //             $email = Helpers::getInitiatorEmail($u->user_id);
-        //              if ($email !== null) {
-                  
-        //               Mail::send(
-        //                   'mail.view-mail',
-        //                    ['data' => $root],
-        //                 function ($message) use ($email) {
-        //                     $message->to($email)
-        //                         ->subject("Document sent ".Auth::user()->name);
-        //                 }
-        //               );
-        //             }
-        //      } 
-        //   }
+
+
+            $list = Helpers::getQAUserList($root->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new RootAuditTrial();
+                    $notification->root_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = "Cancelled";
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "Audit Manager";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
+            foreach ($list as $u) {
+                $email = Helpers::  getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $root,'site'=>'RCA','history' => 'Cancelled', 'process' => 'RCA', 'comment' =>  $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $root) {
+                             $message->to($email)
+                             ->subject("QMS Notification: RCA , Record #" . str_pad($root->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
             $root->update();
             $history = new RootCauseAnalysisHistory();
             $history->type = "Root Cause Analysis";

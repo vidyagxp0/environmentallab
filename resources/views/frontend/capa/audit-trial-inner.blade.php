@@ -9,7 +9,7 @@
                     <div class="col-lg-12">
                         <div class="inner-block">
                             <div class="main-head">
-                                Record - {{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
+                                Record -{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                             </div>
                             <div class="info-list">
 
@@ -54,6 +54,8 @@
                                 </div>
                             @endif
 
+
+
                             @if (
                                 $temp->activity_type == 'Responsibility' ||
                                     $temp->activity_type == 'Abbreviation' ||
@@ -74,11 +76,14 @@
 
                                     </div>
                                 @else
+                                    {{-- @if ($temp->activity_type == 'Activity Log') --}}
+
                                     <div class="list-item">
                                         <div class="head">Changed From</div>
                                         <div>:</div>
                                         <div>NULL</div>
                                     </div>
+                                    {{-- @endif --}}
                                 @endif
                                 @if ($temp->current != $temp->previous)
                                     <div class="list-item">
@@ -95,53 +100,109 @@
                                     <div class="list-item">
                                         <div class="head">Changed From</div>
                                         <div>:</div>
-                                        @if ($temp->activity_type == 'Assigned To' || $temp->activity_type == 'CAPA Team')
-                                            {{ $temp->previous }}
-                                        @else
-                                            {{ $temp->previous }}
-                                        @endif
+
+                                        <div>{{ $temp->previous }}</div>
                                     </div>
                                 @else
-                                    @if ($temp->activity_type == 'Activity Log')
-                                    @else
-                                        <div class="list-item">
-                                            <div class="head">Changed From</div>
-                                            <div>:</div>
-                                            <div>NULL</div>
-                                        </div>
-                                    @endif
+                                    <div class="list-item">
+                                        <div class="head">Changed From</div>
+                                        <div>:</div>
+                                        <div>NULL</div>
+                                    </div>
                                 @endif
+
                                 @if ($temp->current != $temp->previous)
-                                    @if ($temp->activity_type == 'Activity Log')
-                                        <div class="list-item">
-                                            <div class="head">{{ $temp->stage }} By</div>
-                                            <div>:</div>
-                                            <div> {{ $temp->current }}</div>
-                                        </div>
-                                        <div class="list-item">
-                                            <div class="head">{{ $temp->stage }} On</div>
-                                            <div>:</div>
-                                            <div> {{ Helpers::getdateFormat1($temp->created_at) }}</div>
-                                        </div>
-                                    @else
-                                        <div class="list-item">
-                                            <div class="head">Changed To</div>
-                                            <div>:</div>
-                                            @if ($temp->activity_type == 'Assigned To' || $temp->activity_type == 'CAPA Team')
-                                                {{ $temp->current }}
-                                            @else
-                                                {{ $temp->current }}
-                                            @endif
-                                        </div>
-                                    @endif
+                                    <div class="list-item">
+                                        <div class="head">Changed To</div>
+                                        <div>:</div>
+                                        <div>{{ $temp->current }}</div>
+                                    </div>
                                 @endif
                             @endif
 
-                            <div class="list-item">
-                                <div class="head">Origin state</div>
-                                <div>:</div>
-                                <div>{{ $temp->origin_state }}</div>
-                            </div>
+                            <!-- Notification Detail Start -->
+                            @if ($temp->activity_type == 'Notification')
+                                <div class="list-item">
+                                    <div class="head">Notification By</div>
+                                    <div>:</div>
+                                    <div> {{ $temp->user_name }}</div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="head">Notification On</div>
+                                    <div>:</div>
+                                    <div> {{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="head">Stage</div>
+                                    <div>:</div>
+                                    <div> {{ $temp->current }}</div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="head">Notification Detail</div>
+                                    <div>:</div>
+                                    <div> <a href="{{ route('notification-detail', ['slug' => 'CAPA', 'id' => $temp->id]) }}" target = "_blank">{{ $temp->activity_type }}</a> </div>
+                                </div>
+                            @endif
+                            <!-- Notification Detail End -->
+
+
+                            @if ($temp->current != $temp->previous)
+                                @if ($temp->activity_type == 'Activity Log')
+                                    <div class="list-item">
+                                        <div class="head">{{ $temp->stage }} By</div>
+                                        <div>:</div>
+                                        <div> {{ $temp->user_name }}</div>
+                                    </div>
+                                    <div class="list-item">
+                                        <div class="head">{{ $temp->stage }} On</div>
+                                        <div>:</div>
+                                        <div> {{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                    </div>
+                                    {{-- @elseif($temp->origin_state =="Investigation in Progress") 
+                                     
+                                      <div class="list-item">
+                                      <div class="head">Submitted By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Submitted On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                     @elseif($temp->origin_state =="Pending Group Review Discussion") 
+                                      <div class="list-item">
+                                      <div class="head">QA Review Completed By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">QA Review Completed On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                     @elseif($temp->origin_state =="QA Review") 
+                                      <div class="list-item">
+                                      <div class="head">Approved By</div>
+                                      <div>:</div>
+                                      <div> {{$temp->current}}</div>
+                                      </div>  
+                                      <div class="list-item">
+                                      <div class="head">Approved On</div>
+                                      <div>:</div>
+                                      <div> {{Helpers::getdateFormat1($temp->created_at)}}</div>
+                                     </div> 
+                                    
+
+                                     @endif --}}
+                                @else
+                                    <div class="list-item">
+                                        <div class="head">Origin state</div>
+                                        <div>:</div>
+                                        <div>{{ $temp->origin_state }}</div>
+                                    </div>
+                                @endif
+                            @endif
                         </div>
                         {{-- <a href="{{ url('documents/viewpdf/' . $temp->id) }}#toolbar=0" class="view-pdf">
                             <i class="fa-solid fa-file-pdf"></i>&nbsp;View PDF

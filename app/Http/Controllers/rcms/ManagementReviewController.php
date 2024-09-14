@@ -699,7 +699,7 @@ class ManagementReviewController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $management->status;
-                        $history->save();
+                    $history->save();
                     }
                 // if (!empty($management->division_code)) {
                 //     $history = new ManagementAuditTrial();
@@ -740,6 +740,7 @@ class ManagementReviewController extends Controller
                 //           $history->origin_state = $management->status;
                 //             $history->save();
                 //  }
+
                 if (!empty($management->short_description)) {
                     $history = new ManagementAuditTrial();
                     $history->ManagementReview_id = $management->id;
@@ -751,8 +752,9 @@ class ManagementReviewController extends Controller
                     $history->user_name = Auth::user()->name;
                     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                     $history->origin_state = $management->status;
-                        $history->save();
+                    $history->save();
                     }
+
                 if (!empty($management->intiation_date)) {
                     $history = new ManagementAuditTrial();
                     $history->ManagementReview_id = $management->id;
@@ -766,11 +768,21 @@ class ManagementReviewController extends Controller
                     $history->origin_state = $management->status;
                     $history->save();
                 }
+
                 if (!empty($management->assign_to)) {
+
+                    // Fetch the previous 'assign_to' value
+                    $previousAssignee = ManagementAuditTrial::where('ManagementReview_id', $management->id)
+                                            ->where('activity_type', 'Assigned To')
+                                            ->orderBy('created_at', 'desc')
+                                            ->value('current');
+
+                    // If the previous and current assignee are different, log the change
+                    if ($previousAssignee !== Helpers::getInitiatorName($management->assign_to)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
                         $history->activity_type = 'Assigned To';
-                        $history->previous = "Null";
+                        $history->previous = $previousAssignee ?? "Null";  // Use "Null" if there's no previous entry
                         $history->current = Helpers::getInitiatorName($management->assign_to);
                         $history->comment = "NA";
                         $history->user_id = Auth::user()->id;
@@ -778,7 +790,23 @@ class ManagementReviewController extends Controller
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $management->status;
                         $history->save();
+                    }
                 }
+
+
+                //if (!empty($management->assign_to)) {
+                //        $history = new ManagementAuditTrial();
+                //        $history->ManagementReview_id = $management->id;
+                //        $history->activity_type = 'Assigned To';
+                //        $history->previous = "Null";
+                //        $history->current = Helpers::getInitiatorName($management->assign_to);
+                //        $history->comment = "NA";
+                //        $history->user_id = Auth::user()->id;
+                //        $history->user_name = Auth::user()->name;
+                //        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                //        $history->origin_state = $management->status;
+                //        $history->save();
+                //}
 
 
                 if (!empty($management->due_date)) {
@@ -808,12 +836,12 @@ class ManagementReviewController extends Controller
                         $history->save();
                     }
 
-                if (!empty($management->initiator_group_code)) {
+                if (!empty($management->initiator_Group)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
                         $history->activity_type = 'Initiator Group Code';
                         $history->previous = "Null";
-                        $history->current = $management->initiator_group_code;
+                        $history->current = $management->initiator_Group;
                         $history->comment = "NA";
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -1329,7 +1357,7 @@ class ManagementReviewController extends Controller
                     if (!empty($management->customer_satisfaction_level)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
-                        $history->activity_type = 'Customer Satisfactio Level';
+                        $history->activity_type = 'Customer Satisfaction Level';
                         $history->previous = "Null";
                         $history->current = $management->customer_satisfaction_level;
                         $history->comment = "Not Applicable";
@@ -1423,19 +1451,19 @@ class ManagementReviewController extends Controller
                         $history->save();
                     }
 
-                    if (!empty($management->file_attchment_if_any)) {
-                        $history = new ManagementAuditTrial();
-                        $history->ManagementReview_id = $management->id;
-                        $history->activity_type = 'file attach';
-                        $history->previous = "Null";
-                        $history->current = $management->file_attchment_if_any;
-                        $history->comment = "Not Applicable";
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $management->status;
-                        $history->save();
-                    }
+                    //if (!empty($management->file_attchment_if_any)) {
+                    //    $history = new ManagementAuditTrial();
+                    //    $history->ManagementReview_id = $management->id;
+                    //    $history->activity_type = 'file attach';
+                    //    $history->previous = "Null";
+                    //    $history->current = $management->file_attchment_if_any;
+                    //    $history->comment = "Not Applicable";
+                    //    $history->user_id = Auth::user()->id;
+                    //    $history->user_name = Auth::user()->name;
+                    //    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    //    $history->origin_state = $management->status;
+                    //    $history->save();
+                    //}
 
                     if (!empty($management->next_managment_review_date)) {
                         $history = new ManagementAuditTrial();
@@ -1494,7 +1522,7 @@ class ManagementReviewController extends Controller
                     if (!empty($management->due_date_extension)) {
                         $history = new ManagementAuditTrial();
                         $history->ManagementReview_id = $management->id;
-                        $history->activity_type = 'Due_Date_Extension_Justification';
+                        $history->activity_type = 'Due Date Extension Justification';
                         $history->previous = "Null";
                         $history->current = $management->due_date_extension;
                         $history->comment = "Not Applicable";
@@ -2351,14 +2379,14 @@ class ManagementReviewController extends Controller
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->Submited_by;
-                $history->current = $changeControl->Submited_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "In Progress";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage='Submitted';
+                $history->stage = 'Submitted';
                 $history->save();
 
                 // $list = Helpers::getResponsibleUserList();
@@ -2377,6 +2405,57 @@ class ManagementReviewController extends Controller
                 //       }
                 //     }
                 // }
+
+                $list = Helpers::getResponsiblePersonUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new ManagementAuditTrial();
+                    $test->ManagementReview_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "In Progress";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "Initiator";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Management Review','history' => 'Submit', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2389,8 +2468,8 @@ class ManagementReviewController extends Controller
                 $history = new ManagementAuditTrial();
                 $history->ManagementReview_id = $id;
                 $history->activity_type = 'Activity Log';
-                // $history->previous = $lastDocument->completed_by;
-                $history->current = $changeControl->completed_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed - Done";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2415,6 +2494,59 @@ class ManagementReviewController extends Controller
                 //       }
                 //     }
                 // }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new ManagementAuditTrial();
+                    $test->ManagementReview_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Closed - Done";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "Responsible Person";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Management Review','history' => ' More Information Required', 'process' => 'Management Review', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Management Review, Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: All Actions Completed Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
+
                 toastr()->success('Document Sent');
                 return back();
             }

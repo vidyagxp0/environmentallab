@@ -361,7 +361,7 @@ class InternalauditController extends Controller
         if (!empty($internalAudit->assign_to)) {
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $internalAudit->id;
-            $history->activity_type = 'Assigned to';
+            $history->activity_type = 'Assigned To';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorName($internalAudit->assign_to);
             $history->comment = "NA";
@@ -1487,7 +1487,7 @@ class InternalauditController extends Controller
 
             $history = new InternalAuditTrial();
             $history->InternalAudit_id = $id;
-            $history->activity_type = 'Assigned to';
+            $history->activity_type = 'Assigned To';
             $history->previous = Helpers::getInitiatorName($lastDocument->assign_to);
             $history->current = Helpers::getInitiatorName($internalAudit->assign_to);
             $history->comment = $request->dassign_to_comment;
@@ -2329,7 +2329,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_schedule_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Audit Preparation";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2354,6 +2355,58 @@ class InternalauditController extends Controller
                 //             }
                 //      }
                 //   }
+
+                $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new InternalAuditTrial();
+                        $notification->InternalAudit_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Schedule Audit";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Audit Manager";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Schedule Audit', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Schedule Audit Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2375,7 +2428,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_preparation_completed_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Pending Audit";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2400,6 +2454,58 @@ class InternalauditController extends Controller
                 //             }
                 //      }
                 //   }
+
+                $list = Helpers::getAuditManagerUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if(!empty($userId)){
+                            try {
+                                $notification = new InternalAuditTrial();
+                                $notification->InternalAudit_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Complete Audit Preparation";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "Lead Auditor";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Complete Audit Preparation', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Complete Audit Preparation Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2412,7 +2518,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_mgr_more_info_reqd_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Pending Response";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2439,6 +2546,57 @@ class InternalauditController extends Controller
                         //      }
                         //   }
 
+                        $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if(!empty($userId)){
+                            try {
+                                $notification = new InternalAuditTrial();
+                                $notification->InternalAudit_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Issue Report";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "Lead Auditor";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Issue Report', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -2451,7 +2609,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_observation_submitted_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "CAPA Execution in Progress";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2473,7 +2632,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_lead_more_info_reqd_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed - Done";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2509,7 +2669,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->audit_response_completed_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed - Done";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2538,7 +2699,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->rejected_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Opened";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2564,6 +2726,57 @@ class InternalauditController extends Controller
                         //      }
                         //   }
 
+                        $list = Helpers::getAuditManagerUserList($changeControl->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if(!empty($userId)){
+                            try {
+                                $notification = new InternalAuditTrial();
+                                $notification->InternalAudit_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Reject";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "Lead Auditor";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -2585,7 +2798,8 @@ class InternalauditController extends Controller
                 $history = new InternalAuditTrial();
                 $history->InternalAudit_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->current = $changeControl->response_feedback_verified_by;
+                $history->previous = $lastDocument->status;
+                $history->current = "Opened";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
@@ -2593,6 +2807,56 @@ class InternalauditController extends Controller
                 $history->origin_state = $lastDocument->status;
                 $history->stage = "Reject";
                 $history->save();
+
+                $list = Helpers::getAuditManagerUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                            $notification = new InternalAuditTrial();
+                            $notification->InternalAudit_id = $id;
+                            $notification->activity_type = "Notification";
+                            $notification->action = 'Notification';
+                            $notification->comment = "";
+                            $notification->user_id = Auth::user()->id;
+                            $notification->user_name = Auth::user()->name;
+                            $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $notification->origin_state = "Not Applicable";
+                            $notification->previous = $lastDocument->status;
+                            $notification->current = "Reject";
+                            $notification->stage = "";
+                            $notification->action_name = "";
+                            $notification->mailUserId = $userIdNew;
+                            $notification->role_name = "Lead Auditor";
+                            $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Rejected', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
 
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
@@ -2625,7 +2889,8 @@ class InternalauditController extends Controller
                                 $history = new InternalAuditTrial();
                                 $history->InternalAudit_id = $id;
                                 $history->activity_type = 'Activity Log';
-                                $history->current = $changeControl->cancelled_by;
+                                $history->previous = $lastDocument->status;
+                                $history->current = "Closed-Cancelled";
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
@@ -2650,6 +2915,58 @@ class InternalauditController extends Controller
                 //             }
                 //      }
                 //   }
+
+                $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new InternalAuditTrial();
+                        $notification->InternalAudit_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Cancel";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Audit Manager";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -2670,7 +2987,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->cancelled_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed-Cancelled";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2678,6 +2996,29 @@ class InternalauditController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Cancelled";
                             $history->save();
+
+                            $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";
@@ -2698,7 +3039,8 @@ class InternalauditController extends Controller
                             $history = new InternalAuditTrial();
                             $history->InternalAudit_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->current = $changeControl->cancelled_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed-Cancelled";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2706,6 +3048,30 @@ class InternalauditController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = "Cancelled";
                             $history->save();
+
+                            
+                        $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Internal Audit','history' => 'Cancelled', 'process' => 'Internal Audit', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Internal Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 $changeControl->update();
                 $history = new InternalAuditStageHistory();
                 $history->type = "Internal Audit";

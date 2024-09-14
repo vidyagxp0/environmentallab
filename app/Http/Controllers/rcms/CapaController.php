@@ -300,18 +300,31 @@ class CapaController extends Controller
         //{{ Helpers::divisionNameForQMS($data->division_id) }}/CAPA/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
 
         //if (!empty($capa->record_number)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Record Number';
-            $history->previous = "Null";
-            $history->current = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . Helpers::year($capa->created_at) . "/" . str_pad($capa->record, 4, '0', STR_PAD_LEFT);
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->save();
+            // $history = new CapaAuditTrial();
+            // $history->capa_id = $capa->id;
+            // $history->activity_type = 'Record Number';
+            // $history->previous = "Null";
+            // $history->current = Helpers::getDivisionName(session()->get('division')) . "/CAPA/" . Helpers::year($capa->created_at) . "/" . str_pad($capa->record, 4, '0', STR_PAD_LEFT);
+            // $history->comment = "NA";
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            // $history->origin_state = $capa->status;
+            // $history->save();
         //}
+
+        
+        $history = new CapaAuditTrial();
+        $history->capa_id = $capa->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName($capa->division_id) . '/CAPA/' . Helpers::year( $capa->created_at) . '/' . str_pad( $capa->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state =  $capa->status;
+        $history->save();
 
         if (!empty($capa->intiation_date)) {
             $history = new CapaAuditTrial();
@@ -328,18 +341,20 @@ class CapaController extends Controller
         } 
 
         // if (!empty($capa->record_number)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Record Number';
-            $history->previous = "Null";
-            $history->current = $request->record_number;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->save();
+            // $history = new CapaAuditTrial();
+            // $history->capa_id = $capa->id;
+            // $history->activity_type = 'Record Number';
+            // $history->previous = "Null";
+            // $history->current = $request->record_number;
+            // $history->comment = "NA";
+            // $history->user_id = Auth::user()->id;
+            // $history->user_name = Auth::user()->name;
+            // $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            // $history->origin_state = $capa->status;
+            // $history->save();
         // }
+
+
 
         if (!empty($capa->initiator_Group)) {
             $history = new CapaAuditTrial();
@@ -690,19 +705,19 @@ class CapaController extends Controller
             $history->save();
         }
 
-        if (!empty($capa->initiator_Group)) {
-            $history = new CapaAuditTrial();
-            $history->capa_id = $capa->id;
-            $history->activity_type = 'Initiator Group';
-            $history->previous = "Null";
-            $history->current = $capa->initiator_Group;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $capa->status;
-            $history->save();
-        }
+        // if (!empty($capa->initiator_Group)) {
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $capa->id;
+        //     $history->activity_type = 'Initiator Group';
+        //     $history->previous = "Null";
+        //     $history->current = $capa->initiator_Group;
+        //     $history->comment = "NA";
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $capa->status;
+        //     $history->save();
+        // }
 
         if (!empty($capa->initiator_group_code)) {
             $history = new CapaAuditTrial();
@@ -1459,20 +1474,20 @@ class CapaController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastDocument->initiator_Group != $capa->initiator_group || !empty($request->initiator_Group_comment)) {
+        // if ($lastDocument->initiator_Group != $capa->initiator_group || !empty($request->initiator_Group_comment)) {
 
-            $history = new CapaAuditTrial();
-            $history->capa_id = $id;
-            $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->initiator_Group;
-            $history->current = $capa->initiator_Group;
-            $history->comment = $request->initiator_Group_comment;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+        //     $history = new CapaAuditTrial();
+        //     $history->capa_id = $id;
+        //     $history->activity_type = 'Initiator Group';
+        //     $history->previous = $lastDocument->initiator_Group;
+        //     $history->current = $capa->initiator_Group;
+        //     $history->comment = $request->initiator_Group_comment;
+        //     $history->user_id = Auth::user()->id;
+        //     $history->user_name = Auth::user()->name;
+        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //     $history->origin_state = $lastDocument->status;
+        //     $history->save();
+        // }
         if ($lastDocument->site_number != $capa->site_number || !empty($request->site_number_comment)) {
 
             $history = new CapaAuditTrial();
@@ -1689,8 +1704,8 @@ class CapaController extends Controller
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = $capa->plan_proposed_by;
+                    $history->previous = $lastDocument->status;
+                    $history->current = "Pending CAPA Plan";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1699,28 +1714,67 @@ class CapaController extends Controller
                     $history->stage = 'Plan Proposed';
                     $history->save();
 
-                //     $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $capa->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+               
+                $list = Helpers::getHODUserList($capa->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new CapaAuditTrial();
+                        $notification->capa_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Plan Proposed";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
 
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $capa],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      }
-                //   }
+
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $capa,'site'=>'CAPA','history' => 'Plan Proposed', 'process' => 'CAPA', 'comment' =>$history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $capa) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Plan Proposed Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
 
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
             }
+
+
+         
+           
+                
+
             if ($capa->stage == 2) {
                 $capa->stage = "3";
                 $capa->status = "CAPA In Progress";
@@ -1730,32 +1784,64 @@ class CapaController extends Controller
                 $history = new CapaAuditTrial();
                 $history->capa_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $capa->plan_approved_by;
+                $history->previous = "Pending CAPA Plan";
+                $history->current = "CAPA In Progress";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastDocument->status;
-                $history->stage = 'Plan Approved';
+                $history->stage = 'Approve Plan';
                 $history->save();
 
-                // $list = Helpers::getQAUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $capa->division_id){
-                //     $email = Helpers::getInitiatorEmail($u->user_id);
-                //     if ($email !== null) {
-                //         Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $capa],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Plan Approved By ".Auth::user()->name);
-                //             }
-                //         );
-                //     }
-                //   }
-                // }
+                $list = Helpers::getQAUserList($capa->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new RootAuditTrial();
+                        $notification->capa_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Approve Planled";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "QA";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $capa,'site'=>'CAPA','history' => 'Approve Plan', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $capa) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
 
                 $capa->update();
                 toastr()->success('Document Sent');
@@ -1769,8 +1855,8 @@ class CapaController extends Controller
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = $capa->completed_by;
+                    $history->previous = $lastDocument->status;
+                    $history->current = "QA Review";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1790,8 +1876,8 @@ class CapaController extends Controller
                         $history = new CapaAuditTrial();
                         $history->capa_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $capa->approved_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current ="Pending Actions Completion";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -1807,20 +1893,21 @@ class CapaController extends Controller
             if ($capa->stage == 5) {
                 $capa->stage = "6";
                 $capa->status = "Closed - Done";
-                $capa->completed_by = Auth::user()->name;
-                $capa->completed_on = Carbon::now()->format('d-M-Y');
-                        $history = new CapaAuditTrial();
-                        $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $capa->completed_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = 'Completed';
-                        $history->save();
+                $capa->all_action_completed_by = Auth::user()->name;
+                $capa->all_action_completed_on = Carbon::now()->format('d-M-Y');
+
+                $history = new CapaAuditTrial();
+                $history->capa_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed - Done";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'All Action Complete';
+                $history->save();
                 $capa->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1839,15 +1926,16 @@ class CapaController extends Controller
             $lastDocument = Capa::find($id);
 
 
-            $capa->stage = "0";
-            $capa->status = "Closed-Cancelled";
-            $capa->cancelled_by = Auth::user()->name;
-            $capa->cancelled_on = Carbon::now()->format('d-M-Y');
+            if($capa->stage == 2){
+                $capa->stage = "0";
+                    $capa->status = "Closed-Cancelled";
+                    $capa->cancelled_by = Auth::user()->name;
+                    $capa->cancelled_on = Carbon::now()->format('d-M-Y');
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous ="";
-                    $history->current = $capa->cancelled_by;
+                    $history->previous =$lastDocument->status;
+                    $history->current = "Closed-Cancelled";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1855,34 +1943,58 @@ class CapaController extends Controller
                     $history->origin_state =  $capa->status;
                     $history->stage = 'Cancelled';
                     $history->save();
+            }
+
+           
+             
+            $list = Helpers::getInitiatorUserList($capa->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if(!empty($userId)){
+                try {
+                    $notification = new CapaAuditTrial();
+                    $notification->capa_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = "Cancelled";
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "Initiator";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+            foreach ($list as $u) {
+                $email = Helpers:: getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $capa,'site'=>'CAPA','history' => 'Cancelled', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $capa) {
+                             $message->to($email)
+                             ->subject("QMS Notification: CAPA , Record #" . str_pad($record_number, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
+             
             $capa->update();
-            $history = new CapaHistory();
-            $history->type = "Capa";
-            $history->doc_id = $id;
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->stage_id = $capa->stage;
-            $history->status = $capa->status;
-            $history->save();
-
-            // $list = Helpers::getInitiatorUserList();
-            // foreach ($list as $u) {
-            //     if($u->q_m_s_divisions_id == $capa->division_id){
-            //       $email = Helpers::getInitiatorEmail($u->user_id);
-            //       if ($email !== null) {
-
-            //         Mail::send(
-            //             'mail.view-mail',
-            //             ['data' => $capa],
-            //             function ($message) use ($email) {
-            //                 $message->to($email)
-            //                     ->subject("Cancelled By ".Auth::user()->name);
-            //             }
-            //          );
-            //       }
-            //     }
-            // }
-
             toastr()->success('Document Sent');
             return back();
         } else {
@@ -1900,46 +2012,72 @@ class CapaController extends Controller
 
           if($capa->stage == 3){
             $capa->stage = "2";
-            $capa->status = "Pending CAPA Plan";
+            $capa->status = "CAPA In Progress";
             $capa->qa_more_info_required_by = Auth::user()->name;
             $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                    $history = new CapaAuditTrial();
-                    $history->capa_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous ="";
-                    $history->current = $capa->qa_more_info_required_by;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->stage = 'Qa More Info Required';
-                    $history->save();
-            $capa->update();
-            $history = new CapaHistory();
-            $history->type = "Capa";
-            $history->doc_id = $id;
+
+            $history = new CapaAuditTrial();
+            $history->capa_id = $id;
+            $history->activity_type = 'Activity Log';
+            $history->previous = $lastDocument->status;
+            $history->current = "CAPA In Progress";
+            $history->comment = $request->comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
-            $history->stage_id = $capa->stage;
-            $history->status = $capa->status;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->stage = 'QA More Info Required';
             $history->save();
-            // $list = Helpers::getHodUserList();
-            // foreach ($list as $u) {
-            //     if($u->q_m_s_divisions_id == $capa->division_id){
-            //      $email = Helpers::getInitiatorEmail($u->user_id);
-            //      if ($email !== null) {
-            //          Mail::send(
-            //             'mail.view-mail',
-            //             ['data' => $capa],
-            //             function ($message) use ($email) {
-            //                 $message->to($email)
-            //                     ->subject("Document is Send By ".Auth::user()->name);
-            //             }
-            //         );
-            //       }
-            //     }
-            // }
+            $capa->update();
+            
+            $list = Helpers::getHODUserList($capa->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if(!empty($userId)){
+                try {
+                    $notification = new CapaAuditTrial();
+                    $notification->capa_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = "QA More Info Required";
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "QA";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+            foreach ($list as $u) {
+                $email = Helpers::  getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $capa,'site'=>'CAPA','history' => 'QA More Info Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $capa) {
+                             $message->to($email)
+                             ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: Approve Plan Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                // }
+            }
+
             toastr()->success('Document Sent');
             return back();
           }
@@ -1952,8 +2090,8 @@ class CapaController extends Controller
                     $history = new CapaAuditTrial();
                     $history->capa_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = $capa->rejected_by;
+                    $history->previous = $lastDocument->status;
+                    $history->current = "CAPA In Progress";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1994,31 +2132,66 @@ class CapaController extends Controller
                 $capa->more_info_req_by = Auth::user()->name;
                 $capa->more_info_req_on = Carbon::now()->format('d-M-Y');
                 $capa->update();
-                $history = new CapaHistory();
-                $history->type = "Capa";
-                $history->doc_id = $id;
+                $history = new CapaAuditTrial();
+                $history->capa_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Opened";
+                $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
-                $history->stage_id = $capa->stage;
-                $history->status = "Opened";
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $capa->division_id){
-                //     $email = Helpers::getInitiatorEmail($u->user_id);
-                //     if ($email !== null) {
-
-                //         Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $capa],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("More Info Required ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     }
-                // }
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Information Required';
                 $history->save();
+
+
+                $list = Helpers::getInitiatorUserList($capa->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new CapaAuditTrial();
+                        $notification->capa_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "More Information Required";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userId;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+                foreach ($list as $u) {
+                    $email = Helpers::  getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $capa,'site'=>'CAPA','history' => 'More Information Required', 'process' => 'CAPA', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $capa) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: CAPA , Record #" . str_pad($capa->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
+                                );
+    
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
 
                 toastr()->success('Document Sent');
                 return back();
@@ -2028,18 +2201,19 @@ class CapaController extends Controller
                 $capa->status = "Pending CAPA Plan";
                 $capa->qa_more_info_required_by = Auth::user()->name;
                 $capa->qa_more_info_required_on = Carbon::now()->format('d-M-Y');
-                        $history = new CapaAuditTrial();
-                        $history->capa_id = $id;
-                        $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $capa->qa_more_info_required_by;
-                        $history->comment = $request->comment;
-                        $history->user_id = Auth::user()->id;
-                        $history->user_name = Auth::user()->name;
-                        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                        $history->origin_state = $lastDocument->status;
-                        $history->stage = 'Qa More Info Required';
-                        $history->save();
+
+                $history = new CapaAuditTrial();
+                $history->capa_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending CAPA Plan";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'QA More Info Required';
+                $history->save();
                 $capa->update();
                 $history = new CapaHistory();
                 $history->type = "Capa";

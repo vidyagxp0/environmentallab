@@ -448,7 +448,7 @@ class AuditProgramController extends Controller
         if (!empty($data->url_description)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = ' URl,s Description';
+            $history->activity_type = 'URl,s Description';
             $history->previous = "Null";
             $history->current = $data->url_description;
             $history->comment = "NA";
@@ -844,7 +844,7 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
-        if ($lastDocument->url_description != $data->url_description || !empty($request->related_url_comment)) {
+        if ($lastDocument->url_description != $data->url_description || !empty($request->url_description_comment)) {
 
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $id;
@@ -859,20 +859,6 @@ class AuditProgramController extends Controller
             $history->save();
         }
 
-        // if ($lastDocument->url_description != $data->url_description || !empty($request->url_description_comment)) {
-
-        //     $history = new AuditProgramAuditTrial();
-        //     $history->AuditProgram_id = $id;
-        //     $history->activity_type = 'URl,s Description';
-        //     $history->previous = $lastDocument->url_description;
-        //     $history->current = $data->url_description;
-        //     $history->comment = $request->url_description_comment;
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $lastDocument->status;
-        //     $history->save();
-        // }
         if ($lastDocument->Initiator_Group != $data->Initiator_Group || !empty($request->Initiator_Group_comment)) {
 
             $history = new AuditProgramAuditTrial();
@@ -1009,8 +995,8 @@ class AuditProgramController extends Controller
                     $history = new AuditProgramAuditTrial();
                     $history->AuditProgram_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = $changeControl->submitted_by;
+                    $history->previous = $lastDocument->status;
+                    $history->current = "Pending Approval";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1018,25 +1004,53 @@ class AuditProgramController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->stage = "Submitted";
                     $history->save();
-                //     $list = Helpers::getInitiatorUserList();
                     
-                //     foreach ($list as $u) {
-                       
-                //         if($u->q_m_s_divisions_id ==$changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
-                          
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Submitted By ".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
+                    $list = Helpers::getAuditManagerUserList($changeControl->division_id);
+                    
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userIdNew = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+                    if($userId){
+                            $auditNoti = new AuditProgramAuditTrial();
+                            $auditNoti->AuditProgram_id = $id;
+                            $auditNoti->activity_type = "Notification";
+                            $auditNoti->action = 'Notification';
+                            $auditNoti->comment = "";
+                            $auditNoti->user_id = Auth::user()->id;
+                            $auditNoti->user_name = Auth::user()->name;
+                            $auditNoti->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditNoti->origin_state = "Not Applicable";
+                            $auditNoti->previous = $lastDocument->status;
+                            $auditNoti->current = "Submitted";
+                            $auditNoti->stage = "";
+                            $auditNoti->action_name = "";
+                            $auditNoti->mailUserId = $userIdNew;
+                            $auditNoti->role_name = "Initiator";
+                            $auditNoti->save();
+                    }
+
+                // dd($list);
+                foreach ($list as $u) {
+                    $email = Helpers:: getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Audit Program','history' => 'Submitted', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Audit Program , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
+
                 $changeControl->update();
                 toastr()->success('Document Sent');
                 return back();
@@ -1049,8 +1063,8 @@ class AuditProgramController extends Controller
                     $history = new AuditProgramAuditTrial();
                     $history->AuditProgram_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = $changeControl->approved_by;
+                    $history->previous = $lastDocument->status;
+                    $history->current = "Pending Audit";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -1070,8 +1084,8 @@ class AuditProgramController extends Controller
                         $history = new AuditProgramAuditTrial();
                         $history->AuditProgram_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $changeControl->Audit_Completed_By;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Closed - Done";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -1103,32 +1117,59 @@ class AuditProgramController extends Controller
                         $history = new AuditProgramAuditTrial();
                         $history->AuditProgram_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $changeControl->rejected_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Opened";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->stage = 'Rejected';
+                        $history->stage = 'Reject';
                         $history->save();
-                    //     $list = Helpers::getAuditManagerUserList();
-                    //     foreach ($list as $u) {
-                    //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                    //             $email = Helpers::getInitiatorEmail($u->user_id);
-                    //              if ($email !== null) {
-                              
-                    //               Mail::send(
-                    //                   'mail.view-mail',
-                    //                    ['data' => $changeControl],
-                    //                 function ($message) use ($email) {
-                    //                     $message->to($email)
-                    //                         ->subject("Document is Rejected By ".Auth::user()->name);
-                    //                 }
-                    //               );
-                    //             }
-                    //      } 
-                    //   }
+
+                        $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                                $auditNoti = new AuditProgramAuditTrial();
+                                $auditNoti->AuditProgram_id = $id;
+                                $auditNoti->activity_type = "Notification";
+                                $auditNoti->action = 'Notification';
+                                $auditNoti->comment = "";
+                                $auditNoti->user_id = Auth::user()->id;
+                                $auditNoti->user_name = Auth::user()->name;
+                                $auditNoti->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditNoti->origin_state = "Not Applicable";
+                                $auditNoti->previous = $lastDocument->status;
+                                $auditNoti->current = "Reject";
+                                $auditNoti->stage = "";
+                                $auditNoti->action_name = "";
+                                $auditNoti->mailUserId = $userIdNew;
+                                $auditNoti->role_name = " Audit Manager";
+                                $auditNoti->save();
+                        }
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Audit Program','history' => 'Rejected', 'process' => 'Audit Program', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Audit Program , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
                
                 $changeControl->update();
                 toastr()->success('Document Sent');
@@ -1154,8 +1195,8 @@ class AuditProgramController extends Controller
                             $history = new AuditProgramAuditTrial();
                             $history->AuditProgram_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->cancelled_by;
+                            $$history->previous = $lastDocument->status;
+                            $history->current = "Closed - Cancelled";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -1175,8 +1216,8 @@ class AuditProgramController extends Controller
                         $history = new AuditProgramAuditTrial();
                         $history->AuditProgram_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $changeControl->cancelled_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Closed - Cancelled";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -1196,8 +1237,8 @@ class AuditProgramController extends Controller
                         $history = new AuditProgramAuditTrial();
                         $history->AuditProgram_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $changeControl->cancelled_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Closed - Cancelled";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;

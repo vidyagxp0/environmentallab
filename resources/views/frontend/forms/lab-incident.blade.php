@@ -536,8 +536,8 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        {{-- <span id="rchar">240</span> characters remaining --}}
-                                        <textarea id="duedoc" name="due_date_extension" type="text"></textarea>
+                                         <span id="rchar">240</span> characters remaining
+                                        <textarea id="duedoc" maxlength="240" name="due_date_extension" type="text"></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -676,7 +676,59 @@
                                         <label for="Cancelled On">Cancelled On</label>
                                         <div class="Date"></div>
                                     </div>
-                                    </div>                   
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info By</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info On</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info By</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info On</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Further Investigation Required By</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Further Investigation Required On</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return To Pending CAPA By</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return To Pending CAPA On</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return to QA Review By</label>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return to QA Review On</label>
+                                    </div>
+                                </div>
+
+
                                 <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

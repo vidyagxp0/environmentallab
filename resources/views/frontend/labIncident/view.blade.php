@@ -40,11 +40,11 @@
                         <button class="button_theme1"> <a class="text-white"
                                 href="{{ route('audittrialLabincident', $data->id) }}"> Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id,'Lab Incident',3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id,'Lab Incident',4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Incident Review Completed
                             </button>
@@ -54,7 +54,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 3 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id,'Lab Incident',10))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Investigation Completed
                             </button>
@@ -64,11 +64,11 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id,'Lab Incident',10))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All Activities Completed
                             </button>
-                        @elseif($data->stage == 5 && (in_array(10, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id,'Lab Incident',10))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review
                             </button>
@@ -78,14 +78,14 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
-                        @elseif($data->stage == 6 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 6 && Helpers::check_roles($data->division_id,'Lab Incident',7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Return To Pending CAPA
                             </button>
-                        @elseif($data->stage == 7 && (in_array(9, $userRoleIds) || in_array(18, $userRoleIds) || in_array(7, $userRoleIds)))
+                        @elseif($data->stage == 7 && Helpers::check_roles($data->division_id,'Lab Incident',7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Head Approval Complete
                             </button>
@@ -842,7 +842,8 @@
                                     <div class="group-input">
                                         <label for="due_date_extension">Due Date Extension Justification</label>
                                         <div><small class="text-primary">Please Mention justification if due date is crossed</small></div>
-                                        <textarea name="due_date_extension" id="duedoc" type="text"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
+                                        <span id="rchar">240</span> characters remaining
+                                        <textarea name="due_date_extension" maxlength="240" id="duedoc" type="text"{{ $data->stage == 0 || $data->stage == 8 ? "disabled" : "" }}>{{$data->due_date_extension}}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -988,6 +989,72 @@
                                         <div class="Date">{{ $data->cancelled_on }}</div>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info By</label>
+                                        <div class="static">{{ $data->request_more_info_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info On</label>
+                                        <div class="static">{{ $data->request_more_info_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info By</label>
+                                        <div class="static">{{ $data->request_more_information_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Request More Info On</label>
+                                        <div class="static">{{ $data->request_more_information_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Further Investigation Required By</label>
+                                        <div class="static">{{ $data->further_investigation_required_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Further Investigation Required On</label>
+                                        <div class="static">{{ $data->further_investigation_required_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return To Pending CAPA By</label>
+                                        <div class="static">{{ $data->return_to_pending_capa_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return To Pending CAPA On</label>
+                                        <div class="static">{{ $data->return_to_pending_capa_on }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return to QA Review By</label>
+                                        <div class="static">{{ $data->return_to_qa_review_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return to QA Review On</label>
+                                        <div class="static">{{ $data->return_to_qa_review_on }}</div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Cancelled By">Return to QA Review On</label>
+                                        <div class="static">{{ $data->return_to_qa_review_on }}</div>
+                                    </div>
+                                </div>  --}}
                                 {{-- <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="All Activities Completed By">All Activities Completed By</label>

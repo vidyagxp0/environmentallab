@@ -22,6 +22,14 @@
         width: 10%;
     }
 
+    .w-5 {
+        width: 5%;
+    }
+
+    .w-15 {
+        width: 15%;
+    }
+
     .w-20 {
         width: 20%;
     }
@@ -143,6 +151,12 @@
     .table_bg {
         background: #4274da57;
     }
+
+    .allow-wb {
+        word-break: break-all;
+        word-wrap: break-word;
+    }
+
 </style>
 
 <body>
@@ -169,6 +183,8 @@
                     <strong>Observation Audit No.</strong>
                 </td>
                 <td class="w-40">
+                    {{--{{ Helpers::divisionNameForQMS($managementReview->division_id) }}/OBS/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}                </td>--}}
+
                    {{ Helpers::getDivisionName(session()->get('division'))}}/OBS/{{ Helpers::year($doc->created_at)}}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
                 </td>
                 <td class="w-30">
@@ -210,22 +226,21 @@
         </div>
 
         <div class="second-table">
-            <table>
+            <table class="allow-wb" style="table-layout: fixed; width: 700px;" >
                 <tr class="table_bg">
-                    <th>Field History</th>
-                    <th>Date Performed</th>
-                    <th>Person Responsible</th>
-                    <th>Change Type</th>
-                </tr>
+                    <th class='w-30' style="word-break: break-all;">Field History</th>
+                    <th class='w-10'>Date Performed</th>
+                    <th class='w-10'>Person Responsible</th>
+                    <th class='w-10'>Change Type</th>
                 @foreach ($data as $datas)
                     <tr>
                         <td>
                             <div>{{ $datas->activity_type }}</div>
                             <div>
                                 @if($datas->activity_type == "Activity Log")
-                                    <div><strong>Changed From :</strong></div>
-                                    @if(!empty($datas->change_from))
-                                        <div>{!! $datas->change_from !!}</div>
+                                    <div style="word-break: break-all;"><strong>Changed From :</strong></div>
+                                    @if(!empty($datas->previous))
+                                        <div>{!! $datas->previous !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif
@@ -247,9 +262,9 @@
                             </div>
                             <div>
                                 @if($datas->activity_type == "Activity Log")
-                                    <div><strong>Changed To :</strong></div>
-                                    @if(!empty($datas->change_to))
-                                        <div>{!! $datas->change_to !!}</div>
+                                    <div style="word-break: break-all;"><strong>Changed To :</strong></div>
+                                    @if(!empty($datas->current))
+                                        <div>{!! $datas->current !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif

@@ -62,7 +62,7 @@ class UserManagementController extends Controller
             'departmentid' => 'required',
             'roles' => 'required|array',
         ]);
-        
+
         // $user = new User();
         // $user->name = $request->name;
         // $user->email = $request->email;
@@ -71,7 +71,7 @@ class UserManagementController extends Controller
         // $usertableRole = '';
         // if ($user->save()) {
         //     foreach ($request->roles as $roleId) {
-        //     $userRole = new UserRole();                
+        //     $userRole = new UserRole();
         //     $checkRole = Roles::find($roleId);
 
         //     // Split the string using the '-' delimiter
@@ -90,7 +90,7 @@ class UserManagementController extends Controller
         //     $q_m_s_processes_id = $process->id;
         //     $q_m_s_roles_id = $qmsroles->id;
 
-        //     $usertableRole = //concatinate the $q_m_s_roles_id by comma seprated 
+        //     $usertableRole = //concatinate the $q_m_s_roles_id by comma seprated
         //     $userRole->user_id = $user->id;
         //     $userRole->role_id = $roleId;
         //     $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
@@ -101,7 +101,7 @@ class UserManagementController extends Controller
 
         $admins = Admin::all()->count();
         $users = User::all()->count();
-        
+
         $total_users =  $admins + $users;
         if ($total_users <= 40) {
             $user = new User();
@@ -112,28 +112,52 @@ class UserManagementController extends Controller
             $usertableRole = ''; // Initialize the variable to store concatenated role IDs
             if ($user->save()) {
                 foreach ($request->roles as $roleId) {
-                    $userRole = new UserRole();                
+                    $userRole = new UserRole();
                     $checkRole = Roles::find($roleId);
-    
+
+                    // Ensure $checkRole is not null before proceeding
+                    if (!$checkRole) {
+                        \Log::error('Role not found for ID: ' . $roleId);
+                        continue; // Skip to the next role
+                    }
+
                     // Split the string using the '-' delimiter
                     $roleArray = explode('-', $checkRole->name);
-    
+
                     // Assign values to three variables
                     $q_m_s_divisions_name = trim($roleArray[0]);
                     $q_m_s_processes_name = trim($roleArray[1]);
                     $q_m_s_roles_name = trim($roleArray[2]);
-    
-                    // Assuming you have models for q_m_s_divisions and q_m_s_process
+
+                    // Check for null division
                     $division = QMSDivision::where('name', $q_m_s_divisions_name)->first();
-                    $process = QMSProcess::where('process_name', $q_m_s_processes_name)->first();
+                    if (!$division) {
+                        \Log::error('Division not found for name: ' . $q_m_s_divisions_name);
+                        continue; // Skip to the next role
+                    }
+
+                    // Check for null process
+                    $process = QMSProcess::where(['division_id' => $division->id, 'process_name' => $q_m_s_processes_name])->first();
+                    if (!$process) {
+                        \Log::error('Process not found for division_id: ' . $division->division_id . ' and process_name: ' . $q_m_s_processes_name);
+                        continue; // Skip to the next role
+                    }
+
+                    // Check for null role
                     $qmsroles = QMSRoles::where('name', $q_m_s_roles_name)->first();
+                    if (!$qmsroles) {
+                        \Log::error('QMS Role not found for name: ' . $q_m_s_roles_name);
+                        continue; // Skip to the next role
+                    }
+
+                    // Assign IDs after checking that the entities exist
                     $q_m_s_divisions_id = $division->id;
                     $q_m_s_processes_id = $process->id;
                     $q_m_s_roles_id = $qmsroles->id;
-    
+
                     // Concatenate the q_m_s_roles_id with previous ones
                     $usertableRole .= $q_m_s_roles_id . ',';
-    
+
                     $userRole->user_id = $user->id;
                     $userRole->role_id = $roleId;
                     $userRole->q_m_s_divisions_id = $q_m_s_divisions_id;
@@ -141,24 +165,23 @@ class UserManagementController extends Controller
                     $userRole->q_m_s_roles_id = $q_m_s_roles_id;
                     $userRole->save();
                 }
-    
                 // Remove the trailing comma from the concatenated string
                 $usertableRole = rtrim($usertableRole, ',');
-    
+
                 // Explode the concatenated string into an array
                 $rolesArray = explode(',', $usertableRole);
-    
+
                 // Remove duplicate entries
                 $uniqueRolesArray = array_unique($rolesArray);
-    
+
                 // Implode the unique array back into a string
                 $uniqueUsertableRole = implode(',', $uniqueRolesArray);
-    
+
                 // Update the user table with the unique concatenated role IDs
                 $user->role = $uniqueUsertableRole;
                 $user->save();
-    
-    
+
+
                 toastr()->success('User added successfully');
                 return redirect()->route('user_management.index');
             } else {
@@ -169,7 +192,7 @@ class UserManagementController extends Controller
             toastr()->error('Cannot add more than 40 users!');
             return redirect()->back();
         }
-        
+
     }
 
     /**
@@ -211,7 +234,7 @@ class UserManagementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::with('userRoles')->find($id);    
+        $user = User::with('userRoles')->find($id);
     $user->name = $request->name;
     $user->email = $request->email;
     if (!empty($request->password)) {
@@ -225,7 +248,7 @@ class UserManagementController extends Controller
 
         // Attach new roles
         foreach ($request->roles as $roleId) {
-            $userRole = new UserRole();                
+            $userRole = new UserRole();
             $checkRole = Roles::find($roleId);
 
             // Split the string using the '-' delimiter

@@ -252,7 +252,7 @@ class ExtensionController extends Controller
             $history->extension_id = $openState->id;
             $history->activity_type = 'Approver';
             $history->previous = "Null";
-            $history->current = $openState->approver1;
+            $history->current = Helpers::getInitiatorName($openState->approver1);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -405,8 +405,8 @@ class ExtensionController extends Controller
             $history = new ExtensionAuditTrail();
             $history->extension_id = $id;
             $history->activity_type = 'Approver';
-            $history->previous = $lastDocument->approver1;
-            $history->current = $openState->approver1;
+            $history->previous = Helpers::getInitiatorName($lastDocument->approver1);
+            $history->current = Helpers::getInitiatorName($openState->approver1);
             $history->comment = $request->approver1_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -555,7 +555,7 @@ class ExtensionController extends Controller
 
         DocumentService::update_qms_numbers();
 
-        toastr()->success('Document update');
+        toastr()->success('Record is Updated Successfully');
         return back();
     }
 
@@ -611,8 +611,10 @@ class ExtensionController extends Controller
                             $history = new ExtensionAuditTrail();
                             $history->extension_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current =  $changeControl->submitted_by;
+                            // $history->previous = "";
+                            // $history->current =  $changeControl->submitted_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Pending Approval";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -648,6 +650,56 @@ class ExtensionController extends Controller
                     //     } 
                     // }
 
+                $list = Helpers::getApproverUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending Approval";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Submitted', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                     toastr()->success('Document Sent');
 
                     return back();
@@ -662,8 +714,8 @@ class ExtensionController extends Controller
                         $history = new ExtensionAuditTrail();
                         $history->extension_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current =  $changeControl->ext_approved_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "Closed-Done";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -671,31 +723,59 @@ class ExtensionController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Ext Approved";
                         $history->save();
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Extension";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $openState->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
-                //      if ($email !== null) {
-                //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $openState],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     } 
-                // }
+                        $changeControl->update();
+                
+               
+                $list = Helpers::getApproverUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Ext Approved";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Approver";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Ext Approved', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Ext Approved Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -721,8 +801,8 @@ class ExtensionController extends Controller
                             $history = new ExtensionAuditTrail();
                             $history->extension_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current =  $changeControl->cancelled_by;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed-Cancelled";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -751,8 +831,8 @@ class ExtensionController extends Controller
                                 $history = new ExtensionAuditTrail();
                                 $history->extension_id = $id;
                                 $history->activity_type = 'Activity Log';
-                                $history->previous = "";
-                                $history->current =  $changeControl->more_information_required_by;
+                                $history->previous = $lastDocument->status;
+                                $history->current = "Opened";
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
@@ -785,6 +865,59 @@ class ExtensionController extends Controller
                 //       }
                 //     } 
                 // }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+
+                // $list = Helpers::getHODUserList($capa->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "QA More Info Required";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Approver";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'More-information Required', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More-information Required Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 toastr()->success('Document Sent');
                 return back();
             }
@@ -810,8 +943,8 @@ class ExtensionController extends Controller
                         $history = new ExtensionAuditTrail();
                         $history->extension_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current =  $changeControl->rejected_by;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "closed-reject";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -845,6 +978,58 @@ class ExtensionController extends Controller
                 //       }
                 //     } 
                 // }
+
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Reject";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Approver";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
+                        // dd($list);
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Rejected', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
                 toastr()->success('Document Sent');
                 return back();
             } else {

@@ -773,6 +773,37 @@
                     <td class="w-30">{{ $data->cancelled_on }}</td>
                 </tr>
 
+                <tr>
+                    <th class="w-20">Request More Info By</th>
+                    <td class="w-30">{{ $data->request_more_info_by }}</td>
+                    <th class="w-20">Request More Info On</th>
+                    <td class="w-30">{{ $data->request_more_info_on }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Request More Info By</th>
+                    <td class="w-30">{{ $data->request_more_information_by }}</td>
+                    <th class="w-20">Request More Info On</th>
+                    <td class="w-30">{{ $data->request_more_information_on }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Further Investigation Required By</th>
+                    <td class="w-30">{{ $data->further_investigation_required_by }}</td>
+                    <th class="w-20">Further Investigation Required On</th>
+                    <td class="w-30">{{ $data->further_investigation_required_on }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Return To Pending CAPA By</th>
+                    <td class="w-30">{{ $data->return_to_pending_capa_by }}</td>
+                    <th class="w-20">Return To Pending CAPA On</th>
+                    <td class="w-30">{{ $data->return_to_pending_capa_on }}</td>
+                </tr>
+                <tr>
+                    <th class="w-20">Return to QA Review By</th>
+                    <td class="w-30">{{ $data->return_to_qa_review_by }}</td>
+                    <th class="w-20">Return to QA Review On</th>
+                    <td class="w-30">{{ $data->return_to_qa_review_on }}</td>
+                </tr>
+
 
             </table>
         </div>

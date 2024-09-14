@@ -235,7 +235,7 @@ class EffectivenessCheckController extends Controller
             $history->effectiveness_id = $openState->id;
             $history->activity_type = 'Assigned To';
             $history->previous = "Null";
-            $history->current =  $request->assign_to;
+            $history->current =  Helpers::getInitiatorName($request->assign_to);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -895,15 +895,16 @@ class EffectivenessCheckController extends Controller
                     $history = new EffectivenessCheckAuditTrail();
                     $history->effectiveness_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->submit_by;
+                            $history->previous = $lastopenState->status;
+                            $history->current = "Pending Effectiveness Check";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status;
-                            $history->step = 'Submit';
+                            $history->stage = 'Submit';
                             $history->save();
+                            $changeControl->update();
 
                 //     $list = Helpers:: getSupervisorUserList();
                 //     foreach ($list as $u) {
@@ -922,9 +923,55 @@ class EffectivenessCheckController extends Controller
                 //             }
                 //      }
                 //   }
+                        $list = Helpers::getSupervisorUserList($changeControl->division_id);
+                        // dd($list);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId = $users->pluck('name')->implode(',');
+                        $userId1 = $users->pluck('id')->implode(',');
+    
+                        if($userId){
+                            $test = new EffectivenessCheckAuditTrail();
+                            $test->effectiveness_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastopenState->status;
+                            $test->current = "Pending Effectiveness Check";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "Initiator";
+                            $test->save();
+                        }
 
 
-                    $changeControl->update();
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'submitted', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
+                                        );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
+                    
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
                     $history->doc_id = $id;
@@ -954,22 +1001,23 @@ class EffectivenessCheckController extends Controller
                 //     return back();
                 // } else {
                     $changeControl->stage = '3';
-                    $changeControl->status = 'QA Approval-Effective';
+                    $changeControl->status = 'QA Approval - Effective';
                     $changeControl->effective_by =  Auth::user()->name;
                     $changeControl->effective_on = Carbon::now()->format('d-M-Y');
 
                             $history = new EffectivenessCheckAuditTrail();
-                    $history->effectiveness_id = $id;
+                            $history->effectiveness_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->effective_by;
+                            $history->previous = $lastopenState->status;
+                            $history->current = "QA Approval - Effective";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status;
-                            $history->step = 'Effective';
+                            $history->stage = 'Effective';
                             $history->save();
+                            $changeControl->update();
 
                 //     $list = Helpers:: getQAUserList();
                 //     foreach ($list as $u) {
@@ -989,7 +1037,55 @@ class EffectivenessCheckController extends Controller
                 //      }
                 //   }
 
-                    $changeControl->update();
+                        $list = Helpers::getQAUserList($changeControl->division_id);
+                        // dd($list);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId = $users->pluck('name')->implode(',');
+                        $userId1 = $users->pluck('id')->implode(',');
+    
+                        if($userId){
+                            $test = new EffectivenessCheckAuditTrail();
+                            $test->effectiveness_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastopenState->status;
+                            $test->current = "QA Approval - Effective";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "Supervisor";
+                            $test->save();
+                        }
+
+
+                        foreach ($list as $u) {
+                            $email = Helpers:: getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                        $message->to($email)
+                                        ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Performed"); }
+                                        );
+
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                            // }
+                        }
+
+                    
                     $history = new CCStageHistory();
                     $history->type = "Effectiveness-Check";
                     $history->doc_id = $id;
@@ -1010,18 +1106,42 @@ class EffectivenessCheckController extends Controller
                 $changeControl->effective_approval_complete_on = Carbon::now()->format('d-M-Y');
 
                             $history = new EffectivenessCheckAuditTrail();
-                    $history->effectiveness_id = $id;
+                            $history->effectiveness_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->effective_approval_complete_by;
+                            $history->previous = $lastopenState->status;
+                            $history->current = "Closed – Effective";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status;
-                            $history->step = 'Effective Approval Completed';
+                            $history->stage = 'Effective Approval Completed';
                             $history->save();
-                $changeControl->update();
+                            $changeControl->update();
+
+
+                            // $list = Helpers::getQAUserList($changeControl->division_id);
+                            //     // dd($list);
+                            //     foreach ($list as $u) {
+                            //         $email = Helpers:: getQAEmail($u->user_id);
+                            //         if (!empty($email)) {
+                            //             try {
+                            //                 info('Sending mail to', [$email]);
+                            //                 Mail::send(
+                            //                     'mail.view-mail',
+                            //                     ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Effective Approval Complete', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            //                     function ($message) use ($email, $changeControl) {
+                            //                     $message->to($email)
+                            //                     ->subject("QMS Notification: Risk Assessment , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Effective Approval Complete Performed"); }
+                            //                     );
+
+                            //             } catch (\Exception $e) {
+                            //                 \Log::error('Mail failed to send: ' . $e->getMessage());
+                            //             }
+                            //         }
+                            //         // }
+                            //     }
+
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
                 $history->doc_id = $id;
@@ -1048,22 +1168,23 @@ class EffectivenessCheckController extends Controller
             $lastopenState = EffectivenessCheck::find($id);
             if ($changeControl->stage == 2) {
                 $changeControl->stage = '5';
-                $changeControl->status = 'QA Approval-Not Effective';
+                $changeControl->status = 'QA Approval - Not Effective';
                 $changeControl->not_effective_by =  Auth::user()->name;
                 $changeControl->not_effective_on = Carbon::now()->format('d-M-Y');
 
                             $history = new EffectivenessCheckAuditTrail();
-                    $history->effectiveness_id = $id;
+                            $history->effectiveness_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = $changeControl->not_effective_by;
+                            $history->previous = $lastopenState->status;
+                            $history->current = "QA Approval - Not Effective";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
                             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                             $history->origin_state = $lastopenState->status;
-                            $history->step = 'Not Effective';
+                            $history->stage = 'Not Effective';
                             $history->save();
+                            $changeControl->update();
 
                 //     $list = Helpers:: getQAUserList();
                 //     foreach ($list as $u) {
@@ -1083,7 +1204,52 @@ class EffectivenessCheckController extends Controller
                 //      }
                 //   }
 
-                $changeControl->update();
+                $list = Helpers::getQAUserList($changeControl->division_id);
+                                // dd($list);
+
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userId = $users->pluck('name')->implode(',');
+                                $userId1 = $users->pluck('id')->implode(',');
+            
+                                if($userId){
+                                    $test = new EffectivenessCheckAuditTrail();
+                                    $test->effectiveness_id = $id;
+                                    $test->activity_type = "Notification";
+                                    $test->action = 'Notification';
+                                    $test->comment = "";
+                                    $test->user_id = Auth::user()->id;
+                                    $test->user_name = Auth::user()->name;
+                                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $test->origin_state = "Not Applicable";
+                                    $test->previous = $lastopenState->status;
+                                    $test->current = "QA Approval - Not Effective";
+                                    $test->stage = "";
+                                    $test->action_name = "";
+                                    $test->mailUserId = $userId1;
+                                    $test->role_name = "Supervisor";
+                                    $test->save();
+                                }
+
+                                foreach ($list as $u) {
+                                    $email = Helpers:: getAllUserEmail($u->user_id);
+                                    if (!empty($email)) {
+                                        try {
+                                            info('Sending mail to', [$email]);
+                                            Mail::send(
+                                                'mail.view-mail',
+                                                ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'Not Effective', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                                function ($message) use ($email, $changeControl) {
+                                                $message->to($email)
+                                                ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Not Effective Performed"); }
+                                                );
+
+                                        } catch (\Exception $e) {
+                                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                                        }
+                                    }
+                                    // }
+                                }
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
                 $history->doc_id = $id;
@@ -1104,16 +1270,16 @@ class EffectivenessCheckController extends Controller
                 $changeControl->not_effective_approval_complete_on = Carbon::now()->format('d-M-Y');
 
                         $history = new EffectivenessCheckAuditTrail();
-                    $history->effectiveness_id = $id;
+                        $history->effectiveness_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = $changeControl->not_effective_approval_complete_by;
+                        $history->previous = $lastopenState->status;
+                        $history->current = 'Closed – Not Effective';
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastopenState->status;
-                        $history->step = 'Not Effective Approval Completed';
+                        $history->stage = 'Not Effective Approval Completed';
                         $history->save();
 
                 $changeControl->update();
@@ -1151,14 +1317,14 @@ class EffectivenessCheckController extends Controller
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->more_info_required_effective_by;
+                $history->previous = $lastopenState->status;
+                $history->current = "Pending Effectiveness Check";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status;
-                $history->step = 'More Information Required(Effective)';
+                $history->stage = 'More Information Required(Effective)';
                 $history->save();
 
 
@@ -1186,19 +1352,64 @@ class EffectivenessCheckController extends Controller
                 $history = new EffectivenessCheckAuditTrail();
                 $history->effectiveness_id = $id;
                 $history->activity_type = 'Activity Log';
-                $history->previous = "";
-                $history->current = $changeControl->more_info_required_not_effective_by;
+                $history->previous = $lastopenState->status;
+                $history->current = "Pending Effectiveness Check";
                 $history->comment = $request->comment;
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                 $history->origin_state = $lastopenState->status;
-                $history->step = 'More Information Required(Not Effective)';
+                $history->stage = 'More Information Required(Not Effective)';
                 $history->save();
-
-
-
                 $changeControl->update();
+
+
+                $list = Helpers::getSupervisorUserList($changeControl->division_id);
+                // dd($list);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('name')->implode(',');
+                $userId1 = $users->pluck('id')->implode(',');
+
+                if($userId){
+                    $test = new EffectivenessCheckAuditTrail();
+                    $test->effectiveness_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastopenState->status;
+                    $test->current = "Pending Effectiveness Check";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    $test->save();
+                }
+
+                foreach ($list as $u) {
+                    $email = Helpers:: getSupervisorEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Effectiveness Check','history' => 'More Info Required', 'process' => 'Effective Check', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                $message->to($email)
+                                ->subject("QMS Notification: Effectiveness Check , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Info Required Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                    // }
+                }
                 $history = new CCStageHistory();
                 $history->type = "Effectiveness-Check";
                 $history->doc_id = $id;

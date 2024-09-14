@@ -51,9 +51,11 @@
                         <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
                     </div> --}}
                 </div>
+                
 
                 <div class="inner-block tms-block" id="tms-all-block">
                     @if (Helpers::checkRoles(6))
+                    <div class="created-by-me"style="font-size: 16px; font-weight: 600;">Training Created</div>
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -69,7 +71,6 @@
                                 <tbody>
                                     @foreach ($documents as $temp)
                                     @if(!empty($temp->training) && $temp->training->stage >=6)
-                                        <tr>
                                             @php
                                                     $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
                                                     if ($trainingPlan) {
@@ -77,21 +78,25 @@
                                                         $sopsCount = count(explode(',', $trainingPlan->sops));
                                                     }
                                             @endphp
+                                            @if($trainingPlan)
+                                                <tr>
 
-                                            <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
-                                            {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
-                                                000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
-                                            <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
-                                            <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
-                                            <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
-                                            <td>{{ $temp->status }}</td>
-                                           
-                                            {{-- <td>
-                                                <a href="#"><i class="fa-solid fa-eye"></i></a>            
-                                            </td> --}}
-                                            <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
-
-                                        </tr>
+                                                    <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
+                                                    {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
+                                                        000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
+                                                    <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
+                                                    <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
+                                                    <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
+                                                    <td>{{ $temp->status }}</td>
+                                                
+                                                    {{-- <td>
+                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>            
+                                                    </td> --}}
+                                                    <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
+        
+                                                </tr>
+                                            @endif
+                                        
                                         @endif
                                     @endforeach
 
@@ -100,9 +105,9 @@
                             </table>
                         </div>
                         @endif
-
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                        <div class="block-table" style="    padding-top: 100px;">
+                    <div class="created-by-me" style="font-size: 16px; font-weight: 600; padding-top:30px">Training Assigned</div> 
+                       <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
@@ -127,7 +132,7 @@
                                             ])->first();
                                     @endphp 
                                         <tr>
-                                            <td>Sop-000{{ $temp->id }}</td>
+                                            <td>{{ $temp->sop_no }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <td>{{ $temp->traningstatus->status }}</td>
                                             <td>Document</td>
