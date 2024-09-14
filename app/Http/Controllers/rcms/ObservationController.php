@@ -1466,9 +1466,10 @@ class ObservationController extends Controller
 
         return view('frontend.observation.view', compact('data','griddata','grid_data'));
     }
+
+
     public function observation_send_stage(Request $request, $id)
     {
-
 
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changestage = Observation::find($id);
@@ -1492,6 +1493,35 @@ class ObservationController extends Controller
                                 $history->save();
 
                                 $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userId1 = $users->pluck('id')->implode(',');
+                                $userId = $users->pluck('name')->implode(',');
+
+                                if($userId){
+                                    $test = new AuditTrialObservation();
+                                    $test->Observation_id = $id;
+                                    $test->activity_type = "Notification";
+                                    $test->action = 'Notification';
+                                    $test->comment = "";
+                                    $test->user_id = Auth::user()->id;
+                                    $test->user_name = Auth::user()->name;
+                                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $test->origin_state = "Not Applicable";
+                                    $test->previous = $lastDocument->status;
+                                    $test->current = "Pending CAPA Plan";
+                                    $test->stage = "";
+                                    $test->action_name = "";
+                                    $test->mailUserId = $userId1;
+                                    $test->role_name = "Lead Auditor";
+                                    //dd($test->mailUserId);
+                                    $test->save();
+                                }
+
+
+
                                 // dd($list);
                                 foreach ($list as $u) {
                                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1554,6 +1584,33 @@ class ObservationController extends Controller
             //   }
 
             $list = Helpers::getQAUserList($changestage->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId1 = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+
+            if($userId){
+                $test = new AuditTrialObservation();
+                $test->Observation_id = $id;
+                $test->activity_type = "Notification";
+                $test->action = 'Notification';
+                $test->comment = "";
+                $test->user_id = Auth::user()->id;
+                $test->user_name = Auth::user()->name;
+                $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $test->origin_state = "Not Applicable";
+                $test->previous = $lastDocument->status;
+                $test->current = "Pending Approval";
+                $test->stage = "";
+                $test->action_name = "";
+                $test->mailUserId = $userId1;
+                $test->role_name = "Lead Auditee";
+                //dd($test->mailUserId);
+                $test->save();
+            }
+
+
             // dd($list);
             foreach ($list as $u) {
                 $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1616,6 +1673,34 @@ class ObservationController extends Controller
                         //   }
 
                         $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "CAPA Execution in Progress";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
+
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1638,6 +1723,32 @@ class ObservationController extends Controller
                         }
 
                         $list = Helpers::getLeadAuditorUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "CAPA Execution in Progress";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1700,6 +1811,33 @@ class ObservationController extends Controller
             //   }
 
                     $list = Helpers::getLeadAuditorUserList($changestage->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Pending Final Approval";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
                     // dd($list);
                     foreach ($list as $u) {
                         $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1722,6 +1860,33 @@ class ObservationController extends Controller
                     }
 
                     $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Pending Final Approval";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
                     // dd($list);
                     foreach ($list as $u) {
                         $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1784,6 +1949,33 @@ class ObservationController extends Controller
             //   }
 
                         $list = Helpers::getLeadAuditorUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "Closed - Done";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1806,6 +1998,32 @@ class ObservationController extends Controller
                         }
 
                         $list = Helpers::getLeadAuditeeUserList($changestage->division_id);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId1 = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+
+                        if($userId){
+                            $test = new AuditTrialObservation();
+                            $test->Observation_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastDocument->status;
+                            $test->current = "Closed - Done";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "QA";
+                            //dd($test->mailUserId);
+                            $test->save();
+                        }
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1884,6 +2102,34 @@ class ObservationController extends Controller
 
 
                 $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Pending CAPA Plan";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1928,6 +2174,32 @@ class ObservationController extends Controller
                 $history->save();
 
                 $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Closed - Cancelled";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1950,6 +2222,33 @@ class ObservationController extends Controller
                 }
 
                 $list = Helpers::getQAUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Closed - Cancelled";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1996,6 +2295,33 @@ class ObservationController extends Controller
 
 
                 $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Opened";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -2042,6 +2368,32 @@ class ObservationController extends Controller
                 $history->save();
 
                 $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new AuditTrialObservation();
+                    $test->Observation_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Pending CAPA Plan";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -2100,6 +2452,33 @@ class ObservationController extends Controller
 
 
                     $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Closed - Done";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
                     // dd($list);
                     foreach ($list as $u) {
                         $email = Helpers:: getAllUserEmail($u->user_id);
@@ -2122,6 +2501,33 @@ class ObservationController extends Controller
                     }
 
                     $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
+
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userId1 = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+
+                    if($userId){
+                        $test = new AuditTrialObservation();
+                        $test->Observation_id = $id;
+                        $test->activity_type = "Notification";
+                        $test->action = 'Notification';
+                        $test->comment = "";
+                        $test->user_id = Auth::user()->id;
+                        $test->user_name = Auth::user()->name;
+                        $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $test->origin_state = "Not Applicable";
+                        $test->previous = $lastDocument->status;
+                        $test->current = "Closed - Done";
+                        $test->stage = "";
+                        $test->action_name = "";
+                        $test->mailUserId = $userId1;
+                        $test->role_name = "QA";
+                        //dd($test->mailUserId);
+                        $test->save();
+                    }
+
+
                     // dd($list);
                     foreach ($list as $u) {
                         $email = Helpers:: getAllUserEmail($u->user_id);

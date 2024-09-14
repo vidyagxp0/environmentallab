@@ -2407,6 +2407,33 @@ class ManagementReviewController extends Controller
                 // }
 
                 $list = Helpers::getResponsiblePersonUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new ManagementAuditTrial();
+                    $test->ManagementReview_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "In Progress";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "Initiator";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -2469,6 +2496,35 @@ class ManagementReviewController extends Controller
                 // }
 
                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
+
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+
+                if($userId){
+                    $test = new ManagementAuditTrial();
+                    $test->ManagementReview_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastDocument->status;
+                    $test->current = "Closed - Done";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "Responsible Person";
+                    //dd($test->mailUserId);
+                    $test->save();
+                }
+
+
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);

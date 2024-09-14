@@ -943,7 +943,7 @@ class ActionItemController extends Controller
                         $history->origin_state = $lastopenState->status;
                         $history->stage = "Submitted";
                         $history->save();
-                    $changeControl->update();
+
                     $history = new CCStageHistory();
                     $history->type = "Action-Item";
                     $history->doc_id = $id;
@@ -959,8 +959,8 @@ class ActionItemController extends Controller
                     //$userId = $users->pluck('id')->implode(',');
                     //if(!empty($users)){
                     //    try {
-                    //        $history = new RootAuditTrial();
-                    //        $history->root_id = $id;
+                    //        $history = new ActionItemHistory();
+                    //        $history->cc_id = $id;
                     //        $history->activity_type = "Not Applicable";
                     //        $history->action = 'Notification';
                     //        $history->comment = "";
@@ -980,8 +980,36 @@ class ActionItemController extends Controller
                     //    }
                     //}
 
+
                 $list = Helpers::getActionOwnerUserList($openState->division_id);
-                // dd($list);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId1 = $users->pluck('id')->implode(',');
+
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    $test = new ActionItemHistory();
+                    $test->cc_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastopenState->status;
+                    $test->current = "Work In Progress";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "Initiator";
+                    //dd($test->mailUserId);
+                        $test->save();
+                }
+
+                // dd($openState->division_id);
+//dd($list = Helpers::getActionOwnerUserList($openState->division_id));
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
                     if (!empty($email)) {
@@ -1001,6 +1029,8 @@ class ActionItemController extends Controller
                     }
                     // }
                 }
+
+                $changeControl->update();
                     toastr()->success('Document Sent');
 
                     return back();
@@ -1051,6 +1081,32 @@ class ActionItemController extends Controller
             //   }
 
             $list = Helpers::getInitiatorUserList($openState->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId1 = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+
+            if($userId){
+                $test = new ActionItemHistory();
+                $test->cc_id = $id;
+                $test->activity_type = "Notification";
+                $test->action = 'Notification';
+                $test->comment = "";
+                $test->user_id = Auth::user()->id;
+                $test->user_name = Auth::user()->name;
+                $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $test->origin_state = "Not Applicable";
+                $test->previous = $lastopenState->status;
+                $test->current = "Closed - Done";
+                $test->stage = "";
+                $test->action_name = "";
+                $test->mailUserId = $userId1;
+                $test->role_name = "Action Owner";
+                //dd($test->mailUserId);
+                    $test->save();
+            }
+
             // dd($list);
             foreach ($list as $u) {
                 $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1160,7 +1216,34 @@ public function actionStageCancel(Request $request, $id)
             //          }
             //       }
 
+
             $list = Helpers::getActionOwnerUserList($openState->division_id);
+
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userId1 = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+
+            if($userId){
+                $test = new ActionItemHistory();
+                $test->cc_id = $id;
+                $test->activity_type = "Notification";
+                $test->action = 'Notification';
+                $test->comment = "";
+                $test->user_id = Auth::user()->id;
+                $test->user_name = Auth::user()->name;
+                $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $test->origin_state = "Not Applicable";
+                $test->previous = $lastopenState->status;
+                $test->current = "Closed - Cancelled";
+                $test->stage = "";
+                $test->action_name = "";
+                $test->mailUserId = $userId1;
+                $test->role_name = "Action Owner";
+                //dd($test->mailUserId);
+                    $test->save();
+            }
+
             // dd($list);
             foreach ($list as $u) {
                 $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1233,6 +1316,63 @@ public function actionStageCancel(Request $request, $id)
         //   }
 
         $list = Helpers::getInitiatorUserList($openState->division_id);
+
+        $userIds = collect($list)->pluck('user_id')->toArray();
+        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        $userId1 = $users->pluck('id')->implode(',');
+        $userId = $users->pluck('name')->implode(',');
+
+        if($userId){
+            $test = new ActionItemHistory();
+            $test->cc_id = $id;
+            $test->activity_type = "Notification";
+            $test->action = 'Notification';
+            $test->comment = "";
+            $test->user_id = Auth::user()->id;
+            $test->user_name = Auth::user()->name;
+            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $test->origin_state = "Not Applicable";
+            $test->previous = $lastopenState->status;
+            $test->current = "Opened";
+            $test->stage = "";
+            $test->action_name = "";
+            $test->mailUserId = $userId1;
+            $test->role_name = "Action Owner";
+            //dd($test->mailUserId);
+            $test->save();
+        }
+
+
+
+        //$list = Helpers::getInitiatorUserList($openState->division_id);
+
+        //$userIds = collect($list)->pluck('user_id')->toArray();
+        //$users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+        //$userId = $users->pluck('name')->implode(',');
+        //if(!empty($userId)){
+        //    try {
+        //        $notification = new ActionItemHistory();
+        //        $notification->cc_id = $id;
+        //        $notification->activity_type = "Notification";
+        //        $notification->action = 'Notification';
+        //        $notification->comment = "";
+        //        $notification->user_id = Auth::user()->id;
+        //        $notification->user_name = Auth::user()->name;
+        //        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        //        $notification->origin_state = "Not Applicable";
+        //        $notification->previous = $lastDocument->status;
+        //        $notification->current = "Opened";
+        //        $notification->stage = "";
+        //        $notification->action_name = "";
+        //        $notification->mailUserId = $userId;
+        //        $notification->role_name = "Action Owner";
+        //        $notification->save();
+        //        // dd($history);
+        //    } catch (\Throwable $e) {
+        //        \Log::error('Mail failed to send: ' . $e->getMessage());
+        //    }
+        //}
+
         // dd($list);
         foreach ($list as $u) {
             $email = Helpers:: getAllUserEmail($u->user_id);
