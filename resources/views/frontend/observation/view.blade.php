@@ -68,24 +68,27 @@ $users = DB::table('users')
                         <button class="button_theme1"> <a class="text-white" href="{{ route('ShowObservationAuditTrial', $data->id) }}">
                                 Audit Trail </a> </button>
 
-                        @if ($data->stage == 1 && (in_array(12, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Observation', 12))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Report Issued
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Observation', 11))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Complete
                             </button>
-                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                More Info Required
+                            </button>
+                            {{--<button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
-                        @elseif($data->stage == 3 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Observation', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 QA Approval
                             </button>
@@ -98,13 +101,16 @@ $users = DB::table('users')
                             {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button> --}}
-                        @elseif($data->stage == 4 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Observation', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
-                        @elseif($data->stage == 5 && (in_array(7, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Observation', 7))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Final Approval
+                            </button>
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
+                                Reject CAPA Plan
                             </button>
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
@@ -1144,7 +1150,18 @@ dd($data->date_Response_due2);
                                     </div>
                                 </div>
 
-
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_By">Final Reject CAPA Plan By</label>
+                                        <div class="static">{{ $data->final_reject_capa_plan_by }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Final_Approval_On">Final Reject CAPA Plan On</label>
+                                        <div class="static">{{ $data->final_reject_capa_plan_on }}</div>
+                                    </div>
+                                </div>
 
                             </div>
                             <div class="button-block">

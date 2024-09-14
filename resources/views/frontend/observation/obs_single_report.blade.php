@@ -280,9 +280,13 @@
                     <td class="w-80">{{ $data->non_compliance }}</td> --}}
 
                 </tr>
+                </table>
+
+
+            <table>
                 <tr>
                     <th class="w-20">Non Compliance</th>
-                    <td class="w-80">
+                    <td class="w-60">
                         @if ($data->non_compliance)
                             {{ $data->non_compliance }}
                         @else
@@ -296,7 +300,7 @@
                 </tr>
                <tr>
                 <th class="w-20">Recommended Action</th>
-                <td class="w-80">
+                <td class="w-60">
                     @if ($data->recommend_action)
                         {!! $data->recommend_action !!}
                     @else
@@ -306,7 +310,7 @@
                </tr>
 
                 </table>
-
+            </div>
                 {{-- <h5>Non Compliance</h5>
                 <div style="font-size: 12px;">
                     {{ $data->non_compliance }}
@@ -391,7 +395,7 @@
 
         </div>
 
-
+<br>
 
         <div class="block">
             <div class="block-head">
@@ -455,7 +459,11 @@
 
     </div>
 
+    <div class="block">
+    <div class="block-head">
+
     <div style="font-weight: 200">Action Plan</div>
+    </div>
     <div class="border-table">
         <table>
             <tr class="table_bg">
@@ -490,7 +498,7 @@
         </table>
     </div>
 
-
+<br>
     <div class="block">
         <div class="block-head">
             Impact Analysis
@@ -514,7 +522,7 @@
                         Not Applicable
                     @endif
                 </td>
-
+            </tr>
                 {{--<td class="w-80">
                     @if ($data->impact)
                         {{ $datas[$data->impact] ?? '' }}
@@ -523,15 +531,16 @@
                     @endif
                 </td>--}}
 
+                <tr>
                  <th class="w-20">Impact Analysis
-                </th>
-                <td class="w-80">
-                    @if ($data->impact_analysis)
-                        {{ $data->impact_analysis }}
-                    @else
-                        Not Applicable
-                    @endif
-                </td>
+                    </th>
+                    <td class="w-80">
+                        @if ($data->impact_analysis)
+                            {{ $data->impact_analysis }}
+                        @else
+                            Not Applicable
+                        @endif
+                    </td>
             </tr>
             </table>
 
@@ -642,6 +651,9 @@
                     @endif
                 </td>
             </tr>
+        </table>
+
+        <table>
             <tr>
                 <th class="w-20">Action Taken</th>
                 <td class="w-80">
