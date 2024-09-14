@@ -925,6 +925,32 @@ class EffectivenessCheckController extends Controller
                 //   }
                         $list = Helpers::getSupervisorUserList($changeControl->division_id);
                         // dd($list);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId = $users->pluck('name')->implode(',');
+                        $userId1 = $users->pluck('id')->implode(',');
+    
+                        if($userId){
+                            $test = new EffectivenessCheckAuditTrail();
+                            $test->effectiveness_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastopenState->status;
+                            $test->current = "Pending Effectiveness Check";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "Initiator";
+                            $test->save();
+                        }
+
+
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
                             if (!empty($email)) {
@@ -1013,6 +1039,32 @@ class EffectivenessCheckController extends Controller
 
                         $list = Helpers::getQAUserList($changeControl->division_id);
                         // dd($list);
+
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userId = $users->pluck('name')->implode(',');
+                        $userId1 = $users->pluck('id')->implode(',');
+    
+                        if($userId){
+                            $test = new EffectivenessCheckAuditTrail();
+                            $test->effectiveness_id = $id;
+                            $test->activity_type = "Notification";
+                            $test->action = 'Notification';
+                            $test->comment = "";
+                            $test->user_id = Auth::user()->id;
+                            $test->user_name = Auth::user()->name;
+                            $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $test->origin_state = "Not Applicable";
+                            $test->previous = $lastopenState->status;
+                            $test->current = "QA Approval - Effective";
+                            $test->stage = "";
+                            $test->action_name = "";
+                            $test->mailUserId = $userId1;
+                            $test->role_name = "Supervisor";
+                            $test->save();
+                        }
+
+
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
                             if (!empty($email)) {
@@ -1154,6 +1206,31 @@ class EffectivenessCheckController extends Controller
 
                 $list = Helpers::getQAUserList($changeControl->division_id);
                                 // dd($list);
+
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userId = $users->pluck('name')->implode(',');
+                                $userId1 = $users->pluck('id')->implode(',');
+            
+                                if($userId){
+                                    $test = new EffectivenessCheckAuditTrail();
+                                    $test->effectiveness_id = $id;
+                                    $test->activity_type = "Notification";
+                                    $test->action = 'Notification';
+                                    $test->comment = "";
+                                    $test->user_id = Auth::user()->id;
+                                    $test->user_name = Auth::user()->name;
+                                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $test->origin_state = "Not Applicable";
+                                    $test->previous = $lastopenState->status;
+                                    $test->current = "QA Approval - Not Effective";
+                                    $test->stage = "";
+                                    $test->action_name = "";
+                                    $test->mailUserId = $userId1;
+                                    $test->role_name = "Supervisor";
+                                    $test->save();
+                                }
+
                                 foreach ($list as $u) {
                                     $email = Helpers:: getAllUserEmail($u->user_id);
                                     if (!empty($email)) {
@@ -1289,6 +1366,31 @@ class EffectivenessCheckController extends Controller
 
                 $list = Helpers::getSupervisorUserList($changeControl->division_id);
                 // dd($list);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userId = $users->pluck('name')->implode(',');
+                $userId1 = $users->pluck('id')->implode(',');
+
+                if($userId){
+                    $test = new EffectivenessCheckAuditTrail();
+                    $test->effectiveness_id = $id;
+                    $test->activity_type = "Notification";
+                    $test->action = 'Notification';
+                    $test->comment = "";
+                    $test->user_id = Auth::user()->id;
+                    $test->user_name = Auth::user()->name;
+                    $test->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $test->origin_state = "Not Applicable";
+                    $test->previous = $lastopenState->status;
+                    $test->current = "Pending Effectiveness Check";
+                    $test->stage = "";
+                    $test->action_name = "";
+                    $test->mailUserId = $userId1;
+                    $test->role_name = "QA";
+                    $test->save();
+                }
+
                 foreach ($list as $u) {
                     $email = Helpers:: getSupervisorEmail($u->user_id);
                     if (!empty($email)) {
