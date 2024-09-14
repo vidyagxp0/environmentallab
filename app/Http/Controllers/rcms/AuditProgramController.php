@@ -1006,6 +1006,30 @@ class AuditProgramController extends Controller
                     $history->save();
                     
                     $list = Helpers::getAuditManagerUserList($changeControl->division_id);
+                    
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userIdNew = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+                    if($userId){
+                            $auditNoti = new AuditProgramAuditTrial();
+                            $auditNoti->AuditProgram_id = $id;
+                            $auditNoti->activity_type = "Notification";
+                            $auditNoti->action = 'Notification';
+                            $auditNoti->comment = "";
+                            $auditNoti->user_id = Auth::user()->id;
+                            $auditNoti->user_name = Auth::user()->name;
+                            $auditNoti->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $auditNoti->origin_state = "Not Applicable";
+                            $auditNoti->previous = $lastDocument->status;
+                            $auditNoti->current = "Submitted";
+                            $auditNoti->stage = "";
+                            $auditNoti->action_name = "";
+                            $auditNoti->mailUserId = $userIdNew;
+                            $auditNoti->role_name = "Initiator";
+                            $auditNoti->save();
+                    }
+
                 // dd($list);
                 foreach ($list as $u) {
                     $email = Helpers:: getAllUserEmail($u->user_id);
@@ -1100,10 +1124,32 @@ class AuditProgramController extends Controller
                         $history->user_name = Auth::user()->name;
                         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
                         $history->origin_state = $lastDocument->status;
-                        $history->stage = 'Rejected';
+                        $history->stage = 'Reject';
                         $history->save();
 
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                                $auditNoti = new AuditProgramAuditTrial();
+                                $auditNoti->AuditProgram_id = $id;
+                                $auditNoti->activity_type = "Notification";
+                                $auditNoti->action = 'Notification';
+                                $auditNoti->comment = "";
+                                $auditNoti->user_id = Auth::user()->id;
+                                $auditNoti->user_name = Auth::user()->name;
+                                $auditNoti->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $auditNoti->origin_state = "Not Applicable";
+                                $auditNoti->previous = $lastDocument->status;
+                                $auditNoti->current = "Reject";
+                                $auditNoti->stage = "";
+                                $auditNoti->action_name = "";
+                                $auditNoti->mailUserId = $userIdNew;
+                                $auditNoti->role_name = " Audit Manager";
+                                $auditNoti->save();
+                        }
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);

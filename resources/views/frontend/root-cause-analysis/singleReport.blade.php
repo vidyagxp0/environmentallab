@@ -879,9 +879,9 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->acknowledge_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Submited By</th>
+                        <th class="w-20">Submit By</th>
                         <td class="w-30">{{ $data->submitted_by }}</td>
-                        <th class="w-20">Submited On</th>
+                        <th class="w-20">Submit On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                     </tr>
                      <tr>

@@ -300,7 +300,7 @@
                                             Assigned To <span class="text-danger"></span>
                                         </label>
                                         <select id="assign_toe" placeholder="Select..." name="multiple_assignee_to[]">
-                                            <option value="">Select a value</option>
+                                            <option value="" hidden>Select a value</option>
                                             @foreach ($users as $data)
                                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                                             @endforeach
@@ -758,7 +758,7 @@
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Lead Auditor">Lead Auditor</label>
-                                        <input type="text" name="lead_auditor" maxlength="255" >
+                                        <input type="text" name="lead_auditor" maxlength="255">
                                         {{-- <select name="lead_auditor">
                                             <option value="">-- Select --</option>
                                             @foreach ($users as $data)
@@ -1297,7 +1297,7 @@
 
     <script>
         VirtualSelect.init({
-            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #assign_toe, #auditee, #Reference_Recores1'
+            ele: '#Facility, #Group, #Audit, #Auditee ,#reference_record, #auditee, #Reference_Recores1'
         });
 
         function openCity(evt, cityName) {
