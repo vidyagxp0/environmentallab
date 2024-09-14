@@ -233,8 +233,8 @@
                             <div>
                                 @if($datas->activity_type == "Activity Log")
                                     <div style="word-break: break-all;"><strong>Changed From :</strong></div>
-                                    @if(!empty($datas->change_from))
-                                        <div>{!! $datas->change_from !!}</div>
+                                    @if(!empty($datas->previous))
+                                        <div>{!! $datas->previous !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif
@@ -257,8 +257,8 @@
                             <div>
                                 @if($datas->activity_type == "Activity Log")
                                     <div><strong>Changed To :</strong></div>
-                                    @if(!empty($datas->change_to))
-                                        <div>{!! $datas->change_to !!}</div>
+                                    @if(!empty($datas->current))
+                                        <div>{!! $datas->current !!}</div>
                                     @else
                                         <div>Not Applicable</div>
                                     @endif

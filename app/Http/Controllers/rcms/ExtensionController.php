@@ -650,7 +650,35 @@ class ExtensionController extends Controller
                     //     } 
                     // }
 
-                    $list = Helpers::getApproverUserList($changeControl->division_id);
+                $list = Helpers::getApproverUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending Approval";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -695,33 +723,38 @@ class ExtensionController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Ext Approved";
                         $history->save();
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Extension";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = $changeControl->status;
-                $history->save();
-                // $list = Helpers::getInitiatorUserList();
-                // foreach ($list as $u) {
-                //     if($u->q_m_s_divisions_id == $openState->division_id){
-                //      $email = Helpers::getInitiatorEmail($u->user_id);
-                //      if ($email !== null) {
-                //          Mail::send(
-                //             'mail.view-mail',
-                //             ['data' => $openState],
-                //             function ($message) use ($email) {
-                //                 $message->to($email)
-                //                     ->subject("Document is Send By ".Auth::user()->name);
-                //             }
-                //         );
-                //       }
-                //     } 
-                // }
+                        $changeControl->update();
+                
+               
+                $list = Helpers::getApproverUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Ext Approved";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Approver";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
 
-                $list = Helpers::getInitiatorUserList($changeControl->division_id);
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -834,6 +867,36 @@ class ExtensionController extends Controller
                 // }
 
                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
+
+                // $list = Helpers::getHODUserList($capa->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "QA More Info Required";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Approver";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);
@@ -917,6 +980,35 @@ class ExtensionController extends Controller
                 // }
 
                 $list = Helpers::getInitiatorUserList($changeControl->division_id);
+
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if(!empty($userId)){
+                    try {
+                        $notification = new ExtensionAuditTrail();
+                        $notification->extension_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Reject";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Approver";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+
                         // dd($list);
                         foreach ($list as $u) {
                             $email = Helpers:: getAllUserEmail($u->user_id);

@@ -193,7 +193,7 @@
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Notification Issued By
                                 :{{ $notification->user_name ? $notification->user_name : '' }}
                             </div>
-                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ $parentData->due_date }}
+                            <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($parentData->due_date) }}
                             </div>
                         </div>
         </div>

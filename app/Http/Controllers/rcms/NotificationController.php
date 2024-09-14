@@ -15,10 +15,14 @@ Observation,
 AuditTrialObservation,
 Deviation,
 DeviationAuditTrail,
+AuditProgramAuditTrial,
+AuditProgram,
 ActionItem,
 ActionItemHistory,
+InternalAuditTrial,
 Extension,
-ExtensionNewAuditTrail,
+InternalAudit,
+ExtensionAuditTrail,
 EffectivenessCheck,
 EffectivenessCheckAuditTrail,
 RootCauseAnalysis,
@@ -28,7 +32,8 @@ LabIncident,
 Auditee,
 AuditTrialExternal,
 ManagementReview,
-ManagementAuditTrial
+ManagementAuditTrial,
+User
 };
 
 class NotificationController extends Controller
@@ -38,7 +43,7 @@ class NotificationController extends Controller
             case 'RiskAssessment':
                 $notification = RiskAuditTrail::find($id);
                 if($notification){
-                    $riskAssessmentId = $notification->audit_id;
+                    $riskAssessmentId = $notification->risk_id;
                     $parentData = RiskManagement::where('id', $riskAssessmentId)->first();
 
                     $userId = explode(',', $notification->mailUserId);
@@ -50,7 +55,7 @@ class NotificationController extends Controller
             case 'LabIncident':
                 $notification = LabIncidentAuditTrial::find($id);
                 if($notification){
-                    $labIncidentId = $notification->audit_id;
+                    $labIncidentId = $notification->LabIncident_id;
                     $parentData = LabIncident::where('id', $labIncidentId)->first();
 
                     $userId = explode(',', $notification->mailUserId);
@@ -63,7 +68,7 @@ class NotificationController extends Controller
             case 'ExternalAudit':
                 $notification = AuditTrialExternal::find($id);
                 if($notification){
-                    $externalId = $notification->audit_id;
+                    $externalId = $notification->ExternalAudit_id;
                     $parentData = Auditee::where('id', $externalId)->first();
 
                     $userId = explode(',', $notification->mailUserId);
@@ -71,6 +76,19 @@ class NotificationController extends Controller
                     return view('frontend.notification.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
+            
+            case 'AuditProgram':
+                $notification = AuditProgramAuditTrial::find($id);
+                if($notification){
+                    $AuditProgramId = $notification->AuditProgram_id;
+                    $parentData = AuditProgram::where('id', $AuditProgramId)->first();
+        
+                    $userId = explode(',', $notification->mailUserId);
+                    $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                    return view('frontend.notification.notification_detail', compact('notification', 'getName', 'parentData'));
+                }
+                break; 
+                
 
 
             case 'ManagementReview':
@@ -97,6 +115,18 @@ class NotificationController extends Controller
                     return view('frontend.notification.notification_detail', compact('notification', 'getName', 'parentData'));
                 }
                 break;
+
+            case 'InternalAudit':
+                    $notification = InternalAuditTrial::find($id);
+                    if($notification){
+                        $InternalAuditId = $notification->InternalAudit_id;
+                        $parentData = InternalAudit::where('id', $InternalAuditId)->first();
+    
+                        $userId = explode(',', $notification->mailUserId);
+                        $getName = User::whereIn('id', $userId)->get(['name', 'email']);
+                        return view('frontend.notification.notification_detail', compact('notification', 'getName', 'parentData'));
+                    }
+                    break;    
 
 
             case 'CAPA':
@@ -152,7 +182,7 @@ class NotificationController extends Controller
 
 
             case 'Extension':
-                $notification = ExtensionNewAuditTrail::find($id);
+                $notification = ExtensionAuditTrail::find($id);
                 if($notification){
                     $extensionId = $notification->extension_id;
                     $parentData = Extension::where('id', $extensionId)->first();
@@ -167,7 +197,7 @@ class NotificationController extends Controller
             case 'EffectivenessCheck':
                 $notification = EffectivenessCheckAuditTrail::find($id);
                 if($notification){
-                    $effectivenessCheckId = $notification->effectiveness_check_id;
+                    $effectivenessCheckId = $notification->effectiveness_id;
                     $parentData = EffectivenessCheck::where('id', $effectivenessCheckId)->first();
 
                     $userId = explode(',', $notification->mailUserId);
