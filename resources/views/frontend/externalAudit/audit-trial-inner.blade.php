@@ -119,6 +119,31 @@
                                     </div>
                                 @endif
                             @endif
+                            @if ($temp->activity_type == 'Notification')
+                                <div class="list-item">
+                                    <div class="head">Notification By</div>
+                                    <div>:</div>
+                                    <div> {{ $temp->user_name }}</div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="head">Notification On</div>
+                                    <div>:</div>
+                                    <div> {{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="head">Stage</div>
+                                    <div>:</div>
+                                    <div> {{ $temp->current }}</div>
+                                </div>
+                                <div class="list-item">
+                                    <div class="head">Notification Detail</div>
+                                    <div>:</div>
+                                    <div> <a href="{{ route('notification-detail', ['slug' => 'ExternalAudit', 'id' => $temp->id]) }}"
+                                            target = "_blank">{{ $temp->action ? $temp->action : 'Not Applicable' }}<a>
+                                    </div>
+                                </div>
+                            @endif
+
                             @if ($temp->current != $temp->previous)
                                 @if ($temp->activity_type == 'Activity Log')
                                     <div class="list-item">

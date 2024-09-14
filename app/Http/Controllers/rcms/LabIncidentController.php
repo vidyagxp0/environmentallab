@@ -1333,8 +1333,30 @@ class LabIncidentController extends Controller
                 //   }
 
                 $list = Helpers::getHODUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Pending Incident Review";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "Initiator";
+                                $notification->save();
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getHODEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1353,8 +1375,35 @@ class LabIncidentController extends Controller
                         }
 
                 $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Pending Incident Review";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "Initiator";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1413,8 +1462,35 @@ class LabIncidentController extends Controller
                 //   }
 
                 $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = 'Pending Investigation';
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "HOD/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1473,8 +1549,35 @@ class LabIncidentController extends Controller
                 //   }
 
                 $list = Helpers::getHODUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = 'Pending Activity Completion';
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew ;
+                                $notification->role_name = "QC Head/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getHODEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1556,8 +1659,35 @@ class LabIncidentController extends Controller
             //   } 
 
             $list = Helpers::getQAUserList($changeControl->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new LabIncidentAuditTrial();
+                    $notification->LabIncident_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = 'Pending QA Review';
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "QC Head/Designee";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
                         foreach ($list as $u) {
-                            $email = Helpers::getQAEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1599,8 +1729,36 @@ class LabIncidentController extends Controller
                 $history->save();
 
                 $list = Helpers::getHODUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new LabIncidentAuditTrial();
+                    $notification->LabIncident_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = 'Pending QA Head Approval';
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "QA";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
+
                 foreach ($list as $u) {
-                    $email = Helpers::getHODEmail($u->user_id);
+                    $email = Helpers::getAllUserEmail($u->user_id);
                     if (!empty($email)) {
                         try {
                             info('Sending mail to', [$email]);
@@ -1619,8 +1777,35 @@ class LabIncidentController extends Controller
                 }
 
                  $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                 $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new LabIncidentAuditTrial();
+                    $notification->LabIncident_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = 'Pending QA Head Approval';
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "QA";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
                         foreach ($list as $u) {
-                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1638,9 +1823,36 @@ class LabIncidentController extends Controller
                             }
                         }
 
-                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+            $list = Helpers::getInitiatorUserList($changeControl->division_id);
+            $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new LabIncidentAuditTrial();
+                    $notification->LabIncident_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = 'Pending QA Head Approval';
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "QA";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
                         foreach ($list as $u) {
-                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1738,8 +1950,35 @@ class LabIncidentController extends Controller
                         $history->save();
                         
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+            $userIdNew = $users->pluck('id')->implode(',');
+            $userId = $users->pluck('name')->implode(',');
+            if($userId){
+                try {
+                    $notification = new LabIncidentAuditTrial();
+                    $notification->LabIncident_id = $id;
+                    $notification->activity_type = "Notification";
+                    $notification->action = 'Notification';
+                    $notification->comment = "";
+                    $notification->user_id = Auth::user()->id;
+                    $notification->user_name = Auth::user()->name;
+                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $notification->origin_state = "Not Applicable";
+                    $notification->previous = $lastDocument->status;
+                    $notification->current = 'Opened';
+                    $notification->stage = "";
+                    $notification->action_name = "";
+                    $notification->mailUserId = $userIdNew;
+                    $notification->role_name = "HOD/Designee";
+                    $notification->save();
+                    // dd($history);
+                } catch (\Throwable $e) {
+                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                }
+            }
                         foreach ($list as $u) {
-                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1820,8 +2059,35 @@ class LabIncidentController extends Controller
                         $history->save();
                         
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                         $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Pending Investigation";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "QC Head/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1840,8 +2106,36 @@ class LabIncidentController extends Controller
                         }
 
                         $list = Helpers::getHODUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Pending Investigation";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "QC Head/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                        
                         foreach ($list as $u) {
-                            $email = Helpers::getHODEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1860,8 +2154,35 @@ class LabIncidentController extends Controller
                         }
 
                         $list = Helpers::getQCHeadDesigneeUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Pending Investigation";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "QC Head/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getQCHeadDesigneeEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -1987,8 +2308,35 @@ class LabIncidentController extends Controller
                         $history->save();
                         
                         $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Closed-Cancelled";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "HOD/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getInitiatorEmail1($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
@@ -2007,8 +2355,35 @@ class LabIncidentController extends Controller
                         }
 
                     $list = Helpers::getQAUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new LabIncidentAuditTrial();
+                                $notification->LabIncident_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "Closed-Cancelled";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "HOD/Designee";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
                         foreach ($list as $u) {
-                            $email = Helpers::getQAEmail($u->user_id);
+                            $email = Helpers::getAllUserEmail($u->user_id);
                             if (!empty($email)) {
                                 try {
                                     info('Sending mail to', [$email]);
