@@ -1,6 +1,7 @@
 @extends('frontend.layout.main')
 @section('container')
     @include('frontend.TMS.head')
+
     @if (count($errors) > 0)
         @foreach ($errors->all() as $error)
             @php
@@ -8,6 +9,7 @@
             @endphp
         @endforeach
     @endif
+
     {{-- ======================================
                 MANAGE QUESTION BANK
     ======================================= --}}
@@ -16,14 +18,11 @@
             <div class="inner-block basic-info">
                 <div class="main-class">
                     <div class="main-head d-flex justify-content-between align-items-center">
-                       <div> Manage Question Bank</div>
-                       {{-- <button class="button_theme1">Edit</button> --}}
-                       <div class="button_theme1" data-bs-toggle="modal" data-bs-target="#question-bank-modal">
-                        Edit
+                       <div>Manage Question Bank</div>
+                       <div class="button_theme1" data-bs-toggle="modal" data-bs-target="#question-bank-modal">Edit</div>
                     </div>
-                    </div>
-                  
                 </div>
+
                 <div class="inner-block-content">
                     <div class="bar">
                         <div>Title</div>
@@ -42,10 +41,11 @@
                     </div>
                 </div>
             </div>
-               
+
             <form action="{{ route('question-bank.update', $question->id) }}" method="post">
                 @csrf
                 @method('PUT')
+
                 <div class="inner-block add-question">
                     <div class="main-head">Manage Questions</div>
                     <div class="inner-block-content">
@@ -63,7 +63,6 @@
                                     <tbody id="item-list">
                                         @foreach ($data as $key => $temp)
                                             <tr data-item="{{ $temp->id }}">
-
                                                 <td>{{ $temp->question }}</td>
                                                 <td>{{ $temp->type }}</td>
                                             </tr>
@@ -88,33 +87,34 @@
 
                                     </tbody>
                                 </table>
-
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- Hidden input for storing deleted question IDs -->
+                <input type="hidden" name="deleted_questions" id="deleted-questions">
+
                 <div class="foot-btns">
                     <button type="button" class="btn" onclick="goBack()">Cancel</button>
                     <button type="submit">Save</button>
                 </div>
+
                 <script>
                     function goBack() {
                         window.history.back();
                     }
                 </script>
             </form>
-
         </div>
     </div>
 
     <div class="modal fade" id="question-bank-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-
                 <div class="modal-header">
                     <h4 class="modal-title">Question Bank</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fas fa-times"></i></button>
                 </div>
                 <form action="{{ route('question-bank.update', $question->id) }}" method="post">
                     @csrf
@@ -142,7 +142,6 @@
                         <button type="submit">Save</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
@@ -150,15 +149,27 @@
     <script>
         const itemList = document.getElementById('item-list');
         const selectedList = document.getElementById('selected-list');
+        const deletedQuestions = document.getElementById('deleted-questions');
+        let deletedQuestionIds = [];
+
         function deleteItem() {
             const itemRow = this.closest('tr');
+            const itemId = itemRow.getAttribute('data-item');
+
+            // Add deleted question ID to the array
+            deletedQuestionIds.push(itemId);
+            deletedQuestions.value = deletedQuestionIds.join(',');
+
+            // Remove the row from the selected list
             itemRow.remove();
         }
+
         selectedList.addEventListener('click', function(e) {
             if (e.target.matches('button')) {
                 deleteItem.call(e.target);
             }
         });
+
         itemList.addEventListener('click', function(e) {
             const selectedItem = e.target.closest('tr');
             if (selectedItem) {
@@ -168,7 +179,9 @@
                     const newItem = selectedItem.cloneNode(true);
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
+                    deleteBtn.classList.add('btn', 'btn-danger');
                     deleteBtn.addEventListener('click', deleteItem);
+
                     const td = document.createElement('td');
                     const inputType = document.createElement('input');
                     inputType.setAttribute('type', 'hidden');
@@ -182,38 +195,33 @@
             }
         });
     </script>
+
     <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
- $(document).ready(function() {
-  loadUsers();
+        $(document).ready(function() {
+            loadUsers();
 
-  // Handle pagination click event
-  $(document).on('click', '#pagination a', function(event) {
-    event.preventDefault();
-    var page = $(this).attr('href').split('page=')[1];
-    loadUsers(page);
-  });
+            $(document).on('click', '#pagination a', function(event) {
+                event.preventDefault();
+                var page = $(this).attr('href').split('page=')[1];
+                loadUsers(page);
+            });
 
-  // Function to load paginated users
-  function loadUsers(page) {
-    fetch('/question-bank/2/edit?page=' + page)
-      .then(response => response.text())
-      .then(data => {
-        // Extract the userList HTML and pagination HTML from the response
-        var userList = $(data).find('#item-list').html();
-        var pagination = $(data).find('#pagination').html();
-
-        // Update the #userList and #pagination elements on the page
-        $('#item-list').html(userList);
-        $('#pagination').html(pagination);
-      })
-      .catch(error => {
-        console.log(error); // Handle error response
-      });
-  }
-});
-
+            function loadUsers(page) {
+                fetch('/question-bank/2/edit?page=' + page)
+                    .then(response => response.text())
+                    .then(data => {
+                        var userList = $(data).find('#item-list').html();
+                        var pagination = $(data).find('#pagination').html();
+                        $('#item-list').html(userList);
+                        $('#pagination').html(pagination);
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
+            }
+        });
     </script>
 @endsection

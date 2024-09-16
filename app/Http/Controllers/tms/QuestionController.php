@@ -17,9 +17,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $data = Question::where('trainer_id',Auth::user()->id)->orderByDesc('id')->paginate(10);
-        return view('frontend.TMS.question',compact('data'));
+        $data = Question::where('trainer_id', Auth::user()->id)->orderBy('id', 'asc')->paginate(10);
+        return view('frontend.TMS.question', compact('data'));
     }
+    
 
     /**
      * Show the form for creating a new resource.
@@ -40,43 +41,39 @@ class QuestionController extends Controller
     public function store(Request $request)
     {
 
-        if($request->submit == "save"){
+        if($request->submit == "save") {
 
-             if($request->type != "Exact Match Questions"){
-                $this->validate($request,[
+            // Validation for different question types
+            if ($request->type != "Exact Match Questions") {
+                $this->validate($request, [
                     'type' => 'required',
-                    'question' => 'required',
-                    'options' => 'required_if:type,Single Selection Questions,Multi Selection Questions',
-                    'answers' => 'required_if:type,Single Selection Questions,Multi Selection Questions',
-                 ]);
-             }
-             else{
-                $this->validate($request,[
-                    'type' =>'required',
-                    'question'=>'required|max:255',
-
-                    'answers'=>'required',
-                  ]);
-             }
-            $options = $request->options;
-            $answers = $request->answers;
-
-            //     foreach ($options as $key => $option) {
-            //         if (in_array($option, $answers)) {
-            //             $index = array_search($option, $answers);
-            //             $answers[$index] = $key;
-            //             break; // Exit loop once value is updated
-            //         }
-            //     }
-            // $request->merge(['answers' => $answers]);
+                    'question' => 'required|max:255',
+                    'options' => 'required_if:type,Single Selection Questions,Multi Selection Questions|array|min:1', // Ensure options are an array and required for certain types
+                    'answers' => 'required_if:type,Single Selection Questions,Multi Selection Questions|array|min:1', // Ensure answers are an array and required for certain types
+                ]);
+            } else {
+                $this->validate($request, [
+                    'type' => 'required',
+                    'question' => 'required|max:255',
+                    'answers' => 'required', // Validation for Exact Match Questions type
+                ]);
+            }
+    
+            // Prepare options and answers for saving
+            $options = $request->has('options') ? serialize($request->options) : null; // Serialize options only if provided
+            $answers = $request->has('answers') ? serialize($request->answers) : null; // Serialize answers only if provided
+    
+            // Create a new Question instance and save data
             $question = new Question();
             $question->trainer_id = Auth::user()->id;
             $question->type = $request->type;
             $question->question = $request->question;
-            $question->options = serialize($request->options);
-            $question->answers = serialize($request->answers);
+            $question->options = $options;
+            $question->answers = $answers;
             $question->save();
-            toastr()->success('Question Created Successfuly !!');
+    
+            // Notify the user of success and redirect
+            toastr()->success('Question Created Successfully !!');
             return back();
         }
 

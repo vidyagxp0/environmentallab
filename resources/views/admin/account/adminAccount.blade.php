@@ -19,7 +19,7 @@
 <div class="fluid-container mb-3">
     @if($checkAdmin)
         <a href="{{ route('admin_management.create') }}" class="btn btn-primary">
-            New
+            New Account
         </a>
     @endif
 </div>

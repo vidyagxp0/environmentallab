@@ -118,7 +118,7 @@ button:hover {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #111;
+    background: #e7e7f1;
     left: 0;
     top: 0;
     border-radius: 10px;
@@ -2908,222 +2908,6 @@ section#pdf-page .watermark {
                 TMS QUESTION
 ===============================================*/
 
-/* #tms-question {
-    padding: 20px 0px;
-    background: #4274da;
-    min-height: calc(100vh - 150px);
-}
-
-#tms-question .inner-block {
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
-    background: #ffffff;
-}
-
-#tms-question .search-bar form {
-    margin-bottom: 20px;
-    border: 1px solid grey;
-    display: grid;
-    grid-template-columns: auto 70px;
-}
-
-#tms-question .search-bar form input {
-    border: 0;
-    outline: none;
-}
-
-#tms-question .search-bar form label {
-    background: #4274da;
-    color: white;
-    display: grid;
-    place-items: center;
-}
-
-#tms-question .question-table .head {
-    font-size: 1.3rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#tms-question .question-table .head button {
-    font-size: 0.9rem;
-}
-
-#tms-question .question-table .table-block {
-    border-left: 2px solid black;
-    border-right: 2px solid black;
-    border-top: 2px solid black;
-}
-
-#tms-question .question-table thead th {
-    background: #4274daba;
-}
-
-#tms-question .question-table tbody tr {
-    border-bottom: 2px solid black;
-}
-
-#tms-question .question-table td {
-    vertical-align: middle;
-    font-size: 0.9rem;
-}
-
-#tms-question .question-table .question {
-    max-width: 350px;
-}
-
-#tms-question .question-table .action-btns {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-#tms-question .question-table .action-btns .button {
-    border: 1px solid #a3a0a0a6;
-    color: #355cab;
-    background: #f0f0f0;
-    width: 26px;
-    height: 26px;
-    text-align: center;
-    line-height: 24px;
-}
-
-#tms-question .add-question {
-    text-align: center;
-    background: #4274da;
-    padding: 10px;
-    color: white;
-    font-size: 1.1rem;
-    cursor: pointer;
-}
-
-#tms-question .filter-block {
-    padding: 0;
-    overflow: hidden;
-}
-
-#tms-question .filter-block .head {
-    font-size: 1.1rem;
-    font-weight: bold;
-    padding: 10px 20px;
-    background: #4274da;
-    color: white;
-}
-
-#tms-question .filter-block .list {
-    padding: 20px;
-}
-
-#tms-question .filter-block .list label {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-
-
-
-
-#tms-question .quiz-block {
-    padding: 0;
-    overflow: hidden;
-}
-
-#tms-question .quiz-block .head {
-    font-size: 1.1rem;
-    font-weight: bold;
-    padding: 10px 20px;
-    background: #4274da;
-    color: white;
-}
-
-#tms-question .quiz-block .list {
-    padding: 20px;
-}
-
-#tms-question .quiz-block .list .quiz {
-    display: grid;
-    grid-template-columns: auto 50px;
-    align-items: center;
-    margin-bottom: 15px;
-    padding-bottom: 5px;
-    border-bottom: 1px solid #abaaaa82;
-}
-
-#tms-question .quiz-block .list .quiz:nth-last-child(1) {
-    margin-bottom: 0;
-}
-
-#tms-question .quiz-block .list .quiz div:nth-child(1) {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-#tms-question .quiz-block .list .quiz button {
-    border: 1px solid #a3a0a0a6;
-    color: #355cab;
-}
-
-
-
-
-
-#add-question-modal .group-input label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-#add-question-modal .group-input label button {
-    border-radius: 50%;
-    font-size: 0.8rem;
-    width: 25px;
-    height: 25px;
-    margin-left: 10px;
-    color: white;
-    background: #4274da;
-    border: 0;
-    display: inline-grid;
-    place-items: center;
-}
-
-#add-question-modal .group-input input,
-#add-question-modal .group-input select {
-    display: block;
-    width: 100%;
-    border-radius: 5px;
-    margin-bottom: 20px;
-}
-
-#add-question-modal .group-input .option-group {
-    display: grid;
-    grid-template-columns: auto 30px;
-    margin-bottom: 20px;
-}
-
-#add-question-modal .group-input .option-group input:nth-child(2) {
-    display: initial;
-    margin: auto;
-    width: 15px;
-    height: 15px;
-}
-
-#add-question-modal .group-input .option-group input:nth-child(1) {
-    margin-bottom: 0;
-}
-
-#add-question-modal .modal-footer button {
-    color: white;
-    background: #4274da;
-    border: 1px solid rgb(202, 202, 202);
-} */
-
 #tms-question {
     padding: 20px;
     background: #4274da;
@@ -4440,111 +4224,236 @@ section#pdf-page .watermark {
 /*! ============================================= */
 
 #manage-question-bank {
-    padding: 20px 0px;
-    background: #4274da;
+    padding: 20px 0;
+    background: #f4f7fc;
     min-height: calc(100vh - 150px);
+    color: #333;
 }
 
 #manage-question-bank .inner-block {
     margin-bottom: 20px;
-    box-shadow: 12px 12px 24px #b2b8c9, -12px -12px 24px #f0f8ff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     background: #ffffff;
+    border-radius: 8px;
     overflow: hidden;
 }
 
-#manage-question-bank .inner-block.create-inner .main-head {
-    text-align: right;
-    background: white;
+#manage-question-bank .main-class {
+    border-bottom: 1px solid #eaeaea;
+    padding: 15px;
+    background: #4274da;
+    border-radius: 8px 8px 0 0;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
-#manage-question-bank .inner-block .main-head {
-    padding: 15px;
-    color: white;
-    background: #4274da;
-    margin-bottom: 0;
+#manage-question-bank .main-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
     font-weight: bold;
-    font-size: 1.2rem;
+}
+
+#manage-question-bank .button_theme1 {
+    background: #fff;
+    color: #4274da;
+    border: 1px solid #4274da;
+    padding: 8px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#manage-question-bank .button_theme1:hover {
+    background: #3556b3;
+    color: #fff;
+    border-color: #3556b3;
 }
 
 #manage-question-bank .inner-block .inner-block-content {
     padding: 20px;
+    font-size: 1rem;
 }
 
 #manage-question-bank .basic-info .bar {
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+#manage-question-bank .basic-info .bar div {
+    margin-right: 10px;
+    font-weight: 500;
 }
 
 #manage-question-bank .basic-info .bar div:nth-child(1) {
     width: 120px;
     font-weight: bold;
+    color: #555;
 }
 
 #manage-question-bank .basic-info .bar div:nth-child(2) {
-    width: 30px;
+    width: 20px;
     font-weight: bold;
+    color: #555;
 }
 
 #manage-question-bank .basic-info .bar div:nth-child(3) {
-    width: calc(100% - 150px);
+    flex: 1;
+    color: #333;
 }
 
 #manage-question-bank .add-question .question-container {
     display: flex;
     justify-content: space-between;
+    gap: 20px;
 }
 
 #manage-question-bank .add-question .head {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: 700;
     margin-bottom: 20px;
+    color: #333;
 }
 
 #manage-question-bank .add-question .left-block,
 #manage-question-bank .add-question .right-block {
-    width: 45%;
+    width: 48%;
+}
+
+#manage-question-bank .add-question table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
 #manage-question-bank .add-question th,
 #manage-question-bank .add-question td {
-    padding: 10px;
+    padding: 12px;
     text-align: left;
+    border: 1px solid #ddd;
+    background-color: #f9f9f9;
 }
 
 #manage-question-bank .add-question thead th {
-    background: #5d87dbba;
-}
-
-#manage-question-bank .add-question th {
-    background-color: #eee;
+    background-color: #4274da;
+    color: white;
 }
 
 #manage-question-bank .add-question tbody tr:hover {
-    background: #eeeeee;
+    background-color: #f0f0f0;
     cursor: pointer;
 }
 
 #manage-question-bank .add-question .right-table button {
-    border: 1px solid #a3a0a0a6;
-    color: #355cab;
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    background-color: #fff;
+    color: #4274da;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#manage-question-bank .add-question .right-table button:hover {
+    background-color: #4274da;
+    color: white;
 }
 
 #manage-question-bank .foot-btns {
     display: flex;
     justify-content: flex-end;
-    align-items: center;
     gap: 20px;
-    padding: 0 30px;
+    padding: 20px 0;
+    background: #f9f9f9;
 }
 
 #manage-question-bank .foot-btns button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    background-color: #4274da;
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#manage-question-bank .foot-btns button:hover {
+    background-color: #3556b3;
+}
+
+#manage-question-bank .foot-btns button.cancel-btn {
+    background-color: #fff;
     color: #4274da;
-    font-size: 1.2rem;
-    border: 0;
-    padding: 5px 15px;
+    border: 1px solid #4274da;
+}
+
+#manage-question-bank .foot-btns button.cancel-btn:hover {
+    background-color: #f1f1f1;
+}
+
+.modal .modal-dialog {
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.modal .modal-header {
+    background: #4274da;
+    color: white;
+    border-bottom: none;
+    padding: 20px;
+}
+
+.modal .modal-header .btn-close {
     background: white;
 }
+
+.modal .modal-body {
+    padding: 20px;
+}
+
+.modal .group-input {
+    margin-bottom: 20px;
+}
+
+.modal .group-input label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.modal .group-input input,
+.modal .group-input select,
+.modal .group-input textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.modal .modal-footer {
+    padding: 15px;
+    text-align: right;
+}
+
+.modal .modal-footer button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #4274da;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.modal .modal-footer button:hover {
+    background-color: #3556b3;
+}
+
+
 
 
 
