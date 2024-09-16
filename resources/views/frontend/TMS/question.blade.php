@@ -203,7 +203,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const checkboxes = document.querySelectorAll('.question-filter');
             
-          
+            // Load saved filter state
             checkboxes.forEach(checkbox => {
                 const savedState = localStorage.getItem(checkbox.id);
                 if (savedState !== null) {
@@ -251,6 +251,7 @@
             const addOptionBtn = $('#add-option');
             const selectedAnswerInput = $('#answer');
 
+            // Add an option field to the form
             function addOption() {
                 const newOption = $(`<div class="option">
                     <input type="text" name="options[]" placeholder="Option ${++optionCount}" />
@@ -260,35 +261,36 @@
                 optionsContainer.append(newOption);
             }
 
-            
+            // Remove an option field from the form
             function removeOption() {
                 $(this).parent().remove();
             }
 
-           
+            // Update the selected answer field based on the user's selection
             function updateSelectedAnswer() {
                 const selectedOption = $('input[name="answer"]:checked').prev().val();
                 selectedAnswerInput.val(selectedOption);
             }
 
+            // Add event listeners to the form elements
             addOptionBtn.click(addOption);
             optionsContainer.on('click', '.remove-option', removeOption);
             $(document).on('change', 'input[name="answer"]', updateSelectedAnswer);
 
-           
+            // Add the multi-select checkbox handler here
             $(document).on('change', 'input[name="answer"]', function() {
                 let selectedAnswers = [];
 
-             
+                // Get all checked checkboxes
                 $('input[name="answer"]:checked').each(function() {
-                    selectedAnswers.push($(this).prev().val());  
+                    selectedAnswers.push($(this).prev().val());  // Get the corresponding option value
                 });
 
-            t
+                // Join the selected answers with a comma or any separator you want
                 $('#answer').val(selectedAnswers.join(', '));
             });
 
-            
+            // Add event listener for toggle button change event
             $('#toggle-options').change(function() {
                 const isEnabled = $(this).is(':checked');
                 $('input[name="options[]"]').prop('disabled', !isEnabled);

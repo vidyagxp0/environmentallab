@@ -8,6 +8,7 @@
 @section('container')
     <div class="fluid-container mb-3">
         <a href="{{ route('user_management.create') }}" class="btn btn-primary">
+        <i class="fas fa-plus nav-icon"></i>
             New Account
         </a>
     </div>
