@@ -281,7 +281,7 @@
                             <div class="row">
                                 <!-- Reference Info comments -->
                                 <div class="col-12 sub-head">
-                                    Reference Info comments
+                                    Reference Info Comments
                                 </div>
                                 <div class="col-12">
                                     <div class="group-input">
@@ -368,13 +368,13 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Submit by"><b>Submit by</b></label>
+                                        <label for="Submit by"><b>Submitted  By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Submit On"><b>Submit On</b></label>
+                                        <label for="Submit On"><b>Submitted  On</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
@@ -423,7 +423,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="group-input">
-                                        <label for="Effective by"><b>Effective by</b></label>
+                                        <label for="Effective by"><b>Effective By</b></label>
                                         <div class="static"></div>
                                     </div>
                                 </div>
