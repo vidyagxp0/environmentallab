@@ -277,7 +277,7 @@ use Illuminate\Support\Facades\Hash;
         $history->activity_type = 'Short Description';
         $history->previous = "Null";
         $history->current = $root->short_description;
-        $history->comment = "Null";
+        $history->comment = "NA";
         $history->user_id = Auth::user()->id;
         $history->user_name = Auth::user()->name;
         $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');

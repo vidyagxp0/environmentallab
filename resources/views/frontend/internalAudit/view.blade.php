@@ -839,7 +839,7 @@
                                             <div class="group-input">
                                                 <label for="audit-agenda-grid">
                                                     Audit Agenda<button type="button"
-                                                        name="audit-agenda-grid"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                                        name="audit-agenda-grid"
                                                         onclick="addAuditAgenda('audit-agenda-grid')"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
                                                 </label>
@@ -864,10 +864,10 @@
                                                                     <tr>
                                                                         <td><input disabled type="text"
                                                                                 name="serial_number[]"
-                                                                                value="{{ $key + 1 }}"></td>
+                                                                                value="{{ $key + 1 }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}></td>
 
                                                                         <td><input type="text" name="audit[]"
-                                                                                value="{{ $temps }}">
+                                                                                value="{{ $temps }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
 
                                                                         <td>
@@ -879,13 +879,13 @@
                                                                                             id="scheduled_start_date{{ $key }}"
                                                                                             readonly
                                                                                             placeholder="DD-MM-YYYY"
-                                                                                            value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
+                                                                                            value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
                                                                                         <input type="date"
                                                                                             id="scheduled_start_date{{ $key }}_checkdate"
                                                                                             name="scheduled_start_date[]"
                                                                                             class="hide-input"
                                                                                             value="{{ unserialize($grid_data->start_date)[$key] }}"
-                                                                                            oninput="handleDateInput(this, 'scheduled_start_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')" />
+                                                                                            oninput="handleDateInput(this, 'scheduled_start_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}/>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -893,7 +893,7 @@
 
                                                                         <td><input type="time"
                                                                                 name="scheduled_start_time[]"
-                                                                                value="{{ unserialize($grid_data->start_time)[$key] }}">
+                                                                                value="{{ unserialize($grid_data->start_time)[$key] }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
 
                                                                         <td>
@@ -905,13 +905,13 @@
                                                                                             id="scheduled_end_date{{ $key }}"
                                                                                             readonly
                                                                                             placeholder="DD-MM-YYYY"
-                                                                                            value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
+                                                                                            value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                                                         <input type="date"
                                                                                             id="scheduled_end_date{{ $key }}_checkdate"
                                                                                             name="scheduled_end_date[]"
                                                                                             class="hide-input"
                                                                                             value="{{ unserialize($grid_data->end_date)[$key] }}"
-                                                                                            oninput="handleDateInput(this, 'scheduled_end_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')" />
+                                                                                            oninput="handleDateInput(this, 'scheduled_end_date{{ $key }}'); checkDate('scheduled_start_date{{ $key }}_checkdate', 'scheduled_end_date{{ $key }}_checkdate')" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} />
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -919,11 +919,11 @@
 
                                                                         <td><input type="time"
                                                                                 name="scheduled_end_time[]"
-                                                                                value="{{ unserialize($grid_data->end_time)[$key] }}">
+                                                                                value="{{ unserialize($grid_data->end_time)[$key] }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
 
                                                                         <td>
-                                                                            <select id="auditor" name="auditor[]">
+                                                                            <select id="auditor" name="auditor[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                 <option value="">-- Select --
                                                                                 </option>
                                                                                 @foreach ($users as $value)
@@ -936,7 +936,7 @@
                                                                         </td>
 
                                                                         <td>
-                                                                            <select id="auditee" name="auditee[]">
+                                                                            <select id="auditee" name="auditee[]" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                                 <option value="">-- Select --
                                                                                 </option>
                                                                                 @foreach ($users as $value)
@@ -949,7 +949,7 @@
                                                                         </td>
 
                                                                         <td><input type="text" name="remark[]"
-                                                                                value="{{ unserialize($grid_data->remark)[$key] }}">
+                                                                                value="{{ unserialize($grid_data->remark)[$key] }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                                         </td>
                                                                     </tr>
                                                                 @endforeach
@@ -1059,7 +1059,7 @@
                                             <div class="group-input">
                                                 <label for="Lead Auditor">Lead Auditor</label>
                                                 <input type="text" name="lead_auditor"
-                                                    value="{{ $data->lead_auditor }}">
+                                                    value="{{ $data->lead_auditor }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                 {{-- <select name="lead_auditor"
                                                     {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                                     <option value="">-- Select --</option>
@@ -1225,7 +1225,7 @@
                                     <div class="col-lg-12">
                                         <div class="group-input">
                                             <label for="Audit Team">Audit Team</label>
-                                            <input type="text" value="{{ $data->Audit_team }}" name="Audit_team">
+                                            <input type="text" value="{{ $data->Audit_team }}" name="Audit_team" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
                                             {{-- <select multiple name="Audit_team[]" placeholder="Select Audit Team"
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="Audit"
