@@ -2180,10 +2180,7 @@
 
 
 
-             <div class="border-table">
-                {{-- <div class="block-head">
-                    File Attachment
-                </div> --}}
+             {{--<div class="border-table">
                 <table>
 
                     <tr class="table_bg">
@@ -2203,9 +2200,12 @@
                         <td class="w-20">Not Applicable</td>
                     </tr>
                     @endif
-
              </table>
-            </div>
+            </div>--}}
+
+
+
+            {{--<br>--}}
 
             <div class="block">
                 <div class="head">

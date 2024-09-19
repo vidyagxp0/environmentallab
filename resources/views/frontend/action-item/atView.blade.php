@@ -174,6 +174,7 @@
                                         {{-- <div class="static"> </div> --}}
                                     </div>
                                 </div>
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Due"><b>Date of Initiation</b></label>
@@ -181,6 +182,7 @@
                                             value="{{ Helpers::getdateFormat($data->intiation_date) }}">
                                     </div>
                                 </div>
+
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="search">
