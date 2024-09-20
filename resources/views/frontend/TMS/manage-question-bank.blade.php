@@ -84,7 +84,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="selected-list">
-
+                            
                                     </tbody>
                                 </table>
                             </div>
@@ -147,29 +147,17 @@
     </div>
 
     <script>
-        const itemList = document.getElementById('item-list');
+               const itemList = document.getElementById('item-list');
         const selectedList = document.getElementById('selected-list');
-        const deletedQuestions = document.getElementById('deleted-questions');
-        let deletedQuestionIds = [];
-
         function deleteItem() {
             const itemRow = this.closest('tr');
-            const itemId = itemRow.getAttribute('data-item');
-
-            // Add deleted question ID to the array
-            deletedQuestionIds.push(itemId);
-            deletedQuestions.value = deletedQuestionIds.join(',');
-
-            // Remove the row from the selected list
             itemRow.remove();
         }
-
         selectedList.addEventListener('click', function(e) {
             if (e.target.matches('button')) {
                 deleteItem.call(e.target);
             }
         });
-
         itemList.addEventListener('click', function(e) {
             const selectedItem = e.target.closest('tr');
             if (selectedItem) {
@@ -179,9 +167,7 @@
                     const newItem = selectedItem.cloneNode(true);
                     const deleteBtn = document.createElement('button');
                     deleteBtn.textContent = 'Delete';
-                    deleteBtn.classList.add('btn', 'btn-danger');
                     deleteBtn.addEventListener('click', deleteItem);
-
                     const td = document.createElement('td');
                     const inputType = document.createElement('input');
                     inputType.setAttribute('type', 'hidden');
@@ -195,33 +181,38 @@
             }
         });
     </script>
-
     <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <script>
-        $(document).ready(function() {
-            loadUsers();
+ $(document).ready(function() {
+  loadUsers();
 
-            $(document).on('click', '#pagination a', function(event) {
-                event.preventDefault();
-                var page = $(this).attr('href').split('page=')[1];
-                loadUsers(page);
-            });
+  // Handle pagination click event
+  $(document).on('click', '#pagination a', function(event) {
+    event.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+    loadUsers(page);
+  });
 
-            function loadUsers(page) {
-                fetch('/question-bank/2/edit?page=' + page)
-                    .then(response => response.text())
-                    .then(data => {
-                        var userList = $(data).find('#item-list').html();
-                        var pagination = $(data).find('#pagination').html();
-                        $('#item-list').html(userList);
-                        $('#pagination').html(pagination);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            }
-        });
+  // Function to load paginated users
+  function loadUsers(page) {
+    fetch('/question-bank/2/edit?page=' + page)
+      .then(response => response.text())
+      .then(data => {
+        // Extract the userList HTML and pagination HTML from the response
+        var userList = $(data).find('#item-list').html();
+        var pagination = $(data).find('#pagination').html();
+
+        // Update the #userList and #pagination elements on the page
+        $('#item-list').html(userList);
+        $('#pagination').html(pagination);
+      })
+      .catch(error => {
+        console.log(error); // Handle error response
+      });
+  }
+});
+   
     </script>
 @endsection

@@ -1859,7 +1859,9 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">E-Signature</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                     </div>
                     <form action="{{ route('externalAuditStateChange', $data->id) }}" method="POST">
                         @csrf
@@ -1906,7 +1908,9 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">E-Signature</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                     </div>
 
                     <form action="{{ url('RejectStateAuditee', $data->id) }}" method="POST">
@@ -1953,7 +1957,9 @@
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">E-Signature</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                     </div>
 
                     <form action="{{ url('CancelStateExternalAudit', $data->id) }}" method="POST">

@@ -178,7 +178,9 @@
                     <strong>Observation No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{--{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}--}}
+                    {{ Helpers::divisionNameForQMS($data->division_id) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -215,7 +217,8 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
-                            {{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
+                            {{ Helpers::divisionNameForQMS($data->division_id) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
+                            {{--{{ Helpers::getDivisionName(session()->get('division')) }}/OBS/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}--}}
                             @else
                                 Not Applicable
                             @endif
