@@ -32,7 +32,7 @@
         }
 
         .symbol-support {
-            font-family:"DeJaVu Sans Mono",monospace !important;
+            font-family:"DeJaVu Sans Mono", monospace !important;
         }
 
         html{
@@ -45,7 +45,7 @@
         td,
         th {
             text-align: center;
-            
+
         }
 
         .w-5 {
@@ -94,7 +94,7 @@
 
         .w-55 {
             width: 55%;
-            
+
         }
 
         .w-60 {
@@ -220,7 +220,7 @@
 
         .text-justify {
             text-align: justify;
-            
+
         }
 
         .text-center {
@@ -310,7 +310,7 @@
 
         }
 
-       
+
         .footer {
             position: fixed;
             bottom: -45px;
@@ -357,15 +357,15 @@
             overflow-x: auto;
             max-width: 100%;
         }
-    
+
         .MsoNormalTable tr {
             border: 1px solid rgb(156, 156, 156);
         }
-        
+
         .MsoNormalTable td {
             text-align: left!important;
         }
-        
+
         .MsoNormalTable tbody {
             border: 1px solid rgb(156, 156, 156);
         }
@@ -378,7 +378,7 @@
             page-break-inside: auto;
             page-break-before: auto;
         }
-        
+
         .MsoNormalTable, .table {
             table-layout: fixed;
             width: 650px!important;
@@ -407,7 +407,7 @@
             page-break-inside: auto; /* Avoids breaking inside headings */
             page-break-before: auto; /* Allows automatic page breaks before headings */
         }
-        
+
         .main-section {
             text-align: left;
         }
@@ -423,11 +423,11 @@
             <tbody>
                 <tr>
                     <td class="logo w-20">
-                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;"> 
+                        <img src="https://dms.mydemosoftware.com/user/images/logo.png" alt="..." style="margin-top: 0.5rem; margin-bottom: 1rem;">
                     </td>
-                    <td class="title w-60" 
+                    <td class="title w-60"
                     style="height: 150px; padding: 0px;  margin: 0px; border-left: 1px solid rgb(104, 104, 104); border-right: 1px solid rgb(104, 104, 104);">
-                        <p 
+                        <p
                         style="font-size: 1rem; margin-top: -0.1rem; border-bottom: 1px solid rgb(104, 104, 104);">Environmental Laboratory</p>
                         <br>
                         <p style="font-size: 1rem; margin-top: -2rem; margin-bottom: 0px;">
@@ -444,14 +444,14 @@
         <table class="border border-top-none p-10">
             <tbody>
                 <tr>
-                    <td class="doc-num w-100"> 
+                    <td class="doc-num w-100">
                         @php
                         $temp = DB::table('document_types')
                             ->where('name', $data->document_type_name)
                             ->value('typecode');
                        @endphp
-                        @if($data->revised === 'Yes') 
-                               
+                        @if($data->revised === 'Yes')
+
                         {{ Helpers::getDivisionName($data->division_id) }}
                         /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
@@ -475,7 +475,7 @@
                                 ->where('name', $data->document_type_name)
                                 ->value('typecode');
                         @endphp
-                        @if($data->revised === 'Yes')  
+                        @if($data->revised === 'Yes')
                             {{ Helpers::getDivisionName($data->division_id) }}
                             /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                             /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
@@ -483,9 +483,9 @@
                             @else
                             {{ Helpers::getDivisionName($data->division_id) }}
                             /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                            /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}                           
+                            /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
                         @endif
-                        
+
                     <td class="w-36">Printed On : {{ $time }}</td>
                     <td class="text-right w-20"></td>
                 </tr>
@@ -570,16 +570,16 @@
                                         @endif
                                         @php
                                             if (!$isSub) {
-                                                $i++;  
-                                                $sub_index = 1; 
+                                                $i++;
+                                                $sub_index = 1;
                                             } else {
                                                 $sub_index++;
-                                            } 
+                                            }
                                         @endphp
                                     @endforeach
-                                @endif    
+                                @endif
 
-                                
+
                             </div>
                         </div>
                     </div>
@@ -617,14 +617,14 @@
                                         @endif
                                         @php
                                             if (!$isSub) {
-                                                $i++;  
-                                                $sub_index = 1; 
+                                                $i++;
+                                                $sub_index = 1;
                                             } else {
                                                 $sub_index++;
-                                            } 
+                                            }
                                         @endphp
                                     @endforeach
-                                @endif    
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -664,14 +664,14 @@
                                             @endif
                                             @php
                                                 if (!$isSub) {
-                                                    $i++;  
-                                                    $sub_index = 1; 
+                                                    $i++;
+                                                    $sub_index = 1;
                                                 } else {
                                                     $sub_index++;
-                                                } 
+                                                }
                                             @endphp
                                         @endforeach
-                                    @endif  
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -709,11 +709,11 @@
                                             @endif
                                             @php
                                                 if (!$isSub) {
-                                                    $i++;  
-                                                    $sub_index = 1; 
+                                                    $i++;
+                                                    $sub_index = 1;
                                                 } else {
                                                     $sub_index++;
-                                                } 
+                                                }
                                             @endphp
                                         @endforeach
                                     @endif
@@ -741,7 +741,7 @@
                                 <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
                                     @if ($data->document_content)
                                         {{-- {!! $data->document_content->safety_precautions !!} --}}
-                                        {!! strip_tags($data->document_content->safety_precautions, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
+                                        {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->safety_precautions)), '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
                                     @endif
                                 </div>
                             </div>
@@ -765,9 +765,9 @@
                         <div class="w-100">
                             <div class="w-100" style="display:inline-block;">
                                 <div class="w-100">
-                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;">
+                                    <div style="height:auto; overflow-x:hidden; width:650px; margin-left: 2.5rem;" class="symbol-support">
                                         @if ($data->document_content)
-                                            {!! strip_tags($data->document_content->procedure, '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
+                                            {!! strip_tags(str_replace("−", "-", html_entity_decode($data->document_content->procedure)), '<br><table><th><td><tbody><tr><p><img><a><img><span><h1><h2><h3><h4><h5><h6><div><strong></strong><ol><li>') !!}
                                         @endif
                                     </div>
                                 </div>
@@ -806,11 +806,11 @@
                                             @endif
                                             @php
                                                 if (!$isSub) {
-                                                    $i++;  
-                                                    $sub_index = 1; 
+                                                    $i++;
+                                                    $sub_index = 1;
                                                 } else {
                                                     $sub_index++;
-                                                } 
+                                                }
                                             @endphp
                                         @endforeach
                                     @endif
@@ -850,11 +850,11 @@
                                             @endif
                                             @php
                                                 if (!$isSub) {
-                                                    $i++;  
-                                                    $sub_index = 1; 
+                                                    $i++;
+                                                    $sub_index = 1;
                                                 } else {
                                                     $sub_index++;
-                                                } 
+                                                }
                                             @endphp
                                         @endforeach
                                     @endif
@@ -864,7 +864,7 @@
                     </div>
                 </div>
             {{-- REFERENCES END --}}
-            
+
             {{-- ANNEXSURE START --}}
             <table class="mb-20">
                 <tbody>
@@ -895,11 +895,11 @@
                                         @endif
                                         @php
                                             if (!$isSub) {
-                                                $i++;  
-                                                $sub_index = 1; 
+                                                $i++;
+                                                $sub_index = 1;
                                             } else {
                                                 $sub_index++;
-                                            } 
+                                            }
                                         @endphp
                                     @endforeach
                                 @endif
@@ -932,7 +932,7 @@
                     @endforeach
                 @endif --}}
             </section>
-            
+
             <section class="doc-control" style="page-break-after: never;">
                 <div class="head">
                     <div>
@@ -955,8 +955,8 @@
                                             ->where('name', $data->document_type_name)
                                             ->value('typecode');
                                        @endphp
-                                        @if($data->revised === 'Yes') 
-                                           
+                                        @if($data->revised === 'Yes')
+
                                         {{ Helpers::getDivisionName($data->division_id) }}
                                         /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
@@ -965,7 +965,7 @@
                                         {{ Helpers::getDivisionName($data->division_id) }}
                                         /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
                                         /000{{ $data->document_number }}/R{{$data->major}}.{{$data->minor}}
-                                        
+
                                     @endif
                                 </td>
                                 </tr>
@@ -1106,7 +1106,7 @@
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
-                                            
+
                                                 $comment = DB::table('stage_manages')
                                                 ->where('document_id', $data->id)
                                                 ->where('user_id', $reviewer[$i])
@@ -1132,10 +1132,10 @@
                                                 <td class="text-left w-25">Review Rejected </td>
                                             @else
                                                 <td class="text-left w-25">Review Pending</td>
-                                            @endif                                                
+                                            @endif
 
                                             <td class="text-left w-25">{{ $user->email }}</td>
-                                            <td class="text-left w-25"> 
+                                            <td class="text-left w-25">
                                             @if($comment)
                                                 {{ $comment->comment }}
                                             @endif</td>
@@ -1175,7 +1175,7 @@
                                                         ->where('deleted_at', null)
                                                         ->latest()
                                                         ->first();
-                                                        
+
                                                     $reject = DB::table('stage_manages')
                                                         ->where('document_id', $data->id)
                                                         ->where('user_id', $reviewer[$i])
@@ -1264,7 +1264,7 @@
                                                 ->where('deleted_at', null)
                                                 ->latest()
                                                 ->first();
-                                                
+
                                         @endphp
                                         <tr>
                                             <td class="text-left w-25">{{ $user->name }}</td>
@@ -1335,7 +1335,7 @@
                                                         <td class="text-left w-25">Approval Pending</td>
                                                     @endif
 
-                                                    <td class="text-left w-25">{{ $user->email }}</td>                                  
+                                                    <td class="text-left w-25">{{ $user->email }}</td>
                                                 </tr>
                                             @endfor
                                         @endif
@@ -1353,7 +1353,7 @@
 
     </section>
 
-  
+
 
     <script type="text/php">
         if ( isset($pdf) ) {
