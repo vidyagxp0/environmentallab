@@ -2262,7 +2262,7 @@
                         <div class="mb-3 text-justify">
                             Please select a meaning and a outcome for this task and enter your username
                             and password for this task. You are performing an electronic signature,
-                            which is legally binding equivalent of a hand written signature.
+                            which is legally binding equivalent of a hand written signature..
                         </div>
                         <div class="group-input">
                             <label for="username">Username <span class="text-danger">*</span></label>
