@@ -246,26 +246,26 @@
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal"><i class="fa fa-times"></i> </button>
                 </div>
 
-                <div class="modal-body">
+                <div class="modal-body text-center">
                     <div class="logo">
                         <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
                     </div>
-                    <div class="bar">
+                    <div class="bar mb-2">
                         <strong>Version : </strong> 10.0.0
                     </div>
-                    <div class="bar">
+                    <div class="bar mb-2">
                         <strong>Build # : </strong> 2
                     </div>
-                    <div class="bar">
+                    <div class="bar mb-2">
                         April 23, 2023
                     </div>
-                    <div class="bar">
+                    <div class="bar mb-2">
                         <strong>Licensed to : </strong> Connexo
                     </div>
-                    <div class="bar">
+                    <div class="bar mb-2">
                         <strong>Environment : </strong> Master Demo Dev
                     </div>
-                    <div class="bar">
+                    <div class="bar mb-2">
                         <strong>Server : </strong> SCRRREVE3 (100.23.34.0)
                     </div>
                     <div class="copyright-bar">

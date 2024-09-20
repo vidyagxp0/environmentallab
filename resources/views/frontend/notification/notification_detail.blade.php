@@ -189,9 +189,9 @@
                             <div class="heading-new">
                                 Notification Detail
                             </div>
-                            <div> <strong>Record ID.</strong> {{ str_pad($parentData->record, 4, '0', STR_PAD_LEFT) }}</div>
+                            <div> <strong>Record ID : </strong> {{ str_pad($parentData->record, 4, '0', STR_PAD_LEFT) }}</div>
                             <div style="margin-bottom: 5px;  font-weight: bold;"> Notification Issued By
-                                :{{ $notification->user_name ? $notification->user_name : '' }}
+                                : {{ $notification->user_name ? $notification->user_name : '' }}
                             </div>
                             <div style="margin-bottom: 5px;  font-weight: bold;">Due Date : {{ Helpers::getdateFormat($parentData->due_date) }}
                             </div>

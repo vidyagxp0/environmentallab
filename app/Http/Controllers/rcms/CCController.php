@@ -446,6 +446,18 @@ class CCController extends Controller
 
         $closure->save();
 
+        $history = new RcmDocHistory;
+        $history->cc_id = $openState->id;
+        $history->activity_type = 'Record Number';
+        $history->previous = "Null";
+        $history->current = Helpers::getDivisionName(session()->get('division')) . "/CC/" . Helpers::year($openState->created_at) . "/" . str_pad($openState->record, 4, '0', STR_PAD_LEFT);
+        $history->comment = "NA";
+        $history->user_id = Auth::user()->id;
+        $history->user_name = Auth::user()->name;
+        $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+        $history->origin_state = $openState->status;
+        $history->save();
+
 
         $history = new RcmDocHistory;
         $history->cc_id = $openState->id;
@@ -498,7 +510,7 @@ class CCController extends Controller
         if(!empty($request->Initiator_Group)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Inititator Group';
+            $history->activity_type = 'Initiator Group';
             $history->previous = "Null";
             $history->current = Helpers::getInitiatorGroupFullName($request->Initiator_Group);
             $history->comment = "NA";
@@ -512,7 +524,7 @@ class CCController extends Controller
         if(!empty($request->initiator_group_code)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
-            $history->activity_type = 'Inititator Group Code';
+            $history->activity_type = 'Initiator Group Code';
             $history->previous = "Null";
             $history->current = $request->initiator_group_code;
             $history->comment = "NA";
@@ -523,7 +535,7 @@ class CCController extends Controller
             $history->save();
         }
         
-        if(!empty($openState->initiator_id)){
+        if(!empty($openState->assign_to)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'Assigned To';
@@ -565,7 +577,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->Microbiology_Person)){
+        if(!empty($openState->Microbiology_Person)){
             $history = new RcmDocHistory;
             $history->cc_id = $openState->id;
             $history->activity_type = 'CFT Reviewer Person';
@@ -808,24 +820,24 @@ class CCController extends Controller
             $history->save();
         }
 
-        // if(!empty($request->related_records)){            
-        //     $history = new RcmDocHistory;
-        //     $history->cc_id = $review->id;
-        //     $history->activity_type = 'Related Records';
-        //     $history->previous = "Null";
-        //     $history->current = $request->related_records;
-        //     $history->comment = "NA";
-        //     $history->user_id = Auth::user()->id;
-        //     $history->user_name = Auth::user()->name;
-        //     $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        //     $history->origin_state = $openState->status;
-        //     $history->save();
-        // }     
+        if(!empty($review->related_records)){            
+            $history = new RcmDocHistory;
+            $history->cc_id = $review->id;
+            $history->activity_type = 'Related Records';
+            $history->previous = "Null";
+            $history->current = $review->related_records;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $openState->status;
+            $history->save();
+        }     
         
         if(!empty($request->qa_head)){
             $history = new RcmDocHistory;
             $history->cc_id = $review->id;
-            $history->activity_type = 'QA Attachment';
+            $history->activity_type = 'QA Attachments';
             $history->previous = "Null";
             $history->current = $review->qa_head;
             $history->comment = "NA";
@@ -897,9 +909,9 @@ class CCController extends Controller
         if(!empty($request->cft_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $info->id;
-            $history->activity_type = 'CFT Comments';
+            $history->activity_type = 'Comments.';
             $history->previous = "Null";
-            $history->current = $request->cft_comments;
+            $history->current = $openState->cft_comments;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -910,24 +922,25 @@ class CCController extends Controller
 
         if(!empty($request->cft_attchament)){
             $history = new RcmDocHistory;
-            $history->cc_id = $info->id;
-            $history->activity_type = 'CFT Attachments';
+            $history->cc_id = $comments->id;
+            $history->activity_type = 'Attachment';
             $history->previous = "Null";
-            $history->current = $info->cft_attchament;
+            $history->current = $comments->cft_attchament;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
-            $history->save(); 
+            $history->save();
         }
 
-        if(!empty($request->qa_comments)){
+
+        if(!empty($request->qa_commentss)){
             $history = new RcmDocHistory;
             $history->cc_id = $comments->id;
             $history->activity_type = 'QA Comments';
             $history->previous = "Null";
-            $history->current = $request->qa_comments;
+            $history->current = $request->qa_commentss;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1092,7 +1105,7 @@ class CCController extends Controller
         if(!empty($request->Occurance)){
             $history = new RcmDocHistory;
             $history->cc_id = $assessment->id;
-            $history->activity_type = 'Occurance';
+            $history->activity_type = 'Occurrence';
             $history->previous = "Null";
            
             if($request->Occurance == 1){
@@ -1229,7 +1242,7 @@ class CCController extends Controller
         if(!empty($request->qa_closure_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $closure->id;
-            $history->activity_type = 'QA Closure Comment';
+            $history->activity_type = 'QA Closure Comments';
             $history->previous = "Null";
             $history->current = $closure->qa_closure_comments;
             $history->comment = "NA";
@@ -1243,7 +1256,7 @@ class CCController extends Controller
         if(!empty($request->attach_list)){
             $history = new RcmDocHistory;
             $history->cc_id = $closure->id;
-            $history->activity_type = 'Change Closure Attachment';
+            $history->activity_type = 'List Of Attachments';
             $history->previous = "Null";
             $history->current = $closure->attach_list;
             $history->comment = "NA";
@@ -1254,12 +1267,12 @@ class CCController extends Controller
             $history->save();
         }
 
-        if(!empty($request->due_date_extension)){
+        if(!empty($openState->due_date_extension)){
             $history = new RcmDocHistory;
-            $history->cc_id = $closure->id;
-            $history->activity_type = 'Due Date Extension Justification';
+            $history->cc_id = $openState->id;
+            $history->activity_type ='Due Date Extension Justification';
             $history->previous = "Null";
-            $history->current = $closure->due_date_extension;
+            $history->current = $openState->due_date_extension;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1322,10 +1335,10 @@ class CCController extends Controller
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
 
-        $getId = $lastDocument->Microbiology_Person;
-        $lastcftReviewerIds = explode(',', $getId);
-        $lastcftReviewers = User::whereIn('id', $lastcftReviewerIds)->pluck('name')->toArray();
-        $lastcftReviewerNames = implode(', ', $lastcftReviewers);
+        // $getId = $lastDocument->Microbiology_Person;
+        // $lastcftReviewerIds = explode(',', $getId);
+        // $lastcftReviewers = User::whereIn('id', $lastcftReviewerIds)->pluck('name')->toArray();
+        // $lastcftReviewerNames = implode(', ', $lastcftReviewers);
 
 
         $openState->initiator_id = Auth::user()->id;
@@ -1360,16 +1373,16 @@ class CCController extends Controller
 
         $openState->Microbiology = $request->Microbiology;
         
-         if ($request->Microbiology_Person) {
-            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        //  if ($request->Microbiology_Person) {
+        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
 
-            $cftReviewerIds = explode(',', $openState->Microbiology_Person);
-            $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
-            $cftReviewerNames = implode(', ', $cftReviewers);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
+        //     $cftReviewerIds = explode(',', $openState->Microbiology_Person);
+        //     $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+        //     $cftReviewerNames = implode(', ', $cftReviewers);
+        //  } else {
+        //      toastr()->warning('CFT reviewers can not be empty');
+        //      return back();
+        //  }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -1379,7 +1392,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        // $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments; 
         // $openState->cft_attchament = json_encode($request->cft_attchament);
         // $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -1526,15 +1539,15 @@ class CCController extends Controller
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
         $info->Microbiology = $request->Microbiology;
         
-         if ($request->Microbiology_Person) {
-             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-             $cftReviewerIds = explode(',', $info->Microbiology_Person);
-           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
-           $cftReviewerNames = implode(', ', $cftReviewers);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
+        //  if ($request->Microbiology_Person) {
+        //      $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        //      $cftReviewerIds = explode(',', $info->Microbiology_Person);
+        //    $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+        //    $cftReviewerNames = implode(', ', $cftReviewers);
+        //  } else {
+        //      toastr()->warning('CFT reviewers can not be empty');
+        //      return back();
+        //  }
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
 
@@ -1716,8 +1729,8 @@ class CCController extends Controller
         if ($lastDocument->Initiator_Group != $request->Initiator_Group) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Inititator Group';
-            $history->previous = $lastDocument->Initiator_Group;
+            $history->activity_type = 'Initiator Group';
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
             $history->current = Helpers::getInitiatorGroupFullName($request->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
@@ -1730,7 +1743,7 @@ class CCController extends Controller
         if ($lastDocument->initiator_group_code != $request->initiator_group_code) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Inititator Group';
+            $history->activity_type = 'Initiator Group Code';
             $history->previous = $lastDocument->initiator_group_code;
             $history->current = $request->initiator_group_code;
             $history->comment = "NA";
@@ -1924,12 +1937,12 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastdocdetail->reason_change != $docdetail->reason_change || !empty($request->proposed_change_comment)) {
+        if ($lastdocdetail->reason_change != $docdetail->reason_change || !empty($request->reason_change_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Reason for Change';
-            $history->previous = $lastdocdetail->proposed_change;
-            $history->current = $docdetail->proposed_change;
+            $history->previous = $lastdocdetail->reason_change;
+            $history->current = $docdetail->reason_change;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2150,19 +2163,45 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastinfo->Microbiology_Person != $request->Microbiology_Person) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'CFT Reviewer Person';
-            $history->previous = $lastcftReviewerNames;
-            $history->current = $cftReviewerNames;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+// Existing logic for retrieving last CFT reviewer names
+
+
+// Ensure both values are not null before comparing them
+if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbiology_Person)) && 
+    ($lastDocument->Microbiology_Person != implode(',', (array)$request->Microbiology_Person))) {
+
+    // Retrieving last CFT reviewer names
+    $getId = $lastDocument->Microbiology_Person;
+    $lastcftReviewerIds = explode(',', $getId);
+    $lastcftReviewers = User::whereIn('id', $lastcftReviewerIds)->pluck('name')->toArray();
+    $lastcftReviewerNames = implode(', ', $lastcftReviewers);
+
+    // If a new Microbiology_Person is provided in the request
+    if (!empty($request->Microbiology_Person)) {
+        $openState->Microbiology_Person = implode(',', (array)$request->Microbiology_Person);
+
+        $cftReviewerIds = explode(',', $openState->Microbiology_Person);
+        $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+        $cftReviewerNames = implode(', ', $cftReviewers);
+    } else {
+        toastr()->warning('CFT reviewers cannot be empty');
+        return back();
+    }
+
+    // Saving the history if there is a change in the reviewers
+    $history = new RcmDocHistory;
+    $history->cc_id = $id;
+    $history->activity_type = 'CFT Reviewer Person';
+    $history->previous = $lastcftReviewerNames; // Previous reviewers
+    $history->current = $cftReviewerNames; // Current reviewers
+    $history->comment = "NA";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->save();
+}
+
         // if ($lastinfo->bd_domestic != $info->bd_domestic || !empty($request->bd_domestic_comment)) {
         //     $history = new RcmDocHistory;
         //     $history->cc_id = $id;
@@ -2211,6 +2250,20 @@ class CCController extends Controller
             $history->activity_type = 'QA Comments';
             $history->previous = $lastcomments->qa_commentss;
             $history->current = $comments->qa_commentss;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+         if ($lastcomments->cft_comments != $comments->cft_comments) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Comments.';
+            $history->previous = $lastcomments->cft_comments;
+            $history->current = $comments->cft_comments;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2392,7 +2445,7 @@ class CCController extends Controller
         if ($lastassessment->Occurance != $assessment->Occurance || !empty($request->Occurance_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Occurance';
+            $history->activity_type = 'Occurrence';
             
             if($lastassessment->Occurance == 1){
                 $history->previous = "Very Likely";
@@ -2557,7 +2610,7 @@ class CCController extends Controller
         if ($lastclosure->attach_list != $closure->attach_list) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Change Closure Attachment';
+            $history->activity_type = 'List Of Attachments';
             $history->previous = $lastclosure->attach_list;
             $history->current = $closure->attach_list;
             $history->comment = "NA";
@@ -2571,7 +2624,7 @@ class CCController extends Controller
         if ($lastDocument->due_date_extension != $request->due_date_extension) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Due Date Extension Justification';
+            $history->activity_type ='Due Date Extension Justification';
             $history->previous = $lastDocument->due_date_extension;
             $history->current = $request->due_date_extension;
             $history->comment = "NA";
@@ -2602,11 +2655,11 @@ class CCController extends Controller
                     $changeControl->stage = "2";
                     $changeControl->status = "HOD Review";
                     
-                    $history = new RcmDocHistory;
+                    $history = new RcmDocHistory();
                     $history->cc_id = $id;
                     $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = Auth::user()->name;
+                    $history->previous = $lastDocument->status;
+                    $history->current = "HOD Review";
                     $history->comment = $request->comment;
                     $history->user_id = Auth::user()->id;
                     $history->user_name = Auth::user()->name;
@@ -2614,22 +2667,53 @@ class CCController extends Controller
                     $history->origin_state = $lastDocument->status;
                     $history->stage = 'Submit';
                     $history->save();
-            //  $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                    
+                    $list = Helpers::getHODUserList($changeControl->division_id);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userIdNew = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+                    if($userId){
+                        try {
+                            $notification = new RcmDocHistory();
+                            $notification->cc_id = $id;
+                            $notification->activity_type = "Notification";
+                            $notification->action = 'Notification';
+                            $notification->comment = "";
+                            $notification->user_id = Auth::user()->id;
+                            $notification->user_name = Auth::user()->name;
+                            $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $notification->origin_state = "Not Applicable";
+                            $notification->previous = $lastDocument->status;
+                            $notification->current = "HOD Review";
+                            $notification->stage = "";
+                            $notification->action_name = "";
+                            $notification->mailUserId = $userIdNew;
+                            $notification->role_name = "Initiator";
+                            $notification->save();
+                            // dd($history);
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                foreach ($list as $u) {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Change Control','history' => 'Submit', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submit Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                }
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2640,14 +2724,14 @@ class CCController extends Controller
                     $history->status = $changeControl->status;
                     $history->save();
                     
-                    $history = new CCStageHistory();
-                    $history->type = "Activity-log";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->status = $changeControl->status;
-                    $history->save();
+                    // $history = new CCStageHistory();
+                    // $history->type = "Activity-log";
+                    // $history->doc_id = $id;
+                    // $history->user_id = Auth::user()->id;
+                    // $history->user_name = Auth::user()->name;
+                    // $history->stage_id = $changeControl->stage;
+                    // $history->status = $changeControl->status;
+                    // $history->save();
                     // Helpers::hodMail($changeControl);
                     toastr()->success('Document Sent');
                     return back();
@@ -2656,11 +2740,11 @@ class CCController extends Controller
             if ($changeControl->stage == 2) {
                     $changeControl->stage = "3";
                     $changeControl->status = "Pending CFT/SME/QA Review";
-                                $history = new RcmDocHistory;
+                                $history = new RcmDocHistory();
                                 $history->cc_id = $id;
                                 $history->activity_type = 'Activity Log';
-                                $history->previous = "";
-                                $history->current = Auth::user()->name;
+                                $history->previous = $lastDocument->status;
+                                $history->current = "Pending CFT/SME/QA Review";
                                 $history->comment = $request->comment;
                                 $history->user_id = Auth::user()->id;
                                 $history->user_name = Auth::user()->name;
@@ -2668,23 +2752,53 @@ class CCController extends Controller
                                 $history->origin_state = $lastDocument->status;
                                 $history->stage = 'HOD Review Complete';
                                 $history->save();
-                            //     $list = Helpers::getInitiatorUserList();
-                            //     foreach ($list as $u) {
-                            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                            //             $email = Helpers::getInitiatorEmail($u->user_id);
-                            //              if ($email !== null) {
-                                      
-                            //               Mail::send(
-                            //                   'mail.view-mail',
-                            //                    ['data' => $changeControl],
-                            //                 function ($message) use ($email) {
-                            //                     $message->to($email)
-                            //                         ->subject("Document is Send By".Auth::user()->name);
-                            //                 }
-                            //               );
-                            //             }
-                            //      } 
-                            //   }            
+                                
+                                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                                $userIds = collect($list)->pluck('user_id')->toArray();
+                                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                                $userIdNew = $users->pluck('id')->implode(',');
+                                $userId = $users->pluck('name')->implode(',');
+                                if($userId){
+                                    try {
+                                        $notification = new RcmDocHistory();
+                                        $notification->cc_id = $id;
+                                        $notification->activity_type = "Notification";
+                                        $notification->action = 'Notification';
+                                        $notification->comment = "";
+                                        $notification->user_id = Auth::user()->id;
+                                        $notification->user_name = Auth::user()->name;
+                                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                        $notification->origin_state = "Not Applicable";
+                                        $notification->previous = $lastDocument->status;
+                                        $notification->current = "Pending CFT/SME/QA Review";
+                                        $notification->stage = "";
+                                        $notification->action_name = "";
+                                        $notification->mailUserId = $userIdNew;
+                                        $notification->role_name = "HOD/Designee";
+                                        $notification->save();
+                                        // dd($history);
+                                    } catch (\Throwable $e) {
+                                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
+                            foreach ($list as $u) {
+                                $email = Helpers::getAllUserEmail($u->user_id);
+                                if (!empty($email)) {
+                                    try {
+                                        info('Sending mail to', [$email]);
+                                        Mail::send(
+                                            'mail.view-mail',
+                                            ['data' => $changeControl,'site'=>'Change Control','history' => 'HOD Review Complete', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                            function ($message) use ($email, $changeControl) {
+                                             $message->to($email)
+                                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: HOD Review Complete Performed"); }
+                                            );
+            
+                                    } catch (\Exception $e) {
+                                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                                    }
+                                }
+                            }   
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2697,15 +2811,15 @@ class CCController extends Controller
                     toastr()->success('Document Sent');
                     return back();
             }
+            
             if ($changeControl->stage == 3) {
-
-                    $changeControl->stage = "4";
+                   $changeControl->stage = "4";
                     $changeControl->status = "CFT/SME/QA Review";
-                        $history = new RcmDocHistory;
+                        $history = new RcmDocHistory();
                         $history->cc_id = $id;
                         $history->activity_type = 'Activity Log';
-                        $history->previous = "";
-                        $history->current = Auth::user()->name;
+                        $history->previous = $lastDocument->status;
+                        $history->current = "CFT/SME/QA Review";
                         $history->comment = $request->comment;
                         $history->user_id = Auth::user()->id;
                         $history->user_name = Auth::user()->name;
@@ -2713,23 +2827,53 @@ class CCController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = 'Send to CFT/SME/QA Review';
                         $history->save();
-                        // $list = Helpers::getCFTUserList();
-                        //         foreach ($list as $u) {
-                        //             if($u->q_m_s_divisions_id == $changeControl->division_id){
-                        //                 $email = Helpers::getInitiatorEmail($u->user_id);
-                        //                  if ($email !== null) {
-                                      
-                        //                   Mail::send(
-                        //                       'mail.view-mail',
-                        //                        ['data' => $changeControl],
-                        //                     function ($message) use ($email) {
-                        //                         $message->to($email)
-                        //                             ->subject("Document is Send By".Auth::user()->name);
-                        //                     }
-                        //                   );
-                        //                 }
-                        //          } 
-                        //       }     
+                        
+                        $list = Helpers::getCFTUserList($changeControl->division_id);
+                        $userIds = collect($list)->pluck('user_id')->toArray();
+                        $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                        $userIdNew = $users->pluck('id')->implode(',');
+                        $userId = $users->pluck('name')->implode(',');
+                        if($userId){
+                            try {
+                                $notification = new RcmDocHistory();
+                                $notification->cc_id = $id;
+                                $notification->activity_type = "Notification";
+                                $notification->action = 'Notification';
+                                $notification->comment = "";
+                                $notification->user_id = Auth::user()->id;
+                                $notification->user_name = Auth::user()->name;
+                                $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                $notification->origin_state = "Not Applicable";
+                                $notification->previous = $lastDocument->status;
+                                $notification->current = "CFT/SME/QA Review";
+                                $notification->stage = "";
+                                $notification->action_name = "";
+                                $notification->mailUserId = $userIdNew;
+                                $notification->role_name = "Initiator";
+                                $notification->save();
+                                // dd($history);
+                            } catch (\Throwable $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    foreach ($list as $u) {
+                        $email = Helpers::getAllUserEmail($u->user_id);
+                        if (!empty($email)) {
+                            try {
+                                info('Sending mail to', [$email]);
+                                Mail::send(
+                                    'mail.view-mail',
+                                    ['data' => $changeControl,'site'=>'Change Control','history' => 'Send to CFT/SME/QA Review', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                    function ($message) use ($email, $changeControl) {
+                                     $message->to($email)
+                                     ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Send to CFT/SME/QA Review Performed"); }
+                                    );
+    
+                            } catch (\Exception $e) {
+                                \Log::error('Mail failed to send: ' . $e->getMessage());
+                            }
+                        }
+                    }  
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2743,67 +2887,67 @@ class CCController extends Controller
                     return back();
 
             }
-            if ($changeControl->stage == 4) {
-                if ($evaluation->training_required == "yes") {
-                    $changeControl->stage = "6";
-                    $changeControl->status = "Pending Change Implementation";
-                //     $list = Helpers::getHodUserList();
-                //     foreach ($list as $u) {
-                //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-                //             $email = Helpers::getInitiatorEmail($u->user_id);
-                //              if ($email !== null) {
+            // if ($changeControl->stage == 4) {
+            //     if ($evaluation->training_required == "yes") {
+            //         $changeControl->stage = "6";
+            //         $changeControl->status = "Pending Change Implementation";
+            //         $list = Helpers::getHodUserList();
+            //          foreach ($list as $u) {
+            //              if($u->q_m_s_divisions_id == $changeControl->division_id){
+            //                  $email = Helpers::getInitiatorEmail($u->user_id);
+            //                  if ($email !== null) {
                           
-                //               Mail::send(
-                //                   'mail.view-mail',
-                //                    ['data' => $changeControl],
-                //                 function ($message) use ($email) {
-                //                     $message->to($email)
-                //                         ->subject("Document is Send By".Auth::user()->name);
-                //                 }
-                //               );
-                //             }
-                //      } 
-                //   }
-                    $changeControl->update();
-                    $history = new CCStageHistory();
-                    $history->type = "Change-Control";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->status = $changeControl->status;
-                    $history->save();
-                    toastr()->success('Document Sent');
-                    return back();
-                } else {
+            //                    Mail::send(
+            //                        'mail.view-mail',
+            //                         ['data' => $changeControl],
+            //                      function ($message) use ($email) {
+            //                      $message->to($email)
+            //                              ->subject("Document is Send By".Auth::user()->name);
+            //                     }
+            //                   );
+            //                 }
+            //      } 
+            //       }
+            //          $changeControl->update();
+            //         $history = new CCStageHistory();
+            //         $history->type = "Change-Control";
+            //         $history->doc_id = $id;
+            //         $history->user_id = Auth::user()->id;
+            //         $history->user_name = Auth::user()->name;
+            //         $history->stage_id = $changeControl->stage;
+            //         $history->status = $changeControl->status;
+            //         $history->save();
+            //         toastr()->success('Document Sent');
+            //         return back();
+            //     } else {
 
-                    $changeControl->stage = "7";
-                    $changeControl->status = "Pending Change Implementation";
-                    $changeControl->update();
-                            $history = new RcmDocHistory;
-                            $history->cc_id = $id;
-                            $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = Auth::user()->name;
-                            $history->comment = $request->comment;
-                            $history->user_id = Auth::user()->id;
-                            $history->user_name = Auth::user()->name;
-                            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                            $history->origin_state = $lastDocument->status;
-                            $history->stage = 'Review Complete';
-                            $history->save();
-                    $history = new CCStageHistory();
-                    $history->type = "Change-Control";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->status = $changeControl->status;
-                    $history->save();
-                    toastr()->success('Document Sent');
-                    return back();
-                }
-            }
+            //         $changeControl->stage = "7";
+            //         $changeControl->status = "Pending Change Implementation";
+            //         $changeControl->update();
+            //                 $history = new RcmDocHistory;
+            //                 $history->cc_id = $id;
+            //                 $history->activity_type = 'Activity Log';
+            //                 $history->previous = "";
+            //                 $history->current = Auth::user()->name;
+            //                 $history->comment = $request->comment;
+            //                 $history->user_id = Auth::user()->id;
+            //                 $history->user_name = Auth::user()->name;
+            //                 $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            //                 $history->origin_state = $lastDocument->status;
+            //                 $history->stage = 'Review Complete';
+            //                 $history->save();
+            //         $history = new CCStageHistory();
+            //         $history->type = "Change-Control";
+            //         $history->doc_id = $id;
+            //         $history->user_id = Auth::user()->id;
+            //         $history->user_name = Auth::user()->name;
+            //         $history->stage_id = $changeControl->stage;
+            //         $history->status = $changeControl->status;
+            //         $history->save();
+            //         toastr()->success('Document Sent');
+            //         return back();
+            //     }
+            // }
             // if ($changeControl->stage == 5) {
             //     $rules = [
             //         'qa_eval_comments' => 'required|max:255',
@@ -2840,52 +2984,155 @@ class CCController extends Controller
             // }
 
 
+            if ($changeControl->stage == 4) {
+                $changeControl->stage = "5";
+                $changeControl->status = "Pending Change Implementation";
+                    $history = new RcmDocHistory();
+                    $history->cc_id = $id;
+                    $history->activity_type = 'Activity Log';
+                    $history->previous = $lastDocument->status;
+                    $history->current = "Pending Change Implementation";
+                    $history->comment = $request->comment;
+                    $history->user_id = Auth::user()->id;
+                    $history->user_name = Auth::user()->name;
+                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                    $history->origin_state = $lastDocument->status;
+                    $history->stage = 'Review Complete';
+                    $history->save();
+                    
+                    $list = Helpers::getHODUserList($changeControl->division_id);
+                    $userIds = collect($list)->pluck('user_id')->toArray();
+                    $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                    $userIdNew = $users->pluck('id')->implode(',');
+                    $userId = $users->pluck('name')->implode(',');
+                    if($userId){
+                        try {
+                            $notification = new RcmDocHistory();
+                            $notification->cc_id = $id;
+                            $notification->activity_type = "Notification";
+                            $notification->action = 'Notification';
+                            $notification->comment = "";
+                            $notification->user_id = Auth::user()->id;
+                            $notification->user_name = Auth::user()->name;
+                            $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                            $notification->origin_state = "Not Applicable";
+                            $notification->previous = $lastDocument->status;
+                            $notification->current = "Pending Change Implementation";
+                            $notification->stage = "";
+                            $notification->action_name = "";
+                            $notification->mailUserId = $userIdNew;
+                            $notification->role_name = "CFT/SME/QA";
+                            $notification->save();
+                            // dd($history);
+                        } catch (\Throwable $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                foreach ($list as $u) {
+                    $email = Helpers::getAllUserEmail($u->user_id);
+                    if (!empty($email)) {
+                        try {
+                            info('Sending mail to', [$email]);
+                            Mail::send(
+                                'mail.view-mail',
+                                ['data' => $changeControl,'site'=>'Change Control','history' => 'Review Complete', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                function ($message) use ($email, $changeControl) {
+                                 $message->to($email)
+                                 ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Complete Performed"); }
+                                );
+
+                        } catch (\Exception $e) {
+                            \Log::error('Mail failed to send: ' . $e->getMessage());
+                        }
+                    }
+                } 
+                
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending Change Implementation";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "CFT/SME/QA";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            foreach ($list as $u) {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'Review Complete', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Review Complete Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            }  
+                $changeControl->update();
+                $history = new CCStageHistory();
+                $history->type = "Change-Control";
+                $history->doc_id = $id;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->stage_id = $changeControl->stage;
+                $history->status = $changeControl->status;
+                $history->save();
+                toastr()->success('Document Sent');
+                return back();
+             }
+
+
+            // if ($changeControl->stage == 6) {
+
+            //         $changeControl->stage = "8";
+            //         $changeControl->status = "QA-Final Review";
+            //         $changeControl->update();
+            //         $history = new CCStageHistory();
+            //         $history->type = "Change-Control";
+            //         $history->doc_id = $id;
+            //         $history->user_id = Auth::user()->id;
+            //         $history->user_name = Auth::user()->name;
+            //         $history->stage_id = $changeControl->stage;
+            //         $history->status = $changeControl->status;
+            //         $history->save();
+            //         toastr()->success('Document Sent');
+            //         return back();
+            // }
+
+
             if ($changeControl->stage == 5) {
-
-                    $changeControl->stage = '7';
-                    $changeControl->status = 'Pending Change Implemented';
-                    $changeControl->update();
-                    $history = new CCStageHistory();
-                    $history->type = "Change-Control";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->status = $changeControl->status;
-                    $history->save();
-                    toastr()->success('Document Sent');
-                    return back();
-
-            }
-
-
-            if ($changeControl->stage == 6) {
-
-                    $changeControl->stage = "8";
-                    $changeControl->status = "QA-Final Review";
-                    $changeControl->update();
-                    $history = new CCStageHistory();
-                    $history->type = "Change-Control";
-                    $history->doc_id = $id;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->stage_id = $changeControl->stage;
-                    $history->status = $changeControl->status;
-                    $history->save();
-                    toastr()->success('Document Sent');
-                    return back();
-            }
-
-
-            if ($changeControl->stage == 7) {
-
-                    $changeControl->stage = "9";
+                    $changeControl->stage = "6";
                     $changeControl->status = "Closed-Done";
-                            $history = new RcmDocHistory;
+                            $history = new RcmDocHistory();
                             $history->cc_id = $id;
                             $history->activity_type = 'Activity Log';
-                            $history->previous = "";
-                            $history->current = Auth::user()->name;
+                            $history->previous = $lastDocument->status;
+                            $history->current = "Closed-Done";
                             $history->comment = $request->comment;
                             $history->user_id = Auth::user()->id;
                             $history->user_name = Auth::user()->name;
@@ -2893,23 +3140,148 @@ class CCController extends Controller
                             $history->origin_state = $lastDocument->status;
                             $history->stage = 'Implemented';
                             $history->save();
-            // $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                            
+                            $list = Helpers::getHODUserList($changeControl->division_id);
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userIdNew = $users->pluck('id')->implode(',');
+                            $userId = $users->pluck('name')->implode(',');
+                            if($userId){
+                                try {
+                                    $notification = new RcmDocHistory();
+                                    $notification->cc_id = $id;
+                                    $notification->activity_type = "Notification";
+                                    $notification->action = 'Notification';
+                                    $notification->comment = "";
+                                    $notification->user_id = Auth::user()->id;
+                                    $notification->user_name = Auth::user()->name;
+                                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $notification->origin_state = "Not Applicable";
+                                    $notification->previous = $lastDocument->status;
+                                    $notification->current = "Closed-Done";
+                                    $notification->stage = "";
+                                    $notification->action_name = "";
+                                    $notification->mailUserId = $userIdNew;
+                                    $notification->role_name = "Initiator";
+                                    $notification->save();
+                                    // dd($history);
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        foreach ($list as $u) {
+                            $email = Helpers::getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        } 
+
+                     $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userIdNew = $users->pluck('id')->implode(',');
+                            $userId = $users->pluck('name')->implode(',');
+                            if($userId){
+                                try {
+                                    $notification = new RcmDocHistory();
+                                    $notification->cc_id = $id;
+                                    $notification->activity_type = "Notification";
+                                    $notification->action = 'Notification';
+                                    $notification->comment = "";
+                                    $notification->user_id = Auth::user()->id;
+                                    $notification->user_name = Auth::user()->name;
+                                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $notification->origin_state = "Not Applicable";
+                                    $notification->previous = $lastDocument->status;
+                                    $notification->current = "Closed-Done";
+                                    $notification->stage = "";
+                                    $notification->action_name = "";
+                                    $notification->mailUserId = $userIdNew;
+                                    $notification->role_name = "Initiator";
+                                    $notification->save();
+                                    // dd($history);
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        foreach ($list as $u) {
+                            $email = Helpers::getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        } 
+
+                     $list = Helpers::getCFTUserList($changeControl->division_id);
+                            $userIds = collect($list)->pluck('user_id')->toArray();
+                            $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                            $userIdNew = $users->pluck('id')->implode(',');
+                            $userId = $users->pluck('name')->implode(',');
+                            if($userId){
+                                try {
+                                    $notification = new RcmDocHistory();
+                                    $notification->cc_id = $id;
+                                    $notification->activity_type = "Notification";
+                                    $notification->action = 'Notification';
+                                    $notification->comment = "";
+                                    $notification->user_id = Auth::user()->id;
+                                    $notification->user_name = Auth::user()->name;
+                                    $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                                    $notification->origin_state = "Not Applicable";
+                                    $notification->previous = $lastDocument->status;
+                                    $notification->current = "Closed-Done";
+                                    $notification->stage = "";
+                                    $notification->action_name = "";
+                                    $notification->mailUserId = $userIdNew;
+                                    $notification->role_name = "Initiator";
+                                    $notification->save();
+                                    // dd($history);
+                                } catch (\Throwable $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        foreach ($list as $u) {
+                            $email = Helpers::getAllUserEmail($u->user_id);
+                            if (!empty($email)) {
+                                try {
+                                    info('Sending mail to', [$email]);
+                                    Mail::send(
+                                        'mail.view-mail',
+                                        ['data' => $changeControl,'site'=>'Change Control','history' => 'Implemented', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        function ($message) use ($email, $changeControl) {
+                                         $message->to($email)
+                                         ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Implemented Performed"); }
+                                        );
+        
+                                } catch (\Exception $e) {
+                                    \Log::error('Mail failed to send: ' . $e->getMessage());
+                                }
+                            }
+                        } 
+                        
                     $changeControl->update();
                     $history = new CCStageHistory();
                     $history->type = "Change-Control";
@@ -2932,28 +3304,72 @@ class CCController extends Controller
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);
-            $openState = CC::find($id);
+            $lastDocument = CC::find($id);
+            $evaluation = Evaluation::where('cc_id', $id)->first();
 
             if ($changeControl->stage == 1) {
                 $changeControl->stage = "0";
                 $changeControl->status = "Closed-Cancelled";
-            //     $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                
+                $history = new RcmDocHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Closed-Cancelled";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'Cancel';
+                $history->save();
+                
+                $list = Helpers::getHODUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Closed-Cancelled";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            foreach ($list as $u) {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'Cancel', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancel Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            } 
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -2966,26 +3382,71 @@ class CCController extends Controller
                 toastr()->success('Document Sent');
                 return back();
             }
+            
             if ($changeControl->stage == 2) {
                 $changeControl->stage = "1";
                 $changeControl->status = "Opened";
-            //     $list = Helpers::getInitiatorUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                
+                $history = new RcmDocHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Opened";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Information Required';
+                $history->save();
+                
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Opened";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "HOD/Designee";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            foreach ($list as $u) {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'More Information Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            } 
+            
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3001,23 +3462,68 @@ class CCController extends Controller
             if ($changeControl->stage == 3) {
                 $changeControl->stage = "2";
                 $changeControl->status = "HOD Review";
-            //     $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                
+                $history = new RcmDocHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "HOD Review";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'More Information Required';
+                $history->save();
+                
+                $list = Helpers::getHODUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "HOD Review";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            foreach ($list as $u) {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'More Information Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More Information Required Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            } 
+
+            
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3031,25 +3537,116 @@ class CCController extends Controller
                 return back();
             }
             if ($changeControl->stage == 4) {
-                $changeControl->stage = "3";
-                $changeControl->status = "Under Supervisor review";
-            //     $list = Helpers::getHodUserList();
-            //     foreach ($list as $u) {
-            //         if($u->q_m_s_divisions_id == $changeControl->division_id){
-            //             $email = Helpers::getInitiatorEmail($u->user_id);
-            //              if ($email !== null) {
-                      
-            //               Mail::send(
-            //                   'mail.view-mail',
-            //                    ['data' => $changeControl],
-            //                 function ($message) use ($email) {
-            //                     $message->to($email)
-            //                         ->subject("Document is Send By".Auth::user()->name);
-            //                 }
-            //               );
-            //             }
-            //      } 
-            //   }
+                $changeControl->stage = "2";
+                $changeControl->status = "HOD Review";
+                
+                $history = new RcmDocHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "HOD Review";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'Request More Info';
+                $history->save();
+                
+                $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "HOD Review";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "CFT/SME";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            foreach ($list as $u) {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'Request More Info', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            } 
+            
+             $list = Helpers::getHODUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId){
+                    try {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "HOD Review";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "CFT/SME";
+                        $notification->save();
+                        // dd($history);
+                    } catch (\Throwable $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            foreach ($list as $u) {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) {
+                    try {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'Request More Info', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Request More Info Performed"); }
+                            );
+
+                    } catch (\Exception $e) {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            }  
+            
                 $changeControl->update();
                 $history = new CCStageHistory();
                 $history->type = "Change-Control";
@@ -3057,26 +3654,26 @@ class CCController extends Controller
                 $history->user_id = Auth::user()->id;
                 $history->user_name = Auth::user()->name;
                 $history->stage_id = $changeControl->stage;
-                $history->status = "More-info Required";
+                $history->status = "Request More Info";
                 $history->save();
                 toastr()->success('Document Sent');
                 return back();
             }
-            if ($changeControl->stage == 5) {
-                $changeControl->stage = "4";
-                $changeControl->status = "QA Review";
-                $changeControl->update();
-                $history = new CCStageHistory();
-                $history->type = "Change-Control";
-                $history->doc_id = $id;
-                $history->user_id = Auth::user()->id;
-                $history->user_name = Auth::user()->name;
-                $history->stage_id = $changeControl->stage;
-                $history->status = "More-info Required";
-                $history->save();
-                toastr()->success('Document Sent');
-                return back();
-            }
+            // if ($changeControl->stage == 5) {
+            //     $changeControl->stage = "4";
+            //     $changeControl->status = "QA Review";
+            //     $changeControl->update();
+            //     $history = new CCStageHistory();
+            //     $history->type = "Change-Control";
+            //     $history->doc_id = $id;
+            //     $history->user_id = Auth::user()->id;
+            //     $history->user_name = Auth::user()->name;
+            //     $history->stage_id = $changeControl->stage;
+            //     $history->status = "More-info Required";
+            //     $history->save();
+            //     toastr()->success('Document Sent');
+            //     return back();
+            // }
         } else {
             toastr()->error('E-signature Not match');
             return back();
@@ -3086,25 +3683,142 @@ class CCController extends Controller
 
     public function stageCFTnotReq(Request $request, $id)
     {
-        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
+        if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password))
+         {
             $changeControl = CC::find($id);
             $lastDocument = CC::find($id);
             $openState = CC::find($id);
 
-            $changeControl->stage = "7";
-            $changeControl->status = "Pending Change Implementation";
-                    $history = new RcmDocHistory;
-                    $history->cc_id = $id;
-                    $history->activity_type = 'Activity Log';
-                    $history->previous = "";
-                    $history->current = Auth::user()->name;
-                    $history->comment = $request->comment;
-                    $history->user_id = Auth::user()->id;
-                    $history->user_name = Auth::user()->name;
-                    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $history->origin_state = $lastDocument->status;
-                    $history->stage = 'CFT/SME/QA Review Not required';
-                    $history->save();
+            if ($changeControl->stage == 3) 
+            {
+                $changeControl->stage = "5";
+                $changeControl->status = "Pending Change Implementation";
+                
+                $history = new RcmDocHistory();
+                $history->cc_id = $id;
+                $history->activity_type = 'Activity Log';
+                $history->previous = $lastDocument->status;
+                $history->current = "Pending Change Implementation";
+                $history->comment = $request->comment;
+                $history->user_id = Auth::user()->id;
+                $history->user_name = Auth::user()->name;
+                $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                $history->origin_state = $lastDocument->status;
+                $history->stage = 'CFT/SME/QA Review Not Required';
+                $history->save();
+                
+                $list = Helpers::getHODUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId)
+                {
+                    try 
+                    {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending Change Implementation";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } 
+                    catch (\Throwable $e)
+                    {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+             foreach ($list as $u) 
+             {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) 
+                {
+                    try 
+                    {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'CFT/SME/QA Review Not Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
+                            );
+
+                    } 
+                    catch (\Exception $e) 
+                    {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            }
+
+             $list = Helpers::getInitiatorUserList($changeControl->division_id);
+                $userIds = collect($list)->pluck('user_id')->toArray();
+                $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
+                $userIdNew = $users->pluck('id')->implode(',');
+                $userId = $users->pluck('name')->implode(',');
+                if($userId)
+                {
+                    try 
+                    {
+                        $notification = new RcmDocHistory();
+                        $notification->cc_id = $id;
+                        $notification->activity_type = "Notification";
+                        $notification->action = 'Notification';
+                        $notification->comment = "";
+                        $notification->user_id = Auth::user()->id;
+                        $notification->user_name = Auth::user()->name;
+                        $notification->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+                        $notification->origin_state = "Not Applicable";
+                        $notification->previous = $lastDocument->status;
+                        $notification->current = "Pending Change Implementation";
+                        $notification->stage = "";
+                        $notification->action_name = "";
+                        $notification->mailUserId = $userIdNew;
+                        $notification->role_name = "Initiator";
+                        $notification->save();
+                        // dd($history);
+                    } 
+                    catch (\Throwable $e)
+                    {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            foreach ($list as $u) 
+            {
+                $email = Helpers::getAllUserEmail($u->user_id);
+                if (!empty($email)) 
+                {
+                    try 
+                    {
+                        info('Sending mail to', [$email]);
+                        Mail::send(
+                            'mail.view-mail',
+                            ['data' => $changeControl,'site'=>'Change Control','history' => 'CFT/SME/QA Review Not Required', 'process' => 'Change Control', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                            function ($message) use ($email, $changeControl) {
+                             $message->to($email)
+                             ->subject("QMS Notification: Change Control , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: CFT/SME/QA Review Not Required Performed"); }
+                            );
+
+                    } 
+                    catch (\Exception $e) 
+                    {
+                        \Log::error('Mail failed to send: ' . $e->getMessage());
+                    }
+                }
+            }
+            
             $changeControl->update();
             $history = new CCStageHistory();
             $history->type = "Change-Control";
@@ -3115,14 +3829,16 @@ class CCController extends Controller
             $history->status = $changeControl->status;
             $history->save();
             toastr()->success('Document Sent');
-            return back();
+            return back();}
+            
         } else {
             toastr()->error('E-signature Not match');
             return back();
         }
     }
+   
 
-    public function stagecancel(Request $request, $id)
+    public function stagecancel(Request $request, $id) 
     {
         if ($request->username == Auth::user()->email && Hash::check($request->password, Auth::user()->password)) {
             $changeControl = CC::find($id);

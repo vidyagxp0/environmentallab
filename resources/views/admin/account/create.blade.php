@@ -38,14 +38,29 @@
                     @enderror
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
 
                     <label for="password">Password <span style="color: red">*</span></label>
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter password" required>
                     @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> -->
+                    <div class="form-group">
+                       <label for="password">Password <span style="color: red">*</span></label>
+                       <div class="input-group">
+                         <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="password" placeholder="Enter password" required>
+                        <div class="input-group-append">
+                          <span class="input-group-text" onclick="togglePasswordVisibility()">
+                            <i class="fa fa-eye" id="togglePasswordIcon"></i>
+                           </span>
+                         </div>
+                      </div>
+                       @error('password')
+                       <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
                 <div class="form-group">
                     <label for="departmentid">Department Name <span style="color: red">*</span></label>
                     <select class="form-control @error('departmentid') is-invalid @enderror" id="departmentid" name="departmentid" required>
@@ -80,7 +95,23 @@
                         }
                         document.getElementById("selectedOptions").innerHTML = "Selected roles: <br>" + selectedOptions.join("<br>");
                     }
+                    function togglePasswordVisibility() {
+                      const passwordField = document.getElementById('password');
+                      const toggleIcon = document.getElementById('togglePasswordIcon');
+    
+                             if (passwordField.type === 'password') {
+                                 passwordField.type = 'text';
+                                 toggleIcon.classList.remove('fa-eye');
+                                  toggleIcon.classList.add('fa-eye-slash');
+                           } else {
+                                  passwordField.type = 'password';
+                                  toggleIcon.classList.remove('fa-eye-slash');
+                                  toggleIcon.classList.add('fa-eye');
+                                 }
+                            }
+
                 </script>
+
 
             </div>
 
@@ -104,7 +135,42 @@
                 min-height: 100%;
                 position: fixed;
                 top: 0;
-            }
+            }  select.form-control {
+        height: auto;
+        padding: 10px;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        background-color: #f9f9f9;
+        font-size: 16px;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    select.form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 10px rgba(0, 123, 255, 0.2);
+    }
+
+   
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+    }
+
+    
+    .card-footer {
+        background-color: #f8f9fa;
+        border-top: 1px solid rgba(0, 0, 0, 0.125);
+        padding: 15px;
+    }
+
+    
+    #selectedOptions {
+        background-color: #e9ecef;
+        padding: 10px;
+        border-radius: 0.25rem;
+        font-size: 14px;
+    }
         </style>
     </div>
     <!-- /.card -->

@@ -687,7 +687,7 @@ class ExtensionController extends Controller
                                     info('Sending mail to', [$email]);
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Submitted', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Submitted', 'process' => 'Extension', 'comment' => $request->comment,'user'=> Auth::user()->name],
                                         function ($message) use ($email, $changeControl) {
                                          $message->to($email)
                                          ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Submitted Performed"); }
@@ -763,7 +763,7 @@ class ExtensionController extends Controller
                                     info('Sending mail to', [$email]);
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Ext Approved', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Ext Approved', 'process' => 'Extension', 'comment' => $request->comment,'user'=> Auth::user()->name],
                                         function ($message) use ($email, $changeControl) {
                                          $message->to($email)
                                          ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Ext Approved Performed"); }
@@ -905,7 +905,7 @@ class ExtensionController extends Controller
                                     info('Sending mail to', [$email]);
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Extension','history' => 'More-information Required', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'More-information Required', 'process' => 'Extension', 'comment' => $request->comment,'user'=> Auth::user()->name],
                                         function ($message) use ($email, $changeControl) {
                                          $message->to($email)
                                          ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: More-information Required Performed"); }
@@ -1017,7 +1017,7 @@ class ExtensionController extends Controller
                                     info('Sending mail to', [$email]);
                                     Mail::send(
                                         'mail.view-mail',
-                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Rejected', 'process' => 'Extension', 'comment' => $history->comment,'user'=> Auth::user()->name],
+                                        ['data' => $changeControl,'site'=>'Extension','history' => 'Rejected', 'process' => 'Extension', 'comment' => $request->comment,'user'=> Auth::user()->name],
                                         function ($message) use ($email, $changeControl) {
                                          $message->to($email)
                                          ->subject("QMS Notification: Extension , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
