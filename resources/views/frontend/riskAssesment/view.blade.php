@@ -557,7 +557,7 @@
                                                 <label for="severity-level">Severity Level</label>
                                                 <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                                 <select {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }} name="severity2_level">
-                                                    <option  value="0">-- Select --</option>
+                                                    <option  value="">-- Select --</option>
                                                     <option @if ($data->severity2_level == 'minor') selected @endif
                                                      value="minor">Minor</option>
                                                     <option  @if ($data->severity2_level == 'major') selected @endif 
@@ -575,22 +575,52 @@
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="">Select Department</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->departments)) ? 'selected' : '' }}>
-                                                        QA</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->departments)) ? 'selected' : '' }}>
-                                                        QC</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->departments)) ? 'selected' : '' }}>
-                                                        R&D</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->departments)) ? 'selected' : '' }}>
-                                                        Manufacturing</option>
-                                                    <option value="5"
-                                                        {{ in_array('5', explode(',', $data->departments)) ? 'selected' : '' }}>
-                                                        Warehouse</option>
+                                                    
+                                                    <option value="QA"
+                                                        {{ in_array('QA', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        QA
+                                                    </option>
+                                                    <option value="QC"
+                                                        {{ in_array('QC', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        QC
+                                                    </option>
+                                                    <option value="R&D"
+                                                        {{ in_array('R&D', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        R&D
+                                                    </option>
+                                                   {{-- <option value="Manufacturing"
+                                                        {{ in_array('Manufacturing', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Manufacturing
+                                                    </option> --}}
+                                                    <option value="Warehouse"
+                                                        {{ in_array('Warehouse', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Warehouse
+                                                    </option>
+                                                    <option value="Wet Chemistry Area"
+                                                        {{ in_array('Wet Chemistry Area', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Wet Chemistry Area
+                                                    </option>
+                                                    <option value="Molecular Area"
+                                                        {{ in_array('Molecular Area', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Molecular Area
+                                                    </option>
+                                                    <option value="Microbiology Area"
+                                                        {{ in_array('Microbiology Area', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Microbiology Area
+                                                    </option>
+                                                    <option value="Instrumental Area"
+                                                        {{ in_array('Instrumental Area', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Instrumental Area
+                                                    </option>
+                                                    <option value="Administration"
+                                                        {{ in_array('Administration', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Administration
+                                                    </option>
+                                                    <option value="Financial Department"
+                                                        {{ in_array('Financial Department', explode(',', $data->departments)) ? 'selected' : '' }}>
+                                                        Financial Department
+                                                    </option>
+
 
                                                 </select>
                                             </div>
@@ -768,22 +798,52 @@
                                                     data-search="false" data-silent-initial-value-set="true"
                                                     id="departments"
                                                     {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="">Select Department</option>
-                                                    <option value="1"
-                                                        {{ in_array('1', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        QA</option>
-                                                    <option value="2"
-                                                        {{ in_array('2', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        QC</option>
-                                                    <option value="3"
-                                                        {{ in_array('3', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        R&D</option>
-                                                    <option value="4"
-                                                        {{ in_array('4', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        Manufacturing</option>
-                                                    <option value="5"
-                                                        {{ in_array('5', explode(',', $data->departments2)) ? 'selected' : '' }}>
-                                                        Warehouse</option>
+                                                    
+                                                    <option value="QA"
+                                                        {{ in_array('QA', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        QA
+                                                    </option>
+                                                    <option value="QC"
+                                                        {{ in_array('QC', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        QC
+                                                    </option>
+                                                    <option value="R&D"
+                                                        {{ in_array('R&D', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        R&D
+                                                    </option>
+                                                   {{-- <option value="Manufacturing"
+                                                        {{ in_array('Manufacturing', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Manufacturing
+                                                    </option> --}}
+                                                    <option value="Warehouse"
+                                                        {{ in_array('Warehouse', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Warehouse
+                                                    </option>
+                                                    <option value="Wet Chemistry Area"
+                                                        {{ in_array('Wet Chemistry Area', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Wet Chemistry Area
+                                                    </option>
+                                                    <option value="Molecular Area"
+                                                        {{ in_array('Molecular Area', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Molecular Area
+                                                    </option>
+                                                    <option value="Microbiology Area"
+                                                        {{ in_array('Microbiology Area', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Microbiology Area
+                                                    </option>
+                                                    <option value="Instrumental Area"
+                                                        {{ in_array('Instrumental Area', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Instrumental Area
+                                                    </option>
+                                                    <option value="Administration"
+                                                        {{ in_array('Administration', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Administration
+                                                    </option>
+                                                    <option value="Financial Department"
+                                                        {{ in_array('Financial Department', explode(',', $data->departments2)) ? 'selected' : '' }}>
+                                                        Financial Department
+                                                    </option>
+
                                                 </select>
                                             </div>
                                         </div>
@@ -1403,7 +1463,7 @@
                                                 <select name="root_cause_methodology[]" multiple {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}
                                                     placeholder="-- Select --" data-search="false"
                                                     data-silent-initial-value-set="true" id="root-cause-methodology">
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option value="1"
                                                         {{ in_array('1', explode(',', $data->root_cause_methodology)) ? 'selected' : '' }}>
                                                         Why-Why Chart</option>
@@ -2127,7 +2187,7 @@
                                             <div class="group-input">
                                                 <label for="mitigation-status">Status of Mitigation</label>
                                                 <select name="mitigation_status" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option value="green"
                                                         {{ $data->mitigation_status == 'green' ? 'selected' : '' }}>Green
                                                         Status</option>
@@ -2154,7 +2214,7 @@
                                             <div class="group-input">
                                                 <label for="impact">Impact</label>
                                                 <select name="impact" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->impact == 'high' ? 'selected' : '' }}>High</option>
                                                     <option value="medium"
@@ -2170,7 +2230,7 @@
                                             <div class="group-input">
                                                 <label for="criticality">Criticality</label>
                                                 <select name="criticality" {{ $data->stage == 0 || $data->stage == 7 ? 'disabled' : '' }}>
-                                                    <option value="0">-- Select --</option>
+                                                    <option value="">-- Select --</option>
                                                     <option value="high"
                                                         {{ $data->criticality == 'high' ? 'selected' : '' }}>High</option>
                                                     <option value="medium"
@@ -2503,7 +2563,9 @@
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                         </div>
                         <form action="{{ route('riskAssesmentStateUpdate', $data->id) }}" method="POST">
                             @csrf
@@ -2549,7 +2611,9 @@
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                         </div>
 
                         <form action="{{ url('reject_Risk', $data->id) }}" method="POST">

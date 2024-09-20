@@ -1614,7 +1614,7 @@ select.goog-te-combo {
 #document .document-left-block .inner-block .head button {
     display: block;
     padding: 3px 15px;
-    background: #4274da;
+    background: #030303;
     color: white;
     border: 0;
     font-weight: 400;
@@ -4275,7 +4275,7 @@ section#pdf-page .watermark {
 }
 
 #manage-question-bank .button_theme1 {
-    background: #fff;
+    background: #000;
     color: #4274da;
     border: 1px solid #4274da;
     padding: 8px 20px;
@@ -4442,7 +4442,7 @@ section#pdf-page .watermark {
     font-weight: bold;
 }
 
-.modal .group-input input,
+/* .modal .group-input input, */
 .modal .group-input select,
 .modal .group-input textarea {
     width: 100%;

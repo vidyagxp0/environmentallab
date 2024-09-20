@@ -199,7 +199,7 @@
 
             <div class="division-bar">
                 <strong>Site Division/Project</strong> :
-                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assesment
+                {{ Helpers::getDivisionName(session()->get('division')) }} / Risk Assessment
             </div>
         </div>
         @php
@@ -219,7 +219,7 @@
                     <button class="cctablinks" onclick="openCity(event, 'CCForm4')">Risk/Opportunity Analysis</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm5')">Residual Risk</button>
                     <button class="cctablinks" onclick="openCity(event, 'CCForm6')">Risk Mitigation</button>
-                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Signatures</button>
+                    <button class="cctablinks" onclick="openCity(event, 'CCForm7')">Activity Log</button>
                 </div>
 
    
@@ -359,7 +359,7 @@
                                             <label for="severity-level">Severity Level</label>
                                             <span class="text-primary">Severity levels in a QMS record gauge issue seriousness, guiding priority for corrective actions. Ranging from low to high, they ensure quality standards and mitigate critical risks.</span>
                                             <select name="severity2_level">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option value="minor">Minor</option>
                                                 <option value="major">Major</option>
                                                 <option value="critical">Critical</option>
@@ -371,17 +371,18 @@
                                             <label for="Department(s)">Department(s)</label>
                                             <select name="departments[]" placeholder="Select Departments" data-search="false"
                                                 data-silent-initial-value-set="true" id="departments" multiple>
-                                                <option value="">Select Department</option>
-                                                <option value="1">QA</option>
-                                                <option value="2">QC</option>
-                                                <option value="3">R&D</option>
-                                                <option value="4">Wet Chemistry Area</option>
-                                                <option value="5">Warehouse</option>
-                                                <option value="6"> Molecular Area</option>
-                                                <option value="7"> Microbiology Area</option>
-                                                <option value="8"> Instrumental Area</option>
-                                                <option value="9"> Administration</option>
-                                                <option value="10"> Financial Department</option>
+                                                
+                                                <option value="QA">QA</option>
+                                                <option value="QC">QC</option>
+                                                <option value="R&D">R&D</option>
+                                                <option value="Wet Chemistry Area">Wet Chemistry Area</option>
+                                                <option value="Warehouse">Warehouse</option>
+                                                <option value="Molecular Area">Molecular Area</option>
+                                                <option value="Microbiology Area">Microbiology Area</option>
+                                                <option value="Instrumental Area">Instrumental Area</option>
+                                                <option value="Administration">Administration</option>
+                                                <option value="Financial Department">Financial Department</option>
+
                                             </select>
                                         </div>
                                     </div>
@@ -522,17 +523,18 @@
                                             <label for="Department(s)">Department(s)</label>
                                             <select multiple name="departments2[]" placeholder="Select Departments"
                                                 data-search="false" data-silent-initial-value-set="true" id="departments">
-                                                <option value="">Select Department</option>
-                                                <option value="1">QA</option>
-                                                <option value="2">QC</option>
-                                                <option value="3">R&D</option>
-                                                <option value="4">Wet Chemistry Area</option>
-                                                <option value="5">Warehouse</option>
-                                                <option value="6"> Molecular Area</option>
-                                                <option value="7"> Microbiology Area</option>
-                                                <option value="8"> Instrumental Area</option>
-                                                <option value="9"> Administration</option>
-                                                <option value="10"> Financial Department</option>
+                                                
+                                                <option value="QA">QA</option>
+                                                <option value="QC">QC</option>
+                                                <option value="R&D">R&D</option>
+                                                <option value="Wet Chemistry Area">Wet Chemistry Area</option>
+                                                <option value="Warehouse">Warehouse</option>
+                                                <option value="Molecular Area">Molecular Area</option>
+                                                <option value="Microbiology Area">Microbiology Area</option>
+                                                <option value="Instrumental Area">Instrumental Area</option>
+                                                <option value="Administration">Administration</option>
+                                                <option value="Financial Department">Financial Department</option>
+
                                             </select>
                                         </div>
                                     </div>
@@ -1480,7 +1482,7 @@
                                         <div class="group-input">
                                             <label for="mitigation-status">Status of Mitigation</label>
                                             <select name="mitigation_status">
-                                                <option value="0">-- Select --</option>
+                                                <option value="">-- Select --</option>
                                                 <option value="green">Green Status</option>
                                                 <option value="amber">Amber Status</option>
                                                 <option value="red">Red Staus</option>
