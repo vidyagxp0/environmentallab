@@ -900,7 +900,9 @@
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                         </div>
                         <form action="{{ route('StateChangeAuditProgram', $data->id) }}" method="POST">
                             @csrf
@@ -909,7 +911,7 @@
                                 <div class="mb-3 text-justify">
                                     Please select a meaning and a outcome for this task and enter your username
                                     and password for this task. You are performing an electronic signature,
-                                    which is legally binding equivalent of a hand written signature.
+                                    which is legally binding equivalent of a hand written signatureaaaaaaaaaaaaaaa.
                                 </div>
                                 <div class="group-input">
                                     <label for="username">Username <span class="text-danger">*</span></label>
@@ -946,7 +948,9 @@
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                         </div>
 
                         <form action="{{ route('AuditProgramCancel', $data->id) }}" method="POST">
@@ -994,7 +998,9 @@
                         <!-- Modal Header -->
                         <div class="modal-header">
                             <h4 class="modal-title">E-Signature</h4>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                         </div>
 
                         <form action="{{ route('AuditProgramStateRecject', $data->id) }}" method="POST">

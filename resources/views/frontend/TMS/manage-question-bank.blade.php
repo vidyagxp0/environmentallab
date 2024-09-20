@@ -84,7 +84,7 @@
                                         </tr>
                                     </thead>
                                     <tbody id="selected-list">
-
+                            
                                     </tbody>
                                 </table>
                             </div>
@@ -147,7 +147,7 @@
     </div>
 
     <script>
-        const itemList = document.getElementById('item-list');
+               const itemList = document.getElementById('item-list');
         const selectedList = document.getElementById('selected-list');
         function deleteItem() {
             const itemRow = this.closest('tr');
@@ -213,6 +213,6 @@
       });
   }
 });
-
+   
     </script>
 @endsection
