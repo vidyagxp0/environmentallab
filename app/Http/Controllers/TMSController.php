@@ -382,42 +382,55 @@ class TMSController extends Controller
     //    }
     // Quiz Question SHOW 
     }   
-    public function trainingQuestion($id){
-        $document = Document::find($id);
-        $document_training = DocumentTraining::where('document_id',$id)->first();
-        $training = Training::find($document_training->training_plan);
-        if($training->training_plan_type == "Read & Understand with Questions"){
-            $quize = Quize::find($training->quize);
-            $data = explode(',',$quize->question);
-            $array = [];
+    public function trainingQuestion($id)
+{
+    $document = Document::find($id);
+    $document_training = DocumentTraining::where('document_id', $id)->first();
+    $training = Training::find($document_training->training_plan);
 
-            for($i = 0; $i<count($data); $i++){
-                $question = Question::find($data[$i]);
-                $question->id = $i+1;
-                $json_option = unserialize($question->options);
-                $options = [];
-                foreach($json_option as $key => $value){
-                    $options[chr(97 + $key)] = $value;
+    if ($training->training_plan_type == "Read & Understand with Questions") {
+        $quize = Quize::find($training->quize);
+        $data = explode(',', $quize->question);
+        $array = [];
+
+        for ($i = 0; $i < count($data); $i++) {
+            $question = Question::find($data[$i]);
+            $question->id = $i + 1;
+            $json_option = unserialize($question->options);
+            $options = [];
+            
+            if (!empty($json_option)) {
+                // If the question has options, set it as a multiple-choice question
+                $question->type = 'multiple-choice';
+                foreach ($json_option as $key => $value) {
+                    $options[chr(97 + $key)] = $value; // Convert key to letter (a, b, c, etc.)
                 }
                 $question->options = array($options);
-                $ans = unserialize($question->answers);
-                $question->answers = implode("", $ans);
-                $question->score = 0;
-                $question->status = "";
-                
-                array_push($array,$question);
+            } else {
+                // If no options, treat the question as a text input question
+                $question->type = 'text';
+                $question->options = null; // Clear any options
             }
-             $data_array = implode(',',$array);
 
-            return view('frontend.TMS.example',compact('document','data_array','quize'));
+            // Process answers and other fields
+            $ans = unserialize($question->answers);
+            $question->answers = implode("", $ans);
+            $question->score = 0;
+            $question->status = "";
 
+            array_push($array, $question);
+        }
 
-       }
-       else{
+        // Convert the array into a JSON string to pass to the frontend
+        $data_array = json_encode($array);
+
+        return view('frontend.TMS.example', compact('document', 'data_array', 'quize'));
+    } else {
         toastr()->error('Training not specified');
         return back();
-       }
     }
+}
+
     
     // public function trainingSubmitData(Request $request,$id){
          
