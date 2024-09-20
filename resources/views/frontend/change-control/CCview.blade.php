@@ -1996,7 +1996,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
                 <form action="{{ url('rcms/send-cc', $cc_lid) }}" method="POST">
                     @csrf
@@ -2128,7 +2130,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ url('rcms/send-rejection-field', $cc_lid) }}" method="POST">
@@ -2172,7 +2176,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ url('rcms/send-cft-field', $cc_lid) }}" method="POST">
@@ -2215,7 +2221,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ url('rcms/send-cancel', $cc_lid) }}" method="POST">

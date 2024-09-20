@@ -12833,7 +12833,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ route('non_conformance_reject', $data->id) }}" method="POST">
@@ -12882,7 +12884,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ route('failureInvestigationCancel', $data->id) }}" method="POST">
@@ -12930,7 +12934,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ url('failureInvestigationIsCFTRequired', $data->id) }}" method="POST">
@@ -12976,7 +12982,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ route('nonConformaceCheck', $data->id) }}" method="POST">
@@ -13022,7 +13030,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ route('nonConformaceCheck2', $data->id) }}" method="POST">
@@ -13068,7 +13078,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
 
                 <form action="{{ route('nonConformaceCheck3', $data->id) }}" method="POST">
@@ -13114,7 +13126,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
                 <form action="{{ route('pending_initiator_update', $data->id) }}" method="POST"
                     id="pendingInitiatorForm">
@@ -13158,7 +13172,9 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
                 <form action="{{ route('nonConformaceStageChange', $data->id) }}" method="POST"
                     id="signatureModalForm">
@@ -13203,7 +13219,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
                 <form action="{{ route('nonConformaceCftnotreqired', $data->id) }}" method="POST">
                     @csrf
@@ -13248,7 +13266,9 @@
                 <!-- Modal Header -->
                 <div class="modal-header">
                     <h4 class="modal-title">E-Signature</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <!-- <button type="button" class="btn-close" data-bs-dismiss="modal"></button> -->
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+
                 </div>
                 <form action="{{ route('failureInvestigationQaMoreInfo', $data->id) }}" method="POST">
                     @csrf
