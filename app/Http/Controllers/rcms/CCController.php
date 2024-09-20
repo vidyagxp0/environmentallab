@@ -909,9 +909,9 @@ class CCController extends Controller
         if(!empty($request->cft_comments)){
             $history = new RcmDocHistory;
             $history->cc_id = $info->id;
-            $history->activity_type = 'CFT Comments';
+            $history->activity_type = 'Comments.';
             $history->previous = "Null";
-            $history->current = $request->cft_comments;
+            $history->current = $openState->cft_comments;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -922,24 +922,25 @@ class CCController extends Controller
 
         if(!empty($request->cft_attchament)){
             $history = new RcmDocHistory;
-            $history->cc_id = $info->id;
+            $history->cc_id = $comments->id;
             $history->activity_type = 'Attachment';
             $history->previous = "Null";
-            $history->current = $info->cft_attchament;
+            $history->current = $comments->cft_attchament;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $openState->status;
-            $history->save(); 
+            $history->save();
         }
 
-        if(!empty($request->qa_comments)){
+
+        if(!empty($request->qa_commentss)){
             $history = new RcmDocHistory;
             $history->cc_id = $comments->id;
             $history->activity_type = 'QA Comments';
             $history->previous = "Null";
-            $history->current = $request->qa_comments;
+            $history->current = $request->qa_commentss;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1255,7 +1256,7 @@ class CCController extends Controller
         if(!empty($request->attach_list)){
             $history = new RcmDocHistory;
             $history->cc_id = $closure->id;
-            $history->activity_type = 'Change Closure Attachment';
+            $history->activity_type = 'List Of Attachments';
             $history->previous = "Null";
             $history->current = $closure->attach_list;
             $history->comment = "NA";
@@ -1334,10 +1335,10 @@ class CCController extends Controller
         $lastDocument = CC::find($id);
         $openState = CC::find($id);
 
-        $getId = $lastDocument->Microbiology_Person;
-        $lastcftReviewerIds = explode(',', $getId);
-        $lastcftReviewers = User::whereIn('id', $lastcftReviewerIds)->pluck('name')->toArray();
-        $lastcftReviewerNames = implode(', ', $lastcftReviewers);
+        // $getId = $lastDocument->Microbiology_Person;
+        // $lastcftReviewerIds = explode(',', $getId);
+        // $lastcftReviewers = User::whereIn('id', $lastcftReviewerIds)->pluck('name')->toArray();
+        // $lastcftReviewerNames = implode(', ', $lastcftReviewers);
 
 
         $openState->initiator_id = Auth::user()->id;
@@ -1372,16 +1373,16 @@ class CCController extends Controller
 
         $openState->Microbiology = $request->Microbiology;
         
-         if ($request->Microbiology_Person) {
-            $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        //  if ($request->Microbiology_Person) {
+        //     $openState->Microbiology_Person = implode(',', $request->Microbiology_Person);
 
-            $cftReviewerIds = explode(',', $openState->Microbiology_Person);
-            $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
-            $cftReviewerNames = implode(', ', $cftReviewers);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
+        //     $cftReviewerIds = explode(',', $openState->Microbiology_Person);
+        //     $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+        //     $cftReviewerNames = implode(', ', $cftReviewers);
+        //  } else {
+        //      toastr()->warning('CFT reviewers can not be empty');
+        //      return back();
+        //  }
         $openState->goup_review = $request->goup_review;
         $openState->Production = $request->Production;
         $openState->Production_Person = $request->Production_Person;
@@ -1391,7 +1392,7 @@ class CCController extends Controller
         $openState->Bd_Person = $request->Bd_Person;
         $openState->additional_attachments = json_encode($request->additional_attachments);
 
-        // $openState->cft_comments = $request->cft_comments; 
+        $openState->cft_comments = $request->cft_comments; 
         // $openState->cft_attchament = json_encode($request->cft_attchament);
         // $openState->qa_commentss = $request->qa_commentss;
         $openState->designee_comments = $request->designee_comments;
@@ -1538,15 +1539,15 @@ class CCController extends Controller
         $info->Quality_Approver_Person = $request->Quality_Approver_Person;
         $info->Microbiology = $request->Microbiology;
         
-         if ($request->Microbiology_Person) {
-             $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
-             $cftReviewerIds = explode(',', $info->Microbiology_Person);
-           $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
-           $cftReviewerNames = implode(', ', $cftReviewers);
-         } else {
-             toastr()->warning('CFT reviewers can not be empty');
-             return back();
-         }
+        //  if ($request->Microbiology_Person) {
+        //      $info->Microbiology_Person = implode(',', $request->Microbiology_Person);
+        //      $cftReviewerIds = explode(',', $info->Microbiology_Person);
+        //    $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+        //    $cftReviewerNames = implode(', ', $cftReviewers);
+        //  } else {
+        //      toastr()->warning('CFT reviewers can not be empty');
+        //      return back();
+        //  }
         $info->bd_domestic = $request->bd_domestic;
         $info->Bd_Person = $request->Bd_Person;
 
@@ -1729,7 +1730,7 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Initiator Group';
-            $history->previous = $lastDocument->Initiator_Group;
+            $history->previous = Helpers::getInitiatorGroupFullName($lastDocument->Initiator_Group);
             $history->current = Helpers::getInitiatorGroupFullName($request->Initiator_Group);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
@@ -1936,12 +1937,12 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastdocdetail->reason_change != $docdetail->reason_change || !empty($request->proposed_change_comment)) {
+        if ($lastdocdetail->reason_change != $docdetail->reason_change || !empty($request->reason_change_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Reason for Change';
-            $history->previous = $lastdocdetail->proposed_change;
-            $history->current = $docdetail->proposed_change;
+            $history->previous = $lastdocdetail->reason_change;
+            $history->current = $docdetail->reason_change;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2162,19 +2163,45 @@ class CCController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        if ($lastinfo->Microbiology_Person != $request->Microbiology_Person || !empty($request->Microbiology_Person)) {
-            $history = new RcmDocHistory;
-            $history->cc_id = $id;
-            $history->activity_type = 'CFT Reviewer Person';
-            $history->previous = $lastcftReviewerNames;
-            $history->current = $cftReviewerNames;
-            $history->comment = "NA";
-            $history->user_id = Auth::user()->id;
-            $history->user_name = Auth::user()->name;
-            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-            $history->origin_state = $lastDocument->status;
-            $history->save();
-        }
+// Existing logic for retrieving last CFT reviewer names
+
+
+// Ensure both values are not null before comparing them
+if ((!is_null($lastDocument->Microbiology_Person) && !is_null($request->Microbiology_Person)) && 
+    ($lastDocument->Microbiology_Person != implode(',', (array)$request->Microbiology_Person))) {
+
+    // Retrieving last CFT reviewer names
+    $getId = $lastDocument->Microbiology_Person;
+    $lastcftReviewerIds = explode(',', $getId);
+    $lastcftReviewers = User::whereIn('id', $lastcftReviewerIds)->pluck('name')->toArray();
+    $lastcftReviewerNames = implode(', ', $lastcftReviewers);
+
+    // If a new Microbiology_Person is provided in the request
+    if (!empty($request->Microbiology_Person)) {
+        $openState->Microbiology_Person = implode(',', (array)$request->Microbiology_Person);
+
+        $cftReviewerIds = explode(',', $openState->Microbiology_Person);
+        $cftReviewers = User::whereIn('id', $cftReviewerIds)->pluck('name')->toArray();
+        $cftReviewerNames = implode(', ', $cftReviewers);
+    } else {
+        toastr()->warning('CFT reviewers cannot be empty');
+        return back();
+    }
+
+    // Saving the history if there is a change in the reviewers
+    $history = new RcmDocHistory;
+    $history->cc_id = $id;
+    $history->activity_type = 'CFT Reviewer Person';
+    $history->previous = $lastcftReviewerNames; // Previous reviewers
+    $history->current = $cftReviewerNames; // Current reviewers
+    $history->comment = "NA";
+    $history->user_id = Auth::user()->id;
+    $history->user_name = Auth::user()->name;
+    $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+    $history->origin_state = $lastDocument->status;
+    $history->save();
+}
+
         // if ($lastinfo->bd_domestic != $info->bd_domestic || !empty($request->bd_domestic_comment)) {
         //     $history = new RcmDocHistory;
         //     $history->cc_id = $id;
@@ -2223,6 +2250,20 @@ class CCController extends Controller
             $history->activity_type = 'QA Comments';
             $history->previous = $lastcomments->qa_commentss;
             $history->current = $comments->qa_commentss;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+         if ($lastcomments->cft_comments != $comments->cft_comments) {
+            $history = new RcmDocHistory;
+            $history->cc_id = $id;
+            $history->activity_type = 'Comments.';
+            $history->previous = $lastcomments->cft_comments;
+            $history->current = $comments->cft_comments;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2404,7 +2445,7 @@ class CCController extends Controller
         if ($lastassessment->Occurance != $assessment->Occurance || !empty($request->Occurance_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Occurance';
+            $history->activity_type = 'Occurrence';
             
             if($lastassessment->Occurance == 1){
                 $history->previous = "Very Likely";
@@ -2569,7 +2610,7 @@ class CCController extends Controller
         if ($lastclosure->attach_list != $closure->attach_list) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
-            $history->activity_type = 'Change Closure Attachment';
+            $history->activity_type = 'List Of Attachments';
             $history->previous = $lastclosure->attach_list;
             $history->current = $closure->attach_list;
             $history->comment = "NA";

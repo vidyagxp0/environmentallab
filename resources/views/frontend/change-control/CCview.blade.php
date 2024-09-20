@@ -373,7 +373,7 @@
                                                     <label for="search">
                                                         Assigned To
                                                     </label>
-                                                    <select placeholder="Select..." name="assign_to" required>
+                                                    <select placeholder="Select..." name="assign_to">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $datas)
                                                             @if (Helpers::checkUserRolesassign_to($datas))
