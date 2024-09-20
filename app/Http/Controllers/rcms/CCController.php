@@ -1964,7 +1964,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastdocdetail->supervisor_comment != $docdetail->other_comment || !empty($request->supervisor_comment_comment)) {
+        if ($lastdocdetail->supervisor_comment != $docdetail->supervisor_comment || !empty($request->supervisor_comment_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Supervisor Comments';
