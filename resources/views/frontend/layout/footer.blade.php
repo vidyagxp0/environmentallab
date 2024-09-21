@@ -730,7 +730,7 @@
             var departmentCode = $(this).find(':selected').attr('data-id');
             var myarr = departmentCode;
             var url = "{{ route('data', [':myarr']) }}";
-            url = url.replace(':myarr', myarr);
+            // url = url.replace(':myarr', myarr);
             url = url.replace('http:', 'https:');
             $('#question-list').empty();
             $.ajax({
@@ -747,7 +747,7 @@
         var selectQuestion = $('#selectQuestion').attr('data-id');
         var quesData = selectQuestion;
         var url = "{{ route('questiondata', [':quesData']) }}";
-        url = url.replace(':quesData', quesData);
+        // url = url.replace(':quesData', quesData);
         // uncomment on live
         url = url.replace('http:', 'https:');
         $('#selected-list').empty();
