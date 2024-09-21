@@ -961,7 +961,7 @@
                         <th class="w-20">Reference Record</th>
                         <td class="w-30">
                             @if ($data->Reference_Recores1)
-                                {{ $data->Reference_Recores1 }}
+                                {{ str_replace(',', ', ', $data->Reference_Recores1) }}
                             @else
                                 Not Applicable
                             @endif

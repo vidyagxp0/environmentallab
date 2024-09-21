@@ -890,9 +890,10 @@
                                         <select name="severity" id="analysisR" onchange='calculateRiskAnalysis(this)'>
                                             <option value="">Enter Your Selection Here</option>
                                             <option value="1">Negligible</option>
-                                            <option value="2">Moderate</option>
-                                            <option value="3">Major</option>
-                                            <option value="4">Fatal</option>
+                                            <option value="2">Minor</option>
+                                            <option value="3">Moderate</option>
+                                            <option value="4">Major</option>
+                                            <option value="5">Fatal</option>
                                         </select>
                                     </div>
                                 </div>
@@ -918,7 +919,7 @@
                                             <option value="4">Rare</option>
                                             <option value="3">Unlikely</option>
                                             <option value="2">Likely</option>
-                                            <option value="1">Very Likely</option>
+                                            {{-- <option value="1">Very Likely</option>  --}}
                                         </select>
                                     </div>
                                 </div>

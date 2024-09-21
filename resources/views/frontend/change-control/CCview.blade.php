@@ -877,12 +877,7 @@
                                                     <textarea name="qa_review_comments" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $review->qa_comments }}</textarea>
                                                 </div>
                                             </div>
-
-
-
-
-
-
+                                            
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Related Records">Related Records</label>
@@ -1468,13 +1463,14 @@
                                                             value="3">Unlikely</option>
                                                         <option {{ $assessment->Detection == '2' ? 'selected' : '' }}
                                                             value="2">Likely</option>
-                                                        {{-- <option  {{   $assessment ->Detection=='Very-Likely'? 'selected' : ''}} value="Very-Likely">Very Likely</option> --}}
+                                                        {{-- <option  {{   $assessment ->Detection=='Very-Likely'? 'selected' : ''}} value="Very-Likely">Very Likely</option>  --}}
                                                     </select>
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="RPN">RPN</label>
+                                                    <div><small class="text-primary">Auto - Calculated</small></div>
                                                     <input type="text" name="RPN" id="analysisRPN"
                                                         value="{{ $assessment->RPN }}"
                                                         {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
