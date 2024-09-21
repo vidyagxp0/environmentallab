@@ -161,7 +161,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                Risk Assesment Single Report
+                Risk Assessment Single Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -173,7 +173,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Risk Assesment No.</strong>
+                    <strong>Risk Assessment No.</strong>
                 </td>
                 <td class="w-40">
                    {{ Helpers::divisionNameForQMS($data->division_id) }}/RA/{{ Helpers::year($data->created_at) }}/{{ str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -234,7 +234,7 @@
                         </tr>
                         <tr>
                             <th class="w-20">Department(s)</th>
-                            <td class="w-80">@if($data->departments){{  Helpers::getDepartmentNameWithString($data->departments) }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->departments){{  $data->departments  }}@else Not Applicable @endif</td>
                            {{-- <th class="w-20"> Short Description</th>
                            <td class="w-30">@if($data->short_description){{ $data->short_description }} @else Not Applicable @endif</td> --}}
                        </tr>
@@ -297,7 +297,7 @@
                 <table>
                         <tr>
                             <th class="w-20">Department(s)</th>
-                            <td class="w-80">@if($data->departments2){{  Helpers::getDepartmentNameWithString($data->departments2) }}@else Not Applicable @endif</td>
+                            <td class="w-80">@if($data->departments2){{  $data->departments2 }}@else Not Applicable @endif</td>
                             <th class="w-20">Source of Risk</th>
                             <td class="w-80">@if($data->source_of_risk){{ $data->source_of_risk }}@else Not Applicable @endif</td>
                         </tr>
@@ -1060,9 +1060,9 @@
                         <td class="w-30">{{ Helpers::getdateFormat($data->submitted_on) }}</td>
                     </tr>
                     <tr>
-                        <th class="w-20">Evaluation Complete By</th>
+                        <th class="w-20">Evaluation Completed By</th>
                         <td class="w-30">{{ $data->evaluated_by }}</td>
-                        <th class="w-20">Evaluation Complete On</th>
+                        <th class="w-20">Evaluation Completed On</th>
                         <td class="w-30">{{ Helpers::getdateFormat($data->evaluated_on) }}</td>
                     </tr>
 

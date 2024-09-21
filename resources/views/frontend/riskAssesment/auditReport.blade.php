@@ -164,7 +164,7 @@
         <table>
             <tr>
                 <td class="w-70 head">
-                   Risk Assesment Trail Report
+                   Risk Assessment Trail Report
                 </td>
                 <td class="w-30">
                     <div class="logo">
@@ -176,7 +176,7 @@
         <table>
             <tr>
                 <td class="w-30">
-                    <strong>Risk Assesment No.</strong>
+                    <strong>Risk Assessment No.</strong>
                 </td>
                 <td class="w-40">
                 {{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}
@@ -190,7 +190,7 @@
 
     <div class="inner-block">
 
-        <div class="head"> Risk Assesment Trial Report</div>
+        <div class="head"> Risk Assessment Trail Report</div>
 
         <div class="division">
         {{ Helpers::getDivisionName(session()->get('division')) }}/RA/{{ date('Y') }}/{{ str_pad($doc->record_number->record_number, 4, '0', STR_PAD_LEFT) }}

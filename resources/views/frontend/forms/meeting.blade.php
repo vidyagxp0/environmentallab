@@ -1289,6 +1289,18 @@
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="group-input">
+                                        <label for="Completed On"> Submitted By</label>
+                                        {{-- <div class="static">17-04-2023 11:12PM</div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Completed On"> Submitted On</label>
+                                        {{-- <div class="static">17-04-2023 11:12PM</div> --}}
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
                                         <label for="Completed By"> All Actions Completed By</label>
                                         {{-- <div class="static">Person datafield</div>/ --}}
                                     </div>
@@ -1296,19 +1308,6 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Completed On"> All Actions Completed On</label>
-                                        {{-- <div class="static">17-04-2023 11:12PM</div> --}}
-                                    </div>
-                                </div>
-                                <div> </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Completed On"> Submited On</label>
-                                        {{-- <div class="static">17-04-2023 11:12PM</div> --}}
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="group-input">
-                                        <label for="Completed On"> Submited On</label>
                                         {{-- <div class="static">17-04-2023 11:12PM</div> --}}
                                     </div>
                                 </div>

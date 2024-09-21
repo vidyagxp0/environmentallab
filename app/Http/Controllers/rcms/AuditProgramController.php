@@ -448,7 +448,7 @@ class AuditProgramController extends Controller
         if (!empty($data->url_description)) {
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $data->id;
-            $history->activity_type = 'URl,s Description';
+            $history->activity_type = "URl's Description";
             $history->previous = "Null";
             $history->current = $data->url_description;
             $history->comment = "NA";
@@ -848,7 +848,7 @@ class AuditProgramController extends Controller
 
             $history = new AuditProgramAuditTrial();
             $history->AuditProgram_id = $id;
-            $history->activity_type = 'URl,s Description';
+            $history->activity_type = "URl's Description";
             $history->previous = $lastDocument->url_description;
             $history->current = $data->url_description;
             $history->comment = $request->related_url_comment;
