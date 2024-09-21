@@ -183,9 +183,9 @@
                     <strong>Observation Audit No.</strong>
                 </td>
                 <td class="w-40">
-                    {{--{{ Helpers::divisionNameForQMS($managementReview->division_id) }}/OBS/{{ Helpers::year($managementReview->created_at) }}/{{ str_pad($managementReview->record, 4, '0', STR_PAD_LEFT) }}                </td>--}}
+                    {{ Helpers::divisionNameForQMS($doc->division_id) }}/OBS/{{ Helpers::year($doc->created_at) }}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
 
-                   {{ Helpers::getDivisionName(session()->get('division'))}}/OBS/{{ Helpers::year($doc->created_at)}}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
+                   {{--{{ Helpers::getDivisionName(session()->get('division'))}}/OBS/{{ Helpers::year($doc->created_at)}}/{{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}--}}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($doc->record, 4, '0', STR_PAD_LEFT) }}
@@ -197,8 +197,6 @@
     <div class="inner-block">
 
         <div class="head">Audit Trail Histroy Configuration Report</div>
-
-
 
         <div class="first-table">
             <table>
@@ -232,6 +230,7 @@
                     <th class='w-10'>Date Performed</th>
                     <th class='w-10'>Person Responsible</th>
                     <th class='w-10'>Change Type</th>
+                </tr>
                 @foreach ($data as $datas)
                     <tr>
                         <td>

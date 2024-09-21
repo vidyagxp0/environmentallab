@@ -521,8 +521,8 @@
                                             placeholder="Select Reference Records">
                                             @foreach ($pre as $new)
                                                 <option
-                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/Change-Control/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) . '/Change-Control/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
+                                                    value="{{ Helpers::getDivisionName($new->division_id) . '/CC/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}">
+                                                    {{ Helpers::getDivisionName($new->division_id) . '/CC/' . date('Y') . '/' . Helpers::recordFormat($new->record) }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -600,7 +600,7 @@
                                 </div>
                             </div>
                          </div>
-                        </div>   
+                        {{-- </div>    --}}
                             <div class="sub-head">
                                 Training Information
                             </div>
@@ -1026,7 +1026,7 @@
                                             </td>
                                             {{-- <td><input type="date" name="implementation_date[]">
                                             </td> --}}
-                                            <td><input type="text" name="implementation_date[]"></td>
+                                            <td><input type="date" name="implementation_date[]"></td>
                                             <td><input type="text" name="new_document_no[]">
                                             </td>
                                             <td><input type="text" name="new_version_no[]">
@@ -1107,7 +1107,6 @@
                                         <textarea name="due_date_extension"></textarea>
                                     </div>
                                 </div>
-                            </div>
                             <div class="button-block">
                                 <button type="submit" class="saveButton">Save</button>
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

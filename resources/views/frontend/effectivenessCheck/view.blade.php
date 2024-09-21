@@ -319,7 +319,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="group-input">
-                                        <label for="Effectiveness check Plan"><b>Effectiveness check Plan</b></label>
+                                        <label for="Effectiveness check Plan"><b>Effectiveness Check Plan</b></label>
                                         <input type="text" name="Effectiveness_check_Plan"
                                             {{ $data->stage == 0 || $data->stage == 6 || $data->stage == 4 ? 'disabled' : '' }}
                                             value="{{ $data->Effectiveness_check_Plan }}">
@@ -422,7 +422,7 @@
                             @endif
                             <div class="col-12">
                                 <div class="group-input">
-                                    <label for="Effectiveness check Attachments">Effectiveness check Attachment</label>
+                                    <label for="Effectiveness check Attachments">Effectiveness Check Attachment</label>
                                     <div><small class="text-primary">Please Attach all relevant or supporting
                                             documents</small></div>
                                     <div class="file-attachment-field">
@@ -529,7 +529,7 @@
                         <div class="row">
                             <!-- Reference Info comments -->
                             <div class="col-12 sub-head">
-                                Reference Info comments
+                                Reference Info Comments
                             </div>
                             <div class="col-12">
                                 <div class="group-input">

@@ -92,7 +92,7 @@
                                         </div>
                                     </div> -->
 
-                                <div class="col-lg-6">
+                                {{--<div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Date Opened">Date of Initiation</label>
                                         <input disabled type="text"
@@ -101,9 +101,16 @@
                                         <input type="hidden" id="initiation_date" value="{{ $parent_intiation_date }}"
                                             name="intiation_date">
                                     </div>
+                                </div>--}}
+
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Date Due"><b>Date of Initiation</b></label>
+                                        <input disabled type="text" value="{{ date('d-M-Y') }}" name="intiation_date">
+                                        <input type="hidden" value="{{ date('Y-m-d') }}" name="intiation_date" >
+
+                                    </div>
                                 </div>
-
-
 
 
                                 {{-- <div class="col-lg-6">

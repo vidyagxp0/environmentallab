@@ -594,7 +594,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Department1';
             $history->previous = "Null";
-            $history->current = Helpers::getDepartmentWithString($data->departments);
+            $history->current = $data->departments;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -748,7 +748,7 @@ class RiskManagementController extends Controller
             $history->risk_id = $data->id;
             $history->activity_type = 'Department2';
             $history->previous = "Null";
-            $history->current = Helpers::getDepartmentWithString($data->departments2);
+            $history->current = $data->departments2;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2098,8 +2098,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Department1';
-            $history->previous = Helpers::getDepartmentWithString($lastDocument->departments);
-            $history->current = Helpers::getDepartmentWithString($data->departments);
+            $history->previous = $lastDocument->departments;
+            $history->current = $data->departments;
             $history->comment = $request->departments_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -2305,8 +2305,8 @@ class RiskManagementController extends Controller
             $history = new RiskAuditTrail();
             $history->risk_id = $id;
             $history->activity_type = 'Department2';
-            $history->previous = Helpers::getDepartmentWithString($lastDocument->departments2);
-            $history->current = Helpers::getDepartmentWithString($data->departments2);
+            $history->previous = $lastDocument->departments2;
+            $history->current = $data->departments2;
             $history->comment = $request->departments2_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

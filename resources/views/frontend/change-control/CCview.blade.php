@@ -97,14 +97,14 @@
                             <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/eCheck', $data->id) }}">
                                     Close Done </a> </button>
                         @endif --}}
-                        @if ($data->stage == 1 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @if ($data->stage == 1 && Helpers::check_roles($data->division_id, 'Change Control', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Submit
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Cancel
                             </button>
-                        @elseif($data->stage == 2 && (in_array(4, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 2 && Helpers::check_roles($data->division_id, 'Change Control', 4))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
                                 Child
                             </button>
@@ -114,7 +114,7 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 More Info-required
                             </button>
-                        @elseif($data->stage == 3 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 3 && Helpers::check_roles($data->division_id, 'Change Control', 3))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Send to CFT/SME/QA Reviewers
                             </button>
@@ -127,30 +127,31 @@
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
                             </button>
-                        @elseif($data->stage == 4 && (in_array(5, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 4 && Helpers::check_roles($data->division_id, 'Change Control', 5))
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Review Complete
                             </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#rejection-modal">
                                 Request More Info
                             </button>
-                        @elseif($data->stage == 6 && (in_array(6, $userRoleIds) || in_array(18, $userRoleIds)))
+                        @elseif($data->stage == 5 && Helpers::check_roles($data->division_id, 'Change Control', 3))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
+                                Implemented
+                            </button>
+                            {{-- @elseif($data->stage == 6 && Helpers::check_roles($data->division_id, 'Change Control', 3))
                             @if ($evaluation->training_required == 'yes')
                                 <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                     Training Completed
                                 </button>
-                            @endif
-                        @elseif($data->stage == 7 && (in_array(3, $userRoleIds) || in_array(18, $userRoleIds)))
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
-                                Implemented
-                            </button>
-                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
+                            @endif --}}
+
+                            {{-- <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal1">
                                 Child
-                            </button>
-                        @elseif($data->stage == 8)
+                            </button> --}}
+                            {{-- @elseif($data->stage == 8)
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 Final Review Complete
-                            </button>
+                            </button> --}}
                         @endif
                         <button class="button_theme1"> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit
                             </a> </button>
@@ -252,9 +253,9 @@
                         <div class="">Superviser Review</div>
                     @endif  --}}
                             @if ($data->stage >= 2)
-                                <div class="active">Under HOD Review </div>
+                                <div class="active"> HOD Review </div>
                             @else
-                                <div class="">Under HOD Review </div>
+                                <div class=""> HOD Review </div>
                             @endif
                             {{-- @if ($info->Quality_Approver == 'yes') --}}
                             @if ($data->stage >= 3)
@@ -285,12 +286,12 @@
                             @endif
                         @endif --}}
 
-                            @if ($data->stage >= 7)
+                            @if ($data->stage >= 5)
                                 <div class="active">Pending Change Implementation</div>
                             @else
                                 <div class="">Pending Change Implementation</div>
                             @endif
-                            @if ($data->stage >= 8)
+                            @if ($data->stage >= 6)
                                 <div class="bg-danger">Closed - Done</div>
                             @else
                                 <div class="">Closed - Done</div>
@@ -372,7 +373,7 @@
                                                     <label for="search">
                                                         Assigned To
                                                     </label>
-                                                    <select placeholder="Select..." name="assign_to" required>
+                                                    <select placeholder="Select..." name="assign_to">
                                                         <option value="">Select a value</option>
                                                         @foreach ($users as $datas)
                                                             @if (Helpers::checkUserRolesassign_to($datas))
@@ -435,18 +436,19 @@
                                             </div>
 
                                             <!-- <div class="col-md-6">
-                                                    <div class="group-input">
-                                                        <label for="due-date">Due Date <span class="text-danger"></span></label>
-                                                        <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
-                                                        <input readonly type="text"
-                                                            value="{{ Helpers::getdateFormat($data->due_date) }}"
-                                                            name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                    </div>
-                                                </div> -->
+                                                        <div class="group-input">
+                                                            <label for="due-date">Due Date <span class="text-danger"></span></label>
+                                                            <div><small class="text-primary">If revising Due Date, kindly mention revision reason in "Due Date Extension Justification" data field.</small></div>
+                                                            <input readonly type="text"
+                                                                value="{{ Helpers::getdateFormat($data->due_date) }}"
+                                                                name="due_date" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
+                                                        </div>
+                                                    </div> -->
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="initiator-group">Initiator Group</label>
                                                     <select name="Initiator_Group" id="initiator_group">
+                                                        <option value="">-- Select --</option>
                                                         <option value="CQA"
                                                             @if ($data->Initiator_Group == 'CQA') selected @endif>Corporate
                                                             Quality Assurance</option>
@@ -689,7 +691,8 @@
                                                                             target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                        <a type="button" class="remove-file"
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                             data-remove-id="2-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
@@ -712,9 +715,11 @@
                                         </div>
                                         <div class="button-block">
                                             <button type="submit" class="saveButton">Save</button>
-                                            <button type="button" class="backButton" onclick="previousStep()">Back</button>
+                                            <button type="button" class="backButton"
+                                                onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            <button class=""> <a class="text-white"
+                                                    href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -746,7 +751,8 @@
                                                                 @foreach (unserialize($docdetail->current_doc_no) as $key => $datas)
                                                                     <tr>
                                                                         <td><input type="text" name="serial_number[]"
-                                                                                value="{{ $key ? $key + 1 : '1' }}" readonly></td>
+                                                                                value="{{ $key ? $key + 1 : '1' }}"
+                                                                                readonly></td>
                                                                         <td><input type="text"
                                                                                 name="current_doc_number[]"
                                                                                 value="{{ unserialize($docdetail->current_doc_no)[$key] ? unserialize($docdetail->current_doc_no)[$key] : '' }}">
@@ -815,7 +821,8 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            <button class=""> <a class="text-white"
+                                                    href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -866,7 +873,7 @@
                                                                 @php
                                                                     $recordValue =
                                                                         Helpers::getDivisionName($new->division_id) .
-                                                                        '/Change-Control/' .
+                                                                        '/CC/' .
                                                                         date('Y') .
                                                                         '/' .
                                                                         Helpers::recordFormat($new->record);
@@ -890,19 +897,19 @@
 
 
                                             <!-- <div class="col-12">
-                                                    <div class="group-input">
-                                                        <label for="related_records">Related Records</label>
-                                                        <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
-                                                            placeholder="Select Reference Records" data-search="false"
-                                                            data-silent-initial-value-set="true" id="related_records">
-                                                            @foreach ($pre as $prix)
+                                                        <div class="group-input">
+                                                            <label for="related_records">Related Records</label>
+                                                            <select {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} multiple id="related_records" name="related_records[]"
+                                                                placeholder="Select Reference Records" data-search="false"
+                                                                data-silent-initial-value-set="true" id="related_records">
+                                                                @foreach ($pre as $prix)
     <option value="{{ $prix->id }}" {{ in_array($prix->id, explode(',', $data->related_records)) ? 'selected' : '' }}>
-                                                                    {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
-                                                                </option>
+                                                                        {{ Helpers::getDivisionName($prix->division_id) }}/Change-Control/{{ Helpers::year($prix->created_at) }}/{{ Helpers::record($prix->record) }}
+                                                                    </option>
     @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div> -->
+                                                            </select>
+                                                        </div>
+                                                    </div> -->
 
 
                                             @if ($review->qa_head)
@@ -926,7 +933,8 @@
                                                                             target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                        <a type="button" class="remove-file"
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                             data-remove-id="3-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
@@ -949,7 +957,8 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            <button class=""> <a class="text-white"
+                                                    href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -982,7 +991,8 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                <a type="button" class="remove-file"
+                                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                     data-remove-id="4-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -1022,7 +1032,8 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            <button class=""> <a class="text-white"
+                                                    href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1237,7 +1248,8 @@
                                                                             target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                        <a type="button" class="remove-file"
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                             data-remove-id="5-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
@@ -1331,7 +1343,8 @@
                                                                             target="_blank"><i
                                                                                 class="fa fa-eye text-primary"
                                                                                 style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                        <a type="button" class="remove-file" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                        <a type="button" class="remove-file"
+                                                                            {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                             data-remove-id="6-{{ $loop->index }}"
                                                                             data-file-name="{{ $file }}"><i
                                                                                 class="fa-solid fa-circle-xmark"
@@ -1356,7 +1369,8 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            <button class=""> <a class="text-white"
+                                                    href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1394,7 +1408,7 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="group-input">
-                                                    <label for="Occurance">Occurance</label>
+                                                    <label for="Occurance">Occurrence</label>
                                                     <select name="Occurance" id="analysisP"
                                                         onchange='calculateRiskAnalysis(this)'>
                                                         <option value="">-- Select --</option>
@@ -1454,6 +1468,8 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
+                                            <button class=""> <a class="text-white"
+                                                    href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1488,7 +1504,8 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                <a type="button" class="remove-file"
+                                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                     data-remove-id="7-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -1511,7 +1528,8 @@
                                             <button type="button" class="backButton"
                                                 onclick="previousStep()">Back</button>
                                             <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                            <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                            <button class=""> <a class="text-white"
+                                                    href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                         </div>
                                     </div>
                                 </div>
@@ -1541,7 +1559,8 @@
                                                         @foreach (unserialize($closure->affected_document) as $key => $datas)
                                                             <tr>
                                                                 <td><input type="text" name="serial_number[]"
-                                                                        value="{{ $key ? $key + 1 : '1' }}" readonly></td>
+                                                                        value="{{ $key ? $key + 1 : '1' }}" readonly>
+                                                                </td>
                                                                 <td><input type="text" name="affected_documents[]"
                                                                         value="{{ unserialize($closure->affected_document)[$key] ? unserialize($closure->affected_document)[$key] : '' }}">
                                                                 </td>
@@ -1567,13 +1586,13 @@
                                                                         value="{{ unserialize($closure->implementation_date)[$key] ? unserialize($closure->implementation_date)[$key] : '' }}">
 
                                                                     <!-- <div class="group-input new-date-data-field">
-                                                                        <div class="input-date">
-                                                                            <div class="calenderauditee">
-                                                                                <input type="text" id="display_date{{ $key }}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
-                                                                                <input type="date" id="implementation_date_input{{ $key }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($closure->implementation_date)[$key] }}" name="implementation_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `display_date{{ $key }}`)" />
+                                                                            <div class="input-date">
+                                                                                <div class="calenderauditee">
+                                                                                    <input type="text" id="display_date{{ $key }}" {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($closure->implementation_date)[$key]) }}" />
+                                                                                    <input type="date" id="implementation_date_input{{ $key }}" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} value="{{ unserialize($closure->implementation_date)[$key] }}" name="implementation_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `display_date{{ $key }}`)" />
+                                                                                </div>
                                                                             </div>
-                                                                        </div>
-                                                                    </div> -->
+                                                                        </div> -->
                                                                 </td>
 
 
@@ -1614,7 +1633,8 @@
                                                                 <a href="{{ asset('upload/' . $file) }}"
                                                                     target="_blank"><i class="fa fa-eye text-primary"
                                                                         style="font-size:20px; margin-right:-10px;"></i></a>
-                                                                <a type="button" class="remove-file" {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
+                                                                <a type="button" class="remove-file"
+                                                                    {{ $data->stage == 0 || $data->stage == 9 ? 'disabled' : '' }}
                                                                     data-remove-id="8-{{ $loop->index }}"
                                                                     data-file-name="{{ $file }}"><i
                                                                         class="fa-solid fa-circle-xmark"
@@ -1631,52 +1651,52 @@
                                             </div>
                                         </div>
                                         <!-- <div class="sub-head">
-                                                Effectiveness Check Information
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="group-input">
-                                                        <label for="effective-check">Effectivess Check Required?</label>
-                                                        <select name="effective_check">
-                                                            <option value="">-- Select --</option>
-                                                            <option {{ $closure->effective_check == 'yes' ? 'selected' : '' }}
-                                                                value="yes">Yes</option>
-                                                            <option {{ $closure->effective_check == 'no' ? 'selected' : '' }}
-                                                                value="no">No</option>
-                                                        </select>
-                                                    </div>
+                                                    Effectiveness Check Information
                                                 </div>
-                                               
-                                                <div class="col-lg-6 new-date-data-field">
-                                                    <div class="group-input input-date">
-                                                        <label for="effective-check-date">Effectiveness Check Creation Date</label>
-                                                       <div class="calenderauditee">
-                                                              <input type="text"  id="effective_check_date"  readonly value="{{ Helpers::getdateFormat($data->effective_check_date) }}"
-                                                               name="effective_check_date"  placeholder="DD-MMM-YYYY" />
-                                                              <input type="date" name="effective_check_date" value="{{ $data->effective_check_date }}"  class="hide-input"
-                                                               oninput="handleDateInput(this, 'effective_check_date')"/>
-                                                 </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="group-input">
+                                                            <label for="effective-check">Effectivess Check Required?</label>
+                                                            <select name="effective_check">
+                                                                <option value="">-- Select --</option>
+                                                                <option {{ $closure->effective_check == 'yes' ? 'selected' : '' }}
+                                                                    value="yes">Yes</option>
+                                                                <option {{ $closure->effective_check == 'no' ? 'selected' : '' }}
+                                                                    value="no">No</option>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="group-input">
-                                                        <label for="Effectiveness_checker">Effectiveness Checker</label>
-                                                        <select name="Effectiveness_checker">
-                                                            <option value="">Enter Your Selection Here</option>
-                                                            @foreach ($users as $datas)
+                                                   
+                                                    <div class="col-lg-6 new-date-data-field">
+                                                        <div class="group-input input-date">
+                                                            <label for="effective-check-date">Effectiveness Check Creation Date</label>
+                                                           <div class="calenderauditee">
+                                                                  <input type="text"  id="effective_check_date"  readonly value="{{ Helpers::getdateFormat($data->effective_check_date) }}"
+                                                                   name="effective_check_date"  placeholder="DD-MMM-YYYY" />
+                                                                  <input type="date" name="effective_check_date" value="{{ $data->effective_check_date }}"  class="hide-input"
+                                                                   oninput="handleDateInput(this, 'effective_check_date')"/>
+                                                     </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12">
+                                                        <div class="group-input">
+                                                            <label for="Effectiveness_checker">Effectiveness Checker</label>
+                                                            <select name="Effectiveness_checker">
+                                                                <option value="">Enter Your Selection Here</option>
+                                                                @foreach ($users as $datas)
     <option {{ $info->Effectiveness_checker == $datas->id ? 'selected' : '' }}
-                                                                     value="{{ $datas->id }}">{{ $datas->name }}
-                                                                </option>
+                                                                         value="{{ $datas->id }}">{{ $datas->name }}
+                                                                    </option>
     @endforeach
-                                                        </select>
+                                                            </select>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="group-input">
-                                                        <label for="effective_check_plan">Effectiveness Check Plan</label>
-                                                        <textarea name="effective_check_plan">{{ $data->effective_check_plan }}</textarea>
-                                                    </div>
-                                                </div> -->
+                                                    <div class="col-12">
+                                                        <div class="group-input">
+                                                            <label for="effective_check_plan">Effectiveness Check Plan</label>
+                                                            <textarea name="effective_check_plan">{{ $data->effective_check_plan }}</textarea>
+                                                        </div>
+                                                    </div> -->
                                         <div class="col-12 sub-head">
                                             Extension Justification
                                         </div>
@@ -1691,7 +1711,8 @@
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="button" class="nextButton" onclick="nextStep()">Next</button>
-                                        <button> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                        <button> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -1707,67 +1728,69 @@
                                         Electronic Signatures
                                     </div>
                                     <div class="row">
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Submitted By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
-                                                            ->where('stage_id', 2)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="submitted">Submitted By</label>
+                                                @php
+                                                    $submit = DB::table('c_c_stage_histories')
+                                                        ->where('type', 'Change-Control')
+                                                        ->where('doc_id', $data->id)
+                                                        ->where('stage_id', 2)
+                                                        ->get();
+                                                @endphp
+                                                @foreach ($submit as $temp)
+                                                    <div class="static">{{ $temp->user_name }}</div>
+                                                @endforeach
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Submitted On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $data->id)
-                                                            ->where('stage_id', 2)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="submitted">Submitted On</label>
+                                                @php
+                                                    $submit = DB::table('c_c_stage_histories')
+                                                        ->where('type', 'Change-Control')
+                                                        ->where('doc_id', $data->id)
+                                                        ->where('stage_id', 2)
+                                                        ->get();
+                                                @endphp
+                                                @foreach ($submit as $temp)
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}
+                                                    </div>
+                                                @endforeach
                                             </div>
+                                        </div>
 
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Cancelled By</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 0)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ $temp->user_name }}</div>
-                                                    @endforeach
-                                                </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="submitted">Cancelled By</label>
+                                                @php
+                                                    $submit = DB::table('c_c_stage_histories')
+                                                        ->where('type', 'Change-Control')
+                                                        ->where('doc_id', $cc_lid)
+                                                        ->where('stage_id', 0)
+                                                        ->get();
+                                                @endphp
+                                                @foreach ($submit as $temp)
+                                                    <div class="static">{{ $temp->user_name }}</div>
+                                                @endforeach
                                             </div>
-                                            <div class="col-lg-6">
-                                                <div class="group-input">
-                                                    <label for="submitted">Cancelled On</label>
-                                                    @php
-                                                        $submit = DB::table('c_c_stage_histories')
-                                                            ->where('type', 'Change-Control')
-                                                            ->where('doc_id', $cc_lid)
-                                                            ->where('stage_id', 0)
-                                                            ->get();
-                                                    @endphp
-                                                    @foreach ($submit as $temp)
-                                                        <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
-                                                    @endforeach
-                                                </div>
-                                            </div>                                        
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="group-input">
+                                                <label for="submitted">Cancelled On</label>
+                                                @php
+                                                    $submit = DB::table('c_c_stage_histories')
+                                                        ->where('type', 'Change-Control')
+                                                        ->where('doc_id', $cc_lid)
+                                                        ->where('stage_id', 0)
+                                                        ->get();
+                                                @endphp
+                                                @foreach ($submit as $temp)
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
 
                                         <div class="col-lg-6">
                                             <div class="group-input">
@@ -1795,7 +1818,8 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1826,7 +1850,8 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1857,7 +1882,8 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1889,7 +1915,8 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1920,7 +1947,8 @@
                                                         ->get();
                                                 @endphp
                                                 @foreach ($submit as $temp)
-                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}</div>
+                                                    <div class="static">{{ Helpers::getdateFormat1($temp->created_at) }}
+                                                    </div>
                                                 @endforeach
                                             </div>
                                         </div>
@@ -1930,7 +1958,8 @@
                                         <button type="submit" class="saveButton">Save</button>
                                         <button type="button" class="backButton" onclick="previousStep()">Back</button>
                                         <button type="submit">Submit</button>
-                                        <button class=""> <a class="text-white" href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
+                                        <button class=""> <a class="text-white"
+                                                href="{{ url('rcms/qms-dashboard') }}"> Exit </a> </button>
                                     </div>
                                 </div>
                             </div>
@@ -1960,11 +1989,11 @@
                         <div class="group-input">
 
                             <!-- <label for="major">
-                                    <input type="radio" name="child_type" value="extension">
-                                    Extension
-                                    <input type="hidden" name="parent_name" value="Change_control">
-                                    <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                </label> -->
+                                        <input type="radio" name="child_type" value="extension">
+                                        Extension
+                                        <input type="hidden" name="parent_name" value="Change_control">
+                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
+                                    </label> -->
                             <label for="major">
                                 <input type="radio" name="child_type" value="documents">
                                 New Document
@@ -2421,6 +2450,14 @@
             } else {
                 productTable.style.display = 'none';
             }
+        });
+    </script>
+
+    <script>
+        // JavaScript
+        document.getElementById('initiator_group').addEventListener('change', function() {
+            var selectedValue = this.value;
+            document.getElementById('initiator_group_code').value = selectedValue;
         });
     </script>
 
