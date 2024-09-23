@@ -337,7 +337,41 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Initiated Through</label>
+                                        <div><small class="text-primary">Please select related
+                                                information</small></div>
+                                        <select name="initiated_through"
+                                            {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
+                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option @if ($data->initiated_through == 'recall') selected @endif
+                                                value="recall">Recall</option>
+                                            <option @if ($data->initiated_through == 'return') selected @endif
+                                                value="return">Return</option>
+                                            <option @if ($data->initiated_through == 'deviation') selected @endif
+                                                value="deviation">Deviation</option>
+                                            <option @if ($data->initiated_through == 'complaint') selected @endif
+                                                value="complaint">Complaint</option>
+                                            <option @if ($data->initiated_through == 'regulatory') selected @endif
+                                                value="regulatory">Regulatory</option>
+                                            <option @if ($data->initiated_through == 'lab-incident') selected @endif
+                                                value="lab-incident">Lab Incident</option>
+                                            <option @if ($data->initiated_through == 'improvement') selected @endif
+                                                value="improvement">Improvement</option>
+                                            <option @if ($data->initiated_through == 'others') selected @endif
+                                                value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="initiated_through">Others<span
+                                                class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_through_req" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->initiated_through_req }}</textarea>
+                                    </div>
+                                </div>
                                 <!-- <div class="col-lg-6">
                              <div class="col-lg-6">
                                     <div class="group-input">
@@ -1441,7 +1475,20 @@
             });
         });
     </script>
-
+ <script>
+    function otherController(value, checkValue, blockID) {
+        let block = document.getElementById(blockID)
+        let blockTextarea = block.getElementsByTagName('textarea')[0];
+        let blockLabel = block.querySelector('label span.text-danger');
+        if (value === checkValue) {
+            blockLabel.classList.remove('d-none');
+            blockTextarea.setAttribute('required', 'required');
+        } else {
+            blockLabel.classList.add('d-none');
+            blockTextarea.removeAttribute('required');
+        }
+    }
+</script>
     <script>
         $(document).ready(function() {
             $('.remove-file').click(function() {

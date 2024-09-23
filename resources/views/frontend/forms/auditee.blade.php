@@ -159,6 +159,7 @@
                         '<td><input type="text" name="observation_description[]"></td>' +
                         // '<td><input type="text" name="severity_level[]"></td>' +
                         '<td><input type="text" name="area[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>'+
                         //'<td><input type="text" name="observation_category[]"></td>'
                         //  '<td><select name="observation_category[]"><option value="">Select A Value</option><option value="Major">Major</option><option value="Minor">Minor</option><option value="Critical">Critical</option><option value="Recommendation">Recommendation</option></select></td>'+
                         // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
@@ -952,6 +953,7 @@
                                                     <th>Pre Comments</th>
                                                     {{-- <th>Severity Level</th> --}}
                                                     <th>CAPA Details if any</th>
+                                                    <th>Expected Date To Complete</th>
                                                     {{-- <th>Observation Category</th>
                                                         <th>CAPA Required</th> --}}
                                                     <th>Post Comments</th>

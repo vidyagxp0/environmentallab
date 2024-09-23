@@ -146,53 +146,13 @@
                     var users = @json($users);
 
                     var html =
-                        '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
+                       '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                         '<td><input type="text" name="observation_id[]"></td>' +
-                        // '<td><input type="date" name="date[]"></td>' +
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="auditorG[]">' +
-                        '<option value="">Select a value</option>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    html += '</select></td>' +
-                        //     '<td><select name="auditeeG[]">' +
-                        //     '<option value="">Select a value</option>';
-
-                        // for (var i = 0; i < users.length; i++) {
-                        //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                        // }
-                        // html += '</select></td>' +
                         '<td><input type="text" name="observation_description[]"></td>' +
-                        // '<td><input type="text" name="severity_level[]"></td>' +
                         '<td><input type="text" name="area[]"></td>' +
-                        // '<td><input type="text" name="observation_category[]"></td>' +
-                        // '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="auditee_response[]"></td>' +
-                        // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
-                        // '<td><input type="text" name="qa_comment[]"></td>' +
-                        // '<td><input type="text" name="capa_details[]"></td>' +
-                        // '<td><input type="date" name="capa_due_date[]"></td>' +
-                        //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
-
-                        //     '<td><select name="capa_owner[]">' +
-                        '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-                        //  '<td><input type="text" name="action_taken[]"></td>' +
-                        // '<td><input type="date" name="capa_completion_date[]"></td>' +
-                        //    '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>' +
-
-                        //     '<td><input type="text" name="status_Observation[]"></td>' +
-                        //     '<td><input type="text" name="remark_observation[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>'+
+                        '<td><input type="text" name="auditee_response[]"></td>'+
                         '</tr>';
 
                     return html;
@@ -279,6 +239,9 @@
                                 No CAPAs Required
                             </button>
                         @elseif($data->stage == 5 && (in_array(11, $userRoleIds) || in_array(18, $userRoleIds)))
+                            <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#child-modal">
+                                Child
+                            </button>
                             <button class="button_theme1" data-bs-toggle="modal" data-bs-target="#signature-modal">
                                 All CAPA Closed
                             </button>
@@ -1449,6 +1412,7 @@
                                                             <th>Pre Comments</th>
                                                             {{-- <th>Severity Level</th> --}}
                                                             <th>CAPA Details if any</th>
+                                                            <th>Expected Date To Complete</th>
                                                             {{-- <th>Observation Category</th>
                                                                 <th>CAPA Required</th> --}}
                                                             <th>Post Comments</th>
@@ -1512,6 +1476,12 @@
                                                                             name="area[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($grid_data1->area)[$key] ? unserialize($grid_data1->area)[$key] : '' }}">
                                                                     </td>
+                                                                    <td><div class="group-input new-date-data-field mb-0">
+                                                                        <div class="input-date "><div
+                                                                        class="calenderauditee">
+                                                                        <input type="text" id="capa_due_date{{$key}}' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getdateFormat(unserialize($grid_data1->capa_due_date)[$key]) }}" />
+                                                                        <input type="date" name="capa_due_date[]" class="hide-input" value="{{ unserialize($grid_data1->capa_due_date)[$key] }}"
+                                                                        oninput="handleDateInput(this, `capa_due_date{{$key}}' + serialNumber +'`)" /></div></div></div></td>
                                                                     {{-- <td><input type="text" name="observation_category[]" value="{{unserialize($grid_data1->observation_category)[$key] ? unserialize($grid_data1->observation_category)[$key]: "" }}"></td> --}}
                                                                     {{-- <td>
                                                                         <select name="capa_required[]">
@@ -1520,10 +1490,17 @@
                                                                             <option value="no">No</option>
                                                                         </select>
                                                                     </td> --}}
-                                                                    <td><input type="text"
+                                                                    {{-- <td><input type="text"
                                                                             name="auditee_response[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
                                                                             value="{{ unserialize($grid_data1->auditee_response)[$key] ? unserialize($grid_data1->auditee_response)[$key] : '' }}">
+                                                                    </td> --}}
+                                                                    <td>
+                                                                        <input type="text" 
+                                                                               name="auditee_response[]" 
+                                                                               {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }} 
+                                                                               value="{{ is_array($unserialized = unserialize($grid_data1->auditee_response)) && isset($unserialized[$key]) ? $unserialized[$key] : '' }}">
                                                                     </td>
+                                                                    
                                                                     {{-- <td><input type="text" name="auditee_response[]" value="{{ is_array($auditee_response = unserialize($grid_data1->auditee_response)) && isset($auditee_response[$key]) ? $observation_description[$key] : '' }}"></td> --}}
 
                                                                     {{-- <td><input type="text" name="auditor_review_on_response[]" value="{{unserialize($grid_data1->auditor_review_on_response)[$key] ? unserialize($grid_data1->auditor_review_on_response)[$key]: "" }}"></td>
@@ -2169,7 +2146,7 @@
 
             </div>
         </div>
-        <div class="modal fade" id="child-modal1">
+        {{-- <div class="modal fade" id="child-modal1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
 
@@ -2202,7 +2179,7 @@
 
                 </div>
             </div>
-        </div>
+        </div> --}}
 
 
         <div class="modal fade" id="signature-modal">
@@ -2353,7 +2330,7 @@
         <div class="modal fade" id="child-modal">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-
+        
                     <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Child</h4>
@@ -2363,34 +2340,32 @@
                         <!-- Modal body -->
                         <div class="modal-body">
                             <div class="group-input">
-                                <label for="major">
-                                    <input type="radio" name="child_type" value="Observations">
-                                    Observations
-                                </label>
-                            </div>
-
-                        </div>
-                        {{-- <div class="modal-body">
-                                <div class="group-input">
+                                @if ($data->stage == 3)
                                     <label for="major">
-                                        <input type="hidden" name="parent_name" value="Internal_audit">
-                                        <input type="hidden" name="due_date" value="{{ $data->due_date }}">
-                                        <input type="radio" name="child_type" value="extension">
-                                        Extension
+                                        <input type="radio" name="revision" value="Observation-child">
+                                        Observations
                                     </label>
-                                </div>
-                            </div> --}}
-
+                                @endif
+        
+                                @if ($data->stage == 5)
+                                    <label for="major">
+                                        <input type="radio" name="revision" value="capa-child">
+                                        CAPA
+                                    </label>
+                                @endif
+                            </div>
+                        </div>
+        
                         <!-- Modal footer -->
                         <div class="modal-footer">
                             <button type="button" data-bs-dismiss="modal">Close</button>
                             <button type="submit">Continue</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
+        
         <style>
             #step-form>div {
                 display: none

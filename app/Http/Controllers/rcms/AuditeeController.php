@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\rcms;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActionItem;
 use App\Models\Auditee;
 use App\Models\AuditeeHistory;
+use App\Models\Capa;
+use App\Models\CC;
+use App\Models\RootCauseAnalysis;
 use Helpers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -2912,17 +2916,58 @@ class AuditeeController extends Controller
     }
 
 
+    // public function child_external(Request $request, $id)
+    // {
+    //     $parent_id = $id;
+    //     $parent_type = "Observations";
+    //     $record_number = ((RecordNumber::first()->value('counter')) + 1);
+    //     $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+    //     $parent_division_id = Auditee::where('id', $id)->value('division_id');
+
+    //     $currentDate = Carbon::now();
+    //     $formattedDate = $currentDate->addDays(30);
+    //     $due_date = $formattedDate->format('d-M-Y');
+    //     return view('frontend.forms.observation', compact('record_number','parent_division_id', 'due_date', 'parent_id', 'parent_type'));
+    // }
+
     public function child_external(Request $request, $id)
     {
+        $cc = Auditee::find($id);
+        $cft = [];
         $parent_id = $id;
-        $parent_type = "Observations";
+        $parent_division_id = $cc->division_id;
+        $parent_type = "Internal Audit";
+        $old_record = Capa::select('id', 'division_id', 'record')->get();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-        $parent_division_id = Auditee::where('id', $id)->value('division_id');
-
         $currentDate = Carbon::now();
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
-        return view('frontend.forms.observation', compact('record_number','parent_division_id', 'due_date', 'parent_id', 'parent_type'));
+        $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+        $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+        $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+        $parent_initiator_id = $id;
+        // $changeControl = OpenStage::find(1);/
+        $hod = User::get();
+        $pre = CC::all();
+    // $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
+        $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+
+        // if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+        
+        if ($request->revision == "Observation-child") {
+            $old_record = ActionItem::all();
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+            return view('frontend.forms.observation', compact('record_number','old_record','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+
+        }
+       
+
+        if ($request->revision == "capa-child") {
+            $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+           return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft'));
+        }
+      
     }
 }
+

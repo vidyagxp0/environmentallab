@@ -166,6 +166,31 @@
                                         </select>
                                     </div>
                                 </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input">
+                                        <label for="Initiator Group">Initiated Through</label>
+                                        <div><small class="text-primary">Please select related information</small></div>
+                                        <select name="initiated_through"
+                                            onchange="otherController(this.value, 'others', 'initiated_through_req')">
+                                            <option value="">Enter Your Selection Here</option>
+                                            <option value="recall">Recall</option>
+                                            <option value="return">Return</option>
+                                            <option value="deviation">Deviation</option>
+                                            <option value="complaint">Complaint</option>
+                                            <option value="regulatory">Regulatory</option>
+                                            <option value="lab-incident">Lab Incident</option>
+                                            <option value="improvement">Improvement</option>
+                                            <option value="others">Others</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="group-input" id="initiated_through_req">
+                                        <label for="initiated_through">Others<span
+                                                class="text-danger d-none">*</span></label>
+                                        <textarea name="initiated_through_req"></textarea>
+                                    </div>
+                                </div>
                                 <!-- <div class="col-lg-6">
                                             <div class="group-input" id="initiated_through_req">
                                                 <label for="If Other">Others<span
@@ -860,5 +885,19 @@
         $('#duedoc').keyup(function() {
             var textlen = maxLength - $(this).val().length;
             $('#rchar').text(textlen);});
+    </script>
+     <script>
+        function otherController(value, checkValue, blockID) {
+            let block = document.getElementById(blockID)
+            let blockTextarea = block.getElementsByTagName('textarea')[0];
+            let blockLabel = block.querySelector('label span.text-danger');
+            if (value === checkValue) {
+                blockLabel.classList.remove('d-none');
+                blockTextarea.setAttribute('required', 'required');
+            } else {
+                blockLabel.classList.add('d-none');
+                blockTextarea.removeAttribute('required');
+            }
+        }
     </script>
 @endsection
