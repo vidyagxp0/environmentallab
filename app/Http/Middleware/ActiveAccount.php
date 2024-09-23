@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
-class Timezone
+class ActiveAccount
 {
     /**
      * Handle an incoming request.
@@ -17,13 +16,16 @@ class Timezone
      */
     public function handle(Request $request, Closure $next)
     {
-
-        if (Session::has('login_timezone')) {
-            $timezone = Session::get('login_timezone');
-            config(['app.timezone' => $timezone]);
-            date_default_timezone_set($timezone);
+        if (auth()->check()) {
+            if (auth()->user()->is_active) {
+                return $next($request);
+            } else {
+                auth()->logout();
+                toastr()->error('Account is disabled');
+                return redirect()->route('login');
+            }
+        } else {
+            return $next($request);
         }
-
-        return $next($request);
     }
 }

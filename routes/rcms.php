@@ -31,7 +31,7 @@ Route::group(['prefix' => 'rcms'], function () {
     Route::view('form-division', 'frontend.forms.form-division');
     Route::get('/logout', [UserLoginController::class, 'rcmslogout'])->name('rcms.logout');
 
-    Route::middleware(['rcms'])->group(
+    Route::middleware(['rcms', 'active-account'])->group(
         function () {
             Route::resource('CC', CCController::class);
             Route::resource('actionItem', ActionItemController::class);
@@ -72,7 +72,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('summary/{id}', [CCController::class, 'summery_pdf']);
             Route::get('audit/{id}', [CCController::class, 'audit_pdf']);
 
-            
+
             Route::get('notification-detail/{slug}/{id}', [NotificationController::class, 'notificationDetail'])->name('notification-detail');
 
             Route::get('ccView/{id}/{type}', [DashboardController::class, 'ccView'])->name('ccView');
@@ -117,7 +117,7 @@ Route::group(['prefix' => 'rcms'], function () {
             Route::get('LabIncidentAuditReport/{id}', [LabIncidentController::class, 'auditReport'])->name('LabIncidentAuditReport');
             //------------------------------------
 
-            
+
             Route::post('create', [AuditProgramController::class, 'create'])->name('createAuditProgram');
             Route::get('AuditProgramShow/{id}', [AuditProgramController::class, 'AuditProgramShow'])->name('ShowAuditProgram');
             Route::post('AuditStateChange/{id}', [AuditProgramController::class, 'AuditStateChange'])->name('StateChangeAuditProgram');

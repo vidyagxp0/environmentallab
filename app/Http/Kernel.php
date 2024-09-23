@@ -78,5 +78,7 @@ class Kernel extends HttpKernel
         'user-activity' => \App\Http\Middleware\CheckUserActivity::class,
         'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
         'rcms' => \App\Http\Middleware\RCMS::class,
+        'active-account' => \App\Http\Middleware\ActiveAccount::class,
+
     ];
 }

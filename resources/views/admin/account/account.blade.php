@@ -28,6 +28,7 @@
                                 <th>Email</th>
                                 <th>Department</th>
                                 <th>Role</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -55,13 +56,15 @@
                                             <i class="fas fa-eye"></i>
                                         </button>
                                     </td>
+                                    <td class="text-{{ $user->is_active ? 'success' : 'danger' }}">{{ $user->is_active ? 'Active' : 'Inactive' }}</td>
                                     <td>
                                         <a href="{{ route('user_management.edit', $user->id) }}" class="btn btn-dark">Edit</a>
-                                        <form action="{{ route('user_management.destroy', $user->id) }}" method="POST" style="display:inline-block;">
+                                        <a href="{{ route('account.toggle', $user->id) }}" class="btn btn-{{ $user->is_active ? 'danger' : 'primary' }}">{{ $user->is_active ? 'Disable' : 'Enable' }}</a>
+                                        {{-- <form action="{{ route('user_management.destroy', $user->id) }}" method="POST" style="display:inline-block;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="confirmation btn btn-danger">Delete</button>
-                                        </form>
+                                        </form> --}}
                                     </td>
                                 </tr>
                             @endforeach
