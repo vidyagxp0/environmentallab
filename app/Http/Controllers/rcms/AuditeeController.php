@@ -850,7 +850,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Reference Record';
             $history->previous = "Null";
-            $history->current = $internalAudit->Reference_Recores1;
+            $history->current = str_replace(',', ', ', $internalAudit->Reference_Recores1);
             // $history->current =  implode(',', $request->Reference_Recores1);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
@@ -878,7 +878,7 @@ class AuditeeController extends Controller
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Reference Record';
             $history->previous = "Null";
-            $history->current = $internalAudit->Reference_Recores2;
+            $history->current = str_replace(',', ', ', $internalAudit->Reference_Recores2);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1880,8 +1880,8 @@ class AuditeeController extends Controller
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Reference Record';
-            $history->previous = $lastDocument->Reference_Recores1;
-            $history->current = $internalAudit->Reference_Recores1;
+            $history->previous = str_replace(',', ', ', $lastDocument->Reference_Recores1);
+            $history->current = str_replace(',', ', ', $internalAudit->Reference_Recores1);
             $history->comment = $request->date_comment;
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

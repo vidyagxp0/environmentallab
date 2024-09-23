@@ -177,7 +177,7 @@
                     <strong>Change Control No.</strong>
                 </td>
                 <td class="w-40">
-                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                    {{ Helpers::getDivisionName($data->division_id) }}/CC/{{ date('Y') }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                 </td>
                 <td class="w-30">
                     <strong>Record No.</strong> {{ str_pad($data->record, 4, '0', STR_PAD_LEFT) }}
@@ -211,7 +211,7 @@
                         <th class="w-20">Record Number</th>
                         <td class="w-30">
                             @if ($data->record)
-                                {{ Helpers::divisionNameForQMS($data->division_id) }}/CC/{{ Helpers::year($data->created_at) }}/{{ $data->record_number ? str_pad($data->record_number->record_number, 4, '0', STR_PAD_LEFT) : '' }}
+                                {{ Helpers::divisionNameForQMS($data->division_id) }}/CC/{{ Helpers::year($data->created_at) }}/{{ $data->record ? str_pad($data->record, 4, '0', STR_PAD_LEFT) : '' }}
                             @else
                                 Not Applicable
                             @endif
@@ -446,7 +446,7 @@
                 <table>
                     <tr>
                         <th class="w-20">Current Practice</th>
-                        <td>
+                        <td colspan="3">
                             <div>
                                 @if ($docdetail->current_practice)
                                     {{ $docdetail->current_practice }}
@@ -458,7 +458,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Proposed Change</th>
-                        <td>
+                        <td colspan="3">
                             <div>
                                 @if ($docdetail->proposed_change)
                                     {{ $docdetail->proposed_change }}
@@ -470,7 +470,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Reason For Change</th>
-                        <td>
+                        <td colspan="3">
                             <div>
                                 @if ($docdetail->reason_change)
                                     {{ $docdetail->reason_change }}
@@ -482,7 +482,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Supervisor Comments</th>
-                        <td>
+                        <td colspan="3">
                             <div>
                                 @if ($docdetail->supervisor_comment)
                                     {{ $docdetail->supervisor_comment }}
@@ -494,7 +494,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Any Other Comments</th>
-                        <td>
+                        <td colspan="3">
                             <div>
                                 @if ($docdetail->other_comment)
                                     {{ $docdetail->other_comment }}
@@ -514,7 +514,7 @@
                     <table>
                         <tr>
                             <th class="w-20">Type of Change</th>
-                            <td class="w-80">
+                            <td class="w-80" colspan="3">
                                 @if ($review->type_chnage)
                                     {{ $review->type_chnage }}
                                 @else
@@ -524,33 +524,32 @@
                         </tr>
                         <tr>
                             <th class="w-20">QA Review Comments</th>
-                            <td>
-                                <div>
-                                    @if ($review->qa_comments)
-                                        {{ $review->qa_comments }}
-                                    @else
-                                        Not Applicable
-                                    @endif
-                                </div>
+                            <td class="w-80" colspan="3">
+                                @if ($review->qa_comments)
+                                    {{ $review->qa_comments }}
+                                @else
+                                    Not Applicable
+                                @endif
+
                             </td>
                         </tr>
                         <tr>
                             <th class="w-20">Related Records</th>
-                            <td class="w-80">
+                            <td class="w-80" colspan="3">
                                 @if ($review->related_records)
-                                    {{ $review->related_records }}
+                                    {{ str_replace(',', ', ', $review->related_records) }}
                                 @else
                                     Not Applicable
                                 @endif
                             </td>
                         </tr>
                     </table>
+
                     <div class="border-table">
                         <div class="block-head">
                             QA Attachments
                         </div>
                         <table>
-
                             <tr class="table_bg">
                                 <th class="w-20">S.N.</th>
                                 <th class="w-60">Attachment</th>
@@ -591,6 +590,33 @@
                             </td>
                         </tr>
                     </table>
+                    <div class="border-table">
+                        <div class="block-head">
+                            QA Evaluation Attachments
+                        </div>
+                        <table>
+
+                            <tr class="table_bg">
+                                <th class="w-20">S.N.</th>
+                                <th class="w-60">Attachment</th>
+                            </tr>
+                            @if ($evaluation->qa_eval_attach)
+                                @foreach (json_decode($evaluation->qa_eval_attach) as $key => $file)
+                                    <tr>
+                                        <td class="w-20">{{ $key + 1 }}</td>
+                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
+                                                target="_blank"><b>{{ $file }}</b></a> </td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td class="w-20">1</td>
+                                    <td class="w-20">Not Applicable</td>
+                                </tr>
+                            @endif
+
+                        </table>
+                    </div>
 
 
                     <div class="block-head">
@@ -622,33 +648,7 @@
                         </tr>
                     </table>
 
-                    <div class="border-table">
-                        <div class="block-head">
-                            QA Evaluation Attachments
-                        </div>
-                        <table>
 
-                            <tr class="table_bg">
-                                <th class="w-20">S.N.</th>
-                                <th class="w-60">Attachment</th>
-                            </tr>
-                            @if ($evaluation->qa_eval_attach)
-                                @foreach (json_decode($evaluation->qa_eval_attach) as $key => $file)
-                                    <tr>
-                                        <td class="w-20">{{ $key + 1 }}</td>
-                                        <td class="w-20"><a href="{{ asset('upload/' . $file) }}"
-                                                target="_blank"><b>{{ $file }}</b></a> </td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td class="w-20">1</td>
-                                    <td class="w-20">Not Applicable</td>
-                                </tr>
-                            @endif
-
-                        </table>
-                    </div>
                 </div>
             </div>
 
@@ -926,7 +926,7 @@
                 <table>
                     <tr>
                         <th class="w-20">QA Approval Comments</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             <div><strong>On {{ Helpers::getDateFormat($approcomments->created_at) }} added by
                                     {{ $data->originator }}</strong>
                             </div>
@@ -937,7 +937,7 @@
                     </tr>
                     <tr>
                         <th class="w-20">Training Feedback</th>
-                        <td class="w-80">
+                        <td class="w-80" colspan="3">
                             <div><strong>On {{ Helpers::getDateFormat($approcomments->created_at) }} added by
                                     {{ $data->originator }}</strong>
                             </div>

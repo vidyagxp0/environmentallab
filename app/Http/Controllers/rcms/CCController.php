@@ -825,7 +825,7 @@ class CCController extends Controller
             $history->cc_id = $review->id;
             $history->activity_type = 'Related Records';
             $history->previous = "Null";
-            $history->current = $review->related_records;
+            $history->current = str_replace(',', ', ', $review->related_records);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -1964,7 +1964,7 @@ class CCController extends Controller
             $history->save();
         }
 
-        if ($lastdocdetail->supervisor_comment != $docdetail->other_comment || !empty($request->supervisor_comment_comment)) {
+        if ($lastdocdetail->supervisor_comment != $docdetail->supervisor_comment || !empty($request->supervisor_comment_comment)) {
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Supervisor Comments';
@@ -2021,8 +2021,8 @@ class CCController extends Controller
             $history = new RcmDocHistory;
             $history->cc_id = $id;
             $history->activity_type = 'Related Records';
-            $history->previous = $lastreview->related_records;
-            $history->current = $review->related_records;
+            $history->previous = str_replace(',', ', ', $lastreview->related_records);
+            $history->current = str_replace(',', ', ', $review->related_records);
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
