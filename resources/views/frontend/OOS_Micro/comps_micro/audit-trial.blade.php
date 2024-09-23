@@ -221,8 +221,8 @@
                                 <!-- Modal Header -->
                                 {{-- <div class="modal-header">
                                     <h4 class="modal-title">Audit Reviewers Details</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div> --}}
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+                                    </div> --}}
 
                                 {{-- @php
                                     $reviewer = DB::table('audit_reviewers_details')
@@ -275,8 +275,8 @@
                                 <!-- Modal Header -->
                                 {{-- <div class="modal-header">
                                     <h4 class="modal-title">Audit Reviewers</h4>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                </div>
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal"> <i class="fa fa-times"></i> </button>
+                                    </div>
                                 <!-- <form action="" method="POST"> -->
                                     <form action="{{ route('oos_micro.store_audit_review', $document->id) }}" method="POST">
                                         @csrf

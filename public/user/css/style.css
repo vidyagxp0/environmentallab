@@ -2323,7 +2323,7 @@ section#pdf-page .watermark {
 
 #review-sign .modal-footer button,
 #review-cancel .modal-footer button {
-    background: #028cd5;
+    background: #4274da;
     color: white;
     border: 1px solid transparent;
     transition: all 0.3s linear;
@@ -2332,8 +2332,8 @@ section#pdf-page .watermark {
 #review-sign .modal-footer button:hover,
 #review-cancel .modal-footer button:hover {
     background: white;
-    color: #028cd5;
-    border-color: #028cd5;
+    color: #4274da;
+    border-color: #4274da;
 }
 
 /* =============================================
@@ -4276,7 +4276,7 @@ section#pdf-page .watermark {
 
 #manage-question-bank .button_theme1 {
     background: #000;
-    color: #4274da;
+    color: #fff;
     border: 1px solid #4274da;
     padding: 8px 20px;
     border-radius: 4px;

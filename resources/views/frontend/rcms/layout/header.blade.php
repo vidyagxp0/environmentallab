@@ -345,42 +345,91 @@
                     ABOUT MODAL
     ======================================= --}}
     <div class="modal fade" id="about-modal">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-                <div class="modal-header">
-                    <h4 class="modal-title">About</h4>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-
-                <div class="modal-body">
-                    <div class="logo">
-                        <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
-                    </div>
-                    <div class="bar">
-                        <strong>Version : </strong> 10.0.0
-                    </div>
-                    <div class="bar">
-                        <strong>Build # : </strong> 2
-                    </div>
-                    <div class="bar">
-                        April 23, 2023
-                    </div>
-                    <div class="bar">
-                        <strong>Licensed to : </strong> Connexo
-                    </div>
-                    <div class="bar">
-                        <strong>Environment : </strong> Master Demo Dev
-                    </div>
-                    <div class="bar">
-                        <strong>Server : </strong> SCRRREVE3 (100.23.34.0)
-                    </div>
-                    <div class="copyright-bar">
-                        <i class="fa-regular fa-copyright"></i>&nbsp;
-                        Copyright 2023 Connexo Asia Limited
-                    </div>
-                </div>
-
+        <div class="modal-header" style="background: #4274da; color: white; border-bottom: none; padding: 20px;">
+                  <h4 class="modal-title">About</h4>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">
+                    <i class="fa fa-times"></i>
+                </button>
             </div>
+
+            <div class="modal-body">
+                <div class="logo">
+                    <img src="{{ asset('user/images/logo.png') }}" alt="..." class="w-100 h-100">
+                </div>
+                <div class="bar">
+                    <strong>Version : </strong> 10.0.0
+                </div>
+                <div class="bar">
+                    <strong>Build # : </strong> 2
+                </div>
+                <div class="bar">
+                    April 23, 2023
+                </div>
+                <div class="bar">
+                    <strong>Licensed to : </strong> Connexo
+                </div>
+                <div class="bar">
+                    <strong>Environment : </strong> Master Demo Dev
+                </div>
+                <div class="bar">
+                    <strong>Server : </strong> SCRRREVE3 (100.23.34.0)
+                </div>
+                <div class="copyright-bar">
+                    <i class="fa-regular fa-copyright"></i>&nbsp;
+                    Copyright 2023 Connexo Asia Limited
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
+
+<style>
+    .modal-body .logo {
+        width: 200px;
+        aspect-ratio: 1/0.35;
+        margin: 0 0 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal-body .logo img {
+        object-fit: contain;
+        object-position: center;
+        max-width: 100%;
+        height: auto;
+    }
+
+    .modal-body .bar {
+        margin-bottom: 5px;
+    }
+
+    .modal-body .copyright-bar {
+        margin-top: 20px;
+        background: #4274da;
+        padding: 5px 10px;
+        font-size: 0.9rem;
+        color: white;
+        letter-spacing: 1px;
+    }
+
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .modal-body .bar strong {
+        font-weight: bold;
+        color: #4274da;
+    }
+
+    .modal-body .bar:nth-child(odd) {
+        background-color: #f0f0f0;
+    }
+</style>
+
