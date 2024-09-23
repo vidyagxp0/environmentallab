@@ -765,7 +765,8 @@
         var question = question;
         var url = "{{ route('datag', [':question']) }}";
         url = url.replace(':question', question);
-        
+        // uncomment on live
+         url = url.replace('http:', 'https:');
         $('#selected-question').empty();
         $.ajax({
             url: url,
