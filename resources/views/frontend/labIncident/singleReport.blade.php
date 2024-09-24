@@ -316,7 +316,24 @@
                             @endif
                         </td>
                     </tr>
-
+                    <tr>
+                        <th class="w-20">Initiated Through</th>
+                        <td class="w-30">
+                            @if ($data->initiated_through)
+                                {{ $data->initiated_through }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                        <th class="w-20">Others</th>
+                        <td class="w-80" colspan="3">
+                            @if ($data->initiated_through_req)
+                                {{ $data->initiated_through_req }}
+                            @else
+                                Not Applicable
+                            @endif
+                        </td>
+                    </tr>
                     <tr>
                         <th class="w-20">Invocation Type</th>
                         <td class="w-30">
