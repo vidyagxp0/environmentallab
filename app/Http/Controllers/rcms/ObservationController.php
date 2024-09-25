@@ -163,6 +163,7 @@ class ObservationController extends Controller
 
         $data1 = new ObservationGrid();
         $data1->observation_id = $data->id;
+
         if (!empty($request->action)) {
             $data1->action = serialize($request->action);
         }
@@ -195,7 +196,6 @@ class ObservationController extends Controller
         $history->save();
 
         if (!empty($request->parent_id)) {
-
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Parent Id';
@@ -210,7 +210,6 @@ class ObservationController extends Controller
         }
 
         if (!empty($request->parent_type)) {
-
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Parent Type';
@@ -225,7 +224,6 @@ class ObservationController extends Controller
         }
 
         if (!empty($request->division_id)) {
-
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Site/Location Code';
@@ -307,8 +305,8 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->grading)) {
 
+        if (!empty($request->grading)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Grading';
@@ -351,7 +349,6 @@ class ObservationController extends Controller
         }
 
         if (!empty($request->description)) {
-
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Parent Type';
@@ -364,8 +361,8 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->attach_files1)) {
 
+        if (!empty($request->attach_files1)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Attached Files1';
@@ -461,6 +458,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->cro_vendor)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -474,6 +472,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->comments)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -487,8 +486,8 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
-        if (!empty($request->impact)) {
 
+        if (!empty($request->impact)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
         $history->activity_type = 'Impact ';
@@ -501,6 +500,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->impact_analysis)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -514,6 +514,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         // if (!empty($request->severity_rate)) {
         // $history = new AuditTrialObservation();
         // $history->Observation_id = $data->id;
@@ -527,6 +528,7 @@ class ObservationController extends Controller
         // $history->origin_state = $data->status;
         // $history->save();
         // }
+
         if (!empty($data->severity_rate)) {
             $history = new AuditTrialObservation();
             $history->Observation_id = $data->id;
@@ -550,6 +552,7 @@ class ObservationController extends Controller
 
             $history->save();
         }
+
         if (!empty($request->occurrence)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -575,6 +578,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->detection)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -601,6 +605,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->analysisRPN)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -614,6 +619,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->actual_start_date)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -627,6 +633,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->actual_end_date)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -683,6 +690,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->attach_files2)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -696,6 +704,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->related_url)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -709,6 +718,7 @@ class ObservationController extends Controller
         $history->origin_state = $data->status;
         $history->save();
         }
+
         if (!empty($request->response_summary)) {
         $history = new AuditTrialObservation();
         $history->Observation_id = $data->id;
@@ -859,21 +869,66 @@ class ObservationController extends Controller
         $data->status = 'Opened';
         $data->stage = 1;
         $data->update();
-        $data1 = ObservationGrid::find($id);
-        $data1->observation_id = $data->id;
-        if (!empty($request->action)) {
-            $data1->action = serialize($request->action);
+
+        //$data1 = ObservationGrid::all();
+        //$data1->observation_id = $data->id;
+
+        //if (!empty($request->action)) {
+        //    $data1->action = serialize($request->action);
+        //}
+        //if (!empty($request->responsible)) {
+        //    $data1->responsible = serialize($request->responsible);
+        //}
+        //if (!empty($request->item_status)) {
+        //    $data1->item_status = serialize($request->item_status);
+        //}
+        //if (!empty($request->deadline)) {
+        //    $data1->deadline = serialize($request->deadline);
+        //}
+        //$data1->update();
+
+        // Fetch a specific record by observation_id
+        $data1 = ObservationGrid::where('observation_id', $data->id)->first();
+
+        if ($data1) {
+            // Update the fields if they exist in the request
+            if (!empty($request->action)) {
+                $data1->action = serialize($request->action);
+            }
+            if (!empty($request->responsible)) {
+                $data1->responsible = serialize($request->responsible);
+            }
+            if (!empty($request->item_status)) {
+                $data1->item_status = serialize($request->item_status);
+            }
+            if (!empty($request->deadline)) {
+                $data1->deadline = serialize($request->deadline);
+            }
+
+            // Save the updated data
+            $data1->update();
+        } else {
+            // Handle case where no record is found, or create a new record
+            $data1 = new ObservationGrid;
+            $data1->observation_id = $data->id;
+
+            if (!empty($request->action)) {
+                $data1->action = serialize($request->action);
+            }
+            if (!empty($request->responsible)) {
+                $data1->responsible = serialize($request->responsible);
+            }
+            if (!empty($request->item_status)) {
+                $data1->item_status = serialize($request->item_status);
+            }
+            if (!empty($request->deadline)) {
+                $data1->deadline = serialize($request->deadline);
+            }
+
+            // Save the new record
+            $data1->update();
         }
-        if (!empty($request->responsible)) {
-            $data1->responsible = serialize($request->responsible);
-        }
-        if (!empty($request->item_status)) {
-            $data1->item_status = serialize($request->item_status);
-        }
-        if (!empty($request->deadline)) {
-            $data1->deadline = serialize($request->deadline);
-        }
-        $data1->update();
+
 
         if ($lastDocument->parent_id != $data->parent_id || !empty($request->parent_id_comment)) {
 
@@ -1462,8 +1517,9 @@ class ObservationController extends Controller
         $data->assign_to_name = User::where('id', $data->assign_id)->value('name');
         $data->initiator_name = User::where('id', $data->initiator_id)->value('name');
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
-        $griddata = ObservationGrid::where('observation_id',$data->id)->first();
-
+        $griddata = ObservationGrid::where('observation_id', $data->id)->first();
+        //$griddata = ObservationGrid::all();
+//dd($griddata);
         return view('frontend.observation.view', compact('data','griddata','grid_data'));
     }
 

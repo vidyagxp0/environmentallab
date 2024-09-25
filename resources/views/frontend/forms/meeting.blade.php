@@ -1142,7 +1142,7 @@
                                         <td>
                                             <select id="select-state" placeholder="Select..."
                                                 name="responsible_person[]">
-                                                <option value="">Select a value</option>
+                                                <option value="">--Select--</option>
                                                 @foreach ($users as $data)
                                                     <option value="{{ $data->id }}">{{ $data->name }}
                                                     </option>

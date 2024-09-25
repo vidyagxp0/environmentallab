@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('observation_grids', function (Blueprint $table) {
             $table->id();
             $table->integer('observation_id');
-            $table->string('action');
-            $table->string('responsible');
-            $table->string('deadline');
-            $table->string('item_status');
+            $table->longText('action');
+            $table->longText('responsible');
+            $table->longText('deadline');
+            $table->longText('item_status');
             $table->timestamps();
         });
     }

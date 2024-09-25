@@ -55,14 +55,14 @@
                             </div> <!-- RECORD NUMBER -->
                             <div class="row">
                                 <div class="col-lg-6">
-                                    <div class="group-input"> 
+                                    <div class="group-input">
                                         <label for="RLS Record Number"><b>Record Number</b></label>
                                         <input disabled type="text" name="record_number"
                                             value="{{ Helpers::getDivisionName(session()->get('division')) }}/AI/{{ date('Y') }}/{{ $record}}">
                                         {{-- <div class="static">QMS-EMEA/CAPA/{{ date('Y') }}/{{ $record_number }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Division Code"><b>Division Code</b></label>
                                         <input disabled type="text" name="division_code"
@@ -71,7 +71,7 @@
                                         {{-- <div class="static">{{ Helpers::getDivisionName(session()->get('division')) }}</div> --}}
                                     </div>
                                 </div>
-                                <div class="col-lg-6">  
+                                <div class="col-lg-6">
                                     @if (!empty($cc->id))
                                         <input type="hidden" name="ccId" value="{{ $cc->id }}">
                                     @endif
@@ -122,33 +122,33 @@
                                         <div class="calenderauditee">
                                             <!-- Display the formatted date in a readonly input -->
                                             <input type="text" id="due_date_display" readonly placeholder="DD-MMM-YYYY" value="{{ Helpers::getDueDate(30, true) }}" />
-                                           
+
                                             <input type="date" name="due_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" value="{{ Helpers::getDueDate(30, false) }}" class="hide-input" readonly />
                                         </div>
                                     </div>
                                 </div>
-                                
+
                                 <script>
                                 function handleDateInput(dateInput, displayId) {
                                     const date = new Date(dateInput.value);
                                     const options = { day: '2-digit', month: 'short', year: 'numeric' };
                                     document.getElementById(displayId).value = date.toLocaleDateString('en-GB', options).replace(/ /g, '-');
                                 }
-                                
+
                                 // Call this function initially to ensure the correct format is shown on page load
                                 document.addEventListener('DOMContentLoaded', function() {
                                     const dateInput = document.querySelector('input[name="due_date"]');
                                     handleDateInput(dateInput, 'due_date_display');
                                 });
                                 </script>
-                                
+
                                 <style>
                                 .hide-input {
                                     display: none;
                                 }
                                 </style>
-                                
-                             
+
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -156,7 +156,10 @@
                                         characters remaining
                                         <input id="docname" type="text" name="short_description" maxlength="255" required>
                                     </div>
-                                </div>  
+                                </div>
+
+
+
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
@@ -324,13 +327,13 @@
                                     <div class="group-input input-date">
                                         <label for="end_date">Actual End Date</lable>
                                         <div class="calenderauditee">
-                                        <input type="text" id="end_date"                             
+                                        <input type="text" id="end_date"
                                                 placeholder="DD-MMM-YYYY" />
                                              <input type="date"  min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" id="end_date_checkdate" name="end_date" class="hide-input"
                                                 oninput="handleDateInput(this, 'end_date');checkDate('start_date_checkdate','end_date_checkdate')" />
                                         </div>
-                                   
-                                        
+
+
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -443,7 +446,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="More information required By">More information required By</label>
-                                        <div class="static"></div> 
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -455,7 +458,7 @@
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="completed by">Completed By</label>
-                                        <div class="static"></div> 
+                                        <div class="static"></div>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
@@ -464,7 +467,7 @@
                                          <div class="Date"></div>
                                     </div>
                                 </div>
-                              
+
                             </div>
                             <div class="button-block">
                                 <button type="button" class="backButton" onclick="previousStep()">Back</button>

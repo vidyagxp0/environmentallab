@@ -33,7 +33,9 @@ class ActionItemController extends Controller
 
     public function showAction()
     {
+
         $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
         $currentDate = Carbon::now();
@@ -58,7 +60,7 @@ class ActionItemController extends Controller
     {
 
         $document = ActionItem::all();
-        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $old_record = ActionItem::all();
         $record_number = ((RecordNumber::first()->value('counter')) + 1);
         $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
 
@@ -77,6 +79,7 @@ class ActionItemController extends Controller
 
     public function store(Request $request)
     {
+        //dd($request->all());
         if (!$request->short_description) {
             toastr()->error("Short description is required");
             return redirect()->back();
@@ -227,6 +230,7 @@ class ActionItemController extends Controller
             foreach ($recordIds as $id) {
                 // Assuming $new->id corresponds to $id
                 $newRecord = ActionItem::find($id); // Replace `YourModel` with your actual model name
+                //   dd($newRecord);
                 if ($newRecord) {
                     $value = Helpers::getDivisionName($newRecord->division_id) . '/AI/' . date('Y') . '/' . Helpers::recordFormat($newRecord->record);
                     $recordValues[] = $value;
@@ -486,7 +490,8 @@ class ActionItemController extends Controller
     public function show($id)
     {
 
-        $old_record = ActionItem::select('id', 'division_id', 'record')->get();
+        $old_record = ActionItem::all();
+        //dd($old_record);
         $data = ActionItem::find($id);
         $cc = CC::find($data->cc_id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);

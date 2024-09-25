@@ -136,6 +136,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-12">
                                     <div class="group-input">
                                         <label for="Short Description">Short Description<span
@@ -479,7 +480,7 @@
                                                         <div class="input-date ">
                                                             <div class="calenderauditee">
                                                                 <input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                                <input type="date"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"name="deadline[]" class="hide-input"
+                                                                <input type="date"   min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" name="deadline[]" class="hide-input"
                                                                 oninput="handleDateInput(this, `deadline' + serialNumber +'`)" />
                                                             </div>
                                                         </div>
@@ -940,8 +941,7 @@
                             '<tr>' +
                                 '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                                 '<td><input type="text" name="action[]"></td>' +
-                                '<td><select name="responsible[]">' +
-                                    '<option value="">Select a value</option>';
+                                '<td><select name="responsible[]">' + '<option value="">Select a value</option>';
 
                                 for (var i = 0; i < users.length; i++) {
                                     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -949,7 +949,7 @@
 
                                 html += '</select></td>' +
                                 // '<td><input type="date" name="deadline[]"></td>' +
-                                                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
 
                                 '<td><input type="text" name="item_status[]"></td>' +
                                 '</tr>';

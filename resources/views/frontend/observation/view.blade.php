@@ -204,8 +204,7 @@ $users = DB::table('users')
                     '<tr>' +
                         '<td><input disabled type="text" name="serial_number[]" value="' + serialNumber + '"></td>' +
                         '<td><input type="text" name="action[]"></td>' +
-                        '<td><select name="responsible[]">' +
-                            '<option value="">Select a value</option>';
+                        '<td><select name="responsible[]">' + '<option value="">Select a value</option>';
 
                         for (var i = 0; i < users.length; i++) {
                             html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
@@ -213,7 +212,7 @@ $users = DB::table('users')
 
                         html += '</select></td>' +
                         // '<td><input type="date" name="deadline[]"></td>' +
-                                                '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="deadline' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="deadline[]" class="hide-input" oninput="handleDateInput(this, `deadline' + serialNumber +'`)" /></div></div></div></td>' +
 
                         '<td><input type="text" name="item_status[]"></td>' +
                         '</tr>';
@@ -760,7 +759,7 @@ dd($data->date_Response_due2);
                                                     </td>  -->
                                                     {{-- <td><input type="text" name="deadline[]"{{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }}  value="{{unserialize($griddata->deadline)[$key] ? unserialize($griddata->deadline)[$key] : "" }}"></td> --}}
                                                     {{-- <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>  --}}
-                                                    <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->action)[$key] ? unserialize($griddata->action)[$key] : "" }}"></td>
+                                                    <td><input type="text" name="item_status[]" {{ $data->stage == 0 || $data->stage == 6 ? "disabled" : "" }} value="{{unserialize($griddata->item_status)[$key] ? unserialize($griddata->item_status)[$key] : "" }}"></td>
 
                                                     {{-- <td>
     @php

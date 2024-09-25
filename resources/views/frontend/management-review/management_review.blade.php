@@ -759,7 +759,7 @@
 
                                                         <td> <select id="select-state" placeholder="Select..."
                                                                      name="responsible_person[]"  {{ $data->stage == 0 || $data->stage == 3 ? 'disabled' : '' }} >
-                                                                      <option value="">Select a value</option>
+                                                                      <option value="">--Select--</option>
                                                                         @foreach ($users as $undata)
 
                                                                         <option {{ (unserialize($action_item_details->responsible_person)[$key] ?? null) ? (unserialize($action_item_details->responsible_person)[$key] == $undata->id ? 'selected' : ' ') : '' }}

@@ -144,9 +144,8 @@
 
 
 
-                            @if($temp->current != $temp->previous)
-                            @if($temp->activity_type == "Activity Log" )
-
+                        @if($temp->current != $temp->previous)
+                           @if($temp->activity_type == "Activity Log" )
 
                                      <div class="list-item">
                                       <div class="head">{{$temp->stage}} By</div>

@@ -181,6 +181,11 @@
                                             required>
                                     </div>
                                 </div>
+
+{{--
+@php
+dd($old_record);
+@endphp--}}
                                 <div class="col-lg-6">
                                     <div class="group-input">
                                         <label for="Related Records">Action Item Related Records</label>
@@ -188,12 +193,11 @@
                                             placeholder="Select Reference Records">
                                             {{--<option value="">--select record--</option>--}}
                                              @if (!empty($old_record))
-
-                                            @foreach ($old_record as $new)
-                                                <option value="{{ $new->id }}">
-                                                    {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
-                                                </option>
-                                            @endforeach
+                                                @foreach ($old_record as $new)
+                                                    <option value="{{ $new->id }}">
+                                                        {{ Helpers::getDivisionName($new->division_id) }}/AI/{{ date('Y') }}/{{ Helpers::recordFormat($new->record) }}
+                                                    </option>
+                                                @endforeach
                                             @endif
                                         </select>
                                     </div>
