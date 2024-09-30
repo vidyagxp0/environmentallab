@@ -35,7 +35,7 @@
             border: 2px solid #000000;
             border-radius: 40px;
         }
- 
+
         #displayField {
             border: 1px solid #f0f0f0;
             background: white;
@@ -71,7 +71,7 @@
                 {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-instru')">Instrument SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-instrumental')">Instrumental Chemistry SOP</button>
-                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> 
+                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
                 <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button>
                 <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button> --}}
@@ -172,14 +172,14 @@
                                 </div>
 
                             @endif
-                           
+
                             <div class="col-md-12">
                                 <div class="group-input">
                                     <label for="short-desc">Short Description*  </label>
                                     <span id="editrchars">255</span>
                                 characters remaining
                                     <input type="text" name="short_desc" id="short_desc" maxlength="255"
-                                     {{Helpers::isRevised($document->stage)}} 
+                                     {{Helpers::isRevised($document->stage)}}
                                         value="{{ $document->short_description }}">
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'Short Description' && !empty($tempHistory->comment) )
@@ -275,14 +275,14 @@
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
-                            @endif   
+                            @endif
                             </div>
                             <div class="col-md-4 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="due-date">Due Date</label>
                                     <div><small class="text-primary" >Kindly Fill Target Date of Completion</small>
                                     </div>
-                                    <div class="calenderauditee">                                     
+                                    <div class="calenderauditee">
                                         <input type="text"  id="due_dateDoc" value="{{ $document->due_dateDoc }}"  placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="due_dateDoc" value="{{ $document->due_dateDoc ? Carbon\Carbon::parse($document->due_dateDoc)->format('Y-m-d') : ''  }}" readonly {{Helpers::isRevised($document->stage)}}
                                         class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
@@ -333,7 +333,7 @@
                                     <select multiple name="notify_to[]" placeholder="Select Persons" data-search="false"
                                         data-silent-initial-value-set="true" id="notify_to" {{Helpers::isRevised($document->stage)}} >
                                         @php
-                                            $notify_user_id = explode(',', $document->notify_to); 
+                                            $notify_user_id = explode(',', $document->notify_to);
                                         @endphp
                                         @foreach ($users as $data)
                                             <option value="{{ $data->id }}" {{ in_array($data->id, $notify_user_id) ? 'selected' : '' }}>{{ $data->name }}
@@ -432,19 +432,19 @@
                                             ->where('name', $document->document_type_name)
                                             ->value('typecode');
                                        @endphp
-                                        @if($document->revised === 'Yes') 
+                                        @if($document->revised === 'Yes')
                                          {{ Helpers::getDivisionName($document->division_id) }}
                                         /@if($document->document_type_name){{  $temp }} /@endif{{ $year }}
                                         /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}}
-                                       
+
                                         @else
                                         {{ Helpers::getDivisionName($document->division_id) }}
                                         /@if($document->document_type_name){{ $temp }} /@endif{{ $year }}
                                         /000{{ $document->document_number }}/R{{$document->major}}.{{$document->minor}}
-                                        
+
                                     @endif
                                     </div>
-                                        
+
                                         {{-- {{ $document->division_name }} --}}
                                 </div>
                             </div>
@@ -456,7 +456,7 @@
                                         data-search="false" data-silent-initial-value-set="true" id="reference_record" {{Helpers::isRevised($document->stage)}} >
                                         @if (!empty($document_data))
                                             @foreach ($document_data as $temp)
-                                            
+
                                                 <option value="{{ $temp->id }}" {{ str_contains($document->reference_record, $temp->id) ? 'selected' : '' }}>
                                                     {{ Helpers::getDivisionName($temp->division_id) }}/{{ $temp->typecode }}/{{ $temp->year }}/000{{ $temp->id }}/R{{$temp->major}}.{{$temp->minor}}/{{$temp->document_name}}
                                                 </option>
@@ -628,7 +628,7 @@
                                         (Launch Instruction) </span>
                                     </label>
                                     <input type="number" name="major" id="major" min="0"  value="{{ $document->major }}" required {{Helpers::isRevised($document->stage)}} >
-                                    
+
                                     @foreach ($history as $tempHistory)
                                     @if (
                                         $tempHistory->activity_type == 'Major' &&
@@ -648,7 +648,7 @@
                                             type="text" value="{{ $tempHistory->comment }}" disabled>
                                     @endif
                                 @endforeach
-                                </div> 
+                                </div>
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
                                 {{-- Add Comment  --}}
                                 <div class="comment">
@@ -660,11 +660,11 @@
                                     </div>
                                     <div class="button">Add Comment</div>
                                 </div>
-                            @endif 
+                            @endif
                             </div>
                             <div class="col-6">
                                 <div class="group-input">
-                                    <label for="minor">Minor<span class="text-danger">*</span> 
+                                    <label for="minor">Minor<span class="text-danger">*</span>
                                         <span  class="text-primary" data-bs-toggle="modal"
                                         data-bs-target="#document-management-system-modal-minor"
                                         style="font-size: 0.8rem; font-weight: 400;">
@@ -828,7 +828,7 @@
 
 
                                 @if (Auth::user()->role != 3 && $document->stage < 8)
-                                 Add Comment  
+                                 Add Comment
                                     <div class="comment">
                                         <div>
                                             <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }}
@@ -975,7 +975,7 @@
                                 <div class="group-input input-date">
                                     <label for="effective-date">Effective Date</label>
                                     <div><small class="text-primary">The effective date will be automatically populated once the record becomes effective</small></div>
-                                    <div class="calenderauditee">                                     
+                                    <div class="calenderauditee">
                                         <input  @if($document->stage != 1) disabled @endif type="text"  id="effective_date" value="{{ $document->effective_date  ? Carbon\Carbon::parse($document->effective_date)->format('d-M-Y') : ''  }}" readonly placeholder="DD-MMM-YYYY" {{Helpers::isRevised($document->stage)}}  />
                                         <input  @if($document->stage != 1) disabled @endif type="date" name="effective_date" value=""
                                         class="hide-input"
@@ -1068,8 +1068,8 @@
                             <div class="col-md-5 new-date-data-field">
                                 <div class="group-input input-date">
                                     <label for="review-date">Next Review Date</label>
-                                    
-                                        <div class="calenderauditee">                                     
+
+                                        <div class="calenderauditee">
                                         <input  style="margin-top: 25px;" @if($document->stage != 1) disabled @endif type="text"  id="next_review_date" class="new_review_date_show" value="{{ $document->next_review_date ? Carbon\Carbon::parse($document->next_review_date)->format('d-M-Y') : '' }}" {{Helpers::isRevised($document->stage)}}  readonly placeholder="DD-MMM-YYYY" />
                                         <input @if($document->stage != 1) disabled @endif type="date" name="next_review_date" value=""
                                         class="hide-input new_review_date_hide"
@@ -1117,7 +1117,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="draft-doc">Attach Draft document</label>
-                                    <input type="file" name="attach_draft_doocument"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}} 
+                                    <input type="file" name="attach_draft_doocument"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}}
                                         value="{{ $document->attach_draft_doocument }}">
                                         @if($document->attach_draft_doocument)
                                             <input type="hidden" name="attach_draft_doocument" value="{{ $document->attach_draft_doocument }}">
@@ -1178,7 +1178,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="effective-doc">Attach Effective document</label>
-                                    <input type="file" name="attach_effective_docuement"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}} 
+                                    <input type="file" name="attach_effective_docuement"  style="height: 100% !important; margin-bottom: 0px !important;" {{Helpers::isRevised($document->stage)}}
                                         value="{{ $document->attach_effective_docuement }}">
                                         @if($document->attach_effective_docuement)
                                             <input type="hidden" name="attach_effective_docuement" value="{{ $document->attach_effective_docuement }}">
@@ -1232,7 +1232,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers">Reviewers</label>
-                                    <select   @if($document->stage != 1 && !Helpers::userIsQA() || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
+                                    <select   @if($document->stage != 1 && !Helpers::userIsQA() || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-reviewer" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
@@ -1294,7 +1294,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers">Approvers</label>
-                                    <select   @if($document->stage != 1 && !Helpers::userIsQA()  || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}} 
+                                    <select   @if($document->stage != 1 && !Helpers::userIsQA()  || $document->stage >=5 ) disabled @endif id="choices-multiple-remove-button" class="choices-multiple-approver" {{ !Helpers::userIsQA() ? Helpers::isRevised($document->stage) : ''}}
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
@@ -1356,7 +1356,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="reviewers-group">Reviewers Group</label>
-                                    <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}} 
+                                    <select id="choices-multiple-remove-button" name="reviewers_group[]" {{Helpers::isRevised($document->stage)}}
                                         placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewergroup))
                                             @foreach ($reviewergroup as $lan)
@@ -1415,7 +1415,7 @@
                             <div class="col-md-6">
                                 <div class="group-input">
                                     <label for="approvers-group">Approvers Group</label>
-                                    <select id="choices-multiple-remove-button" name="approver_group[]" {{Helpers::isRevised($document->stage)}} 
+                                    <select id="choices-multiple-remove-button" name="approver_group[]" {{Helpers::isRevised($document->stage)}}
                                         placeholder="Select Approvers" multiple>
                                         @if (!empty($approversgroup))
                                             @foreach ($approversgroup as $lan)
@@ -1581,7 +1581,7 @@
                                         @else
                                             <option value="no" selected>No</option>
                                             <option value="yes">Yes</option>
-                                            
+
                                         @endif
 
                                     </select>
@@ -1613,7 +1613,7 @@
                                             <option value="{{ $temp->id }}"
                                                 @if (!empty($trainingDoc)) @if ($trainingDoc->trainer == $temp->id) selected @endif
                                                 @endif>{{ $temp->name }}</option>
-                                        @endif        
+                                        @endif
                                         @endforeach
                                     </select>
                                     @foreach ($history as $tempHistory)
@@ -1892,7 +1892,7 @@
                                             name="button" {{Helpers::isRevised($document->stage)  }} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    
+
                                     <div id="abbreviationdiv">
                                         @if ($document->document_content && !empty($document->document_content->abbreviation))
                                             @foreach (unserialize($document->document_content->abbreviation) as $key => $data)
@@ -1906,7 +1906,7 @@
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else 
+                                                    @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
                                                                 <textarea name="abbreviation[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
@@ -1963,7 +1963,7 @@
                                         Definition<button type="button" id="Definitionbtnadd" name="button" {{Helpers::isRevised($document->stage)}} >+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    
+
                                     <div id="definitiondiv">
                                         @if ($document->document_content && !empty($document->document_content->defination))
                                             @foreach (unserialize($document->document_content->defination) as $key => $data)
@@ -1977,7 +1977,7 @@
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else 
+                                                    @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
                                                                 <textarea name="defination[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
@@ -1990,7 +1990,7 @@
                                                             </div>
                                                         </div>
                                                     @endif
-                                                </div>    
+                                                </div>
                                             @endforeach
                                         @endif
                                     </div>
@@ -2051,7 +2051,7 @@
                                                     @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
-                                                                <textarea name="materials_and_equipments[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea> 
+                                                                <textarea name="materials_and_equipments[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
                                                             </div>
 
                                                             <div class="col-sm-1">
@@ -2196,7 +2196,7 @@
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="col-md-12">
                                 <div class="group-input">
@@ -2218,7 +2218,7 @@
                                                                 <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                             </div>
                                                         </div>
-                                                    @else 
+                                                    @else
                                                         <div class="row">
                                                             <div class="col-sm-10">
                                                                 <textarea type="text" name="reporting[]" class=""
@@ -2231,7 +2231,7 @@
                                                             <button class="btn btn-danger removeAllBlocks">Remove</button>
                                                         </div>
                                                         </div>
-                                                    @endif 
+                                                    @endif
                                                 </div>
                                             @endforeach
                                         @else
@@ -2291,7 +2291,7 @@
                                         References<button type="button" id="referencesbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    
+
                                     <div id="referencesdiv">
                                         @if ($document->document_content && !empty($document->document_content->references))
                                             @foreach (unserialize($document->document_content->references) as $key => $data)
@@ -2306,7 +2306,7 @@
                                                                     <button class="btn btn-danger abbreviationbtnRemove">Remove</button>
                                                                 </div>
                                                             </div>
-                                                        @else    
+                                                        @else
                                                             <div class="row">
                                                                 <div class="col-sm-10">
                                                                     <textarea name="references[]" class="myclassname" {{Helpers::isRevised($document->stage)}}>{{ $data }}</textarea>
@@ -2339,7 +2339,7 @@
                                         @endif
 
                                     </div>
-                                    
+
                                     @foreach ($history as $tempHistory)
                                         @if ($tempHistory->activity_type == 'References' && !empty($tempHistory->comment) )
                                             @php
@@ -2357,9 +2357,9 @@
                                         @endif
                                     @endforeach
 
-                                   
-                                    
-                                   
+
+
+
                                 </div>
                             </div>
 
@@ -2420,7 +2420,7 @@
                                         Annexure<button type="button" id="annbtadd" name="button" {{Helpers::isRevised($document->stage)}}>+</button>
                                     </label>
                                     <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                    
+
                                     <div id="anndiv">
                                         @if ($document->document_content && !empty($document->document_content->ann))
                                             @foreach (unserialize($document->document_content->ann) as $key => $data)
@@ -2485,9 +2485,9 @@
                                         @endif
                                     @endforeach
 
-                                   
-                                    
-                                   
+
+
+
                                 </div>
                             </div>
 
@@ -2684,15 +2684,15 @@
                                 @endif
                             @endforeach
 
-                           
-                            
-                           
+
+
+
                         </div>
                     </div>
 
                     @if (Auth::user()->role != 3 && $document->stage < 8)
 
-                        {{-- Add Comment 
+                        {{-- Add Comment
                         <div class="comment">
                             <div>
                                 <p class="timestamp" style="color: blue">Modify by {{ Auth::user()->name }} at
@@ -2732,7 +2732,7 @@
                                             <th class="copy-long">Reason for Retrieval</th>
                                             <th class="copy-long">Remarks</th>
                                             <th class="copy-long">Action</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -2756,11 +2756,11 @@
                                                 <div class="input-date "><div
                                                     class="calenderauditee">
                                                 <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ $grid->issuance_date }}"/>
-                                                <input type="date" name="distribution[{{ $loop->index }}][issuance_date]" 
+                                                <input type="date" name="distribution[{{ $loop->index }}][issuance_date]"
                                                 class="hide-input" style="position: absolute; top: 0; left: 0; opacity: 0;"
                                                 oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" value="{{ $grid->issuance_date }}"/></div></div></div>
                                             </td>
-                                            
+
                                                 <td>
                                                     <select id="select-state" placeholder="Select..."
                                                         name="distribution[{{ $loop->index }}][issuance_to]" >
@@ -2775,13 +2775,13 @@
                                                         name="distribution[{{ $loop->index }}][location]">
                                                         <option value='0' {{ $grid->location == '0' ? 'selected' : '' }}>-- Select --</option>
                                                         @foreach ($departments as $department)
-                                                            <option 
+                                                            <option
                                                                 value='{{ $department->id }}' {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
                                                                 {{ $department->name }}
                                                             </option>
                                                         @endforeach
                                                     </select>
-                                                </td>    
+                                                </td>
                                             <td><input type="text" name="distribution[{{ $loop->index }}][issued_copies]" value="{{ $grid->issued_copies }}">
                                             </td>
                                             <td><input type="text" name="distribution[{{ $loop->index }}][issued_reason]" value="{{ $grid->issued_reason }}">
@@ -2790,7 +2790,7 @@
                                                 <div class="input-date "><div
                                                     class="calenderauditee">
                                                 <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" value="{{ $grid->retrieval_date }}"/>
-                                                <input type="date" name="distribution[{{ $loop->index }}][retrieval_date]" class="hide-input" 
+                                                <input type="date" name="distribution[{{ $loop->index }}][retrieval_date]" class="hide-input"
                                                 oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" value="{{ $grid->retrieval_date }}"/></div></div></div>
                                             </td>
                                             <td>
@@ -2807,13 +2807,13 @@
                                                     name="distribution[{{ $loop->index }}][retrieved_department]">
                                                     <option value='0' {{ $grid->retrieved_department == '0' ? 'selected' : '' }}>-- Select --</option>
                                                     @foreach ($departments as $department)
-                                                        <option 
+                                                        <option
                                                             value='{{ $department->id }}' {{ $grid->retrieved_department == $department->id ? 'selected' : '' }}>
                                                             {{ $department->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                            </td>    
+                                            </td>
                                             <td><input type="number" name="distribution[{{ $loop->index }}][retrieved_copies]" value="{{ $grid->retrieved_copies }}">
                                             </td>
                                             <td><input type="text" name="distribution[{{ $loop->index }}][retrieved_reason]" value="{{ $grid->retrieved_reason }}">
@@ -3074,7 +3074,7 @@
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Originated By 
+                                    Originated By
                                 </div>
                                 @php
                                     $inreview = DB::table('stage_manages')
@@ -3093,7 +3093,7 @@
                         <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Originated On 
+                                    Originated On
                                 </div>
                                 <div class="name">{{ $temp->created_at }}</div>
                                 @endforeach
@@ -3104,7 +3104,7 @@
                         {{-- <div class="col-md-6">
                             <div class="review-names">
                                 <div class="orig-head">
-                                    Originated On 
+                                    Originated On
                                 </div>
                                 @php
                                     $inreview = DB::table('stage_manages')
@@ -3281,20 +3281,24 @@
 
 
     <script>
+	let uploadUrl = "{{ route('api.upload.file') }}";
+
+	let uploadFileUrl = uploadUrl.replace('http:', 'https:');
+
         var editor = new FroalaEditor('.summernote', {
             key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
             imageUploadParam: 'image_param',
             imageUploadMethod: 'POST',
             imageMaxSize: 20 * 1024 * 1024,
-            imageUploadURL: "{{ route('api.upload.file') }}",
+            imageUploadURL: uploadFileUrl ,
             fileUploadParam: 'image_param',
-            fileUploadURL: "{{ route('api.upload.file') }}",
+            fileUploadURL: uploadFileUrl ,
             videoUploadParam: 'image_param',
-            videoUploadURL: "{{ route('api.upload.file') }}",
+            videoUploadURL: uploadFileUrl ,
             videoMaxSize: 500 * 1024 * 1024,
         });
 
-        
+
     </script>
     <script>
         VirtualSelect.init({
@@ -3335,7 +3339,7 @@
                 // Create a new list item with the source value and a close icon
                 var newItem = $('<li>', { class: 'd-flex justify-content-between align-items-center' }).text(sourceValue);
                 var closeButton = $('<span>', {
-                    text: '×',
+                    text: 'Ã—',
                     class: 'close-icon ms-2' // Bootstrap class for margin-left spacing
                 }).appendTo(newItem);
 
@@ -3354,7 +3358,7 @@
 
                 // Add click event for the close icon
                 closeButton.on('click', function() {
-                    var thisValue = $(this).parent().text().slice(0, -1); // Remove the '×' from the value
+                    var thisValue = $(this).parent().text().slice(0, -1); // Remove the 'Ã—' from the value
                     $(this).parent().remove(); // Remove the parent list item on click
                     $('#keywords option').filter(function() {
                         return $(this).val() === thisValue;
@@ -3363,7 +3367,7 @@
             });
 
             $(document).on('click', '.close-icon', function() {
-                var thisValue = $(this).parent().text().trim().slice(0, -1).trim(); // Remove the '×' from the value
+                var thisValue = $(this).parent().text().trim().slice(0, -1).trim(); // Remove the 'Ã—' from the value
                 $(this).closest('li').remove();
                 $('#keywords option').filter(function() {
                     return $(this).text().trim() === thisValue;

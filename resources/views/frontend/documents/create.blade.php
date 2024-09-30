@@ -77,7 +77,7 @@
         @if(isset($_GET['id']))
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($_GET['id'])}} / Document 
+            {{ Helpers::getDivisionName($_GET['id'])}} / Document
             {{-- {{ $division->dname }} / {{ $division->pname }} --}}
         </div>
         @endif
@@ -87,13 +87,13 @@
 
         <div class="container-fluid">
             <div class="tab">
-                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button> 
-                {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>  
+                <button class="tablinks active" onclick="openData(event, 'doc-info')" id="defaultOpen">Document information</button>
+                {{-- <button class="tablinks" onclick="openData(event, 'doc-chem')">Chemistry SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-instru')">Instrument SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-instrumental')">Instrumental Chemistry SOP</button>
-                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button> 
+                <button class="tablinks" onclick="openData(event, 'doc-micro')">Microbiology SOP</button>
                 <button class="tablinks" onclick="openData(event, 'doc-lab')">Good Laboratory Practices</button>
-                <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button> 
+                <button class="tablinks" onclick="openData(event, 'doc-wet')">Wet Chemistry</button>
                 <button class="tablinks" onclick="openData(event, 'doc-others')">Others</button>--}}
                 <button class="tablinks" onclick="openData(event, 'add-doc')">Training Information</button>
                 <button class="tablinks" onclick="openData(event, 'doc-content')">Document Content</button>
@@ -130,7 +130,7 @@
                                         <div class="default-name">{{ $recordNumber }}</div>
                                     </div>
                                 </div> --}}
-                                           
+
 
                                 <div class="col-lg-12">
                                     <div class="group-input">
@@ -150,7 +150,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="document_name-desc">Document Name<span
@@ -194,8 +194,8 @@
                                         <label for="due-date">Due Date <span class="text-danger">*</span></label>
                                         <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                         </div>
-                                        <div class="calenderauditee"> 
-                                            <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />                                    
+                                        <div class="calenderauditee">
+                                            <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />
                                         <input
                                          type="date" id="due_dateDoc" name="due_dateDoc" pattern="\d{4}-\d{2}-\d{2}"
                                          class="hide-input" min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
@@ -255,7 +255,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="depart-name">Department Name<span class="text-danger">*</span></label>
@@ -327,7 +327,7 @@
 
                                 <div class="col-6">
                                     <div class="group-input">
-                                        <label for="minor">Minor<span class="text-danger">*</span> 
+                                        <label for="minor">Minor<span class="text-danger">*</span>
                                             <span  class="text-primary" data-bs-toggle="modal"
                                             data-bs-target="#document-management-system-modal-minor"
                                             style="font-size: 0.8rem; font-weight: 400;">
@@ -335,7 +335,7 @@
                                             </span>
                                         </label>
                                         <input type="number" name="minor" id="minor" min="0" max="9" required>
-                                       
+
                                     </div>
                                     {{-- <p id="minorError" style="color:red">** Department is required</p> --}}
                                 </div>
@@ -356,7 +356,7 @@
                                 <div class="col-md-6">
                                     <div class="group-input">
                                         <label for="doc-code">Document Type Code</label>
-                                        <div class="default-name"> <span id="document_type_code">Not selected</span></div>               
+                                        <div class="default-name"> <span id="document_type_code">Not selected</span></div>
                                      </div>
                                 </div>
                                 {{-- <div class="col-md-6">
@@ -415,10 +415,10 @@
                                     <div class="group-input input-date">
                                         <label for="effective-date">Effective Date</label>
                                         <div> <small class="text-primary">The effective date will be automatically populated once the record becomes effective</small></div>
-                                        <div class="calenderauditee"> 
+                                        <div class="calenderauditee">
                                         <input type="text" name="effective_date" id="effective_date"  placeholder="DD-MMM-YYYY" />
-                                        <input 
-                                        type="date" name="effective_date" id="effective_date" 
+                                        <input
+                                        type="date" name="effective_date" id="effective_date"
                                         class="hide-input"
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
                                         oninput="handleDateInput(this, 'effective_date')"
@@ -428,7 +428,7 @@
                                 </div>
 
                                 <div class="col-md-2 new-date-data-field">
-                                    <div class="group-input "> 
+                                    <div class="group-input ">
                                         <label for="review-period">Review Period (in years)</label>
 
                                         <input type="number" name="review_period" id="review_period" style="margin-top: 25px;" value="3" min="0" oninput="validateInput(this)">
@@ -445,7 +445,7 @@
                                 <div class="col-md-5 new-date-data-field">
                                     <div class="group-input input-date">
                                         <label for="next_review_date">Next Review Date</label>
-                                        <div class="calenderauditee"> 
+                                        <div class="calenderauditee">
                                             <input type="text" name="next_review_date" id="next_review_date"  style="margin-top: 25px;"  class="new_review_date_show"  readonly placeholder="DD-MMM-YYYY" />
                                         <input type="date" name="next_review_date" id="next_review_date"
                                         class="hide-input new_review_date_hide" readonly
@@ -480,7 +480,7 @@
                                         <select id="choices-multiple-remove-button" class="choices-multiple-reviewer"
                                             name="reviewers[]" placeholder="Select Reviewers" multiple required>
                                             @if (!empty($reviewer))
-                                            
+
                                                 @foreach ($reviewer as $lan)
                                                     @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
@@ -573,7 +573,7 @@
                             <button type="submit" value="save" name="submit" id="DocsaveButton" class="saveButton">Save</button>
                             <button type="button" class="nextButton" id="DocnextButton">Next</button>
                             <button type="button"> <a href="{{ url('rcms/qms-dashboard') }}" class="text-white"> Exit </a>
-                            </button> 
+                            </button>
                         </div>
                     </div>
 
@@ -695,7 +695,7 @@
                             </button>
                         </div>
                     </div>
-                   
+
                     <div id="doc-content" class="tabcontent">
                         <div class="orig-head">
                             Document Information
@@ -716,13 +716,13 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="group-input">
-                                        
+
                                         <label for="responsibility" id="responsibility">
                                             Responsibility<button type="button" id="responsibilitybtnadd"
                                                 name="button">+</button>
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
-                                        
+
                                         <div id="responsibilitydiv">
                                             <div class="singleResponsibilityBlock">
                                                 <div class="row">
@@ -750,7 +750,7 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
-                                        
+
                                         <div id="abbreviationdiv">
                                             <div class="singleAbbreviationBlock">
                                                 <div class="row">
@@ -779,7 +779,7 @@
                                                 <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
                                         </label>
 
-                                        
+
 
                                         <div id="definitiondiv">
 
@@ -848,15 +848,15 @@
                                     </div>
                                 </div>
 
-                                
+
 
                                 <div class="col-md-12">
                                     <div class="group-input">
                                         <label for="reporting" id="newreport">
-                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button> 
+                                            Reporting<button type="button" id="reportingbtadd" name="button">+</button>
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        
+
                                         <div id="reportingdiv">
                                             <div class="singleReportingBlock">
                                                 <div class="row">
@@ -905,7 +905,7 @@
                                             Annexure<button type="button" id="annbtadd" >+</button>
                                         </label>
                                         <div><small class="text-primary">Please insert "NA" in the data field if it does not require completion</small></div>
-                                        
+
                                         <div id="anndiv">
                                             <div class="singleAnnexureBlock">
                                                 <div class="row">
@@ -969,7 +969,7 @@
                                                     <th class="sop-num">SOP Revision No.</th>
                                                     <th class="dcrf-num">Change Control No./ DCRF No.</th>
                                                     <th class="changes">Changes</th>
-                                                    <th class="deleteRow">&nbsp;</th> 
+                                                    <th class="deleteRow">&nbsp;</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -1148,10 +1148,10 @@
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
                                                     <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="distribution[0][issuance_date]" class="hide-input" 
+                                                    <input type="date" name="distribution[0][issuance_date]" class="hide-input"
                                                     oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" /></div></div></div>
                                                 </td>
-                                                
+
                                                     <td>
                                                         <select id="select-state" placeholder="Select..."
                                                             name="distribution[0][issuance_to]">
@@ -1173,7 +1173,7 @@
                                                             <option value='4'>IT Administration</option>
                                                             <option value='5'>Business Administration</option>
                                                         </select>
-                                                    </td>    
+                                                    </td>
                                                 <td><input type="number" name="distribution[0][issued_copies]">
                                                 </td>
                                                 <td><input type="text" name="distribution[0][issued_reason]">
@@ -1182,7 +1182,7 @@
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
                                                     <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
-                                                    <input type="date" name="distribution[0][retrieval_date]" class="hide-input" 
+                                                    <input type="date" name="distribution[0][retrieval_date]" class="hide-input"
                                                     oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" /></div></div></div>
                                                 </td>
                                                 <td>
@@ -1206,7 +1206,7 @@
                                                         <option value='4'>IT Administration</option>
                                                         <option value='5'>Business Administration</option>
                                                     </select>
-                                                </td>    
+                                                </td>
                                                 <td><input type="number" name="distribution[0][retrieved_copies]">
                                                 </td>
                                                 <td><input type="text" name="distribution[0][retrieved_reason]">
@@ -1219,7 +1219,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div> 
+                        </div>
                         <div class="button-block">
                             <button type="submit" value="save" name="submit" class="saveButton">Save</button>
                             <button type="button" class="backButton" onclick="previousStep()">Back</button>
@@ -1468,7 +1468,7 @@
                             <div class="col-md-6">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Originated By 
+                                        Originated By
                                         {{-- Review Proposed By --}}
                                     </div>
                                 </div>
@@ -1483,7 +1483,7 @@
                             <div class="col-md-6">
                                 <div class="review-names">
                                     <div class="orig-head">
-                                        Originated On 
+                                        Originated On
                                         {{-- Document Reuqest Approved By --}}
                                     </div>
                                 </div>
@@ -1568,21 +1568,26 @@
 
     <script>
         $(document).ready(function(){
+
+            let uploadUrl = "{{ route('api.upload.file') }}";
+
+	        let uploadFileUrl = uploadUrl.replace('http:', 'https:');
+
             var editor = new FroalaEditor('.summernote', {
                 key: "uXD2lC7C4B4D4D4J4B11dNSWXf1h1MDb1CF1PLPFf1C1EESFKVlA3C11A8D7D2B4B4G2D3J3==",
                 imageUploadParam: 'image_param',
                 imageUploadMethod: 'POST',
                 imageMaxSize: 20 * 1024 * 1024,
-                imageUploadURL: "{{ route('api.upload.file') }}",
+                imageUploadURL: uploadFileUrl,
                 fileUploadParam: 'image_param',
-                fileUploadURL: "{{ route('api.upload.file') }}",
+                fileUploadURL: uploadFileUrl,
                 videoUploadParam: 'image_param',
-                videoUploadURL: "{{ route('api.upload.file') }}",
+                videoUploadURL: uploadFileUrl,
                 videoMaxSize: 500 * 1024 * 1024,
             });
-        }) 
+        })
     </script>
-    
+
     <script>
         VirtualSelect.init({
             ele: '#reference_record, #notify_to'
