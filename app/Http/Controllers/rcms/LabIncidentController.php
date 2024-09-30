@@ -63,6 +63,8 @@ class LabIncidentController extends Controller
         $data->division_id = $request->division_id;
         $data->short_desc = $request->short_desc;
         $data->severity_level2= $request->severity_level2;
+        $data->initiated_through = $request->initiated_through;
+        $data->initiated_through_req = $request->initiated_through_req;
         $data->intiation_date = $request->intiation_date;
         $data->Initiator_Group= $request->Initiator_Group;
         $data->initiator_group_code= $request->initiator_group_code;
@@ -279,6 +281,34 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Severity Level';
             $history->previous = "Null";
             $history->current = $request->severity_level2;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->initiated_through)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = "Null";
+            $history->current = $request->initiated_through;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $data->status;
+            $history->save();
+        }
+
+        if (!empty($request->initiated_through_req)) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $data->id;
+            $history->activity_type = 'others';
+            $history->previous = "Null";
+            $history->current = $request->initiated_through_req;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;
@@ -692,6 +722,9 @@ class LabIncidentController extends Controller
         $data->Incident_Category_others = $request->Incident_Category_others;
         $data->due_date_extension= $request->due_date_extension;
         $data->severity_level2= $request->severity_level2;
+        $data->initiated_through = $request->initiated_through;
+        $data->initiated_through_req = $request->initiated_through_req;
+
 
 
 
@@ -869,6 +902,34 @@ class LabIncidentController extends Controller
             $history->activity_type = 'Severity Level';
             $history->previous = $lastDocument->severity_level2;
             $history->current = $request->severity_level2;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->initiated_through != $request->initiated_through) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Initiated Through';
+            $history->previous = $lastDocument->initiated_through;
+            $history->current = $request->initiated_through;
+            $history->comment = "NA";
+            $history->user_id = Auth::user()->id;
+            $history->user_name = Auth::user()->name;
+            $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
+            $history->origin_state = $lastDocument->status;
+            $history->save();
+        }
+
+        if ($lastDocument->initiated_through_req != $request->initiated_through_req) {
+            $history = new LabIncidentAuditTrial();
+            $history->LabIncident_id = $id;
+            $history->activity_type = 'Others';
+            $history->previous = $lastDocument->initiated_through_req;
+            $history->current = $request->initiated_through_req;
             $history->comment = "NA";
             $history->user_id = Auth::user()->id;
             $history->user_name = Auth::user()->name;

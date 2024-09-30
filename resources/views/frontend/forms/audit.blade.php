@@ -158,52 +158,13 @@
 
                     var html =
                         '<tr>' +
-                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber +
-                        '"></td>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
                         '<td><input type="text" name="observation_id[]"></td>' +
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="date[]" class="hide-input" oninput="handleDateInput(this, `date' + serialNumber +'`)" /></div></div></div></td>' +
-                        // '<td><select name="auditorG[]">'
-                        +'<option value="">Select a value</option>';
-
-                    // for (var i = 0; i < users.length; i++) {
-                    //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    // }
-
-                    html += '</select></td>' +
-                        //     '<td><select name="auditeeG[]">' +
-                        //     '<option value="">Select a value</option>';
-
-                        // for (var i = 0; i < users.length; i++) {
-                        //     html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                        // }
-                        // html += '</select></td>'
                         '<td><input type="text" name="observation_description[]"></td>' +
-                        // '<td><input type="text" name="severity_level[]"></td>' +
                         '<td><input type="text" name="area[]"></td>' +
-                        // '<td><input type="text" name="observation_category[]"></td>' +
-                        //'<td><select name="observation_category[]"><option value="">Select A Value</option><option value="Major">Major</option><option value="Minor">Minor</option><option value="Critical">Critical</option><option value="Recommendation">Recommendation</option></select></td>'
-                        // + '<td><select name="capa_required[]"><option value="">Select A Value</option><option value="Yes">Yes</option><option value="No">No</option></select></td>' +
-                        '<td><input type="text" name="auditee_response[]"></td>'
-                    // '<td><input type="text" name="auditor_review_on_response[]"></td>' +
-                    //'<td><input type="text" name="qa_comment[]"></td>' +
-
-                    // '//<td><input type="text" name="capa_details[]"></td>' +
-                    // '<td><input type="date" name="capa_due_date[]"></td>'
-                    // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_due_date[]" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>' +
-                    // '<td><select name="capa_owner[]">' +
-                    '<option value="">Select a value</option>';
-
-                    for (var i = 0; i < users.length; i++) {
-                        html += '<option value="' + users[i].id + '">' + users[i].name + '</option>';
-                    }
-
-                    html += '</select></td>' +
-                        //  '<td><input type="text" name="action_taken[]"></td>' +
-                        // '<td><input type="date" name="capa_completion_date[]"></td>'
-                        // '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_completion_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" /><input type="date" name="capa_completion_date[]" class="hide-input" oninput="handleDateInput(this, `capa_completion_date' + serialNumber +'`)" /></div></div></div></td>'
-                        +
-                        //'<td><input type="text" name="status_Observation[]"></td>' +
-                        //'<td><input type="text" name="remark_observation[]"></td>' +
+                        '<td><div class="group-input new-date-data-field mb-0"><div class="input-date "><div class="calenderauditee"><input type="text" id="capa_due_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" /><input type="date" name="capa_due_date[]" min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}" class="hide-input" oninput="handleDateInput(this, `capa_due_date' + serialNumber +'`)" /></div></div></div></td>'+
+                        '<td><input type="text" name="auditee_response[]"></td>'+
+                        
                         '</tr>';
 
                     return html;
@@ -1006,7 +967,7 @@
                                                         <th>Pre Comments</th>
                                                         {{-- <th>Severity Level</th> --}}
                                                         <th>CAPA Details if any</th>
-                                                        {{-- <th>Observation Category</th> --}}
+                                                        <th>Expected Date To Complete</th>
                                                         {{-- <th>CAPA Required</th> --}}
                                                         <th>Post Comments</th>
                                                         {{-- <th>Auditor Review on Response</th> --}}

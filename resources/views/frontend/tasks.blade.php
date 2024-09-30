@@ -75,6 +75,8 @@
                                                         <div class="action-down-btn">Action <i class="fa-solid fa-angle-down"></i></div>
                                                         <div class="action-block">
                                                             <a href="{{ url('rev-details', $temp->id) }}">View</a>
+                                                            <a href="{{ url('doc-details', $temp->id) }}">View Details
+                                                            </a>
                                                             <!-- @php
                                                                 $showEdit = false;
                                                             @endphp

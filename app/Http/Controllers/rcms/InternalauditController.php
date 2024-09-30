@@ -298,9 +298,9 @@ class InternalauditController extends Controller
         // if (!empty($request->capa_details)) {
         //     $data4->capa_details = serialize($request->capa_details);
         // }
-        // if (!empty($request->capa_due_date)) {
-        //     $data4->capa_due_date = serialize($request->capa_due_date);
-        // }
+        if (!empty($request->capa_due_date)) {
+            $data4->capa_due_date = serialize($request->capa_due_date);
+        }
         // if (!empty($request->capa_owner)) {
         //     $data4->capa_owner = serialize($request->capa_owner);
         // }
@@ -3112,21 +3112,68 @@ class InternalauditController extends Controller
         return view('frontend.internalAudit.audit-trial-inner', compact('detail', 'doc', 'detail_data'));
     }
 
+        // public function internal_audit_child(Request $request, $id)
+        // {
+        //     $parent_id = $id;
+        //     $parent_type = "Observations";
+        //     $record_number = ((RecordNumber::first()->value('counter')) + 1);
+        //     $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
+        //      $currentDate = Carbon::now();
+        //      $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
+        //      $formattedDate = $currentDate->addDays(30);
+        //      $due_date = $formattedDate->format('d-M-Y');
+
+        //      if ($request->revision == "capa-child") {
+        //         $internalAudit->originator = User::where('id', $internalAudit->initiator_id)->value('name');
+        //        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type', 'old_record', 'cft'));
+        //     }
+
+        //     if ($request->revision == "Observation-child") {
+        //         $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+        //         return view('frontend.forms.observation', compact('record_number','parent_division_id' ,'due_date', 'parent_id', 'parent_type'));
+        //     }
+           
+        // }
+
         public function internal_audit_child(Request $request, $id)
         {
+            $cc = InternalAudit::find($id);
+            $cft = [];
             $parent_id = $id;
-            $parent_type = "Observations";
+            $parent_division_id = $cc->division_id;
+            $parent_type = "Internal Audit";
+            $old_record = Capa::select('id', 'division_id', 'record')->get();
             $record_number = ((RecordNumber::first()->value('counter')) + 1);
             $record_number = str_pad($record_number, 4, '0', STR_PAD_LEFT);
-             $currentDate = Carbon::now();
-             $parent_division_id = InternalAudit::where('id', $id)->value('division_id');
-
+            $currentDate = Carbon::now();
             $formattedDate = $currentDate->addDays(30);
             $due_date = $formattedDate->format('d-M-Y');
-            return view('frontend.forms.observation', compact('record_number','parent_division_id' ,'due_date', 'parent_id', 'parent_type'));
+            $parent_intiation_date = Capa::where('id', $id)->value('intiation_date');
+            $parent_record =  ((RecordNumber::first()->value('counter')) + 1);
+            $parent_record = str_pad($parent_record, 4, '0', STR_PAD_LEFT);
+            $parent_initiator_id = $id;
+            // $changeControl = OpenStage::find(1);/
+            $hod = User::get();
+            $pre = CC::all();
+        // $old_record = Capa::select('id', 'division_id', 'record', 'short_description')->get();
+            $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+
+            // if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
+            
+            if ($request->revision == "Observation-child") {
+                $old_record = ActionItem::all();
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+                return view('frontend.forms.observation', compact('record_number','old_record','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+    
+            }
+           
+    
+            if ($request->revision == "capa-child") {
+                $cc->originator = User::where('id', $cc->initiator_id)->value('name');
+               return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft'));
+            }
+          
         }
-
-
     public static function singleReport($id)
     {
         $data = InternalAudit::find($id);
