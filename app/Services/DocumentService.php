@@ -33,32 +33,37 @@ class DocumentService
 
             $existing_distribution_grid = DocumentGridData::where('document_id', $document->id)->get();
 
-            foreach ($existing_distribution_grid as $grid)
-            {
-                $grid->delete();
+            if ($existing_distribution_grid && is_array($existing_distribution_grid)) {
+                foreach ($existing_distribution_grid as $grid)
+                {
+                    $grid->delete();
+                }
             }
 
-            foreach ($distributions as $key => $distribution)
-            {
-                $document_distribution_grid = new DocumentGridData();
-                $document_distribution_grid->document_id = $document->id;
-                $document_distribution_grid->document_title = isset($distribution['document_title']) ? $distribution['document_title'] : '';
-                $document_distribution_grid->document_number = isset($distribution['document_number']) ? $distribution['document_number'] : '';
-                $document_distribution_grid->document_printed_by = isset($distribution['document_printed_by']) ? $distribution['document_printed_by'] : '';
-                $document_distribution_grid->document_printed_on = isset($distribution['document_printed_on']) ? $distribution['document_printed_on'] : '';
-                $document_distribution_grid->document_printed_copies = isset($distribution['document_printed_copies']) ? $distribution['document_printed_copies'] : '';
-                $document_distribution_grid->issuance_date = isset($distribution['issuance_date']) ? $distribution['issuance_date'] : '';
-                $document_distribution_grid->issuance_to = isset($distribution['issuance_to']) ? $distribution['issuance_to'] : '';
-                $document_distribution_grid->location = isset($distribution['location']) ? $distribution['location'] : '';
-                $document_distribution_grid->issued_copies = isset($distribution['issued_copies']) ? $distribution['issued_copies'] : '';
-                $document_distribution_grid->issued_reason = isset($distribution['issued_reason']) ? $distribution['issued_reason'] : '';
-                $document_distribution_grid->retrieval_date = isset($distribution['retrieval_date']) ? $distribution['retrieval_date'] : '';
-                $document_distribution_grid->retrieval_by = isset($distribution['retrieval_by']) ? $distribution['retrieval_by'] : '';
-                $document_distribution_grid->retrieved_department = isset($distribution['retrieved_department']) ? $distribution['retrieved_department'] : '';
-                $document_distribution_grid->retrieved_copies = isset($distribution['retrieved_copies']) ? $distribution['retrieved_copies'] : '';
-                $document_distribution_grid->retrieved_reason =  isset($distribution['retrieved_reason']) ? $distribution['retrieved_reason'] : '';
-                $document_distribution_grid->remark = isset($distribution['remark']) ? $distribution['remark'] : '';
-                $document_distribution_grid->save();
+            if ($distributions && is_array($distributions)) {
+
+                foreach ($distributions as $key => $distribution)
+                {
+                    $document_distribution_grid = new DocumentGridData();
+                    $document_distribution_grid->document_id = $document->id;
+                    $document_distribution_grid->document_title = isset($distribution['document_title']) ? $distribution['document_title'] : '';
+                    $document_distribution_grid->document_number = isset($distribution['document_number']) ? $distribution['document_number'] : '';
+                    $document_distribution_grid->document_printed_by = isset($distribution['document_printed_by']) ? $distribution['document_printed_by'] : '';
+                    $document_distribution_grid->document_printed_on = isset($distribution['document_printed_on']) ? $distribution['document_printed_on'] : '';
+                    $document_distribution_grid->document_printed_copies = isset($distribution['document_printed_copies']) ? $distribution['document_printed_copies'] : '';
+                    $document_distribution_grid->issuance_date = isset($distribution['issuance_date']) ? $distribution['issuance_date'] : '';
+                    $document_distribution_grid->issuance_to = isset($distribution['issuance_to']) ? $distribution['issuance_to'] : '';
+                    $document_distribution_grid->location = isset($distribution['location']) ? $distribution['location'] : '';
+                    $document_distribution_grid->issued_copies = isset($distribution['issued_copies']) ? $distribution['issued_copies'] : '';
+                    $document_distribution_grid->issued_reason = isset($distribution['issued_reason']) ? $distribution['issued_reason'] : '';
+                    $document_distribution_grid->retrieval_date = isset($distribution['retrieval_date']) ? $distribution['retrieval_date'] : '';
+                    $document_distribution_grid->retrieval_by = isset($distribution['retrieval_by']) ? $distribution['retrieval_by'] : '';
+                    $document_distribution_grid->retrieved_department = isset($distribution['retrieved_department']) ? $distribution['retrieved_department'] : '';
+                    $document_distribution_grid->retrieved_copies = isset($distribution['retrieved_copies']) ? $distribution['retrieved_copies'] : '';
+                    $document_distribution_grid->retrieved_reason =  isset($distribution['retrieved_reason']) ? $distribution['retrieved_reason'] : '';
+                    $document_distribution_grid->remark = isset($distribution['remark']) ? $distribution['remark'] : '';
+                    $document_distribution_grid->save();
+                }
             }
         } catch (\Exception $e) {
             info('Error in DocumentService@handleDistributionGrid', [
@@ -71,7 +76,7 @@ class DocumentService
     static function update_document_numbers()
     {
         try {
-            
+
             $document_types = DocumentType::all();
 
             foreach ($document_types as $document_type)
@@ -84,7 +89,7 @@ class DocumentService
                 {
                     if ($document->revised !== 'Yes') {
                         $record_number++;
-                        $document->document_number = $record_number; 
+                        $document->document_number = $record_number;
                         $document->save();
                     } else {
                         $parent_document = Document::find($document->revised_doc);
@@ -170,7 +175,7 @@ class DocumentService
 
                     $extensions_record_number++;
                 }
-                
+
                 foreach ($change_controls as $change_control)
                 {
                     if ($change_control->record_number) {
@@ -199,12 +204,12 @@ class DocumentService
                     }
 
                     $r_n->save();
-                    
+
                     $rca->record_number()->save($r_n);
-                    
+
                     $rca_record_number++;
                 }
-                
+
                 foreach ($risk_managements as $risk_management)
                 {
                     if ($risk_management->record_number) {
@@ -221,7 +226,7 @@ class DocumentService
 
                     $risk_management_record_number++;
                 }
-                
+
                 foreach ($external_audits as $external_audit)
                 {
                     if ($external_audit->record_number) {
@@ -238,7 +243,7 @@ class DocumentService
 
                     $external_audit_record_number++;
                 }
-                
+
                 foreach ($internal_audits as $internal_audit)
                 {
                     if ($internal_audit->record_number) {
@@ -255,7 +260,7 @@ class DocumentService
 
                     $internal_audit_record_number++;
                 }
-                
+
                 foreach ($lab_incidents as $lab_incident)
                 {
                     if ($lab_incident->record_number) {
@@ -272,7 +277,7 @@ class DocumentService
 
                     $lab_incident_record_number++;
                 }
-                
+
                 foreach ($effective_checks as $effective_check)
                 {
                     if ($effective_check->record_number) {
@@ -289,7 +294,7 @@ class DocumentService
 
                     $effective_check_record_number++;
                 }
-                
+
                 foreach ($action_items as $action_item)
                 {
                     if ($action_item->record_number) {
@@ -306,7 +311,7 @@ class DocumentService
 
                     $action_item_record_number++;
                 }
-                
+
                 foreach ($audit_programs as $audit_program)
                 {
                     if ($audit_program->record_number) {
@@ -325,7 +330,7 @@ class DocumentService
                 }
 
             }
-            
+
 
         } catch (\Exception $e) {
             return $e->getMessage();
@@ -335,7 +340,7 @@ class DocumentService
     static function update_sop_numbers()
     {
         try {
-            
+
             $documents = Document::all();
 
             foreach ($documents as $doc)
