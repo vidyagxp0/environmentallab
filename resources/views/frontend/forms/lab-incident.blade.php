@@ -180,6 +180,7 @@
                                             <option value="regulatory">Regulatory</option>
                                             <option value="lab-incident">Lab Incident</option>
                                             <option value="improvement">Improvement</option>
+                                            <option value="OOS">OOS</option>
                                             <option value="others">Others</option>
                                         </select>
                                     </div>

@@ -360,6 +360,8 @@
                                                 value="lab-incident">Lab Incident</option>
                                             <option @if ($data->initiated_through == 'improvement') selected @endif
                                                 value="improvement">Improvement</option>
+                                                <option @if ($data->initiated_through == 'OOS') selected @endif
+                                                    value="OOS">OOS</option>
                                             <option @if ($data->initiated_through == 'others') selected @endif
                                                 value="others">Others</option>
                                         </select>
