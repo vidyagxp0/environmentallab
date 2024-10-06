@@ -53,13 +53,13 @@ class DocumentController extends Controller
      */
     public function division(Request $request)
     {
-        
+
 
         $new = new SetDivision;
         $new->division_id = $request->division_id;
-      
-       
-       
+
+
+
         $new->process_id = $request->process_id;
         $new->user_id = Auth::user()->id;
         $new->save();
@@ -71,11 +71,11 @@ class DocumentController extends Controller
     {
         // $request->dd();
         // return $request;
-        
+
         $new = new Document;
         $new->originator_id = $request->originator_id;
         $new->division_id = $request->division_id;
-        
+
         $new->process_id = $request->process_id;
         $new->record = $request->record;
         $new->revised = $request->revised;
@@ -113,7 +113,7 @@ class DocumentController extends Controller
         $new->training_required = $request->training_required;
         $new->trainer = $request->trainer;
         $new->comments = $request->comments;
-       
+
         $new->user_id = Auth::user()->id;
         $new->save();
 
@@ -155,7 +155,7 @@ class DocumentController extends Controller
 
         $count = $query->where('documents.originator_id', Auth::user()->id)->count();
         $documents = $query->paginate(10);
-        
+
         // dd($request->all(), $query->paginate(10));
         $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
         // $divisions = QMSDivision::where('status', '1')->select('id', 'name')->get();
@@ -209,7 +209,7 @@ class DocumentController extends Controller
         foreach ($documents as $doc) {
             $doctype = DocumentType::where('id', $doc->document_type_id)->value('name');
             $originatorName = User::where('id', $doc->originator_id)->value('name');
-            
+
             // Assign the retrieved names to the document object
             $doc['document_type_name'] = $doctype;
             $doc['originator_name'] = $originatorName;
@@ -318,13 +318,13 @@ class DocumentController extends Controller
     {
         //
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
-       
+
         if(!empty( $division)){
             $division->dname = Division::where('id', $division->division_id)->value('name');
             $division->pname = Process::where('id', $division->process_id)->value('process_name');
         }
-         
-      
+
+
         $users = User::all();
         if (! empty($users)) {
             foreach ($users as $data) {
@@ -341,7 +341,7 @@ class DocumentController extends Controller
                 }
             }
         }
-       
+
         $departments = Department::all();
         $documentTypes = DocumentType::all();
         $documentsubTypes = DocumentSubtype::all();
@@ -365,7 +365,7 @@ class DocumentController extends Controller
                 ->get();
 
         $trainer = User::get();
-        
+
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         // Retrieve the current counter value
@@ -398,7 +398,7 @@ class DocumentController extends Controller
     public function documentExportPDF()
     {
         $documents = Document::all();
-       
+
     }
 
     // documentExportEXCEL
@@ -420,9 +420,9 @@ class DocumentController extends Controller
         if ($request->submit == 'save') {
 
             $document = new Document();
-            
+
             $division = SetDivision::where('user_id', Auth::id())->latest()->first();
-           
+
             if(empty($request->division_id) && empty($request->process_id) ){
               $document->division_id = $division->division_id;
               $document->process_id = $division->process_id;
@@ -430,7 +430,7 @@ class DocumentController extends Controller
                 $document->division_id = $request->division_id;
                 $document->process_id = $request->process_id;
             }
-       
+
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
             $document->document_name = $request->document_name;
@@ -444,14 +444,14 @@ class DocumentController extends Controller
             $document->document_subtype_id = $request->document_subtype_id;
             $document->document_language_id = $request->document_language_id;
             $document->effective_date = $request->effective_date;
-            
+
             try {
                 if($request->effective_date){
                     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
                     $document->next_review_date = $next_review_date;
                 }
             } catch (\Exception $e) {
-                // 
+                //
             }
 
             $document->review_period = $request->review_period;
@@ -461,7 +461,7 @@ class DocumentController extends Controller
             $document->revision_type = $request->revision_type;
             $document->major = $request->major;
             $document->division_id = $request->division_id;
-       
+
             $document->minor = $request->minor;
             $document->sop_type = $request->sop_type;
             $document->notify_to = json_encode($request->notify_to);
@@ -520,7 +520,7 @@ class DocumentController extends Controller
             $document->save();
 
             DocumentService::update_document_numbers();
-            
+
             if($document){
                 DocumentService::handleDistributionGrid($document, $request->distribution);
             }
@@ -542,7 +542,7 @@ class DocumentController extends Controller
                     $keyword->keyword = $key;
                     $keyword->save();
                 }
-                
+
             }
             if ($request->training_required == 'yes') {
                 $trainning = new DocumentTraining();
@@ -663,7 +663,7 @@ class DocumentController extends Controller
                     $temp->year = Carbon::parse($temp->created_at)->format('Y');
                 }
             }
-            
+
         }
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
@@ -676,7 +676,7 @@ class DocumentController extends Controller
         $year = Carbon::parse($document->created_at)->format('Y');
         $trainer = User::get();
         $trainingDoc = DocumentTraining::where('document_id', $id)->first();
-        $history = DocumentHistory::where('document_id', $id)->get();
+        $history = [];
         $documentsubTypes = DocumentSubtype::all();
         // dd($document_distribution_grid);
         // $history = [];
@@ -769,7 +769,7 @@ class DocumentController extends Controller
                 //     $next_review_date = Carbon::parse($request->effective_date)->addYears($request->review_period)->format('Y-m-d');
                 //     $document->next_review_date = $next_review_date;
                 // } catch (\Exception $e) {
-                //     // 
+                //     //
                 // }
                 // $document->review_period = $request->review_period;
                 $document->training_required = $request->training_required;
@@ -787,7 +787,7 @@ class DocumentController extends Controller
                 if ($request->reference_record) {
                     $document->reference_record = implode(',', $request->reference_record);
                 }
-                
+
 
                 if ($request->hasfile('attach_draft_doocument')) {
 
@@ -818,7 +818,7 @@ class DocumentController extends Controller
                 $document->revision_type = $request->revision_type;
                 $document->major = $request->major;
                 $document->minor = $request->minor;
-                
+
 
                 if (! empty($request->reviewers)) {
                     $document->reviewers = implode(',', $request->reviewers);
@@ -833,7 +833,7 @@ class DocumentController extends Controller
                     $document->approver_group = implode(',', $request->approver_group);
                 }
             }
-            
+
 
             $document->update();
 
@@ -980,7 +980,7 @@ class DocumentController extends Controller
                 $history->save();
             }
 
-           
+
              if ($lastDocument->department_id != $document->department_id || ! empty($request->department_id_comment)) {
                  $history = new DocumentHistory;
                  $history->document_id = $id;
@@ -1150,7 +1150,7 @@ class DocumentController extends Controller
                 $temped = explode(',', $document->reviewers);
                 $revewnew = [];
                 for ($i = 0; $i < count($temp); $i++) {
-                    if (array_key_exists($i, $temped)) 
+                    if (array_key_exists($i, $temped))
                     {
                         $dataRenew = User::where('id', $temped[$i])->value('name');
                         array_push($revewnew, $dataRenew);
@@ -1280,7 +1280,7 @@ class DocumentController extends Controller
             $documentcontet->scope = $request->scope;
             $documentcontet->procedure = $request->procedure;
             $documentcontet->safety_precautions = $request->safety_precautions;
-            
+
             $documentcontet->responsibility = $request->responsibility ? serialize($request->responsibility) : serialize([]);
             $documentcontet->abbreviation = $request->abbreviation ? serialize($request->abbreviation) : serialize([]);
             $documentcontet->defination = $request->defination ? serialize($request->defination) : serialize([]);
@@ -1303,7 +1303,7 @@ class DocumentController extends Controller
             if (! empty($request->ann)) {
                 $documentcontet->ann = serialize($request->ann);
             }
-            
+
             if (! empty($request->annexuredata)) {
                 $documentcontet->annexuredata = serialize($request->annexuredata);
             }
@@ -1663,7 +1663,7 @@ class DocumentController extends Controller
         //$data->department = Department::find($data->department_id);
         $department = Department::find(Auth::user()->departmentid);
         $document = Document::find($id);
-        
+
         if($department)
         {
             $data['department_name'] = $department->name;
@@ -2006,7 +2006,7 @@ class DocumentController extends Controller
             $newdoc->stage = 1;
             $newdoc->status = Stage::where('id', 1)->value('name');
             $newdoc->save();
-    
+
             $doc_content = new DocumentContent();
             $doc_content->document_id = $newdoc->id;
             $doc_content->purpose = $doc_content->purpose;
@@ -2021,7 +2021,7 @@ class DocumentController extends Controller
             $doc_content->ann = $doc_content->ann;
             $doc_content->distribution = $doc_content->distribution;
             $doc_content->save();
-    
+
             if ($document->training_required == 'yes') {
                 $docTrain = DocumentTraining::where('document_id', $document->id)->first();
                 if (! empty($docTrain)) {
@@ -2033,9 +2033,9 @@ class DocumentController extends Controller
                     $trainning->comments = $docTrain->comments;
                     $trainning->save();
                 }
-    
+
             }
-    
+
             $annexure = Annexure::where('document_id', $id)->first();
             $new_annexure = new Annexure();
             $new_annexure->document_id = $newdoc->id;
@@ -2045,7 +2045,7 @@ class DocumentController extends Controller
             $new_annexure->save();
 
             DocumentService::update_document_numbers();
-    
+
             toastr()->success('Document is revised, you can change the body!!');
             return redirect()->route('documents.edit', $newdoc->id);
         }
