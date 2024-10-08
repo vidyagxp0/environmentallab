@@ -1305,7 +1305,7 @@ class CCController extends Controller
         if(!is_null($data->Microbiology_Person)){
             $cft_aff = explode(',', $data->Microbiology_Person);
         }
-        $pre = CC::all();
+        $pre = CC::with('record_number')->get();
         $due_date_extension = $data->due_date_extension;
 
         DocumentService::update_qms_numbers();

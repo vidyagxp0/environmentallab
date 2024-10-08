@@ -893,7 +893,7 @@
                                                                         '/CC/' .
                                                                         date('Y') .
                                                                         '/' .
-                                                                        Helpers::recordFormat($new->record);
+                                                                        Helpers::recordFormat($new->record_number->record_number);
                                                                     $selected = in_array(
                                                                         $recordValue,
                                                                         explode(',', $data->related_records),
