@@ -344,6 +344,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                             <div class="col-lg-6">
                                                 <div class="group-input">
                                                     <label for="Division Code"><b>Division Code</b></label>
@@ -368,6 +369,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            
                                             <div class="col-md-6">
                                                 <div class="group-input">
                                                     <label for="search">
@@ -876,7 +878,7 @@
                                                                         '/CC/' .
                                                                         date('Y') .
                                                                         '/' .
-                                                                        Helpers::recordFormat($new->record);
+                                                                        Helpers::recordFormat($new->record_number);
                                                                     $selected = in_array(
                                                                         $recordValue,
                                                                         explode(',', $data->related_records),
