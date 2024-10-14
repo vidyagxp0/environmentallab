@@ -68,6 +68,51 @@
             }
         }
     </script>
+
+<script>
+        $(document).ready(function() {
+            let auditAgendaIndex = 1;
+            $('#auditAgendaData').click(function(e) {
+                function generateTableRow(serialNumber) {
+                    var users = @json($users);
+                    var userOptionsHtml = '';
+                    users.forEach(user => {
+                        userOptionsHtml = userOptionsHtml.concat(
+                            `<option value="${user.id}">${user.name}</option>`)
+                    });
+
+                    var html =
+                        '<tr>' +
+                        '<td><input disabled type="text" name="serial[]" value="' + serialNumber + '"></td>' +
+                        ' <td><input type="text" name="auditAgendaData[' + auditAgendaIndex + '][auditArea]"></td>' +
+                        '<td><input type="date" name="auditAgendaData[' + auditAgendaIndex + '][startDate]"></td>' +
+                        '<td><input type="time" name="auditAgendaData[' + auditAgendaIndex + '][startTime]"></td>' +
+                        '<td><input type="date" name="auditAgendaData[' + auditAgendaIndex + '][endDate]"></td>' +
+                        '<td><input type="time" name="auditAgendaData[' + auditAgendaIndex + '][endTime]"></td>' +
+                        '<td> <select name="auditAgendaData[' + auditAgendaIndex + '][auditor]" > <option value="">Select Option</option>' + userOptionsHtml + ' </select> </td>' +
+                        '<td> <select name="auditAgendaData[' + auditAgendaIndex + '][auditee]" > <option value="">Select Option</option>' + userOptionsHtml + ' </select> </td>' +
+                        '<td><input type="text" name="auditAgendaData[' + auditAgendaIndex + '][remarks]"></td>' +
+                        '<td><button type="text" class="removeRowBtn">Remove</button></td>' +
+                        '</tr>';
+                    '</tr>';
+
+                    auditAgendaIndex++;
+                    return html;
+                }
+                var tableBody = $('#auditAgendaDataTable tbody');
+                var rowCount = tableBody.children('tr').length;
+                var newRow = generateTableRow(rowCount + 1);
+                tableBody.append(newRow);
+            });
+        });
+    </script>
+
+    <script>
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        })
+    </script>
+
     <script>
         $(document).ready(function() {
             $('#internalaudit-table').click(function(e) {
@@ -617,7 +662,68 @@
 
                                     </div>
                                 </div>
+
+
                                 <div class="col-12">
+                                    <div class="group-input">
+                                        <label for="Issues">Audit Agenda <button type="button" name="ann"
+                                                id="auditAgendaData">+</button>
+                                        </label>
+                                        <table class="table table-bordered" id="auditAgendaDataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Row#</th>
+                                                    <th>Area of Audit</th>
+                                                    <th>Scheduled Start Date</th>
+                                                    <th>Scheduled Start Time</th>
+                                                    <th>Scheduled End Date</th>
+                                                    <th>Scheduled End Time</th>
+                                                    <th>Auditor</th>
+                                                    <th>Auditee</th>
+                                                    <th>Remarks</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="text" value="1" name="auditAgendaData[]" readonly></td>
+                                                    <td><input type="text" name="auditAgendaData[0][auditArea]"></td>
+                                                    <td><input type="date" name="auditAgendaData[0][startDate]"></td>
+                                                    <td><input type="time" name="auditAgendaData[0][startTime]"></td>
+                                                    <td><input type="date" name="auditAgendaData[0][endDate]"></td>
+                                                    <td><input type="time" name="auditAgendaData[0][endTime]"></td>
+                                                    <td>
+                                                        <select name="auditAgendaData[0][auditor]">
+                                                            <option value="">Select Option</option>
+                                                            @if (count($users) > 0)
+                                                                @foreach ($users as $user)
+                                                                    <option value="{{ $user->id }}">
+                                                                        {{ $user->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <select name="auditAgendaData[0][auditee]">
+                                                            <option value="">Select Option</option>
+                                                            @if (count($users) > 0)
+                                                                @foreach ($users as $user)
+                                                                    <option value="{{ $user->id }}">
+                                                                        {{ $user->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" name="auditAgendaData[0][remarks]"></td>
+                                                    <td><button type="text" class="removeRowBtn">Remove</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+
+                                <!-- <div class="col-12">
                                     <div class="group-input">
                                         <label for="audit-agenda-grid">
                                             Audit Agenda<button type="button" name="audit-agenda-grid"
@@ -699,7 +805,9 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
+                                </div> -->
+
+
                                 {{-- <div class="col-6">
                                     <div class="group-input">
                                         <label for="Facility Name">Facility Name</label>

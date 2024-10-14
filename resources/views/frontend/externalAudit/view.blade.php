@@ -199,6 +199,51 @@
     </script>
 
 
+
+    <script>
+        $(document).ready(function() {
+        let agendaIndex = {{ count($auditAgenda) }};
+
+        $('#auditAgendaData').click(function(e) {
+            function generateTableRow(serialNumber) {
+                var users = @json($users);
+                var userOptionsHtml = '';
+                users.forEach(user => {
+                    userOptionsHtml = userOptionsHtml.concat(`<option value="${user.id}">${user.name}</option>`)
+                });
+
+                var html =
+                    '<tr>' +
+                    '<td><input type="text" name="serial[]" value="' + serialNumber + '" readonly></td>' +
+                    ' <td><input type="text" name="auditAgendaData[' + agendaIndex + '][auditArea]"></td>' +
+                    ' <td><input type="date" name="auditAgendaData[' + agendaIndex + '][startDate]"></td>' +
+                    ' <td><input type="time" name="auditAgendaData[' + agendaIndex + '][startTime]"></td>' +
+                    ' <td><input type="date" name="auditAgendaData[' + agendaIndex + '][endDate]"></td>' +
+                    ' <td><input type="time" name="auditAgendaData[' + agendaIndex + '][endTime]"></td>' +
+                    '<td><select name="auditAgendaData[' + agendaIndex + '][auditor]" > <option value="">Select Option</option>'+ userOptionsHtml +' </select></td>' +
+                    '<td><select name="auditAgendaData[' + agendaIndex + '][auditee]" > <option value="">Select Option</option>'+ userOptionsHtml +' </select></td>' +
+                    '<td><input type="text" name="auditAgendaData[' + agendaIndex + '][remarks]"></td>' +
+                    '<td><button type="button" class="removeRowBtn">Remove</button></td>' +
+                    '</tr>';
+
+                agendaIndex++;
+                return html;
+            }
+
+            var tableBody = $('#auditAgendaDataTable tbody');
+            var rowCount = tableBody.children('tr').length;
+            var newRow = generateTableRow(rowCount + 1);
+            tableBody.append(newRow);
+        });
+
+        // Remove row functionality
+        $(document).on('click', '.removeRowBtn', function() {
+            $(this).closest('tr').remove();
+        });
+    });
+
+    </script>
+
     <div class="form-field-head">
 
         <div class="division-bar">
@@ -823,17 +868,15 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div class="col-12">
                                         <div class="group-input">
-                                            <label for="audit-agenda-grid">
-                                                Audit Agenda<button type="button" name="audit-agenda-grid"
-                                                    onclick="addAuditAgenda('audit-agenda-grid')"
-                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>+</button>
-                                            </label>
-                                            <table class="table table-bordered" id="audit-agenda-grid">
+                                            <label for="Issues">Audit Agenda<button type="button" name="ann" id="auditAgendaData">+</button></label>
+                                            <table class="table table-bordered" id="auditAgendaDataTable">
                                                 <thead>
                                                     <tr>
-                                                        <th>Row #</th>
+                                                        <th>Row#</th>
                                                         <th>Area of Audit</th>
                                                         <th>Scheduled Start Date</th>
                                                         <th>Scheduled Start Time</th>
@@ -842,116 +885,75 @@
                                                         <th>Auditor</th>
                                                         <th>Auditee</th>
                                                         <th>Remarks</th>
+                                                        <th>Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    @if ($grid_data->start_date)
-                                                        @foreach (unserialize($grid_data->start_date) as $key => $temps)
+                                                    
+
+                                                    @if(!empty($auditAgenda))
+                                                        @foreach($auditAgenda as $index => $row)
                                                             <tr>
-                                                                <td><input disabled type="text"
-                                                                        name="serial_number[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                        value="{{ $key + 1 }}"></td>
-
-                                                                <td><input type="text"
-                                                                        name="audit[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}">
-                                                                </td>
-
+                                                                <td><input type="text" name="serial[]" value="{{ $loop->index + 1 }}" readonly></td>
+                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][auditArea]" value="{{ $row['auditArea'] }}"></td>
+                                                                <td><input type="date" name="auditAgendaData[{{ $index }}][startDate]" value="{{ $row['startDate'] }}"></td>
+                                                                <td><input type="time" name="auditAgendaData[{{ $index }}][startTime]" value="{{ $row['startTime'] }}"></td>
+                                                                <td><input type="date" name="auditAgendaData[{{ $index }}][endDate]" value="{{ $row['endDate'] }}"></td>
+                                                                <td><input type="time" name="auditAgendaData[{{ $index }}][endTime]" value="{{ $row['endTime'] }}"></td>
                                                                 <td>
-                                                                    <div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date ">
-                                                                            <div class="calenderauditee">
-                                                                                <input type="text" class="test"
-                                                                                    id="scheduled_start_date{{ $key }}"
-                                                                                    readonly placeholder="DD-MM-YYYY"
-                                                                                    value="{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}" />
-                                                                                <input type="date"
-                                                                                    id="schedule_start_date{{ $key }}_checkdate"
-                                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                    name="scheduled_start_date[]"
-                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                    value="{{ unserialize($grid_data->start_date)[$key] }}"
-                                                                                    class="hide-input"
-                                                                                    oninput="handleDateInput(this, `scheduled_start_date{{ $key }}`);checkDate('schedule_start_date{{ $key }}_checkdate','schedule_end_date{{ $key }}_checkdate')" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td><input type="time"
-                                                                        name="scheduled_start_time[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}">
-                                                                </td>
-
-                                                                <td>
-                                                                    <div class="group-input new-date-data-field mb-0">
-                                                                        <div class="input-date ">
-                                                                            <div class="calenderauditee">
-                                                                                <input type="text" class="test"
-                                                                                    id="scheduled_end_date{{ $key }}"
-                                                                                    readonly placeholder="DD-MM-YYYY"
-                                                                                    value="{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}" />
-                                                                                <input type="date"
-                                                                                    id="schedule_end_date{{ $key }}_checkdate"
-                                                                                    {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                                    name="scheduled_end_date[]"
-                                                                                    min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}"
-                                                                                    value="{{ unserialize($grid_data->end_date)[$key] }}"
-                                                                                    class="hide-input"
-                                                                                    oninput="handleDateInput(this, `scheduled_end_date{{ $key }}`);checkDate('schedule_start_date{{ $key }}_checkdate','schedule_end_date{{ $key }}_checkdate')" />
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </td>
-
-
-
-                                                                <td><input type="time" name="scheduled_end_time[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}">
-                                                                </td>
-                                                                <td>
-                                                                    {{-- <input type="text" name="auditor"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                    value="{{ $grid_data->auditor }}"> --}}
-                                                                    <select id="select-state" placeholder="Select..."
-                                                                        name="auditor[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-Select-</option>
-                                                                        @foreach ($users as $value)
-                                                                            <option
-                                                                                {{ unserialize($grid_data->auditor)[$key] ? (unserialize($grid_data->auditor)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                                value="{{ $value->id }}">
-                                                                                {{ $value->name }}
-                                                                            </option>
+                                                                    <select name="auditAgendaData[{{ $index }}][auditor]">
+                                                                        <option value="">Select Option</option>
+                                                                        @foreach($users as $user)
+                                                                            <option value="{{ $user->id }}" {{ $row['auditor'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                                         @endforeach
                                                                     </select>
                                                                 </td>
-                                                                <td> <select id="select-state" placeholder="Select..."
-                                                                        name="auditee[]"
-                                                                        {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>
-                                                                        <option value="">-Select-</option>
-                                                                        @foreach ($users as $value)
-                                                                            <option
-                                                                                {{ unserialize($grid_data->auditee)[$key] ? (unserialize($grid_data->auditee)[$key] == $value->id ? 'selected' : ' ') : '' }}
-                                                                                value="{{ $value->id }}">
-                                                                                {{ $value->name }}
-                                                                            </option>
+                                                                <td>
+                                                                    <select name="auditAgendaData[{{ $index }}][auditee]">
+                                                                        <option value="">Select Option</option>
+                                                                        @foreach($users as $user)
+                                                                            <option value="{{ $user->id }}" {{ $row['auditee'] == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                                         @endforeach
-                                                                    </select></td>
-
-                                                                <td><input type="text"
-                                                                        name="remark[]"{{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}
-                                                                        value="{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}">
+                                                                    </select>
                                                                 </td>
-
+                                                                <td><input type="text" name="auditAgendaData[{{ $index }}][remarks]" value="{{ $row['remarks'] }}"></td>
+                                                                <td><button type="button" class="removeRowBtn">Remove</button></td>
                                                             </tr>
                                                         @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td><input type="text" name="serial[]" value="1" readonly></td>
+                                                            <td><input type="text" name="auditAgendaData[0][auditArea]"></td>
+                                                            <td><input type="date" name="auditAgendaData[0][startDate]"></td>
+                                                            <td><input type="time" name="auditAgendaData[0][startTime]"></td>
+                                                            <td><input type="date" name="auditAgendaData[0][endDate]"></td>
+                                                            <td><input type="time" name="auditAgendaData[0][endTime]"></td>
+                                                            <td>
+                                                                <select name="auditAgendaData[0][auditor]">
+                                                                    <option value="">Select Option</option>
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                            <td>
+                                                                <select name="auditAgendaData[0][auditee]">
+                                                                    <option value="">Select Option</option>
+                                                                    @foreach($users as $user)
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endforeach
+                                                                </select>
+                                                            </td>
+                                                            <td><input type="text" name="auditAgendaData[0][remarks]"></td>
+                                                            <td><button type="button" class="removeRowBtn">Remove</button></td>
+                                                        </tr>
                                                     @endif
-
                                                 </tbody>
                                             </table>
                                         </div>
                                     </div>
+
+                               
 
                                     <div class="col-lg-6">
                                         <div class="group-input">

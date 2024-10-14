@@ -219,38 +219,44 @@ class AuditeeController extends Controller
         $record->counter = ((RecordNumber::first()->value('counter')) + 1);
         $record->update();
 
-        // -----------------grid---- Audit Agenda 
-        $data3 = new InternalAuditGrid();
-      //  $request->dd();
-        $data3->audit_id = $internalAudit->id;
-        $data3->type = "external_audit";
-        if (!empty($request->audit)) {
-            $data3->area_of_audit = serialize($request->audit);
-        }
-        if (!empty($request->scheduled_start_date)) {
-            $data3->start_date = serialize($request->scheduled_start_date);
-        }
-        if (!empty($request->scheduled_start_time)) {
-            $data3->start_time = serialize($request->scheduled_start_time);
-        }
-        if (!empty($request->scheduled_end_date)) {
-            $data3->end_date = serialize($request->scheduled_end_date);
-        }
-        if (!empty($request->scheduled_end_time)) {
-            $data3->end_time = serialize($request->scheduled_end_time);
-        }
-        if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
-        }
-        if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
-        }
-        if (!empty($request->remarks)) {
-            $data3->remark = serialize($request->remarks);
-        }
-        //  dd($data3);
-        $data3->save();
-         // -----------------grid ---- Observation Details
+
+
+        $auditAgenda = InternalAuditGrid::where(['audit_id' => $internalAudit->id, 'identifier' => 'AuditAgenda'])->firstOrCreate();
+        $auditAgenda->audit_id = $internalAudit->id;
+        $auditAgenda->identifier = 'AuditAgenda';
+        $auditAgenda->data = $request->auditAgendaData;
+        $auditAgenda->save();
+
+        // $data3 = new InternalAuditGrid();
+        // $data3->audit_id = $internalAudit->id;
+        // $data3->type = "external_audit";
+        // if (!empty($request->audit)) {
+        //     $data3->area_of_audit = serialize($request->audit);
+        // }
+        // if (!empty($request->scheduled_start_date)) {
+        //     $data3->start_date = serialize($request->scheduled_start_date);
+        // }
+        // if (!empty($request->scheduled_start_time)) {
+        //     $data3->start_time = serialize($request->scheduled_start_time);
+        // }
+        // if (!empty($request->scheduled_end_date)) {
+        //     $data3->end_date = serialize($request->scheduled_end_date);
+        // }
+        // if (!empty($request->scheduled_end_time)) {
+        //     $data3->end_time = serialize($request->scheduled_end_time);
+        // }
+        // if (!empty($request->auditor)) {
+        //     $data3->auditor = serialize($request->auditor);
+        // }
+        // if (!empty($request->auditee)) {
+        //     $data3->auditee = serialize($request->auditee);
+        // }
+        // if (!empty($request->remarks)) {
+        //     $data3->remark = serialize($request->remarks);
+        // }
+        // $data3->save();
+
+
         $data4 = new InternalAuditGrid();
         $data4->audit_id = $internalAudit->id;
         $data4->type = "Observation_field_Auditee";
@@ -1082,7 +1088,9 @@ class AuditeeController extends Controller
         $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
 
-        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1'));
+        $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'AuditAgenda'])->first();
+        $auditAgenda = json_decode($auditAgendaData->data, true);
+        return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'auditAgenda'));
     }
 
     public function update(Request $request, $id)
@@ -1232,32 +1240,38 @@ class AuditeeController extends Controller
         }
 
         $internalAudit->update();
-        $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','external_audit')->first();
-        if (!empty($request->audit)) {
-            $data3->area_of_audit = serialize($request->audit);
-        }
-        if (!empty($request->scheduled_start_date)) {
-            $data3->start_date = serialize($request->scheduled_start_date);
-        }
-        if (!empty($request->scheduled_start_time)) {
-            $data3->start_time = serialize($request->scheduled_start_time);
-        }
-        if (!empty($request->scheduled_end_date)) {
-            $data3->end_date = serialize($request->scheduled_end_date);
-        }
-        if (!empty($request->scheduled_end_time)) {
-            $data3->end_time = serialize($request->scheduled_end_time);
-        }
-        if (!empty($request->auditor)) {
-            $data3->auditor = serialize($request->auditor);
-        }
-        if (!empty($request->auditee)) {
-            $data3->auditee = serialize($request->auditee);
-        }
-        if (!empty($request->remark)) {
-            $data3->remark = serialize($request->remark);
-        }
-        $data3->update();
+        // $data3 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','external_audit')->first();
+        // if (!empty($request->audit)) {
+        //     $data3->area_of_audit = serialize($request->audit);
+        // }
+        // if (!empty($request->scheduled_start_date)) {
+        //     $data3->start_date = serialize($request->scheduled_start_date);
+        // }
+        // if (!empty($request->scheduled_start_time)) {
+        //     $data3->start_time = serialize($request->scheduled_start_time);
+        // }
+        // if (!empty($request->scheduled_end_date)) {
+        //     $data3->end_date = serialize($request->scheduled_end_date);
+        // }
+        // if (!empty($request->scheduled_end_time)) {
+        //     $data3->end_time = serialize($request->scheduled_end_time);
+        // }
+        // if (!empty($request->auditor)) {
+        //     $data3->auditor = serialize($request->auditor);
+        // }
+        // if (!empty($request->auditee)) {
+        //     $data3->auditee = serialize($request->auditee);
+        // }
+        // if (!empty($request->remark)) {
+        //     $data3->remark = serialize($request->remark);
+        // }
+        // $data3->update();
+
+        $auditAgenda = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'AuditAgenda'])->firstOrCreate();
+        $auditAgenda->audit_id = $id;
+        $auditAgenda->identifier = 'AuditAgenda';
+        $auditAgenda->data = $request->auditAgendaData;
+        $auditAgenda->update();
 
         $data4 = InternalAuditGrid::where('audit_id',$internalAudit->id)->where('type','Observation_field_Auditee')->first();
 
@@ -2867,11 +2881,15 @@ class AuditeeController extends Controller
             $grid_data = InternalAuditGrid::where('audit_id', $id)->where('type', "external_audit")->first();
             $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
             $data->originator = User::where('id', $data->initiator_id)->value('name');
+
+            $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'AuditAgenda'])->first();
+            $auditAgenda = json_decode($auditAgendaData->data, true);
+
             $pdf = App::make('dompdf.wrapper');
             // $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
             // $auditeeNamesString = implode(', ', $auditeeNames);
             $time = Carbon::now();
-            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_data','grid_data1',))
+            $pdf = PDF::loadview('frontend.externalAudit.singleReport', compact('data','grid_data','grid_data1','auditAgenda'))
                 ->setOptions([
                     'defaultFont' => 'sans-serif',
                     'isHtml5ParserEnabled' => true,

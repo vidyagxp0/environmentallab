@@ -563,16 +563,14 @@
                                 <th>Scheduled Start Date</th>
                                 <th>Scheduled Start Time</th>
                             </tr>
-                            @if ($grid_data->start_date)
-                                @foreach (unserialize($grid_data->start_date) as $key => $temps)
+                            @php $counter = 1; @endphp
+                            @if (!empty($auditAgenda))
+                                @foreach ($auditAgenda as $item)
                                     <tr style="color: black; font-weight: normal;">
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ unserialize($grid_data->area_of_audit)[$key] ? unserialize($grid_data->area_of_audit)[$key] : '' }}
-                                        </td>
-                                        <td>{{ Helpers::getdateFormat(unserialize($grid_data->start_date)[$key]) }}
-                                        </td>
-                                        <td>{{ unserialize($grid_data->start_time)[$key] ? unserialize($grid_data->start_time)[$key] : '' }}
-                                        </td>
+                                        <td>{{ $counter++ }}</td>
+                                        <td> {{ $item['auditArea'] }} </td>
+                                        <td> {{ Helpers::getdateFormat($item['startDate']) }} </td>
+                                        <td> {{ $item['startTime'] }} </td>
                                     </tr>
                                 @endforeach
                             @else
@@ -592,35 +590,30 @@
                         <table>
                             <tr class="table_bg">
                                 <th>Row #</th>
-                                <th>Scheduled End Date</th>
-                                <th>Scheduled End Time</th>
-                                <th>Auditor</th>
-                                <th>Auditee</th>
+                                <th>Scheduled Start Date</th>
+                                <th>Scheduled Start Time</th>
                                 <th>Remarks</th>
                             </tr>
-                            @if ($grid_data->start_date)
-                                @foreach (unserialize($grid_data->start_date) as $key => $temps)
+                            @php $counter = 1; @endphp
+                            @if (!empty($auditAgenda))
+                                @foreach ($auditAgenda as $item)
                                     <tr style="color: black; font-weight: normal;">
-                                        <td>{{ $key + 1 }}</td>
-                                        <td>{{ Helpers::getdateFormat(unserialize($grid_data->end_date)[$key]) }}</td>
-                                        <td>{{ unserialize($grid_data->end_time)[$key] ? unserialize($grid_data->end_time)[$key] : '' }}
-                                        </td>
-                                        <td>{{ isset(unserialize($grid_data->auditor)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditor)[$key]) : '' }}
-                                        </td>
-                                        <td>{{ isset(unserialize($grid_data->auditee)[$key]) ? Helpers::getInitiatorName(unserialize($grid_data->auditee)[$key]) : '' }}
-                                        </td>
-                                        <td>{{ unserialize($grid_data->remark)[$key] ? unserialize($grid_data->remark)[$key] : '' }}
-                                        </td>
+                                        <td>{{ $counter++ }}</td>
+                                        <td> {{ Helpers::getdateFormat($item['endDate']) }} </td>
+                                        <td> {{ $item['endTime'] }} </td>
+                                        <td> {{ $item['remarks'] }} </td>
                                     </tr>
                                 @endforeach
                             @else
                                 <tr>
-                                    <td colspan="6">Not Applicable</td>
+                                    <td colspan="4">Not Applicable</td>
                                 </tr>
                             @endif
                         </table>
                     </div>
                 </div>
+
+               
             </div>
 
 
