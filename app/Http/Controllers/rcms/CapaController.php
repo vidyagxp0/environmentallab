@@ -196,8 +196,8 @@ class CapaController extends Controller
         $capa->effect_check = $request->effect_check;
         $capa->effect_check_date = $request->effect_check_date;
 
+        $files = json_decode($capa->closure_attachment, true) ? $capa->closure_attachment : null;
         if (!empty($request->closure_attachment)) {
-            $files = [];
             if ($request->hasfile('closure_attachment')) {
                 foreach ($request->file('closure_attachment') as $file) {
                     $name = $request->name . '-closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1007,8 +1007,29 @@ class CapaController extends Controller
             }
             $capa->capa_attachment = json_encode($files);
         }
+        
+        // if (!empty($request->closure_attachment)) {
+        //     $files = json_decode($capa->existing_attach_files_e, true) ? json_decode($capa->existing_attach_files_e, true) : null;
+        //     if ($request->hasfile('closure_attachment')) {
+        //         foreach ($request->file('closure_attachment') as $file) {
+        //             $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
+        //             $file->move('upload/', $name);
+        //             $files[] = $name;
+        //         }
+        //     }
+        //     $capa->closure_attachment = json_encode($files);
+        // }
+        
+        $files = is_array($request->existing_attach_files_e) ? $request->existing_attach_files_e : null;
+
         if (!empty($request->closure_attachment)) {
-            $files = [];
+            if ($capa->closure_attachment) {
+                $existingFiles = json_decode($capa->closure_attachment, true); // Convert to associative array
+                if (is_array($existingFiles)) {
+                    $files = array_values($existingFiles);
+                }
+            }
+
             if ($request->hasfile('closure_attachment')) {
                 foreach ($request->file('closure_attachment') as $file) {
                     $name = $request->name . 'closure_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
@@ -1016,8 +1037,8 @@ class CapaController extends Controller
                     $files[] = $name;
                 }
             }
-            $capa->closure_attachment = json_encode($files);
         }
+        $capa->closure_attachment = !empty($files) ? json_encode(array_values($files)) : null;
         $capa->update();
 
 

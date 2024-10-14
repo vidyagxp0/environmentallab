@@ -1487,6 +1487,13 @@
                                                 <textarea name="qa_review" {{ $data->stage == 0 || $data->stage == 6 ? 'disabled' : '' }}>{{ $data->qa_review }}</textarea>
                                             </div>
                                         </div>
+                                                @if ($data->closure_attachment)
+                                        @foreach (json_decode($data->closure_attachment) as $file)
+                                            <input id="5-{{ $loop->index }}" type="hidden"
+                                                name="existing_attach_files_e[{{ $loop->index }}]"
+                                                value="{{ $file }}">
+                                        @endforeach
+                                    @endif
                                         <div class="col-12">
                                             <div class="group-input">
                                                 <label for="Closure Attachments">Closure Attachment</label>
@@ -1505,6 +1512,7 @@
                                                                         target="_blank"><i class="fa fa-eye text-primary"
                                                                             style="font-size:20px; margin-right:-10px;"></i></a>
                                                                     <a type="button" class="remove-file"
+                                                                     data-remove-id="5-{{ $loop->index }}"
                                                                         data-file-name="{{ $file }}"><i
                                                                             class="fa-solid fa-circle-xmark"
                                                                             style="color:red; font-size:20px;"></i></a>
@@ -1524,6 +1532,15 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('.remove-file').click(function() {
+                                                    const removeId = $(this).data('remove-id')
+                                                    console.log('removeId', removeId);
+                                                    $('#' + removeId).remove();
+                                                })
+                                            })
+                                        </script>
                                         <!-- <div class="col-12 sub-head">
                                             Effectiveness Check Details -->
                                     </div>
