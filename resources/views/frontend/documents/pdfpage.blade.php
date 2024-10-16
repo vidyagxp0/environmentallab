@@ -435,7 +435,7 @@
                         </p>
                     </td>
                     <td class="logo w-20 h-20">
-                        <img src="https://environmentallab.doculife.co.in/public/user/images/logo1.png" alt="..." style="max-height: 60px;">
+                        <img src="https://environmentallab.doculife.co.in/user/images/logo1.png" alt="..." style="max-height: 60px;">
                     </td>
                 </tr>
             </tbody>
