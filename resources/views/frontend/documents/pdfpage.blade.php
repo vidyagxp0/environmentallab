@@ -295,19 +295,18 @@
 
         @page {
             size: A4;
-            margin-top: 220px;
+            margin-top: 240px;
             margin-bottom:60px;
-
         }
 
         header {
             width: 100%;
             position: fixed;
-            top: -215px;
+            top: -225px;
             right: 0;
             left: 0;
             display: block;
-
+            height: 210px;
         }
 
 
