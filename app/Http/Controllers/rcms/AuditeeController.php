@@ -211,7 +211,7 @@ class AuditeeController extends Controller
             $internalAudit->myfile = json_encode($files);
         }
 
-     
+
         //return $internalAudit;
         $internalAudit->save();
 
@@ -345,7 +345,7 @@ class AuditeeController extends Controller
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
 
-         
+
             $history->save();
         }
         if (!empty($internalAudit->multiple_assignee_to)) {
@@ -400,7 +400,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->Audit_Category)) {
@@ -414,7 +414,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->severity_level)) {
@@ -428,7 +428,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->external_auditor_name)) {
@@ -442,7 +442,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
         if (!empty($internalAudit->area_of_auditing)) {
@@ -456,7 +456,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-        
+
             $history->save();
         }
 
@@ -485,7 +485,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-      
+
             $history->save();
         }
 
@@ -880,7 +880,7 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-      
+
             $history->save();
         }
         if (!empty($internalAudit->Reference_Recores2)) {
@@ -1005,14 +1005,14 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-            
-         
+
+
             $history->save();
         }
         if(!empty($internalAudit->division_code))
         {
-          
-    
+
+
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $internalAudit->id;
             $history->activity_type = 'Site/Location Code';
@@ -1023,8 +1023,8 @@ class AuditeeController extends Controller
             $history->user_name = Auth::user()->name;
             $history->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
             $history->origin_state = $internalAudit->status;
-                    
-         
+
+
             $history->save();
         }
 
@@ -1074,12 +1074,12 @@ class AuditeeController extends Controller
 
         toastr()->success("Record is Create Successfully");
         return redirect(url('rcms/qms-dashboard'));
-    
+
     }
 
     public function show($id)
     {
-       
+
         $old_record = Auditee::select('id', 'division_id', 'record')->get();
         $data = Auditee::find($id);
         $data->record = str_pad($data->record, 4, '0', STR_PAD_LEFT);
@@ -1089,7 +1089,11 @@ class AuditeeController extends Controller
         $grid_data1 = InternalAuditGrid::where('audit_id', $id)->where('type', "Observation_field_Auditee")->first();
 
         $auditAgendaData = InternalAuditGrid::where(['audit_id' => $id, 'identifier' => 'AuditAgenda'])->first();
-        $auditAgenda = json_decode($auditAgendaData->data, true);
+        if ($auditAgendaData) {
+            $auditAgenda = json_decode($auditAgendaData->data, true);
+        } else {
+            $auditAgenda = [];
+        }
         return view('frontend.externalAudit.view', compact('data', 'old_record','grid_data','grid_data1', 'auditAgenda'));
     }
 
@@ -1123,7 +1127,7 @@ class AuditeeController extends Controller
 
         $internalAudit->initial_comments = $request->initial_comments;
         $internalAudit->start_date = $request->start_date;
-        
+
         $internalAudit->end_date = $request->end_date;
         $internalAudit->audit_agenda = $request->audit_agenda;
         //$internalAudit->Facility =  implode(',', $request->Facility);
@@ -1149,7 +1153,7 @@ class AuditeeController extends Controller
         if (!empty($request->file_attachment_guideline)) {
             $files = [];
             if ($request->hasfile('file_attachment_guideline')) {
-                
+
                 foreach ($request->file('file_attachment_guideline') as $file) {
                     $name = $request->name . 'file_attachment_guideline' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1160,7 +1164,7 @@ class AuditeeController extends Controller
 
             $internalAudit->file_attachment_guideline = json_encode($files);
         }
- 
+
         $internalAudit->Audit_Comments2 = $request->Audit_Comments2;
         $internalAudit->due_date = $request->due_date;
         $internalAudit->audit_start_date = $request->audit_start_date;
@@ -1185,7 +1189,7 @@ class AuditeeController extends Controller
         if (!empty($request->file_attachment)) {
             $files = [];
             if ($request->hasfile('file_attachment')) {
-                
+
                 foreach ($request->file('file_attachment') as $file) {
                     $name = $request->name . 'file_attachment' . rand(1, 100) . '.' . $file->getClientOriginalExtension();
                     $file->move('upload/', $name);
@@ -1720,12 +1724,12 @@ class AuditeeController extends Controller
             $auditeeIdsArray = explode(',', $internalAudit->Auditee);
             $auditeeNames = User::whereIn('id', $auditeeIdsArray)->pluck('name')->toArray();
             $auditeeNamesString = implode(', ', $auditeeNames);
-        
+
             // For the lastDocument, retrieve its auditee names
             $lastDocumentAuditeeIdsArray = explode(',', $lastDocument->Auditee);
             $lastDocumentAuditeeNames = User::whereIn('id', $lastDocumentAuditeeIdsArray)->pluck('name')->toArray();
             $lastDocumentAuditeeNamesString = implode(', ', $lastDocumentAuditeeNames);
-        
+
             $history = new AuditTrialExternal();
             $history->ExternalAudit_id = $id;
             $history->activity_type = 'Auditee';
@@ -1738,7 +1742,7 @@ class AuditeeController extends Controller
             $history->origin_state = $lastDocument->status;
             $history->save();
         }
-        
+
         if ($lastDocument->Auditor_Details != $internalAudit->Auditor_Details || !empty($request->Auditor_Details_comment)) {
 
             $history = new AuditTrialExternal();
@@ -2095,15 +2099,15 @@ class AuditeeController extends Controller
                         // dd($history->current);
                         $history->save();
                     //     $list = Helpers::getLeadAuditorUserList();
-                        
+
 
                     //     foreach ($list as $u) {
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
-                                
+
                     //              if ($email !== null) {
-                                   
-                              
+
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2113,10 +2117,10 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
 
-                                   
+
                 $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
                         $userIds = collect($list)->pluck('user_id')->toArray();
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2190,7 +2194,7 @@ class AuditeeController extends Controller
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2200,7 +2204,7 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
 
                 $list = Helpers::getAuditManagerUserList($changeControl->division_id);
@@ -2275,7 +2279,7 @@ class AuditeeController extends Controller
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2285,7 +2289,7 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
                     $list = Helpers::getLeadAuditeeUserList($changeControl->division_id);
                         $userIds = collect($list)->pluck('user_id')->toArray();
@@ -2327,7 +2331,7 @@ class AuditeeController extends Controller
                                      $message->to($email)
                                      ->subject("QMS Notification: External Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Issue Report Performed"); }
                                     );
-    
+
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
@@ -2448,7 +2452,7 @@ class AuditeeController extends Controller
                     //         if($u->q_m_s_divisions_id == $changeControl->division_id){
                     //             $email = Helpers::getInitiatorEmail($u->user_id);
                     //              if ($email !== null) {
-                              
+
                     //               Mail::send(
                     //                   'mail.view-mail',
                     //                    ['data' => $changeControl],
@@ -2458,7 +2462,7 @@ class AuditeeController extends Controller
                     //                 }
                     //               );
                     //             }
-                    //      } 
+                    //      }
                     //   }
 
                     $list = Helpers::getAuditManagerUserList($changeControl->division_id);
@@ -2501,13 +2505,13 @@ class AuditeeController extends Controller
                                      $message->to($email)
                                      ->subject("QMS Notification: External Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
                                     );
-    
+
                             } catch (\Exception $e) {
                                 \Log::error('Mail failed to send: ' . $e->getMessage());
                             }
                         }
                     }
-                    
+
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
@@ -2537,7 +2541,7 @@ class AuditeeController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Rejected";
                         $history->save();
-                        
+
                         $list = Helpers::getAuditManagerUserList($changeControl->division_id);
                         $userIds = collect($list)->pluck('user_id')->toArray();
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2579,13 +2583,13 @@ class AuditeeController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: External Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Rejected Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                         }
-                        
+
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
@@ -2628,7 +2632,7 @@ class AuditeeController extends Controller
                         $history->origin_state = $lastDocument->status;
                         $history->stage = "Cancelled";
                         $history->save();
-                        
+
                         $list = Helpers::getLeadAuditorUserList($changeControl->division_id);
                         $userIds = collect($list)->pluck('user_id')->toArray();
                         $users = User::whereIn('id', $userIds)->select('id', 'name', 'email')->get();
@@ -2670,13 +2674,13 @@ class AuditeeController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: External Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                         }
-                        
+
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
@@ -2747,14 +2751,14 @@ class AuditeeController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: External Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                         }
 
-                
+
                 $changeControl->update();
                 $history = new AuditeeHistory();
                 $history->type = "External Audit";
@@ -2824,14 +2828,14 @@ class AuditeeController extends Controller
                                          $message->to($email)
                                          ->subject("QMS Notification: External Audit , Record #" . str_pad($changeControl->record, 4, '0', STR_PAD_LEFT) . " - Activity: Cancelled Performed"); }
                                         );
-        
+
                                 } catch (\Exception $e) {
                                     \Log::error('Mail failed to send: ' . $e->getMessage());
                                 }
                             }
                         }
 
-                
+
                 $history->save();
                 $changeControl->update();
                 $history = new AuditeeHistory();
@@ -2972,20 +2976,20 @@ class AuditeeController extends Controller
         $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
 
         // if (!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        
+
         if ($request->revision == "Observation-child") {
             $old_record = ActionItem::all();
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
             return view('frontend.forms.observation', compact('record_number','old_record','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
-       
+
 
         if ($request->revision == "capa-child") {
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
            return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft'));
         }
-      
+
     }
 }
 
