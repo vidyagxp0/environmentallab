@@ -2979,8 +2979,9 @@ class AuditeeController extends Controller
 
         if ($request->revision == "Observation-child") {
             $old_record = ActionItem::all();
+            $parent_division = Auditee::where('id', $id)->value('division_id');
             $cc->originator = User::where('id', $cc->initiator_id)->value('name');
-            return view('frontend.forms.observation', compact('record_number','old_record','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
+            return view('frontend.forms.observation', compact('record_number','old_record','parent_division','rca_old_record', 'due_date','parent_division_id','parent_id', 'parent_type','parent_intiation_date','parent_record','parent_initiator_id'));
 
         }
 

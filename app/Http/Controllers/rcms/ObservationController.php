@@ -2571,9 +2571,10 @@ class ObservationController extends Controller
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
         $rca_old_record = RootCauseAnalysis::select('id', 'division_id', 'record', 'short_description')->get();
+        $parent_division = Observation::where('id',$id)->value('division_id');
 
         if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record', 'parent_id', 'parent_type', 'old_record', 'cft'));
+        return view('frontend.forms.capa', compact('record_number', 'due_date','rca_old_record','parent_division', 'parent_id', 'parent_type', 'old_record', 'cft'));
     }
 
 

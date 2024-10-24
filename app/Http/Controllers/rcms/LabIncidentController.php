@@ -1334,8 +1334,9 @@ class LabIncidentController extends Controller
         $formattedDate = $currentDate->addDays(30);
         $due_date = $formattedDate->format('d-M-Y');
         $changeControl = OpenStage::find(1);
+        $parent_division = LabIncident::where('id',$id)->value('division_id');
          if(!empty($changeControl->cft)) $cft = explode(',', $changeControl->cft);
-        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id', 'parent_type','old_record','cft', 'rca_old_record'));
+        return view('frontend.forms.capa', compact('record_number', 'due_date', 'parent_id','parent_division', 'parent_type','old_record','cft', 'rca_old_record'));
     }
 
     public function lab_incident_root_child(Request $request, $id)
