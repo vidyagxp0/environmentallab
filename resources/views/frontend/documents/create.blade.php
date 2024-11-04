@@ -195,7 +195,7 @@
                                         <div><small class="text-primary">Kindly Fill Target Date of Completion</small>
                                         </div>
                                         <div class="calenderauditee">
-                                            <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" name="due_dateDoc" id="due_dateDoc"  readonly placeholder="DD-MM-YYYY" />
                                         <input
                                          type="date" id="due_dateDoc" name="due_dateDoc" pattern="\d{4}-\d{2}-\d{2}"
                                          class="hide-input" min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
@@ -416,7 +416,7 @@
                                         <label for="effective-date">Effective Date</label>
                                         <div> <small class="text-primary">The effective date will be automatically populated once the record becomes effective</small></div>
                                         <div class="calenderauditee">
-                                        <input type="text" name="effective_date" id="effective_date"  placeholder="DD-MMM-YYYY" />
+                                        <input type="text" name="effective_date" id="effective_date"  placeholder="DD-MM-YYYY" />
                                         <input
                                         type="date" name="effective_date" id="effective_date"
                                         class="hide-input"
@@ -446,7 +446,7 @@
                                     <div class="group-input input-date">
                                         <label for="next_review_date">Next Review Date</label>
                                         <div class="calenderauditee">
-                                            <input type="text" name="next_review_date" id="next_review_date"  style="margin-top: 25px;"  class="new_review_date_show"  readonly placeholder="DD-MMM-YYYY" />
+                                            <input type="text" name="next_review_date" id="next_review_date"  style="margin-top: 25px;"  class="new_review_date_show"  readonly placeholder="DD-MM-YYYY" />
                                         <input type="date" name="next_review_date" id="next_review_date"
                                         class="hide-input new_review_date_hide" readonly
                                         min="{{ Carbon\Carbon::today()->format('Y-m-d') }}"
@@ -1147,7 +1147,7 @@
                                                  <td><div class="group-input new-date-data-field mb-0">
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
-                                                    <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="issuance_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="distribution[0][issuance_date]" class="hide-input"
                                                     oninput="handleDateInput(this, `issuance_date' + serialNumber +'`)" /></div></div></div>
                                                 </td>
@@ -1181,7 +1181,7 @@
                                                 <td><div class="group-input new-date-data-field mb-0">
                                                     <div class="input-date "><div
                                                      class="calenderauditee">
-                                                    <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MMM-YYYY" />
+                                                    <input type="text" id="retrieval_date' + serialNumber +'" readonly placeholder="DD-MM-YYYY" />
                                                     <input type="date" name="distribution[0][retrieval_date]" class="hide-input"
                                                     oninput="handleDateInput(this, `retrieval_date' + serialNumber +'`)" /></div></div></div>
                                                 </td>
