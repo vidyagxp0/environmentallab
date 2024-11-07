@@ -1971,5 +1971,30 @@ $group->name = "Jordan-New Document- Obsolete";
 $group->description = "Jordan-New Document- Obsolete";
 $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
 $group->save();
+
+
+// $group = new RoleGroup();
+// $group->id = 273;
+// $group->name = "Jordan-New Document- FP";
+// $group->description = "Jordan-New Document- FP";
+// $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+// $group->save();
+
+$group = new RoleGroup();
+
+$divisions = ['Jordan', 'KSA', 'Egypt', 'Estonia'];
+$roles = ['FP', 'QA'];
+$baseId = 273; // Starting ID
+
+foreach ($divisions as $division) {
+    foreach ($roles as $role) {
+        $group = new RoleGroup(); // Assuming 'RoleGroup' is the model for groups
+        $group->id = $baseId++;
+        $group->name = "{$division}-New Document- {$role}";
+        $group->description = "{$division}-New Document- {$role}";
+        $group->permission = json_encode(['read' => true, 'create' => true, 'edit' => true, 'delete' => true]);
+        $group->save();
+    }
+}
     }
 }

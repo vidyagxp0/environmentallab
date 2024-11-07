@@ -1,6 +1,7 @@
 @extends('frontend.layout.main')
 @section('container')
-    @if (Helpers::checkRoles(6))
+
+    @if (Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18))
         @include('frontend.TMS.head')
     @endif
 
@@ -54,7 +55,7 @@
                 
 
                 <div class="inner-block tms-block" id="tms-all-block">
-                    @if (Helpers::checkRoles(6))
+                    @if (Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18))
                     <div class="created-by-me"style="font-size: 16px; font-weight: 600;">Training Created</div>
                         <div class="block-table">
                             <table class="table table-bordered">
@@ -153,7 +154,7 @@
                 </div>
 
                 <div class="inner-block tms-block" id="tms-due-block">
-                    @if (Helpers::checkRoles(6))
+                    @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -203,13 +204,13 @@
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
-                                            <td>{{ $temp->traningstatus->status }}</td>
+                                            <td>{{ $temp->training->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             
                                             <td><a
-                                                    href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
+                                                    href="{{ url('TMS-details', $temp->training->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
                                         </tr>
                                     @endforeach
@@ -220,7 +221,7 @@
                 </div>
 
                 <div class="inner-block tms-block" id="tms-pending-block">
-                    @if (Helpers::checkRoles(6))
+                    @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -270,12 +271,12 @@
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
-                                            <td>{{ $temp->traningstatus->status }}</td>
+                                            <td>{{ $temp->training->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
-                                                    href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
+                                                    href="{{ url('TMS-details', $temp->training->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
                                         </tr>
                                     @endforeach
@@ -286,7 +287,7 @@
                 </div>
 
                 <div class="inner-block tms-block" id="tms-completed-block">
-                    @if (Helpers::checkRoles(6))
+                    @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
                         <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -337,12 +338,12 @@
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
-                                            <td>{{ $temp->traningstatus->status }}</td>
+                                            <td>{{ $temp->training->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
-                                                    href="{{ url('TMS-details', $temp->traningstatus->training_plan) }}/{{ $temp->id }}"><i
+                                                    href="{{ url('TMS-details', $temp->training->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
                                         </tr>
                                     @endforeach

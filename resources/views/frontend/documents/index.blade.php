@@ -289,7 +289,7 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $(document).ready(function() {
         let postUrl = "{{ route('record.filter') }}";
@@ -317,6 +317,40 @@
             }
         })
     })
-</script>
+</script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function() {
+        let postUrl = "{{ route('record.filter') }}";
+        $('.loadingRecords').hide();
 
+        // Function to update records
+        async function updateRecords() {
+            $('.loadingRecords').show();
+            let data = {
+                status: $('select[name=status]').val(),
+                document_type_id: $('select[name=document_type_id]').val(),
+                division_id: $('select[name=division_id]').val(),
+                originator_id: $('select[name=originator_id]').val(),
+            };
+
+            try {
+                const res = await axios.post(postUrl, data);
+                $('.record-body').html(res.data.html);
+            } catch (err) {
+                console.log("Error", err.message);
+            } finally {
+                $('.loadingRecords').hide();
+            }
+        }
+
+        // Load default records on page load
+        updateRecords();
+
+        // Update records when filters change
+        $('.filterSelect').change(function() {
+            updateRecords();
+        });
+    });
+</script>
 @endsection

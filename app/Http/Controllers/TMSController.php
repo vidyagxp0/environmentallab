@@ -28,10 +28,10 @@ use Helpers;
 class TMSController extends Controller
 {
     public function index(){
-        if(Helpers::checkRoles(6)){
+        if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
             $documents = DocumentTraining::where('trainer', Auth::user()->id)->with('root_document')->orderByDesc('id')->get();
-           if($documents){
-               foreach($documents as $temp){
+            if($documents){
+                foreach($documents as $temp){
 
                 $temp->training = Document::find($temp->document_id);
                 if($temp->training){
@@ -46,10 +46,10 @@ class TMSController extends Controller
 
 
                 }
-              
+                
                 
             }
-           }
+        }
              
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->orderByDesc('id')->get();
             if(!empty($due)){
@@ -173,7 +173,7 @@ class TMSController extends Controller
         }
     }
     public function create(){ 
-        if(Helpers::checkRoles(6) || Helpers::checkRoles(3)){
+        if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18) || Helpers::checkRoles(3)){
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
             $due = DocumentTraining::where('document_trainings.trainer', Auth::user()->id)->whereIn('document_trainings.status', ["Past-due", 'Assigned', 'Complete'])
@@ -207,7 +207,7 @@ class TMSController extends Controller
         } 
     }
     public function store(Request $request){
-        if(Helpers::checkRoles(6)){
+        if(Helpers::checkRoles(6 ) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
             $this->validate($request,[
                 'traning_plan_name' =>'required|unique:trainings,traning_plan_name',
                 'training_plan_type'=>'required',
@@ -292,14 +292,14 @@ class TMSController extends Controller
         }
     }
     public function show(){
-        if(Helpers::checkRoles(6)){
+        if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
             $trainning = Training::where('trainner_id',Auth::user()->id)->get();
             return view('frontend.TMS.manage-training',compact('trainning'));
         }
     }
     public function viewTraining($id,$sopId){
         $doc = Document::find($sopId);
-        if(Helpers::checkRoles(6)){
+        if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
             if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
             {
                 $trainning = Training::find($id);
@@ -610,7 +610,7 @@ class TMSController extends Controller
         $train = Training::find($id);
         $traineesPerson = UserRole::where(['q_m_s_roles_id' => 6])->distinct()->pluck('user_id');
 
-        if(Helpers::checkRoles(6)){
+        if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
 
             $quize = Quize::where('trainer_id', Auth::user()->id)->get();
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->get();

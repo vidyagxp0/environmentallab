@@ -4,7 +4,7 @@
         {{ count($documents) }} Results {{ isset($count) ? ' out of Results  ' .  $count : 'found' }}
     </div>
 </div>
-<div class="table-list">
+<div style="overflow: auto; height: 400px;" class="table-list">
     <table class="table table-bordered">
         <thead>
             <th class="pr-id" data-bs-toggle="modal" data-bs-target="#division-modal">
@@ -44,7 +44,7 @@
         <tbody id="searchTable">
             @if (count($documents) > 0)
             {{-- {{dd($documents);}} --}}
-            @foreach ($documents as $doc)
+            @foreach ($documents->sortByDesc('id') as $doc)
             @php
                                             $userRoles = DB::table('user_roles')
                                             ->where(['user_id' => auth()->id(), 'q_m_s_divisions_id' => $doc->division_id])

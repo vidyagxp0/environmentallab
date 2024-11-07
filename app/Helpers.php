@@ -224,6 +224,12 @@ class Helpers
                 if ($datauser[$i] == 6) {
                     return true;
                 }
+                if ($datauser[$i] == 7) {
+                    return true;
+                }
+                if ($datauser[$i] == 18) {
+                    return true;
+                }
             }
         } else {
             return false;
@@ -1056,5 +1062,6 @@ public static function getInitiatorGroupFullName($shortName)
             return DB::table('user_roles')->where(['q_m_s_roles_id' => '19', 'q_m_s_divisions_id' => $division])->select('user_id')->distinct()->get();
         }
     }
+    
 
 }
