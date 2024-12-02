@@ -30,10 +30,10 @@
                                 <tr>
                                     <td>01.</td>
                                     <td>Yes</td>
-                                    <td>Vikas Prajapati</td>
+                                    <td>Shaleen Mishra</td>
                                     <td>Tech Support</td>
                                     <td>6264992922</td>
-                                    <td>vikas.prajapati@connexo.io</td>
+                                    <td>shaleen.mishra@connexo.io</td>
                                     <td>470001</td>
                                     <td>Sougar</td>
                                     <td>Madhya Pradesh</td>

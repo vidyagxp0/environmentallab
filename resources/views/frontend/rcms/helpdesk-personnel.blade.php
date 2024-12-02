@@ -8,7 +8,7 @@
 
             <div class="inner-block">
                 <div class="main-head">
-                    HelpDesk Personnel
+                    HelpDesk Personal
                 </div>
                 <div class="inner-block-content">
                     <div class="help-table">
@@ -21,56 +21,57 @@
                                     <th>Division</th>
                                     <th>Phone</th>
                                     <th>E-Mail</th>
-                                    <th>Pin</th>
+                                    {{-- <th>Pin</th>
                                     <th>City</th>
-                                    <th>State</th>
+                                    <th>State</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     <td>01.</td>
                                     <td>Yes</td>
-                                    <td>Vikas Prajapati</td>
+                                    <td>Shaleen Mishra</td>
                                     <td>Tech Support</td>
                                     <td>6264992922</td>
-                                    <td>vikas.prajapati@connexo.io</td>
-                                    <td>470001</td>
-                                    <td>Sagar</td>
-                                    <td>Madhya Pradesh</td>
+                                    <td>shaleen.mishra@connexo.io</td>
+                                    {{-- <td>470001</td>
+                                    <td>Sougar</td>
+                                    <td>Madhya Pradesh</td> --}}
                                 </tr>
                                 <tr>
                                     <td>02.</td>
+                                    <td>Yes</td>
+                                    <td>Gautam Solanki</td>
+                                    <td>Tech Support</td>
+                                    <td>7354654474</td>
+                                    <td>gautam.sholanki@connexo.io</td>
+                                    {{-- <td>470001</td>
+                                    <td>Sagar</td>
+                                    <td>Madhya Pradesh</td> --}}
+                                </tr>
+                                <tr>
+                                    <td>03.</td>
+                                    <td>Yes</td>
+                                    <td>Himanshu Patil</td>
+                                    <td>Tech Support</td>
+                                    <td>8305375136</td>
+                                    <td>himanshu.patil@connexo.io</td>
+                                    {{-- <td>470001</td>
+                                    <td>Sagar</td>
+                                    <td>Madhya Pradesh</td> --}}
+                                </tr>
+                                <tr>
+                                    <td>04.</td>
                                     <td>Yes</td>
                                     <td>Gopal Sen</td>
                                     <td>Tech Support</td>
                                     <td>8009109401</td>
                                     <td>gopal.sen@connexo.io</td>
-                                    <td>470001</td>
+                                    {{-- <td>470001</td>
                                     <td>Sagar</td>
-                                    <td>Madhya Pradesh</td>
+                                    <td>Madhya Pradesh</td> --}}
                                 </tr>
-                                <tr>
-                                    <td>03.</td>
-                                    <td>Yes</td>
-                                    <td>Amit Patel</td>
-                                    <td>Tech Support</td>
-                                    <td>7354654474</td>
-                                    <td>amit.patel@connexo.io</td>
-                                    <td>470001</td>
-                                    <td>Sagar</td>
-                                    <td>Madhya Pradesh</td>
-                                </tr>
-                                <tr>
-                                    <td>04.</td>
-                                    <td>Yes</td>
-                                    <td>Anshul Patel</td>
-                                    <td>Tech Support</td>
-                                    <td>8305375136</td>
-                                    <td>anshul.patel@connexo.io</td>
-                                    <td>470001</td>
-                                    <td>Sagar</td>
-                                    <td>Madhya Pradesh</td>
-                                </tr>
+                               
                                 <tr>
                                     <td>05.</td>
                                     <td>Yes</td>
@@ -78,21 +79,21 @@
                                     <td>Tech Support</td>
                                     <td>8303993561</td>
                                     <td>anshul.jain@connexo.io</td>
-                                    <td>470001</td>
+                                    {{-- <td>470001</td>
                                     <td>Sagar</td>
-                                    <td>Madhya Pradesh</td>
+                                    <td>Madhya Pradesh</td> --}}
                                 </tr>
-                                <tr>
+                                {{-- <tr>
                                     <td>06.</td>
                                     <td>Yes</td>
                                     <td>Rohit Thakur</td>
                                     <td>Tech Support</td>
                                     <td>7447011439</td>
-                                    <td>rohit.thakur@connexo.io</td>
-                                    <td>470001</td>
+                                    <td>rohit.thakur@connexo.io</td> --}}
+                                    {{-- <td>470001</td>
                                     <td>Sagar</td>
-                                    <td>Madhya Pradesh</td>
-                                </tr>
+                                    <td>Madhya Pradesh</td> --}}
+                                {{-- </tr> --}}
                             </tbody>
                         </table>
                     </div>
