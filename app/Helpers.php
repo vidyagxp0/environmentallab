@@ -196,6 +196,9 @@ class Helpers
                 if ($datauser[$i] == 1) {
                     return true;
                 }
+                if ($datauser[$i] == 18) {
+                    return true;
+                }
             }
         } else {
             return false;
@@ -208,6 +211,9 @@ class Helpers
             $datauser = explode(',', $data->role);
             for ($i = 0; $i < count($datauser); $i++) {
                 if ($datauser[$i] == 2) {
+                    return true;
+                }
+                if ($datauser[$i] == 18) {
                     return true;
                 }
             }

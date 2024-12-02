@@ -256,15 +256,17 @@
                         @endforeach
                     </div>
                     @php
-                    $process = DB::table('processes')->get();
+                    $process = DB::table('q_m_s_processes')->get();
                     @endphp
                     @foreach ($process as $temp)
                     <div id="{{ $temp->division_id }}" class="divisioncontent">
                         @php
-                        $pro = DB::table('processes')
-                        ->where('division_id', $temp->division_id)
-                        ->get();
+                            $pro = DB::table('q_m_s_processes')
+                                ->where('division_id', $temp->division_id)
+                                ->where('process_name', 'New Document')  
+                                ->get();
                         @endphp
+
                         @foreach ($pro as $test)
                         <label for="process">
                             <input type="radio" class="process_id_reset" for="process" value="{{ $test->id }}" name="process_id" required> {{ $test->process_name }}
@@ -321,8 +323,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.8/axios.min.js" integrity="sha512-PJa3oQSLWRB7wHZ7GQ/g+qyv6r4mbuhmiDb8BjSFZ8NZ2a42oTtAq5n0ucWAwcQDlikAtkub+tPVCw4np27WCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     $(document).ready(function() {
-        // let postUrl = "{{ route('record.filter') }}";
-        let postUrl = "https://environmentallab.doculife.co.in/api/filter-records";
+        let postUrl = "{{ route('record.filter') }}";
+        // let postUrl = "https://environmentallab.doculife.co.in/api/filter-records";
         $('.loadingRecords').hide();
 
         // Function to update records

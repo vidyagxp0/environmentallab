@@ -12,7 +12,7 @@ use App\Models\QMSDivision;
 use Helpers;
 use App\Models\DocumentContent;
 use App\Models\DocumentGridData;
-//use App\Models\ContentsDocument;
+use App\Models\QMSProcess;
 use App\Models\DocumentHistory;
 use App\Models\DocumentLanguage;
 use App\Models\DocumentSubtype;
@@ -51,22 +51,18 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function division(Request $request)
-    {
+    // public function division(Request $request)
+    // {
+    //     $new = new SetDivision;
+    //     $new->division_id = $request->division_id;
+    //     $new->process_id = $request->process_id;
+    //     $new->user_id = Auth::user()->id;
+    //     $new->save();
+    //     $id = $request->process_id;
+    //     $idDivision = $request->division_id;
 
-
-        $new = new SetDivision;
-        $new->division_id = $request->division_id;
-
-
-
-        $new->process_id = $request->process_id;
-        $new->user_id = Auth::user()->id;
-        $new->save();
-        //return redirect()->route('documents.create');
-        $id = $request->process_id;
-        return redirect()->route('documents.create' ,compact('id'));
-    }
+    //     return view('frontend.documents.create', compact('id', 'idDivision'));
+    // }
     public function division_old(Request $request)
     {
         // $request->dd();
@@ -240,8 +236,8 @@ class DocumentController extends Controller
         //
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
         if(!empty( $division)){
-            $division->dname = Division::where('id', $division->division_id)->value('name');
-            $division->pname = Process::where('id', $division->process_id)->value('process_name');
+            $division->dname = QMSDivision::where('id', $division->division_id)->value('name');
+            $division->pname = QMSProcess::where('id', $division->process_id)->value('process_name');
         }
         $users = User::all();
         if (! empty($users)) {
@@ -253,7 +249,7 @@ class DocumentController extends Controller
         if (! empty($document)) {
             foreach ($document as $temp) {
                 if (! empty($temp)) {
-                    $temp->division = Division::where('id', $temp->division_id)->value('name');
+                    $temp->division = QMSDivision::where('id', $temp->division_id)->value('name');
                     $temp->typecode = DocumentType::where('id', $temp->document_type_id)->value('typecode');
                     $temp->year = Carbon::parse($temp->created_at)->format('Y');
                 }
@@ -322,16 +318,27 @@ class DocumentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function division(Request $request)
     {
-        //
+        // dd($request->all());
+        $new = new SetDivision;
+        $new->process_id = $request->process_id;
+
+        $checkDivision = QMSProcess::where('id', $request->process_id)->pluck('division_id')->first();
+        // dd($checkDivision);
+        $new->division_id = $checkDivision;
+        $new->user_id = Auth::user()->id;
+        $new->save();
+        $idProcess = $request->process_id;
+        $idDivision = $checkDivision;
+
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
-
-        if(!empty( $division)){
-            $division->dname = Division::where('id', $division->division_id)->value('name');
-            $division->pname = Process::where('id', $division->process_id)->value('process_name');
+        $checkProcess = null;
+        if(!empty( $checkDivision)){
+            $division->dname = QMSDivision::where('id', $checkDivision)->value('name');
+            $division->pname = QMSProcess::where('id', $request->process_id)->value('process_name');
+            $checkProcess = $division->process_id;
         }
-
 
         $users = User::all();
         if (! empty($users)) {
@@ -343,7 +350,7 @@ class DocumentController extends Controller
         if (! empty($document)) {
             foreach ($document as $temp) {
                 if (! empty($temp)) {
-                    $temp->division = Division::where('id', $temp->division_id)->value('name');
+                    $temp->division = QMSDivision::where('id', $temp->division_id)->value('name');
                     $temp->typecode = DocumentType::where('id', $temp->document_type_id)->value('typecode');
                     $temp->year = Carbon::parse($temp->created_at)->format('Y');
                 }
@@ -358,17 +365,30 @@ class DocumentController extends Controller
         $reviewer = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_processes_id', $checkProcess)
                 ->where('user_roles.q_m_s_roles_id', 2)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
-
-        //sdd($temp->division_id);
+        $reviewer = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', $checkProcess)
+                ->where('user_roles.q_m_s_roles_id', 18)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
         $approvers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
+                ->where('user_roles.q_m_s_processes_id', $checkProcess)
                 ->where('user_roles.q_m_s_roles_id', 1)
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
+
+        $approvers = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', $checkProcess)
+                ->where('user_roles.q_m_s_roles_id', 18)
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
 
@@ -384,7 +404,7 @@ class DocumentController extends Controller
 
         $user = User::all();
 
-        return view('frontend.documents.create', compact(
+        return view('frontend.documents.create', compact('idProcess', 'idDivision',
             'departments',
             'documentTypes',
             'documentLanguages',
@@ -431,14 +451,9 @@ class DocumentController extends Controller
 
             $division = SetDivision::where('user_id', Auth::id())->latest()->first();
 
-            if(empty($request->division_id) && empty($request->process_id) ){
-              $document->division_id = $division->division_id;
-              $document->process_id = $division->process_id;
-            } else {
-                $document->division_id = $request->division_id;
-                $document->process_id = $request->process_id;
-            }
-
+            
+            $document->division_id = $request->division_id;
+            $document->process_id = $request->process_id;
             $document->record = DB::table('record_numbers')->value('counter') + 1;
             $document->originator_id = Auth::id();
             $document->document_name = $request->document_name;
@@ -666,7 +681,7 @@ class DocumentController extends Controller
         if (! empty($document_data)) {
             foreach ($document_data as $temp) {
                 if (! empty($temp)) {
-                    $temp->division = Division::where('id', $temp->division_id)->value('name');
+                    $temp->division = QMSDivision::where('id', $temp->division_id)->value('name');
                     $temp->typecode = DocumentType::where('id', $temp->document_type_id)->value('typecode');
                     $temp->year = Carbon::parse($temp->created_at)->format('Y');
                 }
@@ -674,13 +689,17 @@ class DocumentController extends Controller
 
         }
         $print_history = PrintHistory::join('users', 'print_histories.user_id', 'users.id')->select('print_histories.*', 'users.name as user_name')->where('document_id', $id)->get();
+
+
         $document = Document::join('users', 'documents.originator_id', 'users.id')->leftjoin('document_types', 'documents.document_type_id', 'document_types.id')
             ->join('divisions', 'documents.division_id', 'divisions.id')->leftjoin('departments', 'documents.department_id', 'departments.id')
             ->select('documents.*', 'users.name as originator_name', 'document_types.name as document_type_name', 'divisions.name as division_name', 'departments.name as dept_name')->where('documents.id', $id)->first();
+
+
         $document->date = Carbon::parse($document->created_at)->format('d-M-Y');
         $document['document_content'] = DocumentContent::where('document_id', $id)->first();
         $document_distribution_grid = DocumentGridData::where('document_id', $id)->get();
-        $document['division'] = Division::where('id', $document->division_id)->value('name');
+        $document['division'] = QMSDivision::where('id', $document->division_id)->value('name');
         $year = Carbon::parse($document->created_at)->format('Y');
         $trainer = User::get();
         $trainingDoc = DocumentTraining::where('document_id', $id)->first();
@@ -697,18 +716,51 @@ class DocumentController extends Controller
         $signature = StageManage::where('document_id', $id)->get();
         //$reviewer = User::get();
         $reviewer = DB::table('user_roles')
-                ->join('users', 'user_roles.user_id', '=', 'users.id')
-                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
-                ->where('user_roles.q_m_s_roles_id', 2)
-                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
-        //$approvers = User::get();
+                    ->join('users', 'user_roles.user_id', '=', 'users.id')
+                    ->select(
+                        'user_roles.q_m_s_processes_id',
+                        'users.id',
+                        'users.role',
+                        'users.name'
+                    )
+                    ->where('user_roles.q_m_s_processes_id', $document->process_id)
+                    ->where('user_roles.q_m_s_roles_id', 2) // Include both Reviewer and Full Permission roles
+                    ->groupBy(
+                        'user_roles.q_m_s_processes_id',
+                        'users.id',
+                        'users.role',
+                        'users.name'
+                    )
+                    ->get();
+        $reviewer = DB::table('user_roles')
+                    ->join('users', 'user_roles.user_id', '=', 'users.id')
+                    ->select(
+                        'user_roles.q_m_s_processes_id',
+                        'users.id',
+                        'users.role',
+                        'users.name'
+                    )
+                    ->where('user_roles.q_m_s_processes_id', $document->process_id)
+                    ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
+                    ->groupBy(
+                        'user_roles.q_m_s_processes_id',
+                        'users.id',
+                        'users.role',
+                        'users.name'
+                    )
+                    ->get();
         $approvers = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', 89)
-                ->where('user_roles.q_m_s_roles_id', 1)
+                ->where('user_roles.q_m_s_processes_id', $document->process_id)
+                ->where('user_roles.q_m_s_roles_id', 1) // Include both Reviewer and Full Permission roles
+                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                ->get();
+        $approvers = DB::table('user_roles')
+                ->join('users', 'user_roles.user_id', '=', 'users.id')
+                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                ->where('user_roles.q_m_s_processes_id', $document->process_id)
+                ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
@@ -1519,7 +1571,7 @@ class DocumentController extends Controller
             $data['originator_email'] = User::where('id', $data->originator_id)->value('email');
             $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
             $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-            $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+            $data['document_division'] = QMSDivision::where('id', $data->division_id)->value('name');
             $data['document_content'] = DocumentContent::where('document_id', $id)->first();
             $data['year'] = Carbon::parse($data->created_at)->format('Y');
             // $document = Document::where('id', $id)->get();
@@ -1685,7 +1737,7 @@ class DocumentController extends Controller
         $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
         $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
 
-        $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+        $data['document_division'] = QMSDivision::where('id', $data->division_id)->value('name');
         $data['year'] = Carbon::parse($data->created_at)->format('Y');
         $data['document_content'] = DocumentContent::where('document_id', $id)->first();
 
@@ -1772,7 +1824,7 @@ class DocumentController extends Controller
             $data['document_content'] = DocumentContent::where('document_id', $id)->first();
             $data['document_type_name'] = DocumentType::where('id', $data->document_type_id)->value('name');
             $data['document_type_code'] = DocumentType::where('id', $data->document_type_id)->value('typecode');
-            $data['document_division'] = Division::where('id', $data->division_id)->value('name');
+            $data['document_division'] = QMSDivision::where('id', $data->division_id)->value('name');
 
             $data['year'] = Carbon::parse($data->created_at)->format('Y');
             // $document = Document::where('id', $id)->get();

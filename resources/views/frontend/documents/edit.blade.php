@@ -1251,22 +1251,20 @@
                                         name="reviewers[]" placeholder="Select Reviewers" multiple>
                                         @if (!empty($reviewer))
                                             @foreach ($reviewer as $lan)
-                                            @if(Helpers::checkUserRolesreviewer($lan))
-                                                <option value="{{ $lan->id }}"
-                                                    @if ($document->reviewers) @php
-                                                   $data = explode(",",$document->reviewers);
-                                                    $count = count($data);
-                                                    $i=0;
-                                                @endphp
-                                                @for ($i = 0; $i < $count; $i++)
-                                                    @if ($data[$i] == $lan->id)
-                                                     selected @endif
-                                                    @endfor
-                                            @endif>
-                                            {{ $lan->name }}
-                                            </option>
-                                            @endif
-                                        @endforeach
+                                                    <option value="{{ $lan->id }}"
+                                                        @if ($document->reviewers) @php
+                                                    $data = explode(",",$document->reviewers);
+                                                        $count = count($data);
+                                                        $i=0;
+                                                    @endphp
+                                                    @for ($i = 0; $i < $count; $i++)
+                                                        @if ($data[$i] == $lan->id)
+                                                        selected @endif
+                                                        @endfor
+                                                @endif>
+                                                {{ $lan->name }}
+                                                </option>
+                                            @endforeach
                                         @endif
                                     </select>
                                     @foreach ($history as $tempHistory)
@@ -1313,7 +1311,6 @@
                                         name="approvers[]" placeholder="Select Approvers" multiple>
                                         @if (!empty($approvers))
                                             @foreach ($approvers as $lan)
-                                            @if(Helpers::checkUserRolesApprovers($lan))
                                                 <option value="{{ $lan->id }}"
                                                     @if ($document->approvers) @php
                                                    $data = explode(",",$document->approvers);
@@ -1327,7 +1324,6 @@
                                             @endif>
                                             {{ $lan->name }}
                                             </option>
-                                            @endif
                                         @endforeach
                                         @endif
                                     </select>

@@ -69,18 +69,16 @@
 
 
     </style>
-<?php $division_id = isset($_GET['id'])?$_GET['id']:'';?>
+
+
     <div id="data-field-head">
         <div class="pr-id">
             New Document
         </div>
-        @if(isset($_GET['id']))
         <div class="division-bar">
             <strong>Site Division/Project</strong> :
-            {{ Helpers::getDivisionName($_GET['id'])}} / Document
-            {{-- {{ $division->dname }} / {{ $division->pname }} --}}
+            {{ Helpers::getDivisionName($idDivision)}} / New Document
         </div>
-        @endif
     </div>
 
     <div id="data-fields">
@@ -131,23 +129,12 @@
                                     </div>
                                 </div> --}}
 
-
                                 <div class="col-lg-12">
                                     <div class="group-input">
-                                        @if(isset($_GET['id']))
                                         <label for="Division Code"><b>Site/Location Code</b></label>
-                                        <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($_GET['id'])}}">
-                                        <input type="hidden" name="division_id" value="{{$_GET['id']}}">
-                                        {{-- <div class="static">QMS-North America</div> --}}
-                                        @else
-                                        <label for="Division Code"><b>Site/Location Code </b></label>
-                                        {{-- <input readonly type="text" name="division_id"
-                                            value="">
-                                        <input type="hidden" name="division_id" value=""> --}}
-                                        <input readonly type="text" name="division_code"
-                                        value="{{ Helpers::getDivisionName(session()->get('division')) }}">
-                                       <input type="hidden" name="division_id" value="{{ session()->get('division') }}">
-                                        @endif
+                                        <input readonly type="text" name="division_id" value="{{ Helpers::getDivisionName($idDivision)}}">
+                                        <input type="hidden" name="division_id" value="{{$idDivision}}">
+                                        <input type="hidden" name="process_id" value="{{$idProcess}}">
                                     </div>
                                 </div>
 
@@ -482,11 +469,9 @@
                                             @if (!empty($reviewer))
 
                                                 @foreach ($reviewer as $lan)
-                                                    @if(Helpers::checkUserRolesreviewer($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
-                                                    @endif
                                                 @endforeach
                                             @endif
                                         </select>
@@ -502,11 +487,9 @@
                                             name="approvers[]" placeholder="Select Approvers" multiple required>
                                             @if (!empty($approvers))
                                                 @foreach ($approvers as $lan)
-                                                    @if(Helpers::checkUserRolesApprovers($lan))
                                                     <option value="{{ $lan->id }}">
                                                         {{ $lan->name }}
                                                     </option>
-                                                    @endif
                                                 @endforeach
                                             @endif
                                         </select>
