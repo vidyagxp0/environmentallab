@@ -138,7 +138,7 @@
                                 <!-- <div data-bs-toggle="modal" data-bs-target="#setting-modal">Settings</div> -->
                                 <div data-bs-toggle="modal" data-bs-target="#about-modal">About</div>
                                 <!-- <div><a href="#">Help</a></div> -->
-                                <div><a href="/helpdesk-personnel">Helpdesk Personel</a></div>
+                                <div><a href="/rcms/helpdesk-personnel">Helpdesk Personel</a></div>
                                 <div><a href="{{ route('logout') }}">Log Out</a></div>
                             </div>
                         </div>

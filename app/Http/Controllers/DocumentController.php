@@ -184,6 +184,14 @@ class DocumentController extends Controller
 
         $query = Document::query();
 
+        if ($request->search_query && !empty($request->search_query)) {
+            $query->where('document_name', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('sop_no', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('sop_type', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('status', 'LIKE', '%'. $request->search_query .'%')
+                    ->orWhere('short_description', 'LIKE', '%'.  $request->search_query .'%');
+        }
+
         if ($request->status && !empty($request->status))
         {
             $query->where('status', $request->status);
@@ -203,7 +211,7 @@ class DocumentController extends Controller
         {
             $query->where('originator_id', $request->originator_id);
         }
-
+        
         $documents = $query->get();
 
         foreach ($documents as $doc) {

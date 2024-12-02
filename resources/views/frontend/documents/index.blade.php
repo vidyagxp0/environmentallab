@@ -333,6 +333,7 @@
                 document_type_id: $('select[name=document_type_id]').val(),
                 division_id: $('select[name=division_id]').val(),
                 originator_id: $('select[name=originator_id]').val(),
+                search_query: $('input[name=search_query]').val(),
             };
 
             try {
