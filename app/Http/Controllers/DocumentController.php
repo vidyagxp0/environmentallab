@@ -366,34 +366,20 @@ class DocumentController extends Controller
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
                 ->where('user_roles.q_m_s_processes_id', $checkProcess)
-                ->where('user_roles.q_m_s_roles_id', 2)
-                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
-        $reviewer = DB::table('user_roles')
-                ->join('users', 'user_roles.user_id', '=', 'users.id')
-                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', $checkProcess)
-                ->where('user_roles.q_m_s_roles_id', 18)
+                ->whereIn('user_roles.q_m_s_roles_id', [2,18])
                 ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
                 ->get();
         $approvers = DB::table('user_roles')
-                ->join('users', 'user_roles.user_id', '=', 'users.id')
-                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', $checkProcess)
-                ->where('user_roles.q_m_s_roles_id', 1)
-                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
+                        ->join('users', 'user_roles.user_id', '=', 'users.id')
+                        ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+                        ->where('user_roles.q_m_s_processes_id', $checkProcess)
+                        ->whereIn('user_roles.q_m_s_roles_id', [1,18])
+                        ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+                        ->get();
 
-        $approvers = DB::table('user_roles')
-                ->join('users', 'user_roles.user_id', '=', 'users.id')
-                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', $checkProcess)
-                ->where('user_roles.q_m_s_roles_id', 18)
-                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
+                        // dd($reviewer, $approvers);
 
         $trainer = User::get();
-
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         // Retrieve the current counter value
