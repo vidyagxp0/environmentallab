@@ -29,6 +29,7 @@ use App\Models\PrintHistory;
 use App\Models\Process;
 use App\Models\RoleGroup;
 use App\Models\SetDivision;
+use App\Models\UserRole;
 use App\Models\Stage;
 use App\Models\StageManage;
 use App\Models\User;
@@ -207,7 +208,7 @@ class DocumentController extends Controller
         {
             $query->where('originator_id', $request->originator_id);
         }
-        
+
         $documents = $query->get();
 
         foreach ($documents as $doc) {
@@ -260,6 +261,7 @@ class DocumentController extends Controller
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
         //$reviewer = User::get();
+
         $reviewer = DB::table('user_roles')
                 ->join('users', 'user_roles.user_id', '=', 'users.id')
                 ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
@@ -320,6 +322,7 @@ class DocumentController extends Controller
      */
     public function division(Request $request)
     {
+
         // dd($request->all());
         $new = new SetDivision;
         $new->process_id = $request->process_id;
@@ -328,7 +331,39 @@ class DocumentController extends Controller
         // dd($checkDivision);
         $new->division_id = $checkDivision;
         $new->user_id = Auth::user()->id;
-        $new->save();
+        // $new->save();
+
+        $qms_process = QmsProcess::where([
+            'division_id' => $checkDivision,
+            'process_name' => 'New Document'
+        ])->first();
+
+        // return $qms_process;
+
+        $reviewer_users = UserRole::where([
+            'q_m_s_divisions_id' => $checkDivision,
+            'q_m_s_processes_id' => $qms_process->id,
+ 	    'q_m_s_roles_id' => 2
+        ])->select('user_id')->distinct()->get();
+
+	    $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
+
+	    $reviewer = User::whereIn('id', $reviewer_ids)->get();
+
+        $approver_users = UserRole::where([
+            'q_m_s_divisions_id' => $checkDivision,
+            'q_m_s_processes_id' => $qms_process->id,
+ 	    'q_m_s_roles_id' => 1
+        ])->select('user_id')->distinct()->get();
+
+        $approver_ids = $approver_users->pluck('user_id')->toArray();
+
+	    $approvers = User::whereIn('id', $approver_ids)->get();
+
+
+        // return $reviewer_users;
+        // return $checkDivision;
+
         $idProcess = $request->process_id;
         $idDivision = $checkDivision;
 
@@ -362,20 +397,20 @@ class DocumentController extends Controller
         $documentsubTypes = DocumentSubtype::all();
         $documentLanguages = DocumentLanguage::all();
         //$reviewer = User::get();
-        $reviewer = DB::table('user_roles')
-                ->join('users', 'user_roles.user_id', '=', 'users.id')
-                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', $checkProcess)
-                ->whereIn('user_roles.q_m_s_roles_id', [2,18])
-                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
-        $approvers = DB::table('user_roles')
-                        ->join('users', 'user_roles.user_id', '=', 'users.id')
-                        ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                        ->where('user_roles.q_m_s_processes_id', $checkProcess)
-                        ->whereIn('user_roles.q_m_s_roles_id', [1,18])
-                        ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                        ->get();
+        // $reviewer = DB::table('user_roles')
+        //        ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //        ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+        //        ->where('user_roles.q_m_s_processes_id', $checkProcess)
+        //        ->whereIn('user_roles.q_m_s_roles_id', [2,18])
+        //        ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+        //        ->get();
+        // $approvers = DB::table('user_roles')
+        //                ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+        //                ->where('user_roles.q_m_s_processes_id', $checkProcess)
+        //                ->whereIn('user_roles.q_m_s_roles_id', [1,18])
+        //                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+        //                ->get();
 
                         // dd($reviewer, $approvers);
 
@@ -437,7 +472,7 @@ class DocumentController extends Controller
 
             $division = SetDivision::where('user_id', Auth::id())->latest()->first();
 
-            
+
             $document->division_id = $request->division_id;
             $document->process_id = $request->process_id;
             $document->record = DB::table('record_numbers')->value('counter') + 1;
