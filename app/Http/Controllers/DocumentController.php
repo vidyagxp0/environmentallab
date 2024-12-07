@@ -736,54 +736,82 @@ class DocumentController extends Controller
 
         $signature = StageManage::where('document_id', $id)->get();
         //$reviewer = User::get();
-        $reviewer = DB::table('user_roles')
-                    ->join('users', 'user_roles.user_id', '=', 'users.id')
-                    ->select(
-                        'user_roles.q_m_s_processes_id',
-                        'users.id',
-                        'users.role',
-                        'users.name'
-                    )
-                    ->where('user_roles.q_m_s_processes_id', $document->process_id)
-                    ->where('user_roles.q_m_s_roles_id', 2) // Include both Reviewer and Full Permission roles
-                    ->groupBy(
-                        'user_roles.q_m_s_processes_id',
-                        'users.id',
-                        'users.role',
-                        'users.name'
-                    )
-                    ->get();
-        $reviewer = DB::table('user_roles')
-                    ->join('users', 'user_roles.user_id', '=', 'users.id')
-                    ->select(
-                        'user_roles.q_m_s_processes_id',
-                        'users.id',
-                        'users.role',
-                        'users.name'
-                    )
-                    ->where('user_roles.q_m_s_processes_id', $document->process_id)
-                    ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
-                    ->groupBy(
-                        'user_roles.q_m_s_processes_id',
-                        'users.id',
-                        'users.role',
-                        'users.name'
-                    )
-                    ->get();
-        $approvers = DB::table('user_roles')
-                ->join('users', 'user_roles.user_id', '=', 'users.id')
-                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', $document->process_id)
-                ->where('user_roles.q_m_s_roles_id', 1) // Include both Reviewer and Full Permission roles
-                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
-        $approvers = DB::table('user_roles')
-                ->join('users', 'user_roles.user_id', '=', 'users.id')
-                ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
-                ->where('user_roles.q_m_s_processes_id', $document->process_id)
-                ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
-                ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
-                ->get();
+
+        $qms_process = QmsProcess::where([
+            'division_id' => $document->division_id,
+            'process_name' => 'New Document'
+        ])->first();
+
+        // return $qms_process;
+
+        $reviewer_users = UserRole::where([
+            'q_m_s_divisions_id' => $document->division_id,
+            'q_m_s_processes_id' => $qms_process->id,
+ 	    'q_m_s_roles_id' => 2
+        ])->select('user_id')->distinct()->get();
+
+	    $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
+
+	    $reviewer = User::whereIn('id', $reviewer_ids)->get();
+
+        $approver_users = UserRole::where([
+            'q_m_s_divisions_id' => $document->division_id,
+            'q_m_s_processes_id' => $qms_process->id,
+ 	    'q_m_s_roles_id' => 1
+        ])->select('user_id')->distinct()->get();
+
+        $approver_ids = $approver_users->pluck('user_id')->toArray();
+
+	    $approvers = User::whereIn('id', $approver_ids)->get();
+
+        // $reviewer = DB::table('user_roles')
+        //             ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //             ->select(
+        //                 'user_roles.q_m_s_processes_id',
+        //                 'users.id',
+        //                 'users.role',
+        //                 'users.name'
+        //             )
+        //             ->where('user_roles.q_m_s_processes_id', $document->process_id)
+        //             ->where('user_roles.q_m_s_roles_id', 2) // Include both Reviewer and Full Permission roles
+        //             ->groupBy(
+        //                 'user_roles.q_m_s_processes_id',
+        //                 'users.id',
+        //                 'users.role',
+        //                 'users.name'
+        //             )
+        //             ->get();
+        // $reviewer = DB::table('user_roles')
+        //             ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //             ->select(
+        //                 'user_roles.q_m_s_processes_id',
+        //                 'users.id',
+        //                 'users.role',
+        //                 'users.name'
+        //             )
+        //             ->where('user_roles.q_m_s_processes_id', $document->process_id)
+        //             ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
+        //             ->groupBy(
+        //                 'user_roles.q_m_s_processes_id',
+        //                 'users.id',
+        //                 'users.role',
+        //                 'users.name'
+        //             )
+        //             ->get();
+        // $approvers = DB::table('user_roles')
+        //         ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //         ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+        //         ->where('user_roles.q_m_s_processes_id', $document->process_id)
+        //         ->where('user_roles.q_m_s_roles_id', 1) // Include both Reviewer and Full Permission roles
+        //         ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+        //         ->get();
+        // $approvers = DB::table('user_roles')
+        //         ->join('users', 'user_roles.user_id', '=', 'users.id')
+        //         ->select('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the select statement
+        //         ->where('user_roles.q_m_s_processes_id', $document->process_id)
+        //         ->where('user_roles.q_m_s_roles_id', 18) // Include both Reviewer and Full Permission roles
+        //         ->groupBy('user_roles.q_m_s_processes_id', 'users.id','users.role','users.name') // Include all selected columns in the group by clause
+        //         ->get();
         $reviewergroup = Grouppermission::where('role_id', 2)->get();
         $approversgroup = Grouppermission::where('role_id', 1)->get();
         $user = User::all();
