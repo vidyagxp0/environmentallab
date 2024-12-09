@@ -994,6 +994,29 @@
                                 @endphp
 
                                 <tr>
+                                    <th class="w-30 text-left vertical-baseline">Reference Record</th>
+                                    <td class="w-70 text-left">
+                                       @php
+                                        $temp = DB::table('document_types')
+                                            ->where('name', $data->document_type_name)
+                                            ->value('typecode');
+                                       @endphp
+                                        @if($data->revised === 'Yes')
+
+                                        {{ Helpers::getDivisionName($data->division_id) }}
+                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                                        /000{{ $data->reference_record }}/R{{$data->major}}.{{$data->minor}}/{{$data->document_name}}
+
+                                        @else
+                                        {{ Helpers::getDivisionName($data->division_id) }}
+                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
+                                        /000{{ $data->reference_record }}/R{{$data->major}}.{{$data->minor}}/{{$data->document_name}}
+
+                                    @endif
+                                </td>
+                                </tr>
+
+                                <tr>
                                     <th class="w-30 text-left vertical-baseline">Last Changed</th>
                                     <td class="w-70 text-left">
                                         @if ($last)
