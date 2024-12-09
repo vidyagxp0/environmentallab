@@ -161,7 +161,7 @@
                 <li class="nav-item {{ $mainmenu == 'Control Management' ? 'menu-open' : '' }} ">
                     <a href="#"
                         class="nav-link  @php
-if($mainmenu=="Control Management"){
+                        if($mainmenu=="Control Management"){
                                                 echo "active";
                                             } @endphp">
                         <i class="nav-icon fa fa-briefcase"></i>
@@ -193,6 +193,37 @@ if($submenu=="Download Control"){
                         } @endphp">
                                 <i class="fa fa-download nav-icon"></i>
                                 <p>Download Control</p>
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li class="nav-item {{ $mainmenu == 'Activity' ? 'menu-open' : '' }} ">
+                    <a href="#"
+                        class="nav-link  @php
+                    if($mainmenu=="Activity"){
+                                                echo "active";
+                                            } @endphp">
+                        <i class="nav-icon fa fa-users"></i>
+                        <p>
+                            Activity
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+
+
+                        <li class="nav-item ">
+                            <a href="{{ route('auditTrail') }}"
+                                class="nav-link @php
+                                    if($submenu=="Audit Trail"){
+                                                            echo "active";
+                                                        } @endphp">
+                                                        <p>Audit Trails
+                                                        <i class="fas fa-sign-in-alt nav-icon"></i>
+                                                        </p>
                             </a>
                         </li>
 

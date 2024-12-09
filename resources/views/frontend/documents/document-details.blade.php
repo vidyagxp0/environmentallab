@@ -935,7 +935,7 @@
         });
     })
 </script>
-    <div class="modal fade" id="child-modal">
+    {{-- <div class="modal fade" id="child-modal">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
 
@@ -965,20 +965,8 @@
                             </span>
                         </label>
                         <input type="number" name="major" id="major" min="0">
-                                {{-- <option value="0">-- Select --</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                            </select> --}}
                         
                         <label for="minor">
-                            {{-- <input type="radio" name="revision" id="minor"> --}}
                             Minor Version<span  class="text-primary" data-bs-toggle="modal"
                             data-bs-target="#document-management-system-modal-minor"
                             style="font-size: 0.8rem; font-weight: 400;">
@@ -986,19 +974,6 @@
                             </span>
                         </label>
                         <input type="number" name="minor" id="minor" min="0" max="9">
-                                {{-- <option value="">-- Select --</option>
-                                <option value="0">0</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
-                                <option value="6">6</option>
-                                <option value="7">7</option>
-                                <option value="8">8</option>
-                                <option value="9">9</option>
-                            </select> --}}
-                       
 
                         <label for="reason">
                             Comment
@@ -1017,7 +992,67 @@
 
             </div>
         </div>
+    </div> --}}
+
+    <div class="modal fade" id="child-modal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-weight: 900">Document Revision</h4>
+            </div>
+
+            @if($document->revised === 'Yes') 
+                <form method="POST" action="{{ url('revision', $document->revised_doc) }}">
+            @else
+                <form method="POST" action="{{ url('revision', $document->id) }}">
+            @endif
+
+            @csrf
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="group-input">
+                    <label for="major">Major Version</label>
+                    <input type="number" name="major" id="major" min="0" value="{{ $newMajor = $document->minor >= 9 ? $document->major + 1 : $document->major }}" class="form-control" required>
+
+                    <label for="minor">Minor Version</label>
+                    <input type="number" name="minor" id="minor" min="0" max="9" value="{{ $newMinor = $document->minor >= 9 ? 1 : $document->minor + 1 }}" class="form-control" required>
+
+                    <label for="reason">Comment</label>
+                    <input type="text" name="reason" placeholder="Enter your comment" class="form-control" required>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" data-bs-dismiss="modal" class="btn btn-secondary">Close</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+        </form>
+
+        </div>
     </div>
+</div>
+
+
+<script>
+    document.getElementById('minor').addEventListener('input', function() {
+        let majorInput = document.getElementById('major');
+        let minorInput = parseInt(this.value, 10);
+        let majorInputValue = parseInt(majorInput.value, 10);
+
+        if (minorInput > 9) {
+            majorInputValue += 1;
+            minorInput.value = 1;
+            majorInput.value = majorInputValue;
+        }
+    });
+</script>
+
+
 <style>
 .group-input input {
 width: 60%;
