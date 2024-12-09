@@ -324,7 +324,7 @@
 <script>
     $(document).ready(function() {
         // let postUrl = "{{ route('record.filter') }}";
-        let postUrl = "https://environmentallab.doculife.co.in/api/filter-records";
+       let postUrl = "https://environmentallab.doculife.co.in/api/filter-records";
         $('.loadingRecords').hide();
 
         // Function to update records
