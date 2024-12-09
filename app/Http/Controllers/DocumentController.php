@@ -323,56 +323,54 @@ class DocumentController extends Controller
     public function division(Request $request)
     {
 
-        // dd($request->all());
         $new = new SetDivision;
         $new->process_id = $request->process_id;
-
+        
         $checkDivision = QMSProcess::where('id', $request->process_id)->pluck('division_id')->first();
         // dd($checkDivision);
         $new->division_id = $checkDivision;
         $new->user_id = Auth::user()->id;
         // $new->save();
-
+        
         $qms_process = QmsProcess::where([
             'division_id' => $checkDivision,
             'process_name' => 'New Document'
-        ])->first();
-
-        // return $qms_process;
-
-        $reviewer_users = UserRole::where([
-            'q_m_s_divisions_id' => $checkDivision,
-            'q_m_s_processes_id' => $qms_process->id,
- 	    'q_m_s_roles_id' => 2
-        ])->select('user_id')->distinct()->get();
-
-	    $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
-
-	    $reviewer = User::whereIn('id', $reviewer_ids)->get();
-
-        $approver_users = UserRole::where([
-            'q_m_s_divisions_id' => $checkDivision,
-            'q_m_s_processes_id' => $qms_process->id,
- 	    'q_m_s_roles_id' => 1
-        ])->select('user_id')->distinct()->get();
-
-        $approver_ids = $approver_users->pluck('user_id')->toArray();
-
-	    $approvers = User::whereIn('id', $approver_ids)->get();
-
-
-        // return $reviewer_users;
-        // return $checkDivision;
+            ])->first();
+            
+            // return $qms_process;
+            
+            $reviewer_users = UserRole::where([
+                'q_m_s_divisions_id' => $checkDivision,
+                'q_m_s_processes_id' => $qms_process->id,
+                'q_m_s_roles_id' => 2
+                ])->select('user_id')->distinct()->get();
+                
+                $reviewer_ids = $reviewer_users->pluck('user_id')->toArray();
+                
+                $reviewer = User::whereIn('id', $reviewer_ids)->get();
+                
+                $approver_users = UserRole::where([
+                    'q_m_s_divisions_id' => $checkDivision,
+                    'q_m_s_processes_id' => $qms_process->id,
+                    'q_m_s_roles_id' => 1
+                    ])->select('user_id')->distinct()->get();
+                    
+                    $approver_ids = $approver_users->pluck('user_id')->toArray();
+                    
+                    $approvers = User::whereIn('id', $approver_ids)->get();
+                    
+                    
+                    // return $reviewer_users;
+                    // return $checkDivision;
+                    // dd(QMSDivision::where('id', $checkDivision)->value('name'));
 
         $idProcess = $request->process_id;
         $idDivision = $checkDivision;
 
         $division = SetDivision::where('user_id', Auth::id())->latest()->first();
-        $checkProcess = null;
-        if(!empty( $checkDivision)){
-            $division->dname = QMSDivision::where('id', $checkDivision)->value('name');
-            $division->pname = QMSProcess::where('id', $request->process_id)->value('process_name');
-            $checkProcess = $division->process_id;
+        if(!empty($checkDivision)){
+            $division['dname'] = QMSDivision::where('id', $checkDivision)->value('name');
+            $division['pname'] = QMSProcess::where('id', $request->process_id)->value('process_name');
         }
 
         $users = User::all();

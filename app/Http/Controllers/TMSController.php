@@ -29,7 +29,7 @@ class TMSController extends Controller
 {
     public function index(){
         if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
-            $documents = DocumentTraining::where('trainer', Auth::user()->id)->with('root_document')->orderByDesc('id')->get();
+            $documents = DocumentTraining::with('root_document')->orderByDesc('id')->get();
             if($documents){
                 foreach($documents as $temp){
 
