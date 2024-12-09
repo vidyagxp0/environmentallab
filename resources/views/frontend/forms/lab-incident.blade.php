@@ -597,6 +597,11 @@
                                     <p>
                                         This type could encompass incidents resulting from errors or deviations in standard operating procedures (SOPs), protocols, or methods. It might involve mistakes made during testing, analysis, or other laboratory proced.
                                     </p>
+                                    <h4>c. Environmental or Contamination Issue:</h4>
+                                    <p>
+
+                                        This type might involve incidents related to environmental conditions or contamination that affect laboratory processes, results, or safety. It could include situations such as cross-contamination of samples, exposure to environmental factors like humidity or temperature fluctuations beyond acceptable ranges, or contamination due to inadequate cleaning or maintenance of laboratory spaces.
+                                    </p>
                 
                                 </div>
                 
