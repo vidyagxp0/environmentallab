@@ -227,6 +227,18 @@ if($submenu=="Download Control"){
                             </a>
                         </li>
 
+                        <li class="nav-item ">
+                            <a href="{{ route('admin_logs') }}"
+                                class="nav-link @php
+                                    if($submenu=="Login Logs"){
+                                                            echo "active";
+                                                        } @endphp">
+                                                        <p>Login Logs
+                                                        <i class="fas fa-sign-in-alt nav-icon"></i>
+                                                        </p>
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
 

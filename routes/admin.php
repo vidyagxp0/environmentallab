@@ -51,7 +51,10 @@ Route::group(['prefix' => 'admin'], function () {
             Route::resource('process', ProcessController::class);
             Route::resource('risk-level', RiskLevelController::class);
             Route::resource('user_management', UserManagementController::class);
+            
             Route::get('auditTrail', [UserManagementController::class, 'auditTrail'])->name('auditTrail');
+            Route::get('login/logs', [UserManagementController::class, 'showLogs'])->name('admin_logs');
+
             Route::resource('admin_management', AdminManagementController::class);
             Route::resource('role_groups', RoleGroupController::class);
             Route::resource('printcontrol', PrintControlController::class);
