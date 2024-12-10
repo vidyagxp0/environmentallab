@@ -186,84 +186,84 @@ class UserManagementController extends Controller
 
                 $user->save();
 
-                if (!empty($request->name)) {
-                    $validation2 = new AdminLoginAuditTrail();
-                    $validation2->adminAudit_id = $user->id;
-                    $validation2->previous = "Null";
-                    $validation2->current = $request->name;
-                    $validation2->activity_type = 'Name';
-                    $validation2->user_id = Auth::user()->id;
-                    $validation2->user_name = Auth::user()->name;
-                    $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        
-                    $validation2->change_to =   "";
-                    $validation2->change_from = "";
-                    $validation2->action_name = 'Create';
-                    // $validation2->comment = "Not Applicable";
-                    $validation2->save();
-                }
+                if (Auth::guard('admin')->check() && Auth::guard('admin')->user()->role === 'admin') {
 
-                if (!empty($request->email)) {
-                    $validation2 = new AdminLoginAuditTrail();
-                    $validation2->adminAudit_id = $user->id;
-                    $validation2->previous = "Null";
-                    $validation2->current = $request->email;
-                    $validation2->activity_type = 'Email';
-                    $validation2->user_id = Auth::user()->id;
-                    $validation2->user_name = Auth::user()->name;
-                    $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-        
-                    $validation2->change_to =   "";
-                    $validation2->change_from = "";
-                    $validation2->action_name = 'Create';
-                    // $validation2->comment = "Not Applicable";
-                    $validation2->save();
-                }
-
-                if (!empty($request->departmentid)) {
-                    $departmentName = Department::where('id', $request->departmentid)->value('name');
-                
-                    if (!$departmentName) {
-                        \Log::error('Department not found for ID: ' . $request->departmentid);
-                        $departmentName = 'Unknown'; 
+                    if (!empty($request->name)) {
+                        $validation2 = new AdminLoginAuditTrail();
+                        $validation2->adminAudit_id = $user->id;
+                        $validation2->previous = "Null";
+                        $validation2->current = $request->name;
+                        $validation2->activity_type = 'Name';
+                        $validation2->user_id = Auth::guard('admin')->user()->id;
+                        $validation2->user_name = Auth::guard('admin')->user()->name;
+                        $validation2->user_role = Auth::guard('admin')->user()->role;
+                        $validation2->change_to = "";
+                        $validation2->change_from = "";
+                        $validation2->action_name = 'Create';
+                        $validation2->save();
                     }
                 
-                    $validation2 = new AdminLoginAuditTrail();
-                    $validation2->adminAudit_id = $user->id;
-                    $validation2->previous = "Null";
-                    $validation2->current = $departmentName;
-                    $validation2->activity_type = 'Department';
-                    $validation2->user_id = Auth::user()->id;
-                    $validation2->user_name = Auth::user()->name;
-                    $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $validation2->change_to = "";
-                    $validation2->change_from = "";
-                    $validation2->action_name = 'Create';
-                    $validation2->save();
-                }
+                    // Check if email is provided
+                    if (!empty($request->email)) {
+                        $validation2 = new AdminLoginAuditTrail();
+                        $validation2->adminAudit_id = $user->id;
+                        $validation2->previous = "Null";
+                        $validation2->current = $request->email;
+                        $validation2->activity_type = 'Email';
+                        $validation2->user_id = Auth::guard('admin')->user()->id;
+                        $validation2->user_name = Auth::guard('admin')->user()->name;
+                        $validation2->user_role = Auth::guard('admin')->user()->role;
+                        $validation2->change_to = "";
+                        $validation2->change_from = "";
+                        $validation2->action_name = 'Create';
+                        $validation2->save();
+                    }
                 
-
-
-                if (!empty($usertableRole)) {
-                    $roleNames = DB::table('role_groups')
-                        ->whereIn('id', explode(',', $usertableRole))
-                        ->pluck('name')
-                        ->toArray();
+                    // Check if department is provided
+                    if (!empty($request->departmentid)) {
+                        $departmentName = Department::where('id', $request->departmentid)->value('name');
                 
-                    $roleNamesString = implode(', ', $roleNames);
+                        if (!$departmentName) {
+                            \Log::error('Department not found for ID: ' . $request->departmentid);
+                            $departmentName = 'Unknown';
+                        }
                 
-                    $validation2 = new AdminLoginAuditTrail();
-                    $validation2->adminAudit_id = $user->id;
-                    $validation2->previous = "Null";
-                    $validation2->current = $roleNamesString;
-                    $validation2->activity_type = 'Roles';
-                    $validation2->user_id = Auth::user()->id;
-                    $validation2->user_name = Auth::user()->name;
-                    $validation2->user_role = RoleGroup::where('id', Auth::user()->role)->value('name');
-                    $validation2->change_to = "";
-                    $validation2->change_from = "";
-                    $validation2->action_name = 'Create';
-                    $validation2->save();
+                        $validation2 = new AdminLoginAuditTrail();
+                        $validation2->adminAudit_id = $user->id;
+                        $validation2->previous = "Null";
+                        $validation2->current = $departmentName;
+                        $validation2->activity_type = 'Department';
+                        $validation2->user_id = Auth::guard('admin')->user()->id;
+                        $validation2->user_name = Auth::guard('admin')->user()->name;
+                        $validation2->user_role = Auth::guard('admin')->user()->role;
+                        $validation2->change_to = "";
+                        $validation2->change_from = "";
+                        $validation2->action_name = 'Create';
+                        $validation2->save();
+                    }
+                
+                    // Check if role is provided
+                    if (!empty($usertableRole)) {
+                        $roleNames = DB::table('role_groups')
+                            ->whereIn('id', explode(',', $usertableRole))
+                            ->pluck('name')
+                            ->toArray();
+                
+                        $roleNamesString = implode(', ', $roleNames);
+                
+                        $validation2 = new AdminLoginAuditTrail();
+                        $validation2->adminAudit_id = $user->id;
+                        $validation2->previous = "Null";
+                        $validation2->current = $roleNamesString;
+                        $validation2->activity_type = 'Roles';
+                        $validation2->user_id = Auth::guard('admin')->user()->id;
+                        $validation2->user_name = Auth::guard('admin')->user()->name;
+                        $validation2->user_role = Auth::guard('admin')->user()->role;
+                        $validation2->change_to = "";
+                        $validation2->change_from = "";
+                        $validation2->action_name = 'Create';
+                        $validation2->save();
+                    }
                 }
                 
 
@@ -519,5 +519,11 @@ class UserManagementController extends Controller
         $admin_audit = AdminLoginAuditTrail::paginate(5);
 
         return view('admin.account.admin_auditTrail', compact('users','admin_audit'));
+    }
+
+    public function showLogs()
+    {
+        $logs = \DB::table('admin_login_logs')->orderBy('created_at', 'desc')->get();
+        return view('admin.account.login_logs', compact('logs'));
     }
 }

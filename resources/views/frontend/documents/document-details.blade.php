@@ -1015,13 +1015,13 @@
             <div class="modal-body">
                 <div class="group-input">
                     <label for="major">Major Version</label>
-                    <input type="number" name="major" id="major" min="0" value="{{ $newMajor = $document->minor >= 9 ? $document->major + 1 : $document->major }}" class="form-control" required>
+                    <input type="number" name="major" id="major" min="0" value="{{ $newMajor = $document->minor >= 9 ? $document->major + 1 : $document->major }}" class="form-control">
 
                     <label for="minor">Minor Version</label>
-                    <input type="number" name="minor" id="minor" min="0" max="9" value="{{ $newMinor = $document->minor >= 9 ? 1 : $document->minor + 1 }}" class="form-control" required>
+                    <input type="number" name="minor" id="minor" min="0" max="9" value="{{ $newMinor = $document->minor >= 9 ? 1 : $document->minor + 1 }}" class="form-control">
 
                     <label for="reason">Comment</label>
-                    <input type="text" name="reason" placeholder="Enter your comment" class="form-control" required>
+                    <input type="text" name="reason" placeholder="Enter your comment" class="form-control">
                 </div>
             </div>
 
