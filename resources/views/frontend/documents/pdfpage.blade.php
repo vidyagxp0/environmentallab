@@ -996,24 +996,37 @@
                                 <tr>
                                     <th class="w-30 text-left vertical-baseline">Reference Record</th>
                                     <td class="w-70 text-left">
-                                       @php
-                                        $temp = DB::table('document_types')
-                                            ->where('name', $data->document_type_name)
-                                            ->value('typecode');
-                                       @endphp
-                                        @if($data->revised === 'Yes')
-
-                                        {{ Helpers::getDivisionName($data->division_id) }}
-                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                                        /000{{ $data->reference_record }}/R{{$data->major}}.{{$data->minor}}/{{$data->document_name}}
-
-                                        @else
-                                        {{ Helpers::getDivisionName($data->division_id) }}
-                                        /@if($data->document_type_name){{  $temp }} /@endif{{ $data->year }}
-                                        /000{{ $data->reference_record }}/R{{$data->major}}.{{$data->minor}}/{{$data->document_name}}
-
-                                    @endif
-                                </td>
+                                        @php
+                                            // Convert the string of IDs (e.g., "1,2,3") into an array
+                                            $reference_records = explode(',', $data->reference_record); // [1, 2, 3]
+                                            $totalRecords = count($reference_records); // Total number of records
+                                            $currentIndex = 0;
+                                        @endphp
+                                        
+                                        @foreach ($reference_records as $reference_record)
+                                            @php
+                                            $currentIndex++;
+                                                // Fetch the document details using the current reference ID
+                                                $referDoc = DB::table('documents')->where('id', $reference_record)->first(); // Use first() instead of get()
+                                                if (!$referDoc) {
+                                                    // Skip if no document is found for the ID
+                                                    continue;
+                                                }
+                                                $year = Carbon\Carbon::parse($referDoc->created_at)->format('Y');
+                                                // Fetch the type code for the document
+                                                $temp = DB::table('document_types')
+                                                    ->where('id', $referDoc->document_type_id)
+                                                    ->value('typecode');
+                                            @endphp
+                                            {{ Helpers::getDivisionName($referDoc->division_id) }}
+                                            /@if($referDoc->document_type_id){{  $temp }} /@endif{{ $year }}
+                                            /000{{ $reference_record }}/R{{$referDoc->major}}.{{$referDoc->minor}}/{{$referDoc->document_name}}
+                                            @if ($currentIndex < $totalRecords)
+                                                , <!-- Add a comma if it's not the last record -->
+                                            @endif
+                                        @endforeach
+                                        
+                                    </td>
                                 </tr>
 
                                 <tr>
