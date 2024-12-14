@@ -55,6 +55,60 @@
                 
 
                 <div class="inner-block tms-block" id="tms-all-block">
+{{-- ========= --}}
+                    @if (auth()->user()->department->name == 'Quality Assurance Director')
+                        <div class="created-by-me"style="font-size: 16px; font-weight: 600;">All Trainings</div>
+                        <div class="block-table">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Training Plan</th>
+                                        <th>Number of SOPs</th>
+                                        <th>Effective Criteria</th>
+                                        <th>Number of Trainees </th>
+                                        <th>Status</th>
+                                        <th>&nbsp;</th> 
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($all_trainings as $temp)
+                                    @if(!empty($temp->training))
+                                            @php
+                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
+                                                    if ($trainingPlan) {
+                                                        $traineesCount = count(explode(',', $trainingPlan->trainees));
+                                                        $sopsCount = count(explode(',', $trainingPlan->sops));
+                                                    }
+                                            @endphp
+                                            @if($trainingPlan)
+                                                <tr>
+
+                                                    <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
+                                                    {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
+                                                        000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
+                                                    <td>{{ $trainingPlan ? $sopsCount : 0 }}</td>
+                                                    <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
+                                                    <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
+                                                    <td>{{ $temp->status }}</td>
+                                                
+                                                    {{-- <td>
+                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>            
+                                                    </td> --}}
+                                                    <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
+        
+                                                </tr>
+                                            @endif
+                                        
+                                        @endif
+                                    @endforeach
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    @endif
+                    {{-- =================== --}}
+
                     @if (Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18))
                     <div class="created-by-me"style="font-size: 16px; font-weight: 600;">Training Created</div>
                         <div class="block-table">
@@ -153,6 +207,7 @@
                     @endif
                 </div>
 
+                
                 <div class="inner-block tms-block" id="tms-due-block">
                     @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
                         <div class="block-table">
@@ -219,6 +274,8 @@
                         </div>
                     @endif
                 </div>
+
+                
 
                 <div class="inner-block tms-block" id="tms-pending-block">
                     @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))

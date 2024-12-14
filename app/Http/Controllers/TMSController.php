@@ -28,28 +28,28 @@ use Helpers;
 class TMSController extends Controller
 {
     public function index(){
-        if(Helpers::checkRoles(6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
+        if(Helpers::checkRoles(role: 6) || Helpers::checkRoles(7) || Helpers::checkRoles(18)){
             $documents = DocumentTraining::with('root_document')->orderByDesc('id')->get();
+
+
             if($documents){
                 foreach($documents as $temp){
 
-                $temp->training = Document::find($temp->document_id);
-                if($temp->training){
-                    $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
-                    $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
-                    // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
-                    // $temp->division_name= {{ Helpers::getDivisionName($_GET['id'])}
-                    $temp->division_name = Helpers::getDivisionName( $temp->training->division_id);
-                    $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
-                    $temp->major = $temp->training->major;
-                    $temp->minor = $temp->training->minor;
-
-
+                    $temp->training = Document::find($temp->document_id);
+                    if($temp->training){
+                        $temp->document_type_name = DocumentType::where('id',$temp->training->document_type_id)->value('name');
+                        $temp->typecode = DocumentType::where('id',$temp->training->document_type_id)->value('typecode');
+                        // $temp->division_name = QMSDivision::where('id',$temp->training->id)->value('name');
+                        // $temp->division_name= {{ Helpers::getDivisionName($_GET['id'])}
+                        $temp->division_name = Helpers::getDivisionName( $temp->training->division_id);
+                        $temp->year = Carbon::parse($temp->training->created_at)->format('Y');
+                        $temp->major = $temp->training->major;
+                        $temp->minor = $temp->training->minor;
+                    }  
                 }
-                
-                
             }
-        }
+
+            $all_trainings = $documents;
              
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->orderByDesc('id')->get();
             if(!empty($due)){
@@ -133,7 +133,7 @@ class TMSController extends Controller
 
 
 
-            return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete'));
+            return view('frontend.TMS.dashboard', compact('documents2','documents','due','pending','complete', 'all_trainings'));
         }
         else{
             $train = [];
