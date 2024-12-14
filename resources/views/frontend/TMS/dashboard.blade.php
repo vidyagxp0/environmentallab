@@ -58,20 +58,22 @@
 {{-- ========= --}}
                     @if (auth()->user()->department->name == 'Quality Assurance Director')
                         <div class="created-by-me"style="font-size: 16px; font-weight: 600;">All Trainings</div>
-                        <div class="block-table">
+                        <div class="block-table" style="height: 250px; overflow-y: scroll;">
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
+                                        <th>S. No.</th>
                                         <th>Training Plan</th>
                                         <th>Number of SOPs</th>
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
+                                        <th>Created By</th>
                                         <th>&nbsp;</th> 
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($all_trainings as $temp)
+                                    @foreach ($all_trainings as $index => $temp)
                                     @if(!empty($temp->training))
                                             @php
                                                     $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
@@ -82,7 +84,7 @@
                                             @endphp
                                             @if($trainingPlan)
                                                 <tr>
-
+                                                    <td>{{ $index + 1 }}</td>
                                                     <td>{{ DB::table('trainings')->where('id', $temp->training_plan)->value('traning_plan_name') }}</td>
                                                     {{-- <td>{{ $temp->division_name }}/{{ $temp->typecode }}/
                                                         000{{ $temp->root_document ? $temp->root_document->document_number : '' }}/{{ $temp->year }}/R{{$temp->major}}.{{$temp->minor}}</td> --}}
@@ -94,8 +96,11 @@
                                                     {{-- <td>
                                                         <a href="#"><i class="fa-solid fa-eye"></i></a>            
                                                     </td> --}}
+                                                    @php
+                                                        $trainer_user = App\Models\User::find($temp->trainer);
+                                                    @endphp
+                                                    <td>{{ $trainer_user ? $trainer_user->name : '-' }}</td>
                                                     <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
-        
                                                 </tr>
                                             @endif
                                         

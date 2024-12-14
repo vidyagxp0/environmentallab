@@ -50,7 +50,7 @@ class TMSController extends Controller
             }
 
             $all_trainings = $documents;
-             
+            
             $due = DocumentTraining::where('trainer',Auth::user()->id)->where('status',"Past-due")->orderByDesc('id')->get();
             if(!empty($due)){
                 foreach($due as $temp){
