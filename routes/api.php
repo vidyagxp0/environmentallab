@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\HelperController;
 use App\Http\Controllers\Api\DmsDataController;
+use App\Http\Controllers\Api\CapaApiController;
+
 use App\Http\Controllers\ApiController;
 use App\Http\Controllers\UserLoginController;
 use Illuminate\Http\Request;
@@ -33,3 +35,4 @@ Route::post('/filter-records', [DocumentController::class, 'filterRecord'])->nam
 Route::post('upload-files', [HelperController::class, 'upload_file'])->name('api.upload.file');
 Route::get('/document',[DmsDataController::class,'DmsData']);
 
+Route::get('/capa',[CapaApiController::class,'CapaForms']);
