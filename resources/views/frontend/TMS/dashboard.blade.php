@@ -52,7 +52,7 @@
                         <div><i class="fa-solid fa-circle-check"></i>&nbsp;Completed</div>
                     </div> --}}
                 </div>
-                
+
 
                 <div class="inner-block tms-block" id="tms-all-block">
 {{-- ========= --}}
@@ -69,14 +69,14 @@
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
                                         <th>Created By</th>
-                                        <th>&nbsp;</th> 
+                                        <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($all_trainings as $index => $temp)
                                     @if(!empty($temp->training))
                                             @php
-                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
+                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first();
                                                     if ($trainingPlan) {
                                                         $traineesCount = count(explode(',', $trainingPlan->trainees));
                                                         $sopsCount = count(explode(',', $trainingPlan->sops));
@@ -92,9 +92,9 @@
                                                     <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
                                                     <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
                                                     <td>{{ $temp->status }}</td>
-                                                
+
                                                     {{-- <td>
-                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>            
+                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>
                                                     </td> --}}
                                                     @php
                                                         $trainer_user = App\Models\User::find($temp->trainer);
@@ -103,7 +103,7 @@
                                                     <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
                                                 </tr>
                                             @endif
-                                        
+
                                         @endif
                                     @endforeach
 
@@ -125,14 +125,14 @@
                                         <th>Effective Criteria</th>
                                         <th>Number of Trainees </th>
                                         <th>Status</th>
-                                         <th>&nbsp;</th> 
+                                         <th>&nbsp;</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($documents as $temp)
-                                    @if(!empty($temp->training) && $temp->training->stage >=6)
+                                    @if(!empty($temp->training) && $temp->training?->stage >=6)
                                             @php
-                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first(); 
+                                                    $trainingPlan = DB::table('trainings')->where('id',$temp->training_plan)->first();
                                                     if ($trainingPlan) {
                                                         $traineesCount = count(explode(',', $trainingPlan->trainees));
                                                         $sopsCount = count(explode(',', $trainingPlan->sops));
@@ -148,15 +148,15 @@
                                                     <td>{{ $trainingPlan ? $trainingPlan->effective_criteria : 0 }}</td>
                                                     <td>{{ $trainingPlan ? $traineesCount : 0 }}</td>
                                                     <td>{{ $temp->status }}</td>
-                                                
+
                                                     {{-- <td>
-                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>            
+                                                        <a href="#"><i class="fa-solid fa-eye"></i></a>
                                                     </td> --}}
                                                     <td><a href="{{ url('training-overall-status', $temp->training_plan) }}"><i class="fa-solid fa-eye"></i></a></td>
-        
+
                                                 </tr>
                                             @endif
-                                        
+
                                         @endif
                                     @endforeach
 
@@ -166,7 +166,7 @@
                         </div>
                         @endif
                        @if (Helpers::checkRoles(1) || Helpers::checkRoles(2) || Helpers::checkRoles(3) || Helpers::checkRoles(4)|| Helpers::checkRoles(5) || Helpers::checkRoles(7) || Helpers::checkRoles(8))
-                    <div class="created-by-me" style="font-size: 16px; font-weight: 600; padding-top:30px">Training Assigned</div> 
+                    <div class="created-by-me" style="font-size: 16px; font-weight: 600; padding-top:30px">Training Assigned</div>
                        <div class="block-table">
                             <table class="table table-bordered">
                                 <thead>
@@ -190,7 +190,7 @@
                                             'training_id' => $temp->traningstatus->training_plan,
                                             'status' => 'Complete'
                                             ])->first();
-                                    @endphp 
+                                    @endphp
                                         <tr>
                                             <td>{{ $temp->sop_no }}</td>
                                             <td>{{ $temp->document_name }}</td>
@@ -212,7 +212,7 @@
                     @endif
                 </div>
 
-                
+
                 <div class="inner-block tms-block" id="tms-due-block">
                     @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
                         <div class="block-table">
@@ -232,7 +232,7 @@
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
                                                 000{{ $temp->root_document ? $temp->root_document->document_number : '' }}</td>
-                                                <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                                <td>{{ $temp->training ? $temp->training?->document_name : '' }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                             <td>{{ $temp->status }} </td>
@@ -264,13 +264,13 @@
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
-                                            <td>{{ $temp->training->status }}</td>
+                                            <td>{{ $temp->training?->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
-                                            
+
                                             <td><a
-                                                    href="{{ url('TMS-details', $temp->training->training_plan) }}/{{ $temp->id }}"><i
+                                                    href="{{ url('TMS-details', $temp->training?->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
                                         </tr>
                                     @endforeach
@@ -280,7 +280,7 @@
                     @endif
                 </div>
 
-                
+
 
                 <div class="inner-block tms-block" id="tms-pending-block">
                     @if (Helpers::checkRoles(6 ) && Helpers::checkRoles(7) && Helpers::checkRoles(18))
@@ -301,7 +301,7 @@
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
                                                 000{{ $temp->document_id }}</td>
-                                                <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                                <td>{{ $temp->training ? $temp->training?->document_name : '' }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                             <td>{{ $temp->status }} </td>
@@ -333,12 +333,12 @@
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
-                                            <td>{{ $temp->training->status }}</td>
+                                            <td>{{ $temp->training?->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
-                                                    href="{{ url('TMS-details', $temp->training->training_plan) }}/{{ $temp->id }}"><i
+                                                    href="{{ url('TMS-details', $temp->training?->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
                                         </tr>
                                     @endforeach
@@ -367,7 +367,7 @@
                                         <tr>
                                             <td>{{ $temp->division_name }}/{{ $temp->typecode }}/SOP-
                                                 000{{ $temp->document_id }}</td>
-                                                <td>{{ $temp->training ? $temp->training->document_name : '' }}</td>
+                                                <td>{{ $temp->training ? $temp->training?->document_name : '' }}</td>
                                             <td>{{ $temp->document_type_name }}</td>
                                             <td>{{ $temp->division_name }}</td>
                                             <td>{{ $temp->status }} </td>
@@ -400,12 +400,12 @@
                                             <td>Sop-000{{ $temp->id }}</td>
                                             <td>{{ $temp->document_name }}</td>
                                             <th>1</th>
-                                            <td>{{ $temp->training->status }}</td>
+                                            <td>{{ $temp->training?->status }}</td>
                                             <td>Document</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td>{{ $temp->due_dateDoc  }}</td>
                                             <td><a
-                                                    href="{{ url('TMS-details', $temp->training->training_plan) }}/{{ $temp->id }}"><i
+                                                    href="{{ url('TMS-details', $temp->training?->training_plan) }}/{{ $temp->id }}"><i
                                                         class="fa-solid fa-eye"></i></a></td>
                                         </tr>
                                     @endforeach
@@ -496,49 +496,49 @@
                             </div>
                             <div id="chart-tms4"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Deviation Rate (Term)
                             </div>
                             <div id="chart-tms5"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Training Overdue
                             </div>
                             <div id="chart-tms6"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 SOP For Training
                             </div>
                             <div id="chart-tms7"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Completed Training
                             </div>
                             <div id="chart-tms8"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Department Trainees
                             </div>
                             <div id="chart-tms9"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Question Banks
                             </div>
                             <div id="chart-tms10"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 Training Plan
@@ -553,14 +553,14 @@
                             </div>
                             <div id="chart-tms12"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
                             </div>
                             <div id="chart-tms13"></div>
                         </div>
-                        
+
                         <div class="inner-block chart-block">
                             <div class="head">
                                 CAPA Extension Rate (Term)
@@ -622,7 +622,7 @@
                                 </table>
                             </div>
                         </div>
-                        
+
                         <div class="inner-block table-block">
                             <div class="head">Change Control Extension Rate (Term)</div>
                             <div class="dash-table">
